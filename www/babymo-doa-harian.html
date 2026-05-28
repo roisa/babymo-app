@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="description" content="Doa Harian — Belajar doa sehari-hari bersama Baby Mo!">
+<title>🌙 Doa Harian · BabyMo</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<!-- ResponsiveVoice: Google-quality TTS, far better than Web Speech API for Arabic -->
+<script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
+<style>
+:root{
+  --bg:#0B1C12;--bg2:#0F2016;
+  --card:#162014;--card2:#1C2A1A;
+  --green:#2C5A3E;--green-lt:#4A8860;--green-glow:#6DB882;
+  --gold:#C89040;--gold-lt:#E8B060;
+  --cream:#F0E8D8;--cream-dim:#7A8078;
+  --border:rgba(93,170,120,.12);
+  --red:#C85040;--blue:#4080C0;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--cream);}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 65% 45% at 15% 15%,rgba(44,90,62,.22),transparent),
+             radial-gradient(ellipse 55% 35% at 85% 85%,rgba(200,144,64,.07),transparent);}
+
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.stars i{position:absolute;font-style:normal;color:var(--gold);opacity:.06;animation:tw var(--d,3s) var(--dl,0s) ease-in-out infinite;}
+@keyframes tw{0%,100%{opacity:.03}50%{opacity:.18}}
+
+.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
+.screen.active{display:flex;}
+
+/* ════ WELCOME ════ */
+#welcomeScreen{padding:28px 18px 32px;justify-content:flex-start;text-align:center;}
+
+.w-mo-wrap{position:relative;width:130px;height:130px;margin:0 auto 12px;}
+.w-mo{
+  width:130px;height:130px;object-fit:contain;display:block;
+  filter:drop-shadow(0 6px 18px rgba(0,0,0,.38));
+  animation:gentleFloat 3.6s ease-in-out infinite;
+}
+@keyframes gentleFloat{
+  0%,100%{transform:translateY(0)    rotate(-1.5deg);}
+  50%     {transform:translateY(-6px) rotate(1.5deg);}
+}
+.w-mo-shadow{
+  width:68px;height:8px;border-radius:50%;
+  background:rgba(44,90,62,.28);margin:-4px auto 0;
+  filter:blur(3px);animation:shadowBreathe 3.6s ease-in-out infinite;
+}
+@keyframes shadowBreathe{
+  0%,100%{transform:scaleX(1);  opacity:.55;}
+  50%     {transform:scaleX(.8); opacity:.3;}
+}
+
+.w-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(61,106,72,.18);border:1px solid rgba(93,170,120,.2);color:var(--green-glow);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:10px;}
+.w-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green-glow);animation:blink 2s infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.w-title{font-size:clamp(24px,7vw,32px);font-weight:900;color:var(--gold-lt);margin-bottom:4px;text-shadow:0 2px 12px rgba(200,144,64,.3);}
+.w-arabic{font-family:'Scheherazade New',serif;font-size:20px;color:var(--gold);direction:rtl;margin-bottom:5px;opacity:.85;}
+.w-sub{font-size:13px;color:var(--cream-dim);margin-bottom:20px;line-height:1.55;}
+
+.w-preview{width:100%;max-width:380px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:22px;}
+.wp-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center;}
+.wp-icon{font-size:26px;margin-bottom:4px;}
+.wp-label{font-size:10px;font-weight:700;color:var(--cream);line-height:1.2;}
+.wp-time{font-size:9px;color:var(--cream-dim);margin-top:2px;}
+
+.w-start{width:100%;max-width:380px;padding:17px;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:16px;font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 6px 24px rgba(44,90,62,.5);transition:.15s;margin-bottom:11px;}
+.w-start:active{transform:scale(.97);}
+.w-back{font-size:12px;color:var(--cream-dim);text-decoration:none;padding:8px 14px;display:inline-block;}
+.w-back:hover{color:var(--green-glow);}
+
+/* ════ LEARN SCREEN ════ */
+#learnScreen{padding:12px 16px 24px;justify-content:flex-start;}
+.l-topbar{width:100%;max-width:440px;display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-shrink:0;}
+.l-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;transition:.15s;}
+.l-back:active{opacity:.7;}
+.l-counter{font-size:11px;font-weight:700;color:var(--green-glow);background:rgba(93,170,120,.1);padding:5px 12px;border-radius:8px;}
+.l-lives{font-size:13px;display:flex;gap:3px;}
+
+.timeline{width:100%;max-width:440px;display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:12px;flex-shrink:0;}
+.tl-seg{display:flex;align-items:center;gap:4px;}
+.tl-label{font-size:10px;font-weight:700;color:var(--cream-dim);white-space:nowrap;}
+.tl-dot{width:22px;height:6px;border-radius:3px;background:rgba(255,255,255,.07);transition:background .4s,transform .3s;}
+.tl-dot.active{background:var(--gold);transform:scaleY(1.4);}
+.tl-dot.done{background:var(--green-glow);}
+.tl-divider{width:12px;height:1px;background:rgba(255,255,255,.1);}
+
+.scene-card{width:100%;max-width:440px;border-radius:20px;overflow:hidden;margin-bottom:12px;position:relative;flex-shrink:0;height:128px;display:flex;align-items:center;justify-content:center;}
+.scene-bg{position:absolute;inset:0;}
+.scene-overlay{position:absolute;inset:0;background:rgba(0,0,0,.15);}
+.scene-emojis{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:12px;}
+.se-main{font-size:70px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.3));animation:scenePop .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes scenePop{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.se-prop{font-size:34px;opacity:.8;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3));}
+
+.scene-mo-wrap{position:absolute;bottom:6px;right:10px;z-index:2;width:54px;height:54px;}
+.scene-mo-wrap img{
+  width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 3px 8px rgba(0,0,0,.35));
+  animation:moSway 4s ease-in-out infinite;
+}
+@keyframes moSway{0%,100%{transform:rotate(-3deg) scale(1);}50%{transform:rotate(3deg) scale(1.04);}}
+.scene-mo-wrap img.celebrate{animation:moCelebrate .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes moCelebrate{0%{transform:scale(1) rotate(0)}50%{transform:scale(1.2) rotate(-14deg)}100%{transform:scale(1) rotate(0)}}
+.scene-mo-wrap img.wrong{animation:moWrong .4s ease;}
+@keyframes moWrong{0%,100%{transform:rotate(-3deg)}25%{transform:translateX(-4px) rotate(-6deg)}75%{transform:translateX(4px) rotate(-1deg)}}
+
+.scene-time{position:absolute;top:10px;left:12px;z-index:2;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(0,0,0,.3);backdrop-filter:blur(4px);color:rgba(255,255,255,.9);padding:4px 10px;border-radius:20px;}
+
+.dua-card{width:100%;max-width:440px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:16px 18px 14px;margin-bottom:14px;flex-shrink:0;position:relative;overflow:hidden;}
+.dua-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.dua-title{font-size:15px;font-weight:900;color:var(--cream);margin-bottom:3px;}
+.dua-desc{font-size:12px;color:var(--cream-dim);margin-bottom:12px;line-height:1.4;}
+.arabic-box{background:rgba(200,144,64,.06);border:1px solid rgba(200,144,64,.12);border-radius:14px;padding:14px 16px;margin-bottom:10px;text-align:center;}
+.arabic-text{font-family:'Scheherazade New',serif;font-size:clamp(22px,6vw,32px);font-weight:700;color:var(--gold-lt);direction:rtl;line-height:1.5;text-shadow:0 2px 12px rgba(200,144,64,.2);animation:arabicIn .4s cubic-bezier(.34,1.56,.64,1);}
+@keyframes arabicIn{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:scale(1)}}
+.latin-text{font-size:12px;color:var(--green-glow);font-style:italic;letter-spacing:.3px;margin-top:6px;line-height:1.5;}
+.meaning-id{font-size:12.5px;color:var(--cream);font-weight:700;line-height:1.5;margin-bottom:2px;}
+.meaning-en{font-size:11px;color:var(--cream-dim);line-height:1.5;}
+
+.sound-section{width:100%;max-width:440px;margin-bottom:14px;flex-shrink:0;}
+.sound-btn{width:100%;height:62px;border-radius:31px;background:linear-gradient(135deg,#2C5A3E,#3A7050);border:none;font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 24px rgba(44,90,62,.45);position:relative;overflow:hidden;transition:.15s;margin-bottom:8px;animation:invitePulse 2.8s ease-in-out infinite;}
+@keyframes invitePulse{0%,100%{box-shadow:0 6px 24px rgba(44,90,62,.45)}50%{box-shadow:0 6px 32px rgba(44,90,62,.7),0 0 0 6px rgba(93,170,120,.1)}}
+.sound-btn.speaking{background:linear-gradient(135deg,#1E4A30,#2A6040);animation:speakPulse .7s ease-in-out infinite;}
+@keyframes speakPulse{0%,100%{box-shadow:0 6px 18px rgba(44,90,62,.4),0 0 0 0 rgba(109,184,130,.4);}50%{box-shadow:0 6px 18px rgba(44,90,62,.4),0 0 0 14px rgba(109,184,130,.0);}}
+.sound-btn:active{transform:scale(.97);}
+.sound-btn-icon{font-size:24px;}
+.sound-btn::after{content:'';position:absolute;width:100%;height:100%;background:radial-gradient(circle at 50%,rgba(255,255,255,.12),transparent 60%);opacity:0;transition:opacity .3s;}
+.sound-btn.speaking::after{opacity:1;}
+.speed-row{display:flex;gap:8px;}
+.speed-btn{flex:1;padding:11px 8px;background:var(--card);border:1px solid var(--border);border-radius:12px;font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:var(--cream-dim);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;transition:.15s;}
+.speed-btn:active{transform:scale(.97);}
+.speed-btn.active{border-color:var(--green-lt);color:var(--green-glow);background:rgba(93,170,120,.08);}
+.no-audio-note{font-size:11px;color:rgba(200,144,64,.7);text-align:center;margin-top:6px;line-height:1.5;}
+
+.nav-row{width:100%;max-width:440px;display:flex;gap:10px;flex-shrink:0;}
+.nav-btn-sec{flex:1;padding:13px;background:var(--card);border:1px solid var(--border);border-radius:14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--cream-dim);cursor:pointer;text-align:center;transition:.15s;}
+.nav-btn-pri{flex:2;padding:13px;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(44,90,62,.4);transition:.15s;}
+.nav-btn-sec:active,.nav-btn-pri:active{transform:scale(.97);}
+
+/* ════ QUIZ SCREEN ════ */
+#quizScreen{padding:14px 16px 28px;justify-content:flex-start;}
+.q-topbar{width:100%;max-width:440px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0;}
+.q-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;}
+.q-title{font-size:12px;font-weight:700;color:var(--gold);letter-spacing:1px;text-transform:uppercase;}
+.q-counter-badge{font-size:11px;font-weight:700;color:var(--green-glow);background:rgba(93,170,120,.1);padding:5px 12px;border-radius:8px;}
+
+.q-progress{width:100%;max-width:440px;height:5px;background:rgba(255,255,255,.06);border-radius:5px;margin-bottom:14px;flex-shrink:0;overflow:hidden;}
+.q-prog-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green-glow));border-radius:5px;transition:width .5s ease;}
+
+.q-stimulus{width:100%;max-width:440px;background:var(--card);border:1.5px solid rgba(200,144,64,.2);border-radius:20px;padding:16px 18px 14px;margin-bottom:12px;flex-shrink:0;position:relative;overflow:hidden;text-align:center;}
+.q-stimulus::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.q-stim-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cream-dim);margin-bottom:10px;}
+.q-stim-arabic{font-family:'Scheherazade New',serif;font-size:clamp(20px,5.5vw,30px);font-weight:700;color:var(--gold-lt);direction:rtl;line-height:1.5;text-shadow:0 2px 10px rgba(200,144,64,.2);margin-bottom:10px;animation:arabicIn .4s cubic-bezier(.34,1.56,.64,1);}
+.q-play-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:24px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;color:#fff;padding:9px 20px;cursor:pointer;box-shadow:0 4px 14px rgba(44,90,62,.4);transition:.15s;animation:invitePulse 2.8s ease-in-out infinite;}
+.q-play-btn:active{transform:scale(.96);}
+.q-play-btn.speaking{background:linear-gradient(135deg,#1E4A30,#2A6040);animation:speakPulse .7s ease-in-out infinite;}
+
+.q-prompt{width:100%;max-width:440px;text-align:center;margin-bottom:12px;flex-shrink:0;}
+.q-prompt-text{font-size:16px;font-weight:900;color:var(--cream);margin-bottom:2px;}
+.q-prompt-en{font-size:11px;color:var(--cream-dim);}
+
+.q-choices{width:100%;max-width:440px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;flex-shrink:0;}
+.q-choice{background:var(--card);border:2.5px solid var(--border);border-radius:18px;padding:14px 6px 12px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center;transition:transform .15s,border-color .2s,background .2s,box-shadow .2s;min-height:96px;position:relative;overflow:hidden;}
+.q-choice::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity .2s;}
+.q-choice:active{transform:scale(.94);}
+.q-choice.correct{border-color:var(--green-glow);background:rgba(93,170,120,.15);box-shadow:0 0 18px rgba(93,170,120,.25);animation:correctPop .35s cubic-bezier(.34,1.56,.64,1);}
+.q-choice.correct::before{background:linear-gradient(90deg,transparent,var(--green-glow),transparent);opacity:1;}
+@keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.07)}100%{transform:scale(1)}}
+.q-choice.wrong{border-color:var(--red);background:rgba(200,80,64,.12);animation:shake .4s ease;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-choice.disabled{pointer-events:none;opacity:.5;}
+.qc-emoji{font-size:40px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.25));}
+.qc-label{font-size:11px;font-weight:900;color:var(--cream);line-height:1.25;width:100%;word-break:break-word;}
+.qc-result{position:absolute;top:5px;right:7px;font-size:14px;display:none;}
+.q-choice.correct .qc-result{display:block;}
+
+.q-feedback{width:100%;max-width:440px;border-radius:14px;padding:12px 16px;text-align:center;display:none;flex-shrink:0;}
+.q-feedback.show{display:block;}
+.q-fb-correct{background:rgba(93,170,120,.12);border:1px solid rgba(93,170,120,.2);}
+.q-fb-wrong{background:rgba(200,80,64,.1);border:1px solid rgba(200,80,64,.2);}
+.qfb-emoji{font-size:28px;margin-bottom:4px;}
+.qfb-title{font-size:14px;font-weight:900;color:var(--cream);}
+.qfb-meaning{font-size:11px;color:var(--cream-dim);margin-top:2px;line-height:1.4;}
+.q-next-btn{margin-top:12px;width:100%;padding:13px;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(44,90,62,.4);transition:.15s;}
+.q-next-btn:active{transform:scale(.97);}
+
+.mo-quiz-wrap{position:fixed;right:10px;top:50%;transform:translateY(-50%);width:52px;z-index:10;pointer-events:none;}
+.mo-quiz-wrap.hidden{display:none;}
+.mo-quiz-wrap img{width:100%;height:auto;object-fit:contain;filter:drop-shadow(0 3px 8px rgba(0,0,0,.3));animation:moSway 4s ease-in-out infinite;}
+.mo-quiz-wrap img.celebrate{animation:moCelebrate .5s cubic-bezier(.34,1.56,.64,1);}
+.mo-quiz-wrap img.wrong{animation:moWrong .4s ease;}
+
+/* ════ COMPLETE SCREEN ════ */
+#completeScreen{padding:24px 16px 36px;justify-content:flex-start;text-align:center;}
+
+.c-mascot-wrap{position:relative;width:110px;height:110px;margin:0 auto 12px;}
+.c-mascot{width:110px;height:110px;object-fit:contain;display:block;filter:drop-shadow(0 5px 14px rgba(0,0,0,.35));animation:completeSway 2.8s ease-in-out infinite alternate;}
+@keyframes completeSway{from{transform:rotate(-10deg) scale(1);}to{transform:rotate(10deg) scale(1.06);}}
+
+.c-card{background:var(--card);border:1px solid rgba(200,144,64,.2);border-radius:24px;padding:24px 18px 20px;width:100%;max-width:400px;position:relative;overflow:hidden;margin-bottom:14px;}
+.c-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
+.c-title{font-size:26px;font-weight:900;color:var(--gold-lt);margin-bottom:3px;}
+.c-sub{font-size:13px;color:var(--cream-dim);margin-bottom:12px;}
+.c-stars-row{margin:12px 0;font-size:44px;letter-spacing:4px;}
+.c-star{display:inline-block;opacity:.15;transition:opacity .3s;}
+.c-star.lit{opacity:1;animation:starPop .45s cubic-bezier(.34,1.56,.64,1) both;}
+@keyframes starPop{0%{transform:scale(0) rotate(-30deg)}80%{transform:scale(1.15) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
+.c-stats{display:flex;justify-content:center;gap:22px;margin-bottom:14px;}
+.cst{text-align:center;}
+.cst-n{font-size:28px;font-weight:900;color:var(--cream);}
+.cst-l{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cream-dim);margin-top:2px;}
+
+.c-recap{
+  background:rgba(44,90,62,.1);
+  border:1px solid rgba(93,170,120,.12);
+  border-radius:14px;
+  padding:12px 14px;
+  text-align:left;
+}
+.cr-head{
+  font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;
+  color:var(--cream-dim);text-align:center;margin-bottom:10px;
+}
+.cr-item{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(255,255,255,.05);
+}
+.cr-item:last-child{border-bottom:none;}
+.cr-top{display:flex;align-items:center;gap:8px;}
+.cr-icon{font-size:20px;flex-shrink:0;}
+.cr-title-small{font-size:13px;font-weight:900;color:var(--cream);}
+.cr-arabic{
+  font-family:'Scheherazade New',serif;
+  font-size:18px;
+  color:var(--gold-lt);
+  direction:rtl;
+  text-align:right;
+  line-height:1.6;
+  width:100%;
+  word-break:break-word;
+}
+.cr-meaning{font-size:11px;color:var(--cream-dim);line-height:1.4;}
+
+.c-btns{display:flex;gap:10px;width:100%;max-width:400px;}
+.c-btn-sec{flex:1;padding:14px;background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--cream);cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;transition:.15s;}
+.c-btn-pri{flex:2;padding:14px;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:14px;font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(44,90,62,.45);transition:.15s;}
+.c-btn-sec:active,.c-btn-pri:active{transform:scale(.97);}
+.c-share{width:100%;max-width:400px;margin-top:10px;padding:12px;background:rgba(200,144,64,.1);border:1px solid rgba(200,144,64,.22);border-radius:14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--gold-lt);cursor:pointer;transition:.15s;}
+.c-share:active{transform:scale(.97);}
+
+.particle{position:fixed;pointer-events:none;z-index:500;animation:pfall linear forwards;}
+@keyframes pfall{0%{transform:translateY(0) rotate(0);opacity:1}80%{opacity:.8}100%{transform:translateY(105vh) rotate(900deg);opacity:0}}
+.toast{position:fixed;top:46%;left:50%;transform:translate(-50%,-50%) scale(0);background:linear-gradient(135deg,var(--green),#3A7050);border-radius:18px;padding:12px 22px;text-align:center;z-index:400;pointer-events:none;transition:transform .2s cubic-bezier(.34,1.56,.64,1);box-shadow:0 6px 28px rgba(0,0,0,.4);}
+.toast.show{transform:translate(-50%,-50%) scale(1);}
+.toast-e{font-size:28px;}
+.toast-t{font-size:14px;font-weight:900;color:#fff;margin-top:2px;}
+</style>
+</head>
+<body>
+
+<div class="stars" id="starsBg"></div>
+<div class="toast" id="toast"><div class="toast-e" id="toastE">✨</div><div class="toast-t" id="toastT">Bagus!</div></div>
+
+<!-- ════ WELCOME ════ -->
+<div class="screen active" id="welcomeScreen">
+  <div class="w-mo-wrap">
+    <img class="w-mo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+  </div>
+  <div class="w-mo-shadow"></div>
+  <div class="w-badge">🌙 BabyMo Game · Doa</div>
+  <div class="w-title">Doa Harian 🌟</div>
+  <div class="w-arabic">تَعَلَّمِ الدُّعَاءَ مَعَ بَيبِي مُو</div>
+  <div class="w-sub">Belajar doa sehari-hari bersama Baby Mo!<br>Learn daily duas with Baby Mo! 🐻</div>
+  <div class="w-preview">
+    <div class="wp-item"><div class="wp-icon">🌅</div><div class="wp-label">Bangun Tidur</div><div class="wp-time">Pagi</div></div>
+    <div class="wp-item"><div class="wp-icon">🚿</div><div class="wp-label">Kamar Mandi</div><div class="wp-time">Pagi</div></div>
+    <div class="wp-item"><div class="wp-icon">🍽️</div><div class="wp-label">Makan</div><div class="wp-time">Siang</div></div>
+    <div class="wp-item"><div class="wp-icon">📚</div><div class="wp-label">Belajar</div><div class="wp-time">Siang</div></div>
+    <div class="wp-item"><div class="wp-icon">🚪</div><div class="wp-label">Keluar Rumah</div><div class="wp-time">Siang</div></div>
+    <div class="wp-item"><div class="wp-icon">🌙</div><div class="wp-label">Tidur</div><div class="wp-time">Malam</div></div>
+  </div>
+  <button class="w-start" onclick="startLearning()">🔊 Mulai Belajar — Bismillah!</button>
+  <a href="././index.html" class="w-back">← Kembali ke Game Hub</a>
+</div>
+
+
+<!-- ════ LEARN SCREEN ════ -->
+<div class="screen" id="learnScreen">
+  <div class="l-topbar">
+    <button class="l-back" onclick="goHome()">← Hub</button>
+    <div class="l-counter" id="lCounter">Doa 1 / 6</div>
+    <div class="l-lives" id="lLives">🌟🌟🌟</div>
+  </div>
+  <div class="timeline" id="tlRow"></div>
+  <div class="scene-card" id="sceneCard">
+    <div class="scene-bg" id="sceneBg"></div>
+    <div class="scene-overlay"></div>
+    <div class="scene-emojis">
+      <span class="se-main" id="seMain">🌅</span>
+      <span class="se-prop" id="seProp">🛏️</span>
+    </div>
+    <div class="scene-time" id="sceneTime">Pagi 🌅</div>
+    <div class="scene-mo-wrap">
+      <img id="sceneMo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+    </div>
+  </div>
+  <div class="dua-card">
+    <div class="dua-title" id="duaTitle">Doa Bangun Tidur</div>
+    <div class="dua-desc" id="duaDesc">Baby Mo baru bangun tidur di pagi hari!</div>
+    <div class="arabic-box">
+      <div class="arabic-text" id="arabicText">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا</div>
+      <div class="latin-text" id="latinText">Alhamdulillāhil-ladhī ahyānā...</div>
+    </div>
+    <div class="meaning-id" id="meaningId">Segala puji bagi Allah yang menghidupkan kami.</div>
+    <div class="meaning-en" id="meaningEn">All praise to Allah who revived us.</div>
+  </div>
+  <div class="sound-section">
+    <button class="sound-btn" id="soundBtn" onclick="handleSoundClick()">
+      <span class="sound-btn-icon" id="soundBtnIcon">🔊</span>
+      <span id="soundBtnText">Dengar Doa</span>
+    </button>
+    <div class="speed-row">
+      <button class="speed-btn active" id="speedNormal" onclick="setSpeed('normal')">🐇 Normal</button>
+      <button class="speed-btn" id="speedSlow" onclick="setSpeed('slow')">🐢 Pelan</button>
+      <button class="speed-btn" id="speedRepeat" onclick="repeatMode()">🔁 Ulangi 2×</button>
+    </div>
+    <div class="no-audio-note" id="audioNote"></div>
+  </div>
+  <div class="nav-row">
+    <button class="nav-btn-sec" id="navPrev" onclick="prevDua()">← Kembali</button>
+    <button class="nav-btn-pri" id="navNext" onclick="nextDua()">Lanjut →</button>
+  </div>
+</div>
+
+
+<!-- ════ QUIZ SCREEN ════ -->
+<div class="screen" id="quizScreen">
+  <div class="q-topbar">
+    <button class="q-back" onclick="showScreen('learnScreen')">← Ulang</button>
+    <div class="q-title">🎯 Quiz Doa</div>
+    <div class="q-counter-badge" id="qCounterBadge">1 / 4</div>
+  </div>
+  <div class="q-progress"><div class="q-prog-fill" id="qProgFill" style="width:0%"></div></div>
+  <div class="q-stimulus">
+    <div class="q-stim-label">Dengar doanya — ini doa apa?</div>
+    <div class="q-stim-arabic" id="qStimArabic">بِسْمِ اللَّهِ</div>
+    <button class="q-play-btn" id="qPlayBtn" onclick="playQuizAudio()">
+      <span id="qPlayIcon">🔊</span> Dengar lagi
+    </button>
+  </div>
+  <div class="q-prompt">
+    <div class="q-prompt-text" id="qPromptText">Doa ini dibaca saat...?</div>
+    <div class="q-prompt-en" id="qPromptEn">Pilih gambar yang benar! · Tap the right picture!</div>
+  </div>
+  <div class="q-choices" id="qChoices"></div>
+  <div class="q-feedback" id="qFeedback">
+    <div class="qfb-emoji" id="qfbEmoji">✅</div>
+    <div class="qfb-title" id="qfbTitle">Betul!</div>
+    <div class="qfb-meaning" id="qfbMeaning"></div>
+    <button class="q-next-btn" id="qNextBtn" onclick="nextQuestion()">Lanjut →</button>
+  </div>
+  <div class="mo-quiz-wrap hidden" id="moQuizWrap">
+    <img id="moQuizImg" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+  </div>
+</div>
+
+
+<!-- ════ COMPLETE SCREEN ════ -->
+<div class="screen" id="completeScreen">
+  <div class="c-mascot-wrap">
+    <img class="c-mascot" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+  </div>
+  <div class="c-card">
+    <div class="c-title" id="cTitle">Masya Allah! 🌟</div>
+    <div class="c-sub" id="cSub">Kamu sudah hafal 6 doa harian!</div>
+    <div class="c-stars-row">
+      <span class="c-star" id="cs1">⭐</span>
+      <span class="c-star" id="cs2">⭐</span>
+      <span class="c-star" id="cs3">⭐</span>
+    </div>
+    <div class="c-stats">
+      <div class="cst"><div class="cst-n" id="cDoa">6</div><div class="cst-l">Doa</div></div>
+      <div class="cst"><div class="cst-n" id="cQuizScore">4/4</div><div class="cst-l">Quiz</div></div>
+      <div class="cst"><div class="cst-n" id="cStarsDisp">⭐⭐⭐</div><div class="cst-l">Bintang</div></div>
+    </div>
+    <div class="c-recap" id="cRecap"></div>
+  </div>
+  <div class="c-btns">
+    <a href="././index.html" class="c-btn-sec">🏠 Hub</a>
+    <button class="c-btn-pri" onclick="restartGame()">🔄 Main Lagi!</button>
+  </div>
+  <button class="c-share" onclick="shareResult()">📤 Bagikan Hasil!</button>
+</div>
+
+
+<script>
+// ═══════════════════════════════════════
+// DATA
+// ═══════════════════════════════════════
+const DUAS = [
+  {
+    id:'wakeup', timeCode:'morning', time:'Pagi 🌅',
+    icon:'🌅', prop:'🛏️',
+    bg:'linear-gradient(160deg,#FFD080 0%,#E06820 100%)',
+    title:'Doa Bangun Tidur',
+    desc:'Baby Mo baru bangun tidur di pagi hari!',
+    arabic:'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ',
+    latin:"Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr",
+    meaningId:'Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami.',
+    meaningEn:'All praise to Allah who revived us after death.',
+    quizPrompt:'Doa ini dibaca saat...?',
+    quizEmoji:'🌅', quizLabel:'Bangun Tidur'
+  },
+  {
+    id:'bathroom_in', timeCode:'morning', time:'Pagi 🌅',
+    icon:'🚿', prop:'💧',
+    bg:'linear-gradient(160deg,#A0D8F0 0%,#2878B0 100%)',
+    title:'Masuk Kamar Mandi',
+    desc:'Sebelum Baby Mo masuk kamar mandi, baca doa ini!',
+    arabic:'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ',
+    latin:"Allāhumma innī a'ūdhu bika minal-khubthi wal-khabā'ith",
+    meaningId:'Ya Allah, aku berlindung kepada-Mu dari gangguan setan.',
+    meaningEn:"O Allah, I seek Your protection from evil jinns.",
+    quizPrompt:'Doa ini dibaca saat...?',
+    quizEmoji:'🚿', quizLabel:'Masuk Kamar Mandi'
+  },
+  {
+    id:'bathroom_out', timeCode:'morning', time:'Pagi 🌅',
+    icon:'🚪', prop:'✨',
+    bg:'linear-gradient(160deg,#80C8E8 0%,#1E68A8 100%)',
+    title:'Keluar Kamar Mandi',
+    desc:'Setelah keluar dari kamar mandi, ucapkan ini!',
+    arabic:'غُفْرَانَكَ',
+    latin:'Ghufranaka',
+    meaningId:'Ya Allah, ampunilah aku.',
+    meaningEn:'I seek Your forgiveness, O Allah.',
+    quizPrompt:'Doa ini dibaca saat...?',
+    quizEmoji:'🚪', quizLabel:'Keluar Kamar Mandi'
+  },
+  {
+    id:'eating', timeCode:'day', time:'Siang 🌤️',
+    icon:'🍽️', prop:'🥄',
+    bg:'linear-gradient(160deg,#FFD060 0%,#C86020 100%)',
+    title:'Sebelum Makan',
+    desc:'Selalu baca Bismillah sebelum makan ya!',
+    arabic:'بِسْمِ اللَّهِ',
+    latin:'Bismillāh',
+    meaningId:'Dengan nama Allah.',
+    meaningEn:'In the name of Allah.',
+    quizPrompt:'Doa ini dibaca saat...?',
+    quizEmoji:'🍽️', quizLabel:'Mau Makan'
+  },
+  {
+    id:'study', timeCode:'day', time:'Siang 🌤️',
+    icon:'📚', prop:'✏️',
+    bg:'linear-gradient(160deg,#80D8A0 0%,#227848 100%)',
+    title:'Doa Belajar',
+    desc:'Minta kepada Allah agar ilmu kita bertambah!',
+    arabic:'رَبِّ زِدْنِي عِلْمًا',
+    latin:"Rabb zidnī 'ilmā",
+    meaningId:'Ya Rabb-ku, tambahkanlah ilmu kepadaku.',
+    meaningEn:'My Lord, increase me in knowledge.',
+    quizPrompt:'Doa ini dibaca saat...?',
+    quizEmoji:'📚', quizLabel:'Mau Belajar'
+  },
+  {
+    id:'sleep', timeCode:'night', time:'Malam 🌙',
+    icon:'🌙', prop:'⭐',
+    bg:'linear-gradient(160deg,#5060A0 0%,#0E1828 100%)',
+    title:'Doa Sebelum Tidur',
+    desc:'Baby Mo mau tidur. Baca doa ini dulu ya!',
+    arabic:'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',
+    latin:"Bismika Allāhumma amūtu wa ahyā",
+    meaningId:'Dengan nama-Mu ya Allah, aku tidur dan aku bangun.',
+    meaningEn:'In Your name, O Allah, I sleep and I awaken.',
+    quizPrompt:'Doa ini dibaca saat...?',
+    quizEmoji:'🌙', quizLabel:'Mau Tidur'
+  }
+];
+
+const QUIZ_Q = [0, 3, 4, 5];
+
+// ═══════════════════════════════════════
+// SPEECH & AUDIO — ResponsiveVoice (Google TTS) first, Web Speech API fallback
+// ═══════════════════════════════════════
+// ResponsiveVoice uses Google's TTS under the hood — sounds natural on all devices.
+// Web Speech API is kept as silent fallback only (most Arabic voices on it sound poor).
+let isSpeaking = false, currentSpeed = 'normal', audioCtx = null;
+let currentQuizDuaIdx = 0;
+
+// Web Speech API fallback vars (only used if ResponsiveVoice not available)
+let wsVoices = [], wsArabicVoice = null;
+
+function initVoices(){
+  if(window.speechSynthesis){
+    const load = () => {
+      wsVoices = speechSynthesis.getVoices();
+      wsArabicVoice = wsVoices.find(v => v.lang === 'ar-SA') ||
+                      wsVoices.find(v => v.lang === 'ar-EG') ||
+                      wsVoices.find(v => v.lang.startsWith('ar')) || null;
+    };
+    load();
+    if(speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = load;
+  }
+}
+
+function speakDua(text, rate){
+  if(window.responsiveVoice){
+    // ResponsiveVoice: Google-quality Arabic — clear, natural, works on all devices
+    responsiveVoice.cancel();
+    isSpeaking = true; setSoundState('playing'); setQuizPlayState('playing');
+    responsiveVoice.speak(text, 'Arabic Male', {
+      rate:   rate !== undefined ? rate : (currentSpeed === 'slow' ? 0.75 : 0.9),
+      pitch:  1,
+      volume: 1,
+      onstart: () => { isSpeaking = true;  setSoundState('playing'); setQuizPlayState('playing'); },
+      onend:   () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); },
+      onerror: () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); speakDuaFallback(text, rate); }
+    });
+  } else {
+    speakDuaFallback(text, rate);
+  }
+}
+
+function speakDuaFallback(text, rate){
+  // Web Speech API fallback — only when ResponsiveVoice is unavailable
+  if(!window.speechSynthesis || !wsArabicVoice){
+    const note = document.getElementById('audioNote');
+    if(note) note.textContent = '🔇 Suara Arab belum tersedia. Baca teks di atas ya!';
+    return;
+  }
+  speechSynthesis.cancel();
+  const utt  = new SpeechSynthesisUtterance(text);
+  utt.lang   = 'ar-SA';
+  utt.rate   = rate !== undefined ? rate : (currentSpeed === 'slow' ? 0.40 : 0.60);
+  utt.pitch  = 1.0;   // never modify pitch on Arabic TTS
+  utt.volume = 1.0;
+  utt.voice  = wsArabicVoice;
+  utt.onstart = () => { isSpeaking = true;  setSoundState('playing'); setQuizPlayState('playing'); };
+  utt.onend   = () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); };
+  utt.onerror = () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); };
+  speechSynthesis.speak(utt);
+}
+
+function stopSpeech(){
+  if(window.responsiveVoice) responsiveVoice.cancel();
+  if(window.speechSynthesis) speechSynthesis.cancel();
+  isSpeaking = false; setSoundState('idle'); setQuizPlayState('idle');
+}
+
+function setSoundState(state){
+  const btn  = document.getElementById('soundBtn');
+  const icon = document.getElementById('soundBtnIcon');
+  const txt  = document.getElementById('soundBtnText');
+  if(!btn) return;
+  if(state === 'playing'){ btn.classList.add('speaking'); icon.textContent = '⏸'; txt.textContent = 'Sedang dibaca...'; }
+  else { btn.classList.remove('speaking'); icon.textContent = '🔊'; txt.textContent = 'Dengar Doa'; }
+}
+
+function setQuizPlayState(state){
+  const btn  = document.getElementById('qPlayBtn');
+  const icon = document.getElementById('qPlayIcon');
+  if(!btn) return;
+  if(state === 'playing'){ btn.classList.add('speaking'); icon.textContent = '⏸'; }
+  else { btn.classList.remove('speaking'); icon.textContent = '🔊'; }
+}
+
+function handleSoundClick(){
+  if(isSpeaking){ stopSpeech(); return; }
+  speakDua(DUAS[currentDuaIdx].arabic);
+  playTone(523, 0.06);
+}
+
+function playQuizAudio(){
+  if(isSpeaking){ stopSpeech(); return; }
+  speakDua(DUAS[currentQuizDuaIdx].arabic);
+  playTone(523, 0.06);
+}
+
+function setSpeed(s){
+  currentSpeed = s;
+  document.getElementById('speedNormal').classList.toggle('active', s === 'normal');
+  document.getElementById('speedSlow').classList.toggle('active', s === 'slow');
+  document.getElementById('speedRepeat').classList.remove('active');
+}
+
+let repeatTimer = null;
+function repeatMode(){
+  document.getElementById('speedRepeat').classList.add('active');
+  document.getElementById('speedNormal').classList.remove('active');
+  document.getElementById('speedSlow').classList.remove('active');
+  // First pass normal, second pass slow for memorisation
+  speakDua(DUAS[currentDuaIdx].arabic, window.responsiveVoice ? 0.9 : 0.60);
+  clearTimeout(repeatTimer);
+  repeatTimer = setTimeout(() => {
+    speakDua(DUAS[currentDuaIdx].arabic, window.responsiveVoice ? 0.7 : 0.40);
+  }, 5500);
+}
+
+function showAudioNote(msg){ const n = document.getElementById('audioNote'); if(n) n.textContent = msg; }
+
+function getAudioCtx(){
+  if(!audioCtx){ try{ audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }catch(e){} }
+  return audioCtx;
+}
+function playTone(freq, dur, type='sine', vol=0.25){
+  const ctx = getAudioCtx(); if(!ctx) return;
+  try{
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.connect(g); g.connect(ctx.destination);
+    osc.type = type; osc.frequency.value = freq;
+    g.gain.setValueAtTime(vol, ctx.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + dur);
+    osc.start(ctx.currentTime); osc.stop(ctx.currentTime + dur);
+  }catch(e){}
+}
+function playCorrect(){
+  playTone(523,.1,'sine',.25);
+  setTimeout(()=>playTone(659,.1,'sine',.25),110);
+  setTimeout(()=>playTone(784,.25,'sine',.25),220);
+}
+function playWrong(){
+  playTone(280,.08,'square',.2);
+  setTimeout(()=>playTone(240,.18,'square',.2),100);
+}
+
+// ═══════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════
+let currentDuaIdx = 0, quizIdx = 0, quizCorrect = 0, quizAnswered = false;
+
+// ═══════════════════════════════════════
+// SCREEN NAV
+// ═══════════════════════════════════════
+function showScreen(id){
+  stopSpeech();
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById(id).scrollTop = 0;
+}
+function goHome(){ showScreen('welcomeScreen'); }
+
+// ═══════════════════════════════════════
+// LEARN
+// ═══════════════════════════════════════
+function startLearning(){
+  currentDuaIdx = 0;
+  buildTimeline();
+  loadDua(0);
+  showScreen('learnScreen');
+}
+
+function buildTimeline(){
+  const row = document.getElementById('tlRow');
+  row.innerHTML = '';
+  const groups = [
+    { label:'🌅 Pagi', indices:[0,1,2] },
+    { label:'🌤️ Siang', indices:[3,4] },
+    { label:'🌙 Malam', indices:[5] }
+  ];
+  groups.forEach((g, gi) => {
+    if(gi > 0){ const div = document.createElement('div'); div.className = 'tl-divider'; row.appendChild(div); }
+    const seg = document.createElement('div'); seg.className = 'tl-seg';
+    const lbl = document.createElement('span'); lbl.className = 'tl-label'; lbl.textContent = g.label; seg.appendChild(lbl);
+    g.indices.forEach(idx => {
+      const dot = document.createElement('div'); dot.className = 'tl-dot'; dot.id = 'tldot'+idx; seg.appendChild(dot);
+    });
+    row.appendChild(seg);
+  });
+  updateTimeline();
+}
+
+function updateTimeline(){
+  for(let i = 0; i < DUAS.length; i++){
+    const d = document.getElementById('tldot'+i); if(!d) continue;
+    d.className = 'tl-dot' + (i < currentDuaIdx ? ' done' : i === currentDuaIdx ? ' active' : '');
+  }
+}
+
+function loadDua(idx){
+  currentDuaIdx = idx;
+  const d = DUAS[idx];
+  clearTimeout(repeatTimer); stopSpeech();
+  document.getElementById('audioNote').textContent = '';
+  currentSpeed = 'normal';
+  document.getElementById('speedNormal').classList.add('active');
+  document.getElementById('speedSlow').classList.remove('active');
+  document.getElementById('speedRepeat').classList.remove('active');
+
+  document.getElementById('lCounter').textContent = `Doa ${idx+1} / ${DUAS.length}`;
+  updateTimeline();
+
+  document.getElementById('sceneBg').style.background = d.bg;
+  document.getElementById('sceneTime').textContent = d.time;
+  document.getElementById('seMain').textContent = d.icon;
+  document.getElementById('seProp').textContent  = d.prop;
+  const se = document.getElementById('seMain');
+  se.style.animation = 'none';
+  requestAnimationFrame(() => { se.style.animation = 'scenePop .5s cubic-bezier(.34,1.56,.64,1)'; });
+
+  setSceneMoExpression('normal');
+
+  document.getElementById('duaTitle').textContent  = d.title;
+  document.getElementById('duaDesc').textContent   = d.desc;
+  const arabicEl = document.getElementById('arabicText');
+  arabicEl.textContent = d.arabic;
+  arabicEl.style.animation = 'none';
+  requestAnimationFrame(() => { arabicEl.style.animation = 'arabicIn .4s cubic-bezier(.34,1.56,.64,1)'; });
+  document.getElementById('latinText').textContent  = d.latin;
+  document.getElementById('meaningId').textContent  = d.meaningId;
+  document.getElementById('meaningEn').textContent  = d.meaningEn;
+
+  document.getElementById('navPrev').textContent = idx === 0 ? '🏠 Hub' : '← Kembali';
+  document.getElementById('navNext').textContent = idx === DUAS.length - 1 ? 'Mulai Quiz 🎯' : 'Lanjut →';
+
+  setTimeout(() => speakDua(d.arabic), 700);
+}
+
+function prevDua(){ if(currentDuaIdx === 0){ goHome(); return; } loadDua(currentDuaIdx - 1); }
+function nextDua(){ if(currentDuaIdx === DUAS.length - 1){ startQuiz(); } else { loadDua(currentDuaIdx + 1); } }
+
+// ═══════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════
+function startQuiz(){ quizIdx = 0; quizCorrect = 0; showScreen('quizScreen'); loadQuestion(0); }
+
+function loadQuestion(qi){
+  quizIdx = qi; quizAnswered = false;
+  const duaIdx = QUIZ_Q[qi];
+  currentQuizDuaIdx = duaIdx;
+  const d = DUAS[duaIdx];
+
+  document.getElementById('qCounterBadge').textContent = `${qi+1} / ${QUIZ_Q.length}`;
+  document.getElementById('qProgFill').style.width = `${(qi / QUIZ_Q.length) * 100}%`;
+
+  const stimArabic = document.getElementById('qStimArabic');
+  stimArabic.textContent = d.arabic;
+  stimArabic.style.animation = 'none';
+  requestAnimationFrame(() => { stimArabic.style.animation = 'arabicIn .4s cubic-bezier(.34,1.56,.64,1)'; });
+
+  setQuizPlayState('idle');
+  document.getElementById('qPromptText').textContent = d.quizPrompt;
+  document.getElementById('qPromptEn').textContent   = 'Pilih gambar yang benar! · Tap the right picture!';
+  document.getElementById('qFeedback').className = 'q-feedback';
+  document.getElementById('moQuizWrap').classList.add('hidden');
+
+  const choices   = buildChoices(duaIdx);
+  const container = document.getElementById('qChoices');
+  container.innerHTML = '';
+  choices.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'q-choice';
+    btn.innerHTML = `
+      <span class="qc-emoji">${c.emoji}</span>
+      <span class="qc-label">${c.label}</span>
+      <span class="qc-result">✓</span>
+    `;
+    btn.onclick = () => handleAnswer(btn, c.correct, d);
+    container.appendChild(btn);
+  });
+
+  setTimeout(() => speakDua(d.arabic), 400);
+}
+
+function buildChoices(correctIdx){
+  const correct = { emoji: DUAS[correctIdx].quizEmoji, label: DUAS[correctIdx].quizLabel, correct: true };
+  let pool = DUAS
+    .map((d, i) => ({ emoji: d.quizEmoji, label: d.quizLabel, correct: false }))
+    .filter((_, i) => i !== correctIdx);
+  pool = pool.sort(() => Math.random() - .5).slice(0, 2);
+  return [correct, ...pool].sort(() => Math.random() - .5);
+}
+
+function handleAnswer(btn, isCorrect, dua){
+  if(quizAnswered) return;
+  quizAnswered = true;
+  document.querySelectorAll('.q-choice').forEach(b => b.classList.add('disabled'));
+  const fb = document.getElementById('qFeedback');
+  const mo = document.getElementById('moQuizWrap');
+  mo.classList.remove('hidden');
+
+  if(isCorrect){
+    quizCorrect++;
+    btn.classList.add('correct');
+    fb.className = 'q-feedback q-fb-correct show';
+    document.getElementById('qfbEmoji').textContent   = '✅';
+    document.getElementById('qfbTitle').textContent   = getCorrectMsg();
+    document.getElementById('qfbMeaning').textContent = `"${dua.meaningId}"`;
+    setMoQuiz('celebrate');
+    playCorrect();
+    spawnParticles(8);
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.q-choice').forEach(b => {
+      const lbl = b.querySelector('.qc-label');
+      if(lbl && lbl.textContent === DUAS[QUIZ_Q[quizIdx]].quizLabel) b.classList.add('correct');
+    });
+    fb.className = 'q-feedback q-fb-wrong show';
+    document.getElementById('qfbEmoji').textContent   = '🔄';
+    document.getElementById('qfbTitle').textContent   = 'Hampir betul! Coba lagi nanti!';
+    document.getElementById('qfbMeaning').textContent = `Doa "${dua.title}" — ${dua.meaningId}`;
+    setMoQuiz('worried');
+    playWrong();
+  }
+
+  const isLast = quizIdx >= QUIZ_Q.length - 1;
+  document.getElementById('qNextBtn').textContent = isLast ? '🌟 Lihat Hasil!' : 'Lanjut →';
+}
+
+function nextQuestion(){
+  stopSpeech();
+  const next = quizIdx + 1;
+  if(next >= QUIZ_Q.length){ showComplete(); } else { loadQuestion(next); }
+}
+
+const correctMsgs = ['Masya Allah! 🌟','Betul! Alhamdulillah! ✨','Subhanallah! Hebat! 💚','Luar biasa! ⭐','Sempurna! 🏆'];
+let corrMsgI = 0;
+function getCorrectMsg(){ return correctMsgs[corrMsgI++ % correctMsgs.length]; }
+
+// ═══════════════════════════════════════
+// MO EXPRESSIONS
+// ═══════════════════════════════════════
+function setSceneMoExpression(expr){
+  const img = document.querySelector('.scene-mo-wrap img'); if(!img) return;
+  img.classList.remove('celebrate','wrong');
+  if(expr === 'celebrate'){ img.classList.add('celebrate'); setTimeout(() => img.classList.remove('celebrate'), 500); }
+  else if(expr === 'worried'){ img.classList.add('wrong'); setTimeout(() => setSceneMoExpression('normal'), 1200); }
+}
+
+function setMoQuiz(expr){
+  const img = document.getElementById('moQuizImg'); if(!img) return;
+  img.classList.remove('celebrate','wrong');
+  if(expr === 'celebrate'){ img.classList.add('celebrate'); setTimeout(() => img.classList.remove('celebrate'), 500); }
+  else if(expr === 'worried'){ img.classList.add('wrong'); setTimeout(() => img.classList.remove('wrong'), 1200); }
+}
+
+// ═══════════════════════════════════════
+// COMPLETE
+// ═══════════════════════════════════════
+function showComplete(){
+  const total = QUIZ_Q.length;
+  const pct   = quizCorrect / total;
+  let stars = 1;
+  if(pct >= 0.5)  stars = 2;
+  if(pct >= 0.75) stars = 3;
+
+  const titles = {1:'Terus Berlatih! 🌱', 2:'Alhamdulillah! ✨', 3:'Masya Allah! 🌟'};
+  const subs   = {1:'Latihan lagi ya, pasti bisa!', 2:'Bagus sekali! Terus belajar ya!', 3:'Sempurna! Kamu hafal semua doa harian! 🏆'};
+
+  document.getElementById('cTitle').textContent     = titles[stars];
+  document.getElementById('cSub').textContent       = subs[stars];
+  document.getElementById('cDoa').textContent       = DUAS.length;
+  document.getElementById('cQuizScore').textContent = `${quizCorrect}/${total}`;
+  document.getElementById('cStarsDisp').textContent = '⭐'.repeat(stars);
+
+  const recap = document.getElementById('cRecap');
+  recap.innerHTML = '<div class="cr-head">✅ Doa yang kamu pelajari hari ini</div>';
+  DUAS.forEach(d => {
+    recap.innerHTML += `
+      <div class="cr-item">
+        <div class="cr-top">
+          <span class="cr-icon">${d.icon}</span>
+          <span class="cr-title-small">${d.title}</span>
+        </div>
+        <div class="cr-arabic">${d.arabic}</div>
+        <div class="cr-meaning">${d.meaningId}</div>
+      </div>`;
+  });
+
+  showScreen('completeScreen');
+  ['cs1','cs2','cs3'].forEach(id => document.getElementById(id).classList.remove('lit'));
+  for(let i = 1; i <= stars; i++){
+    setTimeout(() => document.getElementById('cs'+i).classList.add('lit'), 300 + (i-1)*350);
+  }
+  spawnParticles(stars * 10);
+}
+
+function restartGame(){
+  ['cs1','cs2','cs3'].forEach(id => document.getElementById(id).classList.remove('lit'));
+  corrMsgI = 0;
+  startLearning();
+}
+
+// ═══════════════════════════════════════
+// SHARE
+// ═══════════════════════════════════════
+function shareResult(){
+  const stars = document.getElementById('cStarsDisp').textContent;
+  const score = document.getElementById('cQuizScore').textContent;
+  const text  = `🌙 Doa Harian — BabyMo.id\nAku belajar 6 doa harian bersama Baby Mo!\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama di BabyMo.id 🐻\n#BabyMo #DoaHarian #BelajarIslam`;
+  if(navigator.share){ navigator.share({title:'BabyMo Doa Harian', text, url:'https://babymo.id'}).catch(()=>{}); }
+  else{ navigator.clipboard?.writeText(text).then(() => showToast('📤','Disalin!')); }
+}
+
+// ═══════════════════════════════════════
+// PARTICLES & TOAST
+// ═══════════════════════════════════════
+function spawnParticles(n){
+  const g = ['⭐','✨','🌙','💚','🌟','✦','🎉','🤲'];
+  for(let i = 0; i < n; i++){
+    setTimeout(() => {
+      const p = document.createElement('div'); p.className = 'particle';
+      p.textContent = g[Math.floor(Math.random()*g.length)];
+      const dur = 2 + Math.random()*2;
+      p.style.cssText = `left:${Math.random()*96}vw;top:-30px;font-size:${10+Math.random()*16}px;animation-duration:${dur}s;`;
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), dur*1000+100);
+    }, i*75);
+  }
+}
+
+let toastTimer;
+function showToast(e, t){
+  clearTimeout(toastTimer);
+  const toast = document.getElementById('toast');
+  document.getElementById('toastE').textContent = e;
+  document.getElementById('toastT').textContent = t;
+  toast.classList.add('show');
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 1400);
+}
+
+// ═══════════════════════════════════════
+// BOOT
+// ═══════════════════════════════════════
+(function(){
+  const bg = document.getElementById('starsBg'), cs = ['✦','·','✧','*'];
+  for(let i = 0; i < 32; i++){
+    const s = document.createElement('i');
+    s.textContent = cs[i%cs.length];
+    s.style.cssText = `left:${Math.random()*98}%;top:${Math.random()*98}%;font-size:${5+Math.random()*7}px;--d:${2+Math.random()*4}s;--dl:${Math.random()*3}s;`;
+    bg.appendChild(s);
+  }
+  initVoices();
+})();
+</script>
+</body>
+</html>

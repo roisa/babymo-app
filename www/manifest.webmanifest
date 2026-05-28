@@ -1,0 +1,27 @@
+{
+  "name": "Baby Mo Games",
+  "short_name": "Baby Mo",
+  "description": "Baby Mo Games — 9 Islamic early learning games for kids",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B1C12",
+  "theme_color": "#0B1C12",
+  "lang": "id",
+  "categories": ["education", "kids", "games"],
+  "icons": [
+    {
+      "src": "Logo_Baby_Mo_Transparant.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "Logo_Baby_Mo_Transparant.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
