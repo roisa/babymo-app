@@ -519,14 +519,50 @@ body::before{
 }
 .lang-opt.active{background:var(--green);color:#fff;}
 
-/* Larger screens — keep mobile feel, just center */
-@media (min-width:520px){
+/* ===== PARENT-TRUST PILLS ===== */
+.trust-row{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px;margin:-6px 0 22px;}
+.trust-pill{font-size:11px;font-weight:800;letter-spacing:.2px;color:var(--green-lt,#6DB882);
+  background:rgba(109,184,130,.10);border:.5px solid rgba(109,184,130,.22);padding:6px 11px;border-radius:999px;}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* Large phones / small tablets — keep the cozy phone-frame look, centered */
+@media (min-width:520px) and (max-width:819px){
   body{background:#06100A;}
-  .app{
-    max-width:430px; margin:0 auto;
-    background:var(--bg);
-    box-shadow:0 0 60px rgba(0,0,0,.5);
-  }
+  .app{max-width:430px;margin:0 auto;background:var(--bg);box-shadow:0 0 60px rgba(0,0,0,.5);}
+}
+
+/* ===== TABLET / iPad — use the room ===== */
+@media (min-width:820px){
+  body{background:#06100A;}
+  .app{max-width:920px;margin:0 auto;background:var(--bg);box-shadow:0 0 90px rgba(0,0,0,.5);}
+  .large-title{font-size:44px;}
+  .large-title-wrap{padding:10px 32px 16px;}
+  .sec-head{padding:0 32px;}
+  .large-subtitle{font-size:16px;}
+  .hero{margin:10px 32px 26px;min-height:260px;padding:28px 28px 24px;}
+  .hero-greet{font-size:26px;}
+  .hero-msg{font-size:15px;}
+  .hero-img-wrap{width:160px;height:160px;}
+  .hero-img{width:172px;height:172px;}
+  .quick-row{padding:0 32px;margin-bottom:26px;gap:14px;}
+  .qs{padding:18px 12px 16px;}
+  .qs-num{font-size:24px;}
+  .trust-row{padding:0 32px;}
+  .h-scroll{padding:2px 32px 8px;gap:16px;}
+  .h-card{flex:0 0 300px;height:190px;}
+  .icon-grid{grid-template-columns:repeat(5,1fr);gap:26px 14px;padding:10px 32px;}
+  .ai-square{width:84px;height:84px;font-size:42px;}
+  .ai-square .ar{font-size:46px;}
+  .ai-label{font-size:13px;max-width:104px;}
+  .ai-sub{font-size:11px;}
+  .list-group,.install-hint{margin-left:32px;margin-right:32px;}
+  .lrow-title{font-size:16px;}
+}
+
+/* ===== LARGE / LANDSCAPE iPad ===== */
+@media (min-width:1100px){
+  .app{max-width:1080px;}
+  .icon-grid{grid-template-columns:repeat(6,1fr);}
 }
 </style>
 <link rel="canonical" href="https://play.babymo.id/">
@@ -633,7 +669,7 @@ body::before{
     <!-- ============= TAB 1: BERANDA (HOME) ============= -->
     <section class="tab-pane active" id="pane-home" data-title="Baby Mo">
       <div class="large-title-wrap">
-        <div class="large-title" data-i18n-html="home_title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</div>
+        <h1 class="large-title" data-i18n-html="home_title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</h1>
         <div class="large-subtitle" id="greetSub">Bismillah, yuk mulai belajar!</div>
       </div>
 
@@ -664,6 +700,14 @@ body::before{
         <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">10</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
         <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">6</div><div class="qs-lbl" data-i18n="qs_doa">Doa</div></div>
         <div class="qs"><div class="qs-icon">ك</div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
+      </div>
+
+      <!-- Parent-trust signals -->
+      <div class="trust-row" aria-label="Kenapa orang tua tenang">
+        <span class="trust-pill" data-i18n="trust_free">✓ Gratis</span>
+        <span class="trust-pill" data-i18n="trust_noads">✓ Tanpa Iklan</span>
+        <span class="trust-pill" data-i18n="trust_offline">✓ Main Tanpa Internet</span>
+        <span class="trust-pill" data-i18n="trust_safe">✓ Aman untuk Anak</span>
       </div>
 
       <!-- Featured horizontal scroll -->
@@ -1105,6 +1149,10 @@ body::before{
 <script>
 /* ===== i18n TRANSLATION SYSTEM ===== */
 const I18N={
+  trust_free:{id:'✓ Gratis',en:'✓ Free'},
+  trust_noads:{id:'✓ Tanpa Iklan',en:'✓ No Ads'},
+  trust_offline:{id:'✓ Main Tanpa Internet',en:'✓ Works Offline'},
+  trust_safe:{id:'✓ Aman untuk Anak',en:'✓ Kid-Safe'},
   home_title:{id:'Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙',en:'Hello, <em>Baby Mo</em><br>Your Little Friend! 🌙'},
   hero_eyebrow:{id:'Featured Hari Ini',en:'Featured Today'},
   hero_msg:{id:'Ayo belajar 6 doa harian dengan suara Arab asli bersama Baby Mo.',en:'Learn 6 daily duas with authentic Arabic voice with Baby Mo.'},
