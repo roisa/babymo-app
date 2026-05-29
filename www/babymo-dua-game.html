@@ -13,11 +13,11 @@
 <meta property="og:title" content="Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo">
 <meta property="og:description" content="Cocokkan doa dengan artinya dalam petualangan seru — belajar doa harian sambil bermain bersama Baby Mo.">
 <meta property="og:url" content="https://play.babymo.id/babymo-dua-game.html">
-<meta property="og:image" content="https://play.babymo.id/Logo_Baby_Mo_Transparant.png">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-dua-game.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo">
 <meta name="twitter:description" content="Cocokkan doa dengan artinya dalam petualangan seru — belajar doa harian sambil bermain bersama Baby Mo.">
-<meta name="twitter:image" content="https://play.babymo.id/Logo_Baby_Mo_Transparant.png">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-dua-game.jpg">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -323,13 +323,20 @@ body::before{
 
 .scroll-hint{font-size:11px;color:var(--cream-dim);text-align:center;margin-top:8px;animation:fadeHint 3s ease 1s forwards;flex-shrink:0;}
 @keyframes fadeHint{0%{opacity:1;}80%{opacity:1;}100%{opacity:0;}}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.g-header,.prog-wrap,.level-wrap,.hint-strip,.card-grid,.btn-row{max-width:640px!important;}}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Dua Journey — Baby Mo","url":"https://play.babymo.id/babymo-dua-game.html","description":"Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":6},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Dua Journey","item":"https://play.babymo.id/babymo-dua-game.html"}]}]}
+</script>
 </head>
 <body>
+<h1 style="position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;">Dua Journey — Game Mencocokkan Doa untuk Anak</h1>
 
 <div class="star-bg" id="starBg"></div>
 
@@ -452,6 +459,7 @@ body::before{
     <button class="btn-pri" onclick="playAgain()">🔄 Main Lagi!</button>
   </div>
   <div class="btn-row" style="margin-top:9px;">
+    <button class="btn-sec" onclick="window.BabyMo&&BabyMo.shareScore(document.getElementById('cStars').textContent,'','Aku menyelesaikan Dua Journey bareng Baby Mo! 🌟')">📤 Bagikan</button>
     <button class="btn-sec" onclick="changeLevelFromComplete()">⚙️ Ganti Level</button>
     <button class="btn-sec" onclick="goHome()">🏠 Ke Hub</button>
   </div>
@@ -751,5 +759,6 @@ function changeLevelFromComplete(){
   showScreen('welcomeScreen');
 }
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

@@ -14,11 +14,11 @@
 <meta property="og:title" content="Kata Islam — Belajar Menyusun Kata Arab untuk Anak | Baby Mo" />
 <meta property="og:description" content="Latih si kecil mengenal dan menyusun kata-kata Arab Islami secara interaktif bersama Baby Mo." />
 <meta property="og:url" content="https://play.babymo.id/babymo-arabic-spelling.html" />
-<meta property="og:image" content="https://play.babymo.id/Logo_Baby_Mo_Transparant.png" />
+<meta property="og:image" content="https://play.babymo.id/og/babymo-arabic-spelling.jpg" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Kata Islam — Belajar Menyusun Kata Arab untuk Anak | Baby Mo" />
 <meta name="twitter:description" content="Latih si kecil mengenal dan menyusun kata-kata Arab Islami secara interaktif bersama Baby Mo." />
-<meta name="twitter:image" content="https://play.babymo.id/Logo_Baby_Mo_Transparant.png" />
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-arabic-spelling.jpg" />
 
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -994,6 +994,9 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Kata Islam — Baby Mo","url":"https://play.babymo.id/babymo-arabic-spelling.html","description":"Susun huruf untuk mengeja kosakata islami dalam bahasa Arab.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":8},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Kata Islam","item":"https://play.babymo.id/babymo-arabic-spelling.html"}]}]}
+</script>
 </head>
 
 <body>
@@ -1095,6 +1098,7 @@
     <div class="learned-list" id="learnedList"></div>
 
     <div class="actions">
+      <button class="btn-secondary" type="button" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('completeStars')||{}).textContent||'',' ','Aku belajar kata-kata Islam bareng Baby Mo! 🔤')">📤 Bagikan</button>
       <button class="btn-secondary" type="button" id="btnReplay">🔄 Main Lagi</button>
       <button class="btn-primary" type="button" id="btnNext">🌙 Lanjut</button>
     </div>
@@ -1619,5 +1623,6 @@ document.addEventListener('visibilitychange', function () {
   if (document.hidden) cancelSpeech();
 });
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>
