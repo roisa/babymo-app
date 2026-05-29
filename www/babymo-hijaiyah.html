@@ -271,6 +271,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .toast.show{transform:translate(-50%,-50%) scale(1);}
 .toast-e{font-size:28px;}
 .toast-t{font-size:14px;font-weight:900;color:#fff;margin-top:2px;}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.w-strip,.w-start,.lesson-path,.intro-topbar,.letter-card,.nav-row,.quiz-topbar,.q-card,.choices-grid,.feedback-bar,.res-card,.res-btns,.about-item{max-width:620px!important;}}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -398,6 +401,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="res-btns">
     <button class="res-btn-sec" onclick="goHome()">🏠 Menu</button>
     <button class="res-btn-pri" id="resNextBtn" onclick="goNextLesson()">Pelajaran Berikutnya →</button>
+  </div>
+  <div class="res-btns" style="margin-top:10px;">
+    <button class="res-btn-sec" style="flex:1;" onclick="window.BabyMo&&BabyMo.share({title:'Huruf Hijaiyah — Baby Mo',message:'Aku belajar huruf hijaiyah bareng Baby Mo! Yuk coba juga 🌙'})">📤 Bagikan</button>
   </div>
 </div>
 
@@ -1094,5 +1100,6 @@ function showToast(e,t){
   initWelcome();
 })();
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

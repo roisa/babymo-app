@@ -1,11 +1,11 @@
 {
   "name": "Baby Mo Games",
   "short_name": "Baby Mo",
-  "description": "Baby Mo Games — 9 Islamic early learning games for kids",
+  "description": "Baby Mo Games — Islamic early learning games for kids",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#0B1C12",
   "theme_color": "#0B1C12",
   "lang": "id",

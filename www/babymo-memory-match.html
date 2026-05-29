@@ -303,6 +303,9 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 /* Scrollbar hidden */
 ::-webkit-scrollbar{display:none}
 *{scrollbar-width:none}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){#app{max-width:620px;}}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -1008,5 +1011,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('app').addEventListener('pointerdown', ()=>{}, {once:true});
 });
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

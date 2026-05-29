@@ -275,6 +275,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .toast.show{transform:translate(-50%,-50%) scale(1);}
 .toast-e{font-size:28px;}
 .toast-t{font-size:14px;font-weight:900;color:#fff;margin-top:2px;}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.w-preview,.w-start,.l-topbar,.timeline,.scene-card,.dua-card,.sound-section,.nav-row,.q-topbar,.q-progress,.q-stimulus,.q-prompt,.q-choices,.q-feedback,.c-card,.c-btns,.c-share{max-width:620px!important;}.scene-card{height:180px;}}
 </style>
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -912,8 +915,13 @@ function restartGame(){
 function shareResult(){
   const stars = document.getElementById('cStarsDisp').textContent;
   const score = document.getElementById('cQuizScore').textContent;
-  const text  = `🌙 Doa Harian — BabyMo.id\nAku belajar 6 doa harian bersama Baby Mo!\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama di BabyMo.id 🐻\n#BabyMo #DoaHarian #BelajarIslam`;
-  if(navigator.share){ navigator.share({title:'BabyMo Doa Harian', text, url:'https://babymo.id'}).catch(()=>{}); }
+  // Prefer the shared kit (branded play.babymo.id URL + analytics).
+  if(window.BabyMo && BabyMo.shareScore){
+    BabyMo.shareScore(score, stars, 'Aku belajar 6 doa harian bersama Baby Mo! Yuk coba juga 🌙');
+    return;
+  }
+  const text = `🌙 Doa Harian — Baby Mo\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama Baby Mo!\nhttps://play.babymo.id/babymo-doa-harian.html\n#BabyMo #DoaHarian #BelajarIslam`;
+  if(navigator.share){ navigator.share({title:'Baby Mo — Doa Harian', text, url:'https://play.babymo.id/babymo-doa-harian.html'}).catch(()=>{}); }
   else{ navigator.clipboard?.writeText(text).then(() => showToast('📤','Disalin!')); }
 }
 
@@ -958,5 +966,6 @@ function showToast(e, t){
   initVoices();
 })();
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>
