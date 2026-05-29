@@ -17,9 +17,8 @@
 
 <link rel="manifest" href="manifest.webmanifest">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="fonts/fonts.css"></noscript>
 
 <style>
 :root{
@@ -482,6 +481,44 @@ body::before{
 .install-hint .x:active{background:rgba(255,255,255,.06);}
 .install-hint.hide{display:none;}
 
+/* ============= LANGUAGE PICKER OVERLAY ============= */
+.lang-pick{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(170deg,#071912 0%,#0D2318 45%,#091A12 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:20px;padding:40px 30px;text-align:center;
+}
+.lang-pick.hide{display:none;}
+.lang-pick-logo{width:120px;height:120px;object-fit:contain;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.4));margin-bottom:8px;}
+.lang-pick h2{font-size:24px;font-weight:900;color:var(--cream);}
+.lang-pick p{font-size:14px;color:var(--cream-dim);font-weight:600;margin-top:-8px;}
+.lang-btn{
+  width:100%;max-width:280px;padding:18px 20px;
+  border-radius:var(--r-card);border:1.5px solid var(--hairline-strong);
+  background:var(--bg-elev);cursor:pointer;
+  display:flex;align-items:center;gap:14px;
+  transition:transform .12s,border-color .2s;
+  text-decoration:none;
+}
+.lang-btn:active{transform:scale(.96);border-color:var(--gold);}
+.lang-btn .flag{font-size:36px;}
+.lang-btn .ltxt{text-align:left;}
+.lang-btn .lname{font-size:16px;font-weight:800;color:var(--cream);display:block;}
+.lang-btn .lsub{font-size:12px;color:var(--cream-dim);font-weight:600;display:block;margin-top:2px;}
+
+/* Language toggle in Tentang */
+.lang-toggle{
+  display:flex;gap:0;border-radius:10px;overflow:hidden;
+  border:1.5px solid var(--hairline-strong);background:var(--bg);
+}
+.lang-opt{
+  flex:1;padding:8px 12px;border:none;background:transparent;
+  font-family:var(--font);font-size:12px;font-weight:800;
+  color:var(--cream-dim);cursor:pointer;transition:all .2s;
+}
+.lang-opt.active{background:var(--green);color:#fff;}
+
 /* Larger screens — keep mobile feel, just center */
 @media (min-width:520px){
   body{background:#06100A;}
@@ -494,6 +531,73 @@ body::before{
 </style>
 </head>
 <body>
+
+<!-- Inline loading screen — renders instantly before any external CSS/JS -->
+<div id="appLoader" style="
+  position:fixed;inset:0;z-index:99999;
+  background:#0B1C12;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:18px;
+  transition:opacity .4s ease;
+">
+  <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.4));animation:loaderBob 2s ease-in-out infinite;">
+  <div style="font-family:-apple-system,system-ui,sans-serif;font-size:18px;font-weight:800;color:#F0E8D8;letter-spacing:-.01em;">Baby Mo</div>
+  <div style="width:140px;height:4px;border-radius:4px;background:rgba(240,232,216,.1);overflow:hidden;margin-top:4px;">
+    <div id="loaderBar" style="height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,#4A8860,#6DB882,#C89040);transition:width .3s ease;"></div>
+  </div>
+  <div id="loaderPct" style="font-family:-apple-system,system-ui,sans-serif;font-size:11px;font-weight:700;color:rgba(240,232,216,.4);letter-spacing:.5px;">Bismillah...</div>
+</div>
+<style>
+@keyframes loaderBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.04)}}
+</style>
+<script>
+(function(){
+  var bar=document.getElementById('loaderBar');
+  var pct=document.getElementById('loaderPct');
+  var loader=document.getElementById('appLoader');
+  var progress=0;
+  var steps=[
+    {p:30,t:'Menyiapkan...'},
+    {p:60,t:'Memuat...'},
+    {p:85,t:'Hampir siap...'},
+    {p:95,t:'Sedikit lagi...'}
+  ];
+  var si=0;
+  var iv=setInterval(function(){
+    if(si<steps.length){
+      progress=steps[si].p;
+      bar.style.width=progress+'%';
+      pct.textContent=steps[si].t;
+      si++;
+    }
+  },150);
+  function hideLoader(){
+    clearInterval(iv);
+    bar.style.width='100%';
+    pct.textContent='Alhamdulillah!';
+    setTimeout(function(){
+      loader.style.opacity='0';
+      setTimeout(function(){loader.remove();},400);
+    },200);
+  }
+  window.addEventListener('load',hideLoader);
+  setTimeout(hideLoader,3000);
+})();
+</script>
+
+<div class="lang-pick" id="langPick">
+  <img class="lang-pick-logo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo">
+  <h2>🌙 Baby Mo Games</h2>
+  <p>Pilih Bahasa / Choose Language</p>
+  <button class="lang-btn" onclick="pickLang('id')">
+    <span class="flag">🇮🇩</span>
+    <span class="ltxt"><span class="lname">Bahasa Indonesia</span><span class="lsub">Belajar Islam sambil bermain</span></span>
+  </button>
+  <button class="lang-btn" onclick="pickLang('en')">
+    <span class="flag">🇬🇧</span>
+    <span class="ltxt"><span class="lname">English</span><span class="lsub">Learn Islam through play</span></span>
+  </button>
+</div>
 
 <div class="stars" id="starsBg"></div>
 <div class="confetti" id="confetti"></div>
@@ -515,7 +619,7 @@ body::before{
     <!-- ============= TAB 1: BERANDA (HOME) ============= -->
     <section class="tab-pane active" id="pane-home" data-title="Baby Mo">
       <div class="large-title-wrap">
-        <div class="large-title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</div>
+        <div class="large-title" data-i18n-html="home_title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</div>
         <div class="large-subtitle" id="greetSub">Bismillah, yuk mulai belajar!</div>
       </div>
 
@@ -523,12 +627,12 @@ body::before{
       <div class="hero">
         <div class="hero-row">
           <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot"></span> Featured Hari Ini</div>
+            <div class="hero-eyebrow"><span class="dot"></span> <span data-i18n="hero_eyebrow">Featured Hari Ini</span></div>
             <div class="hero-greet">
               <span class="ar">السَّلَامُ عَلَيْكُمْ</span>
               Assalamu'alaikum!
             </div>
-            <div class="hero-msg">Ayo belajar 6 doa harian dengan suara Arab asli bersama Baby Mo.</div>
+            <div class="hero-msg" data-i18n="hero_msg">Ayo belajar 6 doa harian dengan suara Arab asli bersama Baby Mo.</div>
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow"></div>
@@ -536,77 +640,77 @@ body::before{
           </div>
         </div>
         <div class="hero-cta">
-          <a class="hero-btn" href="./babymo-doa-harian.html">🔊 Mulai Doa Harian</a>
-          <button class="hero-btn alt" onclick="switchTab('games')">🎮 Lihat Semua</button>
+          <a class="hero-btn" href="./babymo-doa-harian.html" data-i18n="hero_btn_doa">🔊 Mulai Doa Harian</a>
+          <button class="hero-btn alt" onclick="switchTab('games')" data-i18n="hero_btn_all">🎮 Lihat Semua</button>
         </div>
       </div>
 
       <!-- Quick stats -->
       <div class="quick-row">
-        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">9</div><div class="qs-lbl">Game</div></div>
-        <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">6</div><div class="qs-lbl">Doa</div></div>
+        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">10</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
+        <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">6</div><div class="qs-lbl" data-i18n="qs_doa">Doa</div></div>
         <div class="qs"><div class="qs-icon">ك</div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
       </div>
 
       <!-- Featured horizontal scroll -->
       <div class="section">
         <div class="sec-head">
-          <div class="sec-title">Game Pilihan</div>
-          <a class="sec-link" onclick="switchTab('games')">Lihat semua</a>
+          <div class="sec-title" data-i18n="sec_featured">Game Pilihan</div>
+          <a class="sec-link" onclick="switchTab('games')" data-i18n="sec_see_all">Lihat semua</a>
         </div>
         <div class="h-scroll">
           <a class="h-card doa" href="./babymo-doa-harian.html">
             <div class="h-card-em">🌙</div>
-            <div class="h-card-tag">🔊 Audio Arab</div>
-            <div class="h-card-title">Doa Harian</div>
-            <div class="h-card-sub">6 doa · 3–7 tahun</div>
+            <div class="h-card-tag" data-i18n="hc_doa_tag">🔊 Audio Arab</div>
+            <div class="h-card-title" data-i18n="hc_doa_title">Doa Harian</div>
+            <div class="h-card-sub" data-i18n="hc_doa_sub">6 doa · 3–7 tahun</div>
           </a>
           <a class="h-card" href="./babymo-puzzle.html">
             <div class="h-card-em">🧩</div>
-            <div class="h-card-tag">✨ Populer</div>
-            <div class="h-card-title">Kenalan dengan Baby Mo</div>
-            <div class="h-card-sub">Puzzle interaktif · 2–6 tahun</div>
+            <div class="h-card-tag" data-i18n="hc_puzzle_tag">✨ Populer</div>
+            <div class="h-card-title" data-i18n="hc_puzzle_title">Kenalan dengan Baby Mo</div>
+            <div class="h-card-sub" data-i18n="hc_puzzle_sub">Puzzle interaktif · 2–6 tahun</div>
           </a>
           <a class="h-card dream" href="./babymo-dreamtime.html">
             <div class="h-card-em">🛌</div>
-            <div class="h-card-tag">🌙 Malam</div>
+            <div class="h-card-tag" data-i18n="hc_dream_tag">🌙 Malam</div>
             <div class="h-card-title">Baby Mo Dreamtime</div>
-            <div class="h-card-sub">Bedtime routine · 2–5 tahun</div>
+            <div class="h-card-sub" data-i18n="hc_dream_sub">Bedtime routine · 2–5 tahun</div>
           </a>
           <a class="h-card dua" href="./babymo-dua-game.html">
             <div class="h-card-em">🃏</div>
-            <div class="h-card-tag">⭐ Memori</div>
+            <div class="h-card-tag" data-i18n="hc_dua_tag">⭐ Memori</div>
             <div class="h-card-title">Dua Journey</div>
-            <div class="h-card-sub">3 level · 3–6 tahun</div>
+            <div class="h-card-sub" data-i18n="hc_dua_sub">3 level · 3–6 tahun</div>
           </a>
         </div>
       </div>
 
       <!-- Categories list -->
       <div class="section">
-        <div class="sec-head"><div class="sec-title">Kategori</div></div>
+        <div class="sec-head"><div class="sec-title" data-i18n="sec_kategori">Kategori</div></div>
         <div class="list-group">
           <a class="lrow" onclick="switchTab('doa')">
             <div class="lrow-icon blue">🌙</div>
             <div class="lrow-body">
-              <div class="lrow-title">Doa Harian</div>
-              <div class="lrow-sub">6 doa dari bangun hingga tidur</div>
+              <div class="lrow-title" data-i18n="cat_doa_t">Doa Harian</div>
+              <div class="lrow-sub" data-i18n="cat_doa_s">6 doa dari bangun hingga tidur</div>
             </div>
             <div class="lrow-chev">›</div>
           </a>
           <a class="lrow" href="./babymo-hijaiyah.html">
             <div class="lrow-icon gold"><span style="font-family:var(--font-ar)">ك</span></div>
             <div class="lrow-body">
-              <div class="lrow-title">Huruf Hijaiyah</div>
-              <div class="lrow-sub">Kenali 28 huruf Arab</div>
+              <div class="lrow-title" data-i18n="cat_hij_t">Huruf Hijaiyah</div>
+              <div class="lrow-sub" data-i18n="cat_hij_s">Kenali 28 huruf Arab</div>
             </div>
             <div class="lrow-chev">›</div>
           </a>
           <a class="lrow" href="./babymo-arabic-spelling.html">
             <div class="lrow-icon purple">🔤</div>
             <div class="lrow-body">
-              <div class="lrow-title">Kata Islam</div>
-              <div class="lrow-sub">Susun kata Arab</div>
+              <div class="lrow-title" data-i18n="cat_kata_t">Kata Islam</div>
+              <div class="lrow-sub" data-i18n="cat_kata_s">Susun kata Arab</div>
             </div>
             <div class="lrow-chev">›</div>
           </a>
@@ -614,7 +718,15 @@ body::before{
             <div class="lrow-icon red">🎵</div>
             <div class="lrow-body">
               <div class="lrow-title">Forehand Beat</div>
-              <div class="lrow-sub">Game ritme seru</div>
+              <div class="lrow-sub" data-i18n="cat_beat_s">Game ritme seru</div>
+            </div>
+            <div class="lrow-chev">›</div>
+          </a>
+          <a class="lrow" onclick="switchTab('companion')">
+            <div class="lrow-icon" style="background:linear-gradient(160deg,#2C5A3E,#1A3D2A);">🕌</div>
+            <div class="lrow-body">
+              <div class="lrow-title" data-i18n="cat_comp_t">Sholat Bareng Mo</div>
+              <div class="lrow-sub" data-i18n="cat_comp_s">Panduan sholat interaktif</div>
             </div>
             <div class="lrow-chev">›</div>
           </a>
@@ -624,118 +736,175 @@ body::before{
       <div class="foot">
         <div class="br">🐻 Baby Mo · id</div>
         <div class="ar">بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-        <div>Islamic Early Learning untuk Si Kecil</div>
+        <div data-i18n="foot_home">Islamic Early Learning untuk Si Kecil</div>
       </div>
     </section>
 
     <!-- ============= TAB 2: GAMES ============= -->
     <section class="tab-pane" id="pane-games" data-title="Game">
       <div class="large-title-wrap">
-        <div class="large-title">Game <em>Baby Mo</em></div>
-        <div class="large-subtitle">9 game islami untuk si kecil</div>
+        <div class="large-title" data-i18n-html="game_title">Game <em>Baby Mo</em></div>
+        <div class="large-subtitle" data-i18n="game_sub">10 game islami untuk si kecil</div>
       </div>
 
-      <!-- Add to home screen hint -->
-      <div class="install-hint" id="installHint">
-        <div class="ic">📲</div>
-        <div class="tx">Pasang sebagai <b>aplikasi</b>: Ketuk <b>Share</b> di Safari, lalu <b>"Add to Home Screen"</b>.</div>
-        <button class="x" onclick="dismissInstall()">✕</button>
-      </div>
+      <!-- Featured: Kenalan Baby Mo -->
+      <a href="./babymo-puzzle.html" class="h-card" style="margin:4px 16px 18px;flex:none;height:auto;padding:16px 18px;display:flex;flex-direction:row;align-items:center;gap:14px;">
+        <div class="ai-square g-puzzle" style="flex-shrink:0;margin-bottom:0;width:60px;height:60px;font-size:30px;border-radius:16px;">🧩</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:3px;" data-i18n="feat_start">✨ Mulai di sini</div>
+          <div style="font-size:17px;font-weight:900;color:#fff;line-height:1.2;" data-i18n="feat_kenalan">Kenalan Baby Mo</div>
+          <div style="font-size:11px;color:rgba(240,232,216,.65);font-weight:600;margin-top:2px;" data-i18n="feat_kenalan_sub">Puzzle interaktif · Perkenalan</div>
+        </div>
+        <div style="color:var(--cream-faint);font-size:18px;">›</div>
+      </a>
 
       <div class="sec-head" style="margin-top:4px;">
-        <div class="sec-title">Semua Game</div>
-        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;">9 game</span>
+        <div class="sec-title" data-i18n="sec_semua">Semua Game</div>
+        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;" data-i18n="sec_count">10 game</span>
       </div>
 
       <div class="icon-grid">
-        <a class="app-icon" href="./babymo-puzzle.html">
-          <div class="ai-square g-puzzle">🧩<div class="ai-badge">NEW</div></div>
-          <div class="ai-label">Kenalan Baby Mo</div>
-          <div class="ai-sub">Puzzle</div>
-        </a>
         <a class="app-icon" href="./babymo-doa-harian.html">
           <div class="ai-square g-doa">🌙<div class="ai-badge">🔊</div></div>
-          <div class="ai-label">Doa Harian</div>
+          <div class="ai-label" data-i18n="g_doa">Doa Harian</div>
           <div class="ai-sub">Audio</div>
         </a>
         <a class="app-icon" href="./babymo-dua-game.html">
           <div class="ai-square g-dua">🃏</div>
           <div class="ai-label">Dua Journey</div>
-          <div class="ai-sub">Memori</div>
+          <div class="ai-sub" data-i18n="g_dua_sub">Memori</div>
         </a>
         <a class="app-icon" href="./babymo-arabic-spelling.html">
           <div class="ai-square g-kata">🔤</div>
-          <div class="ai-label">Kata Islam</div>
-          <div class="ai-sub">Susun</div>
+          <div class="ai-label" data-i18n="g_kata">Kata Islam</div>
+          <div class="ai-sub" data-i18n="g_kata_sub">Susun</div>
         </a>
         <a class="app-icon" href="./babymo-dreamtime.html">
           <div class="ai-square g-dream">🛌</div>
           <div class="ai-label">Dreamtime</div>
-          <div class="ai-sub">Tidur</div>
+          <div class="ai-sub" data-i18n="g_dream_sub">Tidur</div>
         </a>
         <a class="app-icon" href="./babymo-hijaiyah.html">
           <div class="ai-square g-hijaiyah"><span class="ar">ك</span></div>
           <div class="ai-label">Hijaiyah</div>
-          <div class="ai-sub">Huruf</div>
+          <div class="ai-sub" data-i18n="g_hij_sub">Huruf</div>
         </a>
         <a class="app-icon" href="./babymo-puzzle-katabaik.html">
           <div class="ai-square g-kbaik">💖</div>
-          <div class="ai-label">Kata Baik</div>
-          <div class="ai-sub">Akhlak</div>
+          <div class="ai-label" data-i18n="g_kbaik">Kata Baik</div>
+          <div class="ai-sub" data-i18n="g_kbaik_sub">Akhlak</div>
         </a>
         <a class="app-icon" href="./babymo-look-and-find.html">
           <div class="ai-square g-find">🔍</div>
-          <div class="ai-label">Cari Baby Mo</div>
+          <div class="ai-label" data-i18n="g_find">Cari Baby Mo</div>
           <div class="ai-sub">Look &amp; Find</div>
         </a>
         <a class="app-icon" href="./babymo-memory-match.html">
           <div class="ai-square g-memory">🃏</div>
           <div class="ai-label">Memory Match</div>
-          <div class="ai-sub">Kartu</div>
+          <div class="ai-sub" data-i18n="g_mem_sub">Kartu</div>
         </a>
         <a class="app-icon" href="./baby-mo-forehand-beat.html">
           <div class="ai-square g-beat">🎵</div>
           <div class="ai-label">Forehand Beat</div>
-          <div class="ai-sub">Ritme</div>
+          <div class="ai-sub" data-i18n="g_beat_sub">Ritme</div>
         </a>
       </div>
 
       <div class="foot">
         <div class="ar">اَللَّهُمَّ انْفَعْنَا بِمَا عَلَّمْتَنَا</div>
-        <div>Ya Allah, manfaatkanlah ilmu yang telah Engkau ajarkan kepada kami</div>
+        <div data-i18n="foot_game">Ya Allah, manfaatkanlah ilmu yang telah Engkau ajarkan kepada kami</div>
       </div>
     </section>
 
-    <!-- ============= TAB 3: DOA ============= -->
+    <!-- ============= TAB 3: COMPANION ============= -->
+    <section class="tab-pane" id="pane-companion" data-title="Sholat">
+      <div class="large-title-wrap">
+        <div class="large-title" data-i18n-html="comp_title">Sholat <em>Bareng Mo</em></div>
+        <div class="large-subtitle" data-i18n="comp_sub">Panduan sholat interaktif untuk si kecil</div>
+      </div>
+
+      <div class="hero" style="background:linear-gradient(135deg,#1E3F2A,#0D2318);">
+        <div class="hero-row">
+          <div class="hero-text">
+            <div class="hero-eyebrow"><span class="dot" style="background:#6DB882;box-shadow:0 0 8px #6DB882;"></span> <span data-i18n="comp_eyebrow">Panduan Interaktif</span></div>
+            <div class="hero-greet" data-i18n="comp_greet">Yuk Sholat Bareng Baby Mo!</div>
+            <div class="hero-msg" data-i18n="comp_msg">Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.</div>
+          </div>
+          <div class="hero-img-wrap">
+            <div class="hero-img-glow"></div>
+            <img class="hero-img" src="Baby_Mo_Menyapa.png" alt="Baby Mo" draggable="false" loading="lazy">
+          </div>
+        </div>
+        <div class="hero-cta">
+          <a class="hero-btn" href="./babymo-companion/index.html" data-i18n="comp_btn">🕌 Mulai Sholat Bareng Mo</a>
+        </div>
+      </div>
+
+      <div class="list-group-title" data-i18n="comp_features">Fitur Sholat</div>
+      <div class="list-group">
+        <a class="lrow" href="./babymo-pray-with-mo.html">
+          <div class="lrow-icon">🕌</div>
+          <div class="lrow-body">
+            <div class="lrow-title" data-i18n="comp_f1_t">Panduan Sholat</div>
+            <div class="lrow-sub" data-i18n="comp_f1_s">Gerakan & bacaan sholat lengkap</div>
+          </div>
+          <div class="lrow-chev">›</div>
+        </a>
+        <a class="lrow" href="./babymo-companion/index.html">
+          <div class="lrow-icon gold">🤲</div>
+          <div class="lrow-body">
+            <div class="lrow-title" data-i18n="comp_f2_t">Doa Setelah Sholat</div>
+            <div class="lrow-sub" data-i18n="comp_f2_s">Dzikir & doa pendek setelah sholat</div>
+          </div>
+          <div class="lrow-chev">›</div>
+        </a>
+        <a class="lrow" href="./babymo-companion/index.html">
+          <div class="lrow-icon blue">⏰</div>
+          <div class="lrow-body">
+            <div class="lrow-title" data-i18n="comp_f3_t">Waktu Sholat</div>
+            <div class="lrow-sub" data-i18n="comp_f3_s">Kenali 5 waktu sholat harian</div>
+          </div>
+          <div class="lrow-chev">›</div>
+        </a>
+      </div>
+
+      <div class="foot">
+        <div class="ar">إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَوْقُوتًا</div>
+        <div data-i18n="foot_comp">Sesungguhnya sholat diwajibkan pada waktu-waktu tertentu</div>
+      </div>
+    </section>
+
+    <!-- ============= TAB 4: DOA ============= -->
     <section class="tab-pane" id="pane-doa" data-title="Doa">
       <div class="large-title-wrap">
-        <div class="large-title">Doa <em>Harian</em></div>
-        <div class="large-subtitle">6 doa untuk hari-hari Baby Mo</div>
+        <div class="large-title" data-i18n-html="doa_title">Doa <em>Harian</em></div>
+        <div class="large-subtitle" data-i18n="doa_sub">6 doa untuk hari-hari Baby Mo</div>
       </div>
 
       <div class="hero" style="background:linear-gradient(135deg,#1F3D5C,#0F1F30);">
         <div class="hero-row">
           <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#7AB8D8;box-shadow:0 0 8px #7AB8D8;"></span> Pilihan Hari Ini</div>
-            <div class="hero-greet">Belajar Doa bersama Baby Mo</div>
-            <div class="hero-msg">Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.</div>
+            <div class="hero-eyebrow"><span class="dot" style="background:#7AB8D8;box-shadow:0 0 8px #7AB8D8;"></span> <span data-i18n="doa_eyebrow">Pilihan Hari Ini</span></div>
+            <div class="hero-greet" data-i18n="doa_greet">Belajar Doa bersama Baby Mo</div>
+            <div class="hero-msg" data-i18n="doa_msg">Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.</div>
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(122,184,216,.45),transparent 65%);"></div>
-            <img class="hero-img" src="babymo_running.png" alt="Baby Mo" draggable="false">
+            <img class="hero-img" src="babymo_running.png" alt="Baby Mo" draggable="false" loading="lazy">
           </div>
         </div>
         <div class="hero-cta">
-          <a class="hero-btn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5E8BD0,#2D4F8A);">🌙 Mulai Belajar Doa</a>
+          <a class="hero-btn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5E8BD0,#2D4F8A);" data-i18n="doa_btn">🌙 Mulai Belajar Doa</a>
         </div>
       </div>
 
-      <div class="list-group-title">6 Doa Sehari-hari</div>
+      <div class="list-group-title" data-i18n="doa_group">6 Doa Sehari-hari</div>
       <div class="list-group">
         <a class="lrow" href="./babymo-doa-harian.html">
           <div class="lrow-icon gold">🌅</div>
           <div class="lrow-body">
-            <div class="lrow-title">Doa Bangun Tidur</div>
+            <div class="lrow-title" data-i18n="doa_1">Doa Bangun Tidur</div>
             <div class="lrow-sub"><span class="ar">الْحَمْدُ لِلَّهِ</span> Alhamdulillah…</div>
           </div>
           <div class="lrow-chev">›</div>
@@ -743,7 +912,7 @@ body::before{
         <a class="lrow" href="./babymo-doa-harian.html">
           <div class="lrow-icon blue">🍽️</div>
           <div class="lrow-body">
-            <div class="lrow-title">Doa Sebelum Makan</div>
+            <div class="lrow-title" data-i18n="doa_2">Doa Sebelum Makan</div>
             <div class="lrow-sub"><span class="ar">بِسْمِ اللَّهِ</span> Bismillah…</div>
           </div>
           <div class="lrow-chev">›</div>
@@ -751,7 +920,7 @@ body::before{
         <a class="lrow" href="./babymo-doa-harian.html">
           <div class="lrow-icon">🚿</div>
           <div class="lrow-body">
-            <div class="lrow-title">Doa Masuk Kamar Mandi</div>
+            <div class="lrow-title" data-i18n="doa_3">Doa Masuk Kamar Mandi</div>
             <div class="lrow-sub"><span class="ar">اللَّهُمَّ</span> Allahumma…</div>
           </div>
           <div class="lrow-chev">›</div>
@@ -759,7 +928,7 @@ body::before{
         <a class="lrow" href="./babymo-doa-harian.html">
           <div class="lrow-icon purple">📖</div>
           <div class="lrow-body">
-            <div class="lrow-title">Doa Belajar</div>
+            <div class="lrow-title" data-i18n="doa_4">Doa Belajar</div>
             <div class="lrow-sub"><span class="ar">رَبِّ زِدْنِي عِلْمًا</span> Rabbi zidni 'ilman…</div>
           </div>
           <div class="lrow-chev">›</div>
@@ -767,7 +936,7 @@ body::before{
         <a class="lrow" href="./babymo-doa-harian.html">
           <div class="lrow-icon">👪</div>
           <div class="lrow-body">
-            <div class="lrow-title">Doa untuk Orang Tua</div>
+            <div class="lrow-title" data-i18n="doa_5">Doa untuk Orang Tua</div>
             <div class="lrow-sub"><span class="ar">رَبِّ ارْحَمْهُمَا</span> Rabbirhamhuma…</div>
           </div>
           <div class="lrow-chev">›</div>
@@ -775,20 +944,20 @@ body::before{
         <a class="lrow" href="./babymo-doa-harian.html">
           <div class="lrow-icon blue">🌙</div>
           <div class="lrow-body">
-            <div class="lrow-title">Doa Sebelum Tidur</div>
+            <div class="lrow-title" data-i18n="doa_6">Doa Sebelum Tidur</div>
             <div class="lrow-sub"><span class="ar">بِاسْمِكَ اللَّهُمَّ</span> Bismika Allahumma…</div>
           </div>
           <div class="lrow-chev">›</div>
         </a>
       </div>
 
-      <div class="list-group-title">Lainnya</div>
+      <div class="list-group-title" data-i18n="doa_other">Lainnya</div>
       <div class="list-group">
         <a class="lrow" href="./babymo-dua-game.html">
           <div class="lrow-icon purple">🃏</div>
           <div class="lrow-body">
             <div class="lrow-title">Dua Journey</div>
-            <div class="lrow-sub">Cocokkan doa dengan artinya</div>
+            <div class="lrow-sub" data-i18n="doa_dua_s">Cocokkan doa dengan artinya</div>
           </div>
           <div class="lrow-chev">›</div>
         </a>
@@ -796,7 +965,7 @@ body::before{
           <div class="lrow-icon">🛌</div>
           <div class="lrow-body">
             <div class="lrow-title">Baby Mo Dreamtime</div>
-            <div class="lrow-sub">Doa &amp; rutinitas tidur</div>
+            <div class="lrow-sub" data-i18n="doa_dream_s">Doa &amp; rutinitas tidur</div>
           </div>
           <div class="lrow-chev">›</div>
         </a>
@@ -804,72 +973,56 @@ body::before{
 
       <div class="foot">
         <div class="ar">رَبِّ زِدْنِي عِلْمًا</div>
-        <div>Ya Tuhanku, tambahkanlah ilmuku</div>
+        <div data-i18n="foot_doa">Ya Tuhanku, tambahkanlah ilmuku</div>
       </div>
     </section>
 
     <!-- ============= TAB 4: TENTANG (ABOUT) ============= -->
     <section class="tab-pane" id="pane-about" data-title="Tentang">
       <div class="large-title-wrap">
-        <div class="large-title">Tentang</div>
+        <div class="large-title" data-i18n="about_title">Tentang</div>
         <div class="large-subtitle">Baby Mo Games</div>
       </div>
 
       <div class="profile-head">
         <div class="profile-avatar">
-          <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false">
+          <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" loading="lazy">
         </div>
         <div class="profile-name">Baby Mo Games</div>
         <div class="profile-tag">🌙 Islamic Early Learning</div>
         <div class="profile-arabic">بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
       </div>
 
-      <div class="list-group-title">Aplikasi</div>
+      <!-- Language switcher -->
+      <div class="list-group-title" data-i18n="lang_group">Bahasa / Language</div>
+      <div class="list-group">
+        <div class="lrow" style="justify-content:center;padding:12px 14px;">
+          <div class="lang-toggle" id="langToggle">
+            <button class="lang-opt" data-lang="id" onclick="setLang('id')">🇮🇩 Indonesia</button>
+            <button class="lang-opt" data-lang="en" onclick="setLang('en')">🇬🇧 English</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="list-group-title" data-i18n="about_app">Aplikasi</div>
       <div class="list-group">
         <div class="lrow">
           <div class="lrow-icon gold">📱</div>
           <div class="lrow-body">
-            <div class="lrow-title">Versi</div>
+            <div class="lrow-title" data-i18n="about_ver">Versi</div>
             <div class="lrow-sub">1.0.0 · iOS Edition</div>
           </div>
         </div>
         <div class="lrow">
           <div class="lrow-icon">🎮</div>
           <div class="lrow-body">
-            <div class="lrow-title">Total Game</div>
-            <div class="lrow-sub">9 game siap dimainkan</div>
-          </div>
-        </div>
-        <div class="lrow">
-          <div class="lrow-icon blue">🌐</div>
-          <div class="lrow-body">
-            <div class="lrow-title">Bahasa</div>
-            <div class="lrow-sub">Indonesia &amp; Arab</div>
+            <div class="lrow-title" data-i18n="about_total">Total Game</div>
+            <div class="lrow-sub" data-i18n="about_total_s">10 game siap dimainkan</div>
           </div>
         </div>
       </div>
 
-      <div class="list-group-title">Pasang Aplikasi</div>
-      <div class="list-group">
-        <div class="lrow" onclick="showHowToInstall()">
-          <div class="lrow-icon gold">📲</div>
-          <div class="lrow-body">
-            <div class="lrow-title">Add to Home Screen</div>
-            <div class="lrow-sub">Pasang seperti aplikasi iOS</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </div>
-        <div class="lrow" onclick="showInfo('Share', 'Bagikan aplikasi Baby Mo ke teman-teman ya!')">
-          <div class="lrow-icon blue">📤</div>
-          <div class="lrow-body">
-            <div class="lrow-title">Bagikan Aplikasi</div>
-            <div class="lrow-sub">Ajak teman-teman main bareng</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </div>
-      </div>
-
-      <div class="list-group-title">Brand</div>
+      <div class="list-group-title" data-i18n="about_brand">Brand</div>
       <div class="list-group">
         <div class="lrow">
           <div class="lrow-icon">🐻</div>
@@ -881,8 +1034,8 @@ body::before{
         <div class="lrow">
           <div class="lrow-icon purple">💚</div>
           <div class="lrow-body">
-            <div class="lrow-title">Misi</div>
-            <div class="lrow-sub">Belajar Islam sambil bermain</div>
+            <div class="lrow-title" data-i18n="about_mission">Misi</div>
+            <div class="lrow-sub" data-i18n="about_mission_s">Belajar Islam sambil bermain</div>
           </div>
         </div>
       </div>
@@ -902,26 +1055,32 @@ body::before{
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 11.5 12 4l9 7.5"/><path d="M5 10v9a1 1 0 0 0 1 1h4v-6h4v6h4a1 1 0 0 0 1-1v-9"/>
       </svg>
-      <span>Beranda</span>
+      <span data-i18n="tab_home">Beranda</span>
     </button>
     <button class="tab" data-tab="games" onclick="switchTab('games')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <rect x="3" y="3" width="7" height="7" rx="1.8"/><rect x="14" y="3" width="7" height="7" rx="1.8"/>
         <rect x="3" y="14" width="7" height="7" rx="1.8"/><rect x="14" y="14" width="7" height="7" rx="1.8"/>
       </svg>
-      <span>Game</span>
+      <span data-i18n="tab_game">Game</span>
+    </button>
+    <button class="tab" data-tab="companion" onclick="switchTab('companion')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M6 21V12a6 6 0 0 1 12 0v9"/><path d="M3 21h18"/><path d="M12 3v2"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/>
+      </svg>
+      <span data-i18n="tab_comp">Sholat</span>
     </button>
     <button class="tab" data-tab="doa" onclick="switchTab('doa')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/>
       </svg>
-      <span>Doa</span>
+      <span data-i18n="tab_doa">Doa</span>
     </button>
     <button class="tab" data-tab="about" onclick="switchTab('about')">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>
       </svg>
-      <span>Tentang</span>
+      <span data-i18n="tab_about">Tentang</span>
     </button>
   </nav>
 
@@ -930,6 +1089,122 @@ body::before{
 <div class="toast" id="toast"></div>
 
 <script>
+/* ===== i18n TRANSLATION SYSTEM ===== */
+const I18N={
+  home_title:{id:'Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙',en:'Hello, <em>Baby Mo</em><br>Your Little Friend! 🌙'},
+  hero_eyebrow:{id:'Featured Hari Ini',en:'Featured Today'},
+  hero_msg:{id:'Ayo belajar 6 doa harian dengan suara Arab asli bersama Baby Mo.',en:'Learn 6 daily duas with authentic Arabic voice with Baby Mo.'},
+  hero_btn_doa:{id:'🔊 Mulai Doa Harian',en:'🔊 Start Daily Dua'},
+  hero_btn_all:{id:'🎮 Lihat Semua',en:'🎮 See All'},
+  qs_game:{id:'Game',en:'Games'},qs_doa:{id:'Doa',en:'Duas'},
+  sec_featured:{id:'Game Pilihan',en:'Featured Games'},sec_see_all:{id:'Lihat semua',en:'See all'},
+  hc_doa_tag:{id:'🔊 Audio Arab',en:'🔊 Arabic Audio'},hc_doa_title:{id:'Doa Harian',en:'Daily Dua'},
+  hc_doa_sub:{id:'6 doa · 3–7 tahun',en:'6 duas · Ages 3–7'},
+  hc_puzzle_tag:{id:'✨ Populer',en:'✨ Popular'},hc_puzzle_title:{id:'Kenalan dengan Baby Mo',en:'Meet Baby Mo'},
+  hc_puzzle_sub:{id:'Puzzle interaktif · 2–6 tahun',en:'Interactive puzzle · Ages 2–6'},
+  hc_dream_tag:{id:'🌙 Malam',en:'🌙 Nighttime'},hc_dream_sub:{id:'Bedtime routine · 2–5 tahun',en:'Bedtime routine · Ages 2–5'},
+  hc_dua_tag:{id:'⭐ Memori',en:'⭐ Memory'},hc_dua_sub:{id:'3 level · 3–6 tahun',en:'3 levels · Ages 3–6'},
+  sec_kategori:{id:'Kategori',en:'Categories'},
+  cat_doa_t:{id:'Doa Harian',en:'Daily Duas'},cat_doa_s:{id:'6 doa dari bangun hingga tidur',en:'6 duas from waking to sleeping'},
+  cat_hij_t:{id:'Huruf Hijaiyah',en:'Hijaiyah Letters'},cat_hij_s:{id:'Kenali 28 huruf Arab',en:'Learn 28 Arabic letters'},
+  cat_kata_t:{id:'Kata Islam',en:'Islamic Words'},cat_kata_s:{id:'Susun kata Arab',en:'Arrange Arabic words'},
+  cat_beat_s:{id:'Game ritme seru',en:'Fun rhythm game'},
+  cat_comp_t:{id:'Sholat Bareng Mo',en:'Pray with Mo'},cat_comp_s:{id:'Panduan sholat interaktif',en:'Interactive prayer guide'},
+  foot_home:{id:'Islamic Early Learning untuk Si Kecil',en:'Islamic Early Learning for Little Ones'},
+  game_title:{id:'Game <em>Baby Mo</em>',en:'<em>Baby Mo</em> Games'},
+  game_sub:{id:'10 game islami untuk si kecil',en:'10 Islamic games for kids'},
+  feat_start:{id:'✨ Mulai di sini',en:'✨ Start here'},feat_kenalan:{id:'Kenalan Baby Mo',en:'Meet Baby Mo'},
+  feat_kenalan_sub:{id:'Puzzle interaktif · Perkenalan',en:'Interactive puzzle · Introduction'},
+  sec_semua:{id:'Semua Game',en:'All Games'},sec_count:{id:'10 game',en:'10 games'},
+  g_doa:{id:'Doa Harian',en:'Daily Dua'},g_dua_sub:{id:'Memori',en:'Memory'},
+  g_kata:{id:'Kata Islam',en:'Islamic Words'},g_kata_sub:{id:'Susun',en:'Spelling'},
+  g_dream_sub:{id:'Tidur',en:'Sleep'},g_hij_sub:{id:'Huruf',en:'Letters'},
+  g_kbaik:{id:'Kata Baik',en:'Good Words'},g_kbaik_sub:{id:'Akhlak',en:'Character'},
+  g_find:{id:'Cari Baby Mo',en:'Find Baby Mo'},g_mem_sub:{id:'Kartu',en:'Cards'},g_beat_sub:{id:'Ritme',en:'Rhythm'},
+  foot_game:{id:'Ya Allah, manfaatkanlah ilmu yang telah Engkau ajarkan kepada kami',en:'O Allah, benefit us with the knowledge You have taught us'},
+  doa_title:{id:'Doa <em>Harian</em>',en:'Daily <em>Duas</em>'},
+  doa_sub:{id:'6 doa untuk hari-hari Baby Mo',en:"6 duas for Baby Mo's days"},
+  doa_eyebrow:{id:'Pilihan Hari Ini',en:"Today's Pick"},
+  doa_greet:{id:'Belajar Doa bersama Baby Mo',en:'Learn Duas with Baby Mo'},
+  doa_msg:{id:'Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.',en:'Authentic Arabic voice, animated scenes, and fun quizzes — from morning to night.'},
+  doa_btn:{id:'🌙 Mulai Belajar Doa',en:'🌙 Start Learning Duas'},
+  doa_group:{id:'6 Doa Sehari-hari',en:'6 Daily Duas'},
+  doa_1:{id:'Doa Bangun Tidur',en:'Dua for Waking Up'},doa_2:{id:'Doa Sebelum Makan',en:'Dua Before Eating'},
+  doa_3:{id:'Doa Masuk Kamar Mandi',en:'Dua for Entering Bathroom'},doa_4:{id:'Doa Belajar',en:'Dua for Studying'},
+  doa_5:{id:'Doa untuk Orang Tua',en:'Dua for Parents'},doa_6:{id:'Doa Sebelum Tidur',en:'Dua Before Sleeping'},
+  doa_other:{id:'Lainnya',en:'Others'},
+  doa_dua_s:{id:'Cocokkan doa dengan artinya',en:'Match duas with their meanings'},
+  doa_dream_s:{id:'Doa & rutinitas tidur',en:'Dua & bedtime routine'},
+  foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
+  about_title:{id:'Tentang',en:'About'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
+  about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
+  about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'10 game siap dimainkan',en:'10 games ready to play'},
+  about_brand:{id:'Brand',en:'Brand'},about_mission:{id:'Misi',en:'Mission'},
+  about_mission_s:{id:'Belajar Islam sambil bermain',en:'Learn Islam through play'},
+  comp_title:{id:'Sholat <em>Bareng Mo</em>',en:'Pray <em>with Mo</em>'},
+  comp_sub:{id:'Panduan sholat interaktif untuk si kecil',en:'Interactive prayer guide for kids'},
+  comp_eyebrow:{id:'Panduan Interaktif',en:'Interactive Guide'},
+  comp_greet:{id:'Yuk Sholat Bareng Baby Mo!',en:"Let's Pray with Baby Mo!"},
+  comp_msg:{id:'Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.',en:'Learn prayer movements and recitations with an interactive guide from Baby Mo.'},
+  comp_btn:{id:'🕌 Mulai Sholat Bareng Mo',en:'🕌 Start Praying with Mo'},
+  comp_features:{id:'Fitur Sholat',en:'Prayer Features'},
+  comp_f1_t:{id:'Panduan Sholat',en:'Prayer Guide'},comp_f1_s:{id:'Gerakan & bacaan sholat lengkap',en:'Complete prayer movements & recitations'},
+  comp_f2_t:{id:'Doa Setelah Sholat',en:'Post-Prayer Dua'},comp_f2_s:{id:'Dzikir & doa pendek setelah sholat',en:'Dhikr & short duas after prayer'},
+  comp_f3_t:{id:'Waktu Sholat',en:'Prayer Times'},comp_f3_s:{id:'Kenali 5 waktu sholat harian',en:'Learn the 5 daily prayer times'},
+  foot_comp:{id:'Sesungguhnya sholat diwajibkan pada waktu-waktu tertentu',en:'Indeed, prayer has been decreed upon the believers at specified times'},
+  tab_comp:{id:'Sholat',en:'Prayer'},
+  tab_home:{id:'Beranda',en:'Home'},tab_game:{id:'Game',en:'Games'},tab_doa:{id:'Doa',en:'Duas'},tab_about:{id:'Tentang',en:'About'},
+};
+const GREETINGS={
+  default:{id:'Bismillah, yuk mulai belajar!',en:"Bismillah, let's start learning!"},
+  night:{id:'Sudah malam, jangan lupa doa tidur 🌙',en:"It's late, don't forget your bedtime dua 🌙"},
+  morning:{id:'Selamat pagi! Yuk mulai dengan doa pagi 🌅',en:'Good morning! Start with your morning dua 🌅'},
+  afternoon:{id:'Selamat siang! Tetap semangat ya ☀️',en:'Good afternoon! Keep up the spirit ☀️'},
+  evening:{id:'Selamat sore! Mau main game apa? 🌤️',en:'Good evening! Which game shall we play? 🌤️'},
+  night2:{id:'Selamat malam! Yuk belajar doa malam 🌙',en:"Good night! Let's learn the night dua 🌙"},
+};
+let curLang=localStorage.getItem('bm_lang')||'';
+function applyLang(lang){
+  curLang=lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const k=el.getAttribute('data-i18n');
+    if(I18N[k]&&I18N[k][lang])el.textContent=I18N[k][lang];
+  });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{
+    const k=el.getAttribute('data-i18n-html');
+    if(I18N[k]&&I18N[k][lang])el.innerHTML=I18N[k][lang];
+  });
+  const h=new Date().getHours();
+  let gk='default';
+  if(h<5)gk='night';else if(h<11)gk='morning';else if(h<15)gk='afternoon';else if(h<18)gk='evening';else gk='night2';
+  const gs=document.getElementById('greetSub');
+  if(gs)gs.textContent=GREETINGS[gk][lang];
+  document.querySelectorAll('#langToggle .lang-opt').forEach(b=>{
+    b.classList.toggle('active',b.dataset.lang===lang);
+  });
+  const paneAbout=document.querySelector('[data-tab="about"]');
+  if(paneAbout){
+    const panes=document.querySelectorAll('.tab-pane');
+    panes.forEach(p=>{if(p.id==='pane-about')p.dataset.title=I18N.tab_about[lang];
+      if(p.id==='pane-home')p.dataset.title='Baby Mo';
+      if(p.id==='pane-games')p.dataset.title=I18N.tab_game[lang];
+      if(p.id==='pane-companion')p.dataset.title=I18N.tab_comp[lang];
+      if(p.id==='pane-doa')p.dataset.title=I18N.tab_doa[lang];
+    });
+  }
+}
+function pickLang(lang){
+  localStorage.setItem('bm_lang',lang);
+  document.getElementById('langPick').classList.add('hide');
+  applyLang(lang);
+}
+function setLang(lang){
+  localStorage.setItem('bm_lang',lang);
+  applyLang(lang);
+}
+window.pickLang=pickLang;window.setLang=setLang;
+if(curLang){document.getElementById('langPick').classList.add('hide');applyLang(curLang);}
+
 (function(){
   /* ===== Background stars ===== */
   const bg=document.getElementById('starsBg');
@@ -941,16 +1216,6 @@ body::before{
     bg.appendChild(s);
   }
 
-  /* ===== Time-based greeting ===== */
-  const greetSub=document.getElementById('greetSub');
-  const h=new Date().getHours();
-  let g='Bismillah, yuk mulai belajar!';
-  if(h<5)g='Sudah malam, jangan lupa doa tidur 🌙';
-  else if(h<11)g='Selamat pagi! Yuk mulai dengan doa pagi 🌅';
-  else if(h<15)g='Selamat siang! Tetap semangat ya ☀️';
-  else if(h<18)g='Selamat sore! Mau main game apa? 🌤️';
-  else g='Selamat malam! Yuk belajar doa malam 🌙';
-  if(greetSub)greetSub.textContent=g;
 })();
 
 /* ===== Tab switching ===== */
@@ -969,10 +1234,17 @@ function switchTab(name){
   });
   scroller.scrollTop=0;
   navbar.classList.remove('condensed');
-  // Light haptic-like feedback
+  try{localStorage.setItem('bm_active_tab',name);localStorage.setItem('bm_scroll_y','0');}catch{}
   if(window.navigator.vibrate)window.navigator.vibrate(8);
 }
 window.switchTab=switchTab;
+
+try{
+  const savedTab=localStorage.getItem('bm_active_tab');
+  const savedScroll=parseInt(localStorage.getItem('bm_scroll_y'))||0;
+  if(savedTab)switchTab(savedTab);
+  if(savedScroll>0)requestAnimationFrame(()=>{scroller.scrollTop=savedScroll;if(savedScroll>40)navbar.classList.add('condensed');});
+}catch{}
 
 /* ===== Scroll: condense nav bar when large title scrolls past ===== */
 scroller.addEventListener('scroll',()=>{
@@ -980,6 +1252,7 @@ scroller.addEventListener('scroll',()=>{
   if(y>40) navbar.classList.add('condensed');
   else navbar.classList.remove('condensed');
   if(y>4) navbar.classList.remove('faded');
+  try{localStorage.setItem('bm_scroll_y',y);}catch{}
 });
 
 /* ===== Toast helper ===== */
@@ -993,8 +1266,7 @@ function showToast(msg){
 window.showInfo=(t,m)=>showToast(m||t);
 window.showHowToInstall=()=>showToast('Safari → Share → Add to Home Screen ✨');
 
-/* ===== Install hint dismiss ===== */
-window.dismissInstall=()=>document.getElementById('installHint').classList.add('hide');
+
 
 /* ===== Confetti on sparkle button ===== */
 const layer=document.getElementById('confetti');
@@ -1020,11 +1292,8 @@ document.getElementById('sparkleBtn').addEventListener('click',e=>{
   showToast(msgs[mi%msgs.length]); mi++;
 });
 
-/* ===== Detect standalone (installed) mode and hide install hint ===== */
-if(window.navigator.standalone || window.matchMedia('(display-mode: standalone)').matches){
-  const h=document.getElementById('installHint');
-  if(h)h.classList.add('hide');
-}
+
+
 
 /* ===== Card press confetti micro-burst ===== */
 document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{

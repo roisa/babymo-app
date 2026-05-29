@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="Huruf Hijaiyah — Belajar 28 huruf Arab bersama Baby Mo!">
 <title>🌙 Huruf Hijaiyah · BabyMo</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
   --bg:#0B1C12;--bg2:#0F2016;--bg3:#132818;
@@ -34,7 +34,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .screen.active{display:flex;}
 
 /* ════ WELCOME ════ */
-#sWelcome{padding:24px 18px 32px;justify-content:flex-start;text-align:center;}
+#sWelcome{padding:24px 18px 32px;padding-top:calc(24px + env(safe-area-inset-top));justify-content:flex-start;text-align:center;}
 .w-mo{width:120px;height:120px;margin:0 auto 10px;animation:fl 3s ease-in-out infinite;filter:drop-shadow(0 6px 20px rgba(44,90,62,.4));}
 @keyframes fl{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
 .w-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(61,106,72,.18);border:1px solid rgba(93,170,120,.2);color:var(--green-glow);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:10px;}
@@ -54,7 +54,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* ════ HOME ════ */
 #sHome{padding:0 0 28px;justify-content:flex-start;}
-.home-hdr{width:100%;background:linear-gradient(160deg,#0F2016,#132818);padding:20px 18px 18px;flex-shrink:0;border-bottom:1px solid var(--border);}
+.home-hdr{width:100%;background:linear-gradient(160deg,#0F2016,#132818);padding:20px 18px 18px;padding-top:calc(20px + env(safe-area-inset-top));flex-shrink:0;border-bottom:1px solid var(--border);}
 .home-hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
 .hdr-back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;}
 .hdr-streak{background:rgba(200,144,64,.15);border:1px solid rgba(200,144,64,.2);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;color:var(--gold-lt);display:flex;align-items:center;gap:5px;}
@@ -84,7 +84,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .lesson-xp{font-size:11px;font-weight:700;color:var(--green-glow);}
 
 /* ════ INTRO (Letter Cards) ════ */
-#sIntro{padding:14px 16px 24px;justify-content:flex-start;}
+#sIntro{padding:14px 16px 24px;padding-top:calc(14px + env(safe-area-inset-top));justify-content:flex-start;}
 .intro-topbar{width:100%;max-width:440px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0;}
 .i-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;}
 .i-counter{font-size:11px;font-weight:700;color:var(--green-glow);background:rgba(93,170,120,.1);padding:5px 12px;border-radius:8px;}
@@ -106,16 +106,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   font-family:'Scheherazade New',serif;
   font-size:clamp(88px,24vw,120px);
   font-weight:700;
-  line-height:1.25;
+  line-height:1.4;
   margin-top:4px;
-  margin-bottom:2px;
+  margin-bottom:18px;
   display:block;
   animation:letterIn .4s cubic-bezier(.34,1.56,.64,1);
   filter:drop-shadow(0 4px 16px rgba(200,144,64,.3));
 }
 @keyframes letterIn{from{opacity:0;transform:scale(.7) rotate(-5deg)}to{opacity:1;transform:scale(1) rotate(0)}}
-.lc-name{font-size:30px;font-weight:900;color:var(--cream);margin-bottom:4px;}
-.lc-lat{font-size:13px;color:var(--green-glow);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.lc-name{font-size:28px;font-weight:900;color:var(--cream);margin-bottom:6px;}
+.lc-lat{font-size:13px;color:var(--green-glow);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
 .lc-hint-row{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(200,144,64,.07);border:1px solid rgba(200,144,64,.12);border-radius:10px;padding:8px 14px;}
 .lc-dots-icon{font-size:18px;}
 .lc-dots-text{font-size:12px;color:var(--cream-dim);font-weight:600;}
@@ -154,7 +154,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .nav-sec:active,.nav-pri:active{transform:scale(.97);}
 
 /* ════ QUIZ ════ */
-#sQuiz{padding:14px 16px 24px;justify-content:flex-start;}
+#sQuiz{padding:14px 16px 24px;padding-top:calc(14px + env(safe-area-inset-top));justify-content:flex-start;}
 .quiz-topbar{width:100%;max-width:440px;display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-shrink:0;}
 .q-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;flex-shrink:0;}
 .q-prog-wrap{flex:1;height:8px;background:rgba(255,255,255,.07);border-radius:8px;overflow:hidden;}
@@ -166,7 +166,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 .q-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cream-dim);margin-bottom:10px;}
 /* Big Arabic for "which letter?" type */
-.q-arabic-big{font-family:'Scheherazade New',serif;font-size:clamp(80px,22vw,110px);font-weight:700;color:var(--gold-lt);line-height:1;animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
+.q-arabic-big{font-family:'Scheherazade New',serif;font-size:clamp(80px,22vw,110px);font-weight:700;color:var(--gold-lt);line-height:1.4;margin-bottom:10px;animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
 /* Name display for "which name?" type */
 .q-name-big{font-size:clamp(28px,8vw,38px);font-weight:900;color:var(--cream);animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
 /* Baby Mo tiny reaction */
@@ -216,7 +216,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .fb-next:active{transform:scale(.97);}
 
 /* ════ RESULT ════ */
-#sResult{padding:24px 18px 36px;justify-content:flex-start;text-align:center;}
+#sResult{padding:24px 18px 36px;padding-top:calc(24px + env(safe-area-inset-top));justify-content:flex-start;text-align:center;}
 .res-mascot{width:100px;height:100px;margin:0 auto 10px;animation:cel .8s ease-in-out infinite alternate;}
 @keyframes cel{from{transform:rotate(-14deg) scale(1)}to{transform:rotate(14deg) scale(1.07)}}
 .res-card{background:var(--card);border:1px solid rgba(200,144,64,.2);border-radius:24px;padding:22px 18px 18px;width:100%;max-width:400px;position:relative;overflow:hidden;margin-bottom:14px;}
@@ -243,7 +243,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .res-btn-sec:active,.res-btn-pri:active{transform:scale(.97);}
 
 /* ════ ABOUT ════ */
-#sAbout{padding:20px 18px 36px;justify-content:flex-start;}
+#sAbout{padding:20px 18px 36px;padding-top:calc(20px + env(safe-area-inset-top));justify-content:flex-start;}
 .about-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;align-self:flex-start;margin-bottom:16px;}
 .about-title{font-size:20px;font-weight:900;color:var(--gold-lt);margin-bottom:14px;text-align:center;}
 .about-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;width:100%;max-width:440px;}

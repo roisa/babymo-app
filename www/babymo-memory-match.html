@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BabyMo Memory Match 🌙</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<title>Baby Mo Memory Match 🌙</title>
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 :root{
@@ -42,12 +41,13 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 #dt-overlay.on{opacity:1}
 
 /* ── SCREENS ── */
-.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;
+.screen{position:fixed;top:0;left:0;right:0;bottom:0;display:flex;flex-direction:column;align-items:center;
   z-index:1;opacity:0;pointer-events:none;transition:opacity .45s ease}
 .screen.active{opacity:1;pointer-events:all}
 
 /* ════════════════ HOME SCREEN ════════════════ */
-#s-home{padding:16px 20px 24px;justify-content:space-between;overflow:hidden}
+#s-home{padding:16px 20px 24px;padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:calc(24px + env(safe-area-inset-bottom));justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;gap:8px}
+#s-home>*{flex-shrink:0}
 
 .home-bar{display:flex;justify-content:space-between;align-items:center;width:100%;padding-top:4px}
 .brand{font-family:'Fredoka One',cursive;font-size:26px;
@@ -63,12 +63,12 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 .icon-btn:active{transform:scale(.88)}
 
 /* Baby Mo home */
-.home-mascot-wrap{flex:1;display:flex;align-items:center;justify-content:center;position:relative;min-height:0}
-.mascot-glow{position:absolute;width:220px;height:220px;border-radius:50%;
+.home-mascot-wrap{flex:0 0 auto;display:flex;align-items:center;justify-content:center;position:relative;height:150px}
+.mascot-glow{position:absolute;width:160px;height:160px;border-radius:50%;
   background:radial-gradient(circle,rgba(245,197,24,.18) 0%,rgba(82,183,136,.08) 50%,transparent 75%);
   pointer-events:none;animation:glowPulse 3.2s ease-in-out infinite}
 @keyframes glowPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.15);opacity:1}}
-.mascot-main{width:min(200px,44vh);height:auto;object-fit:contain;
+.mascot-main{width:min(140px,28vh);height:auto;object-fit:contain;
   filter:drop-shadow(0 10px 32px rgba(0,0,0,.4));
   animation:float 3.2s ease-in-out infinite}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-13px)}}
@@ -95,6 +95,16 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
   border-color:rgba(200,140,255,.25)}
 .mode-card.dreamtime:active{border-color:rgba(200,140,255,.6);
   box-shadow:0 0 24px rgba(180,100,255,.25)}
+.mode-card.hijaiyah-half{
+  background:linear-gradient(135deg,rgba(27,94,32,.45),rgba(0,77,64,.45));
+  border-color:rgba(76,175,80,.3)}
+.mode-card.hijaiyah-half:active{border-color:rgba(76,175,80,.6);
+  box-shadow:0 0 24px rgba(76,175,80,.3)}
+.mode-card.hijaiyah{grid-column:1/-1;
+  background:linear-gradient(135deg,rgba(27,94,32,.45),rgba(0,77,64,.45));
+  border-color:rgba(76,175,80,.3)}
+.mode-card.hijaiyah:active{border-color:rgba(76,175,80,.6);
+  box-shadow:0 0 24px rgba(76,175,80,.3)}
 .mode-icon{font-size:25px;margin-bottom:4px}
 .mode-name{font-family:'Fredoka One',cursive;font-size:15px;color:#fff;display:block}
 .mode-desc{font-size:11px;color:rgba(255,255,255,.5);display:block;margin-top:2px;font-weight:700}
@@ -102,7 +112,7 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
   font-size:9px;font-weight:800;padding:2px 7px;border-radius:10px}
 
 /* ════════════════ GAME SCREEN ════════════════ */
-#s-game{padding:14px 18px 18px;justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch}
+#s-game{padding:14px 18px 18px;padding-top:calc(14px + env(safe-area-inset-top));justify-content:flex-start;overflow:hidden}
 
 .game-hdr{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:10px;flex-shrink:0}
 .back-btn{background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.13);
@@ -129,10 +139,10 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 .reaction-bubble.show{opacity:1;transform:translateX(0)}
 
 /* Card Grid */
-#card-grid{display:grid;gap:10px;width:100%;flex-shrink:0}
+#card-grid{display:grid;gap:10px;flex:1;min-height:0;justify-content:center;align-content:center}
 
 /* Memory Cards */
-.mem-card{aspect-ratio:1;perspective:700px;cursor:pointer;touch-action:manipulation}
+.mem-card{perspective:700px;cursor:pointer;touch-action:manipulation}
 .card-inn{width:100%;height:100%;position:relative;transform-style:preserve-3d;
   transition:transform var(--transition-card);border-radius:var(--radius-card)}
 .mem-card.flipped .card-inn,.mem-card.matched .card-inn{transform:rotateY(180deg)}
@@ -152,6 +162,9 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
   border-color:rgba(82,183,136,.55);
   box-shadow:0 0 22px rgba(82,183,136,.45),0 4px 16px rgba(0,0,0,.15)}
 .mem-card.matched .card-inn{transition-duration:.4s}
+
+/* Hijaiyah card label */
+.c-arabic{font-size:11px;color:#1B5E20;font-weight:800;font-family:'Nunito',sans-serif;text-align:center;direction:rtl}
 
 /* Dreamtime card slower */
 .dt .card-inn{transition-duration:.82s}
@@ -203,8 +216,8 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 .btn-sec:active{transform:scale(.96)}
 
 /* ════════════════ BADGES SCREEN ════════════════ */
-#s-stickers{display:flex;flex-direction:column;overflow:hidden}
-.stk-sticky-hdr{padding:16px 20px 0;flex-shrink:0;background:linear-gradient(170deg,#071912,#0D2318)}
+#s-stickers{display:flex;flex-direction:column;overflow:hidden;align-items:stretch}
+.stk-sticky-hdr{padding:16px 20px 0;padding-top:calc(16px + env(safe-area-inset-top));flex-shrink:0;width:100%;background:linear-gradient(170deg,#071912,#0D2318)}
 .s-hdr{display:flex;align-items:center;gap:10px;width:100%;margin-bottom:14px}
 .s-hdr h2{font-family:'Fredoka One',cursive;font-size:21px;color:#fff;flex:1;text-align:center}
 
@@ -232,7 +245,7 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 /* Mode trophies horizontal scroll */
 .trophies-label{font-family:'Fredoka One',cursive;font-size:13px;
   color:rgba(255,255,255,.55);margin-bottom:8px}
-.mode-trophies{display:flex;gap:8px;padding-bottom:2px;margin-bottom:6px}
+.mode-trophies{display:flex;gap:8px;padding-bottom:8px;margin-bottom:6px;width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
 .trophy-card{flex:0 0 auto;width:68px;background:rgba(255,255,255,.05);
   border:1.5px solid rgba(255,255,255,.09);border-radius:16px;padding:9px 5px;
   text-align:center;transition:all .35s}
@@ -302,7 +315,7 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
   <!-- ═══════════════ HOME SCREEN ═══════════════ -->
   <div class="screen active" id="s-home">
     <div class="home-bar">
-      <span class="brand">🌙 BabyMo</span>
+      <span class="brand">🌙 Baby Mo</span>
       <div class="bar-btns">
         <button class="icon-btn" id="btn-stickers" aria-label="My Badges" style="position:relative">⭐<span id="badge-count-pill" style="position:absolute;top:-4px;right:-4px;background:var(--gold);color:#1a0800;font-size:9px;font-weight:900;min-width:16px;height:16px;border-radius:8px;display:none;align-items:center;justify-content:center;padding:0 3px;line-height:1;font-family:'Nunito',sans-serif"></span></button>
         <button class="icon-btn" id="btn-mute-home" aria-label="Toggle Sound">🔊</button>
@@ -343,6 +356,33 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
         <span class="mode-name">Hard</span>
         <span class="mode-desc">12 cards · Ages 4+</span>
       </div>
+      <div class="mode-card" data-mode="expert">
+        <div class="mode-icon">🧠</div>
+        <span class="mode-name">Expert</span>
+        <span class="mode-desc">16 cards · Ages 4+</span>
+      </div>
+      <div class="mode-card" data-mode="master">
+        <div class="mode-icon">📚</div>
+        <span class="mode-name">Master</span>
+        <span class="mode-desc">18 cards · Ages 5+</span>
+      </div>
+      <div class="mode-card" data-mode="champion">
+        <div class="mode-icon">🏅</div>
+        <span class="mode-name">Champion</span>
+        <span class="mode-desc">20 cards · Ages 5+</span>
+        <span class="mode-badge">PRO</span>
+      </div>
+      <div class="mode-card hijaiyah-half" data-mode="hijaiyah_easy">
+        <div class="mode-icon">🌿</div>
+        <span class="mode-name">Hijaiyah Easy</span>
+        <span class="mode-desc">8 huruf · Belajar 🔊</span>
+      </div>
+      <div class="mode-card hijaiyah" data-mode="hijaiyah">
+        <div class="mode-icon">🕌</div>
+        <span class="mode-name">Huruf Hijaiyah</span>
+        <span class="mode-desc">24 huruf · Belajar Hijaiyah 🔊</span>
+        <span class="mode-badge">✨ Belajar</span>
+      </div>
       <div class="mode-card dreamtime" data-mode="dreamtime">
         <div class="mode-icon">💤</div>
         <span class="mode-name">Dreamtime</span>
@@ -350,6 +390,7 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
         <span class="mode-badge">✨ Special</span>
       </div>
     </div>
+    <a href="index.html" style="margin-top:14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.45);text-decoration:none;padding:8px 14px;">← Game Hub</a>
   </div>
 
   <!-- ═══════════════ GAME SCREEN ═══════════════ -->
@@ -398,7 +439,7 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
       </div>
 
       <button class="btn-primary" id="btn-again">Play Again 🎮</button>
-      <button class="btn-sec" id="btn-to-home">Back to Home 🏠</button>
+      <button class="btn-sec" id="btn-to-home">Back to Menu 📋</button>
     </div>
   </div>
 
@@ -408,9 +449,9 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
     <!-- Sticky header section -->
     <div class="stk-sticky-hdr">
       <div class="s-hdr">
-        <button class="back-btn" id="btn-stk-back">← Back</button>
+        <button class="back-btn" id="btn-stk-back" style="flex-shrink:0">← Home</button>
         <h2>My Badges ⭐</h2>
-        <div style="width:60px"></div>
+        <div style="width:70px;flex-shrink:0"></div>
       </div>
 
       <!-- Big progress count + bar -->
@@ -510,6 +551,18 @@ const CARD_DATA = {
   cup:{label:'Cup',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><path d="M22 26 L26 68 Q26 72 40 72 Q54 72 54 68 L58 26Z" fill="#7EB8F7"/><path d="M26 26 L28 58 Q28 63 33 65" stroke="rgba(255,255,255,.45)" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M54 37 Q67 37 67 48 Q67 59 54 59" stroke="#5299CC" stroke-width="5.5" fill="none" stroke-linecap="round"/><rect x="43" y="8" width="6" height="34" rx="3" fill="#F4845F"/><ellipse cx="46" cy="8" rx="3" ry="2.5" fill="#D03A20"/><polygon points="38,48 39.5,53 44,53 40.5,56 42,61 38,58 34,61 35.5,56 32,53 36.5,53" fill="white" opacity=".5"/></svg>`},
   slippers:{label:'Slippers',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><path d="M6 49 Q6 60 20 62 Q34 64 38 57 L38 49 Q28 44 6 49Z" fill="#F4845F"/><path d="M8 49 Q16 42 27 45 L38 49" fill="#D06040"/><ellipse cx="15" cy="49" rx="5.5" ry="3.5" fill="white" opacity=".4"/><ellipse cx="19" cy="38" rx="4.5" ry="9" fill="#F4845F" transform="rotate(-12,19,38)"/><ellipse cx="19" cy="38" rx="2.5" ry="6" fill="white" opacity=".8" transform="rotate(-12,19,38)"/><ellipse cx="28" cy="36" rx="4.5" ry="8" fill="#F4845F" transform="rotate(6,28,36)"/><ellipse cx="28" cy="36" rx="2.5" ry="5.5" fill="white" opacity=".8" transform="rotate(6,28,36)"/><path d="M42 49 Q42 60 56 62 Q70 64 74 57 L74 49 Q64 44 42 49Z" fill="#52B788"/><path d="M44 49 Q52 42 63 45 L74 49" fill="#3A9A62"/><ellipse cx="51" cy="49" rx="5.5" ry="3.5" fill="white" opacity=".4"/><ellipse cx="55" cy="38" rx="4.5" ry="9" fill="#52B788" transform="rotate(-12,55,38)"/><ellipse cx="55" cy="38" rx="2.5" ry="6" fill="white" opacity=".8" transform="rotate(-12,55,38)"/><ellipse cx="64" cy="36" rx="4.5" ry="8" fill="#52B788" transform="rotate(6,64,36)"/><ellipse cx="64" cy="36" rx="2.5" ry="5.5" fill="white" opacity=".8" transform="rotate(6,64,36)"/></svg>`},
   cloud:{label:'Cloud',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="30" cy="50" r="17" fill="white" opacity=".95"/><circle cx="52" cy="50" r="14.5" fill="white" opacity=".95"/><circle cx="41" cy="38" r="20" fill="white" opacity=".95"/><circle cx="22" cy="55" r="13" fill="white" opacity=".9"/><circle cx="58" cy="55" r="12" fill="white" opacity=".9"/><path d="M35 44 Q28 46 28 51 Q28 55 35 55 Q30 53 30 51 Q30 47 35 44Z" fill="#F5C518" opacity=".6"/><circle cx="38" cy="46" r="2" fill="#F5C518" opacity=".5"/><circle cx="38" cy="51" r="1.5" fill="#F5C518" opacity=".4"/></svg>`},
+  h_alif:{label:'Alif',speak:'أَلِفْ',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#1B5E20"/><circle cx="40" cy="40" r="30" fill="#2E7D32" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">أ</text></svg>`},
+  h_ba:{label:'Ba',speak:'بَاء',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#0D47A1"/><circle cx="40" cy="40" r="30" fill="#1565C0" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ب</text></svg>`},
+  h_ta:{label:'Ta',speak:'تَاء',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#4A148C"/><circle cx="40" cy="40" r="30" fill="#6A1B9A" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ت</text></svg>`},
+  h_tsa:{label:'Tsa',speak:'ثَاء',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#880E4F"/><circle cx="40" cy="40" r="30" fill="#AD1457" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ث</text></svg>`},
+  h_jim:{label:'Jim',speak:'جِيمْ',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#E65100"/><circle cx="40" cy="40" r="30" fill="#EF6C00" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ج</text></svg>`},
+  h_haa:{label:'Ha',speak:'حَاء',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#1A237E"/><circle cx="40" cy="40" r="30" fill="#283593" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ح</text></svg>`},
+  h_kha:{label:'Kha',speak:'خَاء',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#004D40"/><circle cx="40" cy="40" r="30" fill="#00695C" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">خ</text></svg>`},
+  h_dal:{label:'Dal',speak:'دَالْ',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#BF360C"/><circle cx="40" cy="40" r="30" fill="#D84315" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">د</text></svg>`},
+  h_dzal:{label:'Dzal',speak:'ذَالْ',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#33691E"/><circle cx="40" cy="40" r="30" fill="#558B2F" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ذ</text></svg>`},
+  h_ra:{label:'Ra',speak:'رَاء',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#263238"/><circle cx="40" cy="40" r="30" fill="#37474F" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ر</text></svg>`},
+  h_zay:{label:'Zay',speak:'زَايْ',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#311B92"/><circle cx="40" cy="40" r="30" fill="#4527A0" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">ز</text></svg>`},
+  h_sin:{label:'Sin',speak:'سِينْ',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="#006064"/><circle cx="40" cy="40" r="30" fill="#00838F" opacity=".7"/><text x="40" y="58" text-anchor="middle" font-size="46" fill="#FFD700" font-family="serif" font-weight="bold">س</text></svg>`},
   prayermat:{label:'Mat',svg:`<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="18" width="56" height="52" rx="5" fill="#3A9A6E"/><rect x="15" y="21" width="50" height="46" rx="3" fill="none" stroke="#F5C518" stroke-width="2"/><path d="M26 62 L26 38 Q40 24 54 38 L54 62Z" fill="#2A7A52" stroke="#F5C518" stroke-width="1.5"/><path d="M30 62 L30 41 Q40 31 50 41 L50 62Z" fill="#3AAD65" opacity=".65"/><circle cx="40" cy="42" r="4" fill="#F5C518"/><line x1="15" y1="28" x2="65" y2="28" stroke="#F5C518" stroke-width="1.2" opacity=".45"/><line x1="15" y1="61" x2="65" y2="61" stroke="#F5C518" stroke-width="1.2" opacity=".45"/><line x1="16" y1="70" x2="16" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="22" y1="70" x2="22" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="28" y1="70" x2="28" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="34" y1="70" x2="34" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="40" y1="70" x2="40" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="46" y1="70" x2="46" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="52" y1="70" x2="52" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="58" y1="70" x2="58" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/><line x1="64" y1="70" x2="64" y2="68" stroke="#F5C518" stroke-width="2" stroke-linecap="round"/></svg>`}
 };
 
@@ -521,11 +574,16 @@ const MODES = {
   starter:   { name:'Starter',   emoji:'🎈', pairs:3, cols:2, types:['crescent','star','lantern'] },
   medium:    { name:'Medium',    emoji:'🕌', pairs:4, cols:2, types:['crescent','star','lantern','kaaba'] },
   hard:      { name:'Hard',      emoji:'🌙', pairs:6, cols:3, types:['crescent','star','lantern','kaaba','mosque','dates'] },
-  dreamtime: { name:'Dreamtime', emoji:'💤', pairs:6, cols:3, types:['crescent','star','teddy','pajamas','cup','slippers'] }
+  dreamtime: { name:'Dreamtime', emoji:'💤', pairs:6, cols:3, types:['crescent','star','teddy','pajamas','cup','slippers'] },
+  expert:    { name:'Expert',    emoji:'🧠', pairs:8, cols:4, types:['crescent','star','lantern','kaaba','mosque','dates','teddy','brush'] },
+  master:    { name:'Master',    emoji:'📚', pairs:9, cols:3, types:['crescent','star','lantern','kaaba','mosque','dates','teddy','brush','quran'] },
+  champion:  { name:'Champion',  emoji:'🏅', pairs:10,cols:4, types:['crescent','star','lantern','kaaba','mosque','dates','teddy','brush','quran','pajamas'] },
+  hijaiyah_easy:{ name:'Hijaiyah Easy', emoji:'🌿', pairs:4, cols:2, types:['h_alif','h_ba','h_ta','h_tsa'] },
+  hijaiyah:  { name:'Hijaiyah',  emoji:'🕌', pairs:12,cols:4, types:['h_alif','h_ba','h_ta','h_tsa','h_jim','h_haa','h_kha','h_dal','h_dzal','h_ra','h_zay','h_sin'] }
 };
 
 /* ════════════════════════════════════════════
-   BADGE DEFINITIONS  (3 tiers, 20 total)
+   BADGE DEFINITIONS  (3 tiers, 29 total)
    ════════════════════════════════════════════ */
 const ALL_STICKERS = [
   // ── TIER 1: Mode Badges (first completion of each mode) ──
@@ -534,23 +592,34 @@ const ALL_STICKERS = [
   {id:'m_med',     icon:'🕌', name:'Mosque',       hint:'Complete Medium',       tier:'mode'},
   {id:'m_hard',    icon:'💫', name:'Star Burst',   hint:'Complete Hard',         tier:'mode'},
   {id:'m_dream',   icon:'💤', name:'Dreamer',      hint:'Complete Dreamtime',    tier:'mode'},
+  {id:'m_expert',  icon:'🧠', name:'Big Brain',    hint:'Complete Expert',       tier:'mode'},
+  {id:'m_master',  icon:'📚', name:'Scholar',      hint:'Complete Master',       tier:'mode'},
+  {id:'m_champ',   icon:'🏅', name:'Champion',     hint:'Complete Champion',     tier:'mode'},
+  {id:'m_hijai_ez',icon:'🌿', name:'Hijaiyah Kid', hint:'Complete Hijaiyah Easy', tier:'mode'},
+  {id:'m_hijai',   icon:'🕌', name:'Hijaiyah Pro', hint:'Complete Hijaiyah',     tier:'mode'},
   // ── TIER 2: Practice Badges (complete each mode 3× total) ──
   {id:'r_easy',    icon:'🌙', name:'Moon Light',   hint:'Easy × 3',              tier:'practice'},
   {id:'r_start',   icon:'🌸', name:'Blossom',      hint:'Starter × 3',           tier:'practice'},
   {id:'r_med',     icon:'🕋', name:'Holy Kaaba',   hint:'Medium × 3',            tier:'practice'},
   {id:'r_hard',    icon:'🌈', name:'Rainbow',      hint:'Hard × 3',              tier:'practice'},
   {id:'r_dream',   icon:'🧸', name:'Teddy Bear',   hint:'Dreamtime × 3',         tier:'practice'},
+  {id:'r_expert',  icon:'⚡', name:'Lightning',    hint:'Expert × 3',            tier:'practice'},
+  {id:'r_master',  icon:'🎯', name:'Bullseye',     hint:'Master × 3',            tier:'practice'},
+  {id:'r_champ',   icon:'💎', name:'Diamond',      hint:'Champion × 3',          tier:'practice'},
+  {id:'r_hijai_ez',icon:'🍃', name:'Leaf',         hint:'Hijaiyah Easy × 3',     tier:'practice'},
+  {id:'r_hijai',   icon:'📖', name:'Quran Reader', hint:'Hijaiyah × 3',          tier:'practice'},
   // ── TIER 3: Milestone Badges ──
   {id:'g_5b',      icon:'🦋', name:'Butterfly',    hint:'Collect 5 badges',      tier:'milestone'},
-  {id:'g_all5',    icon:'👑', name:'Explorer',     hint:'Beat all 5 modes',      tier:'milestone'},
+  {id:'g_all5',    icon:'👑', name:'Explorer',     hint:'Beat all 10 modes',     tier:'milestone'},
   {id:'g_10g',     icon:'🎁', name:'Gift Box',     hint:'Play 10 games',         tier:'milestone'},
   {id:'g_10b',     icon:'🎖️', name:'Medal',        hint:'Collect 10 badges',     tier:'milestone'},
   {id:'g_speed1',  icon:'⚡', name:'Quick Mind',   hint:'Easy in ≤ 4 moves',     tier:'milestone'},
   {id:'g_speed2',  icon:'🦅', name:'Eagle Eye',    hint:'Medium in ≤ 8 moves',   tier:'milestone'},
   {id:'g_20g',     icon:'🌺', name:'Garden',       hint:'Play 20 games',         tier:'milestone'},
   {id:'g_15b',     icon:'🐝', name:'Little Bee',   hint:'Collect 15 badges',     tier:'milestone'},
-  {id:'g_19b',     icon:'💚', name:'Green Heart',  hint:'Collect 19 badges',     tier:'milestone'},
-  {id:'g_champ',   icon:'🏆', name:'Champion',     hint:'Collect all 20!',       tier:'milestone'},
+  {id:'g_20b',     icon:'💚', name:'Green Heart',  hint:'Collect 20 badges',     tier:'milestone'},
+  {id:'g_25b',     icon:'🦁', name:'Little Lion',  hint:'Collect 25 badges',     tier:'milestone'},
+  {id:'g_champ',   icon:'🏆', name:'Grand Master', hint:'All badges!',           tier:'milestone'},
 ];
 
 /* ════════════════════════════════════════════
@@ -585,24 +654,35 @@ const Store = {
     const c=this.getCompletions(), b=this.getBests(), g=this.getTotalGames();
 
     // Tier 1 — first completion per mode
-    if(c.easy>=1)    give('m_easy');
-    if(c.starter>=1) give('m_start');
-    if(c.medium>=1)  give('m_med');
-    if(c.hard>=1)    give('m_hard');
+    if(c.easy>=1)      give('m_easy');
+    if(c.starter>=1)   give('m_start');
+    if(c.medium>=1)    give('m_med');
+    if(c.hard>=1)      give('m_hard');
     if(c.dreamtime>=1) give('m_dream');
+    if(c.expert>=1)    give('m_expert');
+    if(c.master>=1)    give('m_master');
+    if(c.champion>=1)  give('m_champ');
+    if(c.hijaiyah_easy>=1) give('m_hijai_ez');
+    if(c.hijaiyah>=1)  give('m_hijai');
 
     // Tier 2 — 3× completion per mode
-    if(c.easy>=3)    give('r_easy');
-    if(c.starter>=3) give('r_start');
-    if(c.medium>=3)  give('r_med');
-    if(c.hard>=3)    give('r_hard');
+    if(c.easy>=3)      give('r_easy');
+    if(c.starter>=3)   give('r_start');
+    if(c.medium>=3)    give('r_med');
+    if(c.hard>=3)      give('r_hard');
     if(c.dreamtime>=3) give('r_dream');
+    if(c.expert>=3)    give('r_expert');
+    if(c.master>=3)    give('r_master');
+    if(c.champion>=3)  give('r_champ');
+    if(c.hijaiyah_easy>=3) give('r_hijai_ez');
+    if(c.hijaiyah>=3)  give('r_hijai');
 
     // Tier 3 — milestones
     const cnt=this.getBadges().length;
     if(cnt>=5)  give('g_5b');
     if(cnt>=10) give('g_10b');
-    if(['easy','starter','medium','hard','dreamtime'].every(m=>c[m]>=1)) give('g_all5');
+    const allModes=['easy','starter','medium','hard','dreamtime','expert','master','champion','hijaiyah_easy','hijaiyah'];
+    if(allModes.every(m=>c[m]>=1)) give('g_all5');
     if(g>=10)   give('g_10g');
     if(g>=20)   give('g_20g');
     if(b.easy && b.easy<=4)     give('g_speed1');
@@ -610,8 +690,9 @@ const Store = {
     // Re-check after any additions above
     const cnt2=this.getBadges().length;
     if(cnt2>=15) give('g_15b');
-    if(cnt2>=19) give('g_19b');
-    if(this.getBadges().length>=20) give('g_champ');
+    if(cnt2>=20) give('g_20b');
+    if(cnt2>=25) give('g_25b');
+    if(this.getBadges().length>=30) give('g_champ');
 
     return newly;
   }
@@ -693,10 +774,29 @@ function startGame(mode) {
 function renderGrid() {
   const grid = document.getElementById('card-grid');
   const cfg = MODES[G.mode];
-  grid.style.gridTemplateColumns = `repeat(${cfg.cols},1fr)`;
+  const totalCards = cfg.pairs * 2;
+  const cols = cfg.cols;
+  const rows = Math.ceil(totalCards / cols);
+  const gap = 10;
+
+  const gameScreen = document.getElementById('s-game');
+  const cs = getComputedStyle(gameScreen);
+  const padTop = parseFloat(cs.paddingTop) || 14;
+  const padBot = parseFloat(cs.paddingBottom) || 18;
+  const padLR = (parseFloat(cs.paddingLeft) || 18) * 2;
+  const hdrH = 48 + 10;
+  const progH = 7 + 10;
+  const reactH = 50 + 10;
+  const availH = window.innerHeight - padTop - padBot - hdrH - progH - reactH;
+  const availW = (gameScreen.clientWidth || window.innerWidth) - padLR;
+  const maxCardH = Math.floor((availH - (rows - 1) * gap) / rows);
+  const maxCardW = Math.floor((availW - (cols - 1) * gap) / cols);
+  const cardSize = Math.min(maxCardH, maxCardW);
+
+  grid.style.gridTemplateColumns = `repeat(${cols}, ${cardSize}px)`;
+  grid.style.gridAutoRows = `${cardSize}px`;
   grid.innerHTML = '';
 
-  // Card back star pattern SVG
   const backSvg = `<svg class="cb-pattern" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><polygon points="20,4 22.5,13 32,13 24.5,18.5 27,28 20,22.5 13,28 15.5,18.5 8,13 17.5,13" fill="rgba(245,197,24,.38)"/></svg>`;
 
   G.cards.forEach((_,idx)=>{
@@ -705,22 +805,43 @@ function renderGrid() {
     const el = document.createElement('div');
     el.className='mem-card';
     el.dataset.idx = idx;
+    const labelHtml = cd.speak
+      ? `<span class="c-label c-arabic">${cd.label}</span>`
+      : `<span class="c-label">${cd.label}</span>`;
     el.innerHTML=`
       <div class="card-inn">
         <div class="c-face c-back">${backSvg}</div>
         <div class="c-face c-front">
           <div class="c-icon">${cd.svg}</div>
-          <span class="c-label">${cd.label}</span>
+          ${labelHtml}
         </div>
       </div>`;
     el.addEventListener('click', ()=>handleClick(idx));
-    // Stagger entrance
     el.style.cssText=`opacity:0;transform:scale(.8);transition:opacity .3s ${idx*.04}s,transform .3s ${idx*.04}s`;
     grid.appendChild(el);
     requestAnimationFrame(()=>requestAnimationFrame(()=>{
       el.style.opacity='1'; el.style.transform='scale(1)';
     }));
   });
+}
+
+/* ════════════════════════════════════════════
+   ARABIC VOICE (Hijaiyah)
+   ════════════════════════════════════════════ */
+function speakArabic(text) {
+  if (SFX.muted()) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'ar-SA';
+    u.rate = 0.7;
+    u.pitch = 1.1;
+    u.volume = 1;
+    const voices = window.speechSynthesis.getVoices();
+    const arVoice = voices.find(v => v.lang.startsWith('ar'));
+    if (arVoice) u.voice = arVoice;
+    window.speechSynthesis.speak(u);
+  } catch(e) {}
 }
 
 /* ════════════════════════════════════════════
@@ -735,6 +856,9 @@ function handleClick(idx) {
   card.flipped = true;
   G.selected.push(idx);
   document.querySelector(`[data-idx="${idx}"]`)?.classList.add('flipped');
+
+  const cd = CARD_DATA[card.type];
+  if (cd.speak) speakArabic(cd.speak);
 
   if (G.selected.length === 2) {
     G.canFlip = false;
@@ -871,8 +995,9 @@ function renderStickers() {
 
   // ── Stats ──
   document.getElementById('stat-games').textContent = games;
-  const modesDone = ['easy','starter','medium','hard','dreamtime'].filter(m => (compl[m]||0) > 0).length;
-  document.getElementById('stat-modes').textContent = `${modesDone} / 5`;
+  const allModeKeys = ['easy','starter','medium','hard','dreamtime','expert','master','champion','hijaiyah_easy','hijaiyah'];
+  const modesDone = allModeKeys.filter(m => (compl[m]||0) > 0).length;
+  document.getElementById('stat-modes').textContent = `${modesDone} / ${allModeKeys.length}`;
   // Best score = lowest move count across all bests
   const allBests = Object.values(bests);
   document.getElementById('stat-best').textContent = allBests.length ? Math.min(...allBests) : '–';
@@ -885,6 +1010,10 @@ function renderStickers() {
     {mode:'starter',   icon:'🎈', label:'Starter'},
     {mode:'medium',    icon:'🕌', label:'Medium'},
     {mode:'hard',      icon:'🌙', label:'Hard'},
+    {mode:'expert',    icon:'🧠', label:'Expert'},
+    {mode:'master',    icon:'📚', label:'Master'},
+    {mode:'champion',  icon:'🏅', label:'Champ'},
+    {mode:'hijaiyah',  icon:'🕌', label:'Hijaiyah'},
     {mode:'dreamtime', icon:'💤', label:'Dream'},
   ].forEach(({mode, icon, label}) => {
     const c    = compl[mode] || 0;
@@ -950,6 +1079,7 @@ function syncMute() {
 document.addEventListener('DOMContentLoaded', ()=>{
   buildBg();
   updateBadgePill();
+  if (window.speechSynthesis) { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices(); }
 
   // Mode cards
   document.querySelectorAll('.mode-card').forEach(mc=>{

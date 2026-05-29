@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
 <meta name="description" content="Kenalan dengan Baby Mo! — Puzzle interaktif untuk anak">
 <title>👋 Kenalan dengan Baby Mo!</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
   /* ── FRESH KID PALETTE — BabyMo.id inspired ── */
@@ -44,7 +44,7 @@ body::before{
 
 /* ── MAIN LAYOUT ── */
 .page{position:fixed;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;
-  justify-content:space-between;padding:env(safe-area-inset-top,12px) 0 env(safe-area-inset-bottom,16px);overflow:hidden;}
+  justify-content:space-between;padding:12px 0 16px;padding-top:calc(12px + env(safe-area-inset-top));padding-bottom:calc(16px + env(safe-area-inset-bottom));overflow:hidden;}
 
 /* ── HEADER ── */
 .hdr{width:100%;max-width:420px;display:flex;align-items:center;justify-content:space-between;padding:14px 20px 8px;flex-shrink:0;}
@@ -712,10 +712,19 @@ function playSparkle(){
 }
 
 /* Magic sparkle cascade when Baby Mo appears on card slide-in */
+var moIntroAudio = null;
 function playMoReveal(){
+  // Play Baby Mo's voice intro
+  try{
+    if(moIntroAudio){ moIntroAudio.pause(); moIntroAudio.currentTime = 0; }
+    moIntroAudio = new Audio('Intro_Baby_Mo_v001_5.mp3');
+    moIntroAudio.volume = 1.0;
+    moIntroAudio.play().catch(function(){});
+  }catch(e){}
+
+  // Also play a short sparkle arpeggio for extra delight
   const ctx = getCtx(); if(!ctx) return;
-  // Ascending glittery arpeggio: C5→E5→G5→C6→E6→G6
-  const notes = [523, 659, 784, 1047, 1319, 1568];
+  const notes = [523, 659, 784, 1047];
   notes.forEach((freq, i) => {
     setTimeout(() => {
       try{
@@ -723,13 +732,12 @@ function playMoReveal(){
         const g = ctx.createGain();
         o.type = 'sine';
         o.frequency.setValueAtTime(freq, ctx.currentTime);
-        o.frequency.exponentialRampToValueAtTime(freq * 1.5, ctx.currentTime + 0.08);
-        g.gain.setValueAtTime(0.22, ctx.currentTime);
-        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+        g.gain.setValueAtTime(0.12, ctx.currentTime);
+        g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
         o.connect(g); g.connect(ctx.destination);
-        o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.3);
+        o.start(ctx.currentTime); o.stop(ctx.currentTime + 0.2);
       }catch(e){}
-    }, i * 85);
+    }, i * 80);
   });
 }
 
@@ -798,6 +806,10 @@ setInterval(() => {
     spawnSparkles(x, y, 2);
   }
 }, 2200);
+
+// Stop Baby Mo voice on page hide
+window.addEventListener('pagehide', () => { if(moIntroAudio){ moIntroAudio.pause(); } });
+document.addEventListener('visibilitychange', () => { if(document.hidden && moIntroAudio){ moIntroAudio.pause(); } });
 </script>
 </body>
 </html>

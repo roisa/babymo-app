@@ -7,9 +7,7 @@
 <meta name="theme-color" content="#A8E063" />
 <meta name="mobile-web-app-capable" content="yes" />
 <title>Baby Mo · Forehand Beat</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root {
     --cream: #F6F9F3;
@@ -29,28 +27,19 @@
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; touch-action: manipulation; user-select: none; -webkit-user-select: none; }
   html, body { margin: 0; padding: 0; height: 100%; overflow: hidden; font-family: 'Nunito', system-ui, sans-serif; color: var(--ink); }
   body {
-    background:
-      radial-gradient(circle at 20% 10%, #DDF1B8 0%, transparent 55%),
-      radial-gradient(circle at 80% 30%, #C6E8FA 0%, transparent 50%),
-      linear-gradient(180deg, #E9F6D4 0%, #F6F9F3 60%, #FFF8E0 100%);
+    background: linear-gradient(180deg, #C6E8FA 0%, #DDF1B8 40%, #7BBE52 70%, #4FA42F 100%);
     display: flex; align-items: center; justify-content: center;
     overscroll-behavior: none;
   }
 
-  /* === Game frame: portrait 9:16, scales to viewport === */
+  /* === Game frame: full-screen on mobile === */
   #frame {
     position: relative;
-    width: min(100vw, calc(100vh * 9 / 16));
-    height: min(100vh, calc(100vw * 16 / 9));
-    max-width: 520px;
-    max-height: 100vh;
-    background: linear-gradient(180deg, #C6E8FA 0%, #DDF1B8 55%, #F6F9F3 80%, #FFF8E0 100%);
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(180deg, #C6E8FA 0%, #DDF1B8 40%, #7BBE52 70%, #4FA42F 100%);
     border-radius: 0;
     overflow: hidden;
-    box-shadow: 0 20px 60px rgba(45, 74, 31, 0.15);
-  }
-  @media (min-aspect-ratio: 9/16) {
-    #frame { border-radius: 28px; }
   }
 
   /* === Decorative sky elements === */
@@ -481,6 +470,7 @@
       <div class="tagline">Forehand <span class="accent">Beat</span> 🎾</div>
       <button class="big-btn" id="start-btn">Tap to Start</button>
       <div class="hint"><span class="emoji">❤️</span> 3 lives &nbsp;·&nbsp; <span class="emoji">✨</span> Tap 3× to soar!</div>
+      <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">← Game Hub</a>
     </div>
 
     <!-- Pause screen -->
@@ -492,6 +482,7 @@
           <button class="big-btn" id="resume-btn">Resume</button>
           <button class="big-btn secondary" id="quit-btn">Home</button>
         </div>
+        <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
       </div>
     </div>
 
@@ -520,6 +511,7 @@
           <button class="big-btn" id="replay-btn">Play Again</button>
           <button class="big-btn secondary" id="home-btn">Home</button>
         </div>
+        <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
       </div>
     </div>
 
@@ -1670,8 +1662,20 @@ function flashScreen() {
 function render(dt) {
   ctx.save();
   // clear
-  ctx.fillStyle = '#F6F9F3';
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Fill letterbox areas so no white bands show
+  if (offsetY > 0) {
+    ctx.fillStyle = '#C6E8FA';
+    ctx.fillRect(0, 0, canvas.width, offsetY + 1);
+    ctx.fillStyle = '#4FA42F';
+    ctx.fillRect(0, canvas.height - offsetY - 1, canvas.width, offsetY + 2);
+  }
+  if (offsetX > 0) {
+    ctx.fillStyle = '#C6E8FA';
+    ctx.fillRect(0, 0, offsetX + 1, canvas.height);
+    ctx.fillRect(canvas.width - offsetX - 1, 0, offsetX + 2, canvas.height);
+  }
 
   ctx.translate(offsetX, offsetY);
   ctx.scale(scale, scale);

@@ -2,10 +2,10 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="description" content="Baby Mo's Dua Journey - Islamic Early Learning Game for Kids">
 <title>🌙 Baby Mo's Dua Journey</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
   --bg:#0B1C12;--bg2:#0F2016;--bg3:#132818;
@@ -35,7 +35,7 @@ body::before{
 .screen.active{display:flex;}
 
 /* ════ WELCOME ════ */
-#welcomeScreen{justify-content:flex-start;padding-top:24px;}
+#welcomeScreen{justify-content:flex-start;padding-top:calc(24px + env(safe-area-inset-top));}
 .welcome-top{text-align:center;width:100%;padding-bottom:16px;}
 
 .mascot-wrap{position:relative;width:140px;height:140px;margin:0 auto 14px;}
@@ -103,7 +103,7 @@ body::before{
 .brand-tag b{color:var(--gold-dim);}
 
 /* ════ GAME SCREEN ════ */
-#gameScreen{padding-top:16px;justify-content:flex-start;}
+#gameScreen{padding-top:calc(16px + env(safe-area-inset-top));justify-content:flex-start;}
 .g-header{width:100%;max-width:480px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0;}
 .g-back{
   background:var(--card-back);border:1.5px solid var(--border);
@@ -203,7 +203,7 @@ body::before{
 @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
 
 /* ════ COMPLETE SCREEN ════ */
-#completeScreen{padding-top:24px;justify-content:flex-start;}
+#completeScreen{padding-top:calc(24px + env(safe-area-inset-top));justify-content:flex-start;}
 
 .comp-mascot-wrap{position:relative;width:110px;height:110px;margin:0 auto 14px;}
 .comp-mascot{

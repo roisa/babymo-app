@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#0B1C12">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Baby Mo 🌙 Waktunya Tidur</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
   --bg:#0B1C12;--bg2:#0F2016;--bg3:#071008;
@@ -39,7 +39,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .screen{position:fixed;inset:0;display:none;flex-direction:column;background:var(--bg);}
 .screen.on{display:flex;}
 
-.topbar{display:flex;align-items:center;gap:12px;padding:16px 20px 4px;flex-shrink:0;position:relative;z-index:2;}
+.topbar{display:flex;align-items:center;gap:12px;padding:16px 20px 4px;padding-top:calc(16px + env(safe-area-inset-top));flex-shrink:0;position:relative;z-index:2;}
 .ptrack{flex:1;height:10px;background:rgba(255,255,255,.07);border-radius:99px;overflow:hidden;}
 .pfill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--green),var(--green-glow));transition:width .6s;}
 .home-btn{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:7px 12px;color:var(--cream-dim);font-size:16px;cursor:pointer;font-family:inherit;transition:.15s;}
