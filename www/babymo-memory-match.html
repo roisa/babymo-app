@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Baby Mo Memory Match 🌙</title>
+<title>Memory Match — Game Kartu Ingatan Islami Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
@@ -302,7 +302,24 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 /* Scrollbar hidden */
 ::-webkit-scrollbar{display:none}
 *{scrollbar-width:none}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){#app{max-width:680px!important;}}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-memory-match.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Memory Match — Game Kartu Ingatan Islami Anak | Baby Mo">
+<meta property="og:description" content="Cocokkan kartu sambil melatih daya ingat bersama Baby Mo.">
+<meta property="og:url" content="https://play.babymo.id/babymo-memory-match.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-memory-match.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Memory Match — Game Kartu Ingatan Islami Anak | Baby Mo">
+<meta name="twitter:description" content="Cocokkan kartu sambil melatih daya ingat bersama Baby Mo.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-memory-match.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Memory Match — Baby Mo","url":"https://play.babymo.id/babymo-memory-match.html","description":"Cocokkan kartu sambil melatih daya ingat bersama Baby Mo.","inLanguage":"id-ID","genre":"Memory","image":"https://play.babymo.id/og/babymo-memory-match.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Memory Match","item":"https://play.babymo.id/babymo-memory-match.html"}]}]}</script>
 </head>
 <body>
 <div id="app">
@@ -440,6 +457,7 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 
       <button class="btn-primary" id="btn-again">Play Again 🎮</button>
       <button class="btn-sec" id="btn-to-home">Back to Menu 📋</button>
+      <button class="btn-sec" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('win-moves-txt')||{}).textContent||'',(document.getElementById('earn-name')||{}).textContent||'','I matched all the cards with Baby Mo! 🎴')">📤 Share</button>
     </div>
   </div>
 
@@ -1120,5 +1138,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
   document.getElementById('app').addEventListener('pointerdown', ()=>{}, {once:true});
 });
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="description" content="Doa Harian — Belajar doa sehari-hari bersama Baby Mo!">
-<title>🌙 Doa Harian · BabyMo</title>
+<meta name="description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<title>Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <!-- ResponsiveVoice: Google-quality TTS, far better than Web Speech API for Arabic -->
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
@@ -272,7 +272,24 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .toast.show{transform:translate(-50%,-50%) scale(1);}
 .toast-e{font-size:28px;}
 .toast-t{font-size:14px;font-weight:900;color:#fff;margin-top:2px;}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.c-btns,.c-card,.c-share,.dua-card,.l-topbar,.nav-row,.q-choices,.q-feedback,.q-progress,.q-prompt,.q-stimulus,.q-topbar,.scene-card,.sound-section,.timeline,.w-preview,.w-start{max-width:680px!important;}}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-doa-harian.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo">
+<meta property="og:description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<meta property="og:url" content="https://play.babymo.id/babymo-doa-harian.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-doa-harian.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo">
+<meta name="twitter:description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-doa-harian.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Doa Harian Anak — Baby Mo","url":"https://play.babymo.id/babymo-doa-harian.html","description":"Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-doa-harian.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Doa Harian Anak","item":"https://play.babymo.id/babymo-doa-harian.html"}]}]}</script>
 </head>
 <body>
 
@@ -905,8 +922,9 @@ function restartGame(){
 function shareResult(){
   const stars = document.getElementById('cStarsDisp').textContent;
   const score = document.getElementById('cQuizScore').textContent;
-  const text  = `🌙 Doa Harian — BabyMo.id\nAku belajar 6 doa harian bersama Baby Mo!\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama di BabyMo.id 🐻\n#BabyMo #DoaHarian #BelajarIslam`;
-  if(navigator.share){ navigator.share({title:'BabyMo Doa Harian', text, url:'https://babymo.id'}).catch(()=>{}); }
+  if(window.BabyMo && BabyMo.shareScore){ BabyMo.shareScore(score, stars, 'Aku belajar 6 doa harian bersama Baby Mo! Yuk coba juga 🌙'); return; }
+  const text  = `🌙 Doa Harian — Baby Mo\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama Baby Mo!\nhttps://play.babymo.id/babymo-doa-harian.html\n#BabyMo #DoaHarian`;
+  if(navigator.share){ navigator.share({title:'Baby Mo — Doa Harian', text, url:'https://play.babymo.id/babymo-doa-harian.html'}).catch(()=>{}); }
   else{ navigator.clipboard?.writeText(text).then(() => showToast('📤','Disalin!')); }
 }
 
@@ -951,5 +969,6 @@ function showToast(e, t){
   initVoices();
 })();
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

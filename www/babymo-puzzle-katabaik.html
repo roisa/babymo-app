@@ -6,7 +6,7 @@
 <meta name="theme-color" content="#07200E">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>BabyMo · Puzzle Kalimat Thayyibah</title>
+<title>Puzzle Kalimat Thayyibah — Belajar Kata Baik untuk Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
@@ -926,6 +926,20 @@ body{
   .theme-emoji{font-size:42px}
 }
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-puzzle-katabaik.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Puzzle Kalimat Thayyibah — Belajar Kata Baik untuk Anak | Baby Mo">
+<meta property="og:description" content="Belajar kalimat thayyibah &amp; akhlak mulia lewat puzzle kata.">
+<meta property="og:url" content="https://play.babymo.id/babymo-puzzle-katabaik.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-puzzle-katabaik.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Puzzle Kalimat Thayyibah — Belajar Kata Baik untuk Anak | Baby Mo">
+<meta name="twitter:description" content="Belajar kalimat thayyibah &amp; akhlak mulia lewat puzzle kata.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-puzzle-katabaik.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Puzzle Kalimat Thayyibah — Baby Mo","url":"https://play.babymo.id/babymo-puzzle-katabaik.html","description":"Belajar kalimat thayyibah & akhlak mulia lewat puzzle kata.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-puzzle-katabaik.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Puzzle Kalimat Thayyibah","item":"https://play.babymo.id/babymo-puzzle-katabaik.html"}]}]}</script>
 </head>
 <body>
 <div class="bg-deco" id="bgDeco"></div>
@@ -1009,6 +1023,7 @@ body{
 
   <div class="celebration-actions">
     <button class="btn btn-secondary" id="replayBtn">🔊 Dengar</button>
+    <button class="btn btn-secondary" onclick="window.BabyMo&&BabyMo.share({title:'Kata Baik — Baby Mo',message:'Aku belajar kata-kata baik & akhlak mulia bareng Baby Mo! 💖'})">📤 Bagikan</button>
     <button class="btn btn-secondary" id="celebCollBtn">📚 Koleksi</button>
     <button class="btn btn-gold" id="celebNewBtn">🎮 Lagi!</button>
   </div>
@@ -1661,5 +1676,6 @@ init();
 // Unlock audio on first user gesture (iOS Safari requirement)
 document.addEventListener('click', () => audio.ensureCtx(), { once: true });
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
-<meta name="description" content="Kenalan dengan Baby Mo! — Puzzle interaktif untuk anak">
-<title>👋 Kenalan dengan Baby Mo!</title>
+<meta name="description" content="Puzzle interaktif untuk mengenal maskot Baby Mo — seru, ramah anak, dan edukatif.">
+<title>Kenalan dengan Baby Mo — Puzzle Interaktif Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
@@ -303,7 +303,24 @@ body::before{
 .spark{position:fixed;pointer-events:none;z-index:100;font-size:var(--sz,16px);
   animation:sparkFly var(--dur,0.8s) ease forwards;}
 
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.hdr{max-width:680px!important;}}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-puzzle.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Kenalan dengan Baby Mo — Puzzle Interaktif Anak | Baby Mo">
+<meta property="og:description" content="Puzzle interaktif untuk mengenal maskot Baby Mo — seru, ramah anak, dan edukatif.">
+<meta property="og:url" content="https://play.babymo.id/babymo-puzzle.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-puzzle.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kenalan dengan Baby Mo — Puzzle Interaktif Anak | Baby Mo">
+<meta name="twitter:description" content="Puzzle interaktif untuk mengenal maskot Baby Mo — seru, ramah anak, dan edukatif.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-puzzle.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Kenalan dengan Baby Mo — Baby Mo","url":"https://play.babymo.id/babymo-puzzle.html","description":"Puzzle interaktif untuk mengenal maskot Baby Mo — seru, ramah anak, dan edukatif.","inLanguage":"id-ID","genre":"Puzzle","image":"https://play.babymo.id/og/babymo-puzzle.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":2,"suggestedMaxAge":6},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Kenalan dengan Baby Mo","item":"https://play.babymo.id/babymo-puzzle.html"}]}]}</script>
 </head>
 <body>
 
@@ -401,6 +418,7 @@ body::before{
       <a href="./index.html" class="play-btn">
         🎮 Yuk Main Bersama Baby Mo!
       </a>
+      <a href="#" class="play-btn" style="background:rgba(240,232,216,.08);color:#E8B060;margin-top:10px;" onclick="event.preventDefault();window.BabyMo&&BabyMo.share({title:'Kenalan dengan Baby Mo',message:'Kenalan yuk sama Baby Mo — sahabat kecil islami! 🐻'})">📤 Bagikan Baby Mo</a>
     </div>
 
   </div>
@@ -811,5 +829,6 @@ setInterval(() => {
 window.addEventListener('pagehide', () => { if(moIntroAudio){ moIntroAudio.pause(); } });
 document.addEventListener('visibilitychange', () => { if(document.hidden && moIntroAudio){ moIntroAudio.pause(); } });
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="description" content="Huruf Hijaiyah — Belajar 28 huruf Arab bersama Baby Mo!">
-<title>🌙 Huruf Hijaiyah · BabyMo</title>
+<meta name="description" content="Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.">
+<title>Belajar Huruf Hijaiyah Anak — 28 Huruf Arab + Audio | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
@@ -258,7 +258,24 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .toast.show{transform:translate(-50%,-50%) scale(1);}
 .toast-e{font-size:28px;}
 .toast-t{font-size:14px;font-weight:900;color:#fff;margin-top:2px;}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.about-item,.choices-grid,.feedback-bar,.intro-topbar,.lesson-path,.letter-card,.nav-row,.q-card,.quiz-topbar,.res-btns,.res-card,.w-start,.w-strip{max-width:680px!important;}}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-hijaiyah.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Belajar Huruf Hijaiyah Anak — 28 Huruf Arab + Audio | Baby Mo">
+<meta property="og:description" content="Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.">
+<meta property="og:url" content="https://play.babymo.id/babymo-hijaiyah.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-hijaiyah.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Belajar Huruf Hijaiyah Anak — 28 Huruf Arab + Audio | Baby Mo">
+<meta name="twitter:description" content="Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-hijaiyah.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Belajar Huruf Hijaiyah Anak — Baby Mo","url":"https://play.babymo.id/babymo-hijaiyah.html","description":"Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-hijaiyah.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Belajar Huruf Hijaiyah Anak","item":"https://play.babymo.id/babymo-hijaiyah.html"}]}]}</script>
 </head>
 <body>
 
@@ -381,6 +398,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="res-btns">
     <button class="res-btn-sec" onclick="goHome()">🏠 Menu</button>
     <button class="res-btn-pri" id="resNextBtn" onclick="goNextLesson()">Pelajaran Berikutnya →</button>
+  </div>
+  <div class="res-btns" style="margin-top:10px;">
+    <button class="res-btn-sec" style="flex:1;" onclick="window.BabyMo&&BabyMo.share({title:'Huruf Hijaiyah — Baby Mo',message:'Aku belajar huruf hijaiyah bareng Baby Mo! Yuk coba juga 🌙'})">📤 Bagikan</button>
   </div>
 </div>
 
@@ -1077,5 +1097,6 @@ function showToast(e,t){
   initWelcome();
 })();
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>
