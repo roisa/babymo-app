@@ -61,6 +61,18 @@
     } catch (e) {}
   }
 
+  // ---- Offline support --------------------------------------
+  // Registers the service worker so games load fast and work without
+  // wifi. The browser only allows this in a secure context, so a
+  // failure (file://, http) is harmless and swallowed.
+  function initSW() {
+    try {
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker.register("/sw.js").catch(function () {});
+      }
+    } catch (e) {}
+  }
+
   // ---- Identity ---------------------------------------------
   function gameName() {
     try {
@@ -318,8 +330,12 @@
 
   preloadMascot();
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", initAnalytics);
+    document.addEventListener("DOMContentLoaded", function () {
+      initAnalytics();
+      initSW();
+    });
   } else {
     initAnalytics();
+    initSW();
   }
 })();

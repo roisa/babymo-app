@@ -500,6 +500,26 @@ body::before{
 .install-hint .x:active{background:rgba(255,255,255,.06);}
 .install-hint.hide{display:none;}
 
+/* ============= PARENT-TRUST PILLS ============= */
+.trust-row{
+  display:flex; flex-wrap:wrap; gap:7px;
+  padding:0 16px; margin:-6px 0 22px;
+}
+.trust-pill{
+  font-size:11px; font-weight:800; letter-spacing:.2px;
+  color:var(--green-lt);
+  background:rgba(109,184,130,.10);
+  border:.5px solid rgba(109,184,130,.22);
+  padding:6px 11px; border-radius:var(--r-pill);
+}
+
+/* Visually-hidden, still read by search engines & screen readers */
+.sr-only{
+  position:absolute!important; width:1px; height:1px;
+  padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0);
+  white-space:nowrap; border:0;
+}
+
 /* Large phones / small tablets — keep the cozy phone-frame look, centered */
 @media (min-width:520px) and (max-width:819px){
   body{background:#06100A;}
@@ -581,7 +601,7 @@ body::before{
     <!-- ============= TAB 1: BERANDA (HOME) ============= -->
     <section class="tab-pane active" id="pane-home" data-title="Baby Mo">
       <div class="large-title-wrap">
-        <div class="large-title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</div>
+        <h1 class="large-title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</h1>
         <div class="large-subtitle" id="greetSub">Bismillah, yuk mulai belajar!</div>
       </div>
 
@@ -609,9 +629,17 @@ body::before{
 
       <!-- Quick stats -->
       <div class="quick-row">
-        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">9</div><div class="qs-lbl">Game</div></div>
+        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">10</div><div class="qs-lbl">Game</div></div>
         <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">6</div><div class="qs-lbl">Doa</div></div>
         <div class="qs"><div class="qs-icon">ك</div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
+      </div>
+
+      <!-- Parent-trust signals -->
+      <div class="trust-row" aria-label="Kenapa orang tua tenang">
+        <span class="trust-pill">✓ Gratis</span>
+        <span class="trust-pill">✓ Tanpa Iklan</span>
+        <span class="trust-pill">✓ Main Tanpa Internet</span>
+        <span class="trust-pill">✓ Aman untuk Anak</span>
       </div>
 
       <!-- Featured horizontal scroll -->
@@ -704,7 +732,7 @@ body::before{
     <section class="tab-pane" id="pane-games" data-title="Game">
       <div class="large-title-wrap">
         <div class="large-title">Game <em>Baby Mo</em></div>
-        <div class="large-subtitle">9 game islami untuk si kecil</div>
+        <div class="large-subtitle">10 game islami untuk si kecil</div>
       </div>
 
       <!-- Add to home screen hint -->
@@ -716,7 +744,7 @@ body::before{
 
       <div class="sec-head" style="margin-top:4px;">
         <div class="sec-title">Semua Game</div>
-        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;">9 game</span>
+        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;">10 game</span>
       </div>
 
       <div class="icon-grid">
@@ -917,7 +945,7 @@ body::before{
           <div class="lrow-icon">🎮</div>
           <div class="lrow-body">
             <div class="lrow-title">Total Game</div>
-            <div class="lrow-sub">9 game siap dimainkan</div>
+            <div class="lrow-sub">10 game siap dimainkan</div>
           </div>
         </div>
         <div class="lrow">
@@ -949,15 +977,41 @@ body::before{
         </div>
       </div>
 
-      <div class="list-group-title">Brand</div>
+      <div class="list-group-title">Privasi & Keamanan</div>
       <div class="list-group">
         <div class="lrow">
+          <div class="lrow-icon">🚫</div>
+          <div class="lrow-body">
+            <div class="lrow-title">Tanpa Iklan & Pelacakan</div>
+            <div class="lrow-sub">Tidak ada iklan dan tidak mengumpulkan data anak</div>
+          </div>
+        </div>
+        <div class="lrow">
+          <div class="lrow-icon">📶</div>
+          <div class="lrow-body">
+            <div class="lrow-title">Bisa Dimainkan Offline</div>
+            <div class="lrow-sub">Setelah dibuka sekali, main tanpa internet</div>
+          </div>
+        </div>
+        <div class="lrow">
+          <div class="lrow-icon gold">✅</div>
+          <div class="lrow-body">
+            <div class="lrow-title">Konten Ditinjau</div>
+            <div class="lrow-sub">Doa & materi islami dirujuk dari sumber terpercaya</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="list-group-title">Brand</div>
+      <div class="list-group">
+        <a class="lrow" href="https://babymo.id" target="_blank" rel="noopener">
           <div class="lrow-icon">🐻</div>
           <div class="lrow-body">
             <div class="lrow-title">Baby Mo</div>
-            <div class="lrow-sub">babymo.id</div>
+            <div class="lrow-sub">Doa, hadith & panduan parenting di babymo.id</div>
           </div>
-        </div>
+          <div class="lrow-chev">›</div>
+        </a>
         <div class="lrow">
           <div class="lrow-icon purple">💚</div>
           <div class="lrow-body">
