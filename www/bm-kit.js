@@ -319,23 +319,144 @@
     } catch (e) {}
   }
 
+  // ---- Mo Companion (reactions) -----------------------------
+  // Makes Baby Mo present across every game: a pose + speech bubble that
+  // pops in on greet / correct / wrong / win, personalized with the
+  // child's name. Reuses the existing emotional poses.
+  var POSE = "/babymo-companion/mo-assets/";
+  function moLang() {
+    try { return localStorage.getItem("bm_lang") === "en" ? "en" : "id"; }
+    catch (e) { return "id"; }
+  }
+  function childName() {
+    try { return (localStorage.getItem("mo_child_name") || "").trim(); }
+    catch (e) { return ""; }
+  }
+  var PHRASES = {
+    greet: { pose: "mo-waving",
+      id: ["Halo{n}! Ayo main bareng Mo! 🌙", "Assalamu'alaikum{n}! ✨", "Senang ketemu kamu{n}! 💚"],
+      en: ["Hi{n}! Let's play with Mo! 🌙", "Assalamu'alaikum{n}! ✨", "Happy to see you{n}! 💚"] },
+    correct: { pose: "mo-excited",
+      id: ["Masya Allah, hebat! 🌟", "Betul sekali! 💚", "Pintar{n}! ⭐"],
+      en: ["Masha Allah, great! 🌟", "That's right! 💚", "Smart{n}! ⭐"] },
+    wrong: { pose: "mo-hopeful",
+      id: ["Coba lagi ya, kamu pasti bisa! 💪", "Hampir! Ayo sekali lagi 🌱"],
+      en: ["Try again, you can do it! 💪", "Almost! Once more 🌱"] },
+    win: { pose: "mo-thankful",
+      id: ["Alhamdulillah, selesai! 🎉", "Masya Allah, kamu hebat{n}! 🏆", "Subhanallah, keren! ⭐⭐⭐"],
+      en: ["Alhamdulillah, done! 🎉", "Masha Allah, great job{n}! 🏆", "Subhanallah, awesome! ⭐⭐⭐"] },
+    pray: { pose: "mo-praying",
+      id: ["Yuk sholat bareng Mo 🕌"], en: ["Let's pray with Mo 🕌"] },
+  };
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+  function fillName(s) {
+    var n = childName();
+    return n ? s.replace(/\{n\}/g, " " + n) : s.replace(/\{n\}/g, "");
+  }
+  function ensureMoStyle() {
+    if (document.getElementById("bm-mo-style")) return;
+    var st = document.createElement("style");
+    st.id = "bm-mo-style";
+    st.textContent =
+      "#bm-mo{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));" +
+      "transform:translate(-50%,150%);z-index:99998;display:flex;align-items:flex-end;gap:10px;" +
+      "pointer-events:none;transition:transform .42s cubic-bezier(.2,.9,.25,1.2);max-width:92vw;}" +
+      "#bm-mo.show{transform:translate(-50%,0);}" +
+      "#bm-mo img{width:74px;height:74px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));}" +
+      "#bm-mo .bm-bub{background:#fff;color:#173a27;font:800 14px/1.3 'Nunito',system-ui,sans-serif;" +
+      "padding:11px 15px;border-radius:16px;box-shadow:0 8px 26px rgba(0,0,0,.35);position:relative;max-width:240px;}" +
+      "#bm-mo .bm-bub::after{content:'';position:absolute;left:-7px;bottom:16px;border:7px solid transparent;border-right-color:#fff;}";
+    document.head.appendChild(st);
+  }
+  var moTimer = null;
+  function react(type, opts) {
+    try {
+      opts = opts || {};
+      var cfg = PHRASES[type] || PHRASES.greet;
+      ensureMoStyle();
+      var box = document.getElementById("bm-mo");
+      if (!box) {
+        box = document.createElement("div");
+        box.id = "bm-mo";
+        box.innerHTML = '<img alt=""><div class="bm-bub"></div>';
+        document.body.appendChild(box);
+      }
+      var msg = opts.message || fillName(pick(cfg[moLang()] || cfg.id));
+      box.querySelector("img").src = POSE + (opts.pose || cfg.pose) + ".png";
+      box.querySelector(".bm-bub").textContent = msg;
+      void box.offsetWidth;
+      box.classList.add("show");
+      try { if (navigator.vibrate) navigator.vibrate(type === "win" ? [18, 40, 18] : 10); } catch (e) {}
+      clearTimeout(moTimer);
+      moTimer = setTimeout(function () { box.classList.remove("show"); },
+        opts.duration || (type === "win" ? 2600 : 2000));
+    } catch (e) {}
+  }
+
+  // Auto-celebrate when a known win/complete screen becomes visible (once).
+  var WIN_SEL =
+    "#completeScreen,#s-success,#gameover,#s-complete,#celebration,#celebOverlay,.complete-hero,#bdone,#pjdone";
+  function watchWin() {
+    try {
+      var fired = false, obs;
+      function vis(el) {
+        if (!el) return false;
+        var cs = getComputedStyle(el);
+        if (cs.display === "none" || cs.visibility === "hidden" || parseFloat(cs.opacity) === 0) return false;
+        var r = el.getBoundingClientRect();
+        return r.width > 0 && r.height > 0; // works for position:fixed too
+      }
+      function check() {
+        if (fired) return;
+        var els = document.querySelectorAll(WIN_SEL);
+        for (var i = 0; i < els.length; i++) {
+          if (vis(els[i])) { fired = true; react("win"); if (obs) obs.disconnect(); return; }
+        }
+      }
+      obs = new MutationObserver(check);
+      obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class", "style"] });
+      check();
+    } catch (e) {}
+  }
+
+  // Greet on game pages (skip the portal + pages that have their own Mo),
+  // throttled so bouncing between games doesn't spam.
+  function maybeGreet() {
+    try {
+      var p = location.pathname;
+      if (p === "/" || /\/index\.html$/.test(p) || /companion|pray-with-mo/.test(p)) return;
+      var last = parseInt(sessionStorage.getItem("bm_greet_t") || "0", 10);
+      if (Date.now() - last < 45000) return;
+      sessionStorage.setItem("bm_greet_t", String(Date.now()));
+      setTimeout(function () { react("greet"); }, 700);
+    } catch (e) {}
+  }
+
   // ---- Expose + init ----------------------------------------
   window.BabyMo = window.BabyMo || {};
   window.BabyMo.share = share;
   window.BabyMo.shareScore = shareScore;
   window.BabyMo.track = track;
   window.BabyMo.toast = toast;
+  window.BabyMo.react = react;
   // Exposed for the verification harness / previews.
   window.BabyMo._resultDataURL = buildResultDataURL;
+
+  function initCompanion() {
+    maybeGreet();
+    watchWin();
+  }
 
   preloadMascot();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function () {
       initAnalytics();
       initSW();
+      initCompanion();
     });
   } else {
     initAnalytics();
     initSW();
+    initCompanion();
   }
 })();
