@@ -421,8 +421,13 @@
 /* tablet/iPad — widen the play area */
 @media(min-width:820px){.panel{max-width:680px!important;}}
 
-/* bm-letterbox: comfortable centered column on tablet/desktop */
-@media(min-width:760px){#frame, #game{max-width:540px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
+/* Desktop / iMac: the game world is responsive (WORLD_W follows the viewport
+   aspect), so the canvas fills the screen widescreen — no letterbox bars.
+   The #frame already spans 100vw×100vh; just keep the start/over panels
+   from getting too wide on a big screen. */
+@media(min-width:760px){
+  #hud { padding-left: max(env(safe-area-inset-left), 24px); padding-right: max(env(safe-area-inset-right), 24px); }
+}
 </style>
 <link rel="canonical" href="https://play.babymo.id/baby-mo-forehand-beat.html">
 <meta name="robots" content="index,follow">
@@ -578,12 +583,26 @@ const OBSTACLE_PATTERN = [
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-// Logical (game world) dimensions, fixed aspect 9:16
-const WORLD_W = 540;
+// Logical (game world) dimensions. Height is fixed (all physics/ground are
+// pinned to it); WIDTH is responsive to the viewport aspect so the world is a
+// tall portrait on phones and a wide widescreen stage on desktop/iMac — more
+// horizontal runner track, no letterbox bars. Recomputed in resize().
 const WORLD_H = 960;
+let WORLD_W = 540;
+const WORLD_W_MIN = 540;   // phone portrait
+const WORLD_W_MAX = 1707;  // ~16:9 on a tall stage
+
+function computeWorldW() {
+  const ar = window.innerWidth / window.innerHeight; // viewport aspect
+  // World aspect follows the viewport so the canvas fills it with no bars,
+  // clamped so the world never gets absurdly wide/narrow.
+  WORLD_W = Math.max(WORLD_W_MIN, Math.min(WORLD_W_MAX, Math.round(WORLD_H * ar)));
+}
+computeWorldW();
 let scale = 1, offsetX = 0, offsetY = 0;
 
 function resize() {
+  computeWorldW();
   const rect = canvas.getBoundingClientRect();
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(rect.width * dpr);
@@ -594,6 +613,7 @@ function resize() {
   scale = Math.min(sx, sy);
   offsetX = (canvas.width - WORLD_W * scale) / 2;
   offsetY = (canvas.height - WORLD_H * scale) / 2;
+  if (typeof rebuildBackground === 'function') rebuildBackground();
 }
 window.addEventListener('resize', resize);
 
@@ -612,7 +632,9 @@ const BUFFER_MS = 110;           // buffer for early taps
 const BASE_SPEED = 280;          // px/s
 const MAX_SPEED = 460;
 const SPEED_RAMP = 4;            // +px/s per second of total play time
-const SPAWN_LEAD_X = WORLD_W + 80; // where obstacles enter from
+// Obstacles enter just past the right edge. WORLD_W is responsive, so this
+// must read it live (function, not a frozen const).
+const spawnLeadX = () => WORLD_W + 80;
 const SONG_DURATION = 39.32;     // seconds (used to detect song loop)
 const MAX_HEARTS = 3;
 const MAX_AIR_JUMPS = 2;          // 1 ground + 2 air = up to 3 jumps total
@@ -750,27 +772,32 @@ logoImg.src = ASSETS.logo;
 document.getElementById('logo-img').src = ASSETS.logo;
 
 /* ─── Background (parallax) ─────────────────────────────────────────────── */
+// Decoration counts scale with world width so a wide desktop stage stays
+// populated (vs. a near-empty sky on a 1707-wide world).
 const bgState = {
-  cloudsFar: Array.from({length: 5}, (_,i) => ({
+  cloudsFar: [], cloudsNear: [], trees: [], grassBlades: [],
+  bgScrollFar: 0, bgScrollNear: 0, bgScrollGround: 0
+};
+function rebuildBackground() {
+  const wf = WORLD_W / 540; // density factor relative to the original portrait
+  bgState.cloudsFar = Array.from({length: Math.round(5 * wf)}, () => ({
     x: Math.random() * WORLD_W, y: 80 + Math.random() * 120,
     s: 0.5 + Math.random() * 0.4, w: 60 + Math.random() * 50
-  })),
-  cloudsNear: Array.from({length: 3}, (_,i) => ({
+  }));
+  bgState.cloudsNear = Array.from({length: Math.round(3 * wf)}, () => ({
     x: Math.random() * WORLD_W, y: 180 + Math.random() * 80,
     s: 0.9 + Math.random() * 0.4, w: 80 + Math.random() * 60
-  })),
-  trees: Array.from({length: 8}, (_,i) => ({
+  }));
+  bgState.trees = Array.from({length: Math.round(8 * wf)}, (_,i) => ({
     x: i * 90 + Math.random() * 30, h: 120 + Math.random() * 50,
     color: ['#7BBE52','#6CC247','#94D26F'][i%3]
-  })),
-  grassBlades: Array.from({length: 50}, (_,i) => ({
+  }));
+  bgState.grassBlades = Array.from({length: Math.round(50 * wf)}, () => ({
     x: Math.random() * WORLD_W, y: GROUND_Y + 18 + Math.random() * 20,
     h: 6 + Math.random() * 8
-  })),
-  bgScrollFar: 0,
-  bgScrollNear: 0,
-  bgScrollGround: 0
-};
+  }));
+}
+rebuildBackground();
 
 function drawCloud(x, y, w) {
   ctx.fillStyle = 'rgba(255,255,255,0.92)';
@@ -1105,7 +1132,7 @@ function spawnObstacle(beatTime) {
   const type = OBSTACLE_TYPES.find(o => o.key === key);
   state.obstacles.push({
     type: key,
-    x: SPAWN_LEAD_X,
+    x: spawnLeadX(),
     y: GROUND_Y,
     w: type.w, h: type.h,
     targetTime: beatTime,
@@ -1544,7 +1571,7 @@ function update(dt) {
     const beat = BEATS[state.obstacleIdx];
     const pIdx = (state.obstacleIdx + state.patternOffset) % OBSTACLE_PATTERN.length;
     const wantSpawn = OBSTACLE_PATTERN[pIdx] === 1;
-    const travel = (SPAWN_LEAD_X - PLAYER_X) / state.speed;
+    const travel = (spawnLeadX() - PLAYER_X) / state.speed;
     if (beat < WARMUP) { state.obstacleIdx++; continue; }
     if (state.songTime >= beat - travel) {
       if (wantSpawn) spawnObstacle(beat);
