@@ -83,6 +83,21 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 }
 .pjitem:active{transform:scale(.97);}
 
+/* cloth-part highlight glows over Baby Mo (step 2) */
+.pjhi{position:absolute;transform:translate(-50%,-50%) scale(.55);border-radius:50%;
+  pointer-events:none;opacity:0;mix-blend-mode:screen;
+  transition:opacity .55s ease, transform .55s cubic-bezier(.34,1.56,.64,1);}
+.pjhi.on{opacity:1;transform:translate(-50%,-50%) scale(1);}
+.pjhi::after{content:'';position:absolute;inset:0;border-radius:50%;
+  box-shadow:0 0 0 2px rgba(255,255,255,.35), 0 0 14px 2px currentColor;}
+
+/* Baby Mo head peeking in the pillow window (step 4) */
+.blkhead{width:62px;height:62px;border-radius:50%;overflow:hidden;position:relative;
+  background:radial-gradient(circle at 50% 40%,rgba(140,150,247,.22),transparent 70%);
+  box-shadow:inset 0 0 0 2px rgba(179,188,255,.22);transition:filter .5s;}
+.blkhead img{position:absolute;width:242%;height:242%;left:-67.7%;object-fit:cover;
+  transition:top .6s ease, opacity .4s;}
+
 .doa-card{
   background:rgba(255,255,255,.04);
   border:2px solid var(--border);
@@ -161,7 +176,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
     <div style="text-align:center;">
       <div style="position:relative;display:inline-block;">
-        <img class="mo-logo" src="baby-mo-poses/baby-mo-pose-09.png" alt="Baby Mo" style="width:170px;height:170px;object-fit:contain;"/>
+        <img class="mo-logo" src="baby-mo-poses/baby-mo-pose-07.png" alt="Baby Mo" style="width:170px;height:170px;object-fit:contain;"/>
         <div style="position:absolute;top:10px;right:-10px;pointer-events:none;">
           <span style="display:block;font-size:13px;font-weight:900;color:rgba(200,144,64,.45);animation:zzFloat 2s 0s ease-in-out infinite;font-family:Nunito,sans-serif;">z</span>
           <span style="display:block;font-size:20px;font-weight:900;color:rgba(200,144,64,.55);animation:zzFloat 2.5s .5s ease-in-out infinite;font-family:Nunito,sans-serif;">z</span>
@@ -220,7 +235,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div id="sleepcontent" style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;transition:opacity 1.2s;padding:40px;">
 
     <div style="position:relative;display:inline-block;animation:bt 4s ease-in-out infinite;">
-      <img src="baby-mo-poses/baby-mo-pose-12.png" alt="Baby Mo" style="width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(110,123,242,.4));"/>
+      <img src="baby-mo-poses/baby-mo-pose-09.png" alt="Baby Mo" style="width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(110,123,242,.4));"/>
       <div style="position:absolute;top:5px;right:-8px;pointer-events:none;">
         <span style="display:block;font-size:12px;font-weight:900;color:rgba(200,144,64,.4);animation:zzFloat 1.8s 0s ease infinite;font-family:Nunito,sans-serif;">z</span>
         <span style="display:block;font-size:19px;font-weight:900;color:rgba(200,144,64,.5);animation:zzFloat 2.3s .45s ease infinite;font-family:Nunito,sans-serif;">z</span>
@@ -412,7 +427,7 @@ function buildBrush(wrap,done){
     '<div class="shead"><div class="snum">Langkah 1 dari 4</div><div class="stitle">🪥 Gosok Gigi</div><div class="shint">Geser kiri ← → kanan untuk menyikat!</div></div>'
     +'<div style="display:flex;justify-content:center;padding:4px 0 2px;flex-shrink:0;position:relative;">'
     +'<div style="position:relative;display:inline-block;">'
-    +'<div style="width:128px;height:128px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 42%,rgba(140,150,247,.28),rgba(26,23,64,.3) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgba(179,188,255,.25);animation:mof 3.6s ease-in-out infinite;"><img src="baby-mo-poses/baby-mo-pose-33.png" alt="Baby Mo" style="width:230%;height:230%;object-fit:cover;object-position:50% 4%;margin-left:-65%;"/></div>'
+    +'<div style="width:150px;height:150px;border-radius:50%;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 42%,rgba(140,150,247,.28),rgba(26,23,64,.3) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgba(179,188,255,.25);animation:mof 3.6s ease-in-out infinite;"><img src="baby-mo-poses/baby-mo-pose-33.png" alt="Baby Mo" style="position:absolute;width:281%;height:281%;left:-88%;top:-32.5%;object-fit:cover;"/></div>'
     +'<div id="brushOverlay" style="position:absolute;bottom:18px;right:-10px;font-size:30px;transform:rotate(22deg);transition:transform .2s;filter:drop-shadow(0 2px 8px rgba(62,207,184,.5));">🪥</div>'
     +'<div id="toothGlow" style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:38px;height:8px;background:rgba(62,207,184,0);border-radius:99px;transition:background .4s;"></div>'
     +'</div></div>'
@@ -492,15 +507,16 @@ function buildPajamas(wrap,done){
     {emoji:'🧸',label:'Ambil Boneka', color:'#C89040'}
   ];
   var tapped=0;
-  var overlayColors=['','rgba(144,112,200,.28)','rgba(88,120,200,.22)'];
+  var hiIds=['hiTorso','hiLegs',null];  // shirt→torso, pants→legs, doll→none
 
   wrap.innerHTML=
     '<div class="shead"><div class="snum">Langkah 2 dari 4</div><div class="stitle">👕 Ganti Baju</div><div class="shint">Ketuk setiap item untuk memakainya!</div></div>'
     +'<div style="display:flex;justify-content:center;align-items:flex-end;gap:16px;padding:6px 0 2px;flex-shrink:0;">'
     +'<div id="boneka" style="font-size:52px;opacity:.18;transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.8);animation:bonkSway 3s ease-in-out infinite;">🧸</div>'
     +'<div style="position:relative;display:inline-block;">'
-    +'<img id="pjmo" src="baby-mo-poses/baby-mo-ok.png" alt="Baby Mo" style="width:122px;height:122px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;transition:filter .5s;"/>'
-    +'<div id="pjOverlay" style="position:absolute;inset:0;border-radius:50%;background:transparent;mix-blend-mode:color;pointer-events:none;transition:background .6s;"></div>'
+    +'<img id="pjmo" src="baby-mo-poses/baby-mo-ok.png" alt="Baby Mo" style="width:152px;height:152px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;transition:filter .5s;"/>'
+    +'<div id="hiTorso" class="pjhi" style="left:50%;top:53%;width:74px;height:52px;color:#B49CF0;background:radial-gradient(circle,rgba(160,128,224,.5),transparent 72%);"></div>'
+    +'<div id="hiLegs" class="pjhi" style="left:50%;top:78%;width:64px;height:54px;color:#7C9CE8;background:radial-gradient(circle,rgba(96,128,216,.5),transparent 72%);"></div>'
     +'<div id="pjSparkle" style="position:absolute;top:-8px;right:-8px;font-size:22px;opacity:0;transition:opacity .4s;animation:pu 1.5s ease-in-out infinite;">⭐</div>'
     +'</div>'
     +'<div id="moonDeco" style="font-size:36px;opacity:.18;transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.8);">🌙</div>'
@@ -528,8 +544,8 @@ function buildPajamas(wrap,done){
       el.querySelector('div').style.animation='pk .5s cubic-bezier(.34,1.56,.64,1)';
       el.querySelectorAll('div')[1].textContent='Sudah! ✓';
       el.querySelectorAll('div')[1].style.color=item.color;
-      var overlay=document.getElementById('pjOverlay');
-      if(overlay&&i<2) overlay.style.background=overlayColors[tapped]||'';
+      // light up the matching cloth part on Baby Mo
+      if(hiIds[i]){var hi=document.getElementById(hiIds[i]);if(hi)hi.classList.add('on');}
       if(tapped===2){
         var mo=document.getElementById('pjmo');
         if(mo) mo.style.filter='drop-shadow(0 0 16px rgba(144,112,200,.55)) drop-shadow(0 4px 14px rgba(0,0,0,.35))';
@@ -541,6 +557,9 @@ function buildPajamas(wrap,done){
         if(bnk){bnk.style.opacity='1';bnk.style.transform='scale(1.1)';}
         if(moon){moon.style.opacity='1';moon.style.transform='scale(1.1)';}
         if(spk) spk.style.opacity='1';
+        // Baby Mo settles into a cozy, dressed-and-ready pose
+        var mo2=document.getElementById('pjmo');
+        if(mo2) mo2.src='baby-mo-poses/baby-mo-pose-07.png';
         el.querySelector('div').textContent='🥰';
       }
       if(tapped>=items.length){
@@ -857,7 +876,7 @@ function buildBlanket(wrap,done){
     +'<div style="position:absolute;top:0;left:0;right:0;height:22px;background:linear-gradient(90deg,#1A3A28,#243A30);border-radius:24px 24px 0 0;"></div>'
     +'<div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:rgba(0,10,5,.9);"></div>'
     +'<div style="position:absolute;top:28px;left:14px;right:14px;height:70px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:visible;">'
-    +'<div id="blf" style="font-size:52px;transition:all .6s;">👀</div>'
+    +'<div id="blf" class="blkhead"><img id="blfimg" src="baby-mo-poses/baby-mo-pose-12.png" alt="Baby Mo" style="top:-50%;"/></div>'
     +'<div id="zw" style="display:none;position:absolute;right:8px;top:-20px;">'
     +'<span style="font-size:12px;font-weight:900;color:rgba(200,144,64,.4);animation:zf 1.5s 0s ease infinite;display:inline-block;font-family:Nunito,sans-serif;">z</span>'
     +'<span style="font-size:18px;font-weight:900;color:rgba(200,144,64,.5);animation:zf 1.9s .4s ease infinite;display:inline-block;font-family:Nunito,sans-serif;">z</span>'
@@ -877,13 +896,17 @@ function buildBlanket(wrap,done){
     +'</div>'
     +'</div>';
 
+  var asleep=false;  // Baby Mo's eyes: open while awake, closed once snug
+  function setEyes(closed){
+    if(closed===asleep)return;asleep=closed;
+    var im=document.getElementById('blfimg');if(!im)return;
+    if(closed){im.src='baby-mo-poses/baby-mo-pose-09.png';im.style.top='-21%';}
+    else{im.src='baby-mo-poses/baby-mo-pose-12.png';im.style.top='-50%';}
+  }
   function upd(){
     var f=document.getElementById('blf');if(!f)return;
-    if(finished)f.textContent='😴';
-    else if(prog>.75)f.textContent='🌙';
-    else if(prog>.45)f.textContent='😌';
-    else if(prog>.2)f.textContent='😊';
-    else f.textContent='👀';
+    // past the halfway pull, the blanket is snug → Baby Mo drifts to sleep
+    setEyes(finished||prog>.45);
     var b=document.getElementById('blo');
     if(b)b.style.top=(88-prog*72)+'%';
     if(prog>.08){var a=document.getElementById('bla');if(a)a.style.display='none';}
@@ -895,8 +918,9 @@ function buildBlanket(wrap,done){
     var z=document.getElementById('zw');if(z)z.style.display='block';
     var t=document.getElementById('blt');if(t)t.textContent='💤 Selamat Tidur!';
     var h=document.getElementById('blh');if(h)h.textContent='Baby Mo sudah tidur... 🌙';
+    setEyes(true);
     var f=document.getElementById('blf');
-    if(f){f.textContent='😴';f.style.filter='drop-shadow(0 0 16px rgba(200,144,64,.5))';}
+    if(f)f.style.filter='drop-shadow(0 0 16px rgba(200,144,64,.5))';
     setTimeout(done,1300);
   }
 
