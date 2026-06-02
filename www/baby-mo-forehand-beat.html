@@ -78,11 +78,17 @@
   /* === HUD === */
   #hud {
     position: absolute; top: 0; left: 0; right: 0;
-    padding: max(env(safe-area-inset-top), 14px) 14px 0;
-    display: flex; align-items: center; justify-content: space-between;
+    padding: max(env(safe-area-inset-top), 18px) max(env(safe-area-inset-right), 16px) 0 max(env(safe-area-inset-left), 16px);
+    display: flex; align-items: flex-start; justify-content: space-between;
     gap: 10px;
     z-index: 10;
     pointer-events: none;
+    flex-wrap: nowrap;
+  }
+  /* Desktop/iPad: more top breathing room + cap so the HUD pills never
+     touch the top edge or crowd the center hearts on a wide screen. */
+  @media (min-width: 760px) {
+    #hud { padding-top: max(env(safe-area-inset-top), 26px); padding-left: 28px; padding-right: 28px; }
   }
   .hud-pill {
     background: rgba(255,255,255,0.92);
