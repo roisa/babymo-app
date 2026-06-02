@@ -18,7 +18,12 @@
 }
 html{height:100%}
 body{min-height:100%;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior-x:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
-body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),transparent 40%),radial-gradient(circle at 90% 30%,rgba(232,154,148,.08),transparent 40%);background-attachment:fixed}
+body{background-image:
+  radial-gradient(ellipse 60% 30% at 50% 0%,rgba(252,224,170,.55),transparent 60%),
+  radial-gradient(circle at 8% 12%,rgba(31,169,113,.11),transparent 42%),
+  radial-gradient(circle at 92% 26%,rgba(249,115,22,.08),transparent 42%),
+  radial-gradient(circle at 90% 82%,rgba(91,198,232,.07),transparent 45%);
+  background-attachment:fixed}
 
 /* ===== TOP BAR ===== */
 .topbar{
@@ -108,13 +113,20 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 .hero-prayer .hp-pulse{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,95,.7)}70%{box-shadow:0 0 0 6px rgba(201,162,95,0)}100%{box-shadow:0 0 0 0 rgba(201,162,95,0)}}
 .hero-mo{flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;position:relative}
-.hero-mo img{height:170px;object-fit:contain;display:block;margin-bottom:-2px;mix-blend-mode:multiply;clip-path:inset(2px)}
+.hero-mo img{height:170px;object-fit:contain;display:block;margin-bottom:-2px;filter:drop-shadow(0 10px 18px rgba(14,59,46,.28))}
 
 /* ===== HOME: FEATURES ===== */
-.features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.feat-card{background:#fff;border:1px solid rgba(14,59,46,.06);border-radius:18px;padding:16px 14px;cursor:pointer;box-shadow:0 4px 14px rgba(14,59,46,.06);transition:transform .15s;animation:rise .5s ease-out backwards}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.feat-card{background:linear-gradient(180deg,#FFFFFF 0%,#FCFAF3 100%);border:1px solid rgba(31,169,113,.12);border-radius:22px;padding:18px 16px;cursor:pointer;box-shadow:0 8px 20px -8px rgba(14,59,46,.16),inset 0 1px 0 rgba(255,255,255,.7);transition:transform .15s ease, box-shadow .15s ease;animation:rise .5s ease-out backwards}
 .feat-card:nth-child(1){animation-delay:.15s}.feat-card:nth-child(2){animation-delay:.18s}.feat-card:nth-child(3){animation-delay:.21s}.feat-card:nth-child(4){animation-delay:.24s}
 .feat-card:active{transform:scale(.97)}
+.feat-card:hover{transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(14,59,46,.22)}
+/* Playful coloured icon chips per feature card (kid-friendly) */
+.feat-card .fc-icon{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 10px -4px rgba(0,0,0,.2)}
+.feat-card:nth-child(1) .fc-icon{background:linear-gradient(160deg,#FFE3B0,#F6B45A)}
+.feat-card:nth-child(2) .fc-icon{background:linear-gradient(160deg,#FFE08A,#F4C04A)}
+.feat-card:nth-child(3) .fc-icon{background:linear-gradient(160deg,#BCE9D2,#5FCB9A)}
+.feat-card:nth-child(4) .fc-icon{background:linear-gradient(160deg,#FFD3CE,#F39A92)}
 .feat-card .fc-icon{font-size:28px;margin-bottom:8px}
 .feat-card .fc-title{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--green-deep);margin-bottom:2px}
 .feat-card .fc-sub{font-size:10px;color:var(--ink-soft);line-height:1.3}

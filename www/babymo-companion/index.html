@@ -24,7 +24,15 @@ html,body{height:100%;overflow:hidden;}
 body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-font-smoothing:antialiased;user-select:none;-webkit-user-select:none;}
 
 /* ===== APP SHELL ===== */
-.app{position:fixed;inset:0;display:flex;flex-direction:column;}
+.app{position:fixed;inset:0;display:flex;flex-direction:column;
+  /* Warm, alive backdrop so the prayer companion isn't a flat cream sheet */
+  background:
+    radial-gradient(ellipse 80% 45% at 50% 0%, #FCEFD2 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 12% 22%, rgba(31,169,113,.10), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 90% 30%, rgba(249,115,22,.08), transparent 60%),
+    linear-gradient(180deg, #FBF6EC 0%, #F4EFE2 100%);
+}
+.mo-glow{background:radial-gradient(circle,rgba(31,169,113,.30),rgba(201,162,95,.18) 45%,transparent 68%)!important;}
 .page{display:none;flex:1;flex-direction:column;padding-top:calc(var(--safe-top) + 6px);overflow:hidden;min-height:0;}
 .page.active{display:flex;animation:pageIn .28s ease-out;}
 @keyframes pageIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
@@ -86,7 +94,7 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 @keyframes glow{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.1);opacity:1}}
 .mo-wrap img{
   width:100%;height:100%;object-fit:contain;position:relative;z-index:1;
-  mix-blend-mode:multiply;
+  filter:drop-shadow(0 8px 16px rgba(14,59,46,.22));
 }
 .mo-wrap img.bounce{animation:moBounce .6s cubic-bezier(.34,1.56,.64,1);}
 @keyframes moBounce{0%{transform:scale(.85) rotate(-3deg);opacity:0}60%{transform:scale(1.05) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0)}}
@@ -106,9 +114,10 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 }
 .prayer-cell{
   display:flex;flex-direction:column;align-items:center;gap:2px;
-  padding:8px 2px 6px;border-radius:16px;background:#fff;
-  border:1.5px solid transparent;transition:all .2s;
-  box-shadow:0 1px 4px rgba(14,59,46,.04);
+  padding:10px 2px 8px;border-radius:18px;
+  background:linear-gradient(180deg,#FFFFFF 0%,#FCFAF4 100%);
+  border:1.5px solid rgba(31,169,113,.12);transition:all .2s;
+  box-shadow:0 4px 12px -4px rgba(14,59,46,.12),inset 0 1px 0 rgba(255,255,255,.6);
 }
 .pc-emoji{font-size:20px;}
 .pc-name{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
