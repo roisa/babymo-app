@@ -833,9 +833,11 @@ function handleAnswer(btn, isCorrect, dua){
     document.getElementById('qfbMeaning').textContent = `"${dua.meaningId}"`;
     setMoQuiz('celebrate');
     playCorrect();
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('correct');
     spawnParticles(8);
   } else {
     btn.classList.add('wrong');
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
     document.querySelectorAll('.q-choice').forEach(b => {
       const lbl = b.querySelector('.qc-label');
       if(lbl && lbl.textContent === DUAS[QUIZ_Q[quizIdx]].quizLabel) b.classList.add('correct');

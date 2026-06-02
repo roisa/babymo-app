@@ -641,6 +641,7 @@ function checkMatch(){
 
   if(isMatch){
     matched++;
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('correct');
     const pct = (matched/activeDuas.length)*100;
     document.getElementById('progBar').style.width = pct+'%';
     document.getElementById('matchDisp').textContent = matched;
@@ -657,6 +658,7 @@ function checkMatch(){
   } else {
     a.classList.add('wrong');
     b.classList.add('wrong');
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
     setTimeout(()=>{
       a.classList.remove('flipped','wrong');
       b.classList.remove('flipped','wrong');

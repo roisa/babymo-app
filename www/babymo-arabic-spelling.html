@@ -1534,9 +1534,13 @@ function onTileTap(tile) {
   }
   if (!target) {
     tile.classList.add('wrong');
+    // Encourage on a wrong tap (a reaction every correct letter would be
+    // too noisy in a spelling game — correct letters just get a soft sfx).
+    if (window.BabyMo && BabyMo.react) BabyMo.react('wrong');
     setTimeout(function () { tile.classList.remove('wrong'); }, 450);
     return;
   }
+  if (window.BabyMo && BabyMo.sfx) BabyMo.sfx('correct');
   flyLetterToSlot(tile, target, letter);
 }
 
