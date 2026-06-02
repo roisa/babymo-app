@@ -20,15 +20,14 @@
   var MASCOT_SRC = "/Logo_Baby_Mo_Transparant.png";
 
   // ---- CONFIG ------------------------------------------------
-  // Privacy-first analytics. Plausible is the default (no cookies,
-  // GDPR-friendly). It only loads on the real domain, so local and
-  // in-app opens never pollute the numbers.
+  // Privacy-first analytics via Cloudflare Web Analytics — free, no
+  // cookies, no PII, GDPR-friendly. It only loads on the real domain, so
+  // local/in-app opens never pollute the numbers.
   //
-  // To turn analytics ON: create a site at https://plausible.io
-  // (or self-host) for "play.babymo.id" — no code change needed.
-  // To switch to GA4 instead: see the note at initAnalytics().
-  // To disable entirely: set ANALYTICS_DOMAIN to "".
-  var ANALYTICS_DOMAIN = "play.babymo.id";
+  // To turn analytics ON: create a free site for "play.babymo.id" at
+  //   Cloudflare dashboard → Web Analytics → add a site → copy the token,
+  // then paste it below. No other change needed. Leave "" to keep it off.
+  var CF_BEACON_TOKEN = ""; // e.g. "abc123...". Empty = analytics disabled.
 
   function isProd() {
     return location.hostname === "play.babymo.id";
@@ -37,27 +36,21 @@
   // ---- Analytics --------------------------------------------
   function initAnalytics() {
     try {
-      if (!ANALYTICS_DOMAIN || !isProd()) return;
-      // Plausible (privacy-friendly). For GA4 instead, replace the two
-      // lines below with the gtag.js snippet and your measurement ID.
-      window.plausible =
-        window.plausible ||
-        function () {
-          (window.plausible.q = window.plausible.q || []).push(arguments);
-        };
+      if (!CF_BEACON_TOKEN || !isProd()) return;
       var s = document.createElement("script");
       s.defer = true;
-      s.setAttribute("data-domain", ANALYTICS_DOMAIN);
-      s.src = "https://plausible.io/js/script.outbound-links.js";
+      s.src = "https://static.cloudflareinsights.com/beacon.min.js";
+      s.setAttribute("data-cf-beacon", '{"token":"' + CF_BEACON_TOKEN + '"}');
       document.head.appendChild(s);
     } catch (e) {}
   }
 
+  // Lightweight custom-event hook. Cloudflare Web Analytics is page-view
+  // based (no custom events on the free tier), so this is a safe no-op
+  // that still works if you later swap in an events-capable provider.
   function track(event, props) {
     try {
-      if (window.plausible) {
-        window.plausible(event, props ? { props: props } : undefined);
-      }
+      if (typeof window.bmTrack === "function") window.bmTrack(event, props);
     } catch (e) {}
   }
 
@@ -353,6 +346,19 @@
   };
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
 
+  // No-repeat picker: never return the same item twice in a row (per key),
+  // so Mo's pose and phrase feel dynamic rather than looping the same one.
+  var _last = {};
+  function pickNoRepeat(arr, key) {
+    if (!arr || !arr.length) return undefined;
+    if (arr.length === 1) return arr[0];
+    var prev = _last[key], v;
+    var guard = 0;
+    do { v = arr[Math.floor(Math.random() * arr.length)]; } while (v === prev && ++guard < 8);
+    _last[key] = v;
+    return v;
+  }
+
   // Preload every reaction pose during idle time so a pose never flashes
   // blank the first time a greet/correct/wrong/win fires (the swap is then
   // instant from cache). Runs once, low-priority, after the page settles.
@@ -412,13 +418,17 @@
         box.innerHTML = '<div class="bm-pose"><img alt=""></div><div class="bm-bub"></div>';
         document.body.appendChild(box);
       }
-      var msg = opts.message || fillName(pick(cfg[moLang()] || cfg.id));
+      var msg = opts.message || fillName(pickNoRepeat(cfg[moLang()] || cfg.id, type + "_msg"));
       var poseName = opts.pose ||
-        (cfg.poses ? pick(cfg.poses) : (cfg.pose || "baby-mo-pose-01"));
+        (cfg.poses ? pickNoRepeat(cfg.poses, type + "_pose") : (cfg.pose || "baby-mo-pose-01"));
       box.querySelector("img").src = POSE + poseName + ".png";
       box.querySelector(".bm-bub").textContent = msg;
       void box.offsetWidth;
       box.classList.add("show");
+      // Matching sound (silent if muted); win also drops a star in the jar
+      // unless the caller opts out (opts.star === false).
+      if (opts.sound !== false) playSfx(type === "greet" ? null : type);
+      if (type === "win" && opts.star !== false) addStars(1);
       try { if (navigator.vibrate) navigator.vibrate(type === "win" ? [18, 40, 18] : 10); } catch (e) {}
       clearTimeout(moTimer);
       moTimer = setTimeout(function () { box.classList.remove("show"); },
@@ -465,6 +475,68 @@
     } catch (e) {}
   }
 
+  // ---- Sound (synthesized SFX, no asset files) ---------------
+  // Gentle WebAudio chimes for tap / correct / wrong / win, with a parent
+  // mute toggle persisted in localStorage. Synthesized so there's nothing
+  // extra to download and it works offline.
+  var _ac = null;
+  function audioCtx() {
+    try {
+      if (_ac) return _ac;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      _ac = new AC();
+      return _ac;
+    } catch (e) { return null; }
+  }
+  function isMuted() {
+    try { return localStorage.getItem("bm_muted") === "1"; } catch (e) { return false; }
+  }
+  function setMuted(on) {
+    try { localStorage.setItem("bm_muted", on ? "1" : "0"); } catch (e) {}
+  }
+  // Play a short tone sequence: notes = [{f, t, d}] freq(Hz), start, dur (s)
+  function tones(notes, type) {
+    if (isMuted()) return;
+    var ac = audioCtx(); if (!ac) return;
+    try {
+      if (ac.state === "suspended") ac.resume();
+      var t0 = ac.currentTime;
+      notes.forEach(function (n) {
+        var o = ac.createOscillator(), g = ac.createGain();
+        o.type = type || "sine";
+        o.frequency.value = n.f;
+        var s = t0 + (n.t || 0), e = s + (n.d || 0.15);
+        g.gain.setValueAtTime(0, s);
+        g.gain.linearRampToValueAtTime(0.18, s + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.001, e);
+        o.connect(g); g.connect(ac.destination);
+        o.start(s); o.stop(e + 0.02);
+      });
+    } catch (e) {}
+  }
+  var SFX = {
+    tap:     function () { tones([{ f: 660, d: 0.08 }], "triangle"); },
+    correct: function () { tones([{ f: 660, t: 0 }, { f: 880, t: 0.09 }], "sine"); },
+    wrong:   function () { tones([{ f: 300, d: 0.18 }], "sine"); },
+    win:     function () { tones([{ f: 523, t: 0 }, { f: 659, t: 0.12 }, { f: 784, t: 0.24 }, { f: 1047, t: 0.36, d: 0.3 }], "sine"); },
+    star:    function () { tones([{ f: 988, t: 0, d: 0.1 }, { f: 1319, t: 0.08, d: 0.16 }], "sine"); }
+  };
+  function playSfx(name) { try { (SFX[name] || function () {})(); } catch (e) {} }
+
+  // ---- Reward jar (shared star total across all games) -------
+  var JAR_KEY = "bm_star_jar";
+  function getStars() {
+    try { return parseInt(localStorage.getItem(JAR_KEY) || "0", 10) || 0; } catch (e) { return 0; }
+  }
+  function addStars(n) {
+    n = n || 1;
+    var total = getStars() + n;
+    try { localStorage.setItem(JAR_KEY, String(total)); } catch (e) {}
+    playSfx("star");
+    return total;
+  }
+
   // ---- Expose + init ----------------------------------------
   window.BabyMo = window.BabyMo || {};
   window.BabyMo.share = share;
@@ -472,12 +544,26 @@
   window.BabyMo.track = track;
   window.BabyMo.toast = toast;
   window.BabyMo.react = react;
+  window.BabyMo.sfx = playSfx;
+  window.BabyMo.isMuted = isMuted;
+  window.BabyMo.setMuted = setMuted;
+  window.BabyMo.getStars = getStars;
+  window.BabyMo.addStars = addStars;
   // Exposed for the verification harness / previews.
   window.BabyMo._resultDataURL = buildResultDataURL;
 
   function initCompanion() {
     maybeGreet();
     watchWin();
+    // Unlock WebAudio on the first user gesture (iOS/Safari requirement).
+    var unlock = function () {
+      var ac = audioCtx();
+      if (ac && ac.state === "suspended") { try { ac.resume(); } catch (e) {} }
+      document.removeEventListener("pointerdown", unlock);
+      document.removeEventListener("touchstart", unlock);
+    };
+    document.addEventListener("pointerdown", unlock, { passive: true });
+    document.addEventListener("touchstart", unlock, { passive: true });
     // Warm the reaction-pose cache without competing with the game's own
     // loading: wait for idle (or a short delay as a fallback).
     var warm = function () { preloadPoses(); };
