@@ -89,13 +89,14 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   transition:opacity .55s ease, transform .55s cubic-bezier(.34,1.56,.64,1);}
 .pjhi.on{opacity:1;transform:translate(-50%,-50%) scale(1);}
 .pjhi::after{content:'';position:absolute;inset:0;border-radius:50%;
-  box-shadow:0 0 0 2px rgba(255,255,255,.35), 0 0 14px 2px currentColor;}
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.2), 0 0 12px 1px currentColor;}
 
-/* Baby Mo head peeking in the pillow window (step 4) */
-.blkhead{width:62px;height:62px;border-radius:50%;overflow:hidden;position:relative;
-  background:radial-gradient(circle at 50% 40%,rgba(140,150,247,.22),transparent 70%);
-  box-shadow:inset 0 0 0 2px rgba(179,188,255,.22);transition:filter .5s;}
-.blkhead img{position:absolute;width:242%;height:242%;left:-67.7%;object-fit:cover;
+/* Baby Mo's head & shoulders resting on the pillow (step 4) — no circle frame,
+   a soft natural crop that fades out at the bottom into the blanket. */
+.blkhead{width:84px;height:84px;overflow:hidden;position:relative;transition:filter .5s;
+  -webkit-mask-image:linear-gradient(180deg,#000 74%,transparent 99%);
+          mask-image:linear-gradient(180deg,#000 74%,transparent 99%);}
+.blkhead img{position:absolute;width:205%;height:205%;left:-50%;object-fit:cover;
   transition:top .6s ease, opacity .4s;}
 
 .doa-card{
@@ -108,6 +109,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   overflow:hidden;
 }
 .dua-ar.active{color:#fff!important;text-shadow:0 0 18px rgba(255,216,116,.9),0 0 6px rgba(255,216,116,.6);}
+/* Doa step progress dots */
+.ddot{width:24px;height:24px;border-radius:50%;background:rgba(255,255,255,.08);color:var(--cream-dim);font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;transition:.3s;}
+.ddot.active{background:linear-gradient(135deg,var(--green-lt),var(--purple));color:#fff;transform:scale(1.18);box-shadow:0 0 12px -2px var(--green);}
+.ddot.done{background:rgba(109,184,130,.28);color:var(--green-glow);}
+.ddot.ddstar.active{background:linear-gradient(135deg,var(--gold),var(--gold-lt));box-shadow:0 0 12px -2px var(--gold);}
+.ddot.ddstar.done{background:rgba(200,144,64,.25);color:var(--gold-lt);}
+.ddline{width:16px;height:2px;background:rgba(255,255,255,.12);border-radius:2px;}
 .doa-card.now-playing{border-color:var(--gold-lt)!important;background:rgba(255,216,116,.10)!important;box-shadow:0 0 0 1px rgba(255,216,116,.4),0 8px 22px -8px rgba(224,184,77,.4);}
 .doa-card.played{border-color:rgba(140,150,247,.45);background:rgba(110,123,242,.08);}
 .doa-card.combined{border-color:rgba(200,144,64,.25);background:rgba(200,144,64,.05);}
@@ -428,8 +436,8 @@ function buildBrush(wrap,done){
     +'<div style="display:flex;justify-content:center;padding:4px 0 2px;flex-shrink:0;position:relative;">'
     +'<div style="position:relative;display:inline-block;">'
     +'<div style="width:150px;height:150px;border-radius:50%;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 42%,rgba(140,150,247,.28),rgba(26,23,64,.3) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgba(179,188,255,.25);animation:mof 3.6s ease-in-out infinite;"><img src="baby-mo-poses/baby-mo-pose-33.png" alt="Baby Mo" style="position:absolute;width:281%;height:281%;left:-88%;top:-32.5%;object-fit:cover;"/></div>'
-    +'<div id="brushOverlay" style="position:absolute;bottom:18px;right:-10px;font-size:30px;transform:rotate(22deg);transition:transform .2s;filter:drop-shadow(0 2px 8px rgba(62,207,184,.5));">🪥</div>'
-    +'<div id="toothGlow" style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:38px;height:8px;background:rgba(62,207,184,0);border-radius:99px;transition:background .4s;"></div>'
+    +'<div id="brushOverlay" style="position:absolute;bottom:10px;left:44px;font-size:32px;transform:rotate(22deg);transition:transform .2s;filter:drop-shadow(0 2px 8px rgba(62,207,184,.5));">🪥</div>'
+    +'<div id="toothGlow" style="position:absolute;bottom:18px;left:45%;transform:translateX(-50%);width:42px;height:9px;background:rgba(62,207,184,0);border-radius:99px;transition:background .4s;"></div>'
     +'</div></div>'
     +'<div style="padding:0 24px;flex-shrink:0;">'
     +'<div style="background:rgba(255,255,255,.07);border-radius:99px;height:8px;overflow:hidden;margin-bottom:5px;"><div id="bprog" style="height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#3ECFB8,#7EE8DC);transition:width .3s;"></div></div>'
@@ -501,25 +509,40 @@ function buildBrush(wrap,done){
    STEP 2 — GANTI BAJU
 ══════════════════════════════════════════ */
 function buildPajamas(wrap,done){
+  // Sleep clothes drawn in Baby Mo's own colours (green romper, orange trim, cream star)
+  var SHIRT='<svg viewBox="0 0 64 60" width="52" height="52" style="overflow:visible;">'
+    +'<path d="M21 9 L7 18 Q5 19 6 22 L11 31 Q12 33 14 32 L20 28 L20 50 Q20 54 24 54 L40 54 Q44 54 44 50 L44 28 L50 32 Q52 33 53 31 L58 22 Q59 19 57 18 L43 9 Q38 14 32 14 Q26 14 21 9 Z" fill="#54C04A" stroke="#2F7E2C" stroke-width="2.4" stroke-linejoin="round"/>'
+    +'<path d="M25 10 Q32 17 39 10" fill="none" stroke="#F0913E" stroke-width="3.4" stroke-linecap="round"/>'
+    +'<path d="M14 31 L20 28" fill="none" stroke="#F0913E" stroke-width="3" stroke-linecap="round"/>'
+    +'<path d="M50 31 L44 28" fill="none" stroke="#F0913E" stroke-width="3" stroke-linecap="round"/>'
+    +'<path d="M32.0 23.8 L33.8 28.6 L38.8 28.8 L34.9 31.9 L36.2 36.8 L32.0 34.0 L27.8 36.8 L29.1 31.9 L25.2 28.8 L30.2 28.6 Z" fill="#FBE9C8"/>'
+    +'</svg>';
+  var PANTS='<svg viewBox="0 0 64 64" width="52" height="52" style="overflow:visible;">'
+    +'<path d="M18 14 H46 V24 L42 57 Q42 59 40 59 L35 59 Q33 59 33 57 L32 35 L31 57 Q31 59 29 59 L24 59 Q22 59 22 57 L18 24 Z" fill="#54C04A" stroke="#2F7E2C" stroke-width="2.4" stroke-linejoin="round"/>'
+    +'<rect x="17" y="12" width="30" height="7" rx="3.5" fill="#F0913E"/>'
+    +'<rect x="33" y="53" width="10" height="6" rx="3" fill="#F0913E"/>'
+    +'<rect x="21" y="53" width="10" height="6" rx="3" fill="#F0913E"/>'
+    +'</svg>';
   var items=[
-    {emoji:'👕',label:'Baju Tidur',   color:'#9070C8'},
-    {emoji:'🩲',label:'Celana Tidur', color:'#5878C8'},
-    {emoji:'🧸',label:'Ambil Boneka', color:'#C89040'}
+    {art:SHIRT,         label:'Baju Tidur',   color:'#54C04A'},
+    {art:PANTS,         label:'Celana Tidur', color:'#54C04A'},
+    {art:'<span style="font-size:50px;line-height:1;">🧸</span>', label:'Ambil Boneka', color:'#C89040'}
   ];
   var tapped=0;
   var hiIds=['hiTorso','hiLegs',null];  // shirt→torso, pants→legs, doll→none
 
   wrap.innerHTML=
     '<div class="shead"><div class="snum">Langkah 2 dari 4</div><div class="stitle">👕 Ganti Baju</div><div class="shint">Ketuk setiap item untuk memakainya!</div></div>'
-    +'<div style="display:flex;justify-content:center;align-items:flex-end;gap:16px;padding:6px 0 2px;flex-shrink:0;">'
-    +'<div id="boneka" style="font-size:52px;opacity:.18;transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.8);animation:bonkSway 3s ease-in-out infinite;">🧸</div>'
+    +'<div style="display:flex;justify-content:center;align-items:flex-end;gap:18px;padding:6px 0 2px;flex-shrink:0;">'
+    +'<div id="ambStar" style="font-size:26px;opacity:.16;transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.8);">⭐</div>'
     +'<div style="position:relative;display:inline-block;">'
     +'<img id="pjmo" src="baby-mo-poses/baby-mo-ok.png" alt="Baby Mo" style="width:152px;height:152px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;transition:filter .5s;"/>'
     +'<div id="hiTorso" class="pjhi" style="left:50%;top:53%;width:74px;height:52px;color:#B49CF0;background:radial-gradient(circle,rgba(160,128,224,.5),transparent 72%);"></div>'
     +'<div id="hiLegs" class="pjhi" style="left:50%;top:78%;width:64px;height:54px;color:#7C9CE8;background:radial-gradient(circle,rgba(96,128,216,.5),transparent 72%);"></div>'
-    +'<div id="pjSparkle" style="position:absolute;top:-8px;right:-8px;font-size:22px;opacity:0;transition:opacity .4s;animation:pu 1.5s ease-in-out infinite;">⭐</div>'
+    +'<div id="bearFront" style="position:absolute;left:50%;bottom:-4px;transform:translateX(-50%) scale(.4) rotate(-8deg);font-size:62px;line-height:1;opacity:0;transition:opacity .45s, transform .55s cubic-bezier(.34,1.56,.64,1);pointer-events:none;filter:drop-shadow(0 5px 12px rgba(0,0,0,.45));z-index:6;">🧸</div>'
+    +'<div id="pjSparkle" style="position:absolute;top:-8px;right:-8px;font-size:22px;opacity:0;transition:opacity .4s;animation:pu 1.5s ease-in-out infinite;z-index:7;">⭐</div>'
     +'</div>'
-    +'<div id="moonDeco" style="font-size:36px;opacity:.18;transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.8);">🌙</div>'
+    +'<div id="moonDeco" style="font-size:34px;opacity:.16;transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.8);">🌙</div>'
     +'</div>'
     +'<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:4px 24px;">'
     +'<div class="pjgrid" id="pjgrid"></div>'
@@ -532,7 +555,7 @@ function buildPajamas(wrap,done){
     el.className='pjitem';
     if(i===2)el.style.gridColumn='1/-1';
     el.innerHTML=
-      '<div style="font-size:52px;line-height:1;margin-bottom:8px;transition:all .3s;">'+item.emoji+'</div>'
+      '<div style="height:56px;display:flex;align-items:center;justify-content:center;margin-bottom:8px;transition:all .3s;">'+item.art+'</div>'
       +'<div style="font-size:13px;font-weight:800;color:var(--cream-dim);transition:color .3s;">'+item.label+'</div>';
 
     function tap(e){
@@ -551,11 +574,14 @@ function buildPajamas(wrap,done){
         if(mo) mo.style.filter='drop-shadow(0 0 16px rgba(144,112,200,.55)) drop-shadow(0 4px 14px rgba(0,0,0,.35))';
       }
       if(i===2){
-        var bnk=document.getElementById('boneka');
+        // the teddy hops in FRONT of Baby Mo, like she just grabbed it
+        var bear=document.getElementById('bearFront');
+        var star=document.getElementById('ambStar');
         var moon=document.getElementById('moonDeco');
         var spk=document.getElementById('pjSparkle');
-        if(bnk){bnk.style.opacity='1';bnk.style.transform='scale(1.1)';}
-        if(moon){moon.style.opacity='1';moon.style.transform='scale(1.1)';}
+        if(bear){bear.style.opacity='1';bear.style.transform='translateX(-50%) scale(1) rotate(0deg)';}
+        if(star){star.style.opacity='.9';star.style.transform='scale(1.1)';}
+        if(moon){moon.style.opacity='.9';moon.style.transform='scale(1.1)';}
         if(spk) spk.style.opacity='1';
         // Baby Mo settles into a cozy, dressed-and-ready pose
         var mo2=document.getElementById('pjmo');
@@ -583,272 +609,99 @@ function buildPajamas(wrap,done){
 ══════════════════════════════════════════ */
 function buildDoa(wrap,done){
 
-  var DUA_PARTS=[
-    {
-      num:'1', numColor:'#4A8860',
-      arabic:'بِسْمِكَ اللَّهُمَّ',
-      lat:'Bismika Allāhumma',
-      mean:'Dengan nama-Mu ya Allah',
-      speakArTxt:'بسمك اللهم',
-      speakIdTxt:'Bismika Allāhumma'
-    },
-    {
-      num:'2', numColor:'#8870C8',
-      arabic:'أَحْيَا وَأَمُوتُ',
-      lat:'ahyā wa amūtu',
-      mean:'aku hidup dan aku mati',
-      speakArTxt:'أحيا وأموت',
-      speakIdTxt:'ahya wa amut'
-    }
+  var PARTS=[
+    {ar:'بِسْمِكَ اللَّهُمَّ', lat:'Bismika Allāhumma', mean:'Dengan nama-Mu ya Allah', sAr:'بسمك اللهم', sId:'Bismika Allāhumma'},
+    {ar:'أَحْيَا وَأَمُوتُ',   lat:'aḥyā wa amūtu',     mean:'aku hidup dan aku mati',     sAr:'أحيا وأموت', sId:'ahya wa amut'}
   ];
-  var FULL={
-    arabic:'بِسْمِكَ اللَّهُمَّ أَحْيَا وَأَمُوتُ',
-    lat:'Bismika Allāhumma aḥyā wa amūtu',
-    mean:'Dengan nama-Mu ya Allah, aku hidup dan aku mati',
-    speakArTxt:'بسمك اللهم أحيا وأموت',
-    speakIdTxt:'Bismika Allāhumma ahya wa amut'
-  };
+  var FULL={ar:'بِسْمِكَ اللَّهُمَّ أَحْيَا وَأَمُوتُ', lat:'Bismika Allāhumma aḥyā wa amūtu', mean:'Dengan nama-Mu ya Allah, aku hidup dan aku mati', sAr:'بسمك اللهم أحيا وأموت', sId:'Bismika Allāhumma ahya wa amut'};
+  var STEPS=[PARTS[0],PARTS[1],FULL];
+  var doneAll=false, playing=false;
 
-  var played=[false,false,false];
-  var anyPlaying=false;
-
-  function checkEnable(){
-    var btn=document.getElementById('doaLanjut');
-    if(!btn)return;
-    if(played[2]){
-      btn.disabled=false;
-      btn.style.opacity='1';
-      btn.style.animation='pu 2.2s ease-in-out infinite';
-    }
-  }
-
-  function setPlayed(idx,cardId){
-    played[idx]=true;
-    var card=document.getElementById(cardId);
-    if(card){
-      card.classList.add('played');
-      var tick=card.querySelector('.card-tick');
-      if(tick) tick.style.display='flex';
-    }
-    checkEnable();
-  }
-
-  function showWaveFor(cardId,show){
-    var w=document.getElementById('wave-'+cardId);
-    if(w) w.style.display=show?'flex':'none';
-  }
-
-  /* ── KEY FIX: parameters renamed to speakIdTxt / speakArTxt
-     so they don't shadow the global speakAr() function ── */
-  function playPart(idx,cardId,speakIdTxt,speakArTxt,cb){
-    if(anyPlaying)return;
-    anyPlaying=true;
-    var btn=document.getElementById('snd-'+cardId);
-    if(btn){btn.textContent='⏸ Sedang diputar...';btn.style.opacity='.7';}
-    showWaveFor(cardId,true);
-
-    /* Safety timeout — resets if audio silently fails on Android */
-    var safetyTimer=setTimeout(function(){
-      anyPlaying=false;
-      showWaveFor(cardId,false);
-      if(btn){btn.textContent='🔊 Dengar lagi';btn.style.opacity='1';}
-      setPlayed(idx,cardId);
-      if(cb)cb();
-    },12000);
-
-    speakMom(speakIdTxt,function(){
-      setTimeout(function(){
-        speakAr(speakArTxt,function(){
-          clearTimeout(safetyTimer);
-          anyPlaying=false;
-          showWaveFor(cardId,false);
-          if(btn){btn.textContent='🔊 Dengar lagi';btn.style.opacity='1';}
-          setPlayed(idx,cardId);
-          if(cb)cb();
-        });
-      },400);
-    });
-  }
-
-  function cardHTML(id,numLabel,numColor,arabic,lat,mean,btnLabel){
-    return '<div id="'+id+'" class="doa-card" style="margin-bottom:10px;">'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">'
-      +'<div style="width:28px;height:28px;border-radius:50%;background:'+numColor+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:#fff;flex-shrink:0;">'+numLabel+'</div>'
-      +'<button id="snd-'+id+'" style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:12px;font-weight:800;color:var(--cream-dim);cursor:pointer;transition:.15s;">'+btnLabel+'</button>'
-      +'<div class="card-tick" style="display:none;width:28px;height:28px;border-radius:50%;background:rgba(109,184,130,.2);border:2px solid var(--green-glow);align-items:center;justify-content:center;font-size:14px;color:var(--green-glow);flex-shrink:0;">✓</div>'
-      +'</div>'
-      +'<div id="ar-'+id+'" class="dua-ar" style="font-family:\'Scheherazade New\',serif;font-size:clamp(22px,6.5vw,30px);font-weight:700;color:var(--gold-lt);direction:rtl;text-align:right;line-height:1.7;margin-bottom:8px;transition:color .3s, text-shadow .3s;">'+arabic+'</div>'
-      +'<div style="height:1px;background:rgba(255,255,255,.06);margin-bottom:8px;"></div>'
-      +'<div style="font-size:12px;font-weight:700;color:var(--green-glow);font-style:italic;margin-bottom:3px;">'+lat+'</div>'
-      +'<div style="font-size:11px;color:var(--cream-dim);">'+mean+'</div>'
-      +'<div id="wave-'+id+'" style="display:none;justify-content:center;align-items:flex-end;height:18px;gap:3px;margin-top:8px;">'
-      +'<div style="width:3px;height:6px;border-radius:2px;background:rgba(200,144,64,.55);animation:wv .44s 0s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:11px;border-radius:2px;background:rgba(200,144,64,.6);animation:wv .52s .08s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:16px;border-radius:2px;background:rgba(200,144,64,.65);animation:wv .48s .16s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:11px;border-radius:2px;background:rgba(200,144,64,.6);animation:wv .56s .06s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:6px;border-radius:2px;background:rgba(200,144,64,.5);animation:wv .44s .12s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'</div>'
-      +'</div>';
-  }
+  var WAVE='<div style="width:3px;height:6px;border-radius:2px;background:rgba(200,144,64,.55);animation:wv .44s 0s ease-in-out infinite;transform-origin:bottom;"></div>'
+    +'<div style="width:3px;height:12px;border-radius:2px;background:rgba(200,144,64,.6);animation:wv .52s .08s ease-in-out infinite;transform-origin:bottom;"></div>'
+    +'<div style="width:3px;height:17px;border-radius:2px;background:rgba(200,144,64,.65);animation:wv .48s .16s ease-in-out infinite;transform-origin:bottom;"></div>'
+    +'<div style="width:3px;height:12px;border-radius:2px;background:rgba(200,144,64,.6);animation:wv .56s .06s ease-in-out infinite;transform-origin:bottom;"></div>'
+    +'<div style="width:3px;height:6px;border-radius:2px;background:rgba(200,144,64,.5);animation:wv .44s .12s ease-in-out infinite;transform-origin:bottom;"></div>';
 
   wrap.innerHTML=
-    '<div class="shead" style="padding-bottom:6px;"><div class="snum">Langkah 3 dari 4</div><div class="stitle">🤲 Baca Doa</div></div>'
+    '<div class="shead" style="padding-bottom:4px;"><div class="snum">Langkah 3 dari 4</div><div class="stitle">🤲 Baca Doa</div></div>'
+    +'<div style="flex:1;display:flex;flex-direction:column;min-height:0;padding:2px 18px 14px;gap:10px;">'
 
-    +'<div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px 16px;">'
-
-      /* Baby Mo head crop + speech bubble */
-      +'<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">'
-      +'<img src="baby-mo-poses/baby-mo-thank-you.png" alt="Baby Mo" class="mo-head"/>'
-      +'<div style="flex:1;background:rgba(44,90,62,.18);border:1px solid rgba(93,170,120,.22);border-radius:0 16px 16px 16px;padding:10px 13px;position:relative;margin-top:4px;">'
-      +'<div style="position:absolute;left:-8px;top:12px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:8px solid rgba(93,170,120,.22);"></div>'
-      +'<div style="font-size:13px;font-weight:700;color:var(--cream);line-height:1.5;">Yuk belajar doa sebelum tidur ya sayang... Dengarkan, lalu tirukan pelan-pelan! 🌙</div>'
-      +'</div></div>'
-
-      /* Badge */
-      +'<div style="text-align:center;margin-bottom:12px;">'
-      +'<span style="display:inline-block;background:rgba(200,144,64,.08);border:1px solid rgba(200,144,64,.2);border-radius:99px;padding:4px 16px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(232,176,96,.75);">🌙 DOA SEBELUM TIDUR</span>'
+      /* Baby Mo + speech bubble */
+      +'<div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">'
+      +'<img src="baby-mo-poses/baby-mo-thank-you.png" alt="Baby Mo" class="mo-head" style="width:50px;height:50px;">'
+      +'<div style="flex:1;background:rgba(44,90,62,.18);border:1px solid rgba(93,170,120,.22);border-radius:0 14px 14px 14px;padding:8px 12px;font-size:12.5px;font-weight:700;color:var(--cream);line-height:1.45;">Dengarkan doanya, lalu tirukan pelan-pelan ya sayang 🌙</div>'
       +'</div>'
 
-      /* ── PLAY ALL — one-tap, step-by-step with Arabic highlight ── */
-      +'<button id="playAll" style="width:100%;margin-bottom:12px;background:linear-gradient(135deg,var(--green-lt),var(--purple));border:none;border-radius:16px;padding:15px;font-family:inherit;font-size:16px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 8px 24px -6px rgba(110,123,242,.5),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .15s;display:flex;align-items:center;justify-content:center;gap:8px;">▶ Dengar Semua &amp; Tirukan</button>'
-
-      /* Part 1 card */
-      +cardHTML('card1','1','#4A8860',DUA_PARTS[0].arabic,DUA_PARTS[0].lat,DUA_PARTS[0].mean,'🔊 Dengar & Tirukan')
-
-      /* Part 2 card */
-      +cardHTML('card2','2','#8870C8',DUA_PARTS[1].arabic,DUA_PARTS[1].lat,DUA_PARTS[1].mean,'🔊 Dengar & Tirukan')
-
-      /* Combined card — FIX: badge is in normal flow, not absolute */
-      +'<div id="cardFull" class="doa-card combined" style="margin-bottom:10px;">'
-      +'<div style="display:flex;justify-content:center;margin-bottom:10px;">'
-      +'<div style="background:rgba(200,144,64,.12);border:1px solid rgba(200,144,64,.3);border-radius:99px;padding:4px 14px;font-size:9px;font-weight:800;letter-spacing:1.5px;color:var(--gold-lt);white-space:nowrap;">💛 GABUNGKAN KEDUANYA</div>'
+      /* STAGE — one Arabic that changes naturally as the doa plays */
+      +'<div id="doaStage" style="flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:9px;background:rgba(255,255,255,.04);border:1.5px solid var(--border);border-radius:22px;padding:14px 16px;position:relative;overflow:hidden;">'
+      +'<div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 30%,rgba(200,144,64,.07),transparent 70%);pointer-events:none;"></div>'
+      +'<div style="display:flex;gap:7px;align-items:center;z-index:1;">'
+      +'<span class="ddot" data-d="0">1</span><span class="ddline"></span><span class="ddot" data-d="1">2</span><span class="ddline"></span><span class="ddot ddstar" data-d="2">★</span>'
       +'</div>'
-      +'<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;">'
-      +'<div style="width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold-lt));display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;">★</div>'
-      +'<button id="snd-cardFull" style="flex:1;background:rgba(200,144,64,.1);border:1px solid rgba(200,144,64,.25);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:12px;font-weight:800;color:var(--gold-lt);cursor:pointer;transition:.15s;">🔊 Dengar Doa Lengkap</button>'
-      +'<div class="card-tick" style="display:none;width:28px;height:28px;border-radius:50%;background:rgba(200,144,64,.15);border:2px solid var(--gold-lt);align-items:center;justify-content:center;font-size:14px;color:var(--gold-lt);flex-shrink:0;">✓</div>'
-      +'</div>'
-      +'<div id="ar-cardFull" class="dua-ar" style="font-family:\'Scheherazade New\',serif;font-size:clamp(20px,5.5vw,26px);font-weight:700;color:var(--gold-lt);direction:rtl;text-align:right;line-height:1.7;margin-bottom:8px;transition:color .3s, text-shadow .3s;">'+FULL.arabic+'</div>'
-      +'<div style="height:1px;background:rgba(255,255,255,.06);margin-bottom:8px;"></div>'
-      +'<div style="font-size:12px;font-weight:700;color:var(--gold);font-style:italic;margin-bottom:3px;">'+FULL.lat+'</div>'
-      +'<div style="font-size:11px;color:var(--cream-dim);">'+FULL.mean+'</div>'
-      +'<div id="wave-cardFull" style="display:none;justify-content:center;align-items:flex-end;height:18px;gap:3px;margin-top:8px;">'
-      +'<div style="width:3px;height:6px;border-radius:2px;background:rgba(200,144,64,.55);animation:wv .44s 0s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:11px;border-radius:2px;background:rgba(200,144,64,.6);animation:wv .52s .08s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:16px;border-radius:2px;background:rgba(200,144,64,.65);animation:wv .48s .16s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:11px;border-radius:2px;background:rgba(200,144,64,.6);animation:wv .56s .06s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'<div style="width:3px;height:6px;border-radius:2px;background:rgba(200,144,64,.5);animation:wv .44s .12s ease-in-out infinite;transform-origin:bottom;"></div>'
-      +'</div>'
-      +'<div style="text-align:right;margin-top:6px;font-size:24px;opacity:.3;animation:pu 2.5s ease-in-out infinite;">⭐</div>'
+      +'<div id="stageAr" class="dua-ar" style="font-family:\'Scheherazade New\',serif;font-size:clamp(24px,7vw,34px);font-weight:700;color:var(--gold-lt);direction:rtl;line-height:1.7;z-index:1;transition:opacity .25s;">'+FULL.ar+'</div>'
+      +'<div id="stageLat" style="font-size:14px;font-weight:700;color:var(--green-glow);font-style:italic;z-index:1;transition:opacity .25s;">'+FULL.lat+'</div>'
+      +'<div id="stageMean" style="font-size:12.5px;color:var(--cream-dim);line-height:1.45;z-index:1;transition:opacity .25s;">'+FULL.mean+'</div>'
+      +'<div id="doaWave" style="display:none;justify-content:center;align-items:flex-end;height:18px;gap:3px;z-index:1;margin-top:2px;">'+WAVE+'</div>'
       +'</div>'
 
-      /* Artinya */
-      +'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;">'
-      +'<span style="font-size:20px;flex-shrink:0;">❤️</span>'
-      +'<div><div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:#E07070;margin-bottom:4px;">ARTINYA:</div>'
-      +'<div style="font-size:13px;color:var(--cream);line-height:1.55;">'+FULL.mean+'.</div></div>'
-      +'</div>'
+      /* Play-all */
+      +'<button id="playAll" style="flex-shrink:0;width:100%;background:linear-gradient(135deg,var(--green-lt),var(--purple));border:none;border-radius:16px;padding:14px;font-family:inherit;font-size:16px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 8px 24px -6px rgba(110,123,242,.5),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .15s,opacity .2s;">▶ Dengar Semua &amp; Tirukan</button>'
 
-      /* Mom tip */
-      +'<div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:14px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:flex-start;gap:10px;">'
-      +'<span style="font-size:20px;flex-shrink:0;">🌙</span>'
-      +'<div><div style="font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:4px;">MOM\'S TIP</div>'
-      +'<div style="font-size:12px;color:var(--cream-dim);line-height:1.55;">Ajak si kecil ucapkan pelan-pelan setiap malam ya... Allah Maha Mendengar doa anak yang tulus. ❤️</div></div>'
-      +'</div>'
-
-      /* Lanjut button */
-      +'<button id="doaLanjut" disabled style="width:100%;background:linear-gradient(135deg,var(--green-lt),var(--purple));border:none;border-radius:16px;padding:16px;font-family:inherit;font-size:17px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 8px 24px -6px rgba(110,123,242,.5);opacity:.35;transition:opacity .35s;">Aamiin 🤲 — Lanjut Tidur</button>'
+      /* Continue */
+      +'<button id="doaLanjut" disabled style="flex-shrink:0;width:100%;background:linear-gradient(135deg,var(--gold),var(--gold-lt));border:none;border-radius:16px;padding:14px;font-family:inherit;font-size:16px;font-weight:900;color:#3A2A10;cursor:pointer;box-shadow:0 8px 24px -6px rgba(200,144,64,.5);opacity:.38;transition:opacity .35s;">Aamiin 🤲 — Lanjut Tidur</button>'
 
     +'</div>';
 
-  /* Wire part 1 button */
-  document.getElementById('snd-card1').addEventListener('click',function(){
-    playPart(0,'card1',DUA_PARTS[0].speakIdTxt,DUA_PARTS[0].speakArTxt,null);
-  });
+  function setStage(s){
+    var ar=document.getElementById('stageAr'),lat=document.getElementById('stageLat'),mn=document.getElementById('stageMean');
+    if(!ar)return;
+    ar.style.opacity='0';lat.style.opacity='0';mn.style.opacity='0';
+    setTimeout(function(){
+      ar.textContent=s.ar; lat.textContent=s.lat; mn.textContent=s.mean;
+      ar.style.opacity='1';lat.style.opacity='1';mn.style.opacity='1';
+    },170);
+  }
+  function dot(i,cls){var d=document.querySelector('.ddot[data-d="'+i+'"]');if(d){d.classList.remove('active','done');if(cls)d.classList.add(cls);}}
+  function wave(on){var w=document.getElementById('doaWave');if(w)w.style.display=on?'flex':'none';}
+  function arHL(on){var ar=document.getElementById('stageAr');if(ar)ar.classList.toggle('active',on);}
 
-  /* Wire part 2 button */
-  document.getElementById('snd-card2').addEventListener('click',function(){
-    playPart(1,'card2',DUA_PARTS[1].speakIdTxt,DUA_PARTS[1].speakArTxt,null);
-  });
-
-  /* Wire full dua button — FIX: local var for Arabic text, no shadowing */
-  document.getElementById('snd-cardFull').addEventListener('click',function(){
-    if(anyPlaying)return;
-    anyPlaying=true;
-    var btn=document.getElementById('snd-cardFull');
-    if(btn){btn.textContent='⏸ Sedang diputar...';btn.style.opacity='.7';}
-    showWaveFor('cardFull',true);
-
-    var fullArTxt=FULL.speakArTxt; /* local copy — no shadowing */
-    var fullIdTxt=FULL.speakIdTxt;
-
-    var safetyTimer=setTimeout(function(){
-      anyPlaying=false;showWaveFor('cardFull',false);
-      if(btn){btn.textContent='🔊 Dengar Doa Lengkap';btn.style.opacity='1';}
-      setPlayed(2,'cardFull');
-    },14000);
-
-    speakMom(fullIdTxt,function(){
+  function speakStep(s,cb){
+    playing=true; wave(true); arHL(true);
+    var safety=setTimeout(function(){playing=false;wave(false);arHL(false);if(cb)cb();},13000);
+    speakMom(s.sId,function(){
       setTimeout(function(){
-        speakAr(fullArTxt,function(){
-          clearTimeout(safetyTimer);
-          anyPlaying=false;showWaveFor('cardFull',false);
-          if(btn){btn.textContent='🔊 Dengar Doa Lengkap';btn.style.opacity='1';}
-          setPlayed(2,'cardFull');
+        speakAr(s.sAr,function(){
+          clearTimeout(safety); playing=false; wave(false); arHL(false); if(cb)cb();
         });
       },350);
     });
-  });
-
-  /* ── PLAY ALL: step-by-step in one tap, with Arabic highlight ── */
-  function hl(cardId,on){
-    var ar=document.getElementById('ar-'+cardId);
-    var card=document.getElementById(cardId);
-    if(ar) ar.classList.toggle('active',on);
-    if(card) card.classList.toggle('now-playing',on);
   }
-  document.getElementById('playAll').addEventListener('click',function(){
-    if(anyPlaying)return;
-    var pa=document.getElementById('playAll');
-    pa.disabled=true; pa.style.opacity='.6'; pa.textContent='▶ Sedang diputar...';
-    // sequence: part 1 → part 2 → full, highlighting each
-    function step1(){
-      hl('card1',true);
-      playPart(0,'card1',DUA_PARTS[0].speakIdTxt,DUA_PARTS[0].speakArTxt,function(){
-        hl('card1',false); setTimeout(step2,500);
-      });
-    }
-    function step2(){
-      hl('card2',true);
-      playPart(1,'card2',DUA_PARTS[1].speakIdTxt,DUA_PARTS[1].speakArTxt,function(){
-        hl('card2',false); setTimeout(stepFull,500);
-      });
-    }
-    function stepFull(){
-      hl('cardFull',true); anyPlaying=true;
-      var btn=document.getElementById('snd-cardFull');
-      if(btn){btn.textContent='⏸ Sedang diputar...';btn.style.opacity='.7';}
-      showWaveFor('cardFull',true);
-      var st=setTimeout(function(){anyPlaying=false;showWaveFor('cardFull',false);hl('cardFull',false);if(btn){btn.textContent='🔊 Dengar Doa Lengkap';btn.style.opacity='1';}setPlayed(2,'cardFull');finish();},14000);
-      speakMom(FULL.speakIdTxt,function(){
-        setTimeout(function(){
-          speakAr(FULL.speakArTxt,function(){
-            clearTimeout(st);anyPlaying=false;showWaveFor('cardFull',false);hl('cardFull',false);
-            if(btn){btn.textContent='🔊 Dengar Doa Lengkap';btn.style.opacity='1';}
-            setPlayed(2,'cardFull');finish();
-          });
-        },350);
-      });
-    }
-    function finish(){
-      pa.disabled=false; pa.style.opacity='1'; pa.textContent='🔁 Dengar Lagi';
-    }
-    step1();
-  });
 
-  /* Lanjut button */
+  function runAll(){
+    if(playing)return;
+    var pa=document.getElementById('playAll');
+    pa.disabled=true; pa.style.opacity='.6'; pa.textContent='▶ Sedang diputar...'; pa.style.animation='';
+    function go(i){
+      if(i>=STEPS.length){
+        doneAll=true;
+        pa.disabled=false; pa.style.opacity='1'; pa.textContent='🔁 Dengar Lagi';
+        var lj=document.getElementById('doaLanjut');
+        if(lj){lj.disabled=false; lj.style.opacity='1'; lj.style.animation='pu 2.2s ease-in-out infinite';}
+        return;
+      }
+      for(var k=0;k<3;k++){ if(k<i) dot(k,'done'); else if(k===i) dot(k,'active'); else dot(k,''); }
+      setStage(STEPS[i]);
+      setTimeout(function(){
+        speakStep(STEPS[i],function(){ dot(i,'done'); setTimeout(function(){go(i+1);},450); });
+      },230);
+    }
+    go(0);
+  }
+  document.getElementById('playAll').addEventListener('click',runAll);
+
   document.getElementById('doaLanjut').addEventListener('click',function(){
-    if(!played[2])return;
+    if(!doneAll)return;
     speechSynthesis.cancel();
     wrap.innerHTML=
       '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;">'
@@ -875,8 +728,8 @@ function buildBlanket(wrap,done){
     +'<div class="bedframe">'
     +'<div style="position:absolute;top:0;left:0;right:0;height:22px;background:linear-gradient(90deg,#1A3A28,#243A30);border-radius:24px 24px 0 0;"></div>'
     +'<div style="position:absolute;bottom:0;left:0;right:0;height:50%;background:rgba(0,10,5,.9);"></div>'
-    +'<div style="position:absolute;top:28px;left:14px;right:14px;height:70px;background:rgba(255,255,255,.04);border:1.5px solid rgba(255,255,255,.08);border-radius:16px;display:flex;align-items:center;justify-content:center;overflow:visible;">'
-    +'<div id="blf" class="blkhead"><img id="blfimg" src="baby-mo-poses/baby-mo-pose-12.png" alt="Baby Mo" style="top:-50%;"/></div>'
+    +'<div style="position:absolute;top:22px;left:14px;right:14px;height:88px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.06);border-radius:18px;display:flex;align-items:center;justify-content:center;overflow:visible;">'
+    +'<div id="blf" class="blkhead"><img id="blfimg" src="baby-mo-poses/baby-mo-pose-12.png" alt="Baby Mo" style="top:-46%;"/></div>'
     +'<div id="zw" style="display:none;position:absolute;right:8px;top:-20px;">'
     +'<span style="font-size:12px;font-weight:900;color:rgba(200,144,64,.4);animation:zf 1.5s 0s ease infinite;display:inline-block;font-family:Nunito,sans-serif;">z</span>'
     +'<span style="font-size:18px;font-weight:900;color:rgba(200,144,64,.5);animation:zf 1.9s .4s ease infinite;display:inline-block;font-family:Nunito,sans-serif;">z</span>'
@@ -900,8 +753,8 @@ function buildBlanket(wrap,done){
   function setEyes(closed){
     if(closed===asleep)return;asleep=closed;
     var im=document.getElementById('blfimg');if(!im)return;
-    if(closed){im.src='baby-mo-poses/baby-mo-pose-09.png';im.style.top='-21%';}
-    else{im.src='baby-mo-poses/baby-mo-pose-12.png';im.style.top='-50%';}
+    if(closed){im.src='baby-mo-poses/baby-mo-pose-09.png';im.style.top='-20%';}
+    else{im.src='baby-mo-poses/baby-mo-pose-12.png';im.style.top='-46%';}
   }
   function upd(){
     var f=document.getElementById('blf');if(!f)return;
