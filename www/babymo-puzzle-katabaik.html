@@ -1539,7 +1539,24 @@ function showCelebration(){
 
   // Fill celebration: cropped character + theme emoji + text
   const charImg = document.getElementById('celebCharImg');
-  charImg.src = p.character || p.image;
+  // On iPad/tablet the embedded ~360px character art blurs when shown large,
+  // so swap in the crisp 800px pose-library equivalent (closest emotion per
+  // kalimat). Phones keep the lighter embedded art.
+  const KALIMAT_POSE = {
+    assalamualaikum:'baby-mo-pose-05', alhamdulillah:'baby-mo-yes',
+    astagfirullah:'baby-mo-pose-15', masyaallah:'baby-mo-wow',
+    lailahaillallah:'baby-mo-pose-19', subhanallah:'baby-mo-idea',
+    jazakallah:'baby-mo-thank-you', insyaallah:'baby-mo-ok',
+    innalillahi:'baby-mo-pose-15', barakallahufiik:'baby-mo-alright'
+  };
+  var isTablet = window.matchMedia && window.matchMedia('(min-width:760px)').matches;
+  var libPose = KALIMAT_POSE[p.id];
+  if (isTablet && libPose) {
+    charImg.src = 'baby-mo-poses/' + libPose + '.png';
+    charImg.style.objectFit = 'contain';
+  } else {
+    charImg.src = p.character || p.image;
+  }
   charImg.alt = p.title;
   const themeEmoji = document.getElementById('themeEmoji');
   themeEmoji.textContent = p.themeEmoji || '✨';
