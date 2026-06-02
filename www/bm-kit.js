@@ -186,18 +186,19 @@
         x.drawImage(mascotImg, cx - mw / 2, 360, mw, mh);
       }
 
-      // Score
-      var baseY = mascotImg ? 770 : 560;
+      // Score — tightened so the stars line never collides with the footer
+      var baseY = mascotImg ? 752 : 560;
       if (opts.score != null && opts.score !== "") {
         x.fillStyle = "#9EA89C";
-        x.font = "800 36px Nunito, system-ui, sans-serif";
+        x.font = "800 34px Nunito, system-ui, sans-serif";
         x.fillText("SKORKU", cx, baseY);
         x.fillStyle = "#6DB882";
-        x.font = "900 92px Nunito, system-ui, sans-serif";
-        x.fillText(String(opts.score), cx, baseY + 96);
+        x.font = "900 82px Nunito, system-ui, sans-serif";
+        x.fillText(String(opts.score), cx, baseY + 84);
         if (opts.stars) {
-          x.font = "900 64px Nunito, system-ui, sans-serif";
-          x.fillText(String(opts.stars), cx, baseY + 176);
+          x.fillStyle = "#E8B060";
+          x.font = "900 42px Nunito, system-ui, sans-serif";
+          x.fillText(String(opts.stars), cx, baseY + 142);
         }
       } else if (opts.message) {
         x.fillStyle = "#F0E8D8";

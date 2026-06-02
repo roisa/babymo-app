@@ -92,6 +92,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   position:relative;
   overflow:hidden;
 }
+.dua-ar.active{color:#fff!important;text-shadow:0 0 18px rgba(255,216,116,.9),0 0 6px rgba(255,216,116,.6);}
+.doa-card.now-playing{border-color:var(--gold-lt)!important;background:rgba(255,216,116,.10)!important;box-shadow:0 0 0 1px rgba(255,216,116,.4),0 8px 22px -8px rgba(224,184,77,.4);}
 .doa-card.played{border-color:rgba(140,150,247,.45);background:rgba(110,123,242,.08);}
 .doa-card.combined{border-color:rgba(200,144,64,.25);background:rgba(200,144,64,.05);}
 .doa-card.combined.played{border-color:rgba(200,144,64,.55);background:rgba(200,144,64,.1);}
@@ -410,7 +412,7 @@ function buildBrush(wrap,done){
     '<div class="shead"><div class="snum">Langkah 1 dari 4</div><div class="stitle">🪥 Gosok Gigi</div><div class="shint">Geser kiri ← → kanan untuk menyikat!</div></div>'
     +'<div style="display:flex;justify-content:center;padding:4px 0 2px;flex-shrink:0;position:relative;">'
     +'<div style="position:relative;display:inline-block;">'
-    +'<img src="baby-mo-poses/baby-mo-pose-25.png" alt="Baby Mo" style="width:130px;height:130px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;"/>'
+    +'<div style="width:128px;height:128px;border-radius:50%;overflow:hidden;background:radial-gradient(circle at 50% 42%,rgba(140,150,247,.28),rgba(26,23,64,.3) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgba(179,188,255,.25);animation:mof 3.6s ease-in-out infinite;"><img src="baby-mo-poses/baby-mo-pose-33.png" alt="Baby Mo" style="width:230%;height:230%;object-fit:cover;object-position:50% 4%;margin-left:-65%;"/></div>'
     +'<div id="brushOverlay" style="position:absolute;bottom:18px;right:-10px;font-size:30px;transform:rotate(22deg);transition:transform .2s;filter:drop-shadow(0 2px 8px rgba(62,207,184,.5));">🪥</div>'
     +'<div id="toothGlow" style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:38px;height:8px;background:rgba(62,207,184,0);border-radius:99px;transition:background .4s;"></div>'
     +'</div></div>'
@@ -656,7 +658,7 @@ function buildDoa(wrap,done){
       +'<button id="snd-'+id+'" style="flex:1;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:12px;font-weight:800;color:var(--cream-dim);cursor:pointer;transition:.15s;">'+btnLabel+'</button>'
       +'<div class="card-tick" style="display:none;width:28px;height:28px;border-radius:50%;background:rgba(109,184,130,.2);border:2px solid var(--green-glow);align-items:center;justify-content:center;font-size:14px;color:var(--green-glow);flex-shrink:0;">✓</div>'
       +'</div>'
-      +'<div style="font-family:\'Scheherazade New\',serif;font-size:clamp(22px,6.5vw,30px);font-weight:700;color:var(--gold-lt);direction:rtl;text-align:right;line-height:1.7;margin-bottom:8px;">'+arabic+'</div>'
+      +'<div id="ar-'+id+'" class="dua-ar" style="font-family:\'Scheherazade New\',serif;font-size:clamp(22px,6.5vw,30px);font-weight:700;color:var(--gold-lt);direction:rtl;text-align:right;line-height:1.7;margin-bottom:8px;transition:color .3s, text-shadow .3s;">'+arabic+'</div>'
       +'<div style="height:1px;background:rgba(255,255,255,.06);margin-bottom:8px;"></div>'
       +'<div style="font-size:12px;font-weight:700;color:var(--green-glow);font-style:italic;margin-bottom:3px;">'+lat+'</div>'
       +'<div style="font-size:11px;color:var(--cream-dim);">'+mean+'</div>'
@@ -688,6 +690,9 @@ function buildDoa(wrap,done){
       +'<span style="display:inline-block;background:rgba(200,144,64,.08);border:1px solid rgba(200,144,64,.2);border-radius:99px;padding:4px 16px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(232,176,96,.75);">🌙 DOA SEBELUM TIDUR</span>'
       +'</div>'
 
+      /* ── PLAY ALL — one-tap, step-by-step with Arabic highlight ── */
+      +'<button id="playAll" style="width:100%;margin-bottom:12px;background:linear-gradient(135deg,var(--green-lt),var(--purple));border:none;border-radius:16px;padding:15px;font-family:inherit;font-size:16px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 8px 24px -6px rgba(110,123,242,.5),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .15s;display:flex;align-items:center;justify-content:center;gap:8px;">▶ Dengar Semua &amp; Tirukan</button>'
+
       /* Part 1 card */
       +cardHTML('card1','1','#4A8860',DUA_PARTS[0].arabic,DUA_PARTS[0].lat,DUA_PARTS[0].mean,'🔊 Dengar & Tirukan')
 
@@ -704,7 +709,7 @@ function buildDoa(wrap,done){
       +'<button id="snd-cardFull" style="flex:1;background:rgba(200,144,64,.1);border:1px solid rgba(200,144,64,.25);border-radius:10px;padding:8px 10px;font-family:inherit;font-size:12px;font-weight:800;color:var(--gold-lt);cursor:pointer;transition:.15s;">🔊 Dengar Doa Lengkap</button>'
       +'<div class="card-tick" style="display:none;width:28px;height:28px;border-radius:50%;background:rgba(200,144,64,.15);border:2px solid var(--gold-lt);align-items:center;justify-content:center;font-size:14px;color:var(--gold-lt);flex-shrink:0;">✓</div>'
       +'</div>'
-      +'<div style="font-family:\'Scheherazade New\',serif;font-size:clamp(20px,5.5vw,26px);font-weight:700;color:var(--gold-lt);direction:rtl;text-align:right;line-height:1.7;margin-bottom:8px;">'+FULL.arabic+'</div>'
+      +'<div id="ar-cardFull" class="dua-ar" style="font-family:\'Scheherazade New\',serif;font-size:clamp(20px,5.5vw,26px);font-weight:700;color:var(--gold-lt);direction:rtl;text-align:right;line-height:1.7;margin-bottom:8px;transition:color .3s, text-shadow .3s;">'+FULL.arabic+'</div>'
       +'<div style="height:1px;background:rgba(255,255,255,.06);margin-bottom:8px;"></div>'
       +'<div style="font-size:12px;font-weight:700;color:var(--gold);font-style:italic;margin-bottom:3px;">'+FULL.lat+'</div>'
       +'<div style="font-size:11px;color:var(--cream-dim);">'+FULL.mean+'</div>'
@@ -774,6 +779,52 @@ function buildDoa(wrap,done){
         });
       },350);
     });
+  });
+
+  /* ── PLAY ALL: step-by-step in one tap, with Arabic highlight ── */
+  function hl(cardId,on){
+    var ar=document.getElementById('ar-'+cardId);
+    var card=document.getElementById(cardId);
+    if(ar) ar.classList.toggle('active',on);
+    if(card) card.classList.toggle('now-playing',on);
+  }
+  document.getElementById('playAll').addEventListener('click',function(){
+    if(anyPlaying)return;
+    var pa=document.getElementById('playAll');
+    pa.disabled=true; pa.style.opacity='.6'; pa.textContent='▶ Sedang diputar...';
+    // sequence: part 1 → part 2 → full, highlighting each
+    function step1(){
+      hl('card1',true);
+      playPart(0,'card1',DUA_PARTS[0].speakIdTxt,DUA_PARTS[0].speakArTxt,function(){
+        hl('card1',false); setTimeout(step2,500);
+      });
+    }
+    function step2(){
+      hl('card2',true);
+      playPart(1,'card2',DUA_PARTS[1].speakIdTxt,DUA_PARTS[1].speakArTxt,function(){
+        hl('card2',false); setTimeout(stepFull,500);
+      });
+    }
+    function stepFull(){
+      hl('cardFull',true); anyPlaying=true;
+      var btn=document.getElementById('snd-cardFull');
+      if(btn){btn.textContent='⏸ Sedang diputar...';btn.style.opacity='.7';}
+      showWaveFor('cardFull',true);
+      var st=setTimeout(function(){anyPlaying=false;showWaveFor('cardFull',false);hl('cardFull',false);if(btn){btn.textContent='🔊 Dengar Doa Lengkap';btn.style.opacity='1';}setPlayed(2,'cardFull');finish();},14000);
+      speakMom(FULL.speakIdTxt,function(){
+        setTimeout(function(){
+          speakAr(FULL.speakArTxt,function(){
+            clearTimeout(st);anyPlaying=false;showWaveFor('cardFull',false);hl('cardFull',false);
+            if(btn){btn.textContent='🔊 Dengar Doa Lengkap';btn.style.opacity='1';}
+            setPlayed(2,'cardFull');finish();
+          });
+        },350);
+      });
+    }
+    function finish(){
+      pa.disabled=false; pa.style.opacity='1'; pa.textContent='🔁 Dengar Lagi';
+    }
+    step1();
   });
 
   /* Lanjut button */
