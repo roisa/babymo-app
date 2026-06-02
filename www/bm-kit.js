@@ -362,9 +362,11 @@
       "transform:translate(-50%,150%);z-index:99998;display:flex;align-items:flex-end;gap:10px;" +
       "pointer-events:none;transition:transform .42s cubic-bezier(.2,.9,.25,1.2);max-width:92vw;}" +
       "#bm-mo.show{transform:translate(-50%,0);}" +
-      "#bm-mo img{width:76px;height:76px;object-fit:contain;flex:0 0 auto;border-radius:50%;" +
-      "background:radial-gradient(circle at 50% 60%, rgba(109,184,130,.45), rgba(14,59,46,.25) 55%, transparent 72%);" +
-      "filter:drop-shadow(0 6px 14px rgba(0,0,0,.4));}" +
+      "#bm-mo .bm-pose{position:relative;flex:0 0 auto;width:78px;height:78px;border-radius:50%;" +
+      "background:radial-gradient(circle at 50% 58%, rgba(63,208,140,.55), rgba(12,42,32,.55) 60%, rgba(12,42,32,0) 74%);" +
+      "display:flex;align-items:flex-end;justify-content:center;overflow:hidden;" +
+      "box-shadow:0 6px 16px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.10);}" +
+      "#bm-mo .bm-pose img{width:74px;height:74px;object-fit:contain;object-position:bottom;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}" +
       "#bm-mo .bm-bub{background:#fff;color:#173a27;font:800 14px/1.3 'Nunito',system-ui,sans-serif;" +
       "padding:11px 15px;border-radius:16px;box-shadow:0 8px 26px rgba(0,0,0,.35);position:relative;max-width:240px;}" +
       "#bm-mo .bm-bub::after{content:'';position:absolute;left:-7px;bottom:16px;border:7px solid transparent;border-right-color:#fff;}";
@@ -380,7 +382,7 @@
       if (!box) {
         box = document.createElement("div");
         box.id = "bm-mo";
-        box.innerHTML = '<img alt=""><div class="bm-bub"></div>';
+        box.innerHTML = '<div class="bm-pose"><img alt=""></div><div class="bm-bub"></div>';
         document.body.appendChild(box);
       }
       var msg = opts.message || fillName(pick(cfg[moLang()] || cfg.id));
