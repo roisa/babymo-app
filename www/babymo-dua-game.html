@@ -8,13 +8,14 @@
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
-  --bg:#0B1C12;--bg2:#0F2016;--bg3:#132818;
-  --green:#2C5A3E;--green-lt:#4A8860;--green-glow:#5DAA78;
-  --gold:#C89040;--gold-lt:#E8B060;--gold-dim:#8A6028;
-  --cream:#F0E8D8;--cream-dim:#9AA098;
-  --card-back:#142218;--card-ara:#1A3828;--card-mean:#1E3020;
-  --red:#C04840;--star:#F0C040;
-  --border:rgba(93,170,120,.12);
+  /* Fresh iOS-style palette — brighter emerald→teal, soft glass surfaces */
+  --bg:#0A2118;--bg2:#0C2A20;--bg3:#0E3326;
+  --green:#1FA971;--green-lt:#3FD08C;--green-glow:#7BE8B0;
+  --gold:#E0B84D;--gold-lt:#FFD874;--gold-dim:#A88330;
+  --cream:#F2F7F2;--cream-dim:#9FB5A8;
+  --card-back:rgba(255,255,255,.055);--card-ara:rgba(91,198,232,.10);--card-mean:rgba(255,255,255,.05);
+  --red:#FF6B5C;--star:#FFD874;
+  --border:rgba(255,255,255,.10);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 html,body{height:100%;overflow:hidden;}
@@ -22,13 +23,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--cream);pos
 body::before{
   content:'';position:fixed;inset:0;
   background:
-    radial-gradient(ellipse 60% 40% at 15% 25%,rgba(44,90,62,.25),transparent),
-    radial-gradient(ellipse 50% 35% at 85% 75%,rgba(200,144,64,.08),transparent);
+    radial-gradient(ellipse 70% 55% at 20% 8%,rgba(31,169,113,.32),transparent 70%),
+    radial-gradient(ellipse 65% 50% at 85% 18%,rgba(91,198,232,.16),transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 108%,rgba(224,184,77,.12),transparent 70%),
+    linear-gradient(180deg,#0C2A20 0%,#0A2118 55%,#081B14 100%);
   pointer-events:none;z-index:0;
 }
 .star-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.star-bg span{position:absolute;color:var(--gold);font-size:10px;animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;opacity:.08;}
-@keyframes twinkle{0%,100%{opacity:.04;transform:scale(1)}50%{opacity:.18;transform:scale(1.2)}}
+.star-bg span{position:absolute;color:var(--gold-lt);font-size:10px;animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;opacity:.08;}
+@keyframes twinkle{0%,100%{opacity:.05;transform:scale(1)}50%{opacity:.24;transform:scale(1.2)}}
 
 /* ── SCREENS ── */
 .screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;padding:0 18px 24px;overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
@@ -36,6 +39,9 @@ body::before{
 
 /* ════ WELCOME ════ */
 #welcomeScreen{justify-content:flex-start;padding-top:calc(24px + env(safe-area-inset-top));}
+/* On tall screens (iPad/desktop) vertically center the welcome content so it
+   isn't top-stacked with a big empty bottom. */
+@media(min-height:760px){#welcomeScreen,#completeScreen{justify-content:center;}}
 .welcome-top{text-align:center;width:100%;padding-bottom:16px;}
 
 .mascot-wrap{position:relative;width:140px;height:140px;margin:0 auto 14px;}
@@ -63,35 +69,36 @@ body::before{
 .game-sub{font-size:12px;color:var(--cream-dim);margin-bottom:4px;}
 
 /* Level buttons */
-.level-wrap{width:100%;max-width:400px;}
-.level-title{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream-dim);text-align:center;margin-bottom:12px;}
-.level-list{display:flex;flex-direction:column;gap:9px;}
-.lvl-btn{background:var(--card-back);border:1.5px solid var(--border);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.18s ease;width:100%;}
+.level-wrap{width:100%;max-width:420px;}
+.level-title{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream-dim);text-align:center;margin-bottom:12px;}
+.level-list{display:flex;flex-direction:column;gap:10px;}
+.lvl-btn{background:var(--card-back);border:1px solid var(--border);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);border-radius:20px;padding:15px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.18s ease;width:100%;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px -8px rgba(0,0,0,.4);}
 .lvl-btn:active{transform:scale(.97);}
-.lvl-btn.sel{border-color:var(--gold);background:rgba(200,144,64,.07);}
-.lvl-icon{font-size:28px;flex-shrink:0;}
+.lvl-btn.sel{border-color:var(--gold-lt);background:rgba(255,216,116,.10);box-shadow:0 0 0 1px rgba(255,216,116,.3),0 8px 22px -8px rgba(224,184,77,.4);}
+.lvl-icon{font-size:28px;flex-shrink:0;filter:drop-shadow(0 2px 5px rgba(0,0,0,.25));}
 .lvl-info{flex:1;text-align:left;}
 .lvl-name{font-size:15px;font-weight:800;color:var(--cream);line-height:1.2;}
 .lvl-desc{font-size:12px;color:var(--cream-dim);margin-top:2px;}
-.lvl-badge{font-size:10px;font-weight:700;letter-spacing:.5px;background:rgba(74,136,96,.18);color:var(--green-glow);padding:4px 10px;border-radius:20px;flex-shrink:0;}
+.lvl-badge{font-size:10px;font-weight:800;letter-spacing:.5px;background:rgba(123,232,176,.14);color:var(--green-glow);padding:5px 11px;border-radius:999px;flex-shrink:0;}
 
 .start-btn{
-  width:100%;max-width:400px;margin-top:16px;padding:17px;
-  background:linear-gradient(135deg,var(--green),#3A7050);
-  border:none;border-radius:16px;
+  width:100%;max-width:420px;margin-top:16px;padding:17px;
+  background:linear-gradient(135deg,var(--green-lt),var(--green));
+  border:none;border-radius:20px;
   font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
-  color:#fff;cursor:pointer;
-  box-shadow:0 6px 28px rgba(44,90,62,.55);
-  transition:.18s;letter-spacing:.3px;
+  color:#06231A;cursor:pointer;
+  box-shadow:0 8px 26px -6px rgba(63,208,140,.55),inset 0 1px 0 rgba(255,255,255,.3);
+  transition:transform .15s ease, box-shadow .15s ease;letter-spacing:.3px;
 }
-.start-btn:active{transform:scale(.97);}
+.start-btn:active{transform:scale(.97);box-shadow:0 4px 14px -6px rgba(63,208,140,.5),inset 0 1px 0 rgba(255,255,255,.3);}
 
 .hub-back-btn{
-  display:block;width:100%;max-width:400px;
+  display:block;width:100%;max-width:420px;
   margin-top:10px;padding:13px;
   background:var(--card-back);
-  border:1.5px solid var(--border);
-  border-radius:14px;
+  border:1px solid var(--border);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-radius:16px;
   font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
   color:var(--cream-dim);text-align:center;text-decoration:none;
   transition:.15s;cursor:pointer;
