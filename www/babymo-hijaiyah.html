@@ -956,11 +956,13 @@ function handleAnswer(btn, choice, q){
     document.getElementById('fbSub').textContent=q.lt.name+' · '+q.lt.ar+' · '+q.lt.dots;
     setMoExpr('happy');
     playCorrect();
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('correct');
     spawnParticles(6);
     speak(q.speakText, arabicVoice?'ar-SA':'id-ID');
   } else {
     lives=Math.max(0,lives-1);
     renderHearts();
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
     btn.classList.add('wrong');
     // Show correct
     all.forEach(b=>{ if(b.textContent===q.correct) b.classList.add('correct'); });
