@@ -307,7 +307,14 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 @media(min-width:820px){#app{max-width:680px!important;}}
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
-@media(min-width:760px){.screen{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
+@media(min-width:760px){.screen{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}body{background:#06100A;}}
+/* Tablet: the card-size JS constrains cards by the 520px width, so on a tall
+   iPad the grid (flex:1) left a big empty gap above it. Let the grid hug its
+   content and centre vertically in the game screen. */
+@media(min-width:760px){
+  #card-grid{flex:0 1 auto!important;}
+  #s-game{justify-content:center!important;}
+}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-memory-match.html">
 <meta name="robots" content="index,follow">
