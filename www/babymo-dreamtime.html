@@ -3,22 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#0B1C12">
+<meta name="theme-color" content="#1A1740">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Baby Mo Dreamtime — Rutinitas &amp; Doa Sebelum Tidur Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
-  --bg:#0B1C12;--bg2:#0F2016;--bg3:#071008;
-  --card:#162014;--card2:#1C2A1A;
-  --green:#2C5A3E;--green-lt:#4A8860;--green-glow:#6DB882;
-  --gold:#C89040;--gold-lt:#E8B060;
-  --cream:#F0E8D8;--cream-dim:#7A8078;
-  --teal:#3ECFB8;--purple:#8870C8;
-  --border:rgba(93,170,120,.12);
+  /* Calming bedtime palette — soft twilight indigo/violet, dreamy & cozy */
+  --bg:#1A1740;--bg2:#241E54;--bg3:#120F30;
+  --card:rgba(255,255,255,.07);--card2:rgba(255,255,255,.10);
+  --green:#6E7BF2;--green-lt:#8C96F7;--green-glow:#B3BCFF;
+  --gold:#FFD27A;--gold-lt:#FFE3A8;
+  --cream:#F3F1FF;--cream-dim:#A7A3D6;
+  --teal:#5BD8E8;--purple:#B98CF0;
+  --border:rgba(255,255,255,.12);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;}
 html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(--cream);font-family:'Nunito','Arial Rounded MT Bold',Arial,sans-serif;}
+/* Dreamy layered night-sky backdrop */
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:
+    radial-gradient(ellipse 70% 45% at 78% 8%, rgba(255,210,122,.16), transparent 60%),
+    radial-gradient(ellipse 75% 55% at 18% 12%, rgba(185,140,240,.20), transparent 62%),
+    radial-gradient(ellipse 90% 60% at 50% 110%, rgba(110,123,242,.16), transparent 70%),
+    linear-gradient(180deg,#241E54 0%,#1A1740 50%,#120F30 100%);}
 
 @keyframes tw{0%,100%{opacity:.06;transform:scale(.7)}50%{opacity:.2;transform:scale(1.3)}}
 @keyframes fl{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-12px) rotate(2deg)}}
@@ -31,7 +39,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 @keyframes rp{to{transform:scale(5);opacity:0}}
 @keyframes mof{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-8px) rotate(1.5deg)}}
 @keyframes starFade{0%{opacity:.03}50%{opacity:.18}100%{opacity:.03}}
-@keyframes glowBtn{0%,100%{box-shadow:0 6px 28px rgba(44,90,62,.5)}50%{box-shadow:0 6px 40px rgba(44,90,62,.8),0 0 0 10px rgba(93,170,120,.08)}}
+@keyframes glowBtn{0%,100%{box-shadow:0 10px 30px -6px rgba(110,123,242,.55)}50%{box-shadow:0 12px 44px -6px rgba(185,140,240,.7),0 0 0 10px rgba(140,150,247,.10)}}
 @keyframes shadowBreathe{0%,100%{transform:scaleX(1);opacity:.5}50%{transform:scaleX(.78);opacity:.28}}
 @keyframes zzFloat{0%{opacity:.8;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-36px) scale(1.2)}}
 @keyframes bonkSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
@@ -51,12 +59,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .shint{font-size:14px;color:var(--cream-dim);margin-top:5px;line-height:1.4;}
 
 .gbtn{
-  background:linear-gradient(135deg,var(--green),#3A7050);
+  background:linear-gradient(135deg,var(--green-lt),var(--purple));
   border:none;border-radius:100px;
   padding:18px 52px;
   font-family:inherit;font-size:20px;font-weight:900;
   color:#fff;cursor:pointer;
   display:inline-flex;align-items:center;gap:10px;
+  box-shadow:0 10px 30px -6px rgba(110,123,242,.6),inset 0 1px 0 rgba(255,255,255,.3);
   animation:glowBtn 2.5s ease-in-out infinite;
   touch-action:manipulation;
 }
@@ -83,12 +92,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
   position:relative;
   overflow:hidden;
 }
-.doa-card.played{border-color:rgba(109,184,130,.4);background:rgba(93,170,120,.06);}
+.doa-card.played{border-color:rgba(140,150,247,.45);background:rgba(110,123,242,.08);}
 .doa-card.combined{border-color:rgba(200,144,64,.25);background:rgba(200,144,64,.05);}
 .doa-card.combined.played{border-color:rgba(200,144,64,.55);background:rgba(200,144,64,.1);}
 
 .bedframe{
-  background:#0F2016;border:2px solid #1E3A28;
+  background:#191550;border:2px solid #2C2470;
   border-radius:26px;overflow:hidden;
   width:100%;max-width:290px;height:215px;
   position:relative;flex-shrink:0;
@@ -96,22 +105,22 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 .blkout{position:absolute;left:0;right:0;bottom:0;transition:top .3s ease;}
 .blkbody{
   position:absolute;inset:0;
-  background:linear-gradient(160deg,#1A4A2C,#0F3018 35%,#1E4A2A 65%,#0F3018);
+  background:linear-gradient(160deg,#3A3490,#241E66 35%,#3A3490 65%,#241E66);
   overflow:hidden;
 }
-.blkfold{position:absolute;top:0;left:0;right:0;height:18px;background:linear-gradient(135deg,#2A7A48,#1E5A38);border-radius:2px 2px 0 0;}
-.blkgrip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:5px;border-radius:99px;background:rgba(109,184,130,.4);}
+.blkfold{position:absolute;top:0;left:0;right:0;height:18px;background:linear-gradient(135deg,#7E74E8,#5C52C0);border-radius:2px 2px 0 0;}
+.blkgrip{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:5px;border-radius:99px;background:rgba(179,188,255,.45);}
 
 .donebanner{text-align:center;padding:12px 24px;flex-shrink:0;animation:su .5s ease;}
 .ripel{position:absolute;border-radius:50%;pointer-events:none;animation:rp .6s ease forwards;}
 #stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
 
 .mo-logo{object-fit:contain;display:block;filter:drop-shadow(0 6px 18px rgba(0,0,0,.38));animation:mof 3.6s ease-in-out infinite;}
-.mo-shadow{border-radius:50%;background:rgba(44,90,62,.28);filter:blur(4px);animation:shadowBreathe 3.6s ease-in-out infinite;margin:0 auto;}
+.mo-shadow{border-radius:50%;background:rgba(18,15,48,.45);filter:blur(4px);animation:shadowBreathe 3.6s ease-in-out infinite;margin:0 auto;}
 .mo-head{
   width:72px;height:72px;border-radius:50%;
   object-fit:cover;object-position:top center;
-  border:2.5px solid rgba(93,170,120,.25);
+  border:2.5px solid rgba(179,188,255,.35);
   flex-shrink:0;
 }
 
@@ -119,7 +128,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 @media(min-width:820px){.pjgrid{max-width:680px!important;}}
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
-@media(min-width:760px){.screen{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
+@media(min-width:760px){.screen{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#0A0820;}}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-dreamtime.html">
 <meta name="robots" content="index,follow">
@@ -150,7 +159,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 
     <div style="text-align:center;">
       <div style="position:relative;display:inline-block;">
-        <img class="mo-logo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:170px;height:170px;"/>
+        <img class="mo-logo" src="baby-mo-poses/baby-mo-pose-09.png" alt="Baby Mo" style="width:170px;height:170px;object-fit:contain;"/>
         <div style="position:absolute;top:10px;right:-10px;pointer-events:none;">
           <span style="display:block;font-size:13px;font-weight:900;color:rgba(200,144,64,.45);animation:zzFloat 2s 0s ease-in-out infinite;font-family:Nunito,sans-serif;">z</span>
           <span style="display:block;font-size:20px;font-weight:900;color:rgba(200,144,64,.55);animation:zzFloat 2.5s .5s ease-in-out infinite;font-family:Nunito,sans-serif;">z</span>
@@ -204,12 +213,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:var(
 </div>
 
 <!-- ════ SLEEP ════ -->
-<div id="s-sleep" class="screen" style="background:linear-gradient(165deg,#020A06,#050E08);">
+<div id="s-sleep" class="screen" style="background:linear-gradient(180deg,#120F30 0%,#0B0A22 60%,#070614 100%);">
   <div id="sleepdim" style="position:absolute;inset:0;background:#000;opacity:0;z-index:2;pointer-events:none;"></div>
   <div id="sleepcontent" style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;transition:opacity 1.2s;padding:40px;">
 
     <div style="position:relative;display:inline-block;animation:bt 4s ease-in-out infinite;">
-      <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 4px 18px rgba(44,90,62,.4));"/>
+      <img src="baby-mo-poses/baby-mo-pose-12.png" alt="Baby Mo" style="width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(110,123,242,.4));"/>
       <div style="position:absolute;top:5px;right:-8px;pointer-events:none;">
         <span style="display:block;font-size:12px;font-weight:900;color:rgba(200,144,64,.4);animation:zzFloat 1.8s 0s ease infinite;font-family:Nunito,sans-serif;">z</span>
         <span style="display:block;font-size:19px;font-weight:900;color:rgba(200,144,64,.5);animation:zzFloat 2.3s .45s ease infinite;font-family:Nunito,sans-serif;">z</span>
@@ -401,7 +410,7 @@ function buildBrush(wrap,done){
     '<div class="shead"><div class="snum">Langkah 1 dari 4</div><div class="stitle">🪥 Gosok Gigi</div><div class="shint">Geser kiri ← → kanan untuk menyikat!</div></div>'
     +'<div style="display:flex;justify-content:center;padding:4px 0 2px;flex-shrink:0;position:relative;">'
     +'<div style="position:relative;display:inline-block;">'
-    +'<img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:118px;height:118px;object-fit:contain;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;"/>'
+    +'<img src="baby-mo-poses/baby-mo-pose-25.png" alt="Baby Mo" style="width:130px;height:130px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;"/>'
     +'<div id="brushOverlay" style="position:absolute;bottom:18px;right:-10px;font-size:30px;transform:rotate(22deg);transition:transform .2s;filter:drop-shadow(0 2px 8px rgba(62,207,184,.5));">🪥</div>'
     +'<div id="toothGlow" style="position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:38px;height:8px;background:rgba(62,207,184,0);border-radius:99px;transition:background .4s;"></div>'
     +'</div></div>'
@@ -488,7 +497,7 @@ function buildPajamas(wrap,done){
     +'<div style="display:flex;justify-content:center;align-items:flex-end;gap:16px;padding:6px 0 2px;flex-shrink:0;">'
     +'<div id="boneka" style="font-size:52px;opacity:.18;transition:all .6s cubic-bezier(.34,1.56,.64,1);transform:scale(.8);animation:bonkSway 3s ease-in-out infinite;">🧸</div>'
     +'<div style="position:relative;display:inline-block;">'
-    +'<img id="pjmo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:108px;height:108px;object-fit:contain;filter:drop-shadow(0 4px 14px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;transition:filter .5s;"/>'
+    +'<img id="pjmo" src="baby-mo-poses/baby-mo-ok.png" alt="Baby Mo" style="width:122px;height:122px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.35));animation:mof 3.6s ease-in-out infinite;transition:filter .5s;"/>'
     +'<div id="pjOverlay" style="position:absolute;inset:0;border-radius:50%;background:transparent;mix-blend-mode:color;pointer-events:none;transition:background .6s;"></div>'
     +'<div id="pjSparkle" style="position:absolute;top:-8px;right:-8px;font-size:22px;opacity:0;transition:opacity .4s;animation:pu 1.5s ease-in-out infinite;">⭐</div>'
     +'</div>'
@@ -668,7 +677,7 @@ function buildDoa(wrap,done){
 
       /* Baby Mo head crop + speech bubble */
       +'<div style="display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;">'
-      +'<img src="Baby_Mo_Menyapa.png" alt="Baby Mo" class="mo-head"/>'
+      +'<img src="baby-mo-poses/baby-mo-thank-you.png" alt="Baby Mo" class="mo-head"/>'
       +'<div style="flex:1;background:rgba(44,90,62,.18);border:1px solid rgba(93,170,120,.22);border-radius:0 16px 16px 16px;padding:10px 13px;position:relative;margin-top:4px;">'
       +'<div style="position:absolute;left:-8px;top:12px;width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:8px solid rgba(93,170,120,.22);"></div>'
       +'<div style="font-size:13px;font-weight:700;color:var(--cream);line-height:1.5;">Yuk belajar doa sebelum tidur ya sayang... Dengarkan, lalu tirukan pelan-pelan! 🌙</div>'
@@ -724,7 +733,7 @@ function buildDoa(wrap,done){
       +'</div>'
 
       /* Lanjut button */
-      +'<button id="doaLanjut" disabled style="width:100%;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:14px;padding:16px;font-family:inherit;font-size:17px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 4px 18px rgba(44,90,62,.4);opacity:.35;transition:opacity .35s;">Aamiin 🤲 — Lanjut Tidur</button>'
+      +'<button id="doaLanjut" disabled style="width:100%;background:linear-gradient(135deg,var(--green-lt),var(--purple));border:none;border-radius:16px;padding:16px;font-family:inherit;font-size:17px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 8px 24px -6px rgba(110,123,242,.5);opacity:.35;transition:opacity .35s;">Aamiin 🤲 — Lanjut Tidur</button>'
 
     +'</div>';
 
