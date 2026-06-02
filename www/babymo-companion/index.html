@@ -338,7 +338,7 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
     <div class="mo-area">
       <div class="mo-wrap" id="moPortrait">
         <div class="mo-glow"></div>
-        <img id="moImg" src="mo-assets/mo-waving.png" alt="Baby Mo" />
+        <img id="moImg" src="../baby-mo-poses/baby-mo-pose-05.png" alt="Baby Mo" />
       </div>
       <div class="mo-bubble">
         <p class="mo-msg" id="moMsg">Halo! Yuk aktifkan lokasi biar Mo bisa nemenin sholat kamu ✨</p>
@@ -494,11 +494,13 @@ const KAABA={lat:21.4225,lng:39.8262};
 const PRAYER_NAMES=['Subuh','Dzuhur','Ashar','Magrib','Isya'];
 const PRAYER_KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
 const MO={
-  waving:'mo-assets/mo-waving.png',praying:'mo-assets/mo-praying.png',
-  hopeful:'mo-assets/mo-hopeful.png',surprised:'mo-assets/mo-surprised.png',
-  thankful:'mo-assets/mo-thankful.png',grateful:'mo-assets/mo-grateful.png',
-  excited:'mo-assets/mo-excited.png',sujood:'mo-assets/mo-sujood.png',
-  astagfirullah:'mo-assets/mo-astagfirullah.png',sad:'mo-assets/mo-sad.png',
+  /* Generic moods use the rich 3D pose set; prayer-specific poses
+     (praying/sujood/astagfirullah) stay on the dedicated mo-assets. */
+  waving:'../baby-mo-poses/baby-mo-pose-05.png',praying:'mo-assets/mo-praying.png',
+  hopeful:'../baby-mo-poses/baby-mo-idea.png',surprised:'../baby-mo-poses/baby-mo-wow.png',
+  thankful:'../baby-mo-poses/baby-mo-thank-you.png',grateful:'../baby-mo-poses/baby-mo-yes.png',
+  excited:'../baby-mo-poses/baby-mo-yeyy.png',sujood:'mo-assets/mo-sujood.png',
+  astagfirullah:'mo-assets/mo-astagfirullah.png',sad:'../baby-mo-poses/baby-mo-pose-15.png',
 };
 
 let userLoc=null,prayerTimes=null,prayerMinutes=null;

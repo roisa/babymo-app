@@ -686,7 +686,7 @@ body::before{
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow"></div>
-            <img class="hero-img" src="Baby_Mo_Menyapa.png" alt="Baby Mo waving" draggable="false">
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-pose-05.png" alt="Baby Mo" draggable="false">
           </div>
         </div>
         <div class="hero-cta">
@@ -891,7 +891,7 @@ body::before{
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow"></div>
-            <img class="hero-img" src="Baby_Mo_Menyapa.png" alt="Baby Mo" draggable="false" loading="lazy">
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-idea.png" alt="Baby Mo" draggable="false" loading="lazy">
           </div>
         </div>
         <div class="hero-cta">
@@ -949,7 +949,7 @@ body::before{
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(122,184,216,.45),transparent 65%);"></div>
-            <img class="hero-img" src="babymo_running.png" alt="Baby Mo" draggable="false" loading="lazy">
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-run.png" alt="Baby Mo" draggable="false" loading="lazy">
           </div>
         </div>
         <div class="hero-cta">
@@ -1366,5 +1366,28 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
 });
 </script>
 <script src="/bm-kit.js" defer></script>
+<script>
+/* Bring the hero Baby Mo to life: gently rotate [data-mo] images through a
+   friendly pose set with a soft cross-fade. Respects reduced motion. */
+(function(){
+  var POSES=['baby-mo-pose-01','baby-mo-pose-05','baby-mo-idea','baby-mo-ok',
+    'baby-mo-yes','baby-mo-yeyy','baby-mo-wow','baby-mo-alright','baby-mo-pose-19',
+    'baby-mo-pose-22','baby-mo-pose-33','baby-mo-run'];
+  try{ POSES.forEach(function(p){var i=new Image();i.src='baby-mo-poses/'+p+'.png';}); }catch(e){}
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var imgs=[].slice.call(document.querySelectorAll('img.hero-img[data-mo]'));
+  imgs.forEach(function(img){ img.style.transition='opacity .35s ease'; });
+  setInterval(function(){
+    imgs.forEach(function(img){
+      // only rotate the hero in the visible tab pane
+      var pane=img.closest('.tab-pane'); if(pane && !pane.classList.contains('active')) return;
+      var next='baby-mo-poses/'+POSES[Math.floor(Math.random()*POSES.length)]+'.png';
+      if(img.getAttribute('src')===next) return;
+      img.style.opacity='0';
+      setTimeout(function(){ img.src=next; img.onload=function(){img.style.opacity='1';}; }, 350);
+    });
+  }, 5000);
+})();
+</script>
 </body>
 </html>

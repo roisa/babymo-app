@@ -323,7 +323,9 @@
   // Makes Baby Mo present across every game: a pose + speech bubble that
   // pops in on greet / correct / wrong / win, personalized with the
   // child's name. Reuses the existing emotional poses.
-  var POSE = "/babymo-companion/mo-assets/";
+  // Rich 3D pose set — each reaction draws from several poses (picked at
+  // random) so Mo feels varied & alive instead of one frozen image.
+  var POSE = "/baby-mo-poses/";
   function moLang() {
     try { return localStorage.getItem("bm_lang") === "en" ? "en" : "id"; }
     catch (e) { return "id"; }
@@ -333,19 +335,19 @@
     catch (e) { return ""; }
   }
   var PHRASES = {
-    greet: { pose: "mo-waving",
+    greet: { poses: ["baby-mo-pose-01","baby-mo-pose-05","baby-mo-idea","baby-mo-ok","baby-mo-pose-19"],
       id: ["Halo{n}! Ayo main bareng Mo! 🌙", "Assalamu'alaikum{n}! ✨", "Senang ketemu kamu{n}! 💚"],
       en: ["Hi{n}! Let's play with Mo! 🌙", "Assalamu'alaikum{n}! ✨", "Happy to see you{n}! 💚"] },
-    correct: { pose: "mo-excited",
+    correct: { poses: ["baby-mo-yes","baby-mo-ok","baby-mo-alright","baby-mo-pose-08","baby-mo-pose-22"],
       id: ["Masya Allah, hebat! 🌟", "Betul sekali! 💚", "Pintar{n}! ⭐"],
       en: ["Masha Allah, great! 🌟", "That's right! 💚", "Smart{n}! ⭐"] },
-    wrong: { pose: "mo-hopeful",
+    wrong: { poses: ["baby-mo-idea","baby-mo-pose-15","baby-mo-pose-27"],
       id: ["Coba lagi ya, kamu pasti bisa! 💪", "Hampir! Ayo sekali lagi 🌱"],
       en: ["Try again, you can do it! 💪", "Almost! Once more 🌱"] },
-    win: { pose: "mo-thankful",
+    win: { poses: ["baby-mo-yeyy","baby-mo-wow","baby-mo-thank-you","baby-mo-yes","baby-mo-pose-33"],
       id: ["Alhamdulillah, selesai! 🎉", "Masya Allah, kamu hebat{n}! 🏆", "Subhanallah, keren! ⭐⭐⭐"],
       en: ["Alhamdulillah, done! 🎉", "Masha Allah, great job{n}! 🏆", "Subhanallah, awesome! ⭐⭐⭐"] },
-    pray: { pose: "mo-praying",
+    pray: { poses: ["baby-mo-thank-you","baby-mo-pose-12"],
       id: ["Yuk sholat bareng Mo 🕌"], en: ["Let's pray with Mo 🕌"] },
   };
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
@@ -386,7 +388,9 @@
         document.body.appendChild(box);
       }
       var msg = opts.message || fillName(pick(cfg[moLang()] || cfg.id));
-      box.querySelector("img").src = POSE + (opts.pose || cfg.pose) + ".png";
+      var poseName = opts.pose ||
+        (cfg.poses ? pick(cfg.poses) : (cfg.pose || "baby-mo-pose-01"));
+      box.querySelector("img").src = POSE + poseName + ".png";
       box.querySelector(".bm-bub").textContent = msg;
       void box.offsetWidth;
       box.classList.add("show");

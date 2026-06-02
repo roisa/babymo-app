@@ -10,7 +10,7 @@
      - same-origin static → cache-first (fast), refreshed in background.
      - cross-origin (fonts) → opportunistic cache.
    ============================================================ */
-const CACHE = "babymo-games-v6";
+const CACHE = "babymo-games-v7";
 
 const SHELL = [
   "/",
@@ -35,6 +35,16 @@ const SHELL = [
   "/brand/babymo-logo.png",
   "/Baby_Mo_Menyapa.png",
   "/babymo_running.png",
+  // Mo Companion reaction poses (precache the ones the kit picks from)
+  "/baby-mo-poses/baby-mo-pose-01.png",
+  "/baby-mo-poses/baby-mo-pose-05.png",
+  "/baby-mo-poses/baby-mo-idea.png",
+  "/baby-mo-poses/baby-mo-ok.png",
+  "/baby-mo-poses/baby-mo-yes.png",
+  "/baby-mo-poses/baby-mo-alright.png",
+  "/baby-mo-poses/baby-mo-yeyy.png",
+  "/baby-mo-poses/baby-mo-wow.png",
+  "/baby-mo-poses/baby-mo-thank-you.png",
 ];
 
 self.addEventListener("install", (e) => {
