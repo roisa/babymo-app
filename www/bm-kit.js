@@ -351,6 +351,30 @@
       id: ["Yuk sholat bareng Mo 🕌"], en: ["Let's pray with Mo 🕌"] },
   };
   function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  // Preload every reaction pose during idle time so a pose never flashes
+  // blank the first time a greet/correct/wrong/win fires (the swap is then
+  // instant from cache). Runs once, low-priority, after the page settles.
+  var posesPreloaded = false;
+  function preloadPoses() {
+    if (posesPreloaded) return;
+    posesPreloaded = true;
+    try {
+      var seen = {}, list = [];
+      for (var k in PHRASES) {
+        var ps = PHRASES[k].poses || [];
+        for (var i = 0; i < ps.length; i++) {
+          if (!seen[ps[i]]) { seen[ps[i]] = 1; list.push(ps[i]); }
+        }
+      }
+      list.forEach(function (name) {
+        var im = new Image();
+        im.decoding = "async";
+        im.src = POSE + name + ".png";
+      });
+    } catch (e) {}
+  }
+
   function fillName(s) {
     var n = childName();
     return n ? s.replace(/\{n\}/g, " " + n) : s.replace(/\{n\}/g, "");
@@ -453,6 +477,11 @@
   function initCompanion() {
     maybeGreet();
     watchWin();
+    // Warm the reaction-pose cache without competing with the game's own
+    // loading: wait for idle (or a short delay as a fallback).
+    var warm = function () { preloadPoses(); };
+    if (window.requestIdleCallback) requestIdleCallback(warm, { timeout: 3000 });
+    else setTimeout(warm, 1800);
   }
 
   preloadMascot();
