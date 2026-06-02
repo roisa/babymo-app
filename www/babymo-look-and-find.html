@@ -14,12 +14,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 
 /* ===== CSS VARIABLES — BabyMo Brand ===== */
 :root{
-  --green:#3CB54A;--green-dark:#2a8435;--green-glow:#5dd96e;
-  --orange:#FF8C42;--yellow:#FFD23F;--red:#E8401C;
-  --white:#FFFFFF;--cream:#FFF8EC;--dark:#0d2018;
+  /* Fresh, friendly emerald — softer than the old bright green */
+  --green:#1FA971;--green-dark:#137A52;--green-glow:#3FD08C;
+  --orange:#FF9A4D;--yellow:#FFD874;--red:#FF6B5C;
+  --white:#FFFFFF;--cream:#F4FBF6;--dark:#0d2018;
   --shadow:rgba(0,0,0,0.35);
-  --ui-bg:rgba(255,255,255,0.97);
-  --card-bg:#f0faf2;
+  --ui-bg:rgba(248,253,250,0.98);
+  --card-bg:#eefaf2;
 }
 
 /* ===== PARTICLE CANVAS ===== */
@@ -31,7 +32,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 
 /* ===== ADVENTURE MAP (HOME + LEVEL SELECT) ===== */
 #s-home{
-  background:radial-gradient(ellipse at 50% 15%, #1e5a2e 0%, #0d2018 70%);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 6%, rgba(63,208,140,.30), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 85% 22%, rgba(91,198,232,.14), transparent 60%),
+    radial-gradient(ellipse at 50% 18%, #156A40 0%, #0C2418 72%);
   padding:0;justify-content:flex-start;overflow:hidden;
 }
 .map-header{
@@ -100,8 +104,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .g-header{
   width:100%;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;
   display:flex;align-items:center;gap:8px;flex-shrink:0;
-  background:var(--green);
-  box-shadow:0 3px 0 var(--green-dark);
+  background:linear-gradient(135deg,var(--green-glow),var(--green));
+  box-shadow:0 4px 14px -4px rgba(31,169,113,.5);
 }
 .g-title{font-family:'Fredoka One',cursive;font-size:15px;color:#fff;flex:1;text-align:center;text-shadow:0 1px 0 rgba(0,0,0,0.2);}
 .g-dots{display:flex;gap:5px;}
