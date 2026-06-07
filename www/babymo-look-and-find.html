@@ -697,43 +697,61 @@ function getSceneSVG(id){
   return bedroomSVG();
 }
 
-function bedroomSVG(){return`<defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f2b3d"/><stop offset="100%" stop-color="#1a3a2a"/></linearGradient></defs>
-<rect width="375" height="420" fill="url(#bg1)"/>
-<rect x="0" y="345" width="375" height="75" fill="#0d2018"/>
-<rect x="0" y="342" width="375" height="5" fill="#1a4028"/>
-<rect x="255" y="20" width="98" height="118" fill="#1a2d4a" rx="10"/><rect x="261" y="26" width="86" height="106" fill="#0d1f33" rx="8"/>
-<line x1="304" y1="26" x2="304" y2="132" stroke="#1a2d4a" stroke-width="5"/><line x1="261" y1="79" x2="347" y2="79" stroke="#1a2d4a" stroke-width="5"/>
-<circle cx="284" cy="57" r="21" fill="#1a2d4a"/><circle cx="295" cy="52" r="21" fill="#f5c94e" opacity=".84"/>
-<circle cx="323" cy="44" r="2" fill="#fffde0" opacity=".8"/><circle cx="312" cy="100" r="1.5" fill="#fffde0" opacity=".6"/><circle cx="334" cy="113" r="1.5" fill="#fffde0" opacity=".7"/>
-<rect x="255" y="20" width="98" height="118" fill="none" stroke="#1e4030" stroke-width="4" rx="10"/>
-<rect x="252" y="140" width="103" height="148" fill="#1e3a28" rx="8"/>
-<rect x="257" y="145" width="93" height="40" fill="#142b1e" rx="4"/>
-<rect x="257" y="190" width="93" height="40" fill="#142b1e" rx="4"/>
-<rect x="257" y="235" width="93" height="40" fill="#142b1e" rx="4"/>
-<rect x="261" y="149" width="11" height="32" fill="#c0392b" rx="2"/><rect x="274" y="151" width="9" height="30" fill="#2980b9" rx="2"/>
-<rect x="285" y="148" width="13" height="33" fill="#27ae60" rx="2"/><rect x="300" y="150" width="9" height="31" fill="#f39c12" rx="2"/>
-<rect x="313" y="152" width="8" height="29" fill="#8e44ad" rx="2"/>
-<rect x="261" y="194" width="9" height="32" fill="#e74c3c" rx="2"/><rect x="272" y="196" width="12" height="30" fill="#1abc9c" rx="2"/>
-<rect x="286" y="193" width="10" height="33" fill="#f1c40f" rx="2"/><rect x="299" y="195" width="13" height="31" fill="#9b59b6" rx="2"/>
-<circle cx="281" cy="256" r="9" fill="#f5c94e" opacity=".65"/><rect x="296" y="241" width="17" height="26" fill="#2c3e50" rx="3"/>
-<rect x="8" y="268" width="73" height="76" fill="#1e3a28" rx="8"/><rect x="12" y="272" width="65" height="33" fill="#142b1e" rx="4"/>
-<rect x="30" y="248" width="11" height="24" fill="#f5c94e" opacity=".52"/><ellipse cx="36" cy="248" rx="22" ry="9" fill="#f5c94e" opacity=".72"/>
-<circle cx="36" cy="248" r="33" fill="rgba(245,201,78,0.07)"/>
-<rect x="57" y="267" width="193" height="36" fill="#162b1e" rx="10"/><rect x="57" y="287" width="193" height="82" fill="#1e3a28" rx="0 0 14 14"/>
-<ellipse cx="122" cy="308" rx="40" ry="20" fill="#243824"/><ellipse cx="196" cy="308" rx="40" ry="20" fill="#243824"/>
-<rect x="62" y="325" width="183" height="44" fill="#1a3820" rx="0 0 10 10"/>
-<line x1="62" y1="343" x2="245" y2="343" stroke="rgba(245,201,78,.1)" stroke-width="2"/>
-<rect x="0" y="113" width="61" height="232" fill="#162b1e" rx="0 8 8 0"/>
-<rect x="4" y="117" width="53" height="224" fill="#1a3228" rx="6"/>
-<line x1="30" y1="117" x2="30" y2="341" stroke="#0f2018" stroke-width="2"/>
-<circle cx="18" cy="234" r="4" fill="#f5c94e" opacity=".55"/><circle cx="43" cy="234" r="4" fill="#f5c94e" opacity=".55"/>
-<rect x="0" y="113" width="61" height="53" fill="#1e3a28" rx="0 8 0 0"/>
-<line x1="183" y1="0" x2="183" y2="23" stroke="#1e3a28" stroke-width="5"/>
-<ellipse cx="183" cy="27" rx="27" ry="11" fill="#1e3a28"/><circle cx="183" cy="27" r="14" fill="#f5c94e" opacity=".7"/>
-<circle cx="183" cy="27" r="34" fill="rgba(245,201,78,0.05)"/>
-<ellipse cx="156" cy="355" rx="96" ry="19" fill="#1a4030" opacity=".55"/>
-<ellipse cx="156" cy="355" rx="86" ry="14" fill="none" stroke="rgba(245,201,78,.18)" stroke-width="2"/>
-<text x="213" y="197" font-size="11" opacity=".2" fill="#f5c94e">✦</text><text x="106" y="76" font-size="9" opacity=".18" fill="#f5c94e">✦</text>`;}
+function bedroomSVG(){return`<defs>
+<linearGradient id="bdWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#474c8c"/><stop offset="55%" stop-color="#5d6dac"/><stop offset="100%" stop-color="#7184bb"/></linearGradient>
+<linearGradient id="bdFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98a52"/><stop offset="100%" stop-color="#a06a39"/></linearGradient>
+<linearGradient id="bdSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#162247"/><stop offset="100%" stop-color="#2f3f72"/></linearGradient>
+<radialGradient id="bdMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="70%" stop-color="#ffe6a2"/><stop offset="100%" stop-color="#f3c869"/></radialGradient>
+<radialGradient id="bdLampGlow" cx="50%" cy="34%" r="65%"><stop offset="0%" stop-color="rgba(255,226,150,.5)"/><stop offset="100%" stop-color="rgba(255,226,150,0)"/></radialGradient>
+<radialGradient id="bdWarm" cx="50%" cy="0%" r="95%"><stop offset="0%" stop-color="rgba(255,221,160,.18)"/><stop offset="60%" stop-color="rgba(255,221,160,0)"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#bdWall)"/>
+<rect width="375" height="420" fill="url(#bdWarm)"/>
+<g fill="#ffffff" opacity=".05"><circle cx="40" cy="60" r="2.4"/><circle cx="120" cy="40" r="2"/><circle cx="205" cy="64" r="2.2"/><circle cx="92" cy="158" r="2"/><circle cx="165" cy="120" r="2.2"/><circle cx="300" cy="172" r="2"/></g>
+<!-- floor -->
+<rect x="0" y="332" width="375" height="88" fill="url(#bdFloor)"/>
+<rect x="0" y="326" width="375" height="9" fill="#8a5a30"/><rect x="0" y="324" width="375" height="3" fill="#caa06a" opacity=".6"/>
+<g stroke="#875a2f" stroke-width="2" opacity=".4"><line x1="70" y1="335" x2="48" y2="420"/><line x1="160" y1="335" x2="150" y2="420"/><line x1="250" y1="335" x2="262" y2="420"/><line x1="330" y1="335" x2="352" y2="420"/></g>
+<!-- window -->
+<rect x="232" y="26" width="128" height="128" rx="20" fill="#3a4f86"/>
+<rect x="238" y="32" width="116" height="116" rx="15" fill="url(#bdSky)"/>
+<circle cx="284" cy="74" r="40" fill="#ffe6a2" opacity=".14"/>
+<circle cx="284" cy="74" r="26" fill="url(#bdMoon)"/><circle cx="276" cy="68" r="5" fill="#f0c25e" opacity=".5"/><circle cx="293" cy="83" r="3.5" fill="#f0c25e" opacity=".45"/>
+<g fill="#fff7da"><circle cx="322" cy="50" r="1.6"/><circle cx="312" cy="120" r="1.4"/><circle cx="340" cy="100" r="1.5"/><circle cx="258" cy="122" r="1.3"/></g>
+<text x="318" y="58" font-size="10" fill="#fff7da" opacity=".8">✦</text>
+<rect x="294" y="32" width="4" height="116" fill="#3a4f86"/><rect x="238" y="86" width="116" height="4" fill="#3a4f86"/>
+<rect x="232" y="26" width="128" height="128" rx="20" fill="none" stroke="#eef2ff" stroke-width="5"/>
+<rect x="226" y="150" width="140" height="9" rx="4" fill="#eef2ff"/>
+<!-- pendant lamp -->
+<line x1="150" y1="0" x2="150" y2="40" stroke="#3a4f86" stroke-width="3"/>
+<ellipse cx="150" cy="94" rx="62" ry="44" fill="url(#bdLampGlow)"/>
+<path d="M128 62 Q150 36 172 62 Z" fill="#ffd166"/><ellipse cx="150" cy="62" rx="22" ry="6" fill="#f5b942"/><circle cx="150" cy="66" r="5" fill="#fff3c4"/>
+<!-- framed picture -->
+<rect x="34" y="84" width="74" height="64" rx="8" fill="#eef2ff"/><rect x="40" y="90" width="62" height="52" rx="5" fill="#2f3f72"/>
+<circle cx="62" cy="116" r="14" fill="#ffe6a2"/><circle cx="68" cy="112" r="14" fill="#2f3f72"/><circle cx="86" cy="104" r="1.6" fill="#fff7da"/><text x="80" y="135" font-size="9" fill="#fff7da" opacity=".8">✦</text>
+<!-- bookshelf -->
+<rect x="246" y="170" width="116" height="160" rx="10" fill="#b87a44"/><rect x="251" y="175" width="106" height="150" rx="6" fill="#a86c38"/>
+<rect x="251" y="220" width="106" height="6" fill="#8a5a30"/><rect x="251" y="268" width="106" height="6" fill="#8a5a30"/>
+<rect x="258" y="182" width="12" height="36" rx="2" fill="#ff6b5c"/><rect x="272" y="184" width="10" height="34" rx="2" fill="#6cc0e8"/><rect x="284" y="180" width="13" height="38" rx="2" fill="#6bbf59"/><rect x="299" y="183" width="10" height="35" rx="2" fill="#ffd166"/><rect x="311" y="181" width="11" height="37" rx="2" fill="#b497e0"/>
+<circle cx="341" cy="201" r="13" fill="#ffb3a0"/><circle cx="336" cy="198" r="1.8" fill="#5a3a2a"/><circle cx="346" cy="198" r="1.8" fill="#5a3a2a"/><path d="M336 205 Q341 209 346 205" stroke="#5a3a2a" stroke-width="1.5" fill="none"/>
+<rect x="258" y="230" width="11" height="36" rx="2" fill="#4ec5b0"/><rect x="271" y="232" width="13" height="34" rx="2" fill="#ff8c66"/><rect x="286" y="229" width="10" height="37" rx="2" fill="#ffd166"/><rect x="298" y="231" width="12" height="35" rx="2" fill="#6cc0e8"/><rect x="312" y="230" width="10" height="36" rx="2" fill="#ff6b5c"/>
+<rect x="332" y="240" width="22" height="26" rx="4" fill="#7c5cff" opacity=".85"/><circle cx="343" cy="250" r="3" fill="#fff3c4"/>
+<rect x="258" y="280" width="42" height="40" rx="6" fill="#8a5a30" opacity=".45"/><circle cx="279" cy="301" r="13" fill="#ffd166"/><path d="M273 301 a6 6 0 0 1 12 0" fill="#f5b942"/>
+<rect x="312" y="286" width="40" height="34" rx="6" fill="#8a5a30" opacity=".45"/>
+<!-- bed -->
+<rect x="6" y="246" width="36" height="92" rx="10" fill="#b06a3e"/><rect x="11" y="251" width="26" height="62" rx="7" fill="#c8814f"/>
+<circle cx="24" cy="263" r="8" fill="#ffe6a2"/><path d="M19 263 a5 5 0 0 1 10 0" fill="#f3c869"/>
+<rect x="34" y="300" width="148" height="40" rx="10" fill="#f3e3c8"/>
+<path d="M34 314 H182 V330 Q182 340 172 340 H44 Q34 340 34 330 Z" fill="#4ec5b0"/>
+<path d="M34 300 H182 V316 H34 Z" fill="#38a896" opacity=".92"/>
+<rect x="40" y="288" width="46" height="26" rx="9" fill="#fff6e6"/><circle cx="150" cy="326" r="6" fill="#fff3c4" opacity=".5"/>
+<!-- plant -->
+<path d="M210 336 q-12 -32 0 -52" stroke="#5bb85a" stroke-width="5" fill="none" stroke-linecap="round"/>
+<ellipse cx="200" cy="290" rx="11" ry="7" fill="#6bbf59" transform="rotate(-30 200 290)"/><ellipse cx="220" cy="296" rx="11" ry="7" fill="#5bb85a" transform="rotate(25 220 296)"/><ellipse cx="210" cy="277" rx="10" ry="7" fill="#7ace66"/>
+<path d="M196 332 h28 l-4 -22 h-20 Z" fill="#e07a52"/><rect x="192" y="328" width="36" height="9" rx="3" fill="#f0916a"/>
+<!-- rug -->
+<ellipse cx="150" cy="374" rx="92" ry="22" fill="#e6b85c"/><ellipse cx="150" cy="374" rx="74" ry="16" fill="#f3d488"/><ellipse cx="150" cy="374" rx="50" ry="10" fill="#e6b85c" opacity=".55"/>
+<g fill="#fff7da" opacity=".5"><text x="150" y="205" font-size="10">✦</text><text x="120" y="252" font-size="8">⋆</text><text x="222" y="150" font-size="9">✦</text></g>`;}
 
 function livingRoomSVG(){return`<defs><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a2a1a"/><stop offset="100%" stop-color="#0d1e12"/></linearGradient></defs>
 <rect width="375" height="420" fill="url(#bg2)"/>
