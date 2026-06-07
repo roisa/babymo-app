@@ -142,12 +142,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .obj-bubble img{width:88%;height:88%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3));}
 /* the hidden Baby Mo blends in like the other bubbles (a bit hidden) … */
 .obj-bubble.ob-mo{
-  width:82px;height:82px;font-size:0;
-  background:rgba(255,255,255,.12);
-  border:2px solid rgba(255,255,255,.22);
-  box-shadow:0 4px 14px rgba(0,0,0,.22);
+  width:80px;height:80px;font-size:0;
+  background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,255,255,.13);
+  box-shadow:0 2px 9px rgba(0,0,0,.16);
 }
-.obj-bubble.ob-mo img{opacity:.9;}
+.obj-bubble.ob-mo img{opacity:.97;}
 /* … then bursts into a happy reveal when found */
 .obj-bubble.mo-reveal{
   animation:moReveal 1.15s cubic-bezier(.18,.9,.3,1.35) forwards !important;
@@ -345,12 +345,12 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 const LEVELS=[
   {id:1,name:"Kamar Baby Mo",emoji:"🛏️",desc:"Cari 5 benda & Baby Mo! 🧸",sticker:"🧸",msg:"Kamar Baby Mo jadi rapi! ✨",
    objects:[
-    {id:"teddy",label:"Beruang",e:"🧸",cx:72,cy:42},
+    {id:"teddy",label:"Beruang",e:"🧸",cx:58,cy:47},
     {id:"slippers",label:"Sandal",e:"🥿",cx:20,cy:82},
-    {id:"moon_pillow",label:"Bantal",e:"🌙",cx:47,cy:67},
+    {id:"moon_pillow",label:"Bantal",e:"🌙",cx:44,cy:67},
     {id:"lantern",label:"Lentera",e:"🏮",cx:14,cy:54},
-    {id:"brush",label:"Sikat",e:"🪥",cx:84,cy:30},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:51,cy:24,mo:true}
+    {id:"brush",label:"Sikat",e:"🪥",cx:87,cy:54},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:67,cy:25,mo:true}
   ]},
   {id:2,name:"Ruang Keluarga",emoji:"🏠",desc:"Bantu Baby Mo & cari 5 benda! 🌿",sticker:"🕌",msg:"Alhamdulillah, rapi sekali! 🌿",
    objects:[
@@ -744,6 +744,14 @@ function bedroomSVG(){return`<defs>
 <rect x="294" y="32" width="4" height="116" fill="#3a4f86"/><rect x="238" y="86" width="116" height="4" fill="#3a4f86"/>
 <rect x="232" y="26" width="128" height="128" rx="20" fill="none" stroke="#eef2ff" stroke-width="5"/>
 <rect x="226" y="150" width="140" height="9" rx="4" fill="#eef2ff"/>
+<!-- curtains over the window (a little hiding spot) -->
+<rect x="218" y="17" width="156" height="7" rx="3.5" fill="#7a5638"/>
+<circle cx="219" cy="20.5" r="6" fill="#8a6440"/><circle cx="373" cy="20.5" r="6" fill="#8a6440"/>
+<path d="M223 22 H369 V43 Q347 55 326 43 Q305 55 284 43 Q263 55 242 43 Q231 50 223 43 Z" fill="#ef8a63"/>
+<path d="M224 22 H272 V153 Q260 163 250 153 Q240 163 230 153 Q226 157 224 153 Z" fill="#ff9e7a"/>
+<g stroke="#e87f5a" stroke-width="2" opacity=".45" fill="none"><path d="M238 30 V151"/><path d="M250 30 V153"/><path d="M261 30 V151"/></g>
+<path d="M320 22 H368 V153 Q358 163 348 153 Q338 163 328 153 Q324 157 320 153 Z" fill="#ff9e7a"/>
+<g stroke="#e87f5a" stroke-width="2" opacity=".45" fill="none"><path d="M332 30 V153"/><path d="M344 30 V151"/><path d="M356 30 V153"/></g>
 <!-- pendant lamp (cord runs from ceiling into the shade) -->
 <rect x="143" y="0" width="14" height="6" rx="3" fill="#34477a"/>
 <line x1="150" y1="3" x2="150" y2="52" stroke="#3a4f86" stroke-width="3"/>
@@ -752,10 +760,11 @@ function bedroomSVG(){return`<defs>
 <path d="M126 64 Q150 40 174 64 Z" fill="#ffd166"/><ellipse cx="150" cy="64" rx="24" ry="6.5" fill="#f5b942"/><circle cx="150" cy="70" r="5.5" fill="#fff3c4"/>
 <!-- framed Baby Mo photo on the wall -->
 <rect x="60" y="74" width="20" height="9" rx="2" fill="#c9b27a"/>
-<rect x="34" y="80" width="72" height="76" rx="9" fill="#ffffff"/>
-<rect x="40" y="86" width="60" height="64" rx="5" fill="#cfe0ff"/>
-<image href="baby-mo-poses/baby-mo-pose-01.png" x="40" y="86" width="60" height="64" preserveAspectRatio="xMidYMin slice"/>
-<rect x="34" y="80" width="72" height="76" rx="9" fill="none" stroke="#dce6f7" stroke-width="2"/>
+<rect x="34" y="80" width="72" height="76" rx="9" fill="#fbf7ee"/>
+<rect x="40" y="86" width="60" height="64" rx="5" fill="#e7e9ee"/>
+<svg x="42" y="88" width="56" height="60"><image href="baby-mo-poses/baby-mo-pose-01.png" x="-42" y="-13" width="140" height="140" style="filter:grayscale(1) contrast(1.06) brightness(1.03)"/></svg>
+<rect x="40" y="86" width="60" height="64" rx="5" fill="none" stroke="#fbf7ee" stroke-width="3"/>
+<rect x="34" y="80" width="72" height="76" rx="9" fill="none" stroke="#e6ddca" stroke-width="2.5"/>
 <!-- bookshelf -->
 <rect x="246" y="170" width="116" height="160" rx="10" fill="#b87a44"/><rect x="251" y="175" width="106" height="150" rx="6" fill="#a86c38"/>
 <rect x="251" y="220" width="106" height="6" fill="#8a5a30"/><rect x="251" y="268" width="106" height="6" fill="#8a5a30"/>
@@ -772,14 +781,14 @@ function bedroomSVG(){return`<defs>
 <path d="M34 314 H182 V330 Q182 340 172 340 H44 Q34 340 34 330 Z" fill="#4ec5b0"/>
 <path d="M34 300 H182 V316 H34 Z" fill="#38a896" opacity=".92"/>
 <rect x="40" y="288" width="46" height="26" rx="9" fill="#fff6e6"/><circle cx="150" cy="326" r="6" fill="#fff3c4" opacity=".5"/>
-<!-- plant (stem rooted into the pot, rim on top) -->
-<path d="M210 318 q-9 -22 -2 -40" stroke="#4ea84e" stroke-width="5" fill="none" stroke-linecap="round"/>
-<ellipse cx="198" cy="286" rx="11" ry="7" fill="#6bbf59" transform="rotate(-32 198 286)"/>
-<ellipse cx="222" cy="291" rx="11" ry="7" fill="#5bb85a" transform="rotate(28 222 291)"/>
-<ellipse cx="208" cy="274" rx="10" ry="7.5" fill="#7ace66"/>
-<path d="M191 315 H229 L223 340 H197 Z" fill="#e07a52"/>
-<rect x="186" y="307" width="48" height="11" rx="4" fill="#f0916a"/>
-<ellipse cx="210" cy="313" rx="16" ry="3" fill="#7a4a32" opacity=".4"/>
+<!-- plant: pot drawn first, then the stem rises out of the soil (connected) -->
+<path d="M192 316 H228 L222 340 H198 Z" fill="#e07a52"/>
+<rect x="186" y="308" width="48" height="11" rx="4" fill="#f0916a"/>
+<ellipse cx="210" cy="313" rx="15" ry="3" fill="#6b4327"/>
+<path d="M210 313 q-9 -20 -3 -38" stroke="#4ea84e" stroke-width="5" fill="none" stroke-linecap="round"/>
+<ellipse cx="198" cy="285" rx="11" ry="7" fill="#6bbf59" transform="rotate(-32 198 285)"/>
+<ellipse cx="222" cy="289" rx="11" ry="7" fill="#5bb85a" transform="rotate(28 222 289)"/>
+<ellipse cx="208" cy="274" rx="10.5" ry="8" fill="#7ace66"/>
 <!-- rug -->
 <ellipse cx="150" cy="374" rx="92" ry="22" fill="#e6b85c"/><ellipse cx="150" cy="374" rx="74" ry="16" fill="#f3d488"/><ellipse cx="150" cy="374" rx="50" ry="10" fill="#e6b85c" opacity=".55"/>
 <g fill="#fff7da" opacity=".5"><text x="150" y="205" font-size="10">✦</text><text x="120" y="252" font-size="8">⋆</text><text x="222" y="150" font-size="9">✦</text></g>`;}
