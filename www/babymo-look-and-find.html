@@ -140,15 +140,31 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 @keyframes bubbleFloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-7px)}}
 /* image targets (e.g. the hidden Baby Mo) */
 .obj-bubble img{width:88%;height:88%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3));}
-/* the hidden Baby Mo gets a bigger, golden "prize" bubble */
+/* the hidden Baby Mo blends in like the other bubbles (a bit hidden) … */
 .obj-bubble.ob-mo{
-  width:108px;height:108px;font-size:0;
-  background:radial-gradient(circle at 50% 38%,rgba(255,233,160,.32),rgba(255,255,255,.12));
-  border:3px solid rgba(255,210,63,.65);
-  box-shadow:0 0 22px rgba(255,210,63,.4),0 6px 18px rgba(0,0,0,.3);
+  width:82px;height:82px;font-size:0;
+  background:rgba(255,255,255,.12);
+  border:2px solid rgba(255,255,255,.22);
+  box-shadow:0 4px 14px rgba(0,0,0,.22);
 }
-.obj-bubble.ob-mo::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:2px dashed rgba(255,210,63,.45);animation:moSpin 9s linear infinite;}
-@keyframes moSpin{to{transform:rotate(360deg)}}
+.obj-bubble.ob-mo img{opacity:.9;}
+/* … then bursts into a happy reveal when found */
+.obj-bubble.mo-reveal{
+  animation:moReveal 1.15s cubic-bezier(.18,.9,.3,1.35) forwards !important;
+  z-index:48 !important;
+  background:radial-gradient(circle at 50% 40%,rgba(255,233,160,.55),rgba(255,255,255,.18)) !important;
+  border-color:rgba(255,210,63,.9) !important;
+  box-shadow:0 0 34px rgba(255,210,63,.7),0 8px 22px rgba(0,0,0,.3) !important;
+}
+.obj-bubble.mo-reveal img{opacity:1;}
+@keyframes moReveal{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  35%{transform:translate(-50%,-50%) scale(1.75) rotate(-7deg)}
+  52%{transform:translate(-50%,-50%) scale(1.55) rotate(7deg)}
+  68%{transform:translate(-50%,-50%) scale(1.68) rotate(-3deg)}
+  84%{transform:translate(-50%,-50%) scale(1.6) rotate(0);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1.55);opacity:0}
+}
 .obj-bubble.hint{animation:hintGlow 1.4s ease-in-out infinite !important;}
 @keyframes hintGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,63,0);border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.18)}50%{box-shadow:0 0 0 12px rgba(255,215,63,0.15),0 0 30px rgba(255,215,63,0.5);border-color:#FFD23F;background:rgba(255,215,78,0.3)}}
 .obj-bubble.found-anim{animation:objFnd .55s ease forwards !important;}
@@ -224,7 +240,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   .scene-wrap{flex:0 0 auto!important;width:100%;aspect-ratio:3/4;max-height:72vh;border-radius:22px;}
   /* Toddler-friendly: chunkier tap targets + tray on tablet */
   .obj-bubble{width:104px;height:104px;font-size:46px;}
-  .obj-bubble.ob-mo{width:132px;height:132px;}
+  .obj-bubble.ob-mo{width:100px;height:100px;}
   .ti{width:64px;padding:7px 4px;}
   .ti-icon,.ti-img{font-size:30px;width:30px;height:30px;}
   .ti-lbl{font-size:9.5px;}
@@ -504,11 +520,17 @@ function doFound(id,div){
   const obj=LEVELS[curLv].objects.find(o=>o.id===id);
   const isMo=obj&&obj.mo;
 
-  div.classList.add('found-anim');
-  setTimeout(()=>div.remove(),600);
+  if(isMo){
+    // Baby Mo was hiding — pop him up with a bouncy reveal instead of vanishing
+    div.classList.add('mo-reveal');
+    setTimeout(()=>div.remove(),1150);
+  }else{
+    div.classList.add('found-anim');
+    setTimeout(()=>div.remove(),600);
+  }
 
   sparkle(fx,fy,true);
-  if(isMo){chime([659,784,988,1175],0.14);sparkle(fx,fy,true);}
+  if(isMo){chime([659,784,988,1175],0.14);setTimeout(()=>sparkle(fx,fy,true),300);}
   foundTxt(fx,fy,isMo?'Ketemu Baby Mo! 🎉':null);
   updateTrayItem(id);
   updateDots();
@@ -722,13 +744,18 @@ function bedroomSVG(){return`<defs>
 <rect x="294" y="32" width="4" height="116" fill="#3a4f86"/><rect x="238" y="86" width="116" height="4" fill="#3a4f86"/>
 <rect x="232" y="26" width="128" height="128" rx="20" fill="none" stroke="#eef2ff" stroke-width="5"/>
 <rect x="226" y="150" width="140" height="9" rx="4" fill="#eef2ff"/>
-<!-- pendant lamp -->
-<line x1="150" y1="0" x2="150" y2="40" stroke="#3a4f86" stroke-width="3"/>
-<ellipse cx="150" cy="94" rx="62" ry="44" fill="url(#bdLampGlow)"/>
-<path d="M128 62 Q150 36 172 62 Z" fill="#ffd166"/><ellipse cx="150" cy="62" rx="22" ry="6" fill="#f5b942"/><circle cx="150" cy="66" r="5" fill="#fff3c4"/>
-<!-- framed picture -->
-<rect x="34" y="84" width="74" height="64" rx="8" fill="#eef2ff"/><rect x="40" y="90" width="62" height="52" rx="5" fill="#2f3f72"/>
-<circle cx="62" cy="116" r="14" fill="#ffe6a2"/><circle cx="68" cy="112" r="14" fill="#2f3f72"/><circle cx="86" cy="104" r="1.6" fill="#fff7da"/><text x="80" y="135" font-size="9" fill="#fff7da" opacity=".8">✦</text>
+<!-- pendant lamp (cord runs from ceiling into the shade) -->
+<rect x="143" y="0" width="14" height="6" rx="3" fill="#34477a"/>
+<line x1="150" y1="3" x2="150" y2="52" stroke="#3a4f86" stroke-width="3"/>
+<circle cx="150" cy="52" r="3.5" fill="#34477a"/>
+<ellipse cx="150" cy="98" rx="62" ry="44" fill="url(#bdLampGlow)"/>
+<path d="M126 64 Q150 40 174 64 Z" fill="#ffd166"/><ellipse cx="150" cy="64" rx="24" ry="6.5" fill="#f5b942"/><circle cx="150" cy="70" r="5.5" fill="#fff3c4"/>
+<!-- framed Baby Mo photo on the wall -->
+<rect x="60" y="74" width="20" height="9" rx="2" fill="#c9b27a"/>
+<rect x="34" y="80" width="72" height="76" rx="9" fill="#ffffff"/>
+<rect x="40" y="86" width="60" height="64" rx="5" fill="#cfe0ff"/>
+<image href="baby-mo-poses/baby-mo-pose-01.png" x="40" y="86" width="60" height="64" preserveAspectRatio="xMidYMin slice"/>
+<rect x="34" y="80" width="72" height="76" rx="9" fill="none" stroke="#dce6f7" stroke-width="2"/>
 <!-- bookshelf -->
 <rect x="246" y="170" width="116" height="160" rx="10" fill="#b87a44"/><rect x="251" y="175" width="106" height="150" rx="6" fill="#a86c38"/>
 <rect x="251" y="220" width="106" height="6" fill="#8a5a30"/><rect x="251" y="268" width="106" height="6" fill="#8a5a30"/>
@@ -745,10 +772,14 @@ function bedroomSVG(){return`<defs>
 <path d="M34 314 H182 V330 Q182 340 172 340 H44 Q34 340 34 330 Z" fill="#4ec5b0"/>
 <path d="M34 300 H182 V316 H34 Z" fill="#38a896" opacity=".92"/>
 <rect x="40" y="288" width="46" height="26" rx="9" fill="#fff6e6"/><circle cx="150" cy="326" r="6" fill="#fff3c4" opacity=".5"/>
-<!-- plant -->
-<path d="M210 336 q-12 -32 0 -52" stroke="#5bb85a" stroke-width="5" fill="none" stroke-linecap="round"/>
-<ellipse cx="200" cy="290" rx="11" ry="7" fill="#6bbf59" transform="rotate(-30 200 290)"/><ellipse cx="220" cy="296" rx="11" ry="7" fill="#5bb85a" transform="rotate(25 220 296)"/><ellipse cx="210" cy="277" rx="10" ry="7" fill="#7ace66"/>
-<path d="M196 332 h28 l-4 -22 h-20 Z" fill="#e07a52"/><rect x="192" y="328" width="36" height="9" rx="3" fill="#f0916a"/>
+<!-- plant (stem rooted into the pot, rim on top) -->
+<path d="M210 318 q-9 -22 -2 -40" stroke="#4ea84e" stroke-width="5" fill="none" stroke-linecap="round"/>
+<ellipse cx="198" cy="286" rx="11" ry="7" fill="#6bbf59" transform="rotate(-32 198 286)"/>
+<ellipse cx="222" cy="291" rx="11" ry="7" fill="#5bb85a" transform="rotate(28 222 291)"/>
+<ellipse cx="208" cy="274" rx="10" ry="7.5" fill="#7ace66"/>
+<path d="M191 315 H229 L223 340 H197 Z" fill="#e07a52"/>
+<rect x="186" y="307" width="48" height="11" rx="4" fill="#f0916a"/>
+<ellipse cx="210" cy="313" rx="16" ry="3" fill="#7a4a32" opacity=".4"/>
 <!-- rug -->
 <ellipse cx="150" cy="374" rx="92" ry="22" fill="#e6b85c"/><ellipse cx="150" cy="374" rx="74" ry="16" fill="#f3d488"/><ellipse cx="150" cy="374" rx="50" ry="10" fill="#e6b85c" opacity=".55"/>
 <g fill="#fff7da" opacity=".5"><text x="150" y="205" font-size="10">✦</text><text x="120" y="252" font-size="8">⋆</text><text x="222" y="150" font-size="9">✦</text></g>`;}
