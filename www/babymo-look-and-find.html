@@ -123,9 +123,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 /* ===== TAP TARGETS (HTML — iOS safe) ===== */
 .obj-bubble{
   position:absolute;transform:translate(-50%,-50%);
-  width:76px;height:76px;border-radius:50%;
+  width:86px;height:86px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:34px;
+  font-size:38px;
   background:rgba(255,255,255,0.18);
   border:2.5px solid rgba(255,255,255,0.25);
   box-shadow:0 4px 16px rgba(0,0,0,0.25);
@@ -138,6 +138,17 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   z-index:20;
 }
 @keyframes bubbleFloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-7px)}}
+/* image targets (e.g. the hidden Baby Mo) */
+.obj-bubble img{width:88%;height:88%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3));}
+/* the hidden Baby Mo gets a bigger, golden "prize" bubble */
+.obj-bubble.ob-mo{
+  width:108px;height:108px;font-size:0;
+  background:radial-gradient(circle at 50% 38%,rgba(255,233,160,.32),rgba(255,255,255,.12));
+  border:3px solid rgba(255,210,63,.65);
+  box-shadow:0 0 22px rgba(255,210,63,.4),0 6px 18px rgba(0,0,0,.3);
+}
+.obj-bubble.ob-mo::before{content:'';position:absolute;inset:-7px;border-radius:50%;border:2px dashed rgba(255,210,63,.45);animation:moSpin 9s linear infinite;}
+@keyframes moSpin{to{transform:rotate(360deg)}}
 .obj-bubble.hint{animation:hintGlow 1.4s ease-in-out infinite !important;}
 @keyframes hintGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,63,0);border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.18)}50%{box-shadow:0 0 0 12px rgba(255,215,63,0.15),0 0 30px rgba(255,215,63,0.5);border-color:#FFD23F;background:rgba(255,215,78,0.3)}}
 .obj-bubble.found-anim{animation:objFnd .55s ease forwards !important;}
@@ -211,7 +222,32 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 @media(min-width:760px){
   #s-game{justify-content:center!important;gap:14px;}
   .scene-wrap{flex:0 0 auto!important;width:100%;aspect-ratio:3/4;max-height:72vh;border-radius:22px;}
+  /* Toddler-friendly: chunkier tap targets + tray on tablet */
+  .obj-bubble{width:104px;height:104px;font-size:46px;}
+  .obj-bubble.ob-mo{width:132px;height:132px;}
+  .ti{width:64px;padding:7px 4px;}
+  .ti-icon,.ti-img{font-size:30px;width:30px;height:30px;}
+  .ti-lbl{font-size:9.5px;}
+  .bmo-face{width:62px;height:62px;}
 }
+
+/* Warmer, brighter rooms — keeps the cosy night mood but less muddy */
+.scene-svg{filter:saturate(1.14) brightness(1.1) contrast(1.02);}
+.scene-wrap::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:6;
+  background:radial-gradient(ellipse 70% 45% at 50% 22%,rgba(255,224,150,.12),transparent 60%);}
+
+/* a Baby Mo pose cheers from the corner on every find */
+.baby-react-img{position:absolute;left:50%;bottom:4%;transform:translateX(-50%);
+  width:34%;max-width:160px;pointer-events:none;z-index:45;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.45));animation:brImg 1.15s cubic-bezier(.175,.885,.32,1.275) forwards;}
+@keyframes brImg{0%{transform:translateX(-50%) translateY(40px) scale(.4);opacity:0}
+  22%{transform:translateX(-50%) translateY(0) scale(1.08);opacity:1}
+  72%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}
+  100%{transform:translateX(-50%) translateY(14px) scale(.9);opacity:0}}
+
+/* tray item images (hidden Baby Mo) */
+.ti-img{width:24px;height:24px;object-fit:contain;}
+.ti.found .ti-img{filter:grayscale(1);}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-look-and-find.html">
 <meta name="robots" content="index,follow">
@@ -291,47 +327,58 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 // LEVEL DATA
 // =============================================
 const LEVELS=[
-  {id:1,name:"Kamar Baby Mo",emoji:"🛏️",desc:"Temukan 5 benda di kamar tidur!",sticker:"🧸",msg:"Kamar Baby Mo jadi rapi! ✨",
+  {id:1,name:"Kamar Baby Mo",emoji:"🛏️",desc:"Cari 5 benda & Baby Mo! 🧸",sticker:"🧸",msg:"Kamar Baby Mo jadi rapi! ✨",
    objects:[
     {id:"teddy",label:"Beruang",e:"🧸",cx:72,cy:42},
     {id:"slippers",label:"Sandal",e:"🥿",cx:20,cy:82},
     {id:"moon_pillow",label:"Bantal",e:"🌙",cx:47,cy:67},
     {id:"lantern",label:"Lentera",e:"🏮",cx:14,cy:54},
-    {id:"brush",label:"Sikat",e:"🪥",cx:84,cy:30}
+    {id:"brush",label:"Sikat",e:"🪥",cx:84,cy:30},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:51,cy:24,mo:true}
   ]},
-  {id:2,name:"Ruang Keluarga",emoji:"🏠",desc:"Bantu Baby Mo di ruang keluarga!",sticker:"🕌",msg:"Alhamdulillah, rapi sekali! 🌿",
+  {id:2,name:"Ruang Keluarga",emoji:"🏠",desc:"Bantu Baby Mo & cari 5 benda! 🌿",sticker:"🕌",msg:"Alhamdulillah, rapi sekali! 🌿",
    objects:[
     {id:"sajadah",label:"Sajadah",e:"🟦",cx:50,cy:86},
     {id:"kurma",label:"Kurma",e:"🌴",cx:63,cy:56},
     {id:"buku",label:"Buku",e:"📖",cx:26,cy:46},
     {id:"susu",label:"Susu",e:"🥛",cx:72,cy:52},
-    {id:"bulan",label:"Bulan",e:"☪️",cx:16,cy:20}
+    {id:"bulan",label:"Bulan",e:"☪️",cx:16,cy:20},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-26.png",cx:85,cy:80,mo:true}
   ]},
-  {id:3,name:"Taman Mimpi 🌸",emoji:"🌸",desc:"Malam ajaib di taman bintang!",sticker:"🌟",msg:"Subhanallah, indah sekali! 🌙",
+  {id:3,name:"Taman Mimpi 🌸",emoji:"🌸",desc:"Cari Baby Mo di taman bintang! 🌟",sticker:"🌟",msg:"Subhanallah, indah sekali! 🌙",
    objects:[
     {id:"bintang",label:"Bintang",e:"⭐",cx:84,cy:22},
     {id:"awan",label:"Awan",e:"☁️",cx:30,cy:17},
     {id:"kunang",label:"Kunang",e:"✨",cx:63,cy:67},
     {id:"bunga",label:"Bunga",e:"🌸",cx:19,cy:76},
-    {id:"balon",label:"Balon",e:"🎈",cx:52,cy:34}
+    {id:"balon",label:"Balon",e:"🎈",cx:52,cy:34},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-wow.png",cx:80,cy:74,mo:true}
   ]},
-  {id:4,name:"Pasar Ramadan",emoji:"🌙",desc:"Cari benda di pasar malam Ramadan!",sticker:"🌙",msg:"Selamat malam Ramadan! 🌙",
+  {id:4,name:"Pasar Ramadan",emoji:"🌙",desc:"Cari Baby Mo di pasar malam! 🏮",sticker:"🌙",msg:"Selamat malam Ramadan! 🌙",
    objects:[
     {id:"lentera",label:"Lentera",e:"🏮",cx:73,cy:28},
     {id:"samosa",label:"Samosa",e:"🥟",cx:40,cy:69},
     {id:"kue",label:"Kue",e:"🌙",cx:57,cy:64},
     {id:"minum",label:"Minum",e:"💧",cx:24,cy:77},
-    {id:"bedug",label:"Bedug",e:"🥁",cx:79,cy:73}
+    {id:"bedug",label:"Bedug",e:"🥁",cx:79,cy:73},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-09.png",cx:15,cy:42,mo:true}
   ]},
-  {id:5,name:"Halaman Masjid",emoji:"🕌",desc:"Jelajahi halaman masjid!",sticker:"🤲",msg:"MasyaAllah, masjid yang cantik! 🕌",
+  {id:5,name:"Halaman Masjid",emoji:"🕌",desc:"Cari Baby Mo di halaman masjid! 🤲",sticker:"🤲",msg:"MasyaAllah, masjid yang cantik! 🕌",
    objects:[
     {id:"sandal",label:"Sandal",e:"👟",cx:28,cy:87},
     {id:"tasbih",label:"Tasbih",e:"📿",cx:67,cy:52},
     {id:"lampu",label:"Lentera",e:"🏮",cx:18,cy:40},
     {id:"kucing",label:"Kucing",e:"🐱",cx:77,cy:77},
-    {id:"rehal",label:"Rehal",e:"📚",cx:51,cy:62}
+    {id:"rehal",label:"Rehal",e:"📚",cx:51,cy:62},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-yeyy.png",cx:50,cy:25,mo:true}
   ]}
 ];
+
+// celebratory poses popped on each find + on the win screen
+const CHEER_POSES=['baby-mo-yeyy','baby-mo-wow','baby-mo-yes','baby-mo-alright','baby-mo-thank-you','baby-mo-ok','baby-mo-pose-26','baby-mo-idea'];
+// preload poses so they appear instantly
+[...new Set([...CHEER_POSES,'baby-mo-pose-05','baby-mo-pose-26','baby-mo-wow','baby-mo-pose-09','baby-mo-yeyy'])]
+  .forEach(p=>{const im=new Image();im.src='baby-mo-poses/'+p+'.png';});
 
 // =============================================
 // STATE
@@ -404,13 +451,14 @@ function buildScene(lv){
   lv.objects.forEach((obj,i)=>{
     if(found.has(obj.id))return;
     const div=document.createElement('div');
-    div.className='obj-bubble';
+    div.className='obj-bubble'+(obj.mo?' ob-mo':'');
     div.setAttribute('data-id',obj.id);
     div.setAttribute('data-svgx',(obj.cx/100)*VBW);
     div.setAttribute('data-svgy',(obj.cy/100)*VBH);
     div.style.setProperty('--bf-dur',(2.8+i*0.4)+'s');
     div.style.setProperty('--bf-del',(i*0.3)+'s');
-    div.textContent=obj.e;
+    if(obj.img){const im=document.createElement('img');im.src=obj.img;im.alt=obj.label;div.appendChild(im);}
+    else div.textContent=obj.e;
 
     // iOS touch - must be touchstart with preventDefault
     div.addEventListener('touchstart',function(e){
@@ -453,14 +501,18 @@ function doFound(id,div){
   const fx=dRect.left+dRect.width/2-wRect.left;
   const fy=dRect.top+dRect.height/2-wRect.top;
 
+  const obj=LEVELS[curLv].objects.find(o=>o.id===id);
+  const isMo=obj&&obj.mo;
+
   div.classList.add('found-anim');
   setTimeout(()=>div.remove(),600);
 
   sparkle(fx,fy,true);
-  foundTxt(fx,fy);
+  if(isMo){chime([659,784,988,1175],0.14);sparkle(fx,fy,true);}
+  foundTxt(fx,fy,isMo?'Ketemu Baby Mo! 🎉':null);
   updateTrayItem(id);
   updateDots();
-  setTimeout(()=>babyReact(),380);
+  setTimeout(()=>babyReact(isMo?(obj.img.split('/').pop().replace('.png','')):null),380);
   setTimeout(()=>{if(found.size>=LEVELS[curLv].objects.length)setTimeout(showComplete,600);},700);
   clearHint();
 }
@@ -491,23 +543,25 @@ function sparkle(x,y,ok){
   fx.appendChild(div);setTimeout(()=>div.remove(),950);
 }
 
-function foundTxt(x,y){
+function foundTxt(x,y,forced){
   const msgs=['MasyaAllah! 🌟','Bagus! ⭐','Yay! 🎉','Keren! ✨','Hebat! 🌙','Alhamdulillah! 💛','Pintar! 🌸'];
   const fx=document.getElementById('fx-wrap');
   const el=document.createElement('div');
   el.className='found-txt';
   el.style.cssText=`left:${x}px;top:${y}px;position:absolute;`;
-  el.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+  el.textContent=forced||msgs[Math.floor(Math.random()*msgs.length)];
   fx.appendChild(el);setTimeout(()=>el.remove(),1500);
 }
 
-function babyReact(){
+// A real Baby Mo pose cheers from the bottom on every find.
+function babyReact(pose){
   const wrap=document.getElementById('scene-wrap');
-  const rs=['😄','🥰','😁','🌟','💛','🤩','😍'];
-  const el=document.createElement('div');
-  el.className='baby-react';
-  el.textContent=rs[Math.floor(Math.random()*rs.length)];
-  wrap.appendChild(el);setTimeout(()=>el.remove(),1050);
+  const p=pose||CHEER_POSES[Math.floor(Math.random()*CHEER_POSES.length)];
+  const el=document.createElement('img');
+  el.className='baby-react-img';
+  el.src='baby-mo-poses/'+p+'.png';
+  el.alt='';
+  wrap.appendChild(el);setTimeout(()=>el.remove(),1200);
 }
 
 function updateTrayItem(id){
@@ -523,7 +577,10 @@ function updateDots(){
 }
 
 function buildTray(lv){
-  document.getElementById('tray-items').innerHTML=lv.objects.map(o=>`<div class="ti ${found.has(o.id)?'found':''}" data-id="${o.id}"><span class="ti-icon">${o.e}</span><span class="ti-lbl">${o.label}</span></div>`).join('');
+  document.getElementById('tray-items').innerHTML=lv.objects.map(o=>{
+    const icon=o.img?`<img class="ti-img" src="${o.img}" alt="">`:`<span class="ti-icon">${o.e}</span>`;
+    return `<div class="ti ${found.has(o.id)?'found':''}" data-id="${o.id}">${icon}<span class="ti-lbl">${o.label}</span></div>`;
+  }).join('');
 }
 
 // =============================================
@@ -549,6 +606,9 @@ function clearHint(){
 function showComplete(){
   completeSnd();
   const lv=LEVELS[curLv];
+  // celebrate with a random Baby Mo pose
+  const cb=document.querySelector('.comp-baby');
+  if(cb)cb.src='baby-mo-poses/'+CHEER_POSES[Math.floor(Math.random()*CHEER_POSES.length)]+'.png';
   document.getElementById('sticker').textContent=lv.sticker;
   document.getElementById('comp-msg').textContent=lv.msg;
   prog[lv.id]=3;localStorage.setItem('bmo2',JSON.stringify(prog));
