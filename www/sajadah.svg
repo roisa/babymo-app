@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 150">
+  <defs>
+    <linearGradient id="mat" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2f9c7e"/><stop offset="1" stop-color="#22785f"/>
+    </linearGradient>
+  </defs>
+  <!-- top fringe -->
+  <g stroke="#cdaa55" stroke-width="3" stroke-linecap="round">
+    <line x1="22" y1="9" x2="22" y2="3"/><line x1="34" y1="9" x2="34" y2="3"/><line x1="46" y1="9" x2="46" y2="3"/>
+    <line x1="58" y1="9" x2="58" y2="3"/><line x1="70" y1="9" x2="70" y2="3"/>
+  </g>
+  <rect x="12" y="9" width="76" height="132" rx="12" fill="url(#mat)"/>
+  <rect x="12" y="9" width="76" height="132" rx="12" fill="none" stroke="#f4d06a" stroke-width="4"/>
+  <rect x="21" y="18" width="58" height="114" rx="7" fill="none" stroke="#bfe7d6" stroke-width="2"/>
+  <!-- mihrab arch -->
+  <path d="M34 106 V62 a16 16 0 0 1 32 0 V106 Z" fill="#22785f" stroke="#f4d06a" stroke-width="3"/>
+  <path d="M40 106 V64 a10 10 0 0 1 20 0 V106" fill="none" stroke="#bfe7d6" stroke-width="2"/>
+  <!-- hanging lamp motif -->
+  <line x1="50" y1="46" x2="50" y2="55" stroke="#f4d06a" stroke-width="2"/>
+  <path d="M44 60 a6 6 0 0 1 12 0 Z" fill="#f4d06a"/>
+  <circle cx="50" cy="63" r="1.6" fill="#fff3c4"/>
+  <!-- corner motifs -->
+  <circle cx="24" cy="120" r="2.6" fill="#f4d06a"/><circle cx="76" cy="120" r="2.6" fill="#f4d06a"/>
+  <!-- bottom fringe -->
+  <g stroke="#cdaa55" stroke-width="3" stroke-linecap="round">
+    <line x1="22" y1="141" x2="22" y2="147"/><line x1="34" y1="141" x2="34" y2="147"/><line x1="46" y1="141" x2="46" y2="147"/>
+    <line x1="58" y1="141" x2="58" y2="147"/><line x1="70" y1="141" x2="70" y2="147"/>
+  </g>
+</svg>
