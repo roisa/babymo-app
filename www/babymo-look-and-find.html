@@ -414,6 +414,42 @@ const LEVELS=[
     {id:"kepiting",label:"Kepiting",e:"🦀",cx:50,cy:82},
     {id:"ember",label:"Ember",e:"🪣",cx:74,cy:76},
     {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:13,cy:62,mo:true}
+  ]},
+  {id:9,name:"Kebun Binatang",emoji:"🦁",desc:"Cari 5 hewan & Baby Mo! 🦁",sticker:"🦁",msg:"Seru di kebun binatang! 🦁",
+   objects:[
+    {id:"monyet",label:"Monyet",e:"🐵",cx:30,cy:44},
+    {id:"burung",label:"Burung",e:"🦜",cx:58,cy:26},
+    {id:"singa",label:"Singa",e:"🦁",cx:70,cy:56},
+    {id:"jerapah",label:"Jerapah",e:"🦒",cx:84,cy:40},
+    {id:"gajah",label:"Gajah",e:"🐘",cx:44,cy:70},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:14,cy:64,mo:true}
+  ]},
+  {id:10,name:"Taman Bermain",emoji:"🛝",desc:"Cari 5 benda & Baby Mo! 🎈",sticker:"🎈",msg:"Asyik bermain! 🎉",
+   objects:[
+    {id:"layang",label:"Layang",e:"🪁",cx:30,cy:22},
+    {id:"balon",label:"Balon",e:"🎈",cx:62,cy:30},
+    {id:"bola",label:"Bola",e:"⚽",cx:40,cy:76},
+    {id:"sepeda",label:"Sepeda",e:"🚲",cx:18,cy:72},
+    {id:"eskrim",label:"Es Krim",e:"🍦",cx:76,cy:64},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:88,cy:48,mo:true}
+  ]},
+  {id:11,name:"Kebun Baby Mo",emoji:"🚜",desc:"Cari 5 benda kebun & Baby Mo! 🥕",sticker:"🐔",msg:"Panen di kebun! 🌾",
+   objects:[
+    {id:"jagung",label:"Jagung",e:"🌽",cx:20,cy:56},
+    {id:"telur",label:"Telur",e:"🥚",cx:58,cy:48},
+    {id:"sapi",label:"Sapi",e:"🐄",cx:68,cy:68},
+    {id:"wortel",label:"Wortel",e:"🥕",cx:30,cy:78},
+    {id:"ayam",label:"Ayam",e:"🐔",cx:52,cy:80},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:88,cy:56,mo:true}
+  ]},
+  {id:12,name:"Bawah Laut",emoji:"🐠",desc:"Cari 5 hewan laut & Baby Mo! 🐠",sticker:"🐠",msg:"Indahnya bawah laut! 🌊",
+   objects:[
+    {id:"ikan",label:"Ikan",e:"🐠",cx:60,cy:36},
+    {id:"kura",label:"Kura-kura",e:"🐢",cx:30,cy:44},
+    {id:"gurita",label:"Gurita",e:"🐙",cx:76,cy:58},
+    {id:"bintang",label:"Bintang",e:"⭐",cx:22,cy:82},
+    {id:"kepiting",label:"Kepiting",e:"🦀",cx:50,cy:84},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:84,cy:76,mo:true}
   ]}
 ];
 
@@ -746,6 +782,10 @@ function getSceneSVG(id){
   if(id===6)return kitchenSVG();
   if(id===7)return classroomSVG();
   if(id===8)return beachSVG();
+  if(id===9)return zooSVG();
+  if(id===10)return playgroundSVG();
+  if(id===11)return farmSVG();
+  if(id===12)return seaSVG();
   return bedroomSVG();
 }
 
@@ -1063,6 +1103,76 @@ function beachSVG(){return`<defs>
 <!-- shells -->
 <path d="M96 392 l3 7 7 .5 -5.5 4.8 1.8 7 -6.3 -3.8 -6.3 3.8 1.8 -7 -5.5 -4.8 7 -.5 Z" fill="#ffb15c"/>
 <circle cx="248" cy="394" r="7" fill="#ff8fb3"/><path d="M241 394 a7 7 0 0 1 14 0 Z" fill="#ffa9c4"/>`;}
+
+function zooSVG(){return`<defs>
+<linearGradient id="zoSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7ec8ec"/><stop offset="100%" stop-color="#b6e6f4"/></linearGradient>
+<linearGradient id="zoGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#82cd6c"/><stop offset="100%" stop-color="#5faf56"/></linearGradient>
+<radialGradient id="zoSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#zoSky)"/>
+<circle cx="324" cy="56" r="46" fill="rgba(255,240,160,.35)"/><circle cx="324" cy="56" r="28" fill="url(#zoSun)"/>
+<g fill="#fff" opacity=".85"><ellipse cx="92" cy="56" rx="32" ry="15"/><ellipse cx="72" cy="50" rx="19" ry="12"/><ellipse cx="112" cy="50" rx="19" ry="12"/></g>
+<path d="M0 300 Q120 270 240 296 Q320 314 375 300 V420 H0 Z" fill="url(#zoGrass)"/>
+<rect x="118" y="148" width="139" height="22" rx="6" fill="#d2483c"/><text x="187" y="164" text-anchor="middle" font-size="11" fill="#fff6e6" font-family="'Fredoka One',cursive">KEBUN BINATANG</text>
+<rect x="120" y="168" width="12" height="140" fill="#9c6b3a"/><rect x="243" y="168" width="12" height="140" fill="#9c6b3a"/>
+<ellipse cx="200" cy="372" rx="92" ry="20" fill="#6fc0d8" opacity=".55"/><ellipse cx="200" cy="370" rx="70" ry="14" fill="#8ad4e8" opacity=".5"/>
+<rect x="40" y="250" width="15" height="92" rx="5" fill="#a8703f"/>
+<circle cx="47" cy="236" r="34" fill="#5aa066"/><circle cx="24" cy="252" r="26" fill="#6bbf72"/><circle cx="70" cy="252" r="26" fill="#6bbf72"/><circle cx="47" cy="262" r="28" fill="#7ace7e"/>
+<rect x="320" y="270" width="12" height="72" rx="4" fill="#a8703f"/>
+<circle cx="326" cy="258" r="24" fill="#5fae6c"/><circle cx="310" cy="270" r="18" fill="#6fc07a"/><circle cx="342" cy="270" r="18" fill="#6fc07a"/>
+<g fill="#ece0c8"><rect x="100" y="320" width="8" height="34" rx="2"/><rect x="130" y="320" width="8" height="34" rx="2"/><rect x="160" y="320" width="8" height="34" rx="2"/></g><rect x="96" y="328" width="80" height="6" fill="#d8c8a8"/>
+<g><circle cx="285" cy="334" r="18" fill="#5aa066"/><circle cx="302" cy="336" r="14" fill="#6bbf72"/></g>`;}
+
+function playgroundSVG(){return`<defs>
+<linearGradient id="pgSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7ec8ec"/><stop offset="100%" stop-color="#b6e6f4"/></linearGradient>
+<linearGradient id="pgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#82cd6c"/><stop offset="100%" stop-color="#5faf56"/></linearGradient>
+<radialGradient id="pgSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#pgSky)"/>
+<circle cx="52" cy="54" r="44" fill="rgba(255,240,160,.35)"/><circle cx="52" cy="54" r="26" fill="url(#pgSun)"/>
+<g fill="#fff" opacity=".85"><ellipse cx="252" cy="60" rx="32" ry="15"/><ellipse cx="232" cy="54" rx="19" ry="12"/><ellipse cx="272" cy="54" rx="19" ry="12"/></g>
+<rect x="0" y="316" width="375" height="104" fill="url(#pgGrass)"/>
+<rect x="20" y="206" width="120" height="9" rx="4" fill="#5a8ab0"/><rect x="22" y="210" width="9" height="112" rx="3" fill="#6f9fc4"/><rect x="129" y="210" width="9" height="112" rx="3" fill="#6f9fc4"/>
+<line x1="55" y1="216" x2="55" y2="286" stroke="#cfa05a" stroke-width="2"/><line x1="75" y1="216" x2="75" y2="286" stroke="#cfa05a" stroke-width="2"/><rect x="52" y="286" width="26" height="7" rx="3" fill="#ff6b5c"/>
+<line x1="95" y1="216" x2="95" y2="286" stroke="#cfa05a" stroke-width="2"/><line x1="115" y1="216" x2="115" y2="286" stroke="#cfa05a" stroke-width="2"/><rect x="92" y="286" width="26" height="7" rx="3" fill="#ffd166"/>
+<rect x="300" y="200" width="9" height="122" rx="3" fill="#6f9fc4"/><rect x="338" y="248" width="9" height="74" rx="3" fill="#6f9fc4"/>
+<rect x="294" y="192" width="50" height="16" rx="6" fill="#ff8c66"/>
+<path d="M300 208 L258 300 Q256 312 268 312 L300 312 Z" fill="#ffd166"/><path d="M300 208 L266 300" stroke="#f5b942" stroke-width="3" fill="none"/>
+<rect x="120" y="318" width="120" height="8" rx="4" fill="#6cc0e8" transform="rotate(-7 180 322)"/><circle cx="180" cy="332" r="12" fill="#ff6b5c"/>
+<rect x="150" y="348" width="92" height="40" rx="6" fill="#e3c87e"/><rect x="150" y="348" width="92" height="8" rx="4" fill="#caa45e"/>`;}
+
+function farmSVG(){return`<defs>
+<linearGradient id="fmSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd2ec"/><stop offset="100%" stop-color="#c2e9f3"/></linearGradient>
+<linearGradient id="fmField" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8ace6e"/><stop offset="100%" stop-color="#69b052"/></linearGradient>
+<radialGradient id="fmSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#fmSky)"/>
+<circle cx="60" cy="54" r="44" fill="rgba(255,240,160,.35)"/><circle cx="60" cy="54" r="26" fill="url(#fmSun)"/>
+<g fill="#fff" opacity=".85"><ellipse cx="244" cy="56" rx="30" ry="14"/><ellipse cx="226" cy="50" rx="18" ry="11"/></g>
+<path d="M0 290 Q120 268 240 288 Q320 302 375 290 V420 H0 Z" fill="url(#fmField)"/>
+<rect x="40" y="224" width="22" height="96" fill="#ece0c8"/><polygon points="38,224 64,224 51,200" fill="#c0392b"/>
+<g transform="translate(51,210)" fill="#fff6e6"><rect x="-3" y="-26" width="6" height="52" rx="2" transform="rotate(22)"/><rect x="-26" y="-3" width="52" height="6" rx="2" transform="rotate(22)"/></g><circle cx="51" cy="210" r="4" fill="#a8703f"/>
+<rect x="248" y="226" width="112" height="100" fill="#d2483c"/><polygon points="248,226 360,226 348,196 260,196" fill="#b23a2e"/>
+<rect x="289" y="262" width="36" height="64" fill="#fff1e6"/><line x1="307" y1="262" x2="307" y2="326" stroke="#d2483c" stroke-width="2"/><line x1="289" y1="294" x2="325" y2="294" stroke="#d2483c" stroke-width="2"/>
+<polygon points="297,206 317,206 307,192" fill="#fff1e6"/><rect x="300" y="206" width="14" height="12" fill="#fff1e6"/>
+<g><ellipse cx="150" cy="350" rx="28" ry="20" fill="#ecc760"/><path d="M122 350 h56 M150 330 v40 M132 336 l36 28 M168 336 l-36 28" stroke="#d8b048" stroke-width="2" fill="none" opacity=".6"/></g>
+<g fill="#ece0c8"><rect x="70" y="334" width="7" height="28" rx="2"/><rect x="100" y="334" width="7" height="28" rx="2"/></g><rect x="66" y="340" width="48" height="5" fill="#d8c8a8"/>
+<ellipse cx="200" cy="394" rx="68" ry="13" fill="#6fc0d8" opacity=".5"/>`;}
+
+function seaSVG(){return`<defs>
+<linearGradient id="seWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a86c8"/><stop offset="60%" stop-color="#1f6ca8"/><stop offset="100%" stop-color="#185a90"/></linearGradient>
+<linearGradient id="seSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ecd9a0"/><stop offset="100%" stop-color="#d8bf80"/></linearGradient>
+</defs>
+<rect width="375" height="420" fill="url(#seWater)"/>
+<g fill="#bfe6f8" opacity=".1"><polygon points="60,0 110,0 70,420 20,420"/><polygon points="200,0 240,0 220,420 160,420"/><polygon points="320,0 360,0 340,420 290,420"/></g>
+<g fill="#bfe6f8" opacity=".4"><circle cx="90" cy="120" r="5"/><circle cx="100" cy="100" r="3"/><circle cx="300" cy="160" r="6"/><circle cx="312" cy="140" r="3"/><circle cx="210" cy="90" r="4"/></g>
+<path d="M0 350 Q120 332 240 350 Q320 362 375 350 V420 H0 Z" fill="url(#seSand)"/>
+<ellipse cx="120" cy="356" rx="40" ry="22" fill="#5a7a8a"/><ellipse cx="150" cy="352" rx="26" ry="16" fill="#6a8a9a"/>
+<g><path d="M320 360 q-6 -40 6 -56 q10 14 4 56 Z" fill="#ff6b8c"/><path d="M338 360 q4 -30 14 -42 q4 18 -2 42 Z" fill="#ff9a5c"/><path d="M306 360 q-8 -26 -2 -40 q12 12 10 40 Z" fill="#b48be8"/></g>
+<g><path d="M40 360 q-6 -34 4 -50 q10 14 6 50 Z" fill="#ffb15c"/><path d="M56 360 q4 -26 12 -36 q4 16 0 36 Z" fill="#ff6b8c"/></g>
+<g stroke="#3aa86a" stroke-width="6" fill="none" stroke-linecap="round"><path d="M180 360 q-10 -20 0 -40 q10 -18 0 -38"/><path d="M196 360 q10 -18 2 -36 q-8 -16 2 -34"/></g>
+<rect x="240" y="334" width="46" height="26" rx="4" fill="#a8703f"/><rect x="240" y="334" width="46" height="9" fill="#c08850"/><path d="M240 334 q23 -13 46 0" fill="#b87a44"/><circle cx="263" cy="348" r="3" fill="#ffd166"/>
+<path d="M70 392 l3 7 7 .5 -5.5 4.8 1.8 7 -6.3 -3.8 -6.3 3.8 1.8 -7 -5.5 -4.8 7 -.5 Z" fill="#ff8c66"/>`;}
 
 // =============================================
 // EVENT WIRING
