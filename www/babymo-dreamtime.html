@@ -610,10 +610,10 @@ function buildPajamas(wrap,done){
 function buildDoa(wrap,done){
 
   var PARTS=[
-    {ar:'بِسْمِكَ اللَّهُمَّ', lat:'Bismika Allāhumma', mean:'Dengan nama-Mu ya Allah', sAr:'بسمك اللهم', sId:'Bismika Allāhumma'},
-    {ar:'أَحْيَا وَأَمُوتُ',   lat:'aḥyā wa amūtu',     mean:'aku hidup dan aku mati',     sAr:'أحيا وأموت', sId:'ahya wa amut'}
+    {ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا', lat:'Bismika Allāhumma aḥyā', mean:'Dengan nama-Mu ya Allah aku hidup', sAr:'باسمك اللهم أحيا', sId:'Bismika Allāhumma ahyā'},
+    {ar:'وَبِاسْمِكَ أَمُوتُ',   lat:'wa bismika amūtu',     mean:'dan dengan nama-Mu aku mati',     sAr:'وباسمك أموت', sId:'wa bismika amūt'}
   ];
-  var FULL={ar:'بِسْمِكَ اللَّهُمَّ أَحْيَا وَأَمُوتُ', lat:'Bismika Allāhumma aḥyā wa amūtu', mean:'Dengan nama-Mu ya Allah, aku hidup dan aku mati', sAr:'بسمك اللهم أحيا وأموت', sId:'Bismika Allāhumma ahya wa amut'};
+  var FULL={ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', lat:'Bismika Allāhumma aḥyā wa bismika amūtu', mean:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati', sAr:'باسمك اللهم أحيا وباسمك أموت', sId:'Bismika Allāhumma ahyā wa bismika amūt'};
   var STEPS=[PARTS[0],PARTS[1],FULL];
   var doneAll=false, playing=false;
 
@@ -707,8 +707,8 @@ function buildDoa(wrap,done){
       '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;">'
       +'<div style="font-size:52px;margin-bottom:12px;animation:fl 2s ease-in-out infinite;">🤲</div>'
       +'<div style="font-size:26px;font-weight:900;color:var(--gold-lt);margin-bottom:8px;">Aamiin ya Rabb...</div>'
-      +'<div style="font-family:\'Scheherazade New\',serif;font-size:22px;color:var(--gold);direction:rtl;margin-bottom:10px;">بِسْمِكَ اللَّهُمَّ أَحْيَا وَأَمُوتُ</div>'
-      +'<div style="font-size:14px;color:var(--cream-dim);line-height:1.6;">Bismika Allāhumma aḥyā wa amūtu<br><span style="font-size:12px;opacity:.7;">Dengan nama-Mu ya Allah, aku hidup dan aku mati</span></div>'
+      +'<div style="font-family:\'Scheherazade New\',serif;font-size:22px;color:var(--gold);direction:rtl;margin-bottom:10px;">بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ</div>'
+      +'<div style="font-size:14px;color:var(--cream-dim);line-height:1.6;">Bismika Allāhumma aḥyā wa bismika amūtu<br><span style="font-size:12px;opacity:.7;">Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati</span></div>'
       +'<div style="margin-top:16px;font-size:15px;font-weight:800;color:var(--green-glow);">Masya Allah, kamu sudah hafal doanya! 🌟</div>'
       +'</div>';
     vib([60,30,60,30,100]);
