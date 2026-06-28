@@ -434,6 +434,66 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 .sheet-stats strong{color:var(--green-deep);font-family:var(--font-serif);font-size:18px;font-weight:700;margin-right:3px;}
 .sheet-stats .ssdiv{color:rgba(14,59,46,.18);}
 
+/* ===== DENIED-LOCATION SHEET ===== */
+.sheet.tall{max-height:88vh;}
+.denied-head{display:flex;flex-direction:column;align-items:center;text-align:center;padding:6px 22px 4px;}
+.denied-icon{
+  width:54px;height:54px;border-radius:50%;
+  background:linear-gradient(160deg,#FBDDE4,#FFEEF3);
+  border:2px solid #D86A8C;
+  display:flex;align-items:center;justify-content:center;font-size:26px;
+  margin-bottom:6px;box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+}
+.denied-title{font-family:var(--font-serif);font-size:19px;font-weight:700;color:var(--green-deep);}
+.denied-sub{font-size:12px;color:var(--ink-soft);margin-top:4px;line-height:1.4;max-width:300px;}
+
+.denied-section{
+  margin:14px 18px 0;padding:14px;border-radius:16px;
+  background:rgba(255,255,255,.7);border:1px solid rgba(31,169,113,.10);
+}
+.denied-section-title{
+  display:flex;align-items:center;gap:8px;
+  font-family:var(--font-serif);font-size:14px;font-weight:700;color:var(--green-deep);
+  margin-bottom:10px;
+}
+.denied-section-title .dsn{
+  width:24px;height:24px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(160deg,#1FA971,#0e3b2e);color:#fff;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font);font-size:12px;font-weight:800;
+}
+.denied-steps{margin:0 0 12px;padding-left:30px;}
+.denied-steps li{font-size:12.5px;color:var(--ink);line-height:1.5;margin-bottom:4px;}
+.denied-steps li strong{
+  display:inline-block;padding:1px 7px;border-radius:6px;
+  background:#F0E3C6;color:#8a6a30;font-weight:800;margin:0 2px;
+}
+.denied-retry{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;padding:10px;border-radius:12px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
+  color:var(--cream);font-family:var(--font-serif);font-size:13px;font-weight:700;
+  box-shadow:0 4px 12px -2px rgba(14,59,46,.3);
+}
+.denied-retry:active{transform:scale(.97);}
+
+/* City picker (Path B) */
+.city-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;
+}
+.city-btn{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 12px;border-radius:14px;border:1.5px solid transparent;
+  background:rgba(255,255,255,.7);cursor:pointer;
+  font-family:var(--font);font-size:13px;font-weight:700;color:var(--green-deep);
+  text-align:left;transition:all .15s;
+}
+.city-btn:active{transform:scale(.97);}
+.city-btn:hover{background:#fff;border-color:rgba(31,169,113,.3);}
+.city-btn.selected{background:linear-gradient(160deg,#C8EEDC,#E8F7EF);border-color:#1FA971;color:#0e3b2e;}
+.city-btn .ci{font-size:20px;flex-shrink:0;}
+.city-btn .cn{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
 /* ===== PAGE 2: KIBLAT ===== */
 #page-kiblat{align-items:center;padding-left:24px;padding-right:24px;}
 .kiblat-head{text-align:center;padding:4px 0 6px;flex-shrink:0;}
@@ -598,6 +658,54 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 
 <!-- Settings bottom sheet (location + notification + stats live here so the main view stays calm) -->
 <div class="sheet-backdrop" id="sheetBackdrop"></div>
+
+<!-- Denied-location sheet: Path A (re-enable instructions) + Path B (city picker) -->
+<div class="sheet tall" id="deniedSheet" role="dialog" aria-label="Lokasi diblokir">
+  <div class="sheet-handle"></div>
+  <div class="denied-head">
+    <div class="denied-icon">🔒</div>
+    <div class="denied-title">Lokasi diblokir</div>
+    <div class="denied-sub">Yah, browser nggak ngebolehin Mo lihat lokasimu. Bisa diaktifin lagi, atau pilih kota manual ya 🙏</div>
+  </div>
+
+  <!-- Path A: per-browser re-enable instructions (only one shown via JS) -->
+  <div class="denied-section">
+    <div class="denied-section-title"><div class="dsn">A</div> Aktifkan kembali</div>
+
+    <ol class="denied-steps" id="dsIos" style="display:none">
+      <li>Tap <strong>aA</strong> di kiri URL bar Safari</li>
+      <li>Pilih <strong>Website Settings</strong></li>
+      <li>Geser <strong>Location</strong> ke <strong>Allow</strong></li>
+      <li>Refresh halaman ini</li>
+    </ol>
+
+    <ol class="denied-steps" id="dsChromeAndroid" style="display:none">
+      <li>Tap ikon <strong>🔒</strong> di kiri URL bar</li>
+      <li>Pilih <strong>Permissions</strong> → <strong>Location</strong></li>
+      <li>Ubah jadi <strong>Allow</strong></li>
+      <li>Refresh halaman ini</li>
+    </ol>
+
+    <ol class="denied-steps" id="dsDesktop" style="display:none">
+      <li>Klik ikon <strong>🔒</strong> di kiri URL bar</li>
+      <li>Pilih <strong>Site settings</strong></li>
+      <li>Ubah <strong>Location</strong> jadi <strong>Allow</strong></li>
+      <li>Reload halaman</li>
+    </ol>
+
+    <button class="denied-retry" id="retryLocBtn">↻ Sudah, Coba Lagi</button>
+  </div>
+
+  <!-- Path B: manual city picker fallback (always works, no permission needed) -->
+  <div class="denied-section">
+    <div class="denied-section-title"><div class="dsn">B</div> Atau pilih kotamu</div>
+    <div class="city-grid" id="cityGrid"></div>
+  </div>
+
+  <div class="sheet-head" style="padding-top:10px;">
+    <button class="sheet-close" id="deniedSheetClose" aria-label="Tutup" style="margin-left:auto;">✕</button>
+  </div>
+</div>
 <div class="sheet" id="settingsSheet" role="dialog" aria-label="Pengaturan">
   <div class="sheet-handle"></div>
   <div class="sheet-head">
@@ -1221,28 +1329,147 @@ function requestCompass(){
 }
 window.requestCompass=requestCompass;
 
-/* ===== SETTINGS SHEET ===== */
+/* ===== SHEETS (settings + denied) — both share one backdrop, one open at a time ===== */
 const _sheet=document.getElementById('settingsSheet');
+const _deniedSheet=document.getElementById('deniedSheet');
 const _sheetBg=document.getElementById('sheetBackdrop');
-function openSheet(){_sheet.classList.add('open');_sheetBg.classList.add('open');if(window.navigator.vibrate)window.navigator.vibrate(8);}
-function closeSheet(){_sheet.classList.remove('open');_sheetBg.classList.remove('open');}
+function closeAllSheets(){
+  _sheet.classList.remove('open');
+  _deniedSheet.classList.remove('open');
+  _sheetBg.classList.remove('open');
+}
+function openSheet(){closeAllSheets();_sheet.classList.add('open');_sheetBg.classList.add('open');if(window.navigator.vibrate)window.navigator.vibrate(8);}
+function openDeniedSheet(){closeAllSheets();renderDeniedInstructions();_deniedSheet.classList.add('open');_sheetBg.classList.add('open');if(window.navigator.vibrate)window.navigator.vibrate([8,40,8]);}
 document.getElementById('todayBadge').addEventListener('click',openSheet);
-document.getElementById('sheetClose').addEventListener('click',closeSheet);
-_sheetBg.addEventListener('click',closeSheet);
+document.getElementById('sheetClose').addEventListener('click',closeAllSheets);
+document.getElementById('deniedSheetClose').addEventListener('click',closeAllSheets);
+_sheetBg.addEventListener('click',closeAllSheets);
 
-/* Empty-state card tap = trigger the location flow (locBtn lives in the sheet now) */
+/* ===== LOCATION PERMISSION RECOVERY ===== */
+let _locDenied=false; /* tracks last-known denial so empty-state taps go to the right place */
+
+/* UA-based detection: which set of re-enable instructions to show */
+function detectBrowserKind(){
+  const ua=navigator.userAgent;
+  const isIos=/iPhone|iPad|iPod/.test(ua);
+  const isAndroid=/Android/.test(ua);
+  if(isIos)return 'ios';        /* iOS Safari (also covers in-app Safari views) */
+  if(isAndroid)return 'chromeAndroid';
+  return 'desktop';
+}
+function renderDeniedInstructions(){
+  const kind=detectBrowserKind();
+  ['dsIos','dsChromeAndroid','dsDesktop'].forEach(id=>document.getElementById(id).style.display='none');
+  document.getElementById(kind==='ios'?'dsIos':kind==='chromeAndroid'?'dsChromeAndroid':'dsDesktop').style.display='block';
+}
+
+/* Mo turns hopeful/sad when permission's blocked — soft tone, not scary */
+function showDeniedMo(){
+  setMo('hopeful','Yah, Mo butuh lokasi biar tahu waktu sholatmu... Bantuin yuk? 🥺','— Mo');
+}
+
+/* Path A: retry from inside the denied sheet — if still blocked, just stays open */
+document.getElementById('retryLocBtn').addEventListener('click',()=>{
+  if(!navigator.geolocation)return;
+  navigator.geolocation.getCurrentPosition(
+    p=>{
+      userLoc={lat:p.coords.latitude,lng:p.coords.longitude};
+      try{localStorage.setItem('mo_cached_loc',JSON.stringify(userLoc));}catch(e){}
+      _locDenied=false;
+      fetchPrayer(userLoc.lat,userLoc.lng);computeQibla();
+      document.getElementById('locBtn').textContent='Perbarui';
+      closeAllSheets();
+      showToast('🎉 Lokasi aktif!');
+    },
+    err=>{ if(err.code===1)showToast('Masih diblokir — coba langkahnya lagi'); },
+    {enableHighAccuracy:false,timeout:6000,maximumAge:60000}
+  );
+});
+
+/* Path B: city picker — 10 biggest Indonesian metros so kids never need geolocation */
+const CITIES=[
+  {n:'Jakarta',     i:'🏙️', lat:-6.2088, lng:106.8456},
+  {n:'Bandung',     i:'🌋', lat:-6.9175, lng:107.6191},
+  {n:'Surabaya',    i:'🦈', lat:-7.2575, lng:112.7521},
+  {n:'Yogyakarta',  i:'🏛️', lat:-7.7956, lng:110.3695},
+  {n:'Semarang',    i:'⛵', lat:-6.9667, lng:110.4167},
+  {n:'Medan',       i:'🌴', lat:3.5952,  lng:98.6722 },
+  {n:'Makassar',    i:'⛵', lat:-5.1477, lng:119.4327},
+  {n:'Denpasar',    i:'🌺', lat:-8.6500, lng:115.2167},
+  {n:'Palembang',   i:'🌉', lat:-2.9909, lng:104.7566},
+  {n:'Banjarmasin', i:'🛶', lat:-3.3186, lng:114.5944},
+];
+function renderCityGrid(){
+  const sel=(()=>{try{return JSON.parse(localStorage.getItem('mo_manual_city')||'null');}catch(e){return null;}})();
+  document.getElementById('cityGrid').innerHTML=CITIES.map(c=>{
+    const isSel=sel&&sel.n===c.n;
+    return `<button class="city-btn${isSel?' selected':''}" data-city="${c.n}"><span class="ci">${c.i}</span><span class="cn">${c.n}</span></button>`;
+  }).join('');
+  document.getElementById('cityGrid').querySelectorAll('.city-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const c=CITIES.find(x=>x.n===btn.dataset.city);if(!c)return;
+      userLoc={lat:c.lat,lng:c.lng};
+      try{
+        localStorage.setItem('mo_cached_loc',JSON.stringify(userLoc));
+        localStorage.setItem('mo_manual_city',JSON.stringify({n:c.n,lat:c.lat,lng:c.lng}));
+      }catch(e){}
+      fetchPrayer(c.lat,c.lng);computeQibla();
+      document.getElementById('locLabel').textContent=`📍 ${c.n} (manual)`;
+      document.getElementById('locBtn').textContent='Perbarui';
+      closeAllSheets();
+      showToast(`📍 ${c.n} dipilih!`);
+      setMo('thankful',`Mashallah! Mo nemenin sholat dari <strong>${c.n}</strong> 🌙`,'— Mo');
+    });
+  });
+}
+renderCityGrid();
+
+/* Live permission monitoring — if user re-enables in another tab, we auto-recover */
+if(navigator.permissions&&navigator.permissions.query){
+  navigator.permissions.query({name:'geolocation'}).then(status=>{
+    if(status.state==='denied'){_locDenied=true;}
+    status.onchange=()=>{
+      if(status.state==='granted'&&!userLoc){
+        navigator.geolocation.getCurrentPosition(p=>{
+          userLoc={lat:p.coords.latitude,lng:p.coords.longitude};
+          try{localStorage.setItem('mo_cached_loc',JSON.stringify(userLoc));}catch(e){}
+          _locDenied=false;
+          fetchPrayer(userLoc.lat,userLoc.lng);computeQibla();
+          closeAllSheets();showToast('🎉 Lokasi aktif!');
+        });
+      }
+      if(status.state==='denied'){_locDenied=true;showDeniedMo();}
+    };
+  }).catch(()=>{});
+}
+
+/* Empty-state card tap → smart routing: denied? open denied sheet. Otherwise locBtn flow */
 document.getElementById('emptyState').addEventListener('click',()=>{
+  if(_locDenied){openDeniedSheet();showDeniedMo();return;}
   document.getElementById('locBtn').click();
-  openSheet(); /* also open sheet so the kid/parent sees status update */
+  openSheet();
 });
 
 document.getElementById('locBtn').addEventListener('click',()=>{
   if(!navigator.geolocation){document.getElementById('locLabel').textContent='⚠️ Geolokasi tidak didukung';return;}
+  /* If already known-denied, skip the silent failure and go straight to the recovery sheet */
+  if(_locDenied){openDeniedSheet();showDeniedMo();return;}
   document.getElementById('locLabel').textContent='⏳ Mencari lokasi...';
   requestCompass();
   navigator.geolocation.getCurrentPosition(
-    p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};try{localStorage.setItem('mo_cached_loc',JSON.stringify(userLoc));}catch(e){}fetchPrayer(userLoc.lat,userLoc.lng);computeQibla();document.getElementById('locBtn').textContent='Perbarui';},
-    ()=>{document.getElementById('locLabel').textContent='⚠️ Izin lokasi ditolak';},
+    p=>{userLoc={lat:p.coords.latitude,lng:p.coords.longitude};try{localStorage.setItem('mo_cached_loc',JSON.stringify(userLoc));}catch(e){}_locDenied=false;fetchPrayer(userLoc.lat,userLoc.lng);computeQibla();document.getElementById('locBtn').textContent='Perbarui';},
+    (err)=>{
+      if(err&&err.code===1){
+        /* PERMISSION_DENIED — open the recovery sheet with browser-specific guidance + city picker */
+        _locDenied=true;
+        document.getElementById('locLabel').textContent='🔒 Lokasi diblokir';
+        openDeniedSheet();showDeniedMo();
+      }else if(err&&err.code===3){
+        document.getElementById('locLabel').textContent='⏳ Timeout — coba lagi';
+      }else{
+        document.getElementById('locLabel').textContent='⚠️ Lokasi tidak tersedia';
+      }
+    },
     {enableHighAccuracy:false,timeout:6000,maximumAge:60000}
   );
 });
