@@ -94,13 +94,22 @@ body{background-image:
 @keyframes sparkle{0%,100%{opacity:0;transform:translateY(0) scale(.6)}30%{opacity:.6;transform:translateY(-10px) scale(1)}70%{opacity:.4;transform:translateY(-18px) scale(.8)}}
 .hero-body{display:flex;align-items:flex-end;gap:0;position:relative;z-index:1}
 .hero-left{flex:1;padding:0 0 18px 2px}
-.hero-greeting{color:var(--gold-soft);font-size:12px;margin-bottom:2px}
-.hero-title{font-family:'Fraunces',serif;color:#fff;font-size:24px;font-weight:700;line-height:1.15;margin-bottom:10px}
+.hero-greeting{color:var(--gold);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.6px;margin-bottom:6px;opacity:.85}
+.hero-title{font-family:'Fraunces',serif;color:#fff;font-size:30px;font-weight:700;line-height:1.08;margin-bottom:12px;letter-spacing:-.015em}
 .hero-title em{font-style:normal;color:var(--gold)}
 .hero-prayer{
   display:flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);
-  padding:8px 12px;border-radius:14px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  padding:10px 14px;border-radius:16px;
+  position:relative;overflow:hidden;
+}
+.hero-prayer .hp-progress{
+  position:absolute;left:0;bottom:0;height:2.5px;width:0;
+  background:linear-gradient(90deg,#5FCB9A,#F6B45A,#C9A25F);
+  border-radius:0 2px 0 0;
+  box-shadow:0 0 8px rgba(201,162,95,.55);
+  transition:width .6s ease;
 }
 .hero-prayer .hp-info{flex:1}
 .hero-prayer .hp-name{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:#fff;line-height:1}
@@ -117,22 +126,30 @@ body{background-image:
 
 /* ===== HOME: FEATURES ===== */
 .features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.feat-card{background:linear-gradient(180deg,#FFFFFF 0%,#FCFAF3 100%);border:1px solid rgba(31,169,113,.12);border-radius:22px;padding:18px 16px;cursor:pointer;box-shadow:0 8px 20px -8px rgba(14,59,46,.16),inset 0 1px 0 rgba(255,255,255,.7);transition:transform .15s ease, box-shadow .15s ease;animation:rise .5s ease-out backwards}
+.feat-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:18px 16px;cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 8px 22px -10px rgba(0,0,0,.45);
+  transition:transform .15s ease, box-shadow .15s ease, background .2s;
+  animation:rise .5s ease-out backwards;
+}
 .feat-card:nth-child(1){animation-delay:.15s}.feat-card:nth-child(2){animation-delay:.18s}.feat-card:nth-child(3){animation-delay:.21s}.feat-card:nth-child(4){animation-delay:.24s}
 .feat-card:active{transform:scale(.97)}
-.feat-card:hover{transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(14,59,46,.22)}
+.feat-card:hover{background:rgba(255,255,255,.07);transform:translateY(-1px)}
 /* Playful coloured icon chips per feature card (kid-friendly) */
-.feat-card .fc-icon{display:inline-flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:15px;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 10px -4px rgba(0,0,0,.2)}
+.feat-card .fc-icon{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 6px 14px -4px rgba(0,0,0,.35)}
 .feat-card:nth-child(1) .fc-icon{background:linear-gradient(160deg,#FFE3B0,#F6B45A)}
 .feat-card:nth-child(2) .fc-icon{background:linear-gradient(160deg,#FFE08A,#F4C04A)}
 .feat-card:nth-child(3) .fc-icon{background:linear-gradient(160deg,#BCE9D2,#5FCB9A)}
 .feat-card:nth-child(4) .fc-icon{background:linear-gradient(160deg,#FFD3CE,#F39A92)}
-.feat-card .fc-icon{font-size:28px;margin-bottom:8px}
-.feat-card .fc-title{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--green-deep);margin-bottom:2px}
-.feat-card .fc-sub{font-size:10px;color:var(--ink-soft);line-height:1.3}
+.feat-card .fc-icon{font-size:30px;margin-bottom:10px}
+.feat-card .fc-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:2px;letter-spacing:-.005em}
+.feat-card .fc-sub{font-size:11px;color:rgba(250,245,234,.55);line-height:1.35}
 
 /* ===== HOME: STEP STRIP ===== */
-.section-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--green-deep);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.section-title{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:12px;display:flex;align-items:center;gap:8px;letter-spacing:-.005em}
 .step-strip{
   display:flex;align-items:flex-start;gap:0;
   overflow-x:scroll;-webkit-overflow-scrolling:touch;
@@ -142,28 +159,34 @@ body{background-image:
 }
 .step-strip::-webkit-scrollbar{display:none}
 .step-chip{
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  flex-shrink:0;width:68px;cursor:pointer;transition:transform .15s;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  flex-shrink:0;width:84px;cursor:pointer;transition:transform .15s;
   scroll-snap-align:start;
 }
-.step-chip:active{transform:scale(.93)}
+.step-chip:active{transform:scale(.94)}
 .step-chip .sc-img{
-  width:56px;height:56px;border-radius:16px;background:#fff;
-  border:2px solid rgba(14,59,46,.08);overflow:hidden;
+  width:68px;height:68px;border-radius:18px;
+  background:rgba(255,255,255,.05);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.10);overflow:hidden;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(14,59,46,.06);transition:all .2s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 4px 12px -4px rgba(0,0,0,.35);
+  transition:all .2s;
 }
 .step-chip .sc-img img{width:100%;height:100%;object-fit:contain}
 .step-chip .sc-num{
-  width:18px;height:18px;border-radius:50%;background:var(--green-deep);
-  color:var(--gold-soft);font-size:9px;font-weight:800;
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(160deg,#F6B45A,#C9A25F);
+  color:#1a1208;font-size:11px;font-weight:900;
   display:flex;align-items:center;justify-content:center;
-  margin-top:-10px;position:relative;z-index:1;border:2px solid var(--cream);
+  margin-top:-12px;position:relative;z-index:1;
+  border:2px solid var(--green-deep);
+  box-shadow:0 2px 6px rgba(0,0,0,.4);
 }
-.step-chip .sc-name{font-size:9px;font-weight:700;color:var(--ink-soft);text-align:center;line-height:1.2;margin-top:-2px}
+.step-chip .sc-name{font-size:11px;font-weight:700;color:rgba(250,245,234,.85);text-align:center;line-height:1.2;margin-top:0}
 .step-arrow{
   flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  width:16px;height:56px;color:var(--gold);font-size:14px;font-weight:700;
+  width:16px;height:68px;color:rgba(201,162,95,.6);font-size:13px;font-weight:700;
 }
 
 /* ===== GUIDE: STEP INDICATOR ===== */
@@ -416,6 +439,29 @@ body{background-image:
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
 @media(min-width:760px){.main{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
+
+/* ===== PINNED BOTTOM CTA (Home view only) ===== */
+.cta-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  padding:14px 18px calc(14px + var(--safe-bottom));
+  background:linear-gradient(180deg, transparent 0%, rgba(11,28,18,.7) 35%, rgba(11,28,18,.95) 100%);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  pointer-events:none;
+}
+@media(min-width:760px){.cta-bar{padding-left:max(18px,calc((100vw - 560px)/2));padding-right:max(18px,calc((100vw - 560px)/2));}}
+.cta-bar > a{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 22px;border-radius:999px;
+  background:linear-gradient(180deg,#5FCB9A 0%,#2C5A3E 100%);
+  color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:16px;text-decoration:none;
+  box-shadow:0 10px 26px -6px rgba(95,203,154,.55),inset 0 1px 0 rgba(255,255,255,.22);
+  transform:translateY(28px);opacity:0;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .25s, background .15s;
+}
+.cta-bar > a:active{background:linear-gradient(180deg,#4FB387 0%,#234A33 100%);transform:translateY(0) scale(.97);}
+body[data-view="home"] .cta-bar{pointer-events:auto;}
+body[data-view="home"] .cta-bar > a{transform:translateY(0);opacity:1;}
+body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-pray-with-mo.html">
 <meta name="robots" content="index,follow">
@@ -465,6 +511,7 @@ body{background-image:
               <div class="hp-pulse"></div>
               <span id="countdown">--:--:--</span>
             </div>
+            <div class="hp-progress" id="prayerProgress"></div>
           </div>
         </div>
         <div class="hero-mo">
@@ -735,6 +782,7 @@ function todayKey(){var d=new Date();return d.getFullYear()+'-'+String(d.getMont
 function showView(name){
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active')});
   document.getElementById('view'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('active');
+  document.body.dataset.view=name;
   window.scrollTo(0,0);
   var titles={home:'Pray with Mo',guide:'Panduan Sholat',progress:'Progress Sholat',dzikir:'Dzikir & Doa'};
   document.getElementById('topTitle').textContent=titles[name]||'Pray with Mo';
@@ -919,10 +967,17 @@ function renderPrayerNow(){
   updateCountdown();
 }
 function updateCountdown(){
-  var p=PRAYERS[getCurrentPrayer()],now=new Date(),target=new Date(now);
+  var idx=getCurrentPrayer(),p=PRAYERS[idx],now=new Date(),target=new Date(now);
   target.setHours(p.h,p.m,0,0);if(target<=now)target.setDate(target.getDate()+1);
   var diff=Math.max(0,Math.floor((target-now)/1000)),h=Math.floor(diff/3600),m=Math.floor((diff%3600)/60),s=diff%60;
   document.getElementById('countdown').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  // Live-Activity progress bar — fills as we approach the next prayer
+  var prevIdx=idx===0?PRAYERS.length-1:idx-1,prev=PRAYERS[prevIdx],prevTarget=new Date(now);
+  prevTarget.setHours(prev.h,prev.m,0,0);
+  if(prevTarget>=target)prevTarget.setDate(prevTarget.getDate()-1);
+  var interval=Math.max(1,target-prevTarget),elapsed=Math.max(0,Math.min(interval,now-prevTarget));
+  var bar=document.getElementById('prayerProgress');
+  if(bar)bar.style.width=(100*elapsed/interval).toFixed(2)+'%';
 }
 setInterval(updateCountdown,1000);
 
@@ -1171,6 +1226,7 @@ function saveName(){
 document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter')saveName()});
 
 (function init(){
+  document.body.dataset.view='home';
   if(!localStorage.getItem(KEY_NAME)){
     document.getElementById('nameOverlay').classList.add('open');
     setTimeout(function(){document.getElementById('nameInput').focus()},500);
@@ -1179,6 +1235,11 @@ document.getElementById('nameInput').addEventListener('keydown',function(e){if(e
   renderStepIndicator();renderProgress();updateTopStars();
 })();
 </script>
+
+<div class="cta-bar" aria-hidden="false">
+  <a href="#" onclick="event.preventDefault();showView('guide');">🕌 Mulai Latihan Sholat</a>
+</div>
+
 <script src="/bm-kit.js" defer></script>
 </body>
 </html>

@@ -397,6 +397,10 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
         <span id="locLabel">📍 Aktifkan lokasi untuk waktu akurat</span>
         <button class="loc-btn" id="locBtn">Aktifkan</button>
       </div>
+      <div class="loc-row" style="margin-top:6px;">
+        <span id="notifLabel">🔔 Pengingat sholat (saat aplikasi terbuka)</span>
+        <button class="loc-btn" id="notifBtn">Nyalakan</button>
+      </div>
     </div>
   </div>
 
@@ -576,14 +580,46 @@ function stats(){
 }
 
 /* ===== PRAYER TIMES ===== */
+/* Prayer-time cache: 7 most-recent successful fetches keyed by YYYY-MM-DD */
+const PT_CACHE_KEY='mo_prayer_cache_v1';
+function ptDayKey(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function ptLoadCache(){try{return JSON.parse(localStorage.getItem(PT_CACHE_KEY)||'{}');}catch(e){return{};}}
+function ptSaveCache(c){try{localStorage.setItem(PT_CACHE_KEY,JSON.stringify(c));}catch(e){}}
+function ptApply(t){
+  prayerTimes=t;
+  prayerMinutes=PRAYER_KEYS.map(k=>{const[h,m]=t[k].slice(0,5).split(':').map(Number);return h*60+m;});
+  renderUI();renderMo();
+}
+function ptPrune(c){const ks=Object.keys(c.days||{}).sort();while(ks.length>7)delete c.days[ks.shift()];}
+
 async function fetchPrayer(lat,lng){
-  const d=new Date(),ds=`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
+  const d=new Date(),today=ptDayKey(d),ds=`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
+  const cache=ptLoadCache();
+  if(cache.days&&cache.days[today]){ptApply(cache.days[today]);scheduleNotifications();}
   try{
     const r=await fetch(`https://api.aladhan.com/v1/timings/${ds}?latitude=${lat}&longitude=${lng}&method=20`);
-    const data=await r.json();prayerTimes=data.data.timings;
-    prayerMinutes=PRAYER_KEYS.map(k=>{const[h,m]=prayerTimes[k].slice(0,5).split(':').map(Number);return h*60+m;});
-    renderUI();reverseGeo(lat,lng);renderMo();
-  }catch(e){document.getElementById('locLabel').textContent='⚠️ Gagal memuat. Coba lagi.';}
+    if(!r.ok)throw new Error('http '+r.status);
+    const data=await r.json();
+    ptApply(data.data.timings);
+    cache.days=cache.days||{};cache.days[today]=data.data.timings;cache.loc={lat,lng};
+    ptPrune(cache);ptSaveCache(cache);
+    reverseGeo(lat,lng);
+    scheduleNotifications();
+  }catch(e){
+    if(!cache.days||!cache.days[today]){
+      const recent=Object.keys(cache.days||{}).sort().pop();
+      if(recent){
+        ptApply(cache.days[recent]);
+        document.getElementById('locLabel').textContent='📍 Mode offline · perkiraan ('+recent+')';
+        scheduleNotifications();
+        return;
+      }
+      document.getElementById('locLabel').textContent='⚠️ Gagal memuat. Coba lagi saat online.';
+    }else{
+      const lbl=document.getElementById('locLabel');
+      if(!/offline/i.test(lbl.textContent))lbl.textContent='📍 Lokasi tersimpan · mode offline';
+    }
+  }
 }
 async function reverseGeo(lat,lng){
   try{const r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lng}&localityLanguage=id`);const d=await r.json();document.getElementById('locLabel').textContent=`📍 ${d.city||d.locality||d.principalSubdivision||'Lokasi aktif'}`;}
@@ -743,6 +779,54 @@ document.getElementById('locBtn').addEventListener('click',()=>{
     {enableHighAccuracy:false,timeout:6000,maximumAge:60000}
   );
 });
+
+/* ===== NOTIFICATIONS (parent opt-in, foreground-only) =====
+   Web Notifications without a backend can only fire while the tab/PWA is open.
+   We schedule today's remaining prayer times via setTimeout. */
+const NOTIF_KEY='mo_notif_enabled_v1';
+let _notifTimers=[];
+function notifSupported(){return typeof Notification!=='undefined';}
+function notifPermitted(){return notifSupported()&&Notification.permission==='granted';}
+function notifEnabled(){return notifPermitted()&&localStorage.getItem(NOTIF_KEY)==='1';}
+function renderNotifBtn(){
+  const btn=document.getElementById('notifBtn'),lbl=document.getElementById('notifLabel');
+  if(!notifSupported()){btn.disabled=true;btn.textContent='Tidak tersedia';lbl.textContent='🔔 Browser tidak mendukung notifikasi';return;}
+  if(Notification.permission==='denied'){btn.disabled=true;btn.textContent='Diblokir';lbl.textContent='🔔 Izin notifikasi diblokir di pengaturan';return;}
+  if(notifEnabled()){btn.textContent='Matikan';lbl.textContent='🔔 Aktif · Mo akan ingatkan saat waktu sholat';}
+  else{btn.textContent='Nyalakan';lbl.textContent='🔔 Pengingat sholat (saat aplikasi terbuka)';}
+}
+function clearScheduled(){_notifTimers.forEach(t=>clearTimeout(t));_notifTimers=[];}
+function scheduleNotifications(){
+  clearScheduled();
+  if(!notifEnabled()||!prayerMinutes)return;
+  const now=new Date(),nm=now.getHours()*60+now.getMinutes(),nowMs=now.getTime();
+  PRAYER_KEYS.forEach((k,i)=>{
+    const delay=(prayerMinutes[i]-nm)*60000-(now.getSeconds()*1000);
+    if(delay<=0||delay>24*3600*1000)return;
+    _notifTimers.push(setTimeout(()=>{
+      try{
+        new Notification(`🕌 Waktu ${PRAYER_NAMES[i]}`,{
+          body:`Yuk sholat ${PRAYER_NAMES[i]} bareng Mo`,
+          icon:'/apple-touch-icon.png',badge:'/apple-touch-icon.png',tag:'mo-prayer-'+k,silent:false
+        });
+      }catch(e){}
+    },delay));
+  });
+}
+document.getElementById('notifBtn').addEventListener('click',async()=>{
+  if(!notifSupported())return;
+  if(Notification.permission==='default'){
+    const p=await Notification.requestPermission();
+    if(p!=='granted'){renderNotifBtn();return;}
+  }
+  if(Notification.permission!=='granted'){renderNotifBtn();return;}
+  const next=localStorage.getItem(NOTIF_KEY)==='1'?'0':'1';
+  localStorage.setItem(NOTIF_KEY,next);
+  if(next==='1'){scheduleNotifications();showToast('🔔 Pengingat sholat aktif');}
+  else{clearScheduled();showToast('🔔 Pengingat sholat dimatikan');}
+  renderNotifBtn();
+});
+renderNotifBtn();
 
 /* ===== QIBLA ===== */
 function computeQibla(){
