@@ -636,6 +636,55 @@ body{background-image:
 /* iMac/desktop — keep content a centered column, consistent with the portal */
 @media(min-width:820px){.view{max-width:860px;margin-left:auto;margin-right:auto;}.topbar{padding-left:max(16px,calc((100vw - 860px)/2 + 4px));padding-right:max(16px,calc((100vw - 860px)/2 + 4px));}}
 
+/* ===== PROGRESS v2: Capaian Belajarmu + Lencana Mo ===== */
+.cap-row{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:14px 16px;margin-bottom:12px;
+  cursor:pointer;transition:transform .15s, background .2s;
+}
+.cap-row:active{transform:scale(.985)}
+.cap-row:hover{background:rgba(255,255,255,.055)}
+.cap-row-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;gap:8px}
+.cap-row-label{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--cream);letter-spacing:-.005em}
+.cap-row-count{font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:var(--gold-lt,#fff8e8);letter-spacing:-.01em}
+.cap-row-count span{font-size:13px;color:rgba(250,245,234,.45);font-weight:700}
+.cap-segments{display:flex;gap:4px;margin-bottom:8px}
+.cap-seg{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.08);transition:background .3s, box-shadow .3s}
+.cap-seg.done{background:linear-gradient(90deg,#5FCB9A,#C9A25F);box-shadow:0 0 8px rgba(201,162,95,.35)}
+.cap-row-hint{font-size:11px;color:rgba(250,245,234,.5);font-weight:600;letter-spacing:.01em}
+
+.lencana-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.lencana{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:12px 8px 10px;border-radius:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  transition:all .3s;
+}
+.lencana.unlocked{
+  background:linear-gradient(160deg, rgba(201,162,95,.14), rgba(95,203,154,.08));
+  border-color:rgba(201,162,95,.4);
+  box-shadow:0 4px 12px -3px rgba(201,162,95,.3), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.lencana .ln-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  margin-bottom:8px;transition:all .3s;
+}
+.lencana.unlocked .ln-icon{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  border-color:var(--gold-lt,#fff8e8);
+  box-shadow:0 4px 10px -3px rgba(201,162,95,.5), inset 0 1px 0 rgba(255,255,255,.22);
+  filter:none;
+}
+.lencana:not(.unlocked) .ln-icon{filter:grayscale(1);opacity:.4}
+.lencana .ln-name{font-size:11px;font-weight:800;color:var(--cream);line-height:1.2;letter-spacing:-.003em;margin-bottom:3px}
+.lencana:not(.unlocked) .ln-name{color:rgba(250,245,234,.55)}
+.lencana .ln-hint{font-size:9px;font-weight:600;color:rgba(250,245,234,.45);line-height:1.25;min-height:11px}
+.lencana.unlocked .ln-hint{color:rgba(95,203,154,.85);font-weight:700}
+
 /* bm-letterbox: comfortable centered column on tablet/desktop */
 @media(min-width:760px){.main{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
 
@@ -809,33 +858,35 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
       </div>
     </div>
 
-    <!-- Daily prayer practice -->
+    <!-- Capaian Belajarmu: real learning progress -->
     <div class="card">
       <div class="card-head">
         <div>
-          <div class="card-title">Latihan Hari Ini</div>
-          <div class="card-sub">Swipe & tap untuk tandai selesai</div>
+          <div class="card-title">Capaian Belajarmu</div>
+          <div class="card-sub">Yang sudah kamu pelajari bareng Mo</div>
         </div>
-        <span class="badge gold" id="todayPrayBadge">0/5</span>
       </div>
-      <div class="pray-segments" id="praySegments"></div>
-      <div class="pray-carousel" id="prayCarousel"></div>
-      <div id="prayAllDoneMsg"></div>
-    </div>
 
-    <!-- Weekly streak -->
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <div class="card-title">Minggu Ini</div>
-          <div class="card-sub">Streak latihan mingguan kamu</div>
+      <div class="cap-row" onclick="showView('guide')">
+        <div class="cap-row-head">
+          <div class="cap-row-label">🕌 Langkah Sholat</div>
+          <div class="cap-row-count" id="stepMasteredCount">0 <span>/7</span></div>
         </div>
-        <span class="badge" id="streakCount">0/7 Hari</span>
+        <div class="cap-segments" id="stepSegments"></div>
+        <div class="cap-row-hint" id="stepMasteredHint">Buka Panduan Sholat untuk mulai belajar</div>
       </div>
-      <div class="streak-days" id="streakDays"></div>
-      <div class="streak-bar"><div class="streak-bar-fill" id="streakBar" style="width:0%"></div></div>
+
+      <div class="cap-row" onclick="showView('dzikir')">
+        <div class="cap-row-head">
+          <div class="cap-row-label">📿 Jenis Dzikir</div>
+          <div class="cap-row-count" id="dzMasteredCount">0 <span>/6</span></div>
+        </div>
+        <div class="cap-segments" id="dzSegments"></div>
+        <div class="cap-row-hint" id="dzMasteredHint">Tap untuk coba dzikir baru</div>
+      </div>
+
       <div class="streak-stats">
-        <div class="stat"><div class="num" id="statPrayers">0</div><div class="lbl">Latihan</div></div>
+        <div class="stat"><div class="num" id="statPrayers">0</div><div class="lbl">Sholat Lengkap</div></div>
         <div class="stat-divider"></div>
         <div class="stat"><div class="num" id="statDuas">0</div><div class="lbl">Bacaan</div></div>
         <div class="stat-divider"></div>
@@ -843,13 +894,13 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
       </div>
     </div>
 
-    <!-- Rewards -->
+    <!-- Lencana Mo: real milestone badges -->
     <div class="card">
       <div class="card-head">
-        <div><div class="card-title">Rewards</div><div class="card-sub">Kumpulkan bintang dan buka hadiah seru!</div></div>
-        <div class="badge gold">⭐ <span id="rewardStars">0</span></div>
+        <div><div class="card-title">Lencana Mo</div><div class="card-sub">Capai pencapaian, buka lencana baru!</div></div>
+        <div class="badge gold" id="badgeProgress">0/6</div>
       </div>
-      <div class="rewards-grid" id="rewardsGrid"></div>
+      <div class="lencana-grid" id="lencanaGrid"></div>
     </div>
   </div>
 
@@ -950,7 +1001,15 @@ var STEPS=[
 ];
 
 var PRAYERS=[{name:'Subuh',icon:'🌅',h:4,m:35},{name:'Dzuhur',icon:'☀️',h:12,m:0},{name:'Ashar',icon:'🌤',h:15,m:15},{name:'Maghrib',icon:'🌅',h:17,m:55},{name:'Isya',icon:'🌙',h:19,m:10}];
-var REWARDS=[{stars:5,emoji:'🧢'},{stars:15,emoji:'🏮'},{stars:30,emoji:'🕌'},{stars:50,emoji:'🌟'},{stars:80,emoji:'🐸'},{stars:100,emoji:'👑'}];
+/* Real-progress milestone badges — each tied to actual learning activity */
+var LENCANA=[
+  {key:'start',  name:'Mulai Belajar',  icon:'🌱', hintLocked:'Dengar 1 bacaan pertama',     hintDone:'Selesai!',      unlock:function(p){return p.duas>=1;}},
+  {key:'khatam', name:'Khatam Panduan', icon:'🕌', hintLocked:'Selesaikan 7 langkah sholat',  hintDone:'7 langkah ✓',   unlock:function(p){return p.prayers>=1;}},
+  {key:'dzPem',  name:'Dzikir Pemula',  icon:'📿', hintLocked:'Coba 3 jenis dzikir',          hintDone:'3 dzikir ✓',    unlock:function(p){return p.dzDone>=3;}},
+  {key:'tenSh',  name:'10 Sholat',      icon:'🌟', hintLocked:'10 sholat lengkap',            hintDone:'Istiqomah!',    unlock:function(p){return p.prayers>=10;}},
+  {key:'bacaan', name:'Bacaan Master',  icon:'💎', hintLocked:'50 bacaan dipelajari',         hintDone:'Master!',       unlock:function(p){return p.duas>=50;}},
+  {key:'master', name:'Mo Master',      icon:'👑', hintLocked:'Buka 5 lencana lainnya',       hintDone:'Mashallah!',    unlock:function(p){return p.others>=5;}},
+];
 
 var PRAY_ITEMS=[
   {name:'Subuh',icon:'🌅',desc:'Sholat pagi sebelum matahari terbit',thumb:'mo-pray-assets/mo-takbir.png'},
@@ -1195,6 +1254,7 @@ function loadPrayPractice(){var k='mo_pray_practice_'+todayKey();try{return JSON
 function savePrayPractice(d){var k='mo_pray_practice_'+todayKey();try{localStorage.setItem(k,JSON.stringify(d))}catch(e){}}
 
 function renderPrayChecklist(){
+  if(!document.getElementById('prayCarousel'))return; /* daily checklist removed from Progress v2 */
   var practice=loadPrayPractice(),checked=0;
   var segHtml='',carHtml='';
   PRAY_ITEMS.forEach(function(p,i){
@@ -1242,25 +1302,55 @@ function togglePrayPractice(name,el){
 }
 
 function renderProgress(){
-  var stats=loadStats(),streak=loadStreak();
+  var stats=loadStats();
   document.getElementById('statPrayers').textContent=stats.prayers;
   document.getElementById('statDuas').textContent=stats.duas;
   document.getElementById('statStars').textContent=stats.stars;
-  document.getElementById('rewardStars').textContent=stats.stars;
-  var now=new Date(),dow=now.getDay(),mon=new Date(now);mon.setDate(now.getDate()-((dow+6)%7));
-  var dns=['Sen','Sel','Rab','Kam','Jum','Sab','Min'],html='',wd=0;
-  for(var i=0;i<7;i++){var d=new Date(mon);d.setDate(mon.getDate()+i);
-    var key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    var done=!!streak[key],isToday=key===todayKey();if(done)wd++;
-    var cls='sd-circle';if(done)cls+=' done';if(isToday&&!done)cls+=' today';
-    html+='<div class="streak-day"><div class="'+cls+'"></div><div class="sd-label">'+dns[i]+'</div></div>'}
-  document.getElementById('streakDays').innerHTML=html;
-  document.getElementById('streakCount').textContent=wd+'/7 Hari';
-  document.getElementById('streakBar').style.width=Math.round(wd/7*100)+'%';
-  var rhtml='';REWARDS.forEach(function(r){var u=stats.stars>=r.stars;
-    rhtml+='<div class="reward-item"><div class="reward-badge'+(u?' unlocked':' locked')+'">'+r.emoji+'</div><div class="reward-cost">⭐ '+r.stars+'</div></div>'});
-  document.getElementById('rewardsGrid').innerHTML=rhtml;
-  renderPrayChecklist();
+
+  /* Mastery: count distinct steps where at least one dua page has been heard */
+  var stepsTotal=STEPS.length,stepsDone=0,segS='';
+  for(var i=0;i<stepsTotal;i++){
+    var hit=false;
+    for(var k=0;k<localStorage.length;k++){var lk=localStorage.key(k);if(lk&&lk.indexOf('mo_dua_'+i+'_')===0){hit=true;break;}}
+    if(hit)stepsDone++;
+    segS+='<div class="cap-seg'+(hit?' done':'')+'"></div>';
+  }
+  document.getElementById('stepSegments').innerHTML=segS;
+  document.getElementById('stepMasteredCount').innerHTML=stepsDone+' <span>/'+stepsTotal+'</span>';
+  document.getElementById('stepMasteredHint').textContent =
+    stepsDone===0      ? 'Tap untuk mulai belajar langkah sholat' :
+    stepsDone<stepsTotal ? 'Lanjutkan ke langkah berikutnya bareng Mo' :
+                         '🎉 Mashallah! Semua langkah sudah dikuasai';
+
+  /* Mastery: count distinct dzikir where at least one full cycle completed */
+  var dzTotal=DZIKIR.length,dzDone=0,segD='';
+  for(var j=0;j<dzTotal;j++){
+    var d=localStorage.getItem('mo_dzikir_done_'+j)==='1';
+    if(d)dzDone++;
+    segD+='<div class="cap-seg'+(d?' done':'')+'"></div>';
+  }
+  document.getElementById('dzSegments').innerHTML=segD;
+  document.getElementById('dzMasteredCount').innerHTML=dzDone+' <span>/'+dzTotal+'</span>';
+  document.getElementById('dzMasteredHint').textContent =
+    dzDone===0      ? 'Tap untuk coba dzikir pertama' :
+    dzDone<dzTotal  ? 'Coba '+(dzTotal-dzDone)+' jenis dzikir lagi' :
+                      '🎉 Semua dzikir sudah dicoba';
+
+  /* Milestone badges */
+  var prog={prayers:stats.prayers,duas:stats.duas,stars:stats.stars,dzDone:dzDone,stepsDone:stepsDone,others:0};
+  /* compute "others" first by counting first 5 unlocks (master depends on others) */
+  for(var b=0;b<LENCANA.length-1;b++){if(LENCANA[b].unlock(prog))prog.others++;}
+  var unlockedCount=0,lhtml='';
+  LENCANA.forEach(function(l){
+    var u=l.unlock(prog);if(u)unlockedCount++;
+    lhtml+='<div class="lencana'+(u?' unlocked':'')+'">'+
+      '<div class="ln-icon">'+l.icon+'</div>'+
+      '<div class="ln-name">'+l.name+'</div>'+
+      '<div class="ln-hint">'+(u?l.hintDone:'🔒 '+l.hintLocked)+'</div>'+
+    '</div>';
+  });
+  document.getElementById('lencanaGrid').innerHTML=lhtml;
+  document.getElementById('badgeProgress').textContent=unlockedCount+'/'+LENCANA.length;
 }
 
 /* ===== DZIKIR ===== */
@@ -1308,6 +1398,7 @@ function renderDzikir(){
   document.getElementById('dzProgress').style.width=pct+'%';
   document.getElementById('tasbihRing').style.transform='rotate('+(tasbihCurrent/d.count*360)+'deg)';
   var done=tasbihCurrent>=d.count;
+  if(done){try{localStorage.setItem('mo_dzikir_done_'+currentDzikir,'1');}catch(e){}}
   var completeEl=document.getElementById('dzikirComplete');
   var navBtns=document.querySelector('.dzikir-nav-btns');
   completeEl.style.display=done?'block':'none';
