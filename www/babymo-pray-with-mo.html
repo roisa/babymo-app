@@ -63,15 +63,32 @@ body{background-image:
 .view.active{display:block}
 
 /* ===== CARD BASE ===== */
-.card{background:#fff;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:var(--shadow);position:relative;overflow:hidden;border:1px solid rgba(14,59,46,.06);animation:rise .5s ease-out backwards}
+.card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:20px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px -10px rgba(0,0,0,.45);
+  position:relative;overflow:hidden;
+  animation:rise .5s ease-out backwards;
+}
 .card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.1s}.card:nth-child(3){animation-delay:.15s}.card:nth-child(4){animation-delay:.2s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
-.card-title{font-family:'Fraunces',serif;font-weight:600;font-size:18px;color:var(--green-deep);letter-spacing:-.01em}
-.card-sub{font-size:11px;color:var(--ink-soft);margin-top:2px}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--green-soft);color:var(--green-deep);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;white-space:nowrap}
-.badge.gold{background:var(--gold-soft);color:#8a6a30}
+.card-title{font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--cream);letter-spacing:-.01em}
+.card-sub{font-size:11px;color:rgba(250,245,234,.6);margin-top:3px;line-height:1.4}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;padding:5px 11px;
+  background:rgba(95,203,154,.16);color:#5FCB9A;
+  border:1px solid rgba(95,203,154,.32);
+  font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  border-radius:999px;white-space:nowrap;
+}
+.badge.gold{
+  background:rgba(201,162,95,.16);color:var(--gold-lt, #fff8e8);
+  border-color:rgba(201,162,95,.32);
+}
 
 /* ===== HOME: HERO ===== */
 .hero-section{
@@ -327,149 +344,260 @@ body{background-image:
 }
 .guide-nav-btn:disabled{opacity:.32;pointer-events:none}
 
-/* ===== DZIKIR VIEW ===== */
+/* ===== DZIKIR VIEW (iOS-26 glass) ===== */
 .dzikir-nav{display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;padding-top:4px}
 .dzikir-dot{
-  padding:6px 14px;border-radius:999px;font-size:11px;font-weight:700;
-  background:var(--cream-2);color:var(--ink-soft);border:1.5px solid transparent;
+  padding:7px 14px;border-radius:999px;font-size:11px;font-weight:800;
+  background:rgba(255,255,255,.045);color:rgba(250,245,234,.6);
+  border:1px solid rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   cursor:pointer;transition:all .25s;white-space:nowrap;
 }
-.dzikir-dot.active{background:var(--green-deep);color:var(--gold-soft);border-color:var(--green-deep);transform:scale(1.05)}
-.dzikir-dot.done{background:var(--green-soft);color:var(--green-deep);border-color:var(--green-mid)}
-.dzikir-card{
-  background:#fff;border-radius:28px;padding:28px 22px;margin-bottom:14px;
-  box-shadow:var(--shadow);border:1px solid rgba(14,59,46,.06);text-align:center;
-  animation:rise .5s ease-out backwards;
+.dzikir-dot.active{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);color:#1a1208;
+  border-color:var(--gold-lt);transform:scale(1.06);
+  box-shadow:0 4px 12px -2px rgba(201,162,95,.45);
 }
-.dzikir-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--green-deep);margin-bottom:4px}
-.dzikir-badge{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--gold-soft);color:#8a6a30;font-size:10px;font-weight:700;margin-bottom:16px}
-.dzikir-arabic{font-family:'Amiri',serif;font-size:36px;color:var(--green-deep);direction:rtl;line-height:1.7;margin-bottom:14px;min-height:70px;transition:font-size .3s}
-.dzikir-arabic.long-text{font-size:22px;line-height:1.8}
-.dzikir-latin{font-size:14px;color:var(--gold);font-weight:600;font-style:italic;margin-bottom:4px}
-.dzikir-meaning{font-size:12px;color:var(--ink-soft);margin-bottom:20px;line-height:1.4}
+.dzikir-dot.done{
+  background:rgba(95,203,154,.16);color:#5FCB9A;
+  border-color:rgba(95,203,154,.42);
+}
+.dzikir-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:28px;padding:28px 22px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 12px 32px -10px rgba(0,0,0,.5);
+  text-align:center;animation:rise .5s ease-out backwards;
+}
+.dzikir-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:6px;letter-spacing:-.01em}
+.dzikir-badge{
+  display:inline-block;padding:4px 12px;border-radius:999px;
+  background:rgba(201,162,95,.16);color:var(--gold-lt, #fff8e8);
+  border:1px solid rgba(201,162,95,.32);
+  font-size:10px;font-weight:800;margin-bottom:18px;letter-spacing:.5px;
+}
+.dzikir-arabic{font-family:'Amiri',serif;font-size:38px;color:#fff;direction:rtl;line-height:1.7;margin-bottom:14px;min-height:70px;transition:font-size .3s;text-shadow:0 0 18px rgba(201,162,95,.15)}
+.dzikir-arabic.long-text{font-size:24px;line-height:1.8}
+.dzikir-latin{font-size:14px;color:var(--gold-lt, #fff8e8);font-weight:600;font-style:italic;margin-bottom:4px;letter-spacing:.01em}
+.dzikir-meaning{font-size:12px;color:rgba(250,245,234,.62);margin-bottom:20px;line-height:1.45}
 .tasbih-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
 .tasbih-circle{
-  width:120px;height:120px;border-radius:50%;
-  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
+  width:130px;height:130px;border-radius:50%;
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:0 8px 24px rgba(14,59,46,.25);cursor:pointer;
-  transition:transform .15s;position:relative;
+  box-shadow:0 12px 30px -6px rgba(95,203,154,.55), inset 0 1px 0 rgba(255,255,255,.22);
+  cursor:pointer;transition:transform .15s;position:relative;
   -webkit-tap-highlight-color:transparent;
 }
 .tasbih-circle:active{transform:scale(.95)}
-.tasbih-count{font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:var(--gold-soft);line-height:1}
-.tasbih-total{font-size:11px;color:rgba(250,245,234,.5);margin-top:2px}
-.tasbih-label{font-size:11px;color:var(--ink-soft);margin-top:8px;font-weight:600}
+.tasbih-count{font-family:'Fraunces',serif;font-size:40px;font-weight:800;color:#fff;line-height:1;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.tasbih-total{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px;font-weight:600}
+.tasbih-label{font-size:11px;color:rgba(250,245,234,.62);margin-top:10px;font-weight:700;letter-spacing:.4px}
 .tasbih-ring{
   position:absolute;inset:-4px;border-radius:50%;
-  border:3px solid transparent;border-top-color:var(--gold);
+  border:3px solid transparent;border-top-color:var(--gold-lt, #fff8e8);
   transition:transform .3s ease;
+  filter:drop-shadow(0 0 6px rgba(255,248,232,.5));
 }
 .dzikir-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px}
 .dz-btn{
-  width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.10);cursor:pointer;
   display:flex;align-items:center;justify-content:center;font-size:18px;
-  transition:transform .15s;background:var(--cream-2);color:var(--ink-soft);
+  transition:transform .15s, background .15s;
+  background:rgba(255,255,255,.06);color:rgba(250,245,234,.72);
 }
 .dz-btn:active{transform:scale(.9)}
+.dz-btn:hover{background:rgba(255,255,255,.10)}
 .dz-btn-play{
-  width:56px;height:56px;font-size:22px;
-  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
-  color:var(--gold-soft);box-shadow:0 6px 16px rgba(14,59,46,.25);
+  width:56px;height:56px;font-size:22px;border:none;
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;
+  box-shadow:0 8px 20px -4px rgba(95,203,154,.55), inset 0 1px 0 rgba(255,255,255,.22);
 }
-.dz-btn-play.playing{background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff}
-.dzikir-progress{height:4px;background:var(--cream-2);border-radius:2px;margin-top:14px;overflow:hidden}
-.dzikir-progress-fill{height:100%;background:linear-gradient(90deg,var(--green-deep),var(--gold));border-radius:2px;transition:width .3s ease}
+.dz-btn-play.playing{background:linear-gradient(160deg,#FF8A65,#E54F3D);box-shadow:0 8px 20px -4px rgba(255,138,101,.5), inset 0 1px 0 rgba(255,255,255,.22)}
+.dzikir-progress{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:14px;overflow:hidden}
+.dzikir-progress-fill{height:100%;background:linear-gradient(90deg,#5FCB9A,#C9A25F);border-radius:2px;transition:width .3s ease;box-shadow:0 0 8px rgba(201,162,95,.4)}
 .dzikir-nav-btns{display:flex;gap:10px;margin-bottom:18px}
-.dzikir-nav-btn{flex:1;padding:14px;border-radius:16px;border:none;font-family:'Fraunces',serif;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s}
+.dzikir-nav-btn{
+  flex:1;padding:15px;border-radius:18px;border:none;
+  font-family:'Fraunces',serif;font-size:15px;font-weight:700;cursor:pointer;
+  transition:transform .15s, background .2s, opacity .2s;letter-spacing:-.005em;
+}
 .dzikir-nav-btn:active{transform:scale(.97)}
-.dzikir-nav-btn.prev{background:var(--cream-2);color:var(--ink-soft);border:1px solid rgba(14,59,46,.1)}
-.dzikir-nav-btn.next{background:linear-gradient(135deg,var(--green-deep),var(--green-mid));color:var(--cream);box-shadow:0 6px 16px rgba(14,59,46,.2)}
-.dzikir-nav-btn:disabled{opacity:.35;pointer-events:none}
-.dzikir-complete{text-align:center;padding:20px;background:linear-gradient(135deg,#fffaef,#fdf2e3);border:1px solid var(--gold-soft);border-radius:22px;margin-bottom:14px}
-.dzikir-complete .dc-emoji{font-size:44px;margin-bottom:8px}
-.dzikir-complete .dc-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--green-deep)}
-.dzikir-complete .dc-sub{font-size:12px;color:var(--ink-soft);margin-top:4px}
+.dzikir-nav-btn.prev{
+  background:rgba(255,255,255,.05);color:var(--cream);
+  border:1px solid rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+}
+.dzikir-nav-btn.prev:hover{background:rgba(255,255,255,.08)}
+.dzikir-nav-btn.next{
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;
+  box-shadow:0 8px 20px -4px rgba(95,203,154,.5), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.dzikir-nav-btn:disabled{opacity:.32;pointer-events:none}
+.dzikir-complete{
+  text-align:center;padding:24px 20px;margin-bottom:14px;border-radius:22px;
+  background:linear-gradient(135deg, rgba(201,162,95,.10), rgba(201,162,95,.04));
+  border:1px solid rgba(201,162,95,.28);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+}
+.dzikir-complete .dc-emoji{font-size:46px;margin-bottom:10px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35))}
+.dzikir-complete .dc-title{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--cream);letter-spacing:-.005em}
+.dzikir-complete .dc-sub{font-size:12px;color:rgba(250,245,234,.72);margin-top:5px;line-height:1.4}
 
-/* ===== PROGRESS ===== */
-.progress-hero{text-align:center;margin-bottom:16px;padding-top:4px;animation:rise .5s ease-out backwards}
-.progress-star{font-size:44px;margin-bottom:6px}
-.progress-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--green-deep);margin-bottom:2px}
-.progress-subtitle{font-size:12px;color:var(--ink-soft)}
+/* ===== PROGRESS (iOS-26 glass) ===== */
+.progress-hero{text-align:center;margin-bottom:18px;padding-top:4px;animation:rise .5s ease-out backwards}
+.progress-star{font-size:46px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(201,162,95,.45))}
+.progress-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:4px;letter-spacing:-.01em}
+.progress-subtitle{font-size:12px;color:rgba(250,245,234,.62)}
 
-.streak-card{background:#fff;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid rgba(14,59,46,.06)}
+.streak-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:18px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px -10px rgba(0,0,0,.45);
+}
 .streak-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.streak-label{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--green-deep)}
-.streak-count{font-size:12px;color:var(--green-mid);font-weight:700}
+.streak-label{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--cream);letter-spacing:-.005em}
+.streak-count{font-size:12px;color:#5FCB9A;font-weight:800}
 .streak-days{display:flex;justify-content:space-between;gap:4px}
 .streak-day{flex:1;text-align:center}
-.streak-day .sd-circle{width:34px;height:34px;border-radius:50%;background:#fff;border:1.5px dashed rgba(14,59,46,.2);display:flex;align-items:center;justify-content:center;font-size:13px;margin:0 auto 4px;transition:all .3s;color:var(--ink-soft)}
-.streak-day .sd-circle.done{background:var(--green-deep);border:1.5px solid var(--green-deep);color:var(--gold-soft)}
-.streak-day .sd-circle.done::before{content:'✓';font-weight:700}
-.streak-day .sd-circle.today{background:var(--gold-soft);border:2px solid var(--gold);animation:glow 2s ease-in-out infinite}
+.streak-day .sd-circle{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.045);
+  border:1.5px dashed rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;margin:0 auto 5px;transition:all .3s;
+  color:rgba(250,245,234,.5);
+}
+.streak-day .sd-circle.done{
+  background:linear-gradient(160deg,#5FCB9A,#2C5A3E);
+  border:1.5px solid rgba(95,203,154,.55);color:#fff;
+  box-shadow:0 4px 10px -2px rgba(95,203,154,.4);
+}
+.streak-day .sd-circle.done::before{content:'✓';font-weight:800}
+.streak-day .sd-circle.today{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  border:2px solid var(--gold-lt, #fff8e8);
+  animation:glow 2s ease-in-out infinite;color:#1a1208;
+}
 @keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(201,162,95,.5)}50%{box-shadow:0 0 0 8px rgba(201,162,95,0)}}
-.streak-day .sd-label{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
-.streak-bar{height:5px;background:var(--cream-2);border-radius:3px;margin-top:12px;overflow:hidden}
-.streak-bar-fill{height:100%;background:linear-gradient(90deg,var(--green-deep),var(--green-mid));border-radius:3px;transition:width .6s ease}
+.streak-day .sd-label{font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:rgba(250,245,234,.5)}
+.streak-bar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;margin-top:12px;overflow:hidden}
+.streak-bar-fill{height:100%;background:linear-gradient(90deg,#5FCB9A,#C9A25F);border-radius:3px;transition:width .6s ease;box-shadow:0 0 8px rgba(201,162,95,.35)}
 
-.streak-stats{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px dashed rgba(14,59,46,.15)}
+.streak-stats{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.10)}
 .stat{text-align:center;flex:1}
-.stat .num{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--green-deep);line-height:1}
-.stat .lbl{font-size:9px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
-.stat-divider{width:1px;height:28px;background:rgba(14,59,46,.15)}
+.stat .num{font-family:'Fraunces',serif;font-size:24px;font-weight:800;color:var(--cream);line-height:1;letter-spacing:-.015em}
+.stat .lbl{font-size:9px;color:rgba(250,245,234,.55);letter-spacing:.6px;text-transform:uppercase;margin-top:5px;font-weight:700}
+.stat-divider{width:1px;height:28px;background:rgba(255,255,255,.10)}
 
-.rewards-card{background:#fff;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid rgba(14,59,46,.06)}
+.rewards-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:18px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px -10px rgba(0,0,0,.45);
+}
 .rewards-grid{display:flex;gap:10px;overflow-x:auto;padding:4px 0;-webkit-overflow-scrolling:touch}
+.rewards-grid::-webkit-scrollbar{display:none}
 .reward-item{flex-shrink:0;width:66px;text-align:center}
-.reward-badge{width:52px;height:52px;border-radius:16px;background:var(--cream);border:2px solid rgba(14,59,46,.08);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 4px;transition:all .3s}
-.reward-badge.unlocked{border-color:var(--gold);background:var(--gold-lt);box-shadow:0 4px 12px rgba(201,162,95,.2)}
-.reward-badge.locked{filter:grayscale(1);opacity:.4}
-.reward-cost{font-size:9px;font-weight:700;color:var(--gold)}
+.reward-badge{
+  width:54px;height:54px;border-radius:16px;
+  background:rgba(255,255,255,.045);
+  border:2px solid rgba(255,255,255,.10);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;margin:0 auto 5px;transition:all .3s;
+}
+.reward-badge.unlocked{
+  border-color:var(--gold-lt, #fff8e8);
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  box-shadow:0 6px 14px -3px rgba(201,162,95,.5), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.reward-badge.locked{filter:grayscale(1);opacity:.35}
+.reward-cost{font-size:10px;font-weight:800;color:var(--gold-lt, #fff8e8);letter-spacing:.2px}
 
 /* ===== PROGRESS: PRAYER CAROUSEL ===== */
-.pray-segments{display:flex;gap:4px;margin-bottom:12px}
-.pray-seg{flex:1;height:6px;border-radius:3px;background:var(--cream-2);transition:background .3s}
-.pray-seg.done{background:var(--green-deep)}
-.pray-seg.active{background:var(--gold)}
+.pray-segments{display:flex;gap:4px;margin-bottom:14px}
+.pray-seg{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.08);transition:background .3s, box-shadow .3s}
+.pray-seg.done{background:rgba(95,203,154,.55)}
+.pray-seg.active{background:var(--gold-lt, #fff8e8);box-shadow:0 0 10px rgba(201,162,95,.5)}
 .pray-carousel{display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;gap:12px;padding:0 0 8px;margin:0 -4px}
 .pray-carousel::-webkit-scrollbar{display:none}
 .pray-slide{
   flex:0 0 calc(100% - 8px);scroll-snap-align:center;
   display:flex;align-items:center;gap:14px;
-  padding:16px;background:var(--cream);border-radius:18px;
-  border:1.5px solid transparent;transition:all .25s;cursor:pointer;
+  padding:16px;border-radius:20px;
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);
+  border:1.5px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 6px 18px -8px rgba(0,0,0,.4);
+  transition:all .25s;cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
 .pray-slide:active{transform:scale(.98)}
-.pray-slide.checked{background:var(--green-soft);border-color:rgba(14,59,46,.15)}
-.pray-slide .ps-mo{width:56px;height:56px;border-radius:16px;background:var(--cream-2);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.pray-slide .ps-mo img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
-.pray-slide.checked .ps-mo{background:var(--gold-soft)}
+.pray-slide.checked{
+  background:linear-gradient(160deg, rgba(95,203,154,.18), rgba(95,203,154,.08));
+  border-color:rgba(95,203,154,.4);
+}
+.pray-slide .ps-mo{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(160deg,#fffaef,#fdf2e3);
+  overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 3px 8px -2px rgba(0,0,0,.25);
+}
+.pray-slide .ps-mo img{width:100%;height:100%;object-fit:contain}
+.pray-slide.checked .ps-mo{background:linear-gradient(160deg, rgba(201,162,95,.2), rgba(95,203,154,.18))}
 .pray-slide .ps-info{flex:1;min-width:0}
-.pray-slide .ps-name{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--green-deep);display:flex;align-items:center;gap:6px}
-.pray-slide .ps-desc{font-size:11px;color:var(--ink-soft);margin-top:2px}
-.pray-slide.checked .ps-desc{color:var(--green-mid)}
+.pray-slide .ps-name{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--cream);display:flex;align-items:center;gap:6px;letter-spacing:-.005em}
+.pray-slide .ps-desc{font-size:11px;color:rgba(250,245,234,.6);margin-top:2px}
+.pray-slide.checked .ps-desc{color:#5FCB9A}
 .pray-slide .ps-check{
-  width:36px;height:36px;border-radius:50%;background:#fff;
-  border:2px dashed rgba(14,59,46,.18);display:flex;align-items:center;
-  justify-content:center;flex-shrink:0;transition:all .3s;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.045);
+  border:2px dashed rgba(255,255,255,.20);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .3s;
   font-size:16px;color:transparent;
 }
-.pray-slide.checked .ps-check{background:var(--green-deep);border:2px solid var(--green-deep);color:var(--gold-soft)}
-.pray-slide.checked .ps-check::after{content:'✓';font-weight:700;font-size:16px}
+.pray-slide.checked .ps-check{
+  background:linear-gradient(160deg,#5FCB9A,#2C5A3E);
+  border:2px solid rgba(95,203,154,.6);color:#fff;
+  box-shadow:0 4px 10px -2px rgba(95,203,154,.45);
+}
+.pray-slide.checked .ps-check::after{content:'✓';font-weight:800;font-size:16px}
 @keyframes checkPop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
 .pray-slide.just-checked .ps-check{animation:checkPop .4s cubic-bezier(.34,1.56,.64,1)}
-.progress-mo-card{background:linear-gradient(160deg,#fffaef 0%,#fdf2e3 100%);border:1px solid var(--gold-soft);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);animation:rise .5s ease-out backwards}
-.progress-mo-stage{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:center}
+.progress-mo-card{
+  background:linear-gradient(160deg,#fffaef 0%,#fdf2e3 100%);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;padding:18px;margin-bottom:14px;
+  box-shadow:0 14px 36px -10px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.5);
+  animation:rise .5s ease-out backwards;
+  position:relative;overflow:hidden;
+}
+.progress-mo-card::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:5px;
+  background:linear-gradient(90deg, transparent, rgba(201,162,95,.45), transparent);
+  pointer-events:none;
+}
+.progress-mo-stage{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:center;position:relative;z-index:1}
 .progress-mo-portrait{height:120px;display:flex;align-items:flex-end;justify-content:center}
-.progress-mo-portrait img{max-height:110px;max-width:100%;object-fit:contain;mix-blend-mode:multiply;transition:opacity .3s}
+.progress-mo-portrait img{max-height:110px;max-width:100%;object-fit:contain;transition:opacity .3s;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
 @keyframes moBounce{0%{transform:scale(.85) rotate(-3deg);opacity:0}60%{transform:scale(1.05) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0deg);opacity:1}}
 .progress-mo-portrait img.bounce{animation:moBounce .5s cubic-bezier(.34,1.56,.64,1)}
-.progress-speech{position:relative;background:#fff;border-radius:16px;padding:12px;box-shadow:0 4px 12px rgba(14,59,46,.06);border:1px solid rgba(14,59,46,.06)}
+.progress-speech{position:relative;background:#fff;border-radius:16px;padding:13px 14px;box-shadow:0 4px 12px rgba(14,59,46,.10);border:1px solid rgba(14,59,46,.06)}
 .progress-speech::before{content:'';position:absolute;left:-8px;top:20px;width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:9px solid #fff}
-.progress-speech .ps-msg{font-family:'Fraunces',serif;font-size:14px;font-weight:500;color:var(--green-deep);line-height:1.35;margin:0 0 3px}
-.progress-speech .ps-sub{font-size:10px;color:var(--ink-soft)}
-.pray-all-done{text-align:center;padding:14px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));color:var(--cream);border-radius:16px;margin-top:14px;font-family:'Fraunces',serif;font-size:15px;font-weight:600;animation:rise .5s ease-out backwards}
+.progress-speech .ps-msg{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--green-deep);line-height:1.4;margin:0 0 3px}
+.progress-speech .ps-sub{font-size:10px;color:var(--ink-soft);font-weight:600}
+.pray-all-done{
+  text-align:center;padding:15px;border-radius:18px;margin-top:14px;
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;
+  font-family:'Fraunces',serif;font-size:15px;font-weight:700;letter-spacing:-.005em;
+  box-shadow:0 8px 20px -4px rgba(95,203,154,.5), inset 0 1px 0 rgba(255,255,255,.22);
+  animation:rise .5s ease-out backwards;
+}
 
 /* ===== MODALS ===== */
 .modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(14,59,46,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .4s}
@@ -507,6 +635,55 @@ body{background-image:
 
 /* iMac/desktop — keep content a centered column, consistent with the portal */
 @media(min-width:820px){.view{max-width:860px;margin-left:auto;margin-right:auto;}.topbar{padding-left:max(16px,calc((100vw - 860px)/2 + 4px));padding-right:max(16px,calc((100vw - 860px)/2 + 4px));}}
+
+/* ===== PROGRESS v2: Capaian Belajarmu + Lencana Mo ===== */
+.cap-row{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:14px 16px;margin-bottom:12px;
+  cursor:pointer;transition:transform .15s, background .2s;
+}
+.cap-row:active{transform:scale(.985)}
+.cap-row:hover{background:rgba(255,255,255,.055)}
+.cap-row-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;gap:8px}
+.cap-row-label{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--cream);letter-spacing:-.005em}
+.cap-row-count{font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:var(--gold-lt,#fff8e8);letter-spacing:-.01em}
+.cap-row-count span{font-size:13px;color:rgba(250,245,234,.45);font-weight:700}
+.cap-segments{display:flex;gap:4px;margin-bottom:8px}
+.cap-seg{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.08);transition:background .3s, box-shadow .3s}
+.cap-seg.done{background:linear-gradient(90deg,#5FCB9A,#C9A25F);box-shadow:0 0 8px rgba(201,162,95,.35)}
+.cap-row-hint{font-size:11px;color:rgba(250,245,234,.5);font-weight:600;letter-spacing:.01em}
+
+.lencana-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.lencana{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:12px 8px 10px;border-radius:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  transition:all .3s;
+}
+.lencana.unlocked{
+  background:linear-gradient(160deg, rgba(201,162,95,.14), rgba(95,203,154,.08));
+  border-color:rgba(201,162,95,.4);
+  box-shadow:0 4px 12px -3px rgba(201,162,95,.3), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.lencana .ln-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  margin-bottom:8px;transition:all .3s;
+}
+.lencana.unlocked .ln-icon{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  border-color:var(--gold-lt,#fff8e8);
+  box-shadow:0 4px 10px -3px rgba(201,162,95,.5), inset 0 1px 0 rgba(255,255,255,.22);
+  filter:none;
+}
+.lencana:not(.unlocked) .ln-icon{filter:grayscale(1);opacity:.4}
+.lencana .ln-name{font-size:11px;font-weight:800;color:var(--cream);line-height:1.2;letter-spacing:-.003em;margin-bottom:3px}
+.lencana:not(.unlocked) .ln-name{color:rgba(250,245,234,.55)}
+.lencana .ln-hint{font-size:9px;font-weight:600;color:rgba(250,245,234,.45);line-height:1.25;min-height:11px}
+.lencana.unlocked .ln-hint{color:rgba(95,203,154,.85);font-weight:700}
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
 @media(min-width:760px){.main{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
@@ -681,33 +858,35 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
       </div>
     </div>
 
-    <!-- Daily prayer practice -->
+    <!-- Capaian Belajarmu: real learning progress -->
     <div class="card">
       <div class="card-head">
         <div>
-          <div class="card-title">Latihan Hari Ini</div>
-          <div class="card-sub">Swipe & tap untuk tandai selesai</div>
+          <div class="card-title">Capaian Belajarmu</div>
+          <div class="card-sub">Yang sudah kamu pelajari bareng Mo</div>
         </div>
-        <span class="badge gold" id="todayPrayBadge">0/5</span>
       </div>
-      <div class="pray-segments" id="praySegments"></div>
-      <div class="pray-carousel" id="prayCarousel"></div>
-      <div id="prayAllDoneMsg"></div>
-    </div>
 
-    <!-- Weekly streak -->
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <div class="card-title">Minggu Ini</div>
-          <div class="card-sub">Streak latihan mingguan kamu</div>
+      <div class="cap-row" onclick="showView('guide')">
+        <div class="cap-row-head">
+          <div class="cap-row-label">🕌 Langkah Sholat</div>
+          <div class="cap-row-count" id="stepMasteredCount">0 <span>/7</span></div>
         </div>
-        <span class="badge" id="streakCount">0/7 Hari</span>
+        <div class="cap-segments" id="stepSegments"></div>
+        <div class="cap-row-hint" id="stepMasteredHint">Buka Panduan Sholat untuk mulai belajar</div>
       </div>
-      <div class="streak-days" id="streakDays"></div>
-      <div class="streak-bar"><div class="streak-bar-fill" id="streakBar" style="width:0%"></div></div>
+
+      <div class="cap-row" onclick="showView('dzikir')">
+        <div class="cap-row-head">
+          <div class="cap-row-label">📿 Jenis Dzikir</div>
+          <div class="cap-row-count" id="dzMasteredCount">0 <span>/6</span></div>
+        </div>
+        <div class="cap-segments" id="dzSegments"></div>
+        <div class="cap-row-hint" id="dzMasteredHint">Tap untuk coba dzikir baru</div>
+      </div>
+
       <div class="streak-stats">
-        <div class="stat"><div class="num" id="statPrayers">0</div><div class="lbl">Latihan</div></div>
+        <div class="stat"><div class="num" id="statPrayers">0</div><div class="lbl">Sholat Lengkap</div></div>
         <div class="stat-divider"></div>
         <div class="stat"><div class="num" id="statDuas">0</div><div class="lbl">Bacaan</div></div>
         <div class="stat-divider"></div>
@@ -715,13 +894,13 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
       </div>
     </div>
 
-    <!-- Rewards -->
+    <!-- Lencana Mo: real milestone badges -->
     <div class="card">
       <div class="card-head">
-        <div><div class="card-title">Rewards</div><div class="card-sub">Kumpulkan bintang dan buka hadiah seru!</div></div>
-        <div class="badge gold">⭐ <span id="rewardStars">0</span></div>
+        <div><div class="card-title">Lencana Mo</div><div class="card-sub">Capai pencapaian, buka lencana baru!</div></div>
+        <div class="badge gold" id="badgeProgress">0/6</div>
       </div>
-      <div class="rewards-grid" id="rewardsGrid"></div>
+      <div class="lencana-grid" id="lencanaGrid"></div>
     </div>
   </div>
 
@@ -822,7 +1001,15 @@ var STEPS=[
 ];
 
 var PRAYERS=[{name:'Subuh',icon:'🌅',h:4,m:35},{name:'Dzuhur',icon:'☀️',h:12,m:0},{name:'Ashar',icon:'🌤',h:15,m:15},{name:'Maghrib',icon:'🌅',h:17,m:55},{name:'Isya',icon:'🌙',h:19,m:10}];
-var REWARDS=[{stars:5,emoji:'🧢'},{stars:15,emoji:'🏮'},{stars:30,emoji:'🕌'},{stars:50,emoji:'🌟'},{stars:80,emoji:'🐸'},{stars:100,emoji:'👑'}];
+/* Real-progress milestone badges — each tied to actual learning activity */
+var LENCANA=[
+  {key:'start',  name:'Mulai Belajar',  icon:'🌱', hintLocked:'Dengar 1 bacaan pertama',     hintDone:'Selesai!',      unlock:function(p){return p.duas>=1;}},
+  {key:'khatam', name:'Khatam Panduan', icon:'🕌', hintLocked:'Selesaikan 7 langkah sholat',  hintDone:'7 langkah ✓',   unlock:function(p){return p.prayers>=1;}},
+  {key:'dzPem',  name:'Dzikir Pemula',  icon:'📿', hintLocked:'Coba 3 jenis dzikir',          hintDone:'3 dzikir ✓',    unlock:function(p){return p.dzDone>=3;}},
+  {key:'tenSh',  name:'10 Sholat',      icon:'🌟', hintLocked:'10 sholat lengkap',            hintDone:'Istiqomah!',    unlock:function(p){return p.prayers>=10;}},
+  {key:'bacaan', name:'Bacaan Master',  icon:'💎', hintLocked:'50 bacaan dipelajari',         hintDone:'Master!',       unlock:function(p){return p.duas>=50;}},
+  {key:'master', name:'Mo Master',      icon:'👑', hintLocked:'Buka 5 lencana lainnya',       hintDone:'Mashallah!',    unlock:function(p){return p.others>=5;}},
+];
 
 var PRAY_ITEMS=[
   {name:'Subuh',icon:'🌅',desc:'Sholat pagi sebelum matahari terbit',thumb:'mo-pray-assets/mo-takbir.png'},
@@ -1067,6 +1254,7 @@ function loadPrayPractice(){var k='mo_pray_practice_'+todayKey();try{return JSON
 function savePrayPractice(d){var k='mo_pray_practice_'+todayKey();try{localStorage.setItem(k,JSON.stringify(d))}catch(e){}}
 
 function renderPrayChecklist(){
+  if(!document.getElementById('prayCarousel'))return; /* daily checklist removed from Progress v2 */
   var practice=loadPrayPractice(),checked=0;
   var segHtml='',carHtml='';
   PRAY_ITEMS.forEach(function(p,i){
@@ -1114,25 +1302,55 @@ function togglePrayPractice(name,el){
 }
 
 function renderProgress(){
-  var stats=loadStats(),streak=loadStreak();
+  var stats=loadStats();
   document.getElementById('statPrayers').textContent=stats.prayers;
   document.getElementById('statDuas').textContent=stats.duas;
   document.getElementById('statStars').textContent=stats.stars;
-  document.getElementById('rewardStars').textContent=stats.stars;
-  var now=new Date(),dow=now.getDay(),mon=new Date(now);mon.setDate(now.getDate()-((dow+6)%7));
-  var dns=['Sen','Sel','Rab','Kam','Jum','Sab','Min'],html='',wd=0;
-  for(var i=0;i<7;i++){var d=new Date(mon);d.setDate(mon.getDate()+i);
-    var key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    var done=!!streak[key],isToday=key===todayKey();if(done)wd++;
-    var cls='sd-circle';if(done)cls+=' done';if(isToday&&!done)cls+=' today';
-    html+='<div class="streak-day"><div class="'+cls+'"></div><div class="sd-label">'+dns[i]+'</div></div>'}
-  document.getElementById('streakDays').innerHTML=html;
-  document.getElementById('streakCount').textContent=wd+'/7 Hari';
-  document.getElementById('streakBar').style.width=Math.round(wd/7*100)+'%';
-  var rhtml='';REWARDS.forEach(function(r){var u=stats.stars>=r.stars;
-    rhtml+='<div class="reward-item"><div class="reward-badge'+(u?' unlocked':' locked')+'">'+r.emoji+'</div><div class="reward-cost">⭐ '+r.stars+'</div></div>'});
-  document.getElementById('rewardsGrid').innerHTML=rhtml;
-  renderPrayChecklist();
+
+  /* Mastery: count distinct steps where at least one dua page has been heard */
+  var stepsTotal=STEPS.length,stepsDone=0,segS='';
+  for(var i=0;i<stepsTotal;i++){
+    var hit=false;
+    for(var k=0;k<localStorage.length;k++){var lk=localStorage.key(k);if(lk&&lk.indexOf('mo_dua_'+i+'_')===0){hit=true;break;}}
+    if(hit)stepsDone++;
+    segS+='<div class="cap-seg'+(hit?' done':'')+'"></div>';
+  }
+  document.getElementById('stepSegments').innerHTML=segS;
+  document.getElementById('stepMasteredCount').innerHTML=stepsDone+' <span>/'+stepsTotal+'</span>';
+  document.getElementById('stepMasteredHint').textContent =
+    stepsDone===0      ? 'Tap untuk mulai belajar langkah sholat' :
+    stepsDone<stepsTotal ? 'Lanjutkan ke langkah berikutnya bareng Mo' :
+                         '🎉 Mashallah! Semua langkah sudah dikuasai';
+
+  /* Mastery: count distinct dzikir where at least one full cycle completed */
+  var dzTotal=DZIKIR.length,dzDone=0,segD='';
+  for(var j=0;j<dzTotal;j++){
+    var d=localStorage.getItem('mo_dzikir_done_'+j)==='1';
+    if(d)dzDone++;
+    segD+='<div class="cap-seg'+(d?' done':'')+'"></div>';
+  }
+  document.getElementById('dzSegments').innerHTML=segD;
+  document.getElementById('dzMasteredCount').innerHTML=dzDone+' <span>/'+dzTotal+'</span>';
+  document.getElementById('dzMasteredHint').textContent =
+    dzDone===0      ? 'Tap untuk coba dzikir pertama' :
+    dzDone<dzTotal  ? 'Coba '+(dzTotal-dzDone)+' jenis dzikir lagi' :
+                      '🎉 Semua dzikir sudah dicoba';
+
+  /* Milestone badges */
+  var prog={prayers:stats.prayers,duas:stats.duas,stars:stats.stars,dzDone:dzDone,stepsDone:stepsDone,others:0};
+  /* compute "others" first by counting first 5 unlocks (master depends on others) */
+  for(var b=0;b<LENCANA.length-1;b++){if(LENCANA[b].unlock(prog))prog.others++;}
+  var unlockedCount=0,lhtml='';
+  LENCANA.forEach(function(l){
+    var u=l.unlock(prog);if(u)unlockedCount++;
+    lhtml+='<div class="lencana'+(u?' unlocked':'')+'">'+
+      '<div class="ln-icon">'+l.icon+'</div>'+
+      '<div class="ln-name">'+l.name+'</div>'+
+      '<div class="ln-hint">'+(u?l.hintDone:'🔒 '+l.hintLocked)+'</div>'+
+    '</div>';
+  });
+  document.getElementById('lencanaGrid').innerHTML=lhtml;
+  document.getElementById('badgeProgress').textContent=unlockedCount+'/'+LENCANA.length;
 }
 
 /* ===== DZIKIR ===== */
@@ -1180,6 +1398,7 @@ function renderDzikir(){
   document.getElementById('dzProgress').style.width=pct+'%';
   document.getElementById('tasbihRing').style.transform='rotate('+(tasbihCurrent/d.count*360)+'deg)';
   var done=tasbihCurrent>=d.count;
+  if(done){try{localStorage.setItem('mo_dzikir_done_'+currentDzikir,'1');}catch(e){}}
   var completeEl=document.getElementById('dzikirComplete');
   var navBtns=document.querySelector('.dzikir-nav-btns');
   completeEl.style.display=done?'block':'none';
