@@ -107,39 +107,106 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 .mo-msg{font-family:var(--font-serif);font-size:14px;font-weight:500;color:var(--green-deep);line-height:1.35;margin:0 0 2px;}
 .mo-sub{font-size:10px;color:var(--ink-soft);}
 
-/* Prayer Grid */
+/* Prayer Grid — iOS-26 translucent cards with kids-friendly tap feedback */
 .prayer-grid{
   display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
-  padding:0 16px;flex-shrink:0;margin-bottom:10px;
+  padding:0 16px;flex-shrink:0;margin-bottom:6px;
+  position:relative;
 }
 .prayer-cell{
-  display:flex;flex-direction:column;align-items:center;gap:2px;
-  padding:10px 2px 8px;border-radius:18px;
-  background:linear-gradient(180deg,#FFFFFF 0%,#FCFAF4 100%);
-  border:1.5px solid rgba(31,169,113,.12);transition:all .2s;
-  box-shadow:0 4px 12px -4px rgba(14,59,46,.12),inset 0 1px 0 rgba(255,255,255,.6);
+  display:flex;flex-direction:column;align-items:center;gap:3px;
+  padding:11px 2px 9px;border-radius:18px;
+  background:rgba(255,255,255,.55);
+  -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
+  border:1.5px solid rgba(31,169,113,.14);transition:all .25s;
+  box-shadow:0 4px 14px -5px rgba(14,59,46,.14), inset 0 1px 0 rgba(255,255,255,.5);
+  position:relative;overflow:visible;
 }
-.pc-emoji{font-size:20px;}
-.pc-name{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
-.pc-time{font-family:var(--font-serif);font-size:12px;font-weight:600;color:var(--ink);}
+.pc-emoji{font-size:22px;transition:transform .25s;filter:drop-shadow(0 1px 2px rgba(0,0,0,.1));}
+.pc-name{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
+.pc-time{font-family:var(--font-serif);font-size:12px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
 .pc-check{
-  width:22px;height:22px;border-radius:50%;
-  border:2px dashed rgba(14,59,46,.15);
+  width:24px;height:24px;border-radius:50%;
+  border:2px dashed rgba(14,59,46,.18);
   display:flex;align-items:center;justify-content:center;
-  font-size:10px;color:transparent;transition:all .3s;margin-top:1px;
+  font-size:11px;color:transparent;transition:all .3s;margin-top:1px;
+  position:relative;
 }
-.pc-streak{font-size:9px;font-weight:700;color:var(--fire);min-height:10px;}
+.pc-streak{font-size:9px;font-weight:800;color:var(--fire);min-height:10px;transition:transform .25s;}
 .pc-streak.zero{color:transparent;}
 
-.prayer-cell.done .pc-check{background:var(--green-deep);border:2px solid var(--green-deep);color:#fff;}
-.prayer-cell.done .pc-check::after{content:'✓';font-weight:800;}
-.prayer-cell.current{background:var(--gold-soft);border-color:var(--gold);animation:cellGlow 2s ease-in-out infinite;}
+/* Done state */
+.prayer-cell.done{opacity:1;background:linear-gradient(160deg, rgba(216,230,221,.6), rgba(255,255,255,.45));border-color:rgba(28,90,71,.25);}
+.prayer-cell.done .pc-check{background:linear-gradient(160deg,#22A974,#0e3b2e);border:2px solid #0e3b2e;color:#fff;box-shadow:0 3px 10px -2px rgba(14,59,46,.4), inset 0 1px 0 rgba(255,255,255,.25);}
+.prayer-cell.done .pc-check::after{content:'✓';font-weight:900;font-size:12px;}
+
+/* Current state — bigger pulse + tap affordance */
+.prayer-cell.current{
+  background:linear-gradient(160deg, #FFF4D6, #FCEBB8);
+  border-color:var(--gold);transform:scale(1.04);
+  animation:cellGlow 1.8s ease-in-out infinite;
+  z-index:2;
+}
 .prayer-cell.current .pc-name{color:#8a6a30;}
+.prayer-cell.current .pc-check{border:2.5px solid var(--gold);border-style:solid;animation:checkPulse 1.4s ease-in-out infinite;}
 .prayer-cell.current:not(.done){cursor:pointer;}
-.prayer-cell.current:not(.done):active{transform:scale(.92);}
-.prayer-cell.passed{opacity:.4;}
-.prayer-cell.done{opacity:1;}
-@keyframes cellGlow{0%,100%{box-shadow:0 0 0 0 rgba(201,162,95,.35)}50%{box-shadow:0 0 0 6px rgba(201,162,95,0)}}
+.prayer-cell.current:not(.done):active{transform:scale(.95);}
+.prayer-cell.current:not(.done) .pc-emoji{animation:bobNudge 1.6s ease-in-out infinite;}
+.prayer-cell.passed{opacity:.42;}
+@keyframes cellGlow{0%,100%{box-shadow:0 0 0 0 rgba(201,162,95,.5), 0 6px 18px -4px rgba(201,162,95,.35)}50%{box-shadow:0 0 0 10px rgba(201,162,95,0), 0 6px 18px -4px rgba(201,162,95,.55)}}
+@keyframes checkPulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(201,162,95,.5)}50%{transform:scale(1.12);box-shadow:0 0 0 4px rgba(201,162,95,0)}}
+@keyframes bobNudge{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+
+/* "Tap untuk centang" hint that appears only on the current cell */
+.tap-hint{
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:-20px;font-size:10px;font-weight:800;color:var(--gold);
+  letter-spacing:.3px;white-space:nowrap;
+  padding:3px 9px;border-radius:999px;
+  background:rgba(255,255,255,.92);border:1px solid var(--gold-soft);
+  box-shadow:0 2px 8px rgba(14,59,46,.08);
+  pointer-events:none;opacity:0;animation:hintIn .5s .8s ease-out forwards;
+}
+@keyframes hintIn{from{opacity:0;transform:translateX(-50%) translateY(-4px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* Just-checked cell celebration */
+.prayer-cell.just-checked{animation:cellPop .55s cubic-bezier(.34,1.56,.64,1);}
+.prayer-cell.just-checked .pc-check{animation:checkBurst .55s cubic-bezier(.34,1.56,.64,1);}
+@keyframes cellPop{0%{transform:scale(1)}40%{transform:scale(1.22);background:linear-gradient(160deg,#FFE08A,#22A974);}100%{transform:scale(1)}}
+@keyframes checkBurst{0%{transform:scale(0)}55%{transform:scale(1.45)}100%{transform:scale(1)}}
+
+/* ===== CELEBRATION OVERLAY (giant ✓ + sparkle layer) ===== */
+.celeb{
+  position:fixed;inset:0;z-index:1500;pointer-events:none;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 50% 45%, rgba(255,244,214,.45) 0%, rgba(252,235,184,0) 60%);
+  opacity:0;transition:opacity .25s ease-out;
+}
+.celeb.show{opacity:1;}
+.celeb-card{
+  background:rgba(255,255,255,.96);
+  -webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);
+  border:2px solid var(--gold);border-radius:32px;
+  padding:24px 28px;text-align:center;
+  box-shadow:0 20px 60px rgba(14,59,46,.25);
+  transform:scale(.6) rotate(-4deg);opacity:0;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), opacity .25s;
+  max-width:280px;
+}
+.celeb.show .celeb-card{transform:scale(1) rotate(0);opacity:1;}
+.celeb-check{
+  width:72px;height:72px;margin:0 auto 10px;
+  border-radius:50%;
+  background:linear-gradient(160deg,#22A974,#0e3b2e);
+  display:flex;align-items:center;justify-content:center;
+  color:#fff;font-size:38px;font-weight:900;
+  box-shadow:0 10px 24px -4px rgba(34,169,116,.55), inset 0 1px 0 rgba(255,255,255,.3);
+  animation:celebCheckPop .6s cubic-bezier(.34,1.56,.64,1);
+}
+@keyframes celebCheckPop{0%{transform:scale(0) rotate(-180deg)}60%{transform:scale(1.2) rotate(10deg)}100%{transform:scale(1) rotate(0)}}
+.celeb-title{font-family:var(--font-serif);font-size:22px;font-weight:700;color:var(--green-deep);margin-bottom:4px;letter-spacing:-.01em;}
+.celeb-sub{font-size:13px;color:var(--ink-soft);font-weight:500;}
+.celeb-sub strong{color:var(--fire);font-weight:800;}
 
 /* Check-in Button */
 .checkin-btn{
@@ -324,6 +391,13 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 </div>
 
 <div class="confetti" id="confetti"></div>
+<div class="celeb" id="celeb" aria-hidden="true">
+  <div class="celeb-card">
+    <div class="celeb-check">✓</div>
+    <div class="celeb-title" id="celebTitle">Mashallah!</div>
+    <div class="celeb-sub" id="celebSub">Sholat ✓</div>
+  </div>
+</div>
 <a class="back-float" href="../index.html">←</a>
 
 <div class="app">
@@ -653,9 +727,16 @@ function renderUI(){
     else{sel.textContent='';sel.classList.add('zero');}
     const cell=cells[i];
     cell.classList.remove('current','passed','done');
+    /* Strip any old tap-hint when re-rendering */
+    const oldHint=cell.querySelector('.tap-hint');if(oldHint)oldHint.remove();
     if(done)cell.classList.add('done');
     if((prayerMinutes[i]<=nm&&!afterAll)||afterAll)cell.classList.add('passed');
     if(i===ci){cell.classList.remove('passed');cell.classList.add('current');}
+    /* "Tap untuk centang" hint on the current, tappable cell */
+    if(i===ci && !done){
+      const hint=document.createElement('div');hint.className='tap-hint';hint.textContent='👆 Tap';
+      cell.appendChild(hint);
+    }
   });
 
   document.getElementById('nextName').textContent=PRAYER_NAMES[nextPrayerIdx];
@@ -707,6 +788,46 @@ function renderMo(){
 /* ===== CHECK-IN ===== */
 let _checkBusy=false;
 const _toastShown={};
+/* Spawn confetti centered on a DOM rect (per-cell origin) */
+function burstAt(rect,count){
+  count=count||22;
+  const cols=['#c9a25f','#22A974','#FFE08A','#e89a94','#f0e3c6','#f97316'];
+  const ct=document.getElementById('confetti');
+  const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+  for(let i=0;i<count;i++){
+    const s=document.createElement('span');
+    const ang=Math.random()*Math.PI*2, dist=60+Math.random()*120;
+    s.style.cssText=`left:${cx}px;top:${cy}px;background:${cols[i%cols.length]};width:${5+Math.random()*6}px;height:${7+Math.random()*8}px;animation:none;`;
+    ct.appendChild(s);
+    s.animate([
+      {transform:'translate(0,0) rotate(0)',opacity:1},
+      {transform:`translate(${Math.cos(ang)*dist}px,${Math.sin(ang)*dist+30}px) rotate(${360+Math.random()*360}deg)`,opacity:0}
+    ],{duration:900+Math.random()*500,easing:'cubic-bezier(.2,.7,.4,1)',fill:'forwards'});
+    setTimeout(()=>s.remove(),1500);
+  }
+}
+
+/* Show the giant celebration overlay (Mashallah card) */
+function showCeleb(title,sub,duration){
+  const el=document.getElementById('celeb');
+  document.getElementById('celebTitle').textContent=title;
+  document.getElementById('celebSub').innerHTML=sub;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), duration||1700);
+}
+
+/* Best-effort haptic + sound — uses bm-kit when available */
+function kidsFeedback(kind){
+  try{if(window.navigator.vibrate)window.navigator.vibrate([35,55,35]);}catch(e){}
+  try{
+    if(window.BabyMo){
+      if(window.BabyMo.sfx)window.BabyMo.sfx(kind==='milestone'?'win':'star');
+      if(window.BabyMo.react)window.BabyMo.react(kind==='milestone'?'win':'correct');
+      if(window.BabyMo.addStars)window.BabyMo.addStars(kind==='milestone'?5:1);
+    }
+  }catch(e){}
+}
+
 function handleCheckIn(){
   if(_checkBusy)return;
   const ci=curPrayerIdx();if(ci===-1)return;
@@ -715,17 +836,38 @@ function handleCheckIn(){
   if(_toastShown[k])return;
   _checkBusy=true;_toastShown[k]=true;
   const cnt=res.streak.count,ms=[3,7,14,30,50,100].includes(cnt);
-  fireConfetti(ms?70:30);
+
+  /* Layer 1: per-cell celebration animation + per-cell confetti origin */
+  const cell=document.querySelector('.prayer-cell[data-idx="'+ci+'"]');
+  if(cell){
+    cell.classList.add('just-checked');
+    setTimeout(()=>cell.classList.remove('just-checked'), 600);
+    burstAt(cell.getBoundingClientRect(), ms?50:24);
+  }
+  /* Plus a celebratory shower for milestones */
+  if(ms)fireConfetti(60);
+
+  /* Layer 2: BIG celebration overlay (the moment that lands) */
+  const title=ms?(cnt===100?'Subhanallah! 💯':cnt===30?'Subhanallah! ✨':cnt===7?'7 hari! 🔥':cnt===3?'3 hari! 🌟':'Kerennn! 🎉'):'Mashallah!';
+  const sub=ms?`Streak <strong>${cnt} hari</strong> ${n} bareng Mo`:`Sholat <strong>${n}</strong> ✓ · streak <strong>${cnt} hari</strong>`;
+  showCeleb(title,sub, ms?2200:1500);
+
+  /* Layer 3: Mo reacts + speech bubble updates */
+  setMo(ms?'excited':'surprised',
+    ms?`Kerennn! Streak ${n} <strong>${cnt} hari</strong>! 🎉`
+       :`Alhamdulillah! ${n} ✓ Streak: <strong>${cnt} hari</strong> 🔥`,
+    '— Mo girang');
+
+  /* Layer 4: haptic + sound + star bump via bm-kit */
+  kidsFeedback(ms?'milestone':'tap');
+
+  /* Layer 5: legacy toast (subtle, doesn't replace celebration) */
   let msg;
-  if(cnt===1)msg=`🌱 Streak ${n} dimulai! +1`;
-  else if(cnt===3)msg=`🌟 3 hari ${n} — Mashallah!`;
-  else if(cnt===7)msg=`🔥 7 hari ${n}! Mo bangga!`;
-  else if(cnt===30)msg=`✨ 30 hari ${n} — Subhanallah!`;
-  else if(cnt===100)msg=`💯 100 hari ${n}!`;
+  if(cnt===1)msg=`🌱 Streak ${n} dimulai!`;
   else if(ms)msg=`🎉 ${cnt} hari ${n} streak!`;
-  else msg=`✓ ${n} · streak ${cnt} 🔥`;
+  else msg=`✓ ${n} · 🔥 ${cnt}`;
   showToast(msg);
-  setMo(ms?'excited':'surprised',ms?`Kerennn! Streak ${n} <strong>${cnt} hari</strong>! 🎉`:`Alhamdulillah! ${n} ✓ Streak: <strong>${cnt} hari</strong> 🔥`,'— Mo girang');
+
   renderUI();setBtn(false,`✓ ${n} sudah dicentang`);
   setTimeout(()=>{renderMo();_checkBusy=false;},4500);
 }
