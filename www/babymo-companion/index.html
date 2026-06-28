@@ -48,6 +48,11 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 }
 .back-float:active{transform:scale(.88);}
 
+/* today-pill doubles as the settings entry */
+.today-pill{cursor:pointer;display:flex!important;align-items:center;gap:6px;}
+.today-pill:active{transform:translateY(-50%) scale(.94);}
+.today-pill .tp-gear{font-size:11px;opacity:.62;}
+
 /* ===== TAB BAR ===== */
 .tabbar{
   display:flex;height:var(--tab-h);padding-bottom:env(safe-area-inset-bottom);
@@ -107,24 +112,24 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 .mo-msg{font-family:var(--font-serif);font-size:14px;font-weight:500;color:var(--green-deep);line-height:1.35;margin:0 0 2px;}
 .mo-sub{font-size:10px;color:var(--ink-soft);}
 
-/* Prayer Grid — iOS-26 translucent cards with kids-friendly tap feedback */
+/* Prayer Grid — iOS-26 translucent cards with kids-friendly tap feedback (v2: bigger, calmer) */
 .prayer-grid{
-  display:grid;grid-template-columns:repeat(5,1fr);gap:6px;
-  padding:0 16px;flex-shrink:0;margin-bottom:6px;
+  display:grid;grid-template-columns:repeat(5,1fr);gap:7px;
+  padding:0 16px 16px;flex-shrink:0;
   position:relative;
 }
 .prayer-cell{
-  display:flex;flex-direction:column;align-items:center;gap:3px;
-  padding:11px 2px 9px;border-radius:18px;
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  padding:14px 2px 12px;border-radius:20px;
   background:rgba(255,255,255,.55);
   -webkit-backdrop-filter:blur(14px) saturate(140%);backdrop-filter:blur(14px) saturate(140%);
   border:1.5px solid rgba(31,169,113,.14);transition:all .25s;
   box-shadow:0 4px 14px -5px rgba(14,59,46,.14), inset 0 1px 0 rgba(255,255,255,.5);
   position:relative;overflow:visible;
 }
-.pc-emoji{font-size:22px;transition:transform .25s;filter:drop-shadow(0 1px 2px rgba(0,0,0,.1));}
-.pc-name{font-size:9px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
-.pc-time{font-family:var(--font-serif);font-size:12px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;}
+.pc-emoji{font-size:26px;transition:transform .25s;filter:drop-shadow(0 1px 2px rgba(0,0,0,.1));}
+.pc-name{font-size:9.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);}
+.pc-time{font-family:var(--font-serif);font-size:14px;font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:.005em;}
 .pc-check{
   width:24px;height:24px;border-radius:50%;
   border:2px dashed rgba(14,59,46,.18);
@@ -219,24 +224,115 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 .checkin-btn:active{transform:scale(.97);}
 .checkin-btn[disabled]{background:var(--cream-2);color:var(--ink-soft);box-shadow:none;cursor:default;}
 
-/* Bottom Info */
-.bottom-info{padding:0 22px 6px;flex-shrink:0;}
-.next-row{
-  display:flex;align-items:center;justify-content:center;gap:6px;
-  font-size:11px;color:var(--ink-soft);margin-bottom:4px;
+/* Hide the legacy checkin-btn (cells are the tap target now; setBtn() still runs safely) */
+.checkin-btn{display:none!important;}
+
+/* One-line next-prayer hint above the cells (only when data loaded) */
+.next-hint{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  margin:0 22px 10px;padding:9px 14px;
+  background:rgba(255,255,255,.55);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(31,169,113,.12);border-radius:999px;
+  font-size:12px;font-weight:600;color:var(--ink-soft);
+  flex-shrink:0;animation:fadeIn .35s ease-out;
 }
-.next-row strong{color:var(--green-deep);}
-.next-row .pulse{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;}
+.next-hint strong{color:var(--green-deep);font-weight:800;}
+.next-hint .pulse{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;flex-shrink:0;}
+.next-hint .nh-em{font-size:14px;line-height:1;}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,95,.7)}70%{box-shadow:0 0 0 6px rgba(201,162,95,0)}100%{box-shadow:0 0 0 0 rgba(201,162,95,0)}}
-.stats-row{display:flex;align-items:center;justify-content:center;gap:8px;font-size:10px;color:var(--ink-soft);margin-bottom:4px;}
-.stats-row strong{color:var(--green-deep);font-size:12px;}
-.stats-row .sdiv{color:rgba(14,59,46,.2);}
-.loc-row{display:flex;align-items:center;justify-content:space-between;font-size:10px;color:var(--ink-soft);}
+
+/* Empty state card (shown when no prayer data — replaces gold pill + setup rows) */
+.empty-state{
+  margin:0 22px 12px;flex-shrink:0;
+  padding:18px 18px 16px;border-radius:22px;
+  background:linear-gradient(160deg, #FFF4D6 0%, #FCEBB8 100%);
+  border:1.5px solid var(--gold);
+  box-shadow:0 6px 18px -6px rgba(201,162,95,.35), inset 0 1px 0 rgba(255,255,255,.6);
+  text-align:center;cursor:pointer;transition:transform .15s;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  animation:fadeIn .35s ease-out;
+}
+.empty-state:active{transform:scale(.98);}
+.empty-state .es-icon{font-size:32px;line-height:1;filter:drop-shadow(0 2px 6px rgba(0,0,0,.1));}
+.empty-state .es-title{font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--green-deep);line-height:1.25;}
+.empty-state .es-cta{
+  margin-top:4px;padding:8px 18px;border-radius:999px;
+  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
+  color:var(--cream);font-family:var(--font);font-size:12px;font-weight:700;
+  box-shadow:0 4px 12px -2px rgba(14,59,46,.3), inset 0 1px 0 rgba(255,255,255,.18);
+}
+@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+
+/* ===== SETTINGS BOTTOM SHEET ===== */
+.sheet-backdrop{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(14,59,46,.42);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.sheet-backdrop.open{opacity:1;pointer-events:auto;}
+.sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:401;
+  background:linear-gradient(180deg, #FBF6EC 0%, #F4EFE2 100%);
+  border-radius:24px 24px 0 0;
+  padding:8px 0 calc(20px + env(safe-area-inset-bottom));
+  box-shadow:0 -10px 40px rgba(14,59,46,.18);
+  transform:translateY(100%);transition:transform .35s cubic-bezier(.34,1.34,.64,1);
+  max-height:75vh;overflow:hidden;
+}
+.sheet.open{transform:translateY(0);}
+.sheet-handle{
+  width:40px;height:4px;border-radius:2px;
+  background:rgba(14,59,46,.18);margin:6px auto 8px;
+}
+.sheet-head{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:4px 22px 12px;
+}
+.sheet-title{font-family:var(--font-serif);font-size:18px;font-weight:700;color:var(--green-deep);}
+.sheet-close{
+  width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;
+  background:rgba(14,59,46,.06);color:var(--green-deep);
+  display:flex;align-items:center;justify-content:center;font-size:14px;
+}
+.sheet-close:active{transform:scale(.9);}
+.sheet-body{padding:0 18px;}
+.sheet-row{
+  display:flex;align-items:center;gap:12px;
+  padding:12px 14px;margin-bottom:8px;border-radius:14px;
+  background:rgba(255,255,255,.7);border:1px solid rgba(31,169,113,.10);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+}
+.sheet-row-icon{
+  width:36px;height:36px;border-radius:11px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  background:linear-gradient(160deg,#FFE3B0,#F6B45A);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 2px 6px -1px rgba(0,0,0,.15);
+}
+.sheet-row-info{flex:1;min-width:0;}
+.sheet-row-title{font-family:var(--font-serif);font-size:14px;font-weight:700;color:var(--green-deep);}
+.sheet-row-sub{font-size:11px;color:var(--ink-soft);margin-top:1px;line-height:1.35;}
+.loc-row{display:none;} /* legacy class hidden — content moved into sheet */
+.stats-row{display:none;} /* not for kids; cell streaks already visible */
 .loc-btn{
-  background:var(--green-deep);color:var(--cream);border:none;
-  padding:5px 12px;border-radius:999px;font-family:inherit;font-size:10px;font-weight:600;cursor:pointer;
+  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
+  color:var(--cream);border:none;cursor:pointer;flex-shrink:0;
+  padding:8px 14px;border-radius:999px;
+  font-family:inherit;font-size:11px;font-weight:700;
+  box-shadow:0 3px 8px -2px rgba(14,59,46,.3);
 }
 .loc-btn:active{transform:scale(.95);}
+.loc-btn[disabled]{background:rgba(14,59,46,.12);color:var(--ink-soft);box-shadow:none;cursor:default;}
+.sheet-stats{
+  display:flex;align-items:center;justify-content:center;gap:14px;
+  padding:14px;margin-top:6px;border-radius:14px;
+  background:rgba(255,255,255,.55);
+  border:1px solid rgba(31,169,113,.08);
+  font-size:11px;color:var(--ink-soft);
+}
+.sheet-stats strong{color:var(--green-deep);font-family:var(--font-serif);font-size:18px;font-weight:700;margin-right:3px;}
+.sheet-stats .ssdiv{color:rgba(14,59,46,.18);}
 
 /* ===== PAGE 2: KIBLAT ===== */
 #page-kiblat{align-items:center;padding-left:24px;padding-right:24px;}
@@ -400,13 +496,50 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 </div>
 <a class="back-float" href="../index.html">←</a>
 
+<!-- Settings bottom sheet (location + notification + stats live here so the main view stays calm) -->
+<div class="sheet-backdrop" id="sheetBackdrop"></div>
+<div class="sheet" id="settingsSheet" role="dialog" aria-label="Pengaturan">
+  <div class="sheet-handle"></div>
+  <div class="sheet-head">
+    <div class="sheet-title">Pengaturan</div>
+    <button class="sheet-close" id="sheetClose" aria-label="Tutup">✕</button>
+  </div>
+  <div class="sheet-body">
+
+    <div class="sheet-row">
+      <div class="sheet-row-icon">📍</div>
+      <div class="sheet-row-info">
+        <div class="sheet-row-title">Lokasi</div>
+        <div class="sheet-row-sub" id="locLabel">Aktifkan lokasi untuk waktu sholat akurat</div>
+      </div>
+      <button class="loc-btn" id="locBtn">Aktifkan</button>
+    </div>
+
+    <div class="sheet-row">
+      <div class="sheet-row-icon" style="background:linear-gradient(160deg,#FFE08A,#F4C04A);">🔔</div>
+      <div class="sheet-row-info">
+        <div class="sheet-row-title">Pengingat Sholat</div>
+        <div class="sheet-row-sub" id="notifLabel">Berbunyi saat aplikasi terbuka</div>
+      </div>
+      <button class="loc-btn" id="notifBtn">Nyalakan</button>
+    </div>
+
+    <div class="sheet-stats">
+      <span>🔥 <strong id="statTotal">0</strong> total sholat</span>
+      <span class="ssdiv">·</span>
+      <span>⚡ <strong id="statBest">0</strong> streak terlama</span>
+    </div>
+
+  </div>
+</div>
+
 <div class="app">
 
   <!-- ===== PAGE 1: SHOLAT (Mo + Tracker) ===== -->
   <div class="page active" id="page-sholat">
     <div class="sholat-head">
       <div class="greeting" id="salam">Assalamu'alaikum, <em>sahabat</em></div>
-      <div class="today-pill" id="todayBadge">0/5</div>
+      <button class="today-pill" id="todayBadge" aria-label="Hari ini & pengaturan"><span id="todayBadgeText">0/5</span><span class="tp-gear">⚙</span></button>
     </div>
 
     <div class="mo-area">
@@ -455,26 +588,19 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 
     <button class="checkin-btn" id="checkinBtn" disabled>✦ Aktifkan lokasi dulu ✦</button>
 
-    <div class="bottom-info">
-      <div class="next-row">
-        <span class="pulse"></span>
-        <span>Berikutnya: <strong id="nextName">—</strong></span>
-        <span id="nextTime"></span>
-        <span id="countdown"></span>
-      </div>
-      <div class="stats-row">
-        <span>🔥 <strong id="statTotal">0</strong> total</span>
-        <span class="sdiv">·</span>
-        <span>⚡ <strong id="statBest">0</strong> best</span>
-      </div>
-      <div class="loc-row">
-        <span id="locLabel">📍 Aktifkan lokasi untuk waktu akurat</span>
-        <button class="loc-btn" id="locBtn">Aktifkan</button>
-      </div>
-      <div class="loc-row" style="margin-top:6px;">
-        <span id="notifLabel">🔔 Pengingat sholat (saat aplikasi terbuka)</span>
-        <button class="loc-btn" id="notifBtn">Nyalakan</button>
-      </div>
+    <!-- One-line next-prayer hint (visible only when prayer times loaded) -->
+    <div class="next-hint" id="nextHint" style="display:none;">
+      <span class="pulse"></span>
+      <span class="nh-em" id="nextEm">🌅</span>
+      <span><strong id="nextName">—</strong><span id="nextTime"></span></span>
+      <span id="countdown"></span>
+    </div>
+
+    <!-- Empty-state card (visible only when no prayer data; tap = enable location) -->
+    <div class="empty-state" id="emptyState" role="button">
+      <div class="es-icon">📍</div>
+      <div class="es-title">Tap untuk lihat<br>waktu sholatmu</div>
+      <div class="es-cta">Aktifkan Lokasi</div>
     </div>
   </div>
 
@@ -740,10 +866,16 @@ function renderUI(){
   });
 
   document.getElementById('nextName').textContent=PRAYER_NAMES[nextPrayerIdx];
-  document.getElementById('nextTime').textContent='· '+prayerTimes[PRAYER_KEYS[nextPrayerIdx]].slice(0,5);
+  document.getElementById('nextTime').textContent=' '+prayerTimes[PRAYER_KEYS[nextPrayerIdx]].slice(0,5);
   let diff=nmin-nm;if(diff<0)diff+=1440;
   const hh=Math.floor(diff/60),mm=diff%60;
-  document.getElementById('countdown').textContent='· '+(hh>0?`${hh}j ${mm}m`:`${mm}m`);
+  document.getElementById('countdown').textContent=' dalam '+(hh>0?`${hh}j ${mm}m`:`${mm}m`);
+  /* Pick a friendly emoji per prayer for the hint */
+  const NEXT_EMOJI=['🌅','☀️','🌤️','🌇','🌙'];
+  document.getElementById('nextEm').textContent=NEXT_EMOJI[nextPrayerIdx];
+  /* When prayer data is live, swap empty-state → next-hint */
+  document.getElementById('nextHint').style.display='flex';
+  document.getElementById('emptyState').style.display='none';
   renderStats();
 }
 
@@ -751,7 +883,7 @@ function renderStats(){
   const{tot,best,td}=stats();
   document.getElementById('statTotal').textContent=tot;
   document.getElementById('statBest').textContent=best;
-  document.getElementById('todayBadge').textContent=`${td}/5`;
+  document.getElementById('todayBadgeText').textContent=`${td}/5`;
 }
 
 /* ===== MO STATE ===== */
@@ -910,6 +1042,21 @@ function requestCompass(){
   }else{compassPerm='granted';installCompass();document.getElementById('compassBtn').style.display='none';document.getElementById('qiblaHint').innerHTML='📱 Putar HP perlahan hingga 🕋 menunjuk ke atas.';}
 }
 window.requestCompass=requestCompass;
+
+/* ===== SETTINGS SHEET ===== */
+const _sheet=document.getElementById('settingsSheet');
+const _sheetBg=document.getElementById('sheetBackdrop');
+function openSheet(){_sheet.classList.add('open');_sheetBg.classList.add('open');if(window.navigator.vibrate)window.navigator.vibrate(8);}
+function closeSheet(){_sheet.classList.remove('open');_sheetBg.classList.remove('open');}
+document.getElementById('todayBadge').addEventListener('click',openSheet);
+document.getElementById('sheetClose').addEventListener('click',closeSheet);
+_sheetBg.addEventListener('click',closeSheet);
+
+/* Empty-state card tap = trigger the location flow (locBtn lives in the sheet now) */
+document.getElementById('emptyState').addEventListener('click',()=>{
+  document.getElementById('locBtn').click();
+  openSheet(); /* also open sheet so the kid/parent sees status update */
+});
 
 document.getElementById('locBtn').addEventListener('click',()=>{
   if(!navigator.geolocation){document.getElementById('locLabel').textContent='⚠️ Geolokasi tidak didukung';return;}
