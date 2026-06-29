@@ -1202,7 +1202,33 @@ function finishGuide(){
 function showCelebration(){
   var stats=loadStats();stats.prayers++;stats.stars+=5;saveStats(stats);
   var streak=loadStreak();streak[todayKey()]=true;saveStreak(streak);
+  /* Sync with the Companion's per-prayer streak (mo_prayer_streaks_v1) so one
+     completed walkthrough bumps the relevant prayer's streak everywhere. */
+  syncCompanionStreak();
   document.getElementById('celebOverlay').classList.add('open');spawnConfetti();updateTopStars();
+}
+
+/* Map pray-with-mo's PRAYERS index → Companion's PRAYER_KEYS (same prayers, same order) */
+var COMPANION_PRAYER_KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
+function syncCompanionStreak(){
+  try{
+    var idx=getCurrentPrayer();
+    var key=COMPANION_PRAYER_KEYS[idx];
+    if(!key)return;
+    var raw=localStorage.getItem('mo_prayer_streaks_v1');
+    var s=raw?JSON.parse(raw):{};
+    var today=todayKey();
+    var ydate=new Date();ydate.setDate(ydate.getDate()-1);
+    var yest=ydate.getFullYear()+'-'+String(ydate.getMonth()+1).padStart(2,'0')+'-'+String(ydate.getDate()).padStart(2,'0');
+    var cur=s[key]||{count:0,lastDate:null,best:0,total:0};
+    if(cur.lastDate===today)return; /* already checked today */
+    if(cur.lastDate===yest)cur.count+=1;else cur.count=1;
+    cur.lastDate=today;
+    cur.total=(cur.total||0)+1;
+    cur.best=Math.max(cur.best||0,cur.count);
+    s[key]=cur;
+    localStorage.setItem('mo_prayer_streaks_v1',JSON.stringify(s));
+  }catch(e){}
 }
 function closeCelebration(){document.getElementById('celebOverlay').classList.remove('open');showView('dzikir')}
 function spawnConfetti(){
@@ -1515,6 +1541,30 @@ function saveName(){
 }
 document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter')saveName()});
 
+/* Fetch real prayer times for cached location (set by Companion) so this page shares the
+   same numbers as the Companion's Sholat tab instead of hardcoded defaults. */
+function loadRealPrayerTimes(){
+  var raw;try{raw=localStorage.getItem('mo_cached_loc');}catch(e){return;}
+  if(!raw)return;
+  var loc;try{loc=JSON.parse(raw);}catch(e){return;}
+  if(!loc||typeof loc.lat!=='number')return;
+  var d=new Date();
+  var ds=String(d.getDate()).padStart(2,'0')+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+d.getFullYear();
+  fetch('https://api.aladhan.com/v1/timings/'+ds+'?latitude='+loc.lat+'&longitude='+loc.lng+'&method=20')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var t=data&&data.data&&data.data.timings;if(!t)return;
+      var map={Subuh:t.Fajr,Dzuhur:t.Dhuhr,Ashar:t.Asr,Maghrib:t.Maghrib,Isya:t.Isha};
+      PRAYERS.forEach(function(p){
+        var v=map[p.name];if(!v)return;
+        var parts=v.slice(0,5).split(':');
+        p.h=parseInt(parts[0],10);p.m=parseInt(parts[1],10);
+      });
+      renderPrayerNow();
+    })
+    .catch(function(){});
+}
+
 (function init(){
   document.body.dataset.view='home';
   if(!localStorage.getItem(KEY_NAME)){
@@ -1523,6 +1573,15 @@ document.getElementById('nameInput').addEventListener('keydown',function(e){if(e
   }
   renderHomeGreeting();renderPrayerNow();renderHomeStepList();
   renderStepIndicator();renderProgress();updateTopStars();
+  /* Real prayer times if location was cached by the Companion */
+  loadRealPrayerTimes();
+  /* Deep-link from the hub: ?view=dzikir opens dzikir view; ?view=times pops the prayer-times sheet */
+  try{
+    var params=new URLSearchParams(window.location.search);
+    var v=params.get('view');
+    if(v==='dzikir')setTimeout(function(){showView('dzikir');},50);
+    else if(v==='times')setTimeout(function(){showPrayerTimes();},150);
+  }catch(e){}
 })();
 </script>
 
