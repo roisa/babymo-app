@@ -300,8 +300,12 @@ body{background-image:
 .rec-seg{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.08);transition:background .3s,box-shadow .3s;cursor:pointer}
 .rec-seg.done{background:rgba(95,203,154,.5)}
 .rec-seg.active{background:var(--gold-lt, #fff8e8);box-shadow:0 0 10px rgba(201,162,95,.5)}
-.rec-word{display:inline;transition:color .2s,text-shadow .2s}
-.rec-word.highlight{color:var(--gold-lt, #fff8e8);text-shadow:0 0 16px rgba(201,162,95,.6)}
+.rec-word{display:inline;transition:color .2s,text-shadow .2s, transform .2s;}
+.rec-word.highlight{
+  color:#FFD27A;
+  text-shadow:0 0 12px rgba(255,210,122,.9), 0 0 24px rgba(255,210,122,.5);
+  font-weight:700;
+}
 .sound-bars{position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:3px;height:24px;z-index:10;opacity:0;transition:opacity .3s}
 .sound-bars.active{opacity:1}
 .sound-bar{width:4px;border-radius:2px;background:var(--gold)}
@@ -655,6 +659,26 @@ body{background-image:
 .cap-row-hint{font-size:11px;color:rgba(250,245,234,.5);font-weight:600;letter-spacing:.01em}
 
 .lencana-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* Progress closing card — fills the empty viewport tail with a friendly Mo signoff */
+.prog-closer{
+  margin-top:14px;padding:18px 16px;
+  display:flex;align-items:center;gap:12px;border-radius:20px;
+  background:linear-gradient(135deg, rgba(95,203,154,.10), rgba(95,203,154,.04));
+  border:1px solid rgba(95,203,154,.25);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+}
+.prog-closer-mo{
+  width:64px;height:64px;flex-shrink:0;
+  background:linear-gradient(160deg,#fffaef,#fdf2e3);
+  border-radius:50%;border:2px solid rgba(95,203,154,.4);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 4px 10px -2px rgba(0,0,0,.25);
+}
+.prog-closer-mo img{width:80%;height:80%;object-fit:contain;}
+.prog-closer-text{flex:1;min-width:0;}
+.prog-closer-msg{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--cream);line-height:1.3;letter-spacing:-.005em;}
+.prog-closer-sub{font-size:11px;color:rgba(250,245,234,.62);margin-top:3px;line-height:1.4;}
 .lencana{
   display:flex;flex-direction:column;align-items:center;text-align:center;
   padding:12px 8px 10px;border-radius:16px;
@@ -901,6 +925,17 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
         <div class="badge gold" id="badgeProgress">0/6</div>
       </div>
       <div class="lencana-grid" id="lencanaGrid"></div>
+    </div>
+
+    <!-- Closing encouragement card — fills the page tail with a friendly Mo signoff -->
+    <div class="prog-closer">
+      <div class="prog-closer-mo">
+        <img src="baby-mo-poses/baby-mo-ok.png" alt="" onerror="this.onerror=null;this.src='baby-mo-poses/baby-mo-pose-05.png'">
+      </div>
+      <div class="prog-closer-text">
+        <div class="prog-closer-msg">Kerennn! Terus belajar ya 🌟</div>
+        <div class="prog-closer-sub">Mo bangga banget sama kamu — sedikit demi sedikit, makin pintar sholatnya!</div>
+      </div>
     </div>
   </div>
 
