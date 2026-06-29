@@ -1005,7 +1005,8 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 <div class="modal-overlay" id="timesOverlay" style="z-index:310">
   <div class="modal-card" style="padding:24px 20px">
     <div class="modal-emoji" style="animation:none;font-size:40px">🕌</div>
-    <h2 class="modal-title" style="margin-bottom:16px">Waktu Sholat Hari Ini</h2>
+    <h2 class="modal-title" style="margin-bottom:4px">Waktu Sholat Hari Ini</h2>
+    <div id="prayerTimesCity" style="font-size:12px;color:var(--ink-soft);font-weight:600;margin-bottom:14px"></div>
     <div id="prayerTimesList" style="text-align:left"></div>
     <button class="btn-primary" style="margin-top:16px" onclick="closePrayerTimes()">Tutup</button>
   </div>
@@ -1300,7 +1301,20 @@ function updateCountdown(){
 }
 setInterval(updateCountdown,1000);
 
+/* Read the city the prayer times were computed for, so users can verify it's right */
+function getPrayerCityLabel(){
+  try{
+    const m=JSON.parse(localStorage.getItem('mo_manual_city')||'null');
+    if(m&&m.n)return '📍 '+m.n+' · pilihan manual';
+    const r=JSON.parse(localStorage.getItem('mo_reverse_city')||'null');
+    if(r&&r.n)return '📍 '+r.n+' · otomatis dari lokasimu';
+    const loc=JSON.parse(localStorage.getItem('mo_cached_loc')||'null');
+    if(loc&&typeof loc.lat==='number')return '📍 Lokasi tersimpan ('+loc.lat.toFixed(2)+', '+loc.lng.toFixed(2)+')';
+  }catch(e){}
+  return '🌐 Jadwal default · aktifkan lokasi di Sholat Bareng Mo untuk waktu akurat';
+}
 function showPrayerTimes(){
+  document.getElementById('prayerTimesCity').textContent=getPrayerCityLabel();
   var idx=getCurrentPrayer(),html='';
   PRAYERS.forEach(function(p,i){
     var t=String(p.h).padStart(2,'0')+':'+String(p.m).padStart(2,'0'),n=i===idx;
