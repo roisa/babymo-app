@@ -137,7 +137,7 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 
 /* mo-area sits naturally; everything else stacks tightly so the only gap falls between the CTA and the tab bar (capped naturally) */
 .mo-area{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:8px 20px 4px;position:relative;z-index:1;}
-.mo-wrap{position:relative;width:160px;height:160px;flex-shrink:0;margin-bottom:-14px;}
+.mo-wrap{position:relative;width:160px;height:160px;flex-shrink:0;margin-bottom:-44px;}  /* deeper overlap so the mat extends further in front of Mo's feet */
 /* Flexible spacer absorbs leftover vertical space below the CTA */
 .page-spacer{flex:1 1 0;min-height:8px;}
 .mo-glow{
@@ -173,12 +173,13 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 .mo-msg{font-family:var(--font-serif);font-size:13.5px;font-weight:500;color:var(--green-deep);line-height:1.35;margin:0 0 2px;}
 .mo-sub{font-size:10px;color:var(--ink-soft);}
 
-/* Prayer rug — proper trapezoid SVG so Mo appears to sit ON it, not above it */
+/* Prayer rug — proper trapezoid SVG, taller + wider so Mo's feet sit at the BACK
+   of the rug and the front extends visibly toward the viewer */
 .mo-mat{
-  width:190px;height:54px;flex-shrink:0;
-  margin:-46px auto 4px;  /* negative top margin makes the rug overlap Mo's feet */
+  width:230px;height:88px;flex-shrink:0;
+  margin:0 auto 6px;  /* no negative margin needed — mo-wrap already overlaps via its negative margin-bottom */
   position:relative;z-index:0;  /* sits behind Mo's image */
-  filter:drop-shadow(0 6px 12px rgba(14,59,46,.22));
+  filter:drop-shadow(0 8px 14px rgba(14,59,46,.25));
 }
 .mo-mat svg{width:100%;height:100%;display:block;}
 
@@ -325,10 +326,19 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
   border:1px solid rgba(31,169,113,.12);border-radius:999px;
   font-size:12px;font-weight:600;color:var(--ink-soft);
   flex-shrink:0;animation:fadeIn .35s ease-out;
+  position:relative;overflow:hidden;
 }
 .next-hint strong{color:var(--green-deep);font-weight:800;}
 .next-hint .pulse{width:6px;height:6px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite;flex-shrink:0;}
 .next-hint .nh-em{font-size:14px;line-height:1;}
+/* Live Activity-style progress bar that fills as time approaches the next prayer */
+.next-hint .nh-progress{
+  position:absolute;left:0;bottom:0;height:2.5px;width:0;
+  background:linear-gradient(90deg,#5FCB9A,#F6B45A,#C9A25F);
+  border-radius:0 2px 0 0;
+  box-shadow:0 0 8px rgba(201,162,95,.55);
+  transition:width .6s ease;
+}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,95,.7)}70%{box-shadow:0 0 0 6px rgba(201,162,95,0)}100%{box-shadow:0 0 0 0 rgba(201,162,95,0)}}
 
 /* Empty state — friendly full-width green pill CTA (inspired by mockup) */
@@ -963,6 +973,7 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
       <span class="nh-em" id="nextEm">🌅</span>
       <span><strong id="nextName">—</strong><span id="nextTime"></span></span>
       <span id="countdown"></span>
+      <div class="nh-progress" id="nextProgress"></div>
     </div>
 
     <!-- Empty-state CTA (visible only when no prayer data; tap = enable location) -->
@@ -1334,6 +1345,18 @@ function renderUI(){
   /* When prayer data is live, swap empty-state → next-hint */
   document.getElementById('nextHint').style.display='flex';
   document.getElementById('emptyState').style.display='none';
+  /* Live-Activity progress bar: fills as we approach the next prayer
+     (elapsed since previous prayer / interval to next, 0→100%) */
+  const prevIdx=nextPrayerIdx===0?4:nextPrayerIdx-1;
+  let prevMin=prayerMinutes[prevIdx];
+  let nMin=nmin;
+  if(prevMin>=nMin)prevMin-=1440;
+  let nM=nm;if(nM<prevMin)nM+=1440;
+  const interval=Math.max(1,nMin-prevMin);
+  const elapsed=Math.max(0,Math.min(interval,nM-prevMin));
+  const pct=Math.round(100*elapsed/interval*100)/100;
+  const bar=document.getElementById('nextProgress');
+  if(bar)bar.style.width=pct+'%';
   renderStats();
 }
 
@@ -1451,12 +1474,8 @@ function handleCheckIn(){
   /* Layer 4: haptic + sound + star bump via bm-kit */
   kidsFeedback(ms?'milestone':'tap');
 
-  /* Layer 5: legacy toast (subtle, doesn't replace celebration) */
-  let msg;
-  if(cnt===1)msg=`🌱 Streak ${n} dimulai!`;
-  else if(ms)msg=`🎉 ${cnt} hari ${n} streak!`;
-  else msg=`✓ ${n} · 🔥 ${cnt}`;
-  showToast(msg);
+  /* Toast removed — celebration card + Mo reaction + cell confetti are enough.
+     The toast used to linger after the celeb card closed and read as a stuck box. */
 
   renderUI();setBtn(false,`✓ ${n} sudah dicentang`);
   setTimeout(()=>{renderMo();_checkBusy=false;},4500);
