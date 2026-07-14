@@ -760,14 +760,18 @@ html[data-ramadan="1"] .sky-fanoos{
 }
 .sky-fanoos .fn-body::before{content:'';position:absolute;top:-4px;left:5px;right:5px;height:4px;background:#C9A25F;border-radius:2px;}
 .sky-fanoos .fn-body::after{content:'';position:absolute;bottom:-4px;left:6px;right:6px;height:4px;background:#C9A25F;border-radius:0 0 4px 4px;}
-.sky-fanoos.f1{left:12%;animation-delay:0s;}
-.sky-fanoos.f2{right:14%;animation-delay:.8s;}
-.sky-fanoos.f3{left:36%;top:14px;animation-delay:1.6s;}
+.sky-fanoos.f1{left:8%;top:20px;animation-delay:0s;}
+.sky-fanoos.f2{right:8%;top:20px;animation-delay:.8s;}
+/* F3 hidden by default — only shown in wider viewports where the middle
+   has room without colliding with the Ramadan ribbon. */
+.sky-fanoos.f3{display:none;}
+@media(min-width:520px){html[data-ramadan="1"] .sky-fanoos.f3{display:block;left:50%;top:10px;transform:translateX(-50%);animation-delay:1.6s;}}
 @keyframes fanoosSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
 
-/* Beefier crescent + warmer glow during Ramadan */
+/* Bigger, brighter crescent during Ramadan — moved to the right side so
+   it sits in the sky beside the mosque, not on top of the greeting text. */
 html[data-ramadan="1"] .sky-moon{
-  font-size:56px;top:34px;
+  font-size:52px;top:60px;left:auto;right:22%;
   filter:drop-shadow(0 0 18px rgba(255,210,122,.9)) drop-shadow(0 4px 10px rgba(255,180,90,.5));
 }
 /* Warmer dawn wash over the sky area */
@@ -777,18 +781,21 @@ html[data-ramadan="1"] #page-sholat{
     linear-gradient(180deg, #F6C79E 0%, #E9BFC9 30%, #E5D8D2 50%, #E5E2D4 100%);
 }
 
-/* Ramadan ribbon under the greeting — kids can see instantly what day it is */
+/* Ramadan ribbon — sits as an eyebrow above the greeting so it doesn't
+   fight the fanoos lanterns or add visual weight below.  */
 .ramadan-ribbon{display:none;}
 html[data-ramadan="1"] .ramadan-ribbon{
-  display:inline-flex;align-items:center;gap:6px;
-  margin-top:4px;padding:4px 12px;
+  display:inline-flex;align-items:center;gap:5px;
+  margin-bottom:2px;padding:3px 10px;
   background:linear-gradient(135deg,#f0a950,#e07b3a);
   color:#fff;border-radius:999px;
-  font-family:var(--font);font-size:11px;font-weight:800;letter-spacing:.02em;
-  box-shadow:0 3px 10px -2px rgba(224,123,58,.45), inset 0 1px 0 rgba(255,255,255,.35);
+  font-family:var(--font);font-size:10px;font-weight:800;letter-spacing:.04em;
+  text-transform:uppercase;
+  box-shadow:0 3px 8px -2px rgba(224,123,58,.45), inset 0 1px 0 rgba(255,255,255,.35);
   animation:ribbonPop .5s cubic-bezier(.2,.8,.4,1) both;
+  vertical-align:middle;
 }
-.ramadan-ribbon .rr-em{font-size:12px;}
+.ramadan-ribbon .rr-em{font-size:11px;filter:drop-shadow(0 0 4px rgba(255,230,160,.8));}
 @keyframes ribbonPop{0%{opacity:0;transform:translateY(-4px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
 
 /* Rose-gold tab accent during Ramadan (replaces plain gold) */
@@ -808,7 +815,9 @@ html[data-ramadan="1"] .tab[data-tab="puasa"]{display:flex;}
     linear-gradient(180deg, transparent 0%, transparent 30%, #FDF4E4 55%, #F6EBD4 100%),
     linear-gradient(180deg, #F6C79E 0%, #E9BFC9 25%, #E5D8D2 50%, #FDF4E4 100%);
 }
-.pu-scene{position:absolute;top:0;left:0;right:0;height:180px;pointer-events:none;overflow:hidden;z-index:0;}
+/* Hero scene — sits in normal flow inside .puasa-scroll so it scrolls
+   away naturally instead of bleeding through translucent cards. */
+.pu-scene{position:relative;height:150px;margin:-4px -16px 0;pointer-events:none;overflow:hidden;flex-shrink:0;}
 .pu-scene .pu-moon{
   position:absolute;top:38px;left:50%;transform:translateX(-50%);
   font-size:60px;line-height:1;
@@ -844,20 +853,37 @@ html[data-ramadan="1"] .tab[data-tab="puasa"]{display:flex;}
 .puasa-scroll{
   position:relative;z-index:1;
   flex:1;min-height:0;overflow-y:auto;
-  padding:120px 16px calc(var(--tab-h) + 16px);
+  padding:0 16px calc(var(--tab-h) + 16px);
   display:flex;flex-direction:column;gap:14px;
   -webkit-overflow-scrolling:touch;
 }
+/* Direct children must not shrink below content size — the countdown card
+   with overflow:hidden was collapsing to 34px inside this flex column. */
+.puasa-scroll > *{flex-shrink:0;}
 .pu-countdown{
-  border-radius:26px;padding:18px 20px;text-align:center;
+  border-radius:26px;padding:18px 20px 14px;text-align:center;
   background:linear-gradient(160deg,rgba(255,255,255,.85),rgba(255,244,214,.7));
   -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
   border:1.5px solid rgba(240,169,80,.35);
   box-shadow:0 10px 30px -8px rgba(224,123,58,.22), inset 0 1px 0 rgba(255,255,255,.6);
+  position:relative;overflow:hidden;
 }
-.pu-cd-label{font-size:12px;font-weight:700;color:var(--ink-soft);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.pu-cd-label{font-size:12px;font-weight:700;color:var(--ink-soft);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;display:flex;align-items:center;justify-content:center;gap:6px;}
+.pu-cd-label .pu-cd-dot{width:6px;height:6px;border-radius:50%;background:#f0a950;box-shadow:0 0 8px rgba(240,169,80,.8);animation:pulse 2s infinite;}
 .pu-cd-time{font-family:var(--font-serif);font-size:34px;font-weight:800;color:var(--green-deep);font-variant-numeric:tabular-nums;letter-spacing:.01em;line-height:1.1;}
 .pu-cd-hint{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+/* Live Activity progress bar — gold at start, warms to green as maghrib nears */
+.pu-cd-track{
+  margin-top:12px;height:5px;border-radius:999px;
+  background:rgba(224,123,58,.15);overflow:hidden;position:relative;
+}
+.pu-cd-bar{
+  position:absolute;top:0;left:0;bottom:0;
+  width:0%;border-radius:999px;
+  background:linear-gradient(90deg,#f0a950,#22A974);
+  transition:width .6s cubic-bezier(.2,.7,.4,1);
+  box-shadow:0 0 6px rgba(240,169,80,.5);
+}
 
 .pu-check{
   display:flex;align-items:center;justify-content:center;gap:10px;
@@ -883,18 +909,34 @@ html[data-ramadan="1"] .tab[data-tab="puasa"]{display:flex;}
 .pu-cell{
   aspect-ratio:1;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.5);
   border:1px solid rgba(14,59,46,.08);
-  font-size:11px;font-weight:700;color:var(--ink-soft);
-  position:relative;transition:transform .2s;
+  font-family:var(--font-serif);font-size:15px;font-weight:700;color:var(--ink-soft);
+  position:relative;transition:all .25s cubic-bezier(.2,.7,.4,1);overflow:hidden;
 }
-.pu-cell .pu-num{position:absolute;top:2px;left:5px;font-size:9px;opacity:.55;}
-.pu-cell .pu-em{font-size:18px;opacity:.3;}
-.pu-cell.done{background:linear-gradient(160deg,#FFE08A,#F0A950);border-color:#c97a2e;box-shadow:0 4px 12px -3px rgba(224,123,58,.35);}
+.pu-cell .pu-num{position:relative;z-index:2;font-variant-numeric:tabular-nums;}
+.pu-cell .pu-em{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:22px;opacity:0;z-index:1;transition:opacity .3s;}
+/* Fasted state — glowing gold crescent with number faded behind */
+.pu-cell.done{
+  background:linear-gradient(160deg,#FFE08A,#F0A950);
+  border-color:#c97a2e;color:transparent;
+  box-shadow:0 4px 12px -3px rgba(224,123,58,.4), inset 0 1px 0 rgba(255,255,255,.5);
+  animation:cellPop .5s cubic-bezier(.2,.8,.4,1) both;
+}
 .pu-cell.done .pu-em{opacity:1;filter:drop-shadow(0 1px 2px rgba(120,50,10,.35));}
-.pu-cell.done .pu-num{color:#fff;opacity:.85;}
-.pu-cell.today{border:2px solid var(--gold);animation:cellGlow 1.8s ease-in-out infinite;}
-.pu-cell.future{opacity:.5;}
+.pu-cell.done .pu-num{color:rgba(255,255,255,.85);font-size:9px;position:absolute;top:3px;left:5px;font-weight:800;}
+/* Today — pulsing gold ring, actionable feel */
+.pu-cell.today{
+  border:2px solid var(--gold);
+  background:linear-gradient(160deg,#FFF6D8,#FFEAB0);
+  color:var(--green-deep);
+  animation:cellGlow 1.8s ease-in-out infinite;
+}
+.pu-cell.today.done{color:transparent;animation:cellGlow 1.8s ease-in-out infinite;}
+/* Missed (past day, not fasted) — subtle dashed outline, gently muted */
+.pu-cell.missed{background:rgba(255,255,255,.28);border-style:dashed;border-color:rgba(14,59,46,.15);color:rgba(90,81,71,.45);}
+/* Future — just the number, minimal chrome */
+.pu-cell.future{background:transparent;border-color:rgba(14,59,46,.06);color:rgba(90,81,71,.5);}
 
 .pu-doa-grid{display:flex;flex-direction:column;gap:10px;}
 .pu-doa{
@@ -1105,8 +1147,8 @@ html[data-ramadan="1"] .tab[data-tab="puasa"]{display:flex;}
     </div>
     <div class="sholat-head">
       <div>
+        <div><span class="ramadan-ribbon" id="ramadanRibbon" onclick="switchPage('puasa')" style="cursor:pointer;" role="button" tabindex="0"><span class="rr-em">🌙</span><span id="ramadanRibbonText">Ramadan hari ke-1</span></span></div>
         <div class="greeting" id="salam">Assalamu'alaikum, <em>sahabat</em></div>
-        <span class="ramadan-ribbon" id="ramadanRibbon" onclick="switchPage('puasa')" style="cursor:pointer;"><span class="rr-em">🌙</span><span id="ramadanRibbonText">Ramadan hari ke-1</span></span>
       </div>
       <button class="today-pill" id="todayBadge" aria-label="Hari ini & pengaturan"><span id="todayBadgeText">0/5</span><span class="tp-gear">⚙</span></button>
     </div>
@@ -1312,24 +1354,25 @@ html[data-ramadan="1"] .tab[data-tab="puasa"]{display:flex;}
 
   <!-- ===== PAGE (RAMADAN ONLY): PUASA MO ===== -->
   <div class="page" id="page-puasa">
-    <div class="pu-scene" aria-hidden="true">
-      <div class="pu-moon">🌙</div>
-      <i style="top:20px;left:22%;font-size:8px;--d:2.8s;--dl:0s">✦</i>
-      <i style="top:60px;left:70%;font-size:7px;--d:3.4s;--dl:.6s">✦</i>
-      <i style="top:100px;left:16%;font-size:6px;--d:3s;--dl:1s">✦</i>
-      <i style="top:110px;right:24%;font-size:8px;--d:2.6s;--dl:.4s">✦</i>
-      <div class="pu-lantern pl1"><div class="fn-cord"></div><div class="fn-body"></div></div>
-      <div class="pu-lantern pl2"><div class="fn-cord"></div><div class="fn-body"></div></div>
-    </div>
     <div class="puasa-scroll">
+      <div class="pu-scene" aria-hidden="true">
+        <div class="pu-moon">🌙</div>
+        <i style="top:20px;left:22%;font-size:8px;--d:2.8s;--dl:0s">✦</i>
+        <i style="top:60px;left:70%;font-size:7px;--d:3.4s;--dl:.6s">✦</i>
+        <i style="top:100px;left:16%;font-size:6px;--d:3s;--dl:1s">✦</i>
+        <i style="top:110px;right:24%;font-size:8px;--d:2.6s;--dl:.4s">✦</i>
+        <div class="pu-lantern pl1"><div class="fn-cord"></div><div class="fn-body"></div></div>
+        <div class="pu-lantern pl2"><div class="fn-cord"></div><div class="fn-body"></div></div>
+      </div>
       <div class="puasa-head">
         <h2 class="puasa-title">Puasa Mo</h2>
         <div><span class="puasa-day-pill" id="puDayPill">🌙 Hari ke-1</span></div>
       </div>
       <div class="pu-countdown" id="puCountdown">
-        <div class="pu-cd-label" id="puCdLabel">Berbuka dalam</div>
+        <div class="pu-cd-label" id="puCdLabel"><span class="pu-cd-dot"></span><span id="puCdLabelText">Berbuka dalam</span></div>
         <div class="pu-cd-time" id="puCdTime">--:--:--</div>
         <div class="pu-cd-hint" id="puCdHint">Aktifkan lokasi di tab Sholat dulu ya</div>
+        <div class="pu-cd-track"><div class="pu-cd-bar" id="puCdBar"></div></div>
       </div>
       <button class="pu-check" id="puCheck" onclick="puasaCheckIn()">
         <span class="pu-check-em">🌙</span>
@@ -1534,10 +1577,13 @@ function renderPuasaCal(){
   cal.innerHTML='';
   for(let i=1;i<=30;i++){
     const c=document.createElement('div');c.className='pu-cell';
-    if(s.days[i])c.classList.add('done');
+    const fasted=!!s.days[i];
+    if(fasted)c.classList.add('done');
     if(i===today)c.classList.add('today');
-    if(i>today&&today>0)c.classList.add('future');
-    c.innerHTML=`<span class="pu-num">${i}</span><span class="pu-em">🌙</span>`;
+    else if(today>0&&i>today)c.classList.add('future');
+    else if(today>0&&i<today&&!fasted)c.classList.add('missed');
+    // Moon glyph only on fasted cells; everything else is just the day number
+    c.innerHTML=`<span class="pu-num">${i}</span>${fasted?'<span class="pu-em">🌙</span>':''}`;
     cal.appendChild(c);
   }
 }
@@ -1556,13 +1602,15 @@ function renderPuasaCheckState(){
 function pad2(n){return String(n).padStart(2,'0');}
 function renderPuasaCountdown(){
   const timeEl=document.getElementById('puCdTime');
-  const labelEl=document.getElementById('puCdLabel');
+  const labelEl=document.getElementById('puCdLabelText');
   const hintEl=document.getElementById('puCdHint');
+  const barEl=document.getElementById('puCdBar');
   if(!timeEl)return;
   if(!prayerTimes){
-    labelEl.textContent='Berbuka dalam';
+    if(labelEl)labelEl.textContent='Berbuka dalam';
     timeEl.textContent='--:--:--';
     hintEl.textContent='Aktifkan lokasi di tab Sholat dulu ya 📍';
+    if(barEl)barEl.style.width='0%';
     return;
   }
   const now=new Date();
@@ -1570,28 +1618,37 @@ function renderPuasaCountdown(){
   const [mh,mm]=prayerTimes.Maghrib.slice(0,5).split(':').map(Number);
   const [fh,fm]=prayerTimes.Fajr.slice(0,5).split(':').map(Number);
   const maghribMin=mh*60+mm, fajrMin=fh*60+fm;
-  let target,label,hint;
-  if(nowMin<maghribMin&&nowMin>=fajrMin){
-    target=maghribMin;label='Berbuka dalam';
+  const imsakMin=fajrMin-10;
+  let label,hint,pct,totalSec;
+  if(nowMin>=fajrMin&&nowMin<maghribMin){
+    // Fasting window — bar fills fajr→maghrib
+    label='Berbuka dalam';
     hint=`Maghrib pukul ${prayerTimes.Maghrib.slice(0,5)} · Semangat ya! 💪`;
+    totalSec=Math.max(0,Math.round((maghribMin-nowMin)*60));
+    pct=Math.max(0,Math.min(100,((nowMin-fajrMin)/(maghribMin-fajrMin))*100));
   }else{
-    // After maghrib OR before fajr → count to imsak (fajr - 10min)
-    let mins;
-    if(nowMin>=maghribMin){mins=(24*60-nowMin)+(fajrMin-10);}
-    else{mins=(fajrMin-10)-nowMin;}
-    target=null;
+    // Sahur window (after maghrib OR before fajr)
     label='Sahur berakhir dalam';
-    hint=`Imsak sekitar ${pad2(Math.floor((fajrMin-10)/60))}:${pad2((fajrMin-10)%60)} · Sahur dulu ya 🍚`;
-    const totalSec=Math.max(0,Math.round(mins*60));
-    const h=Math.floor(totalSec/3600),m=Math.floor((totalSec%3600)/60),s=totalSec%60;
-    timeEl.textContent=`${pad2(h)}:${pad2(m)}:${pad2(s)}`;
-    labelEl.textContent=label;hintEl.textContent=hint;
-    return;
+    hint=`Imsak sekitar ${pad2(Math.floor(imsakMin/60))}:${pad2(imsakMin%60)} · Sahur dulu ya 🍚`;
+    let mins,spanMin;
+    if(nowMin>=maghribMin){
+      // From maghrib today to imsak tomorrow
+      mins=(24*60-nowMin)+imsakMin;
+      spanMin=(24*60-maghribMin)+imsakMin;
+      pct=Math.max(0,Math.min(100,((nowMin-maghribMin)/spanMin)*100));
+    }else{
+      // From 00:00 to imsak
+      mins=imsakMin-nowMin;
+      spanMin=(24*60-maghribMin)+imsakMin;
+      pct=Math.max(0,Math.min(100,((24*60-maghribMin+nowMin)/spanMin)*100));
+    }
+    totalSec=Math.max(0,Math.round(mins*60));
   }
-  const totalSec=Math.max(0,Math.round((target-nowMin)*60));
   const h=Math.floor(totalSec/3600),m=Math.floor((totalSec%3600)/60),s=totalSec%60;
   timeEl.textContent=`${pad2(h)}:${pad2(m)}:${pad2(s)}`;
-  labelEl.textContent=label;hintEl.textContent=hint;
+  if(labelEl)labelEl.textContent=label;
+  hintEl.textContent=hint;
+  if(barEl)barEl.style.width=pct.toFixed(1)+'%';
 }
 
 function puasaCheckIn(){
