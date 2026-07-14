@@ -736,6 +736,189 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
 @media(min-width:760px){.app{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
+
+/* ==================== RAMADAN MODE ====================
+   Activated by html[data-ramadan="1"] — a seasonal skin swap that dresses
+   the whole companion up for Ramadan without touching non-Ramadan flows.
+   Hidden by default; only appears when today is 1-30 Ramadan (or forced
+   via ?ramadan=1 for preview). */
+
+/* --- Extra sky elements (fanoos lanterns + Ramadan crescent) --- */
+.sky-fanoos{display:none;}
+html[data-ramadan="1"] .sky-fanoos{
+  display:block;position:absolute;top:26px;pointer-events:none;
+  animation:fanoosSway 4s ease-in-out infinite;
+  transform-origin:top center;
+}
+.sky-fanoos .fn-cord{width:1.5px;height:22px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,.45),rgba(201,162,95,.75));}
+.sky-fanoos .fn-body{
+  width:22px;height:28px;margin:-1px auto 0;
+  background:radial-gradient(ellipse at 50% 30%, #FFE08A 0%, #F0A950 55%, #C97A2E 100%);
+  border-radius:8px 8px 12px 12px;
+  box-shadow:0 0 14px rgba(255,180,80,.55), inset 0 -3px 6px rgba(120,50,10,.4);
+  position:relative;
+}
+.sky-fanoos .fn-body::before{content:'';position:absolute;top:-4px;left:5px;right:5px;height:4px;background:#C9A25F;border-radius:2px;}
+.sky-fanoos .fn-body::after{content:'';position:absolute;bottom:-4px;left:6px;right:6px;height:4px;background:#C9A25F;border-radius:0 0 4px 4px;}
+.sky-fanoos.f1{left:12%;animation-delay:0s;}
+.sky-fanoos.f2{right:14%;animation-delay:.8s;}
+.sky-fanoos.f3{left:36%;top:14px;animation-delay:1.6s;}
+@keyframes fanoosSway{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+
+/* Beefier crescent + warmer glow during Ramadan */
+html[data-ramadan="1"] .sky-moon{
+  font-size:56px;top:34px;
+  filter:drop-shadow(0 0 18px rgba(255,210,122,.9)) drop-shadow(0 4px 10px rgba(255,180,90,.5));
+}
+/* Warmer dawn wash over the sky area */
+html[data-ramadan="1"] #page-sholat{
+  background:
+    linear-gradient(180deg, transparent 0%, transparent 45%, #FBF6EC 60%, #F4EFE2 100%),
+    linear-gradient(180deg, #F6C79E 0%, #E9BFC9 30%, #E5D8D2 50%, #E5E2D4 100%);
+}
+
+/* Ramadan ribbon under the greeting — kids can see instantly what day it is */
+.ramadan-ribbon{display:none;}
+html[data-ramadan="1"] .ramadan-ribbon{
+  display:inline-flex;align-items:center;gap:6px;
+  margin-top:4px;padding:4px 12px;
+  background:linear-gradient(135deg,#f0a950,#e07b3a);
+  color:#fff;border-radius:999px;
+  font-family:var(--font);font-size:11px;font-weight:800;letter-spacing:.02em;
+  box-shadow:0 3px 10px -2px rgba(224,123,58,.45), inset 0 1px 0 rgba(255,255,255,.35);
+  animation:ribbonPop .5s cubic-bezier(.2,.8,.4,1) both;
+}
+.ramadan-ribbon .rr-em{font-size:12px;}
+@keyframes ribbonPop{0%{opacity:0;transform:translateY(-4px) scale(.9)}100%{opacity:1;transform:translateY(0) scale(1)}}
+
+/* Rose-gold tab accent during Ramadan (replaces plain gold) */
+html[data-ramadan="1"] .tab.active::before{
+  background:linear-gradient(135deg,#f0a950,#e07b3a);
+  box-shadow:0 0 8px rgba(240,169,80,.75);
+}
+
+/* Puasa Mo tab appears only in Ramadan */
+.tab[data-tab="puasa"]{display:none;}
+html[data-ramadan="1"] .tab[data-tab="puasa"]{display:flex;}
+
+/* --- Puasa Mo page --- */
+#page-puasa{
+  position:relative;
+  background:
+    linear-gradient(180deg, transparent 0%, transparent 30%, #FDF4E4 55%, #F6EBD4 100%),
+    linear-gradient(180deg, #F6C79E 0%, #E9BFC9 25%, #E5D8D2 50%, #FDF4E4 100%);
+}
+.pu-scene{position:absolute;top:0;left:0;right:0;height:180px;pointer-events:none;overflow:hidden;z-index:0;}
+.pu-scene .pu-moon{
+  position:absolute;top:38px;left:50%;transform:translateX(-50%);
+  font-size:60px;line-height:1;
+  filter:drop-shadow(0 0 22px rgba(255,210,122,.95)) drop-shadow(0 4px 12px rgba(255,180,90,.5));
+  animation:moonFloat 5s ease-in-out infinite;
+}
+.pu-scene i{position:absolute;color:#FFE0A0;font-style:normal;opacity:.75;text-shadow:0 0 5px rgba(255,210,122,.55);animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;}
+.pu-scene .pu-lantern{
+  position:absolute;top:36px;pointer-events:none;
+  animation:fanoosSway 4s ease-in-out infinite;transform-origin:top center;
+}
+.pu-scene .pu-lantern .fn-cord{width:1.5px;height:26px;margin:0 auto;background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(201,162,95,.7));}
+.pu-scene .pu-lantern .fn-body{
+  width:20px;height:26px;margin:-1px auto 0;
+  background:radial-gradient(ellipse at 50% 30%, #FFE08A 0%, #F0A950 55%, #C97A2E 100%);
+  border-radius:7px 7px 10px 10px;
+  box-shadow:0 0 14px rgba(255,180,80,.55), inset 0 -3px 6px rgba(120,50,10,.4);
+  position:relative;
+}
+.pu-scene .pu-lantern .fn-body::before{content:'';position:absolute;top:-3px;left:5px;right:5px;height:3px;background:#C9A25F;border-radius:2px;}
+.pu-scene .pu-lantern .pl1{left:14%;animation-delay:.2s;}
+.pu-scene .pu-lantern.pl2{right:16%;animation-delay:1s;}
+
+.puasa-head{position:relative;z-index:2;text-align:center;margin-bottom:4px;}
+.puasa-title{font-family:var(--font-serif);font-size:24px;font-weight:800;color:var(--green-deep);letter-spacing:.01em;}
+.puasa-day-pill{
+  display:inline-flex;align-items:center;gap:6px;margin-top:6px;
+  padding:5px 14px;background:linear-gradient(135deg,#f0a950,#e07b3a);
+  color:#fff;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.03em;
+  box-shadow:0 3px 10px -2px rgba(224,123,58,.45), inset 0 1px 0 rgba(255,255,255,.35);
+}
+
+.puasa-scroll{
+  position:relative;z-index:1;
+  flex:1;min-height:0;overflow-y:auto;
+  padding:120px 16px calc(var(--tab-h) + 16px);
+  display:flex;flex-direction:column;gap:14px;
+  -webkit-overflow-scrolling:touch;
+}
+.pu-countdown{
+  border-radius:26px;padding:18px 20px;text-align:center;
+  background:linear-gradient(160deg,rgba(255,255,255,.85),rgba(255,244,214,.7));
+  -webkit-backdrop-filter:blur(20px) saturate(160%);backdrop-filter:blur(20px) saturate(160%);
+  border:1.5px solid rgba(240,169,80,.35);
+  box-shadow:0 10px 30px -8px rgba(224,123,58,.22), inset 0 1px 0 rgba(255,255,255,.6);
+}
+.pu-cd-label{font-size:12px;font-weight:700;color:var(--ink-soft);letter-spacing:.05em;text-transform:uppercase;margin-bottom:6px;}
+.pu-cd-time{font-family:var(--font-serif);font-size:34px;font-weight:800;color:var(--green-deep);font-variant-numeric:tabular-nums;letter-spacing:.01em;line-height:1.1;}
+.pu-cd-hint{font-size:12px;color:var(--ink-soft);margin-top:6px;}
+
+.pu-check{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  border:none;cursor:pointer;
+  padding:16px 20px;border-radius:22px;
+  background:linear-gradient(135deg,#22A974,#0e3b2e);
+  color:#fff;font-family:var(--font);font-size:16px;font-weight:800;letter-spacing:.01em;
+  box-shadow:0 10px 24px -6px rgba(34,169,116,.5), inset 0 1px 0 rgba(255,255,255,.25);
+  transition:transform .15s;-webkit-tap-highlight-color:transparent;
+}
+.pu-check:active{transform:scale(.97);}
+.pu-check.done{background:linear-gradient(135deg,#c9a25f,#8a6a30);cursor:default;}
+.pu-check .pu-check-em{font-size:22px;line-height:1;filter:drop-shadow(0 2px 6px rgba(255,210,122,.65));}
+
+.pu-cal-label,.pu-doa-label{font-size:12px;font-weight:800;color:var(--ink-soft);letter-spacing:.08em;text-transform:uppercase;margin:6px 4px 0;}
+.pu-cal{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:8px;
+  padding:14px;border-radius:22px;
+  background:rgba(255,255,255,.6);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(240,169,80,.2);
+}
+.pu-cell{
+  aspect-ratio:1;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.35);
+  border:1px solid rgba(14,59,46,.08);
+  font-size:11px;font-weight:700;color:var(--ink-soft);
+  position:relative;transition:transform .2s;
+}
+.pu-cell .pu-num{position:absolute;top:2px;left:5px;font-size:9px;opacity:.55;}
+.pu-cell .pu-em{font-size:18px;opacity:.3;}
+.pu-cell.done{background:linear-gradient(160deg,#FFE08A,#F0A950);border-color:#c97a2e;box-shadow:0 4px 12px -3px rgba(224,123,58,.35);}
+.pu-cell.done .pu-em{opacity:1;filter:drop-shadow(0 1px 2px rgba(120,50,10,.35));}
+.pu-cell.done .pu-num{color:#fff;opacity:.85;}
+.pu-cell.today{border:2px solid var(--gold);animation:cellGlow 1.8s ease-in-out infinite;}
+.pu-cell.future{opacity:.5;}
+
+.pu-doa-grid{display:flex;flex-direction:column;gap:10px;}
+.pu-doa{
+  padding:16px;border-radius:20px;
+  background:rgba(255,255,255,.75);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border:1px solid rgba(31,169,113,.16);
+  box-shadow:0 6px 18px -6px rgba(14,59,46,.15);
+}
+.pu-doa-top{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.pu-doa-em{
+  width:36px;height:36px;border-radius:12px;
+  background:linear-gradient(160deg,#FFE08A,#F0A950);
+  display:flex;align-items:center;justify-content:center;font-size:18px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5);
+}
+.pu-doa-name{font-family:var(--font-serif);font-size:16px;font-weight:700;color:var(--green-deep);}
+.pu-doa-arabic{
+  font-family:var(--font-ar);font-size:18px;line-height:1.9;text-align:right;
+  color:var(--green-deep);direction:rtl;margin:6px 0 8px;
+  padding:12px;border-radius:14px;background:rgba(240,169,80,.08);
+  border:1px dashed rgba(240,169,80,.35);
+}
+.pu-doa-trans{font-size:12px;color:var(--ink-soft);font-style:italic;line-height:1.5;}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-companion/">
 <meta name="robots" content="index,follow">
@@ -878,6 +1061,10 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
       <div class="cloud c1"></div>
       <div class="cloud c2"></div>
       <div class="cloud c3"></div>
+      <!-- Fanoos lanterns: hidden unless html[data-ramadan="1"] -->
+      <div class="sky-fanoos f1" aria-hidden="true"><div class="fn-cord"></div><div class="fn-body"></div></div>
+      <div class="sky-fanoos f2" aria-hidden="true"><div class="fn-cord"></div><div class="fn-body"></div></div>
+      <div class="sky-fanoos f3" aria-hidden="true"><div class="fn-cord"></div><div class="fn-body"></div></div>
       <svg class="mosque-svg" viewBox="0 0 118 82" xmlns="http://www.w3.org/2000/svg">
         <defs>
           <linearGradient id="mq-body" x1="0" y1="0" x2="0" y2="1">
@@ -917,7 +1104,10 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
       <div class="hills"></div>
     </div>
     <div class="sholat-head">
-      <div class="greeting" id="salam">Assalamu'alaikum, <em>sahabat</em></div>
+      <div>
+        <div class="greeting" id="salam">Assalamu'alaikum, <em>sahabat</em></div>
+        <span class="ramadan-ribbon" id="ramadanRibbon" onclick="switchPage('puasa')" style="cursor:pointer;"><span class="rr-em">🌙</span><span id="ramadanRibbonText">Ramadan hari ke-1</span></span>
+      </div>
       <button class="today-pill" id="todayBadge" aria-label="Hari ini & pengaturan"><span id="todayBadgeText">0/5</span><span class="tp-gear">⚙</span></button>
     </div>
 
@@ -1120,6 +1310,55 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
     <div class="q-dots" id="qDots"></div>
   </div>
 
+  <!-- ===== PAGE (RAMADAN ONLY): PUASA MO ===== -->
+  <div class="page" id="page-puasa">
+    <div class="pu-scene" aria-hidden="true">
+      <div class="pu-moon">🌙</div>
+      <i style="top:20px;left:22%;font-size:8px;--d:2.8s;--dl:0s">✦</i>
+      <i style="top:60px;left:70%;font-size:7px;--d:3.4s;--dl:.6s">✦</i>
+      <i style="top:100px;left:16%;font-size:6px;--d:3s;--dl:1s">✦</i>
+      <i style="top:110px;right:24%;font-size:8px;--d:2.6s;--dl:.4s">✦</i>
+      <div class="pu-lantern pl1"><div class="fn-cord"></div><div class="fn-body"></div></div>
+      <div class="pu-lantern pl2"><div class="fn-cord"></div><div class="fn-body"></div></div>
+    </div>
+    <div class="puasa-scroll">
+      <div class="puasa-head">
+        <h2 class="puasa-title">Puasa Mo</h2>
+        <div><span class="puasa-day-pill" id="puDayPill">🌙 Hari ke-1</span></div>
+      </div>
+      <div class="pu-countdown" id="puCountdown">
+        <div class="pu-cd-label" id="puCdLabel">Berbuka dalam</div>
+        <div class="pu-cd-time" id="puCdTime">--:--:--</div>
+        <div class="pu-cd-hint" id="puCdHint">Aktifkan lokasi di tab Sholat dulu ya</div>
+      </div>
+      <button class="pu-check" id="puCheck" onclick="puasaCheckIn()">
+        <span class="pu-check-em">🌙</span>
+        <span class="pu-check-txt">Aku puasa hari ini!</span>
+      </button>
+      <div class="pu-cal-label">Kalender puasa</div>
+      <div class="pu-cal" id="puCal"></div>
+      <div class="pu-doa-label">Doa Puasa</div>
+      <div class="pu-doa-grid">
+        <div class="pu-doa">
+          <div class="pu-doa-top">
+            <div class="pu-doa-em">🍽️</div>
+            <div class="pu-doa-name">Niat Puasa (Sahur)</div>
+          </div>
+          <div class="pu-doa-arabic">نَوَيْتُ صَوْمَ غَدٍ عَنْ أَدَاءِ فَرْضِ شَهْرِ رَمَضَانَ هٰذِهِ السَّنَةِ لِلّٰهِ تَعَالَىٰ</div>
+          <div class="pu-doa-trans">Nawaitu shauma ghadin 'an adā'i fardhi syahri Ramadhāna hādzihis sanati lillāhi ta'ālā. Aku niat puasa esok hari untuk menunaikan kewajiban di bulan Ramadhan tahun ini karena Allah Ta'ala.</div>
+        </div>
+        <div class="pu-doa">
+          <div class="pu-doa-top">
+            <div class="pu-doa-em">🌅</div>
+            <div class="pu-doa-name">Doa Berbuka</div>
+          </div>
+          <div class="pu-doa-arabic">اَللّٰهُمَّ لَكَ صُمْتُ وَبِكَ اٰمَنْتُ وَعَلَىٰ رِزْقِكَ اَفْطَرْتُ بِرَحْمَتِكَ يَا اَرْحَمَ الرَّاحِمِيْنَ</div>
+          <div class="pu-doa-trans">Allāhumma laka shumtu wa bika āmantu wa 'ala rizqika afthartu birahmatika yā arhamar rāhimīn. Ya Allah, untuk-Mu aku berpuasa, kepada-Mu aku beriman, dan atas rezeki-Mu aku berbuka. Dengan rahmat-Mu wahai Yang Maha Penyayang.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- ===== PAGE 4: KALENDER ===== -->
   <div class="page" id="page-kalender">
     <div class="scene-kalender" aria-hidden="true">
@@ -1174,6 +1413,13 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
       </span>
       <span class="tl">Sholat</span>
     </button>
+    <button class="tab" data-tab="puasa" onclick="switchPage('puasa')" aria-label="Puasa Mo">
+      <span class="ti" aria-hidden="true">
+        <!-- Crescent moon + tiny star: Ramadan tab, only shown when data-ramadan="1" -->
+        <svg viewBox="0 0 24 24"><path d="M17 15.5A7 7 0 1 1 10.5 5a5.5 5.5 0 0 0 6.5 10.5z"/><path d="M18.5 5.5l.7 1.5 1.5.5-1.5.5-.7 1.5-.7-1.5-1.5-.5 1.5-.5z" fill="currentColor" stroke="none"/></svg>
+      </span>
+      <span class="tl">Puasa</span>
+    </button>
     <button class="tab" data-tab="kiblat" onclick="switchPage('kiblat')" aria-label="Kiblat">
       <span class="ti" aria-hidden="true">
         <!-- Compass: circle + N-pointing needle (rhombus) -->
@@ -1201,6 +1447,173 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 <div class="toast" id="toast"></div>
 
 <script>
+/* ===== RAMADAN MODE ===== */
+/* Detect the current Hijri day so we can dress the app up during Ramadan
+   (month 9). Sync-read a same-day cache first so the skin appears on first
+   paint; then async-refresh via Aladhan. ?ramadan=1|0 forces preview. */
+const HIJRI_CACHE_KEY='mo_hijri_v1';
+window.moRamadan=null;
+
+(function initRamadanSync(){
+  const forced=new URLSearchParams(location.search).get('ramadan');
+  const stampToday=new Date().toDateString();
+  if(forced==='1'){
+    window.moRamadan={isRamadan:true,day:14,year:1447,daysLeft:16,forced:true};
+    document.documentElement.setAttribute('data-ramadan','1');
+    return;
+  }
+  if(forced==='0'){
+    window.moRamadan={isRamadan:false,forced:true};
+    return;
+  }
+  try{
+    const c=JSON.parse(localStorage.getItem(HIJRI_CACHE_KEY)||'null');
+    if(c&&c.stampedOn===stampToday){
+      window.moRamadan={isRamadan:!!c.isRamadan,day:c.day,year:c.year,daysLeft:c.daysLeft};
+      if(c.isRamadan)document.documentElement.setAttribute('data-ramadan','1');
+    }
+  }catch(e){}
+})();
+
+async function refreshHijri(){
+  if(window.moRamadan&&window.moRamadan.forced)return;
+  try{
+    const d=new Date();
+    const ds=`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
+    const r=await fetch(`https://api.aladhan.com/v1/gToH/${ds}`);
+    if(!r.ok)throw new Error('http '+r.status);
+    const data=await r.json();
+    const h=data.data.hijri;
+    const monthNum=parseInt(h.month.number,10);
+    const day=parseInt(h.day,10);
+    const year=parseInt(h.year,10);
+    const isRamadan=(monthNum===9);
+    const daysLeft=isRamadan?Math.max(0,30-day):0;
+    const state={isRamadan,day:isRamadan?day:null,year,daysLeft,stampedOn:d.toDateString()};
+    try{localStorage.setItem(HIJRI_CACHE_KEY,JSON.stringify(state));}catch(e){}
+    window.moRamadan=state;
+    if(isRamadan)document.documentElement.setAttribute('data-ramadan','1');
+    else document.documentElement.removeAttribute('data-ramadan');
+    if(typeof renderRamadanUI==='function')renderRamadanUI();
+  }catch(e){/* silent — cached skin persists */}
+}
+
+function renderRamadanUI(){
+  const r=window.moRamadan;
+  if(!r||!r.isRamadan)return;
+  const t=`Ramadan hari ke-${r.day}`;
+  const rt=document.getElementById('ramadanRibbonText');if(rt)rt.textContent=t;
+  const dp=document.getElementById('puDayPill');if(dp)dp.textContent=`🌙 Hari ke-${r.day} · ${r.daysLeft} lagi`;
+  renderPuasaCal();renderPuasaCountdown();renderPuasaCheckState();
+}
+
+/* ===== PUASA MO TRACKER ===== */
+const RAMADAN_KEY='mo_ramadan_v1';
+function ramLoad(){
+  try{
+    const r=window.moRamadan;
+    const year=r&&r.year?r.year:1447;
+    const raw=JSON.parse(localStorage.getItem(RAMADAN_KEY)||'null');
+    if(!raw||raw.year!==year)return{year,days:{}};
+    return raw;
+  }catch(e){return{year:1447,days:{}};}
+}
+function ramSave(s){try{localStorage.setItem(RAMADAN_KEY,JSON.stringify(s));}catch(e){}}
+function ramFastedToday(){
+  const r=window.moRamadan;if(!r||!r.isRamadan)return false;
+  return !!ramLoad().days[r.day];
+}
+function ramFastedCount(){
+  const s=ramLoad();return Object.values(s.days).filter(Boolean).length;
+}
+
+function renderPuasaCal(){
+  const cal=document.getElementById('puCal');if(!cal)return;
+  const r=window.moRamadan;const s=ramLoad();
+  const today=r&&r.isRamadan?r.day:0;
+  cal.innerHTML='';
+  for(let i=1;i<=30;i++){
+    const c=document.createElement('div');c.className='pu-cell';
+    if(s.days[i])c.classList.add('done');
+    if(i===today)c.classList.add('today');
+    if(i>today&&today>0)c.classList.add('future');
+    c.innerHTML=`<span class="pu-num">${i}</span><span class="pu-em">🌙</span>`;
+    cal.appendChild(c);
+  }
+}
+
+function renderPuasaCheckState(){
+  const btn=document.getElementById('puCheck');if(!btn)return;
+  if(ramFastedToday()){
+    btn.classList.add('done');
+    btn.querySelector('.pu-check-txt').textContent='✓ Sudah puasa hari ini';
+  }else{
+    btn.classList.remove('done');
+    btn.querySelector('.pu-check-txt').textContent='Aku puasa hari ini!';
+  }
+}
+
+function pad2(n){return String(n).padStart(2,'0');}
+function renderPuasaCountdown(){
+  const timeEl=document.getElementById('puCdTime');
+  const labelEl=document.getElementById('puCdLabel');
+  const hintEl=document.getElementById('puCdHint');
+  if(!timeEl)return;
+  if(!prayerTimes){
+    labelEl.textContent='Berbuka dalam';
+    timeEl.textContent='--:--:--';
+    hintEl.textContent='Aktifkan lokasi di tab Sholat dulu ya 📍';
+    return;
+  }
+  const now=new Date();
+  const nowMin=now.getHours()*60+now.getMinutes()+now.getSeconds()/60;
+  const [mh,mm]=prayerTimes.Maghrib.slice(0,5).split(':').map(Number);
+  const [fh,fm]=prayerTimes.Fajr.slice(0,5).split(':').map(Number);
+  const maghribMin=mh*60+mm, fajrMin=fh*60+fm;
+  let target,label,hint;
+  if(nowMin<maghribMin&&nowMin>=fajrMin){
+    target=maghribMin;label='Berbuka dalam';
+    hint=`Maghrib pukul ${prayerTimes.Maghrib.slice(0,5)} · Semangat ya! 💪`;
+  }else{
+    // After maghrib OR before fajr → count to imsak (fajr - 10min)
+    let mins;
+    if(nowMin>=maghribMin){mins=(24*60-nowMin)+(fajrMin-10);}
+    else{mins=(fajrMin-10)-nowMin;}
+    target=null;
+    label='Sahur berakhir dalam';
+    hint=`Imsak sekitar ${pad2(Math.floor((fajrMin-10)/60))}:${pad2((fajrMin-10)%60)} · Sahur dulu ya 🍚`;
+    const totalSec=Math.max(0,Math.round(mins*60));
+    const h=Math.floor(totalSec/3600),m=Math.floor((totalSec%3600)/60),s=totalSec%60;
+    timeEl.textContent=`${pad2(h)}:${pad2(m)}:${pad2(s)}`;
+    labelEl.textContent=label;hintEl.textContent=hint;
+    return;
+  }
+  const totalSec=Math.max(0,Math.round((target-nowMin)*60));
+  const h=Math.floor(totalSec/3600),m=Math.floor((totalSec%3600)/60),s=totalSec%60;
+  timeEl.textContent=`${pad2(h)}:${pad2(m)}:${pad2(s)}`;
+  labelEl.textContent=label;hintEl.textContent=hint;
+}
+
+function puasaCheckIn(){
+  const r=window.moRamadan;if(!r||!r.isRamadan)return;
+  const s=ramLoad();if(s.days[r.day])return;
+  s.days[r.day]=true;ramSave(s);
+  renderPuasaCal();renderPuasaCheckState();
+  const cnt=ramFastedCount();
+  const isMilestone=(cnt%5===0)||cnt===30;
+  const btn=document.getElementById('puCheck');
+  if(btn&&typeof burstAt==='function')burstAt(btn.getBoundingClientRect(),isMilestone?60:30);
+  if(typeof fireConfetti==='function'&&isMilestone)fireConfetti(70);
+  if(typeof showCeleb==='function'){
+    const title=cnt===30?'Alhamdulillah! 🎉':isMilestone?`${cnt} hari puasa! 🌙`:'Mashallah!';
+    const sub=`Puasa <strong>hari ke-${r.day}</strong> · sudah ${cnt} hari bulan ini`;
+    showCeleb(title,sub,isMilestone?2200:1600);
+  }
+  if(typeof setMo==='function')setMo(isMilestone?'excited':'happy',`Kerennn! Puasa hari ke-${r.day} ✨`,'— Mo bangga');
+  if(typeof kidsFeedback==='function')kidsFeedback(isMilestone?'milestone':'tap');
+}
+window.puasaCheckIn=puasaCheckIn;
+
 const KAABA={lat:21.4225,lng:39.8262};
 const PRAYER_NAMES=['Subuh','Dzuhur','Ashar','Magrib','Isya'];
 const PRAYER_KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
@@ -1223,6 +1636,7 @@ function switchPage(n){
   activeTab=n;
   document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page-'+n));
   document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===n));
+  if(n==='puasa'){renderPuasaCal();renderPuasaCheckState();renderPuasaCountdown();}
 }
 window.switchPage=switchPage;
 
@@ -1296,6 +1710,7 @@ function ptApply(t){
   prayerTimes=t;
   prayerMinutes=PRAYER_KEYS.map(k=>{const[h,m]=t[k].slice(0,5).split(':').map(Number);return h*60+m;});
   renderUI();renderMo();
+  if(typeof renderPuasaCountdown==='function')renderPuasaCountdown();
 }
 function ptPrune(c){const ks=Object.keys(c.days||{}).sort();while(ks.length>7)delete c.days[ks.shift()];}
 
@@ -1916,6 +2331,9 @@ if(!needsPerm){compassPerm='granted';installCompass();}
 })();
 renderMo();
 setInterval(()=>{if(prayerTimes){renderUI();renderMo();}},60000);
+/* Ramadan: paint cached state now, refresh via API, tick countdown per-second when Puasa tab is open */
+renderRamadanUI();refreshHijri();
+setInterval(()=>{if(activeTab==='puasa')renderPuasaCountdown();},1000);
 </script>
 <script src="/bm-kit.js" defer></script>
 </body>

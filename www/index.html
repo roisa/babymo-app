@@ -575,6 +575,29 @@ body::before{
   .app{max-width:1080px;}
   .icon-grid{grid-template-columns:repeat(6,1fr);}
 }
+
+/* ===== RAMADAN RIBBON — appears only when JS confirms current Hijri month is Ramadan ===== */
+.ramadan-badge{display:none;}
+.ramadan-badge.on{
+  display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:999px;
+  background:linear-gradient(135deg,#f0a950,#e07b3a);
+  color:#fff;font-size:10px;font-weight:800;letter-spacing:.03em;
+  box-shadow:0 2px 8px -1px rgba(224,123,58,.5);
+  vertical-align:middle;margin-left:8px;
+}
+.ramadan-badge .rb-em{font-size:11px;filter:drop-shadow(0 0 4px rgba(255,220,140,.7));}
+
+/* Corner ribbon on the small tile in "Semua Game" */
+.lrow{position:relative;}
+.lrow-ramadan{display:none;}
+.lrow-ramadan.on{
+  display:inline-flex;position:absolute;top:8px;right:34px;
+  padding:2px 8px;border-radius:999px;
+  background:linear-gradient(135deg,#f0a950,#e07b3a);
+  color:#fff;font-size:9px;font-weight:800;letter-spacing:.02em;
+  box-shadow:0 2px 6px -1px rgba(224,123,58,.5);
+}
 </style>
 <link rel="canonical" href="https://play.babymo.id/">
 <meta name="robots" content="index,follow">
@@ -800,6 +823,7 @@ body::before{
               <div class="lrow-title" data-i18n="cat_comp_t">Sholat Bareng Mo</div>
               <div class="lrow-sub" data-i18n="cat_comp_s">Panduan sholat interaktif</div>
             </div>
+            <span class="lrow-ramadan" id="lrowRamadan">🌙 <span id="lrowRamadanDay">Ramadan</span></span>
             <div class="lrow-chev">›</div>
           </a>
         </div>
@@ -899,7 +923,7 @@ body::before{
       <div class="hero" style="background:linear-gradient(135deg,#1E3F2A,#0D2318);">
         <div class="hero-row">
           <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#6DB882;box-shadow:0 0 8px #6DB882;"></span> <span data-i18n="comp_eyebrow">Panduan Interaktif</span></div>
+            <div class="hero-eyebrow"><span class="dot" style="background:#6DB882;box-shadow:0 0 8px #6DB882;"></span> <span data-i18n="comp_eyebrow">Panduan Interaktif</span><span class="ramadan-badge" id="heroRamadan"><span class="rb-em">🌙</span><span id="heroRamadanText">Ramadan</span></span></div>
             <div class="hero-greet" data-i18n="comp_greet">Yuk Sholat Bareng Baby Mo!</div>
             <div class="hero-msg" data-i18n="comp_msg">Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.</div>
           </div>
@@ -1418,6 +1442,44 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     if(pill) pill.addEventListener('click',function(){ BabyMo.sfx('star'); pill.classList.remove('bump'); void pill.offsetWidth; pill.classList.add('bump');
       BabyMo.toast('⭐ Kamu punya '+BabyMo.getStars()+' bintang Mo!'); });
   });
+})();
+
+/* ===== RAMADAN RIBBON (hub) — activate when today is 1-30 Ramadan =====
+   Reads the same cache the Companion writes ('mo_hijri_v1') so the ribbon
+   appears on first paint whenever the user has visited Companion today.
+   ?ramadan=1|0 forces preview here too. */
+(function(){
+  function apply(state){
+    if(!state||!state.isRamadan)return;
+    var t='Hari ke-'+state.day;
+    var heroEl=document.getElementById('heroRamadan');
+    var heroTx=document.getElementById('heroRamadanText');
+    var lrowEl=document.getElementById('lrowRamadan');
+    var lrowTx=document.getElementById('lrowRamadanDay');
+    if(heroEl)heroEl.classList.add('on');
+    if(heroTx)heroTx.textContent='Ramadan '+t;
+    if(lrowEl)lrowEl.classList.add('on');
+    if(lrowTx)lrowTx.textContent=t;
+  }
+  var forced=new URLSearchParams(location.search).get('ramadan');
+  if(forced==='1'){apply({isRamadan:true,day:14,year:1447,daysLeft:16});return;}
+  if(forced==='0')return;
+  try{
+    var c=JSON.parse(localStorage.getItem('mo_hijri_v1')||'null');
+    var today=new Date().toDateString();
+    if(c&&c.stampedOn===today)apply(c);
+  }catch(e){}
+  // Async refresh via Aladhan so hub-first visitors also see the ribbon
+  var d=new Date();
+  var ds=String(d.getDate()).padStart(2,'0')+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+d.getFullYear();
+  fetch('https://api.aladhan.com/v1/gToH/'+ds).then(function(r){return r.ok?r.json():null;}).then(function(data){
+    if(!data)return;
+    var h=data.data.hijri, mo=parseInt(h.month.number,10), day=parseInt(h.day,10), year=parseInt(h.year,10);
+    var isR=mo===9;
+    var state={isRamadan:isR,day:isR?day:null,year:year,daysLeft:isR?Math.max(0,30-day):0,stampedOn:d.toDateString()};
+    try{localStorage.setItem('mo_hijri_v1',JSON.stringify(state));}catch(e){}
+    apply(state);
+  }).catch(function(){});
 })();
 </script>
 </body>
