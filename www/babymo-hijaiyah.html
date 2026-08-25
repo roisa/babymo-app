@@ -507,7 +507,7 @@ function initThree(){
   sun.position.set(28,46,16); scene.add(sun);
   clock = new THREE.Clock();
   buildTextures(); planSpots(); buildWorld(); placeLetters();
-  buildWater(); buildClouds(); buildButterflies();
+  buildWater(); buildClouds(); buildButterflies(); buildCritters();
   buildPlayerModel(); buildCompanionModel();
   loadWorld();
   const cv = renderer.domElement;
@@ -532,21 +532,44 @@ function initThree(){
    MODEL VOXEL — PEMAIN (gaya petualang blocky) & TEMAN (Baby Mo)
    ============================================================ */
 let playerGroup, playerParts, moGroup, moParts;
+function playerFaceTex(){
+  return tex((x,s)=>{
+    x.fillStyle='#E8B892'; x.fillRect(0,0,s,s);
+    x.fillStyle='rgba(255,148,138,.32)';
+    x.beginPath(); x.arc(s*0.2,s*0.58,s*0.09,0,Math.PI*2); x.fill();
+    x.beginPath(); x.arc(s*0.8,s*0.58,s*0.09,0,Math.PI*2); x.fill();
+    x.fillStyle='#2A1E14';
+    x.beginPath(); x.arc(s*0.35,s*0.42,s*0.085,0,Math.PI*2); x.fill();
+    x.beginPath(); x.arc(s*0.65,s*0.42,s*0.085,0,Math.PI*2); x.fill();
+    x.fillStyle='#fff';
+    x.beginPath(); x.arc(s*0.37,s*0.395,s*0.028,0,Math.PI*2); x.fill();
+    x.beginPath(); x.arc(s*0.67,s*0.395,s*0.028,0,Math.PI*2); x.fill();
+    x.strokeStyle='#8B5E3C'; x.lineWidth=s*0.045; x.lineCap='round';
+    x.beginPath(); x.arc(s*0.5,s*0.53,s*0.16,0.18*Math.PI,0.82*Math.PI); x.stroke();
+  },64,true);
+}
 function buildPlayerModel(){
   const g = new THREE.Group();
   const skin  = new THREE.MeshLambertMaterial({color:0xE8B892});
   const shirt = new THREE.MeshLambertMaterial({color:0x2E8E86});
   const pants = new THREE.MeshLambertMaterial({color:0x35406B});
   const shoe  = new THREE.MeshLambertMaterial({color:0x2B2320});
+  const hairMat = new THREE.MeshLambertMaterial({color:0x3A2A1E});
+  const beltMat = new THREE.MeshLambertMaterial({color:0x5A3B22});
 
-  const head = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), skin);
+  const headMats = [skin,skin,skin,skin,skin, new THREE.MeshLambertMaterial({map:playerFaceTex()})];
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), headMats);
   head.position.y = 1.5; g.add(head);
 
-  const hair = new THREE.Mesh(new THREE.BoxGeometry(0.52,0.14,0.52), new THREE.MeshLambertMaterial({color:0x3A2A1E}));
-  hair.position.y = 1.72; g.add(hair);
+  const hairTop = new THREE.Mesh(new THREE.BoxGeometry(0.53,0.15,0.53), hairMat);
+  hairTop.position.y = 1.72; g.add(hairTop);
+  const hairBack = new THREE.Mesh(new THREE.BoxGeometry(0.53,0.3,0.16), hairMat);
+  hairBack.position.set(0,1.56,0.17); g.add(hairBack);
 
   const torso = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.68,0.3), shirt);
   torso.position.y = 1.06; g.add(torso);
+  const belt = new THREE.Mesh(new THREE.BoxGeometry(0.52,0.08,0.32), beltMat);
+  belt.position.y = 0.72; g.add(belt);
 
   const mkLimb = (geo, mat, x, y)=>{
     const m = new THREE.Mesh(geo, mat);
@@ -556,10 +579,19 @@ function buildPlayerModel(){
     g.add(m);
     return m;
   };
-  const armGeo = new THREE.BoxGeometry(0.17,0.62,0.17);
-  const legGeo = new THREE.BoxGeometry(0.19,0.68,0.19);
-  const armL = mkLimb(armGeo, skin, -0.33, 1.38);
-  const armR = mkLimb(armGeo, skin,  0.33, 1.38);
+  const mkArm = (x)=>{
+    const shoulder = new THREE.Group();
+    shoulder.position.set(x, 1.4, 0);
+    g.add(shoulder);
+    const sleeveGeo = new THREE.BoxGeometry(0.18,0.36,0.18); sleeveGeo.translate(0,-0.18,0);
+    const sleeve = new THREE.Mesh(sleeveGeo, shirt); shoulder.add(sleeve);
+    const hand = new THREE.Mesh(new THREE.BoxGeometry(0.16,0.16,0.16), skin);
+    hand.position.y = -0.44; shoulder.add(hand);
+    return shoulder;
+  };
+  const legGeo = new THREE.BoxGeometry(0.19,0.66,0.19);
+  const armL = mkArm(-0.33);
+  const armR = mkArm(0.33);
   const legL = mkLimb(legGeo, pants, -0.12, 0.72);
   const legR = mkLimb(legGeo, pants,  0.12, 0.72);
   const shoeL = new THREE.Mesh(new THREE.BoxGeometry(0.2,0.1,0.24), shoe);
@@ -604,6 +636,131 @@ function buildCompanionModel(){
   moState.x = g.position.x; moState.z = g.position.z; moState.y = g.position.y;
 }
 const moState = {x:0,y:0,z:0};
+
+/* ============================================================
+   SENJATA — tumbuh seiring huruf yang ditemukan
+   ============================================================ */
+const WEAPON_TIERS = [
+  {min:1,  name:'Tongkat Kayu',    blade:0x8A5C38, guard:0x6B4423, len:0.36},
+  {min:8,  name:'Pedang Kayu',     blade:0xA97A50, guard:0x6B4423, len:0.44},
+  {min:15, name:'Pedang Batu',     blade:0x9DA4AB, guard:0x5A5F66, len:0.5},
+  {min:22, name:'Pedang Hijaiyah', blade:0xE0B84D, guard:0x9B6818, len:0.56}
+];
+let currentWeaponTier = -1, weaponMesh = null, attackAnim = 0;
+function tierForCount(n){
+  let t = -1;
+  WEAPON_TIERS.forEach((w,i)=>{ if(n>=w.min) t=i; });
+  return t;
+}
+function buildWeaponMesh(tier){
+  const w = WEAPON_TIERS[tier];
+  const g = new THREE.Group();
+  const blade = new THREE.Mesh(new THREE.BoxGeometry(0.07,w.len,0.02), new THREE.MeshLambertMaterial({color:w.blade}));
+  blade.position.y = w.len/2 + 0.06; g.add(blade);
+  const guard = new THREE.Mesh(new THREE.BoxGeometry(0.16,0.05,0.05), new THREE.MeshLambertMaterial({color:w.guard}));
+  guard.position.y = 0.06; g.add(guard);
+  const grip = new THREE.Mesh(new THREE.BoxGeometry(0.06,0.12,0.06), new THREE.MeshLambertMaterial({color:0x3A2A1E}));
+  grip.position.y = -0.02; g.add(grip);
+  return g;
+}
+function updateWeapon(announce){
+  const tier = tierForCount(collected.size);
+  if(tier === currentWeaponTier) return;
+  const leveledUp = tier > currentWeaponTier;
+  currentWeaponTier = tier;
+  if(weaponMesh){ playerParts.armR.remove(weaponMesh); weaponMesh = null; }
+  if(tier >= 0){
+    weaponMesh = buildWeaponMesh(tier);
+    weaponMesh.position.set(0, -0.5, 0.05);
+    weaponMesh.rotation.z = -0.4;
+    playerParts.armR.add(weaponMesh);
+    if(announce && leveledUp){
+      const w = WEAPON_TIERS[tier];
+      setTimeout(()=>toast((tier===0?'🗡️ Bonus! Dapat ':'⚔️ Bonus! Senjata naik jadi ')+w.name+'!'), 1600);
+    }
+  }
+}
+
+/* ============================================================
+   MAKHLUK USIL — bonus mini-game aman, tanpa bahaya untuk Ibra
+   ============================================================ */
+const CRITTER_COLORS = [0x7FC8A9,0xF4A6B7,0xF7D060,0x9E9FFF,0xFF9F6B];
+const critters = [];
+function spawnCritterHome(){
+  const a = Math.random()*Math.PI*2, r = 4+Math.random()*15;
+  return {x:Math.cos(a)*r, z:Math.sin(a)*r};
+}
+function buildCritters(){
+  for(let i=0;i<7;i++){
+    const home = spawnCritterHome();
+    const g = new THREE.Group();
+    const body = new THREE.Mesh(new THREE.SphereGeometry(0.26,10,8),
+      new THREE.MeshLambertMaterial({color:CRITTER_COLORS[i%CRITTER_COLORS.length]}));
+    body.scale.set(1,0.82,1); g.add(body);
+    const eyeGeo = new THREE.SphereGeometry(0.042,6,6);
+    const eyeMat = new THREE.MeshBasicMaterial({color:0x1A1A1A});
+    const eyeL = new THREE.Mesh(eyeGeo, eyeMat); eyeL.position.set(-0.09,0.05,0.22); g.add(eyeL);
+    const eyeR = new THREE.Mesh(eyeGeo, eyeMat); eyeR.position.set(0.09,0.05,0.22); g.add(eyeR);
+    g.position.set(home.x, heightAt(home.x,home.z)+0.3, home.z);
+    scene.add(g);
+    critters.push({ group:g, home, tx:home.x, tz:home.z, waitT:Math.random()*2, popped:false, respawnAt:0, phase:Math.random()*10 });
+  }
+}
+function updateCritters(dt,t){
+  critters.forEach(c=>{
+    if(c.popped){
+      if(t >= c.respawnAt){
+        c.popped = false;
+        c.home = spawnCritterHome();
+        c.group.position.set(c.home.x, heightAt(c.home.x,c.home.z)+0.3, c.home.z);
+        c.group.visible = true;
+        c.tx = c.home.x; c.tz = c.home.z; c.waitT = 1+Math.random()*2;
+      }
+      return;
+    }
+    c.waitT -= dt;
+    if(c.waitT <= 0){
+      const a = Math.random()*Math.PI*2, r = 1+Math.random()*2.5;
+      c.tx = c.home.x + Math.cos(a)*r; c.tz = c.home.z + Math.sin(a)*r;
+      c.waitT = 1.5+Math.random()*2.5;
+    }
+    const k = Math.min(1, dt*1.2);
+    const gx = c.group.position.x + (c.tx-c.group.position.x)*k;
+    const gz = c.group.position.z + (c.tz-c.group.position.z)*k;
+    const bob = Math.abs(Math.sin(t*3+c.phase))*0.08;
+    c.group.position.set(gx, heightAt(gx,gz)+0.3+bob, gz);
+    if(Math.hypot(c.tx-gx, c.tz-gz) > 0.05) c.group.rotation.y = Math.atan2(c.tx-gx, c.tz-gz);
+  });
+}
+function popCritter(c, t){
+  c.popped = true;
+  c.respawnAt = t + 6 + Math.random()*4;
+  c.group.visible = false;
+  spawnBurst(c.group.position.x, c.group.position.y+0.2, c.group.position.z, 0xFFD874);
+  toast('✨ Kena! Makhluk usilnya kabur sebentar~');
+}
+const bursts = [];
+function spawnBurst(x,y,z,color){
+  for(let i=0;i<8;i++){
+    const mat = new THREE.SpriteMaterial({map:T.glow, color, transparent:true, depthWrite:false});
+    const spr = new THREE.Sprite(mat);
+    spr.scale.set(0.32,0.32,1);
+    spr.position.set(x,y,z);
+    scene.add(spr);
+    const ang = Math.random()*Math.PI*2, spd = 0.8+Math.random()*1.2;
+    bursts.push({ spr, vx:Math.cos(ang)*spd, vz:Math.sin(ang)*spd, vy:1.3+Math.random()*0.8, life:0.55, maxLife:0.55 });
+  }
+}
+function updateBursts(dt){
+  for(let i=bursts.length-1;i>=0;i--){
+    const b = bursts[i];
+    b.life -= dt;
+    if(b.life <= 0){ scene.remove(b.spr); b.spr.material.dispose(); bursts.splice(i,1); continue; }
+    b.spr.position.x += b.vx*dt; b.spr.position.z += b.vz*dt;
+    b.spr.position.y += b.vy*dt; b.vy -= 3*dt;
+    b.spr.material.opacity = Math.max(0, b.life/b.maxLife);
+  }
+}
 
 /* ============================================================
    PEMAIN — gerak & fisika
@@ -686,7 +843,13 @@ function updatePlayerModel(dt,t){
   const amt = Math.min(1, lastSpeed) * (P.ground?1:0.4);
   const swing = Math.sin(t*9)*0.55*amt;
   playerParts.armL.rotation.x = swing;
-  playerParts.armR.rotation.x = -swing;
+  if(attackAnim > 0){
+    attackAnim = Math.max(0, attackAnim-dt);
+    const p = 1 - attackAnim/0.18;
+    playerParts.armR.rotation.x = -2.0 + Math.sin(p*Math.PI)*1.1;
+  } else {
+    playerParts.armR.rotation.x = -swing;
+  }
   playerParts.legL.rotation.x = -swing;
   playerParts.legR.rotation.x = swing;
 }
@@ -773,7 +936,7 @@ function placeTarget(){
    HURUF — kuil harta karun (tanpa urutan, tanpa paksaan)
    ============================================================ */
 const collected = new Set();
-function proximity(){
+function proximity(t){
   if(!running) return;
   for(const b of letterBlocks){
     if(b.taken) continue;
@@ -781,11 +944,24 @@ function proximity(){
     const dy = Math.abs(b.base-(P.y+0.9));
     if(d<1.5 && dy<2.2) collectLetter(b);
   }
+  for(const c of critters){
+    if(c.popped) continue;
+    const d = Math.hypot(c.group.position.x-P.x, c.group.position.z-P.z);
+    if(d < 1.1){
+      if(currentWeaponTier >= 0){ popCritter(c, t); attackAnim = 0.18; }
+      else {
+        c.tx = c.group.position.x + (c.group.position.x-P.x)*3;
+        c.tz = c.group.position.z + (c.group.position.z-P.z)*3;
+        c.waitT = 0.1;
+      }
+    }
+  }
 }
 function collectLetter(b){
   b.taken = true; b.mesh.visible = false; b.glow.visible = false;
   collected.add(b.i);
   updateJournalBadge();
+  updateWeapon(true);
   toast('✨ Ditemukan: '+b.letter.name+' — '+b.letter.ar);
   Speech.say([{ar:b.letter.ar, lat:b.letter.name}]);
   saveWorld();
@@ -832,6 +1008,7 @@ function loadWorld(){
       solids.add(k);
     });
     if(data.inv) Object.assign(inv, data.inv);
+    updateWeapon(false);
   }catch(e){}
 }
 
@@ -1016,10 +1193,12 @@ function tick(){
   const dt = Math.min(0.05, clock.getDelta());
   const t = performance.now()/1000;
 
-  if(running){ step(dt); proximity(); }
+  if(running){ step(dt); proximity(t); }
   visY += (P.y - visY) * Math.min(1, dt*14);
   updatePlayerModel(dt,t);
   updateCompanion(dt,t);
+  updateCritters(dt,t);
+  updateBursts(dt);
   updateCamera();
 
   letterBlocks.forEach((b,i)=>{
