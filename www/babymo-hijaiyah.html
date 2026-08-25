@@ -21,7 +21,7 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;font-family:var(--ui);color:var(--cream);
   overscroll-behavior:none;touch-action:none;user-select:none;-webkit-user-select:none}
-body{background:linear-gradient(180deg,#8FD3EC 0%,#BEE6E0 55%,#DDF1E6 100%)}
+body{background:linear-gradient(180deg,#8FD3EC 0%,#BEE6E0 55%,#DDF1E6 100%);transition:background 6s ease}
 canvas{display:block;position:fixed;inset:0;z-index:0}
 
 #hud{position:fixed;inset:0;z-index:10;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
@@ -159,6 +159,8 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
   <h2>Jeda</h2>
   <div class="set"><span>Suara huruf</span><select id="selVoice2"></select></div>
   <div class="set" style="border:none"><span>Kecepatan bicara</span><input id="rngRate2" type="range" min="0.5" max="1.1" step="0.05" value="0.8"></div>
+  <button class="btn ghost" id="btnToggleSfx">🔊 Efek Suara: Aktif</button>
+  <button class="btn ghost" id="btnToggleFly">🚶 Mode Jalan (bukan Terbang)</button>
   <button class="btn" id="btnResume">Lanjut Main</button>
   <a class="btn ghost" id="btnHome" href="index.html" style="display:block;text-decoration:none;text-align:center">← Kembali ke Beranda</a>
   <button class="btn ghost" id="btnReset">Ulangi dari Awal (hapus progres)</button>
@@ -227,10 +229,61 @@ const Speech = {
 };
 
 /* ============================================================
+   EFEK SUARA — sintesis ringan, tanpa file audio
+   ============================================================ */
+let sfxOn = true;
+const SFX = (function(){
+  let ctx = null;
+  function getCtx(){
+    if(!sfxOn) return null;
+    if(!ctx){ try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
+    if(ctx.state === 'suspended') ctx.resume().catch(()=>{});
+    return ctx;
+  }
+  function tone(freq, dur, type, peak, delay){
+    const c = getCtx(); if(!c) return;
+    const t0 = c.currentTime + (delay||0);
+    const osc = c.createOscillator(), gain = c.createGain();
+    osc.type = type||'sine';
+    osc.frequency.setValueAtTime(freq, t0);
+    gain.gain.setValueAtTime(0, t0);
+    gain.gain.linearRampToValueAtTime(peak||0.18, t0+0.015);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t0+dur);
+    osc.connect(gain); gain.connect(c.destination);
+    osc.start(t0); osc.stop(t0+dur+0.02);
+  }
+  function noiseBurst(dur, peak){
+    const c = getCtx(); if(!c) return;
+    const n = Math.max(1, Math.round(c.sampleRate*dur));
+    const buf = c.createBuffer(1, n, c.sampleRate);
+    const data = buf.getChannelData(0);
+    for(let i=0;i<n;i++) data[i] = (Math.random()*2-1)*(1-i/n);
+    const src = c.createBufferSource(); src.buffer = buf;
+    const filter = c.createBiquadFilter(); filter.type='lowpass'; filter.frequency.value=900;
+    const gain = c.createGain(); gain.gain.value = peak||0.2;
+    src.connect(filter); filter.connect(gain); gain.connect(c.destination);
+    src.start();
+  }
+  function warm(){ getCtx(); }
+  return {
+    warm,
+    mine(){ try{ noiseBurst(0.12,0.22); }catch(e){} },
+    place(){ try{ tone(320,0.08,'square',0.14); tone(480,0.06,'square',0.1,0.03); }catch(e){} },
+    jump(){ try{ tone(440,0.12,'triangle',0.14); }catch(e){} },
+    critterPop(){ try{ tone(660,0.1,'sine',0.2); tone(880,0.12,'sine',0.17,0.06); tone(1100,0.14,'sine',0.14,0.12); }catch(e){} },
+    weaponUp(){ try{ tone(392,0.12,'triangle',0.17); tone(523,0.12,'triangle',0.17,0.09); tone(659,0.18,'triangle',0.19,0.18); }catch(e){} },
+    letterFound(){ try{ tone(784,0.1,'sine',0.15); tone(988,0.14,'sine',0.13,0.07); }catch(e){} }
+  };
+})();
+function haptic(pattern){
+  try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
+}
+
+/* ============================================================
    THREE — dunia voxel
    ============================================================ */
 const SIZE = 44, HALF = SIZE/2, MAXH = 12;
-let scene, cam, renderer, clock;
+let scene, cam, renderer, clock, hemiLight, sunLight;
 const solids = new Set();
 const key = (x,y,z)=>x+','+y+','+z;
 const solidAt = (x,y,z)=>solids.has(key(x,y,z));
@@ -494,6 +547,81 @@ function buildButterflies(){
   }
 }
 
+/* ============================================================
+   SIANG & MALAM — siklus lembut, tak pernah benar-benar gelap
+   ============================================================ */
+const DAY_CYCLE = 210;
+const DAY_BG  = 'linear-gradient(180deg,#8FD3EC 0%,#BEE6E0 55%,#DDF1E6 100%)';
+const DUSK_BG = 'linear-gradient(180deg,#FF9D6C 0%,#FF7E6B 45%,#F6C177 100%)';
+const NIGHT_BG= 'linear-gradient(180deg,#28376A 0%,#3B4C82 45%,#5A6494 100%)';
+const DAWN_BG = 'linear-gradient(180deg,#FFC98A 0%,#BEE6E0 55%,#DDF1E6 100%)';
+const SKY_KEYFRAMES = [
+  {at:0.00, bg:DAY_BG,   sun:0.85, hemi:1.0,  hemiSky:0xFFF6E0, hemiGround:0x5A7A55, fog:0xDDF1E6, star:0},
+  {at:0.42, bg:DAY_BG,   sun:0.85, hemi:1.0,  hemiSky:0xFFF6E0, hemiGround:0x5A7A55, fog:0xDDF1E6, star:0},
+  {at:0.52, bg:DUSK_BG,  sun:0.5,  hemi:0.72, hemiSky:0xFFD9A6, hemiGround:0x6B5A46, fog:0xF3A97C, star:0.15},
+  {at:0.62, bg:NIGHT_BG, sun:0.2,  hemi:0.42, hemiSky:0x8FA0D6, hemiGround:0x2B3350, fog:0x3B4C82, star:0.9},
+  {at:0.86, bg:NIGHT_BG, sun:0.2,  hemi:0.42, hemiSky:0x8FA0D6, hemiGround:0x2B3350, fog:0x3B4C82, star:0.9},
+  {at:0.96, bg:DAWN_BG,  sun:0.6,  hemi:0.85, hemiSky:0xFFEBC2, hemiGround:0x5A7A55, fog:0xE7D3A8, star:0.2},
+  {at:1.00, bg:DAY_BG,   sun:0.85, hemi:1.0,  hemiSky:0xFFF6E0, hemiGround:0x5A7A55, fog:0xDDF1E6, star:0}
+];
+function lerpHex(a,b,k){
+  const ar=(a>>16)&255, ag=(a>>8)&255, ab=a&255;
+  const br=(b>>16)&255, bg=(b>>8)&255, bb=b&255;
+  return (Math.round(ar+(br-ar)*k)<<16)|(Math.round(ag+(bg-ag)*k)<<8)|Math.round(ab+(bb-ab)*k);
+}
+function skyAt(dayT){
+  const kf = SKY_KEYFRAMES;
+  for(let i=0;i<kf.length-1;i++){
+    const a=kf[i], b=kf[i+1];
+    if(dayT>=a.at && dayT<=b.at){
+      const span = b.at-a.at;
+      const k = span>0 ? (dayT-a.at)/span : 0;
+      return {
+        sun: a.sun+(b.sun-a.sun)*k,
+        hemi: a.hemi+(b.hemi-a.hemi)*k,
+        hemiSky: lerpHex(a.hemiSky,b.hemiSky,k),
+        hemiGround: lerpHex(a.hemiGround,b.hemiGround,k),
+        fog: lerpHex(a.fog,b.fog,k),
+        star: a.star+(b.star-a.star)*k,
+        bg: k<0.5 ? a.bg : b.bg
+      };
+    }
+  }
+  return kf[0];
+}
+let starGroup, moonSprite, lastSkyBg = '';
+function buildSky(){
+  starGroup = new THREE.Group();
+  for(let i=0;i<40;i++){
+    const mat = new THREE.SpriteMaterial({map:T.glow, color:0xFFFFFF, transparent:true, depthWrite:false, opacity:0});
+    const s = new THREE.Sprite(mat);
+    const a = Math.random()*Math.PI*2, h = 15+Math.random()*45, r = 50+Math.random()*40;
+    s.position.set(Math.cos(a)*r, h, Math.sin(a)*r);
+    const sc = 0.6+Math.random()*0.5;
+    s.scale.set(sc,sc,1);
+    starGroup.add(s);
+  }
+  scene.add(starGroup);
+  const moonMat = new THREE.SpriteMaterial({map:T.cloud, color:0xE9F0FF, transparent:true, depthWrite:false, opacity:0});
+  moonSprite = new THREE.Sprite(moonMat);
+  moonSprite.scale.set(6,6,1);
+  moonSprite.position.set(-46,34,18);
+  scene.add(moonSprite);
+}
+function updateSky(dt,t){
+  const dayT = (t % DAY_CYCLE) / DAY_CYCLE;
+  const sky = skyAt(dayT);
+  const k = Math.min(1, dt*0.6);
+  sunLight.intensity += (sky.sun - sunLight.intensity) * k;
+  hemiLight.intensity += (sky.hemi - hemiLight.intensity) * k;
+  hemiLight.color.setHex(sky.hemiSky);
+  hemiLight.groundColor.setHex(sky.hemiGround);
+  if(scene.fog) scene.fog.color.setHex(sky.fog);
+  if(sky.bg !== lastSkyBg){ lastSkyBg = sky.bg; document.body.style.background = sky.bg; }
+  starGroup.children.forEach(s=>{ s.material.opacity += (sky.star - s.material.opacity)*k; });
+  moonSprite.material.opacity += (sky.star - moonSprite.material.opacity)*k;
+}
+
 function initThree(){
   scene = new THREE.Scene();
   scene.fog = new THREE.Fog(0xDDF1E6, 30, 66);
@@ -502,12 +630,13 @@ function initThree(){
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(innerWidth, innerHeight);
   document.body.appendChild(renderer.domElement);
-  scene.add(new THREE.HemisphereLight(0xFFF6E0, 0x5A7A55, 1.0));
-  const sun = new THREE.DirectionalLight(0xFFF3D2, 0.8);
-  sun.position.set(28,46,16); scene.add(sun);
+  hemiLight = new THREE.HemisphereLight(0xFFF6E0, 0x5A7A55, 1.0);
+  scene.add(hemiLight);
+  sunLight = new THREE.DirectionalLight(0xFFF3D2, 0.8);
+  sunLight.position.set(28,46,16); scene.add(sunLight);
   clock = new THREE.Clock();
   buildTextures(); planSpots(); buildWorld(); placeLetters();
-  buildWater(); buildClouds(); buildButterflies(); buildCritters();
+  buildWater(); buildClouds(); buildButterflies(); buildCritters(); buildSky();
   buildPlayerModel(); buildCompanionModel();
   loadWorld();
   const cv = renderer.domElement;
@@ -676,6 +805,7 @@ function updateWeapon(announce){
     playerParts.armR.add(weaponMesh);
     if(announce && leveledUp){
       const w = WEAPON_TIERS[tier];
+      SFX.weaponUp(); haptic([12,40,18]);
       setTimeout(()=>toast((tier===0?'🗡️ Bonus! Dapat ':'⚔️ Bonus! Senjata naik jadi ')+w.name+'!'), 1600);
     }
   }
@@ -737,6 +867,7 @@ function popCritter(c, t){
   c.respawnAt = t + 6 + Math.random()*4;
   c.group.visible = false;
   spawnBurst(c.group.position.x, c.group.position.y+0.2, c.group.position.z, 0xFFD874);
+  SFX.critterPop(); haptic([10,25,10]);
   toast('✨ Kena! Makhluk usilnya kabur sebentar~');
 }
 const bursts = [];
@@ -781,8 +912,9 @@ function hits(x,y,z){
 
 let lastSpeed = 0;
 let visY = P.y;
+let flyMode = false;
 function step(dt){
-  const sp = 4.4;
+  const sp = flyMode ? 5.6 : 4.4;
   let fx = 0, fz = 0;
   if(keys['w']||keys['arrowup']) fz -= 1;
   if(keys['s']||keys['arrowdown']) fz += 1;
@@ -800,31 +932,43 @@ function step(dt){
   const ox = P.x, oz = P.z;
   P.x += dx;
   if(hits(P.x,P.y,P.z)){
-    if(P.ground && !hits(P.x, P.y+1, P.z)) P.y += 1;
+    if(!flyMode && P.ground && !hits(P.x, P.y+1, P.z)) P.y += 1;
     else P.x = ox;
   }
   P.z += dz;
   if(hits(P.x,P.y,P.z)){
-    if(P.ground && !hits(P.x, P.y+1, P.z)) P.y += 1;
+    if(!flyMode && P.ground && !hits(P.x, P.y+1, P.z)) P.y += 1;
     else P.z = oz;
   }
 
-  P.vy -= 24*dt;
-  if(P.vy < -30) P.vy = -30;
-  P.y += P.vy*dt;
-  P.ground = false;
-  if(hits(P.x,P.y,P.z)){
-    if(P.vy <= 0){ P.y = Math.ceil(P.y); P.ground = true; }
-    else P.y = Math.floor(P.y+1.6) - 1.6 - 0.02;
-    P.vy = 0;
+  if(flyMode){
+    if(keys['space']) P.vy = Math.min(P.vy + 22*dt, 4.4);
+    else P.vy = Math.max(P.vy - 9*dt, -2.2);
+    P.y += P.vy*dt;
+    P.ground = false;
+    if(P.y < 1.2){ P.y = 1.2; P.vy = 0; }
+    if(P.y > 30){ P.y = 30; P.vy = 0; }
+  } else {
+    P.vy -= 24*dt;
+    if(P.vy < -30) P.vy = -30;
+    P.y += P.vy*dt;
+    P.ground = false;
+    if(hits(P.x,P.y,P.z)){
+      if(P.vy <= 0){ P.y = Math.ceil(P.y); P.ground = true; }
+      else P.y = Math.floor(P.y+1.6) - 1.6 - 0.02;
+      P.vy = 0;
+    }
+    if(P.y < -8){ P.x=0.5; P.z=5.5; P.y=heightAt(0,0)+2; P.vy=0; }
   }
-  if(P.y < -8){ P.x=0.5; P.z=5.5; P.y=heightAt(0,0)+2; P.vy=0; }
 
   const lim = HALF - 2.4;
   P.x = Math.max(-lim, Math.min(lim, P.x));
   P.z = Math.max(-lim, Math.min(lim, P.z));
 }
-function jump(){ if(P.ground){ P.vy = 8.2; P.ground = false; } }
+function jump(){
+  if(flyMode) return;
+  if(P.ground){ P.vy = 8.2; P.ground = false; SFX.jump(); }
+}
 
 function updateCamera(){
   const dist = 5.2, height = 1.15;
@@ -911,6 +1055,7 @@ function mineTarget(){
   }else return;
   solids.delete(k);
   inv[type] = (inv[type]||0)+1;
+  SFX.mine(); haptic(8);
   updateHotbar(); saveWorld();
 }
 function placeTarget(){
@@ -929,6 +1074,7 @@ function placeTarget(){
   placedBlocks.set(k, {mesh, type});
   solids.add(k);
   inv[type]--;
+  SFX.place(); haptic(8);
   updateHotbar(); saveWorld();
 }
 
@@ -962,6 +1108,7 @@ function collectLetter(b){
   collected.add(b.i);
   updateJournalBadge();
   updateWeapon(true);
+  SFX.letterFound(); haptic(15);
   toast('✨ Ditemukan: '+b.letter.name+' — '+b.letter.ar);
   Speech.say([{ar:b.letter.ar, lat:b.letter.name}]);
   saveWorld();
@@ -980,7 +1127,7 @@ function saveWorld(){
     blockIndex.forEach((rec,k)=>{ if(rec.taken) mined.push(k); });
     const placed = [];
     placedBlocks.forEach((rec,k)=>{ placed.push(k+'|'+rec.type); });
-    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv }));
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv, flyMode, sfxOn }));
   }catch(e){}
 }
 function loadWorld(){
@@ -1008,6 +1155,8 @@ function loadWorld(){
       solids.add(k);
     });
     if(data.inv) Object.assign(inv, data.inv);
+    if(typeof data.flyMode === 'boolean') flyMode = data.flyMode;
+    if(typeof data.sfxOn === 'boolean') sfxOn = data.sfxOn;
     updateWeapon(false);
   }catch(e){}
 }
@@ -1068,10 +1217,13 @@ if(!isTouch) document.body.classList.add('desktop');
 
 addEventListener('keydown', e=>{
   keys[e.key.toLowerCase()] = true;
-  if(e.code === 'Space'){ e.preventDefault(); jump(); }
+  if(e.code === 'Space'){ e.preventDefault(); keys['space'] = true; jump(); }
   if(e.key === 'Escape' && running) openMenu();
 });
-addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
+addEventListener('keyup', e=>{
+  keys[e.key.toLowerCase()] = false;
+  if(e.code === 'Space') keys['space'] = false;
+});
 
 (function(){
   const el = $('#stick'), knob = $('#knob');
@@ -1124,7 +1276,9 @@ addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
   addEventListener('touchend', end); addEventListener('touchcancel', end);
 })();
 
-$('#btnJump').addEventListener('touchstart', e=>{ e.preventDefault(); jump(); }, {passive:false});
+$('#btnJump').addEventListener('touchstart', e=>{ e.preventDefault(); keys['space']=true; jump(); }, {passive:false});
+$('#btnJump').addEventListener('touchend', ()=>{ keys['space']=false; }, {passive:true});
+$('#btnJump').addEventListener('touchcancel', ()=>{ keys['space']=false; }, {passive:true});
 $('#btnJump').addEventListener('click', jump);
 $('#btnMine').addEventListener('touchstart', e=>{ e.preventDefault(); if(running) mineTarget(); }, {passive:false});
 $('#btnMine').addEventListener('click', ()=>{ if(running) mineTarget(); });
@@ -1164,6 +1318,7 @@ $('#rngRate2').oninput = e=>{ Speech.rate = +e.target.value; $('#rngRate').value
 $('#btnPlay').onclick = ()=>{
   veil.start.classList.remove('on');
   running = true;
+  SFX.warm();
   buildHotbar(); updateHotbar(); updateJournalBadge();
   Speech.say([{ar:'بِسْمِ اللهِ', lat:'Bismillah'}]);
   setTimeout(()=>toast('Jelajahi pulau, gali & bangun sesukamu ✨'), 900);
@@ -1172,10 +1327,23 @@ $('#btnBack').onclick = ()=>{ location.href = 'index.html'; };
 $('#btnJournal').onclick = ()=>{ buildJournal(); running=false; veil.journal.classList.add('on'); };
 $('#btnCloseJournal').onclick = ()=>{ veil.journal.classList.remove('on'); running=true; };
 
+function updateToggleButtons(){
+  $('#btnToggleSfx').textContent = sfxOn ? '🔊 Efek Suara: Aktif' : '🔇 Efek Suara: Mati';
+  $('#btnToggleFly').textContent = flyMode ? '🕊️ Mode Terbang: Aktif' : '🚶 Mode Jalan (bukan Terbang)';
+}
+$('#btnToggleSfx').onclick = ()=>{ sfxOn = !sfxOn; if(sfxOn) SFX.warm(); updateToggleButtons(); saveWorld(); };
+$('#btnToggleFly').onclick = ()=>{
+  flyMode = !flyMode;
+  updateToggleButtons();
+  toast(flyMode ? '🕊️ Mode terbang aktif! Tahan tombol lompat untuk naik.' : '🚶 Mode terbang dimatikan.');
+  saveWorld();
+};
+
 function openMenu(){
   running = false; Speech.stop();
   document.exitPointerLock && document.exitPointerLock();
   $('#selVoice2').value = $('#selVoice').value; $('#rngRate2').value = Speech.rate;
+  updateToggleButtons();
   veil.menu.classList.add('on');
 }
 $('#btnMenu').onclick = openMenu;
@@ -1199,6 +1367,7 @@ function tick(){
   updateCompanion(dt,t);
   updateCritters(dt,t);
   updateBursts(dt);
+  updateSky(dt,t);
   updateCamera();
 
   letterBlocks.forEach((b,i)=>{
