@@ -3,1115 +3,934 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="description" content="Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.">
-<title>Belajar Huruf Hijaiyah Anak — 28 Huruf Arab + Audio | Baby Mo</title>
+<meta name="description" content="Jelajahi Pulau Hijaiyah bersama Baby Mo: gali, bangun, dan temukan 28 huruf hijaiyah tersembunyi di pulau voxel yang bisa dijelajahi bebas.">
+<title>Pulau Hijaiyah — Petualangan Ibra bersama Baby Mo | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
 :root{
-  /* Fresh iOS-style palette — brighter emerald→teal, soft glass surfaces */
-  --bg:#0A2118;--bg2:#0C2A20;--bg3:#0E3326;
-  --card:rgba(255,255,255,.055);--card2:rgba(255,255,255,.08);
-  --green:#1FA971;--green-lt:#3FD08C;--green-glow:#7BE8B0;
-  --gold:#E0B84D;--gold-lt:#FFD874;
+  --bg:#0A2118;--bg2:#0C2A20;--pine:#0F2016;
+  --card:rgba(15,32,22,.74);--card-b:rgba(240,232,216,.14);
+  --green:#1FA971;--green-lt:#3FD08C;
+  --gold:#E0B84D;--gold-lt:#FFD874;--gold-deep:#9B6818;
   --cream:#F2F7F2;--cream-dim:#9FB5A8;
-  --border:rgba(255,255,255,.10);
-  --correct:#3FD08C;--correct-bg:rgba(63,208,140,.16);
-  --wrong:#FF9A4D;--wrong-bg:rgba(255,154,77,.16);
+  --sand:#FFF6E0;
+  --ui:'Nunito',ui-rounded,-apple-system,system-ui,sans-serif;
+  --ar:'Scheherazade New','Traditional Arabic','Amiri','Noto Naskh Arabic',serif;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
-html,body{height:100%;overflow:hidden;}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--cream);}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 70% 55% at 20% 8%,rgba(31,169,113,.32),transparent 70%),
-    radial-gradient(ellipse 65% 50% at 85% 18%,rgba(91,198,232,.16),transparent 70%),
-    radial-gradient(ellipse 80% 60% at 50% 108%,rgba(224,184,77,.12),transparent 70%),
-    linear-gradient(180deg,#0C2A20 0%,#0A2118 55%,#081B14 100%);}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;font-family:var(--ui);color:var(--cream);
+  overscroll-behavior:none;touch-action:none;user-select:none;-webkit-user-select:none}
+body{background:linear-gradient(180deg,#8FD3EC 0%,#BEE6E0 55%,#DDF1E6 100%)}
+canvas{display:block;position:fixed;inset:0;z-index:0}
 
-/* Stars bg */
-.stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.stars i{position:absolute;font-style:normal;color:var(--gold-lt);opacity:.06;animation:tw var(--d,3s) var(--dl,0s) ease-in-out infinite;}
-@keyframes tw{0%,100%{opacity:.04}50%{opacity:.24}}
+#hud{position:fixed;inset:0;z-index:10;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+.card{background:var(--card);border:1.5px solid var(--card-b);border-radius:18px;
+  -webkit-backdrop-filter:blur(10px) saturate(150%);backdrop-filter:blur(10px) saturate(150%);
+  box-shadow:0 8px 20px -8px rgba(0,0,0,.4)}
 
-/* Glass + glow upgrades on the fresh palette */
-.w-strip-letter{-webkit-backdrop-filter:blur(14px) saturate(150%);backdrop-filter:blur(14px) saturate(150%);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
-.w-start{box-shadow:0 6px 20px -8px rgba(63,208,140,.55),inset 0 1px 0 rgba(255,255,255,.3)!important;color:#06231A!important;}
-/* iPad/desktop: vertically center the welcome so it isn't top-stacked */
-@media(min-height:760px){#sWelcome{justify-content:center;}}
+#topbar{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:center;pointer-events:none}
+#btnBack{pointer-events:auto;flex:0 0 42px;width:42px;height:42px;border-radius:14px;border:none;
+  background:var(--card);border:1.5px solid var(--card-b);color:var(--cream);font-size:17px;display:grid;place-items:center}
+#btnJournal{pointer-events:auto;flex:1;display:flex;align-items:center;gap:9px;padding:8px 12px;min-width:0;border:none;text-align:left;color:var(--cream)}
+#jIcon{font-size:20px;flex:0 0 auto}
+#jText{min-width:0;flex:1}
+#jLabel{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--green-lt);font-weight:800}
+#jCount{font-size:15px;font-weight:900;color:var(--gold-lt)}
+#btnMenu{pointer-events:auto;flex:0 0 42px;width:42px;height:42px;border-radius:14px;border:none;
+  background:var(--card);border:1.5px solid var(--card-b);color:var(--cream);font-size:18px;display:grid;place-items:center}
 
-/* ── SCREENS ── */
-.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
-.screen.active{display:flex;}
+/* hotbar */
+#hotbar{position:absolute;left:50%;bottom:calc(228px + env(safe-area-inset-bottom));transform:translateX(-50%);
+  display:flex;gap:6px;pointer-events:auto;max-width:96vw;overflow-x:auto}
+.slot{width:52px;height:52px;border-radius:14px;background:var(--card);border:2px solid var(--card-b);
+  background-size:cover;background-position:center;position:relative;display:flex;align-items:flex-end;justify-content:flex-end}
+.slot.active{border-color:var(--gold-lt);box-shadow:0 0 0 2px rgba(255,216,116,.35)}
+.slot b{font-size:10px;font-weight:900;color:#06231A;background:var(--gold-lt);border-radius:8px;
+  padding:1px 5px;margin:3px}
 
-/* ════ WELCOME ════ */
-#sWelcome{padding:24px 18px 32px;padding-top:calc(24px + env(safe-area-inset-top));justify-content:flex-start;text-align:center;}
-.w-mo{width:120px;height:120px;margin:0 auto 10px;animation:fl 3s ease-in-out infinite;filter:drop-shadow(0 6px 20px rgba(44,90,62,.4));}
-@keyframes fl{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
-.w-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid var(--border);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--green-glow);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:10px;}
-.w-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green-glow);animation:bl 2s infinite;}
-@keyframes bl{0%,100%{opacity:1}50%{opacity:.3}}
-.w-title{font-size:clamp(24px,7vw,32px);font-weight:900;color:var(--gold-lt);margin-bottom:3px;text-shadow:0 2px 12px rgba(200,144,64,.3);}
-.w-arabic-title{font-family:'Scheherazade New',serif;font-size:24px;color:var(--gold);direction:rtl;margin-bottom:5px;opacity:.85;}
-.w-sub{font-size:13px;color:var(--cream-dim);margin-bottom:22px;line-height:1.6;}
+/* controls */
+#stick{position:absolute;left:16px;bottom:74px;width:126px;height:126px;border-radius:50%;
+  background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.5);pointer-events:auto;touch-action:none}
+#knob{position:absolute;left:50%;top:50%;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;
+  background:rgba(255,252,244,.92);box-shadow:0 4px 0 rgba(18,38,31,.18)}
+#actionCluster{position:absolute;right:16px;bottom:66px;width:150px;height:150px;pointer-events:none}
+.abtn{position:absolute;border:none;border-radius:50%;background:var(--card);border:1.5px solid var(--card-b);
+  color:var(--cream);display:grid;place-items:center;pointer-events:auto;font-size:20px}
+.abtn span{font-size:9.5px;font-weight:800;display:block;margin-top:1px}
+#btnJump{width:66px;height:66px;right:0;bottom:78px}
+#btnMine{width:60px;height:60px;right:78px;bottom:20px}
+#btnPlace{width:60px;height:60px;right:0;bottom:0}
+.abtn:active{transform:scale(.9)}
+.desktop #stick,.desktop #actionCluster{display:none}
+#crosshair{position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;
+  border:2px solid rgba(255,255,255,.85);box-shadow:0 0 0 2px rgba(0,0,0,.25);display:none}
+.desktop #crosshair{display:block}
+#desktopHint{position:absolute;left:50%;bottom:16px;transform:translateX(-50%);pointer-events:none;
+  font-size:12px;font-weight:700;color:rgba(255,255,255,.75);text-shadow:0 1px 3px rgba(0,0,0,.5);display:none}
+.desktop #desktopHint{display:block}
 
-/* Letter preview strip */
-.w-strip{width:100%;max-width:380px;display:flex;justify-content:center;gap:6px;margin-bottom:22px;flex-wrap:wrap;}
-.w-strip-letter{width:46px;height:52px;background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:center;font-family:'Scheherazade New',serif;font-size:24px;color:var(--gold-lt);}
-.w-start{width:100%;max-width:380px;padding:17px;background:linear-gradient(135deg,var(--green-lt),var(--green));border:none;border-radius:16px;font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 6px 24px rgba(44,90,62,.5);transition:.15s;margin-bottom:16px;}
-.w-start:active{transform:scale(.97);}
-.w-back{font-size:12px;color:var(--cream-dim);text-decoration:none;padding:8px;}
-.w-back:hover{color:var(--green-glow);}
+/* veils */
+.veil{position:fixed;inset:0;display:none;place-items:center;padding:16px;
+  background:rgba(6,16,11,.62);backdrop-filter:blur(6px);z-index:20}
+.veil.on{display:grid}
+.panel{width:min(460px,100%);max-height:92vh;overflow:auto;padding:22px;text-align:center;
+  background:linear-gradient(180deg,#12281D,#0C2016);border:1.5px solid rgba(240,232,216,.12);
+  border-radius:26px;box-shadow:0 20px 50px rgba(0,0,0,.45)}
+h1{font-size:25px;margin:0 0 4px;letter-spacing:-.01em;color:var(--cream)}
+h2{font-size:20px;margin:0 0 6px;color:var(--cream)}
+p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
+.btn{-webkit-appearance:none;appearance:none;border:none;font-family:var(--ui);font-weight:900;
+  font-size:16px;padding:15px 22px;border-radius:18px;background:var(--green);color:#06231A;
+  box-shadow:0 6px 0 #124D34;width:100%;margin-top:10px;letter-spacing:.01em}
+.btn:active{transform:translateY(4px);box-shadow:0 2px 0 #124D34}
+.btn.gold{background:var(--gold);box-shadow:0 6px 0 var(--gold-deep);color:#3A2A08}
+.btn.ghost{background:transparent;color:var(--cream);box-shadow:none;border:2px solid rgba(240,232,216,.18);padding:12px}
+.row{display:flex;gap:10px}
+.row .btn{margin-top:10px}
+.set{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 0;
+  border-bottom:1px solid rgba(240,232,216,.1);font-size:14px;font-weight:700;text-align:left;color:var(--cream)}
+.set select,.set input[type=range]{font-family:var(--ui);font-size:13px;max-width:52%}
+.set select{padding:7px 9px;border-radius:10px;border:1.5px solid rgba(240,232,216,.2);background:#0F2016;color:var(--cream)}
+#voiceWarn{background:rgba(224,184,77,.12);border:1.5px solid var(--gold);border-radius:14px;padding:10px 12px;
+  font-size:12.5px;line-height:1.5;color:var(--gold-lt);margin-top:12px;text-align:left;display:none}
 
-/* ════ HOME ════ */
-#sHome{padding:0 0 28px;justify-content:flex-start;}
-.home-hdr{width:100%;background:linear-gradient(160deg,#0F2016,#132818);padding:20px 18px 18px;padding-top:calc(20px + env(safe-area-inset-top));flex-shrink:0;border-bottom:1px solid var(--border);}
-.home-hdr-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
-.hdr-back{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;}
-.hdr-streak{background:rgba(200,144,64,.15);border:1px solid rgba(200,144,64,.2);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;color:var(--gold-lt);display:flex;align-items:center;gap:5px;}
-.home-hdr-stats{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.07);border-radius:14px;padding:12px 14px;}
-.hst-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
-.hst-xp{font-size:13px;font-weight:800;color:var(--green-glow);}
-.hst-pct{font-size:11px;color:var(--cream-dim);}
-.xp-bar{height:7px;background:rgba(255,255,255,.08);border-radius:7px;overflow:hidden;}
-.xp-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green-glow));border-radius:7px;transition:width .6s ease;}
+/* journal */
+#journalGrid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:14px 0 6px}
+.jcell{aspect-ratio:1;border-radius:14px;background:var(--sand);border:2px solid var(--gold);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:var(--ar);
+  color:#12261F;padding-bottom:2px}
+.jcell .g{font-size:22px;line-height:1}
+.jcell .l{font-size:8px;font-weight:800;color:var(--gold-deep);margin-top:2px;font-family:var(--ui)}
+.jcell.locked{background:rgba(255,255,255,.06);border-color:rgba(240,232,216,.14);color:rgba(240,232,216,.28)}
+.jcell.locked .g{font-size:20px}
 
-/* Lesson path */
-.lesson-path{width:100%;max-width:480px;padding:16px 16px 0;display:flex;flex-direction:column;gap:8px;}
-.jilid-label{font-size:9px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream-dim);padding:6px 0 2px;display:flex;align-items:center;gap:8px;}
-.jilid-label::after{content:'';flex:1;height:1px;background:var(--border);}
-.lesson-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:16px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;transition:.15s;}
-.lesson-row.done{border-color:rgba(93,170,120,.25);background:rgba(44,90,62,.12);}
-.lesson-row.locked{opacity:.45;cursor:not-allowed;}
-.lesson-row:not(.locked):active{transform:scale(.98);}
-.lesson-icon{width:46px;height:46px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
-.lesson-icon.open-icon{background:linear-gradient(135deg,var(--green-lt),var(--green));}
-.lesson-icon.done-icon{background:rgba(93,170,120,.2);}
-.lesson-icon.locked-icon{background:rgba(255,255,255,.06);}
-.lesson-icon.exam-icon{background:linear-gradient(135deg,#A07820,#C8A030);}
-.lesson-info{flex:1;}
-.lesson-title{font-size:14px;font-weight:800;color:var(--cream);line-height:1.2;margin-bottom:2px;}
-.lesson-meta{font-size:11px;color:var(--cream-dim);}
-.lesson-xp{font-size:11px;font-weight:700;color:var(--green-glow);}
-
-/* ════ INTRO (Letter Cards) ════ */
-#sIntro{padding:14px 16px 24px;padding-top:calc(14px + env(safe-area-inset-top));justify-content:flex-start;}
-.intro-topbar{width:100%;max-width:440px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0;}
-.i-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;}
-.i-counter{font-size:11px;font-weight:700;color:var(--green-glow);background:rgba(93,170,120,.1);padding:5px 12px;border-radius:8px;}
-
-/* Dot progress */
-.dot-prog{display:flex;justify-content:center;gap:6px;margin-bottom:14px;flex-shrink:0;}
-.dpd{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.08);transition:background .3s,transform .3s;}
-.dpd.done{background:var(--green-glow);}
-.dpd.active{background:var(--gold);transform:scale(1.3);}
-
-/* Letter card */
-.letter-card{width:100%;max-width:440px;background:var(--card);border:1.5px solid var(--border);border-radius:24px;padding:16px 20px 18px;text-align:center;margin-bottom:16px;flex-shrink:0;position:relative;overflow:visible;}
-.letter-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.lc-badge{display:inline-flex;align-items:center;gap:6px;font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cream-dim);margin-bottom:12px;}
-.lc-badge-dot{width:6px;height:6px;border-radius:50%;background:var(--gold-lt);}
-
-/* BIG Arabic letter */
-.lc-arabic{
-  font-family:'Scheherazade New',serif;
-  font-size:clamp(88px,24vw,120px);
-  font-weight:700;
-  line-height:1.4;
-  margin-top:4px;
-  margin-bottom:18px;
-  display:block;
-  animation:letterIn .4s cubic-bezier(.34,1.56,.64,1);
-  filter:drop-shadow(0 4px 16px rgba(200,144,64,.3));
-}
-@keyframes letterIn{from{opacity:0;transform:scale(.7) rotate(-5deg)}to{opacity:1;transform:scale(1) rotate(0)}}
-.lc-name{font-size:28px;font-weight:900;color:var(--cream);margin-bottom:6px;}
-.lc-lat{font-size:13px;color:var(--green-glow);font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
-.lc-hint-row{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(200,144,64,.07);border:1px solid rgba(200,144,64,.12);border-radius:10px;padding:8px 14px;}
-.lc-dots-icon{font-size:18px;}
-.lc-dots-text{font-size:12px;color:var(--cream-dim);font-weight:600;}
-
-/* SOUND button */
-.sound-btn{
-  width:100%;max-width:440px;
-  height:64px;
-  border-radius:32px;
-  background:linear-gradient(135deg,var(--green-lt),var(--green));
-  border:none;
-  font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
-  color:#fff;cursor:pointer;
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  box-shadow:0 6px 24px rgba(44,90,62,.5);
-  position:relative;overflow:hidden;
-  transition:.15s;margin-bottom:10px;flex-shrink:0;
-  animation:invPulse 2.5s ease-in-out infinite;
-}
-@keyframes invPulse{0%,100%{box-shadow:0 6px 24px rgba(44,90,62,.5)}50%{box-shadow:0 6px 32px rgba(44,90,62,.75),0 0 0 8px rgba(93,170,120,.1)}}
-.sound-btn.speaking{animation:spkPulse .6s ease-in-out infinite;background:linear-gradient(135deg,#1E4A30,#2A6040);}
-@keyframes spkPulse{0%,100%{box-shadow:0 6px 20px rgba(44,90,62,.4),0 0 0 0 rgba(109,184,130,.4)}50%{box-shadow:0 6px 20px rgba(44,90,62,.4),0 0 0 16px rgba(109,184,130,.0)}}
-.sound-btn:active{transform:scale(.97);}
-.sbi{font-size:26px;}
-/* Sound waves animation when speaking */
-.sound-waves{display:none;gap:3px;align-items:center;}
-.sound-btn.speaking .sound-waves{display:flex;}
-.sound-btn.speaking .sbi-text{display:none;}
-.sw-bar{width:4px;border-radius:2px;background:rgba(255,255,255,.8);animation:swBar var(--d,.5s) ease-in-out infinite alternate;}
-@keyframes swBar{0%{height:6px}100%{height:20px}}
-
-/* Nav row */
-.nav-row{width:100%;max-width:440px;display:flex;gap:10px;flex-shrink:0;}
-.nav-sec{flex:1;padding:13px;background:var(--card);border:1px solid var(--border);border-radius:14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--cream-dim);cursor:pointer;text-align:center;transition:.15s;}
-.nav-pri{flex:2;padding:13px;background:linear-gradient(135deg,var(--green-lt),var(--green));border:none;border-radius:14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:#06231A;cursor:pointer;box-shadow:0 4px 16px rgba(44,90,62,.4);transition:.15s;}
-.nav-sec:active,.nav-pri:active{transform:scale(.97);}
-
-/* ════ QUIZ ════ */
-#sQuiz{padding:14px 16px 24px;padding-top:calc(14px + env(safe-area-inset-top));justify-content:flex-start;}
-.quiz-topbar{width:100%;max-width:440px;display:flex;align-items:center;gap:10px;margin-bottom:10px;flex-shrink:0;}
-.q-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;flex-shrink:0;}
-.q-prog-wrap{flex:1;height:8px;background:rgba(255,255,255,.07);border-radius:8px;overflow:hidden;}
-.q-prog-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green-glow));border-radius:8px;transition:width .4s ease;}
-.q-hearts{display:flex;gap:3px;flex-shrink:0;}
-
-/* Question card */
-.q-card{width:100%;max-width:440px;background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:18px;text-align:center;margin-bottom:14px;flex-shrink:0;position:relative;overflow:hidden;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.q-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cream-dim);margin-bottom:10px;}
-/* Big Arabic for "which letter?" type */
-.q-arabic-big{font-family:'Scheherazade New',serif;font-size:clamp(80px,22vw,110px);font-weight:700;color:var(--gold-lt);line-height:1.4;margin-bottom:10px;animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
-/* Name display for "which name?" type */
-.q-name-big{font-size:clamp(28px,8vw,38px);font-weight:900;color:var(--cream);animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
-/* Baby Mo tiny reaction */
-.q-mo-wrap{position:absolute;right:12px;bottom:8px;width:48px;opacity:.9;}
-
-/* Sound hint button in quiz */
-.q-sound-hint{background:rgba(93,170,120,.1);border:1px solid rgba(93,170,120,.15);border-radius:20px;padding:5px 12px;font-size:11px;font-weight:700;color:var(--green-glow);cursor:pointer;display:inline-flex;align-items:center;gap:5px;margin-top:8px;font-family:'Nunito',sans-serif;}
-
-/* Choices */
-.choices-grid{width:100%;max-width:440px;display:grid;gap:9px;margin-bottom:12px;flex-shrink:0;}
-.choices-grid.name-grid{grid-template-columns:1fr 1fr;}
-.choices-grid.letter-grid{grid-template-columns:1fr 1fr;}
-.choice-btn{
-  background:var(--card);
-  border:2px solid var(--border);
-  border-radius:16px;
-  padding:12px 8px;
-  font-family:'Scheherazade New',serif;
-  font-size:clamp(32px,9vw,44px);
-  color:var(--gold-lt);
-  cursor:pointer;
-  text-align:center;
-  min-height:72px;
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .12s,border-color .15s,background .15s;
-  line-height:1;
-  direction:rtl;
-}
-.choice-btn.name-choice{font-family:'Nunito',sans-serif;font-size:clamp(14px,4vw,18px);font-weight:800;color:var(--cream);direction:ltr;}
-.choice-btn:active:not(.disabled){transform:scale(.96);}
-.choice-btn.correct{border-color:var(--green-glow) !important;background:var(--correct-bg) !important;animation:correctPop .35s cubic-bezier(.34,1.56,.64,1);}
-@keyframes correctPop{0%{transform:scale(1)}50%{transform:scale(1.04)}100%{transform:scale(1)}}
-.choice-btn.wrong{border-color:var(--wrong) !important;background:var(--wrong-bg) !important;animation:shake .4s ease;}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
-.choice-btn.disabled{pointer-events:none;}
-.choice-btn.dim{opacity:.4;}
-
-/* Feedback bar */
-.feedback-bar{width:100%;max-width:440px;border-radius:14px;padding:12px 16px;flex-shrink:0;display:none;}
-.feedback-bar.show{display:block;}
-.fb-correct{background:var(--correct-bg);border:1px solid rgba(93,170,120,.25);}
-.fb-wrong{background:var(--wrong-bg);border:1px solid rgba(200,120,64,.25);}
-.fb-icon{font-size:26px;margin-bottom:3px;}
-.fb-title{font-size:14px;font-weight:900;color:var(--cream);}
-.fb-sub{font-size:11px;color:var(--cream-dim);margin-top:2px;}
-.fb-next{width:100%;margin-top:10px;padding:12px;background:linear-gradient(135deg,var(--green-lt),var(--green));border:none;border-radius:12px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 3px 14px rgba(44,90,62,.4);transition:.15s;}
-.fb-next:active{transform:scale(.97);}
-
-/* ════ RESULT ════ */
-#sResult{padding:24px 18px 36px;padding-top:calc(24px + env(safe-area-inset-top));justify-content:flex-start;text-align:center;}
-.res-mascot{width:100px;height:100px;margin:0 auto 10px;animation:cel .8s ease-in-out infinite alternate;}
-@keyframes cel{from{transform:rotate(-14deg) scale(1)}to{transform:rotate(14deg) scale(1.07)}}
-.res-card{background:var(--card);border:1px solid rgba(200,144,64,.2);border-radius:24px;padding:22px 18px 18px;width:100%;max-width:400px;position:relative;overflow:hidden;margin-bottom:14px;}
-.res-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-.res-title{font-size:26px;font-weight:900;color:var(--gold-lt);margin-bottom:3px;}
-.res-sub{font-size:13px;color:var(--cream-dim);margin-bottom:12px;}
-.res-stars{font-size:44px;letter-spacing:4px;margin-bottom:14px;display:block;}
-.res-star{display:inline-block;opacity:.15;transition:opacity .3s;}
-.res-star.lit{opacity:1;animation:starPop .45s cubic-bezier(.34,1.56,.64,1) both;}
-@keyframes starPop{0%{transform:scale(0) rotate(-30deg)}80%{transform:scale(1.15) rotate(5deg)}100%{transform:scale(1) rotate(0)}}
-.res-stats{display:flex;justify-content:center;gap:16px;margin-bottom:14px;}
-.rss{text-align:center;}
-.rss-n{font-size:26px;font-weight:900;color:var(--cream);}
-.rss-l{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cream-dim);margin-top:2px;}
-.res-letters-recap{background:rgba(44,90,62,.1);border:1px solid rgba(93,170,120,.12);border-radius:14px;padding:10px;margin-bottom:14px;}
-.rlr-title{font-size:9px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cream-dim);text-align:center;margin-bottom:8px;}
-.rlr-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;}
-.rlr-item{width:44px;height:48px;background:var(--card2);border:1px solid var(--border);border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;}
-.rlr-ar{font-family:'Scheherazade New',serif;font-size:22px;color:var(--gold-lt);}
-.rlr-nm{font-size:8px;color:var(--cream-dim);font-weight:700;}
-.res-btns{display:flex;gap:10px;width:100%;max-width:400px;}
-.res-btn-sec{flex:1;padding:13px;background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;color:var(--cream);cursor:pointer;text-align:center;text-decoration:none;display:flex;align-items:center;justify-content:center;transition:.15s;}
-.res-btn-pri{flex:2;padding:13px;background:linear-gradient(135deg,var(--green-lt),var(--green));border:none;border-radius:14px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 4px 16px rgba(44,90,62,.4);transition:.15s;}
-.res-btn-sec:active,.res-btn-pri:active{transform:scale(.97);}
-
-/* ════ ABOUT ════ */
-#sAbout{padding:20px 18px 36px;padding-top:calc(20px + env(safe-area-inset-top));justify-content:flex-start;}
-.about-back{background:var(--card);border:1px solid rgba(255,255,255,.07);border-radius:10px;padding:7px 12px;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;font-family:'Nunito',sans-serif;align-self:flex-start;margin-bottom:16px;}
-.about-title{font-size:20px;font-weight:900;color:var(--gold-lt);margin-bottom:14px;text-align:center;}
-.about-item{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:10px;display:flex;gap:12px;align-items:flex-start;width:100%;max-width:440px;}
-.about-icon{font-size:24px;flex-shrink:0;margin-top:2px;}
-.about-item-title{font-size:13px;font-weight:800;color:var(--cream);margin-bottom:3px;}
-.about-item-body{font-size:12px;color:var(--cream-dim);line-height:1.6;}
-
-/* PARTICLES & TOAST */
-.particle{position:fixed;pointer-events:none;z-index:500;animation:pfall linear forwards;}
-@keyframes pfall{0%{transform:translateY(0) rotate(0);opacity:1}80%{opacity:.8}100%{transform:translateY(105vh) rotate(900deg);opacity:0}}
-.toast{position:fixed;top:46%;left:50%;transform:translate(-50%,-50%) scale(0);background:linear-gradient(135deg,var(--green-lt),var(--green));border-radius:18px;padding:12px 22px;text-align:center;z-index:400;pointer-events:none;transition:transform .2s cubic-bezier(.34,1.56,.64,1);box-shadow:0 6px 28px rgba(0,0,0,.4);}
-.toast.show{transform:translate(-50%,-50%) scale(1);}
-.toast-e{font-size:28px;}
-.toast-t{font-size:14px;font-weight:900;color:#fff;margin-top:2px;}
-
-/* tablet/iPad — widen the play area */
-@media(min-width:820px){.about-item,.choices-grid,.feedback-bar,.intro-topbar,.lesson-path,.letter-card,.nav-row,.q-card,.quiz-topbar,.res-btns,.res-card,.w-start,.w-strip{max-width:680px!important;}}
-
-/* bm-letterbox: comfortable centered column on tablet/desktop */
-@media(min-width:760px){.screen{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
+#toast{position:fixed;left:50%;top:70px;transform:translateX(-50%) translateY(-14px);opacity:0;
+  background:var(--pine);color:#fff;padding:10px 18px;border-radius:99px;font-weight:800;font-size:14px;
+  z-index:30;transition:.25s;pointer-events:none;text-align:center;max-width:88vw;border:1.5px solid rgba(240,232,216,.14)}
+#toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
-<link rel="canonical" href="https://play.babymo.id/babymo-hijaiyah.html">
-<meta name="robots" content="index,follow">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Baby Mo">
-<meta property="og:locale" content="id_ID">
-<meta property="og:title" content="Belajar Huruf Hijaiyah Anak — 28 Huruf Arab + Audio | Baby Mo">
-<meta property="og:description" content="Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.">
-<meta property="og:url" content="https://play.babymo.id/babymo-hijaiyah.html">
-<meta property="og:image" content="https://play.babymo.id/og/babymo-hijaiyah.jpg">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Belajar Huruf Hijaiyah Anak — 28 Huruf Arab + Audio | Baby Mo">
-<meta name="twitter:description" content="Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.">
-<meta name="twitter:image" content="https://play.babymo.id/og/babymo-hijaiyah.jpg">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Belajar Huruf Hijaiyah Anak — Baby Mo","url":"https://play.babymo.id/babymo-hijaiyah.html","description":"Kenali 28 huruf hijaiyah dengan suara dan animasi ramah anak.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-hijaiyah.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Belajar Huruf Hijaiyah Anak","item":"https://play.babymo.id/babymo-hijaiyah.html"}]}]}</script>
 </head>
 <body>
+<div id="hud">
+  <div id="topbar">
+    <button id="btnBack" title="Kembali">←</button>
+    <button id="btnJournal" class="card">
+      <span id="jIcon">📖</span>
+      <span id="jText"><span id="jLabel">Huruf ditemukan</span><br><span id="jCount">0 / 28</span></span>
+    </button>
+    <button id="btnMenu">☰</button>
+  </div>
 
-<div class="stars" id="starsBg"></div>
-<div class="toast" id="toast"><div class="toast-e" id="toastE">⭐</div><div class="toast-t" id="toastT">Betul!</div></div>
-
-<!-- ════ WELCOME ════ -->
-<div class="screen active" id="sWelcome">
-  <img class="w-mo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" style="object-fit:contain;"/>
-  <div class="w-badge">🌙 BabyMo · Huruf Arab</div>
-  <div class="w-title">Huruf Hijaiyah 🌟</div>
-  <div class="w-arabic-title">اَلْحُرُوفُ الْهِجَائِيَّة</div>
-  <div class="w-sub">Belajar 28 huruf Arab bersama Baby Mo!<br>Dengan suara, kuis, dan bintang! 🔊🐻</div>
-  <div class="w-strip" id="wStrip"></div>
-  <button class="w-start" onclick="goHome()">🌙 Mulai Belajar — Bismillah!</button>
-  <a href="././index.html" class="w-back">← Kembali ke Game Hub</a>
+  <div id="hotbar"></div>
+  <div id="stick"><div id="knob"></div></div>
+  <div id="actionCluster">
+    <button class="abtn" id="btnJump">⬆<span>LOMPAT</span></button>
+    <button class="abtn" id="btnMine">⛏️<span>GALI</span></button>
+    <button class="abtn" id="btnPlace">🧱<span>BANGUN</span></button>
+  </div>
+  <div id="crosshair"></div>
+  <div id="desktopHint">Klik kiri: gali &nbsp;·&nbsp; Klik kanan: bangun &nbsp;·&nbsp; WASD jalan &nbsp;·&nbsp; Spasi lompat</div>
 </div>
 
-<!-- ════ HOME ════ -->
-<div class="screen" id="sHome">
-  <div class="home-hdr">
-    <div class="home-hdr-top">
-      <button class="hdr-back" onclick="showScreen('sWelcome')">← Kembali</button>
-      <div class="hdr-streak" id="hStreak">🔥 0 hari</div>
-    </div>
-    <div class="home-hdr-stats">
-      <div class="hst-row">
-        <span class="hst-xp" id="hXPLabel">✨ 0 XP</span>
-        <span class="hst-pct" id="hPctLabel">0 / 9 pelajaran</span>
-      </div>
-      <div class="xp-bar"><div class="xp-fill" id="hXPBar" style="width:0%"></div></div>
-    </div>
-  </div>
-  <div class="lesson-path" id="lessonPath"></div>
-</div>
+<!-- START -->
+<div class="veil on" id="vStart"><div class="panel">
+  <div style="font-family:var(--ar);font-size:56px;line-height:1;color:var(--green-lt);padding-bottom:8px">ا ب ت</div>
+  <h1>Pulau Hijaiyah</h1>
+  <p>Ibra &amp; Baby Mo menjelajahi pulau voxel bersama-sama. Jalan-jalan bebas, gali balok, bangun apa saja, dan temukan huruf-huruf hijaiyah yang tersembunyi di sekitar pulau.</p>
+  <div class="set"><span>Suara huruf</span><select id="selVoice"></select></div>
+  <div class="set" style="border:none"><span>Kecepatan bicara</span><input id="rngRate" type="range" min="0.5" max="1.1" step="0.05" value="0.8"></div>
+  <div id="voiceWarn"></div>
+  <button class="btn" id="btnPlay">Mulai Petualangan</button>
+  <p style="font-size:12px;margin-top:12px">HP/tablet: joystick kiri jalan · geser kanan lihat sekeliling · ⛏️ gali · 🧱 bangun.<br>Komputer: WASD jalan · mouse lihat sekeliling · klik kiri gali · klik kanan bangun.</p>
+</div></div>
 
-<!-- ════ INTRO (Letter Cards) ════ -->
-<div class="screen" id="sIntro">
-  <div class="intro-topbar">
-    <button class="i-back" id="iBackBtn" onclick="leaveLesson()">✕</button>
-    <span class="i-counter" id="iCounter">Huruf 1 / 4</span>
-  </div>
-  <div class="dot-prog" id="dotProg"></div>
+<!-- JOURNAL -->
+<div class="veil" id="vJournal"><div class="panel">
+  <h2>📖 Buku Huruf Ibra</h2>
+  <p>Ketuk huruf yang sudah ditemukan untuk dengar lagi. Yang masih gelap belum ditemukan — cari terus ya!</p>
+  <div id="journalGrid"></div>
+  <button class="btn gold" id="btnCloseJournal">Tutup</button>
+</div></div>
 
-  <div class="letter-card" id="letterCard">
-    <div class="lc-badge"><span class="lc-badge-dot"></span><span id="lcLessonTitle">Pelajaran 1</span></div>
-    <div class="lc-arabic" id="lcArabic" style="color:var(--gold-lt)">بَ</div>
-    <div class="lc-name" id="lcName">Ba</div>
-    <div class="lc-lat" id="lcLat">BA</div>
-    <div class="lc-hint-row">
-      <span class="lc-dots-icon" id="lcDotsIcon">•</span>
-      <span class="lc-dots-text" id="lcDotsText">1 titik bawah</span>
-    </div>
-  </div>
+<!-- MENU -->
+<div class="veil" id="vMenu"><div class="panel">
+  <h2>Jeda</h2>
+  <div class="set"><span>Suara huruf</span><select id="selVoice2"></select></div>
+  <div class="set" style="border:none"><span>Kecepatan bicara</span><input id="rngRate2" type="range" min="0.5" max="1.1" step="0.05" value="0.8"></div>
+  <button class="btn" id="btnResume">Lanjut Main</button>
+  <a class="btn ghost" id="btnHome" href="index.html" style="display:block;text-decoration:none;text-align:center">← Kembali ke Beranda</a>
+  <button class="btn ghost" id="btnReset">Ulangi dari Awal (hapus progres)</button>
+</div></div>
 
-  <button class="sound-btn" id="intrSoundBtn" onclick="speakCurrentLetter()">
-    <span class="sbi" id="iSoundIcon">🔊</span>
-    <span id="iSoundTxt" class="sbi-text">Dengar Huruf</span>
-    <span class="sound-waves" id="iSoundWaves">
-      <span class="sw-bar" style="--d:.3s"></span>
-      <span class="sw-bar" style="--d:.5s;animation-delay:.1s"></span>
-      <span class="sw-bar" style="--d:.4s;animation-delay:.2s"></span>
-      <span class="sw-bar" style="--d:.6s;animation-delay:.05s"></span>
-      <span class="sw-bar" style="--d:.35s;animation-delay:.15s"></span>
-    </span>
-  </button>
-
-  <div class="nav-row">
-    <button class="nav-sec" id="intrPrevBtn" onclick="prevCard()">← Sebelumnya</button>
-    <button class="nav-pri" id="intrNextBtn" onclick="nextCard()">Berikutnya →</button>
-  </div>
-</div>
-
-<!-- ════ QUIZ ════ -->
-<div class="screen" id="sQuiz">
-  <div class="quiz-topbar">
-    <button class="q-back" onclick="leaveLesson()">✕</button>
-    <div class="q-prog-wrap"><div class="q-prog-fill" id="qProgFill" style="width:0%"></div></div>
-    <div class="q-hearts" id="qHearts"></div>
-  </div>
-
-  <div class="q-card" id="qCard">
-    <div class="q-label" id="qLabel">Huruf ini namanya?</div>
-    <div class="q-arabic-big" id="qArabicBig" style="display:block"></div>
-    <div class="q-name-big" id="qNameBig" style="display:none"></div>
-    <button class="q-sound-hint" id="qSoundHint" onclick="speakQuizHint()">🔊 Dengar</button>
-    <img class="q-mo-wrap" id="qMoWrap" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" style="display:none;object-fit:contain;"/>
-  </div>
-
-  <div class="choices-grid name-grid" id="choicesGrid"></div>
-  <div class="feedback-bar" id="feedbackBar">
-    <div class="fb-icon" id="fbIcon">✅</div>
-    <div class="fb-title" id="fbTitle">Betul!</div>
-    <div class="fb-sub" id="fbSub"></div>
-    <button class="fb-next" onclick="nextQuestion()">Lanjut →</button>
-  </div>
-</div>
-
-<!-- ════ RESULT ════ -->
-<div class="screen" id="sResult">
-  <img class="res-mascot" src="Baby_Mo_Menyapa.png" alt="Baby Mo" draggable="false" style="object-fit:contain;"/>
-  <div class="res-card">
-    <div class="res-title" id="resTitle">Masya Allah! 🌟</div>
-    <div class="res-sub" id="resSub">Pelajaran selesai!</div>
-    <div class="res-stars">
-      <span class="res-star" id="rs1">⭐</span>
-      <span class="res-star" id="rs2">⭐</span>
-      <span class="res-star" id="rs3">⭐</span>
-    </div>
-    <div class="res-stats">
-      <div class="rss"><div class="rss-n" id="resScore">-</div><div class="rss-l">Skor</div></div>
-      <div class="rss"><div class="rss-n" id="resXP">-</div><div class="rss-l">XP Dapat</div></div>
-      <div class="rss"><div class="rss-n" id="resStreak">-</div><div class="rss-l">Streak 🔥</div></div>
-    </div>
-    <div class="res-letters-recap">
-      <div class="rlr-title">Huruf yang kamu pelajari hari ini</div>
-      <div class="rlr-grid" id="resLetterGrid"></div>
-    </div>
-  </div>
-  <div class="res-btns">
-    <button class="res-btn-sec" onclick="goHome()">🏠 Menu</button>
-    <button class="res-btn-pri" id="resNextBtn" onclick="goNextLesson()">Pelajaran Berikutnya →</button>
-  </div>
-  <div class="res-btns" style="margin-top:10px;">
-    <button class="res-btn-sec" style="flex:1;" onclick="window.BabyMo&&BabyMo.share({title:'Huruf Hijaiyah — Baby Mo',message:'Aku belajar huruf hijaiyah bareng Baby Mo! Yuk coba juga 🌙'})">📤 Bagikan</button>
-  </div>
-</div>
-
-<!-- ════ ABOUT ════ -->
-<div class="screen" id="sAbout">
-  <button class="about-back" onclick="showScreen('sHome')">← Kembali</button>
-  <div class="about-title">Tentang Huruf Hijaiyah 🌙</div>
-  <div class="about-item">
-    <span class="about-icon">🌙</span>
-    <div>
-      <div class="about-item-title">Metode Ummi</div>
-      <div class="about-item-body">Urutan belajar huruf mengikuti Metode Ummi yang teruji — mulai dari huruf dasar dengan fathah, lalu kasrah, dhammah, sukun, dan seterusnya. 28 huruf penuh.</div>
-    </div>
-  </div>
-  <div class="about-item">
-    <span class="about-icon">🔊</span>
-    <div>
-      <div class="about-item-title">Suara Interaktif</div>
-      <div class="about-item-body">Setiap huruf diucapkan dengan suara. Tap tombol 🔊 kapan saja untuk mendengarkan. Suara otomatis berbunyi saat huruf baru muncul.</div>
-    </div>
-  </div>
-  <div class="about-item">
-    <span class="about-icon">🔥</span>
-    <div>
-      <div class="about-item-title">Streak Harian</div>
-      <div class="about-item-body">Belajar setiap hari untuk menjaga streak! Konsistensi adalah kunci hafalan huruf untuk si kecil.</div>
-    </div>
-  </div>
-  <div class="about-item">
-    <span class="about-icon">🐻</span>
-    <div>
-      <div class="about-item-title">Bersama Baby Mo</div>
-      <div class="about-item-body">Baby Mo menemani setiap langkah belajar — merayakan jawaban benar, menyemangati saat salah, dan bertumbuh bersama si kecil.</div>
-    </div>
-  </div>
-</div>
-
+<div id="toast"></div>
 
 <script>
-// ═══════════════════════════════════════════════
-// DATA — ALL 28 HIJAIYAH LETTERS
-// ═══════════════════════════════════════════════
-const LETTERS = [
-  {id:'alif', ar:'اَ', name:'Alif',  lat:'A',   dots:'tanpa titik',   speak:'Alif',   arName:'أَلِف',   dotsIcon:'○'},
-  {id:'ba',   ar:'بَ', name:'Ba',    lat:'BA',  dots:'1 titik bawah', speak:'Ba',     arName:'بَاء',    dotsIcon:'·'},
-  {id:'ta',   ar:'تَ', name:'Ta',    lat:'TA',  dots:'2 titik atas',  speak:'Ta',     arName:'تَاء',    dotsIcon:'··'},
-  {id:'tsa',  ar:'ثَ', name:'Tsa',   lat:'TSA', dots:'3 titik atas',  speak:'Tsa',    arName:'ثَاء',    dotsIcon:'···'},
-  {id:'jim',  ar:'جَ', name:'Jim',   lat:'JIM', dots:'1 titik dalam', speak:'Jim',    arName:'جِيم',    dotsIcon:'·'},
-  {id:'ha',   ar:'حَ', name:'Ha',    lat:'HA',  dots:'tanpa titik',   speak:'Ha',     arName:'حَاء',    dotsIcon:'○'},
-  {id:'kha',  ar:'خَ', name:'Kha',   lat:'KHA', dots:'1 titik atas',  speak:'Kha',    arName:'خَاء',    dotsIcon:'·'},
-  {id:'dal',  ar:'دَ', name:'Dal',   lat:'DA',  dots:'tanpa titik',   speak:'Dal',    arName:'دَال',    dotsIcon:'○'},
-  {id:'dzal', ar:'ذَ', name:'Dzal',  lat:'DZA', dots:'1 titik atas',  speak:'Dzal',   arName:'ذَال',    dotsIcon:'·'},
-  {id:'ra',   ar:'رَ', name:'Ra',    lat:'RA',  dots:'tanpa titik',   speak:'Ra',     arName:'رَاء',    dotsIcon:'○'},
-  {id:'zai',  ar:'زَ', name:'Zai',   lat:'ZA',  dots:'1 titik atas',  speak:'Zai',    arName:'زَاي',    dotsIcon:'·'},
-  {id:'sin',  ar:'سَ', name:'Sin',   lat:'SA',  dots:'tanpa titik',   speak:'Sin',    arName:'سِين',    dotsIcon:'○'},
-  {id:'syin', ar:'شَ', name:'Syin',  lat:'SYA', dots:'3 titik atas',  speak:'Syin',   arName:'شِين',    dotsIcon:'···'},
-  {id:'shad', ar:'صَ', name:'Shad',  lat:'SHA', dots:'tanpa titik',   speak:'Shad',   arName:'صَاد',    dotsIcon:'○'},
-  {id:'dhad', ar:'ضَ', name:'Dhad',  lat:'DHA', dots:'1 titik atas',  speak:'Dhad',   arName:'ضَاد',    dotsIcon:'·'},
-  {id:'tha',  ar:'طَ', name:'Tha',   lat:'THA', dots:'tanpa titik',   speak:'Tha',    arName:'طَاء',    dotsIcon:'○'},
-  {id:'zha',  ar:'ظَ', name:'Zha',   lat:'ZHA', dots:'1 titik atas',  speak:'Zha',    arName:'ظَاء',    dotsIcon:'·'},
-  {id:'ain',  ar:'عَ', name:"'Ain",  lat:'A\'', dots:'tanpa titik',   speak:'Ain',    arName:'عَيْن',   dotsIcon:'○'},
-  {id:'ghain',ar:'غَ', name:'Ghain', lat:'GHA', dots:'1 titik atas',  speak:'Ghain',  arName:'غَيْن',   dotsIcon:'·'},
-  {id:'fa',   ar:'فَ', name:'Fa',    lat:'FA',  dots:'1 titik atas',  speak:'Fa',     arName:'فَاء',    dotsIcon:'·'},
-  {id:'qaf',  ar:'قَ', name:'Qaf',   lat:'QA',  dots:'2 titik atas',  speak:'Qaf',    arName:'قَاف',    dotsIcon:'··'},
-  {id:'kaf',  ar:'كَ', name:'Kaf',   lat:'KA',  dots:'1 titik dalam', speak:'Kaf',    arName:'كَاف',    dotsIcon:'·'},
-  {id:'lam',  ar:'لَ', name:'Lam',   lat:'LA',  dots:'tanpa titik',   speak:'Lam',    arName:'لَام',    dotsIcon:'○'},
-  {id:'mim',  ar:'مَ', name:'Mim',   lat:'MA',  dots:'1 titik dalam', speak:'Mim',    arName:'مِيم',    dotsIcon:'·'},
-  {id:'nun',  ar:'نَ', name:'Nun',   lat:'NA',  dots:'1 titik atas',  speak:'Nun',    arName:'نُون',    dotsIcon:'·'},
-  {id:'waw',  ar:'وَ', name:'Waw',   lat:'WA',  dots:'tanpa titik',   speak:'Waw',    arName:'وَاو',    dotsIcon:'○'},
-  {id:'ha2',  ar:'هَ', name:"Ha'",   lat:'HA',  dots:'tanpa titik',   speak:'Haa',    arName:'هَاء',    dotsIcon:'○'},
-  {id:'ya',   ar:'يَ', name:'Ya',    lat:'YA',  dots:'2 titik bawah', speak:'Ya',     arName:'يَاء',    dotsIcon:'··'},
-];
+/* ============================================================
+   DATA — 28 huruf hijaiyah
+   ============================================================ */
+const L = [
+  ['ا','أَلِف','Alif','a',  ['أَ','إِ','أُ']],
+  ['ب','بَاء','Ba','b'],   ['ت','تَاء','Ta','t'],   ['ث','ثَاء','Tsa','ts'],
+  ['ج','جِيم','Jim','j'],   ['ح','حَاء','Ha','h'],   ['خ','خَاء','Kha','kh'],
+  ['د','دَال','Dal','d'],   ['ذ','ذَال','Dzal','dz'],['ر','رَاء','Ra','r'],
+  ['ز','زَاي','Zai','z'],   ['س','سِين','Sin','s'],  ['ش','شِين','Syin','sy'],
+  ['ص','صَاد','Shad','sh'], ['ض','ضَاد','Dhad','dh'],['ط','طَاء','Tha','th'],
+  ['ظ','ظَاء','Zha','zh'],  ['ع','عَيْن','Ain','a'],  ['غ','غَيْن','Ghain','gh'],
+  ['ف','فَاء','Fa','f'],    ['ق','قَاف','Qaf','q'],  ['ك','كَاف','Kaf','k'],
+  ['ل','لَام','Lam','l'],   ['م','مِيم','Mim','m'],  ['ن','نُون','Nun','n'],
+  ['و','وَاو','Wau','w'],   ['ه','هَاء','Ha','h'],   ['ي','يَاء','Ya','y']
+].map(r=>({
+  g:r[0], ar:r[1], name:r[2], t:r[3],
+  drill: r[4] || [r[0]+'َ', r[0]+'ِ', r[0]+'ُ'],
+  drillLat:[r[3]+'a', r[3]+'i', r[3]+'u']
+}));
 
-// COLORS — cycling through BabyMo palette
-const COLORS = ['#4A8860','#C89040','#5A80B8','#A05888','#3A8878','#8A6038','#5850A8','#3A7858','#B85038','#5888A0'];
-LETTERS.forEach((l,i) => { l.color = COLORS[i % COLORS.length]; });
-
-// LESSONS — 8 lessons + 1 big exam
-const LESSONS = [
-  {id:'L1', title:'Alif · Ba · Ta · Tsa', emoji:'🌱', letters:['alif','ba','ta','tsa'],     xp:10},
-  {id:'L2', title:'Jim · Ha · Kha',       emoji:'⭐', letters:['jim','ha','kha'],            xp:10},
-  {id:'L3', title:'Dal · Dzal · Ra · Zai',emoji:'⭐', letters:['dal','dzal','ra','zai'],     xp:10},
-  {id:'L4', title:'Ulangan 1–3',          emoji:'🔁', letters:['alif','ba','ta','tsa','jim','ha','kha','dal','dzal','ra','zai'], xp:20, isReview:true},
-  {id:'L5', title:'Sin · Syin · Shad · Dhad', emoji:'⭐', letters:['sin','syin','shad','dhad'], xp:10},
-  {id:'L6', title:'Tha · Zha · Ain · Ghain',  emoji:'⭐', letters:['tha','zha','ain','ghain'],  xp:10},
-  {id:'L7', title:'Fa · Qaf · Kaf · Lam',     emoji:'⭐', letters:['fa','qaf','kaf','lam'],     xp:10},
-  {id:'L8', title:'Mim · Nun · Waw · Ha · Ya', emoji:'⭐', letters:['mim','nun','waw','ha2','ya'],xp:10},
-  {id:'L9', title:'Ujian 28 Huruf! 🏆',         emoji:'🏆', letters:LETTERS.map(l=>l.id),         xp:50, isExam:true},
-];
-
-const CORRECT_MSGS = ['Masya Allah!','Betul! 🌟','Alhamdulillah!','Hebat!','Luar biasa! ✨','Sempurna! 💚'];
-const WRONG_MSGS   = ['Hampir! Coba ingat lagi 🤗','Belum tepat, semangat! 💪','Yuk coba lagi! 🌙'];
-
-// ═══════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════
-let userData     = {xp:0,streak:0,lastDate:'',completed:[]};
-let curLesson    = null;
-let lessonLetters= [];   // Letter objects for current lesson
-let cardIdx      = 0;    // current intro card index
-let questions    = [];   // quiz questions
-let qIdx         = 0;
-let lives        = 3;
-let correct      = 0;
-let sessionXP    = 0;
-let answered     = false;
-let corrMsgI     = 0;
-let qSpeakText   = '';
-
-// ═══════════════════════════════════════════════
-// PERSISTENCE (localStorage)
-// ═══════════════════════════════════════════════
-const LS_KEY = 'babymo_hijaiyah_v2';
-function loadUserData(){
-  try{
-    const raw = localStorage.getItem(LS_KEY);
-    if(raw){ userData = {...userData, ...JSON.parse(raw)}; }
-  }catch(e){}
-}
-function saveUserData(){
-  try{ localStorage.setItem(LS_KEY, JSON.stringify(userData)); }catch(e){}
-}
-
-// ═══════════════════════════════════════════════
-// AUDIO SYSTEM
-// ═══════════════════════════════════════════════
-let audioCtx = null;
-let voices   = [];
-let arabicVoice = null;
-let isSpeaking  = false;
-let speakTimer  = null;
-
-function initAudio(){
-  if(!window.speechSynthesis) return;
-  const load = () => {
-    voices = speechSynthesis.getVoices();
-    arabicVoice = voices.find(v=>v.lang==='ar-SA') ||
-                  voices.find(v=>v.lang==='ar-EG') ||
-                  voices.find(v=>v.lang.startsWith('ar')) || null;
-  };
-  load();
-  if(speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = load;
-}
-
-function speak(text, lang){
-  if(!window.speechSynthesis) return;
-  speechSynthesis.cancel();
-  const utt = new SpeechSynthesisUtterance(text);
-  utt.lang   = lang || (arabicVoice ? 'ar-SA' : 'id-ID');
-  utt.rate   = 0.72;
-  utt.pitch  = 1.1;
-  utt.volume = 1.0;
-  if(arabicVoice && (!lang || lang.startsWith('ar'))) utt.voice = arabicVoice;
-  utt.onstart = () => { isSpeaking=true; setSoundState(true); };
-  utt.onend   = utt.onerror = () => { isSpeaking=false; setSoundState(false); };
-  speechSynthesis.speak(utt);
-}
-
-function stopSpeak(){
-  if(window.speechSynthesis) speechSynthesis.cancel();
-  isSpeaking=false; setSoundState(false);
-}
-
-function setSoundState(playing){
-  const btn = document.getElementById('intrSoundBtn');
-  if(!btn) return;
-  btn.classList.toggle('speaking', playing);
-}
-
-function speakCurrentLetter(){
-  if(!curLesson) return;
-  const lt = lessonLetters[cardIdx];
-  if(!lt) return;
-  // Use Arabic script letter name (arName) for Arabic TTS — this gives natural, correct pronunciation.
-  // Fall back to English romanization for non-Arabic voices.
-  const text = arabicVoice ? lt.arName : lt.speak;
-  speak(text, arabicVoice ? 'ar-SA' : 'id-ID');
-  playTone(523,.08,'sine',.2);
-}
-
-function speakQuizHint(){
-  if(!qSpeakText) return;
-  speak(qSpeakText, arabicVoice ? 'ar-SA' : 'id-ID');
-  playTone(523,.08,'sine',.2);
-}
-
-// Web Audio tones
-function getACtx(){
-  if(!audioCtx){ try{ audioCtx=new(window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
-  return audioCtx;
-}
-function playTone(freq,dur,type='sine',vol=0.22){
-  const ctx=getACtx(); if(!ctx) return;
-  try{
-    const o=ctx.createOscillator(), g=ctx.createGain();
-    o.connect(g); g.connect(ctx.destination);
-    o.type=type; o.frequency.value=freq;
-    g.gain.setValueAtTime(vol,ctx.currentTime);
-    g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+dur);
-    o.start(ctx.currentTime); o.stop(ctx.currentTime+dur);
-  }catch(e){}
-}
-function playCorrect(){
-  playTone(523,.1,'sine',.22);
-  setTimeout(()=>playTone(659,.1,'sine',.22),110);
-  setTimeout(()=>playTone(784,.28,'sine',.22),220);
-}
-function playWrong(){
-  playTone(280,.08,'square',.18);
-  setTimeout(()=>playTone(240,.2,'square',.18),90);
-}
-function playLevelUp(){
-  [523,659,784,1046].forEach((f,i)=>setTimeout(()=>playTone(f,.15,'sine',.2),i*120));
-}
-
-// ═══════════════════════════════════════════════
-// SCREEN NAV
-// ═══════════════════════════════════════════════
-function showScreen(id){
-  stopSpeak();
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.getElementById(id).scrollTop=0;
-}
-function goHome(){
-  updateHomeUI();
-  showScreen('sHome');
-}
-
-// ═══════════════════════════════════════════════
-// WELCOME INIT
-// ═══════════════════════════════════════════════
-function initWelcome(){
-  const strip = document.getElementById('wStrip');
-  strip.innerHTML='';
-  // Show first 10 letters as preview
-  LETTERS.slice(0,10).forEach(lt=>{
-    const d=document.createElement('div');
-    d.className='w-strip-letter';
-    d.textContent=lt.ar;
-    d.style.color=lt.color;
-    strip.appendChild(d);
-  });
-}
-
-// ═══════════════════════════════════════════════
-// HOME UI
-// ═══════════════════════════════════════════════
-function getLessonStatus(lid){
-  if(userData.completed.includes(lid)) return 'done';
-  const idx=LESSONS.findIndex(l=>l.id===lid);
-  if(idx===0) return 'open';
-  if(userData.completed.includes(LESSONS[idx-1]?.id)) return 'open';
-  return 'locked';
-}
-
-function updateHomeUI(){
-  document.getElementById('hStreak').textContent = `🔥 ${userData.streak||0} hari`;
-  document.getElementById('hXPLabel').textContent = `✨ ${userData.xp||0} XP`;
-  const done = userData.completed.length;
-  document.getElementById('hPctLabel').textContent = `${done} / ${LESSONS.length} pelajaran`;
-  const pct = Math.min(100,((userData.xp||0)%100));
-  document.getElementById('hXPBar').style.width = pct+'%';
-  buildLessonPath();
-}
-
-function buildLessonPath(){
-  const path = document.getElementById('lessonPath');
-  path.innerHTML='';
-
-  // Jilid labels
-  const jilidBreaks = {L1:'Jilid 1 — Huruf Dasar (ا–ز)', L5:'Jilid 2 — Huruf Tengah (س–غ)', L8:'Jilid 3 — Huruf Akhir (ف–ي)', L9:'Ujian Besar'};
-
-  LESSONS.forEach((lesson,i)=>{
-    const status = getLessonStatus(lesson.id);
-    const locked = status==='locked';
-    const done   = status==='done';
-
-    if(jilidBreaks[lesson.id]){
-      const lbl=document.createElement('div');
-      lbl.className='jilid-label';
-      lbl.textContent=jilidBreaks[lesson.id];
-      path.appendChild(lbl);
-    }
-
-    const row=document.createElement('div');
-    row.className='lesson-row'+(done?' done':locked?' locked':'');
-    if(!locked) row.onclick=()=>startLesson(lesson);
-
-    const iconDiv=document.createElement('div');
-    iconDiv.className='lesson-icon'+(locked?' locked-icon':done?' done-icon':lesson.isExam?' exam-icon':' open-icon');
-    iconDiv.textContent = locked ? '🔒' : done ? '✅' : lesson.emoji;
-
-    const info=document.createElement('div');
-    info.className='lesson-info';
-    info.innerHTML=`<div class="lesson-title">${lesson.title}</div>
-      <div class="lesson-meta">${lesson.isExam?'Ujian semua 28 huruf':lesson.isReview?'Ulangan · '+lesson.xp+' XP':lesson.letters.length+' huruf · '+lesson.xp+' XP'}</div>`;
-
-    const xpSpan=document.createElement('div');
-    xpSpan.className='lesson-xp';
-    if(done) xpSpan.textContent='+'+lesson.xp;
-
-    row.appendChild(iconDiv);
-    row.appendChild(info);
-    if(done) row.appendChild(xpSpan);
-    path.appendChild(row);
-  });
-
-  // About link at bottom
-  const aboutBtn=document.createElement('button');
-  aboutBtn.style.cssText='margin-top:6px;width:100%;padding:12px;background:var(--card);border:1px solid var(--border);border-radius:14px;font-family:Nunito,sans-serif;font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;';
-  aboutBtn.textContent='Tentang Aplikasi ini →';
-  aboutBtn.onclick=()=>showScreen('sAbout');
-  path.appendChild(aboutBtn);
-
-  // Hub link
-  const hubLink=document.createElement('a');
-  hubLink.href='././index.html';
-  hubLink.style.cssText='margin-top:6px;display:block;text-align:center;font-size:11px;color:var(--cream-dim);text-decoration:none;padding:8px;';
-  hubLink.textContent='← Kembali ke Game Hub';
-  path.appendChild(hubLink);
-}
-
-// ═══════════════════════════════════════════════
-// START LESSON
-// ═══════════════════════════════════════════════
-function startLesson(lesson){
-  curLesson     = lesson;
-  lessonLetters = lesson.letters.map(id=>LETTERS.find(l=>l.id===id));
-  cardIdx       = 0;
-  correct       = 0;
-  sessionXP     = 0;
-  lives         = 3;
-  answered      = false;
-
-  // Update streak
-  const today=new Date().toDateString();
-  if(userData.lastDate!==today){
-    const yest=new Date(); yest.setDate(yest.getDate()-1);
-    if(userData.lastDate===yest.toDateString()){ userData.streak=(userData.streak||0)+1; }
-    else if(userData.lastDate!==today){ userData.streak = userData.lastDate ? 0 : (userData.streak||0); }
-    userData.lastDate=today;
-    saveUserData();
+/* ============================================================
+   SUARA
+   ============================================================ */
+const Speech = {
+  voices:[], ar:null, id:null, chosen:null, rate:0.8, seq:0,
+  init(cb){
+    const load=()=>{
+      this.voices = speechSynthesis.getVoices()||[];
+      this.ar = this.voices.find(v=>/^ar/i.test(v.lang)) || null;
+      this.id = this.voices.find(v=>/^id/i.test(v.lang)) || this.voices.find(v=>/^ms/i.test(v.lang)) || null;
+      this.chosen = this.ar || this.id || this.voices[0] || null;
+      cb && cb();
+    };
+    load();
+    speechSynthesis.onvoiceschanged = load;
+    setTimeout(load, 700);
+  },
+  isArabic(){ return this.chosen && /^ar/i.test(this.chosen.lang); },
+  stop(){ this.seq++; try{speechSynthesis.cancel();}catch(e){} },
+  say(items, done){
+    this.stop();
+    const my = this.seq, useAr = this.isArabic();
+    let i = 0;
+    const next = ()=>{
+      if(my !== this.seq) return;
+      if(i >= items.length){ done && done(); return; }
+      const it = items[i++];
+      const u = new SpeechSynthesisUtterance(useAr ? it.ar : it.lat);
+      u.lang = this.chosen ? this.chosen.lang : 'ar-SA';
+      if(this.chosen) u.voice = this.chosen;
+      u.rate = this.rate; u.pitch = 1.05;
+      u.onend   = ()=>{ if(my===this.seq) setTimeout(next, it.gap!=null?it.gap:220); };
+      u.onerror = ()=>{ if(my===this.seq) setTimeout(next, 260); };
+      try{ speechSynthesis.speak(u); }catch(e){ setTimeout(next,300); }
+    };
+    setTimeout(next, 60);
   }
+};
 
-  showScreen('sIntro');
-  buildDotProgress();
-  loadCard(0);
+/* ============================================================
+   THREE — dunia voxel
+   ============================================================ */
+const SIZE = 44, HALF = SIZE/2, MAXH = 12;
+let scene, cam, renderer, clock;
+const solids = new Set();
+const key = (x,y,z)=>x+','+y+','+z;
+const solidAt = (x,y,z)=>solids.has(key(x,y,z));
+const blockGeo = new THREE.BoxGeometry(1,1,1);
+const blockIndex = new Map();   // key -> {mesh,idx,type,taken}
+const placedBlocks = new Map(); // key -> {mesh,type}
+let MATS = null;
+
+function tex(draw, s, smooth){
+  s = s||32;
+  const c = document.createElement('canvas'); c.width = c.height = s;
+  const x = c.getContext('2d'); draw(x, s);
+  const t = new THREE.CanvasTexture(c);
+  t.magFilter = smooth ? THREE.LinearFilter : THREE.NearestFilter;
+  t.minFilter = THREE.LinearMipMapLinearFilter;
+  t.anisotropy = 4;
+  return t;
 }
-
-function leaveLesson(){
-  stopSpeak();
-  clearTimeout(speakTimer);
-  goHome();
-}
-
-// ═══════════════════════════════════════════════
-// INTRO CARDS
-// ═══════════════════════════════════════════════
-function buildDotProgress(){
-  const dp=document.getElementById('dotProg');
-  dp.innerHTML='';
-  lessonLetters.forEach((_,i)=>{
-    const d=document.createElement('div');
-    d.className='dpd'+(i===0?' active':'');
-    d.id='dpd'+i;
-    dp.appendChild(d);
-  });
-}
-
-function updateDotProgress(){
-  lessonLetters.forEach((_,i)=>{
-    const d=document.getElementById('dpd'+i);
-    if(!d) return;
-    d.className='dpd'+(i<cardIdx?' done':i===cardIdx?' active':'');
-  });
-}
-
-function loadCard(idx){
-  cardIdx=idx;
-  updateDotProgress();
-  const lt=lessonLetters[idx];
-  const total=lessonLetters.length;
-
-  document.getElementById('iCounter').textContent=`Huruf ${idx+1} / ${total}`;
-  document.getElementById('lcLessonTitle').textContent=curLesson.title;
-
-  // Big Arabic letter with animation
-  const arEl=document.getElementById('lcArabic');
-  arEl.style.animation='none';
-  arEl.textContent=lt.ar;
-  arEl.style.color=lt.color;
-  requestAnimationFrame(()=>{ arEl.style.animation='letterIn .4s cubic-bezier(.34,1.56,.64,1)'; });
-
-  document.getElementById('lcName').textContent=lt.name;
-  document.getElementById('lcLat').textContent=lt.lat;
-  document.getElementById('lcDotsIcon').textContent=lt.dotsIcon;
-  document.getElementById('lcDotsText').textContent=lt.dots;
-
-  // Nav button states
-  document.getElementById('intrPrevBtn').textContent = idx===0 ? '✕ Keluar' : '← Sebelumnya';
-  document.getElementById('intrNextBtn').textContent = idx===total-1 ? 'Mulai Kuis! 🎯' : 'Berikutnya →';
-  document.getElementById('intrNextBtn').style.background =
-    idx===total-1 ? 'linear-gradient(135deg,#A07820,#C8A030)' : 'linear-gradient(135deg,var(--green-lt),var(--green))';
-
-  // Auto-speak after short delay
-  clearTimeout(speakTimer);
-  speakTimer = setTimeout(()=>speak(arabicVoice ? lt.arName : lt.speak, arabicVoice?'ar-SA':'id-ID'), 700);
-}
-
-function prevCard(){
-  if(cardIdx===0){ leaveLesson(); return; }
-  loadCard(cardIdx-1);
-}
-
-function nextCard(){
-  if(cardIdx===lessonLetters.length-1){
-    startQuiz();
-  } else {
-    loadCard(cardIdx+1);
-  }
-}
-
-// ═══════════════════════════════════════════════
-// QUIZ
-// ═══════════════════════════════════════════════
-function shuffle(a){ return [...a].sort(()=>Math.random()-.5); }
-
-function makeQuestions(letterIds){
-  const pool=letterIds.map(id=>LETTERS.find(l=>l.id===id));
-  const qs=[];
-  pool.forEach(lt=>{
-    const wrongs=shuffle(LETTERS.filter(l=>l.id!==lt.id)).slice(0,3);
-    // Type A: see Arabic → pick name (4 name choices)
-    qs.push({type:'name', arabic:lt.ar, nameDisplay:'', correct:lt.name,
-      choices:shuffle([lt.name,...wrongs.map(l=>l.name)]), lt, speakText: lt.arName || lt.speak});
-    // Type B: see name → pick Arabic (4 Arabic choices)
-    qs.push({type:'letter', arabic:'', nameDisplay:lt.name, correct:lt.ar,
-      choices:shuffle([lt.ar,...wrongs.map(l=>l.ar)]), lt, speakText: lt.arName || lt.speak});
-  });
-  return shuffle(qs).slice(0, Math.min(10, qs.length));
-}
-
-function startQuiz(){
-  questions=makeQuestions(curLesson.letters);
-  qIdx=0; correct=0; lives=3; sessionXP=0; answered=false;
-  showScreen('sQuiz');
-  renderHearts();
-  loadQuestion(0);
-}
-
-function renderHearts(){
-  const hc=document.getElementById('qHearts');
-  hc.innerHTML='';
-  for(let i=0;i<3;i++){
-    const s=document.createElement('span');
-    s.style.fontSize='15px';
-    s.textContent=i<lives?'❤️':'🖤';
-    hc.appendChild(s);
-  }
-}
-
-function loadQuestion(qi){
-  qIdx=qi; answered=false;
-  const q=questions[qi];
-  const isName=q.type==='name';
-
-  // Progress bar
-  document.getElementById('qProgFill').style.width=((qi/questions.length)*100)+'%';
-
-  // Question card content
-  document.getElementById('qLabel').textContent = isName ? 'Huruf ini namanya?' : 'Manakah huruf '+q.nameDisplay+'?';
-  const arEl=document.getElementById('qArabicBig');
-  const nmEl=document.getElementById('qNameBig');
-  if(isName){
-    arEl.style.display='block'; arEl.textContent=q.arabic; arEl.style.color=q.lt.color;
-    arEl.style.animation='none';
-    requestAnimationFrame(()=>{ arEl.style.animation='letterIn .35s cubic-bezier(.34,1.56,.64,1)'; });
-    nmEl.style.display='none';
-  } else {
-    nmEl.style.display='block'; nmEl.textContent=q.nameDisplay;
-    nmEl.style.animation='none';
-    requestAnimationFrame(()=>{ nmEl.style.animation='letterIn .35s cubic-bezier(.34,1.56,.64,1)'; });
-    arEl.style.display='none';
-  }
-
-  // Sound hint
-  qSpeakText=q.speakText;
-  const qsMo=document.getElementById('qMoWrap');
-  qsMo.style.display='none';
-
-  // Sound hint button
-  const hint=document.getElementById('qSoundHint');
-  hint.style.display = isName ? 'inline-flex' : 'inline-flex';
-  hint.textContent='🔊 Dengar "'+q.lt.name+'"';
-
-  // Hide feedback
-  const fb=document.getElementById('feedbackBar');
-  fb.className='feedback-bar';
-
-  // Build choices
-  const grid=document.getElementById('choicesGrid');
-  grid.innerHTML='';
-  grid.className='choices-grid '+(isName?'name-grid':'letter-grid');
-
-  q.choices.forEach(ch=>{
-    const btn=document.createElement('button');
-    btn.className='choice-btn'+(isName?' name-choice':'');
-    btn.textContent=ch;
-    if(!isName) btn.style.color=q.choices.indexOf(ch)>=0 ? q.lt.color : 'var(--gold-lt)';
-    btn.onclick=()=>handleAnswer(btn, ch, q);
-    grid.appendChild(btn);
-  });
-
-  // Auto-speak for letter type (hear the name, then find the Arabic)
-  clearTimeout(speakTimer);
-  if(!isName){
-    speakTimer=setTimeout(()=>speak(q.speakText, arabicVoice?'ar-SA':'id-ID'), 500);
-  }
-}
-
-function handleAnswer(btn, choice, q){
-  if(answered) return;
-  answered=true;
-
-  const all=document.querySelectorAll('.choice-btn');
-  all.forEach(b=>b.classList.add('disabled'));
-
-  const isCorrect = choice===q.correct;
-  const fb=document.getElementById('feedbackBar');
-  const qsMo=document.getElementById('qMoWrap');
-  qsMo.style.display='block';
-
-  if(isCorrect){
-    correct++; sessionXP+=5;
-    btn.classList.add('correct');
-    fb.className='feedback-bar fb-correct show';
-    document.getElementById('fbIcon').textContent='✅';
-    document.getElementById('fbTitle').textContent=CORRECT_MSGS[corrMsgI++%CORRECT_MSGS.length];
-    document.getElementById('fbSub').textContent=q.lt.name+' · '+q.lt.ar+' · '+q.lt.dots;
-    setMoExpr('happy');
-    playCorrect();
-    if(window.BabyMo&&BabyMo.react)BabyMo.react('correct');
-    spawnParticles(6);
-    speak(q.speakText, arabicVoice?'ar-SA':'id-ID');
-  } else {
-    lives=Math.max(0,lives-1);
-    renderHearts();
-    if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
-    btn.classList.add('wrong');
-    // Show correct
-    all.forEach(b=>{ if(b.textContent===q.correct) b.classList.add('correct'); });
-    fb.className='feedback-bar fb-wrong show';
-    document.getElementById('fbIcon').textContent='🔄';
-    document.getElementById('fbTitle').textContent=WRONG_MSGS[Math.floor(Math.random()*WRONG_MSGS.length)];
-    document.getElementById('fbSub').textContent='Yang benar: '+q.lt.ar+' = '+q.lt.name;
-    setMoExpr('worried');
-    playWrong();
-  }
-
-  const isLast=qIdx>=questions.length-1;
-  document.querySelector('.fb-next').textContent = isLast ? '🌟 Lihat Hasil!' : 'Lanjut →';
-}
-
-function nextQuestion(){
-  if(qIdx+1>=questions.length){
-    finishLesson();
-  } else {
-    loadQuestion(qIdx+1);
-    setMoExpr('normal');
-  }
-}
-
-function setMoExpr(expr){
-  const m=document.getElementById('qMouth');
-  const el=document.getElementById('qEyeL');
-  const er=document.getElementById('qEyeR');
-  if(!m) return;
-  if(expr==='happy'){
-    m.setAttribute('d','M 31 62 Q 40 72 49 62');
-    el&&el.setAttribute('r','4'); er&&er.setAttribute('r','4');
-  } else if(expr==='worried'){
-    m.setAttribute('d','M 33 68 Q 40 63 47 68');
-    el&&el.setAttribute('r','5'); er&&er.setAttribute('r','5');
-  } else {
-    m.setAttribute('d','M 31 64 Q 40 72 49 64');
-    el&&el.setAttribute('r','4.5'); er&&er.setAttribute('r','4.5');
-  }
-}
-
-// ═══════════════════════════════════════════════
-// FINISH LESSON
-// ═══════════════════════════════════════════════
-function finishLesson(){
-  const total=questions.length;
-  const pct=Math.round((correct/Math.max(1,total))*100);
-  const stars=pct>=90?3:pct>=60?2:1;
-  const earnedXP=curLesson.xp+sessionXP;
-
-  // Update userData
-  const newCompleted=[...new Set([...userData.completed, curLesson.id])];
-  userData.xp=(userData.xp||0)+earnedXP;
-  userData.completed=newCompleted;
-  saveUserData();
-
-  // Result screen
-  const titles={1:'Terus Berlatih! 🌱',2:'Alhamdulillah! ✨',3:'Masya Allah! 🌟'};
-  const subs  ={1:'Jangan menyerah ya, Baby Mo percaya kamu bisa!',2:'Bagus sekali! Terus belajar ya!',3:'Sempurna! Kamu jagoan huruf Arab! 🏆'};
-
-  document.getElementById('resTitle').textContent=titles[stars];
-  document.getElementById('resSub').textContent  =subs[stars];
-  document.getElementById('resScore').textContent=pct+'%';
-  document.getElementById('resXP').textContent   ='+'+earnedXP;
-  document.getElementById('resStreak').textContent=(userData.streak||0)+'🔥';
-
-  // Recap letters
-  const rg=document.getElementById('resLetterGrid');
-  rg.innerHTML='';
-  lessonLetters.forEach(lt=>{
-    const item=document.createElement('div');
-    item.className='rlr-item';
-    item.innerHTML=`<span class="rlr-ar" style="color:${lt.color}">${lt.ar}</span><span class="rlr-nm">${lt.name}</span>`;
-    rg.appendChild(item);
-  });
-
-  // Next lesson button
-  const nextIdx=LESSONS.findIndex(l=>l.id===curLesson.id)+1;
-  const nextBtn=document.getElementById('resNextBtn');
-  if(nextIdx<LESSONS.length){
-    nextBtn.textContent='Pelajaran Berikutnya →';
-  } else {
-    nextBtn.textContent='🏆 Tamat! Kembali ke Menu';
-  }
-
-  showScreen('sResult');
-  ['rs1','rs2','rs3'].forEach(id=>document.getElementById(id).classList.remove('lit'));
-  for(let i=1;i<=stars;i++){
-    setTimeout(()=>document.getElementById('rs'+i).classList.add('lit'), 300+(i-1)*350);
-  }
-  spawnParticles(stars*9);
-  if(stars===3) setTimeout(()=>playLevelUp(),400);
-}
-
-function goNextLesson(){
-  const nextIdx=LESSONS.findIndex(l=>l.id===curLesson.id)+1;
-  if(nextIdx<LESSONS.length){
-    startLesson(LESSONS[nextIdx]);
-  } else {
-    goHome();
-  }
-}
-
-// ═══════════════════════════════════════════════
-// PARTICLES & TOAST
-// ═══════════════════════════════════════════════
-function spawnParticles(n){
-  const g=['⭐','✨','🌙','💚','🌟','✦','🎉'];
+function speck(x,s,colors,n){
   for(let i=0;i<n;i++){
-    setTimeout(()=>{
-      const p=document.createElement('div');
-      p.className='particle';
-      p.textContent=g[Math.floor(Math.random()*g.length)];
-      const dur=2+Math.random()*2;
-      p.style.cssText=`left:${Math.random()*96}vw;top:-30px;font-size:${10+Math.random()*16}px;animation-duration:${dur}s;`;
-      document.body.appendChild(p);
-      setTimeout(()=>p.remove(),dur*1000+100);
-    }, i*70);
+    x.fillStyle = colors[(Math.random()*colors.length)|0];
+    const w = 2+((Math.random()*3)|0);
+    x.fillRect((Math.random()*s)|0,(Math.random()*s)|0,w,w);
+  }
+}
+const T = {};
+const HOTBAR = ['grassTop','dirt','stone','sand','wood','leaf'];
+const HOTBAR_LABEL = {grassTop:'Rumput',dirt:'Tanah',stone:'Batu',sand:'Pasir',wood:'Kayu',leaf:'Daun'};
+function buildTextures(){
+  T.grassTop = tex((x,s)=>{x.fillStyle='#6CBF4F';x.fillRect(0,0,s,s);speck(x,s,['#7FD05E','#5CA842','#84D967'],46);});
+  T.grassSide= tex((x,s)=>{x.fillStyle='#9A6B44';x.fillRect(0,0,s,s);speck(x,s,['#8A5D3A','#A97A50'],34);
+    x.fillStyle='#6CBF4F';x.fillRect(0,0,s,s*0.28);
+    for(let i=0;i<s;i+=3){x.fillStyle='#5CA842';x.fillRect(i,s*0.28,2,2+((Math.random()*4)|0));}});
+  T.dirt = tex((x,s)=>{x.fillStyle='#9A6B44';x.fillRect(0,0,s,s);speck(x,s,['#8A5D3A','#A97A50','#7C5231'],42);});
+  T.stone= tex((x,s)=>{x.fillStyle='#8D949B';x.fillRect(0,0,s,s);speck(x,s,['#7E858C','#9DA4AB','#767D84'],40);});
+  T.sand = tex((x,s)=>{x.fillStyle='#E6D3A2';x.fillRect(0,0,s,s);speck(x,s,['#DCC793','#EFDDB0'],36);});
+  T.wood = tex((x,s)=>{x.fillStyle='#8A5C38';x.fillRect(0,0,s,s);
+    for(let i=0;i<s;i+=4){x.fillStyle=i%8?'#7B5131':'#96683F';x.fillRect(i,0,2,s);}});
+  T.leaf = tex((x,s)=>{x.fillStyle='#4F9E48';x.fillRect(0,0,s,s);speck(x,s,['#5FB055','#438A3D','#68BB5D'],52);});
+  T.glow = tex((x,s)=>{
+    const g = x.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+    g.addColorStop(0,'rgba(255,216,116,.85)'); g.addColorStop(1,'rgba(255,216,116,0)');
+    x.fillStyle=g; x.fillRect(0,0,s,s);
+  },64,true);
+}
+function letterTex(letter){
+  return tex((x,s)=>{
+    const g = x.createLinearGradient(0,0,s,s);
+    g.addColorStop(0,'#FFF9E8'); g.addColorStop(1,'#FBE7B8');
+    x.fillStyle=g; x.fillRect(0,0,s,s);
+    x.strokeStyle='#E0B84D'; x.lineWidth=s*0.075; x.strokeRect(x.lineWidth/2,x.lineWidth/2,s-x.lineWidth,s-x.lineWidth);
+    x.fillStyle='#12261F'; x.textAlign='center'; x.textBaseline='middle';
+    x.font = 'bold '+Math.round(s*0.6)+'px "Traditional Arabic","Amiri","Noto Naskh Arabic",serif';
+    x.fillText(letter.g, s/2, s*0.46);
+    x.fillStyle='#1FA971'; x.font='bold '+Math.round(s*0.115)+'px system-ui,sans-serif';
+    x.fillText(letter.name.toUpperCase(), s/2, s*0.87);
+  }, 256, true);
+}
+
+function heightAt(x,z){
+  const h = 3
+    + 1.7*Math.sin(x*0.21)*Math.cos(z*0.18)
+    + 1.1*Math.sin((x+z)*0.11)
+    + 0.8*Math.cos(x*0.07 - z*0.09);
+  return Math.max(1, Math.min(MAXH, Math.round(h)));
+}
+
+const letterBlocks = [];
+const spots = [];
+
+function planSpots(){
+  for(let i=0;i<L.length;i++){
+    const a = 0.6 + i/L.length * Math.PI*2*2.4;
+    const r = 8 + (i/L.length)*11;
+    spots.push([Math.round(Math.cos(a)*r), Math.round(Math.sin(a)*r)]);
+  }
+}
+const nearSpot = (x,z)=>spots.some(s=>Math.abs(s[0]-x)<4 && Math.abs(s[1]-z)<4);
+
+function buildWorld(){
+  const cells = {grassTop:[],dirt:[],stone:[],sand:[],wood:[],leaf:[]};
+  for(let x=-HALF;x<HALF;x++){
+    for(let z=-HALF;z<HALF;z++){
+      const edge = Math.max(Math.abs(x),Math.abs(z)) >= HALF-1;
+      const h = edge ? heightAt(x,z)+2 : heightAt(x,z);
+      for(let y=0;y<=h;y++){
+        solids.add(key(x,y,z));
+        if(edge && y>h-2) cells.stone.push([x,y,z]);
+        else if(y===h) cells.grassTop.push([x,y,z]);
+        else if(y>h-3) cells.dirt.push([x,y,z]);
+        else cells.stone.push([x,y,z]);
+      }
+    }
+  }
+  let seed = 7;
+  const rr = ()=> (seed = (seed*9301+49297)%233280)/233280;
+  for(let i=0;i<26;i++){
+    const x = Math.round((rr()-0.5)*(SIZE-8));
+    const z = Math.round((rr()-0.5)*(SIZE-8));
+    if(Math.hypot(x,z) < 5 || nearSpot(x,z)) continue;
+    const h = heightAt(x,z), th = 3+((rr()*2)|0);
+    for(let y=h+1;y<=h+th;y++){ solids.add(key(x,y,z)); cells.wood.push([x,y,z]); }
+    for(let dx=-2;dx<=2;dx++)for(let dz=-2;dz<=2;dz++)for(let dy=0;dy<=2;dy++){
+      if(Math.abs(dx)+Math.abs(dz)+dy > 3) continue;
+      const px=x+dx, py=h+th+dy, pz=z+dz;
+      if(solidAt(px,py,pz)) continue;
+      solids.add(key(px,py,pz)); cells.leaf.push([px,py,pz]);
+    }
+  }
+  for(let x=-3;x<=3;x++)for(let z=-3;z<=3;z++){
+    if(x*x+z*z>11) continue;
+    const h = heightAt(x,z);
+    cells.grassTop = cells.grassTop.filter(c=>!(c[0]===x&&c[1]===h&&c[2]===z));
+    cells.sand.push([x,h,z]);
+  }
+
+  const mats = {
+    grassTop:[T.grassSide,T.grassSide,T.grassTop,T.dirt,T.grassSide,T.grassSide]
+      .map(m=>new THREE.MeshLambertMaterial({map:m})),
+    dirt : new THREE.MeshLambertMaterial({map:T.dirt}),
+    stone: new THREE.MeshLambertMaterial({map:T.stone}),
+    sand : new THREE.MeshLambertMaterial({map:T.sand}),
+    wood : new THREE.MeshLambertMaterial({map:T.wood}),
+    leaf : new THREE.MeshLambertMaterial({map:T.leaf})
+  };
+  MATS = mats;
+  const m4 = new THREE.Matrix4();
+  for(const k in cells){
+    const list = cells[k]; if(!list.length) continue;
+    const im = new THREE.InstancedMesh(blockGeo, mats[k], list.length);
+    list.forEach((c,i)=>{
+      im.setMatrixAt(i, m4.makeTranslation(c[0]+0.5, c[1]+0.5, c[2]+0.5));
+      blockIndex.set(key(c[0],c[1],c[2]), {mesh:im, idx:i, type:k, taken:false});
+    });
+    im.instanceMatrix.needsUpdate = true;
+    im.frustumCulled = false;
+    scene.add(im);
+  }
+}
+const HIDE_POS = new THREE.Vector3(0,-2000,0);
+const HIDE_Q = new THREE.Quaternion();
+const HIDE_S = new THREE.Vector3(0.0001,0.0001,0.0001);
+function hideInstance(rec){
+  const m = new THREE.Matrix4().compose(HIDE_POS, HIDE_Q, HIDE_S);
+  rec.mesh.setMatrixAt(rec.idx, m);
+  rec.mesh.instanceMatrix.needsUpdate = true;
+}
+
+function placeLetters(){
+  const geo = new THREE.BoxGeometry(0.92,0.92,0.92);
+  L.forEach((letter,i)=>{
+    const x = spots[i][0], z = spots[i][1];
+    const y = heightAt(x,z) + 1;
+    const mat = new THREE.MeshLambertMaterial({map:letterTex(letter), emissive:0x2a2000, emissiveIntensity:0.35});
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(x+0.5, y+0.9, z+0.5);
+    scene.add(mesh);
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow, transparent:true, depthWrite:false}));
+    glow.scale.set(2.2,2.2,1);
+    glow.position.set(x+0.5, y+0.2, z+0.5);
+    scene.add(glow);
+    letterBlocks.push({letter, mesh, glow, i, base:y+0.9, taken:false});
+  });
+}
+
+function initThree(){
+  scene = new THREE.Scene();
+  scene.fog = new THREE.Fog(0xDDF1E6, 30, 66);
+  cam = new THREE.PerspectiveCamera(66, innerWidth/innerHeight, 0.1, 200);
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+  renderer.setSize(innerWidth, innerHeight);
+  document.body.appendChild(renderer.domElement);
+  scene.add(new THREE.HemisphereLight(0xFFF6E0, 0x5A7A55, 1.0));
+  const sun = new THREE.DirectionalLight(0xFFF3D2, 0.8);
+  sun.position.set(28,46,16); scene.add(sun);
+  clock = new THREE.Clock();
+  buildTextures(); planSpots(); buildWorld(); placeLetters();
+  buildPlayerModel(); buildCompanionModel();
+  loadWorld();
+  const cv = renderer.domElement;
+  cv.addEventListener('click', ()=>{
+    if(!running) return;
+    if(!isTouch && document.pointerLockElement !== cv){ cv.requestPointerLock(); return; }
+    if(!isTouch) mineTarget();
+  });
+  cv.addEventListener('contextmenu', e=>{ e.preventDefault(); if(running && !isTouch) placeTarget(); });
+  addEventListener('mousemove', e=>{
+    if(document.pointerLockElement !== cv) return;
+    P.yaw -= e.movementX*0.0022;
+    P.pitch = Math.max(-0.9, Math.min(1.0, P.pitch - e.movementY*0.0022));
+  });
+  addEventListener('resize', ()=>{
+    cam.aspect = innerWidth/innerHeight; cam.updateProjectionMatrix();
+    renderer.setSize(innerWidth, innerHeight);
+  });
+}
+
+/* ============================================================
+   MODEL VOXEL — PEMAIN (gaya petualang blocky) & TEMAN (Baby Mo)
+   ============================================================ */
+let playerGroup, playerParts, moGroup, moParts;
+function buildPlayerModel(){
+  const g = new THREE.Group();
+  const skin  = new THREE.MeshLambertMaterial({color:0xE8B892});
+  const shirt = new THREE.MeshLambertMaterial({color:0x2E8E86});
+  const pants = new THREE.MeshLambertMaterial({color:0x35406B});
+  const shoe  = new THREE.MeshLambertMaterial({color:0x2B2320});
+
+  const head = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), skin);
+  head.position.y = 1.5; g.add(head);
+
+  const hair = new THREE.Mesh(new THREE.BoxGeometry(0.52,0.14,0.52), new THREE.MeshLambertMaterial({color:0x3A2A1E}));
+  hair.position.y = 1.72; g.add(hair);
+
+  const torso = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.68,0.3), shirt);
+  torso.position.y = 1.06; g.add(torso);
+
+  const mkLimb = (geo, mat, x, y)=>{
+    const m = new THREE.Mesh(geo, mat);
+    m.geometry = geo.clone();
+    m.geometry.translate(0, -geo.parameters.height/2, 0);
+    m.position.set(x, y, 0);
+    g.add(m);
+    return m;
+  };
+  const armGeo = new THREE.BoxGeometry(0.17,0.62,0.17);
+  const legGeo = new THREE.BoxGeometry(0.19,0.68,0.19);
+  const armL = mkLimb(armGeo, skin, -0.33, 1.38);
+  const armR = mkLimb(armGeo, skin,  0.33, 1.38);
+  const legL = mkLimb(legGeo, pants, -0.12, 0.72);
+  const legR = mkLimb(legGeo, pants,  0.12, 0.72);
+  const shoeL = new THREE.Mesh(new THREE.BoxGeometry(0.2,0.1,0.24), shoe);
+  shoeL.position.set(-0.12,0.05,0.02); g.add(shoeL);
+  const shoeR = shoeL.clone(); shoeR.position.x = 0.12; g.add(shoeR);
+
+  g.position.set(P.x, P.y, P.z);
+  scene.add(g);
+  playerGroup = g;
+  playerParts = {armL, armR, legL, legR};
+}
+function buildCompanionModel(){
+  const g = new THREE.Group();
+  const bodyMat = new THREE.MeshLambertMaterial({color:0x2C8A5E});
+  const legMat  = new THREE.MeshLambertMaterial({color:0xE0B84D});
+  const body = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.36), bodyMat);
+  body.position.y = 0.52; g.add(body);
+
+  const mkLimb = (x)=>{
+    const geo = new THREE.BoxGeometry(0.16,0.32,0.16);
+    geo.translate(0,-0.16,0);
+    const m = new THREE.Mesh(geo, legMat);
+    m.position.set(x, 0.27, 0);
+    g.add(m);
+    return m;
+  };
+  const legL = mkLimb(-0.14), legR = mkLimb(0.14);
+
+  let face = null;
+  try{
+    const faceTex = new THREE.TextureLoader().load('baby-mo-poses/baby-mo-pose-05.png');
+    face = new THREE.Sprite(new THREE.SpriteMaterial({map:faceTex, transparent:true}));
+    face.scale.set(0.85,0.85,1);
+    face.position.y = 1.02;
+    g.add(face);
+  }catch(e){}
+
+  g.position.set(P.x-1.6, P.y, P.z+1.1);
+  scene.add(g);
+  moGroup = g;
+  moParts = {legL, legR, face};
+  moState.x = g.position.x; moState.z = g.position.z; moState.y = g.position.y;
+}
+const moState = {x:0,y:0,z:0};
+
+/* ============================================================
+   PEMAIN — gerak & fisika
+   ============================================================ */
+const P = { x:0.5, y:heightAt(0,0)+1, z:5.5, vy:0, yaw:Math.PI, pitch:0.35, ground:true };
+const keys = {};
+const move = {x:0, y:0};
+let running = false;
+
+function hits(x,y,z){
+  const x0=Math.floor(x-0.3), x1=Math.floor(x+0.3);
+  const y0=Math.floor(y+0.05),y1=Math.floor(y+1.6);
+  const z0=Math.floor(z-0.3), z1=Math.floor(z+0.3);
+  for(let a=x0;a<=x1;a++)for(let b=y0;b<=y1;b++)for(let c=z0;c<=z1;c++)
+    if(solidAt(a,b,c)) return true;
+  return false;
+}
+
+let lastSpeed = 0;
+function step(dt){
+  const sp = 4.4;
+  let fx = 0, fz = 0;
+  if(keys['w']||keys['arrowup']) fz -= 1;
+  if(keys['s']||keys['arrowdown']) fz += 1;
+  if(keys['a']||keys['arrowleft']) fx -= 1;
+  if(keys['d']||keys['arrowright']) fx += 1;
+  fx += move.x; fz += move.y;
+  const len = Math.hypot(fx,fz);
+  if(len>1){ fx/=len; fz/=len; }
+  lastSpeed = len;
+
+  const sin = Math.sin(P.yaw), cos = Math.cos(P.yaw);
+  const dx = ( fx*cos + fz*sin) * sp * dt;
+  const dz = (-fx*sin + fz*cos) * sp * dt;
+
+  const ox = P.x, oz = P.z;
+  P.x += dx;
+  if(hits(P.x,P.y,P.z)){ P.x = ox; if(P.ground && !hits(ox+dx, P.y+1.05, oz)) P.vy = 6.6; }
+  P.z += dz;
+  if(hits(P.x,P.y,P.z)){ P.z = oz; if(P.ground && !hits(P.x, P.y+1.05, oz+dz)) P.vy = 6.6; }
+
+  P.vy -= 24*dt;
+  if(P.vy < -30) P.vy = -30;
+  P.y += P.vy*dt;
+  P.ground = false;
+  if(hits(P.x,P.y,P.z)){
+    if(P.vy <= 0){ P.y = Math.ceil(P.y); P.ground = true; }
+    else P.y = Math.floor(P.y+1.6) - 1.6 - 0.02;
+    P.vy = 0;
+  }
+  if(P.y < -8){ P.x=0.5; P.z=5.5; P.y=heightAt(0,0)+2; P.vy=0; }
+
+  const lim = HALF - 2.4;
+  P.x = Math.max(-lim, Math.min(lim, P.x));
+  P.z = Math.max(-lim, Math.min(lim, P.z));
+}
+function jump(){ if(P.ground){ P.vy = 8.2; P.ground = false; } }
+
+function updateCamera(){
+  const dist = 5.2, height = 1.15;
+  const horiz = dist*Math.cos(P.pitch);
+  const camX = P.x + Math.sin(P.yaw)*horiz;
+  const camZ = P.z + Math.cos(P.yaw)*horiz;
+  let camY = P.y + height + dist*Math.sin(P.pitch);
+  const floorY = heightAt(camX,camZ)+0.7;
+  if(camY < floorY) camY = floorY;
+  cam.position.set(camX, camY, camZ);
+  cam.lookAt(P.x, P.y+1.15, P.z);
+}
+function updatePlayerModel(dt,t){
+  playerGroup.position.set(P.x, P.y, P.z);
+  playerGroup.rotation.y = P.yaw;
+  const amt = Math.min(1, lastSpeed) * (P.ground?1:0.4);
+  const swing = Math.sin(t*9)*0.55*amt;
+  playerParts.armL.rotation.x = swing;
+  playerParts.armR.rotation.x = -swing;
+  playerParts.legL.rotation.x = -swing;
+  playerParts.legR.rotation.x = swing;
+}
+function updateCompanion(dt,t){
+  const tx = P.x + Math.sin(P.yaw+0.7)*1.9;
+  const tz = P.z + Math.cos(P.yaw+0.7)*1.9;
+  const k = Math.min(1, dt*2.4);
+  moState.x += (tx-moState.x)*k;
+  moState.z += (tz-moState.z)*k;
+  const gy = heightAt(moState.x, moState.z);
+  moState.y += (gy-moState.y)*Math.min(1,dt*5);
+  moGroup.position.set(moState.x, moState.y + Math.sin(t*2.4)*0.05, moState.z);
+  const ang = Math.atan2(P.x-moState.x, P.z-moState.z);
+  moGroup.rotation.y = ang;
+  const moving = Math.hypot(tx-moState.x, tz-moState.z) > 0.08;
+  const swing = moving ? Math.sin(t*8)*0.5 : 0;
+  moParts.legL.rotation.x = swing; moParts.legR.rotation.x = -swing;
+}
+
+/* ============================================================
+   GALI & BANGUN
+   ============================================================ */
+const inv = {grassTop:14, dirt:14, stone:14, sand:10, wood:12, leaf:10};
+let selectedSlot = 0;
+function raycastVoxel(origin, dir, maxDist){
+  const step = 0.08;
+  let px=origin.x, py=origin.y, pz=origin.z, before=null;
+  for(let t=0;t<maxDist;t+=step){
+    const x=Math.floor(px), y=Math.floor(py), z=Math.floor(pz);
+    if(solidAt(x,y,z)) return {x,y,z,before};
+    before = {x,y,z};
+    px += dir.x*step; py += dir.y*step; pz += dir.z*step;
+  }
+  return null;
+}
+function playerOccupies(x,y,z){
+  const x0=Math.floor(P.x-0.3), x1=Math.floor(P.x+0.3);
+  const y0=Math.floor(P.y+0.05),y1=Math.floor(P.y+1.6);
+  const z0=Math.floor(P.z-0.3), z1=Math.floor(P.z+0.3);
+  return x>=x0&&x<=x1&&y>=y0&&y<=y1&&z>=z0&&z<=z1;
+}
+function mineTarget(){
+  const dir = new THREE.Vector3(); cam.getWorldDirection(dir);
+  const hit = raycastVoxel(cam.position, dir, 6);
+  if(!hit){ toast('Tidak ada balok di sana'); return; }
+  const {x,y,z} = hit;
+  if(y<=0){ toast('Sudah sampai dasar pulau'); return; }
+  const k = key(x,y,z);
+  let type = null;
+  if(placedBlocks.has(k)){
+    const rec = placedBlocks.get(k);
+    scene.remove(rec.mesh);
+    placedBlocks.delete(k);
+    type = rec.type;
+  }else if(blockIndex.has(k) && !blockIndex.get(k).taken){
+    const rec = blockIndex.get(k);
+    hideInstance(rec); rec.taken = true;
+    type = rec.type;
+  }else return;
+  solids.delete(k);
+  inv[type] = (inv[type]||0)+1;
+  updateHotbar(); saveWorld();
+}
+function placeTarget(){
+  const dir = new THREE.Vector3(); cam.getWorldDirection(dir);
+  const hit = raycastVoxel(cam.position, dir, 6);
+  if(!hit || !hit.before){ toast('Arahkan ke tempat kosong'); return; }
+  const {x,y,z} = hit.before;
+  if(y<0 || y>MAXH+3 || Math.abs(x)>=HALF || Math.abs(z)>=HALF) return;
+  const k = key(x,y,z);
+  if(solidAt(x,y,z) || playerOccupies(x,y,z)) return;
+  const type = HOTBAR[selectedSlot];
+  if((inv[type]||0)<=0){ toast('Balok habis, gali dulu ya!'); return; }
+  const mesh = new THREE.Mesh(blockGeo, MATS[type]);
+  mesh.position.set(x+0.5, y+0.5, z+0.5);
+  scene.add(mesh);
+  placedBlocks.set(k, {mesh, type});
+  solids.add(k);
+  inv[type]--;
+  updateHotbar(); saveWorld();
+}
+
+/* ============================================================
+   HURUF — kuil harta karun (tanpa urutan, tanpa paksaan)
+   ============================================================ */
+const collected = new Set();
+function proximity(){
+  if(!running) return;
+  for(const b of letterBlocks){
+    if(b.taken) continue;
+    const d = Math.hypot(b.mesh.position.x-P.x, b.mesh.position.z-P.z);
+    const dy = Math.abs(b.base-(P.y+0.9));
+    if(d<1.5 && dy<2.2) collectLetter(b);
+  }
+}
+function collectLetter(b){
+  b.taken = true; b.mesh.visible = false; b.glow.visible = false;
+  collected.add(b.i);
+  updateJournalBadge();
+  toast('✨ Ditemukan: '+b.letter.name+' — '+b.letter.ar);
+  Speech.say([{ar:b.letter.ar, lat:b.letter.name}]);
+  saveWorld();
+  if(collected.size === L.length){
+    setTimeout(()=>toast('🏆 Semua 28 huruf hijaiyah ditemukan, hebat Ibra!'), 1700);
   }
 }
 
-let toastT;
-function showToast(e,t){
-  clearTimeout(toastT);
-  document.getElementById('toastE').textContent=e;
-  document.getElementById('toastT').textContent=t;
-  const el=document.getElementById('toast');
-  el.classList.add('show');
-  toastT=setTimeout(()=>el.classList.remove('show'),1400);
+/* ============================================================
+   PENYIMPANAN
+   ============================================================ */
+const SAVE_KEY = 'bm-pulau-hijaiyah-v1';
+function saveWorld(){
+  try{
+    const mined = [];
+    blockIndex.forEach((rec,k)=>{ if(rec.taken) mined.push(k); });
+    const placed = [];
+    placedBlocks.forEach((rec,k)=>{ placed.push(k+'|'+rec.type); });
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv }));
+  }catch(e){}
+}
+function loadWorld(){
+  try{
+    const raw = localStorage.getItem(SAVE_KEY);
+    if(!raw) return;
+    const data = JSON.parse(raw);
+    (data.collected||[]).forEach(i=>{
+      const b = letterBlocks[i]; if(!b) return;
+      b.taken = true; b.mesh.visible = false; b.glow.visible = false; collected.add(i);
+    });
+    (data.mined||[]).forEach(k=>{
+      const rec = blockIndex.get(k);
+      if(rec && !rec.taken){ hideInstance(rec); rec.taken = true; solids.delete(k); }
+    });
+    (data.placed||[]).forEach(entry=>{
+      const [k,type] = entry.split('|');
+      if(!MATS[type]) return;
+      const [x,y,z] = k.split(',').map(Number);
+      if(solidAt(x,y,z)) return;
+      const mesh = new THREE.Mesh(blockGeo, MATS[type]);
+      mesh.position.set(x+0.5,y+0.5,z+0.5);
+      scene.add(mesh);
+      placedBlocks.set(k,{mesh,type});
+      solids.add(k);
+    });
+    if(data.inv) Object.assign(inv, data.inv);
+  }catch(e){}
 }
 
-// ═══════════════════════════════════════════════
-// BOOT
-// ═══════════════════════════════════════════════
+/* ============================================================
+   HUD
+   ============================================================ */
+const $ = s=>document.querySelector(s);
+const veil = { start:$('#vStart'), journal:$('#vJournal'), menu:$('#vMenu') };
+function toast(msg){
+  const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('on'), 2000);
+}
+function updateJournalBadge(){ $('#jCount').textContent = collected.size+' / '+L.length; }
+function buildHotbar(){
+  const el = $('#hotbar'); el.innerHTML = '';
+  HOTBAR.forEach((type,i)=>{
+    const d = document.createElement('button');
+    d.type = 'button'; d.className = 'slot'+(i===selectedSlot?' active':'');
+    d.style.backgroundImage = 'url('+T[type].image.toDataURL()+')';
+    d.title = HOTBAR_LABEL[type];
+    const b = document.createElement('b'); b.textContent = inv[type]||0;
+    d.appendChild(b);
+    d.onclick = ()=>{ selectedSlot = i; updateHotbar(); };
+    el.appendChild(d);
+  });
+}
+function updateHotbar(){
+  const el = $('#hotbar');
+  [...el.children].forEach((d,i)=>{
+    d.classList.toggle('active', i===selectedSlot);
+    d.querySelector('b').textContent = inv[HOTBAR[i]]||0;
+  });
+}
+function buildJournal(){
+  const grid = $('#journalGrid'); grid.innerHTML = '';
+  L.forEach((letter,i)=>{
+    const c = document.createElement('button');
+    c.type = 'button';
+    const isOn = collected.has(i);
+    c.className = 'jcell'+(isOn?'':' locked');
+    c.innerHTML = isOn
+      ? '<div class="g">'+letter.g+'</div><div class="l">'+letter.name+'</div>'
+      : '<div class="g">?</div>';
+    c.onclick = ()=>{
+      if(!collected.has(i)){ toast('Belum ditemukan — cari terus ya!'); return; }
+      Speech.say([{ar:letter.ar,lat:letter.name},{ar:letter.drill.join(' ، '),lat:letter.drillLat.join(', '),gap:150}]);
+    };
+    grid.appendChild(c);
+  });
+}
+
+/* ============================================================
+   INPUT
+   ============================================================ */
+const isTouch = matchMedia('(hover:none) and (pointer:coarse)').matches;
+if(!isTouch) document.body.classList.add('desktop');
+
+addEventListener('keydown', e=>{
+  keys[e.key.toLowerCase()] = true;
+  if(e.code === 'Space'){ e.preventDefault(); jump(); }
+  if(e.key === 'Escape' && running) openMenu();
+});
+addEventListener('keyup', e=>{ keys[e.key.toLowerCase()] = false; });
+
 (function(){
-  // Starfield
-  const bg=document.getElementById('starsBg');
-  const cs=['✦','·','✧','*'];
-  for(let i=0;i<32;i++){
-    const s=document.createElement('i');
-    s.textContent=cs[i%cs.length];
-    s.style.cssText=`left:${Math.random()*98}%;top:${Math.random()*98}%;font-size:${5+Math.random()*7}px;--d:${2+Math.random()*4}s;--dl:${Math.random()*3}s;`;
-    bg.appendChild(s);
-  }
-  loadUserData();
-  initAudio();
-  initWelcome();
+  const el = $('#stick'), knob = $('#knob');
+  let id = null, cx = 0, cy = 0;
+  const R = 50;
+  el.addEventListener('touchstart', e=>{
+    const t = e.changedTouches[0]; id = t.identifier;
+    const r = el.getBoundingClientRect(); cx = r.left+r.width/2; cy = r.top+r.height/2;
+    e.preventDefault();
+  }, {passive:false});
+  el.addEventListener('touchmove', e=>{
+    for(const t of e.changedTouches){
+      if(t.identifier !== id) continue;
+      let dx = t.clientX-cx, dy = t.clientY-cy;
+      const d = Math.hypot(dx,dy) || 1;
+      const k = Math.min(1, d/R);
+      dx = dx/d*k; dy = dy/d*k;
+      move.x = dx; move.y = dy;
+      knob.style.transform = 'translate('+(dx*R)+'px,'+(dy*R)+'px)';
+    }
+    e.preventDefault();
+  }, {passive:false});
+  const end = e=>{
+    for(const t of e.changedTouches) if(t.identifier === id){
+      id = null; move.x = move.y = 0; knob.style.transform = '';
+    }
+  };
+  el.addEventListener('touchend', end); el.addEventListener('touchcancel', end);
 })();
+
+(function(){
+  let id = null, lx = 0, ly = 0;
+  addEventListener('touchstart', e=>{
+    if(!running) return;
+    for(const t of e.changedTouches){
+      if(t.clientX < innerWidth*0.42) continue;
+      if(t.target.closest('button, .panel')) continue;
+      id = t.identifier; lx = t.clientX; ly = t.clientY; break;
+    }
+  }, {passive:true});
+  addEventListener('touchmove', e=>{
+    for(const t of e.changedTouches){
+      if(t.identifier !== id) continue;
+      P.yaw -= (t.clientX-lx)*0.0055;
+      P.pitch = Math.max(-0.9, Math.min(1.0, P.pitch - (t.clientY-ly)*0.0055));
+      lx = t.clientX; ly = t.clientY;
+    }
+  }, {passive:true});
+  const end = e=>{ for(const t of e.changedTouches) if(t.identifier===id) id = null; };
+  addEventListener('touchend', end); addEventListener('touchcancel', end);
+})();
+
+$('#btnJump').addEventListener('touchstart', e=>{ e.preventDefault(); jump(); }, {passive:false});
+$('#btnJump').addEventListener('click', jump);
+$('#btnMine').addEventListener('touchstart', e=>{ e.preventDefault(); if(running) mineTarget(); }, {passive:false});
+$('#btnMine').addEventListener('click', ()=>{ if(running) mineTarget(); });
+$('#btnPlace').addEventListener('touchstart', e=>{ e.preventDefault(); if(running) placeTarget(); }, {passive:false});
+$('#btnPlace').addEventListener('click', ()=>{ if(running) placeTarget(); });
+
+/* ============================================================
+   UI wiring
+   ============================================================ */
+function fillVoices(sel){
+  sel.innerHTML = '';
+  const list = Speech.voices.filter(v=>/^(ar|id|ms|en)/i.test(v.lang));
+  (list.length?list:Speech.voices).forEach(v=>{
+    const o = document.createElement('option');
+    o.value = v.name; o.textContent = (/^ar/i.test(v.lang)?'🕌 ':'') + v.name + ' (' + v.lang + ')';
+    sel.appendChild(o);
+  });
+  if(Speech.chosen) sel.value = Speech.chosen.name;
+}
+function syncVoiceUI(){
+  fillVoices($('#selVoice')); fillVoices($('#selVoice2'));
+  const w = $('#voiceWarn');
+  if(!Speech.ar){
+    w.style.display = 'block';
+    w.innerHTML = '<b>Belum ada suara Arab di perangkat ini.</b> Sementara memakai suara Indonesia dengan ejaan latin (ba, bi, bu). Untuk suara asli: pasang bahasa Arab di pengaturan sistem (Android: Setelan → Bahasa → tambah <i>العربية</i>; iOS/Mac: Settings → Accessibility → Spoken Content → Voices → Arabic).';
+  } else w.style.display = 'none';
+}
+function pickVoice(name){
+  Speech.chosen = Speech.voices.find(v=>v.name===name) || Speech.chosen;
+  $('#selVoice').value = $('#selVoice2').value = Speech.chosen ? Speech.chosen.name : '';
+}
+$('#selVoice').onchange = e=>pickVoice(e.target.value);
+$('#selVoice2').onchange = e=>pickVoice(e.target.value);
+$('#rngRate').oninput = e=>{ Speech.rate = +e.target.value; $('#rngRate2').value = e.target.value; };
+$('#rngRate2').oninput = e=>{ Speech.rate = +e.target.value; $('#rngRate').value = e.target.value; };
+
+$('#btnPlay').onclick = ()=>{
+  veil.start.classList.remove('on');
+  running = true;
+  buildHotbar(); updateHotbar(); updateJournalBadge();
+  Speech.say([{ar:'بِسْمِ اللهِ', lat:'Bismillah'}]);
+  setTimeout(()=>toast('Jelajahi pulau, gali & bangun sesukamu ✨'), 900);
+};
+$('#btnBack').onclick = ()=>{ location.href = 'index.html'; };
+$('#btnJournal').onclick = ()=>{ buildJournal(); running=false; veil.journal.classList.add('on'); };
+$('#btnCloseJournal').onclick = ()=>{ veil.journal.classList.remove('on'); running=true; };
+
+function openMenu(){
+  running = false; Speech.stop();
+  document.exitPointerLock && document.exitPointerLock();
+  $('#selVoice2').value = $('#selVoice').value; $('#rngRate2').value = Speech.rate;
+  veil.menu.classList.add('on');
+}
+$('#btnMenu').onclick = openMenu;
+$('#btnResume').onclick = ()=>{ veil.menu.classList.remove('on'); running = true; };
+$('#btnReset').onclick = ()=>{
+  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+  location.reload();
+};
+
+/* ============================================================
+   LOOP
+   ============================================================ */
+function tick(){
+  requestAnimationFrame(tick);
+  const dt = Math.min(0.05, clock.getDelta());
+  const t = performance.now()/1000;
+
+  if(running){ step(dt); proximity(); }
+  updatePlayerModel(dt,t);
+  updateCompanion(dt,t);
+  updateCamera();
+
+  letterBlocks.forEach((b,i)=>{
+    if(!b.mesh.visible) return;
+    b.mesh.rotation.y += dt*0.7;
+    b.mesh.position.y = b.base + Math.sin(t*1.6 + i)*0.12;
+    b.glow.material.opacity = 0.55 + 0.25*Math.sin(t*1.6+i);
+  });
+
+  renderer.render(scene, cam);
+}
+
+/* ============================================================
+   MULAI
+   ============================================================ */
+initThree();
+Speech.init(syncVoiceUI);
+tick();
 </script>
-<script src="/bm-kit.js" defer></script>
 </body>
 </html>
