@@ -161,6 +161,7 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
   <div class="set" style="border:none"><span>Kecepatan bicara</span><input id="rngRate2" type="range" min="0.5" max="1.1" step="0.05" value="0.8"></div>
   <button class="btn ghost" id="btnToggleSfx">🔊 Efek Suara: Aktif</button>
   <button class="btn ghost" id="btnToggleFly">🚶 Mode Jalan (bukan Terbang)</button>
+  <button class="btn gold" id="btnShare">📸 Bagikan Pulauku</button>
   <button class="btn" id="btnResume">Lanjut Main</button>
   <a class="btn ghost" id="btnHome" href="index.html" style="display:block;text-decoration:none;text-align:center">← Kembali ke Beranda</a>
   <button class="btn ghost" id="btnReset">Ulangi dari Awal (hapus progres)</button>
@@ -626,7 +627,7 @@ function initThree(){
   scene = new THREE.Scene();
   scene.fog = new THREE.Fog(0xDDF1E6, 30, 66);
   cam = new THREE.PerspectiveCamera(66, innerWidth/innerHeight, 0.1, 200);
-  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true});
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true, preserveDrawingBuffer:true});
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(innerWidth, innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -1166,9 +1167,9 @@ function loadWorld(){
    ============================================================ */
 const $ = s=>document.querySelector(s);
 const veil = { start:$('#vStart'), journal:$('#vJournal'), menu:$('#vMenu') };
-function toast(msg){
+function toast(msg, ms){
   const t = $('#toast'); t.textContent = msg; t.classList.add('on');
-  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('on'), 2000);
+  clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('on'), ms||2000);
 }
 function updateJournalBadge(){ $('#jCount').textContent = collected.size+' / '+L.length; }
 function buildHotbar(){
@@ -1207,6 +1208,98 @@ function buildJournal(){
     };
     grid.appendChild(c);
   });
+}
+
+/* ============================================================
+   BAGIKAN — kartu bermerek dari cuplikan pulau sungguhan
+   ============================================================ */
+function dataURLtoFile(dataURL, name){
+  const parts = dataURL.split(',');
+  const mime = (parts[0].match(/:(.*?);/)||[])[1] || 'image/png';
+  const bstr = atob(parts[1]);
+  let n = bstr.length;
+  const u8 = new Uint8Array(n);
+  while(n--) u8[n] = bstr.charCodeAt(n);
+  return new File([u8], name, {type:mime});
+}
+function buildShareCardDataURL(){
+  const shotCanvas = renderer.domElement;
+  const W = 1080, H = 1350;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d');
+  x.fillStyle = '#0A2118'; x.fillRect(0,0,W,H);
+  const shotH = Math.round(H*0.7);
+  const sw = shotCanvas.width, sh = shotCanvas.height;
+  if(sw>0 && sh>0){
+    const scale = Math.max(W/sw, shotH/sh);
+    const dw = sw*scale, dh = sh*scale;
+    x.drawImage(shotCanvas, (W-dw)/2, (shotH-dh)/2, dw, dh);
+  }
+  const g = x.createLinearGradient(0,shotH,0,H);
+  g.addColorStop(0,'#0F2016'); g.addColorStop(1,'#0A1811');
+  x.fillStyle = g; x.fillRect(0,shotH,W,H-shotH);
+  x.fillStyle = 'rgba(224,184,77,.6)'; x.fillRect(0,shotH,W,3);
+  x.textAlign = 'center';
+  x.fillStyle = '#E0B84D';
+  x.font = '800 34px Nunito, system-ui, sans-serif';
+  x.fillText('🌙 BABY MO', W/2, shotH+70);
+  x.fillStyle = '#F2F7F2';
+  x.font = '900 54px Nunito, system-ui, sans-serif';
+  x.fillText('Pulau Hijaiyah', W/2, shotH+140);
+  x.fillStyle = '#9FB5A8';
+  x.font = '700 30px Nunito, system-ui, sans-serif';
+  const wname = currentWeaponTier>=0 ? WEAPON_TIERS[currentWeaponTier].name : 'Belum ada senjata';
+  x.fillText('📖 '+collected.size+' / '+L.length+' huruf ditemukan  ·  ⚔️ '+wname, W/2, shotH+195);
+  x.fillStyle = '#E0B84D';
+  x.font = '900 30px Nunito, system-ui, sans-serif';
+  x.fillText('play.babymo.id', W/2, H-38);
+  return c.toDataURL('image/png');
+}
+function shareBuild(){
+  try{
+    const url = 'https://play.babymo.id/babymo-hijaiyah.html';
+    const text = '🌙 Pulau Hijaiyah — Baby Mo\nIbra sudah temukan '+collected.size+'/'+L.length+' huruf hijaiyah sambil membangun pulaunya sendiri!\n'+url+'\n#BabyMo #BelajarIslam';
+    const dataURL = buildShareCardDataURL();
+    const file = dataURL ? dataURLtoFile(dataURL, 'pulau-hijaiyah.png') : null;
+    if(file && navigator.canShare && navigator.canShare({files:[file]}) && navigator.share){
+      navigator.share({files:[file], text, title:'Pulau Hijaiyah'}).catch(()=>{});
+      return;
+    }
+    if(navigator.share){
+      navigator.share({title:'Pulau Hijaiyah', text, url}).catch(()=>{});
+      return;
+    }
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(()=>toast('📋 Tautan disalin!'));
+      return;
+    }
+    window.open('https://wa.me/?text='+encodeURIComponent(text), '_blank');
+  }catch(e){ toast('Gagal membagikan, coba lagi ya'); }
+}
+
+/* ============================================================
+   AJAKAN MEMBANGUN — Baby Mo sesekali kasih ide, bukan target
+   ============================================================ */
+const BUILD_PROMPTS = [
+  '🏠 Baby Mo: "Yuk coba bangun rumah kecil!"',
+  '🕌 Baby Mo: "Bangun masjid mini, gimana?"',
+  '🌉 Baby Mo: "Bikin jembatan di atas air, yuk!"',
+  '🗼 Baby Mo: "Coba bangun menara paling tinggi!"',
+  '🌳 Baby Mo: "Tanam \'taman\' kecil di sekitar sini!"',
+  '🚧 Baby Mo: "Buat pagar sekeliling rumahmu!"',
+  '⛺ Baby Mo: "Bikin tenda buat istirahat, seru tuh!"'
+];
+let nextBuildPromptAt = 75;
+const usedPromptIdx = new Set();
+function maybeBuildPrompt(t){
+  if(!running || t < nextBuildPromptAt) return;
+  nextBuildPromptAt = t + 100 + Math.random()*60;
+  if(usedPromptIdx.size >= BUILD_PROMPTS.length) usedPromptIdx.clear();
+  let idx;
+  do{ idx = Math.floor(Math.random()*BUILD_PROMPTS.length); }
+  while(usedPromptIdx.has(idx) && usedPromptIdx.size < BUILD_PROMPTS.length-1);
+  usedPromptIdx.add(idx);
+  toast(BUILD_PROMPTS[idx], 3400);
 }
 
 /* ============================================================
@@ -1332,6 +1425,7 @@ function updateToggleButtons(){
   $('#btnToggleFly').textContent = flyMode ? '🕊️ Mode Terbang: Aktif' : '🚶 Mode Jalan (bukan Terbang)';
 }
 $('#btnToggleSfx').onclick = ()=>{ sfxOn = !sfxOn; if(sfxOn) SFX.warm(); updateToggleButtons(); saveWorld(); };
+$('#btnShare').onclick = ()=>{ shareBuild(); };
 $('#btnToggleFly').onclick = ()=>{
   flyMode = !flyMode;
   updateToggleButtons();
@@ -1362,6 +1456,7 @@ function tick(){
   const t = performance.now()/1000;
 
   if(running){ step(dt); proximity(t); }
+  maybeBuildPrompt(t);
   visY += (P.y - visY) * Math.min(1, dt*14);
   updatePlayerModel(dt,t);
   updateCompanion(dt,t);
