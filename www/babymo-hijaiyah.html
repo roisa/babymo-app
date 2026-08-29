@@ -326,7 +326,14 @@ const Music = (function(){
 /* ============================================================
    THREE — dunia voxel
    ============================================================ */
-const SIZE = 44, HALF = SIZE/2, MAXH = 12;
+const SIZE = 44, HALF = SIZE/2, MAXH = 24;
+const PEAK = {x:13, z:-12, r:6, h:13};
+const CAVE_HILL = {x:-13, z:9, r:4.5, h:6};
+function bump(x,z,b){
+  const dx=x-b.x, dz=z-b.z, d2=dx*dx+dz*dz;
+  if(d2 > b.r*b.r*4) return 0;
+  return b.h*Math.exp(-d2/(2*b.r*b.r));
+}
 let scene, cam, renderer, clock, hemiLight, sunLight;
 const solids = new Set();
 const key = (x,y,z)=>x+','+y+','+z;
@@ -435,6 +442,29 @@ function buildTextures(){
       x.strokeStyle='rgba(0,0,0,.15)'; x.lineWidth=2; x.strokeRect(1,1,s-2,s-2);
     }, 32, true);
   });
+  T.fish = tex((x,s)=>{
+    x.clearRect(0,0,s,s);
+    x.fillStyle='#7FC8E8';
+    x.beginPath(); x.ellipse(s*0.42,s*0.5,s*0.28,s*0.14,0,0,Math.PI*2); x.fill();
+    x.beginPath(); x.moveTo(s*0.14,s*0.5); x.lineTo(s*0.0,s*0.34); x.lineTo(s*0.0,s*0.66); x.closePath(); x.fill();
+    x.fillStyle='#fff'; x.beginPath(); x.arc(s*0.58,s*0.46,s*0.035,0,Math.PI*2); x.fill();
+  },32,true);
+  T.rain = tex((x,s)=>{
+    x.clearRect(0,0,s,s);
+    const g = x.createLinearGradient(0,0,0,s);
+    g.addColorStop(0,'rgba(191,227,240,0)'); g.addColorStop(0.5,'rgba(191,227,240,.9)'); g.addColorStop(1,'rgba(191,227,240,0)');
+    x.fillStyle=g; x.fillRect(s*0.42,0,s*0.16,s);
+  },16,true);
+  T.rainbow = tex((x,s)=>{
+    x.clearRect(0,0,s,s);
+    const colors=['#FF6B6B','#FFB86B','#FFE66B','#6BFF9E','#6BC6FF','#8F6BFF'];
+    const cx=s/2, cy=s*1.05;
+    colors.forEach((c,i)=>{
+      x.strokeStyle=c; x.lineWidth=s*0.045; x.globalAlpha=0.85;
+      x.beginPath(); x.arc(cx,cy, s*0.62-i*s*0.05, Math.PI, 2*Math.PI); x.stroke();
+    });
+    x.globalAlpha=1;
+  },256,true);
 }
 function letterTex(letter){
   return tex((x,s)=>{
@@ -451,10 +481,11 @@ function letterTex(letter){
 }
 
 function heightAt(x,z){
-  const h = 3
+  let h = 3
     + 1.7*Math.sin(x*0.21)*Math.cos(z*0.18)
     + 1.1*Math.sin((x+z)*0.11)
     + 0.8*Math.cos(x*0.07 - z*0.09);
+  h += bump(x,z,PEAK) + bump(x,z,CAVE_HILL);
   return Math.max(1, Math.min(MAXH, Math.round(h)));
 }
 
@@ -470,14 +501,34 @@ function planSpots(){
 }
 const nearSpot = (x,z)=>spots.some(s=>Math.abs(s[0]-x)<4 && Math.abs(s[1]-z)<4);
 
+function caveCarveSet(){
+  const carved = new Set();
+  const ex = CAVE_HILL.x - 5, ez = CAVE_HILL.z;
+  const baseY = Math.max(1, heightAt(ex,ez) - 1);
+  for(let i=0;i<7;i++){
+    const cx = ex + i;
+    for(let dy=0;dy<=1;dy++)
+      for(let dw=-1;dw<=1;dw++)
+        carved.add(key(cx, baseY+dy, ez+dw));
+  }
+  const chx = ex+7;
+  for(let dx2=0;dx2<=2;dx2++)for(let dz2=-2;dz2<=2;dz2++)for(let dy2=0;dy2<=2;dy2++)
+    carved.add(key(chx+dx2, baseY+dy2, ez+dz2));
+  return { carved, baseY, chamber:{x:chx+1, y:baseY+1, z:ez} };
+}
+let caveInfo = null;
 function buildWorld(){
   const cells = {grassTop:[],dirt:[],stone:[],sand:[],wood:[],leaf:[]};
+  caveInfo = caveCarveSet();
+  const carved = caveInfo.carved;
   for(let x=-HALF;x<HALF;x++){
     for(let z=-HALF;z<HALF;z++){
       const edge = Math.max(Math.abs(x),Math.abs(z)) >= HALF-1;
       const h = edge ? heightAt(x,z)+2 : heightAt(x,z);
       for(let y=0;y<=h;y++){
-        solids.add(key(x,y,z));
+        const k = key(x,y,z);
+        if(carved.has(k)) continue;
+        solids.add(k);
         if(edge && y>h-2) cells.stone.push([x,y,z]);
         else if(y===h) cells.grassTop.push([x,y,z]);
         else if(y>h-3) cells.dirt.push([x,y,z]);
@@ -572,6 +623,134 @@ function placeLetters(){
     scene.add(glow);
     letterBlocks.push({letter, mesh, glow, i, base:y+0.9, taken:false});
   });
+}
+
+/* ============================================================
+   PENANDA — puncak yang bisa didaki & gua kecil untuk dijelajahi
+   ============================================================ */
+let peakVisited = false, caveVisited = false;
+function buildLandmarks(){
+  const py = heightAt(PEAK.x, PEAK.z);
+  const pole = new THREE.Mesh(new THREE.CylinderGeometry(0.08,0.1,3,6), new THREE.MeshLambertMaterial({color:0x8A5C38}));
+  pole.position.set(PEAK.x+0.5, py+1+1.5, PEAK.z+0.5);
+  scene.add(pole);
+  const flag = new THREE.Mesh(new THREE.PlaneGeometry(1.1,0.7), new THREE.MeshLambertMaterial({color:0xE0B84D, side:THREE.DoubleSide}));
+  flag.position.set(PEAK.x+0.5+0.55, py+1+2.4, PEAK.z+0.5);
+  scene.add(flag);
+  const peakGlow = new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow, color:0xFFD874, transparent:true, depthWrite:false}));
+  peakGlow.scale.set(3,3,1);
+  peakGlow.position.set(PEAK.x+0.5, py+1+2.2, PEAK.z+0.5);
+  scene.add(peakGlow);
+
+  const mouthGlow = new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow, color:0xFFC98A, transparent:true, depthWrite:false, opacity:0.6}));
+  mouthGlow.scale.set(1.6,1.6,1);
+  mouthGlow.position.set(caveInfo.chamber.x-6.5, caveInfo.baseY+1, caveInfo.chamber.z+0.5);
+  scene.add(mouthGlow);
+  const caveLight = new THREE.PointLight(0xFFA860, 0.9, 8);
+  caveLight.position.set(caveInfo.chamber.x+0.5, caveInfo.chamber.y+0.6, caveInfo.chamber.z+0.5);
+  scene.add(caveLight);
+}
+function updateLandmarks(){
+  if(!peakVisited){
+    const d = Math.hypot(P.x-(PEAK.x+0.5), P.z-(PEAK.z+0.5));
+    if(d < 2.5 && P.y > heightAt(PEAK.x,PEAK.z)-1){
+      peakVisited = true;
+      toast('⛰️ Sampai di puncak! Pemandangannya keren ya~', 3200);
+      SFX.weaponUp(); saveWorld();
+    }
+  }
+  if(!caveVisited){
+    const d = Math.hypot(P.x-(caveInfo.chamber.x+0.5), P.z-(caveInfo.chamber.z+0.5));
+    if(d < 3 && Math.abs(P.y-caveInfo.chamber.y) < 3){
+      caveVisited = true;
+      toast('🕯️ Ketemu gua rahasia! Ada yang bersinar di sini~', 3200);
+      SFX.weaponUp(); saveWorld();
+    }
+  }
+}
+
+/* ============================================================
+   PULAU JAUH & IKAN — dunia terasa lebih luas
+   ============================================================ */
+function buildDistantIslands(){
+  const geo = new THREE.SphereGeometry(1,8,6);
+  const mat = new THREE.MeshLambertMaterial({color:0x6CBF4F});
+  [[55,-40,6],[-58,35,8],[24,58,5],[-62,-30,7]].forEach(([ix,iz,isize])=>{
+    const m = new THREE.Mesh(geo, mat);
+    m.scale.set(isize, isize*0.32, isize);
+    m.position.set(ix, 0.4, iz);
+    scene.add(m);
+  });
+}
+const fishes = [];
+function buildFish(){
+  for(let i=0;i<10;i++){
+    const a = Math.random()*Math.PI*2, r = HALF+4+Math.random()*20;
+    const home = {x:Math.cos(a)*r, z:Math.sin(a)*r};
+    const mat = new THREE.SpriteMaterial({map:T.fish, transparent:true, depthWrite:false});
+    const spr = new THREE.Sprite(mat);
+    spr.scale.set(0.5,0.25,1);
+    spr.position.set(home.x, 1.35+Math.random()*0.15, home.z);
+    scene.add(spr);
+    fishes.push({spr, home, phase:Math.random()*10, dir:Math.random()<0.5?1:-1});
+  }
+}
+function updateFish(dt,t){
+  fishes.forEach(f=>{
+    const ang = t*0.3*f.dir + f.phase;
+    f.spr.position.x = f.home.x + Math.cos(ang)*3;
+    f.spr.position.z = f.home.z + Math.sin(ang)*3;
+    f.spr.material.rotation = -ang - (f.dir>0?Math.PI/2:-Math.PI/2);
+  });
+}
+
+/* ============================================================
+   CUACA — hujan sesekali, lalu pelangi
+   ============================================================ */
+const RAIN_COUNT = 55;
+const rainDrops = [];
+let rainbowSprite = null;
+function buildWeather(){
+  const geo = new THREE.PlaneGeometry(1,1);
+  for(let i=0;i<RAIN_COUNT;i++){
+    const mat = new THREE.SpriteMaterial({map:T.rain, transparent:true, depthWrite:false, opacity:0});
+    const m = new THREE.Sprite(mat);
+    m.scale.set(0.06,0.6,1);
+    scene.add(m);
+    rainDrops.push({ spr:m, ox:(Math.random()-0.5)*16, oz:(Math.random()-0.5)*16, y:Math.random()*10 });
+  }
+  const rbMat = new THREE.SpriteMaterial({map:T.rainbow, transparent:true, depthWrite:false, opacity:0});
+  rainbowSprite = new THREE.Sprite(rbMat);
+  rainbowSprite.scale.set(70,35,1);
+  rainbowSprite.position.set(0,20,-72);
+  scene.add(rainbowSprite);
+}
+let rainActive=false, rainUntil=0, nextWeatherCheck=45, rainbowUntil=0;
+function updateWeather(dt,t){
+  if(t > nextWeatherCheck){
+    nextWeatherCheck = t + 55 + Math.random()*70;
+    if(!rainActive && Math.random()<0.4){
+      rainActive = true; rainUntil = t + 22 + Math.random()*14;
+      toast('🌧️ Hujan turun sebentar...', 2400);
+    }
+  }
+  if(rainActive && t > rainUntil){
+    rainActive = false;
+    const dayT = (t % DAY_CYCLE) / DAY_CYCLE;
+    if(dayT < 0.5){ rainbowUntil = t + 14; toast('🌈 Lihat, ada pelangi!', 2600); }
+  }
+  const targetOpacity = rainActive ? 0.55 : 0;
+  const k = Math.min(1, dt*3);
+  rainDrops.forEach(d=>{
+    d.spr.material.opacity += (targetOpacity - d.spr.material.opacity)*k;
+    if(rainActive){
+      d.y -= dt*9;
+      if(d.y < 0) d.y = 10;
+      d.spr.position.set(P.x+d.ox, visY+d.y, P.z+d.oz);
+    }
+  });
+  const rbTarget = (t < rainbowUntil) ? 0.85 : 0;
+  rainbowSprite.material.opacity += (rbTarget - rainbowSprite.material.opacity) * Math.min(1, dt*1.5);
 }
 
 let waterMesh = null;
@@ -702,6 +881,7 @@ function initThree(){
   clock = new THREE.Clock();
   buildTextures(); planSpots(); buildWorld(); placeLetters();
   buildWater(); buildClouds(); buildButterflies(); buildCritters(); buildSky();
+  buildLandmarks(); buildDistantIslands(); buildFish(); buildWeather();
   buildPlayerModel(); buildCompanionModel();
   loadWorld();
   const cv = renderer.domElement;
@@ -1013,6 +1193,7 @@ let lastSpeed = 0;
 let visY = P.y;
 let flyMode = false;
 let landKick = 0;
+let edgeNotified = false;
 function step(dt){
   const wasGrounded = P.ground;
   const sp = flyMode ? 5.6 : 4.4;
@@ -1067,8 +1248,15 @@ function step(dt){
   }
 
   const lim = HALF - 2.4;
-  P.x = Math.max(-lim, Math.min(lim, P.x));
-  P.z = Math.max(-lim, Math.min(lim, P.z));
+  const cx = Math.max(-lim, Math.min(lim, P.x));
+  const cz = Math.max(-lim, Math.min(lim, P.z));
+  if((cx !== P.x || cz !== P.z) && !edgeNotified){
+    edgeNotified = true;
+    toast('🏝️ Ini ujung pulaunya! Baliklah ke tengah yuk~', 2600);
+  } else if(Math.abs(P.x) < lim-1.5 && Math.abs(P.z) < lim-1.5){
+    edgeNotified = false;
+  }
+  P.x = cx; P.z = cz;
 }
 function jump(){
   if(flyMode) return;
@@ -1276,7 +1464,7 @@ function saveWorld(){
     const placed = [];
     placedBlocks.forEach((rec,k)=>{ placed.push(k+'|'+rec.type); });
     const petIdx = tamedCritter ? critters.indexOf(tamedCritter) : -1;
-    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv, flyMode, sfxOn, musicOn, petIdx, petName: tamedCritter ? tamedCritter.name : null }));
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv, flyMode, sfxOn, musicOn, petIdx, petName: tamedCritter ? tamedCritter.name : null, peakVisited, caveVisited }));
   }catch(e){}
 }
 function loadWorld(){
@@ -1312,6 +1500,8 @@ function loadWorld(){
       pet.tamed = true; pet.name = data.petName || PET_NAMES[0];
       tamedCritter = pet;
     }
+    if(typeof data.peakVisited === 'boolean') peakVisited = data.peakVisited;
+    if(typeof data.caveVisited === 'boolean') caveVisited = data.caveVisited;
     updateWeapon(false);
   }catch(e){}
 }
@@ -1620,7 +1810,7 @@ function tick(){
   const dt = Math.min(0.05, clock.getDelta());
   const t = performance.now()/1000;
 
-  if(running){ step(dt); proximity(t); }
+  if(running){ step(dt); proximity(t); updateLandmarks(); }
   maybeBuildPrompt(t);
   visY += (P.y - visY) * Math.min(1, dt*14);
   landKick *= Math.max(0, 1 - dt*9);
@@ -1629,6 +1819,8 @@ function tick(){
   updateCritters(dt,t);
   updateBursts(dt);
   updateSky(dt,t);
+  updateFish(dt,t);
+  updateWeather(dt,t);
   updateCamera();
 
   letterBlocks.forEach((b,i)=>{
