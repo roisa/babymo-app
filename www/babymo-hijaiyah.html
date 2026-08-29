@@ -933,7 +933,7 @@ function buildPlayerModel(){
   const skin  = new THREE.MeshLambertMaterial({color:0xE8B892});
   const shirt = new THREE.MeshLambertMaterial({color:0x1FA971});
   const shirtTrim = new THREE.MeshLambertMaterial({color:0xFFD874});
-  const pants = new THREE.MeshLambertMaterial({color:0x0F2F22});
+  const pants = new THREE.MeshLambertMaterial({color:0x5A4A32});
   const shoe  = new THREE.MeshLambertMaterial({color:0x2B2320});
   const hairMat = new THREE.MeshLambertMaterial({color:0x3A2A1E});
   const beltMat = new THREE.MeshLambertMaterial({color:0x9B6818});
@@ -956,8 +956,8 @@ function buildPlayerModel(){
 
   const torso = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.68,0.3), shirt);
   torso.position.y = 1.06; upper.add(torso);
-  const collar = new THREE.Mesh(new THREE.BoxGeometry(0.52,0.06,0.32), shirtTrim);
-  collar.position.y = 1.38; upper.add(collar);
+  const collar = new THREE.Mesh(new THREE.BoxGeometry(0.53,0.06,0.32), shirtTrim);
+  collar.position.y = 1.2; upper.add(collar); // just under the head (head bottom is y=1.25) so it isn't buried inside it
   const belt = new THREE.Mesh(new THREE.BoxGeometry(0.52,0.08,0.32), beltMat);
   belt.position.y = 0.72; upper.add(belt);
 
