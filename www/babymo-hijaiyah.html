@@ -912,6 +912,9 @@ function playerFaceTex(){
     x.fillStyle='rgba(255,148,138,.32)';
     x.beginPath(); x.arc(s*0.2,s*0.58,s*0.09,0,Math.PI*2); x.fill();
     x.beginPath(); x.arc(s*0.8,s*0.58,s*0.09,0,Math.PI*2); x.fill();
+    x.strokeStyle='#3A2A1E'; x.lineWidth=s*0.035; x.lineCap='round';
+    x.beginPath(); x.arc(s*0.35,s*0.33,s*0.1,1.15*Math.PI,1.85*Math.PI); x.stroke();
+    x.beginPath(); x.arc(s*0.65,s*0.33,s*0.1,1.15*Math.PI,1.85*Math.PI); x.stroke();
     x.fillStyle='#2A1E14';
     x.beginPath(); x.arc(s*0.35,s*0.42,s*0.085,0,Math.PI*2); x.fill();
     x.beginPath(); x.arc(s*0.65,s*0.42,s*0.085,0,Math.PI*2); x.fill();
@@ -924,26 +927,45 @@ function playerFaceTex(){
 }
 function buildPlayerModel(){
   const g = new THREE.Group();
+  const upper = new THREE.Group(); g.add(upper);
   const skin  = new THREE.MeshLambertMaterial({color:0xE8B892});
   const shirt = new THREE.MeshLambertMaterial({color:0x2E8E86});
+  const shirtTrim = new THREE.MeshLambertMaterial({color:0xF0E8D8});
   const pants = new THREE.MeshLambertMaterial({color:0x35406B});
   const shoe  = new THREE.MeshLambertMaterial({color:0x2B2320});
   const hairMat = new THREE.MeshLambertMaterial({color:0x3A2A1E});
   const beltMat = new THREE.MeshLambertMaterial({color:0x5A3B22});
+  const packMat = new THREE.MeshLambertMaterial({color:0x8A5C38});
+  const strapMat = new THREE.MeshLambertMaterial({color:0x5A3B22});
 
   const headMats = [skin,skin,skin,skin,skin, new THREE.MeshLambertMaterial({map:playerFaceTex()})];
   const head = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.5,0.5), headMats);
-  head.position.y = 1.5; g.add(head);
+  head.position.y = 1.5; upper.add(head);
 
   const hairTop = new THREE.Mesh(new THREE.BoxGeometry(0.53,0.15,0.53), hairMat);
-  hairTop.position.y = 1.72; g.add(hairTop);
+  hairTop.position.y = 1.72; upper.add(hairTop);
   const hairBack = new THREE.Mesh(new THREE.BoxGeometry(0.53,0.3,0.16), hairMat);
-  hairBack.position.set(0,1.56,0.17); g.add(hairBack);
+  hairBack.position.set(0,1.56,0.17); upper.add(hairBack);
+  const hairSideGeo = new THREE.BoxGeometry(0.08,0.26,0.5);
+  const hairSideL = new THREE.Mesh(hairSideGeo, hairMat);
+  hairSideL.position.set(-0.25,1.58,0); upper.add(hairSideL);
+  const hairSideR = new THREE.Mesh(hairSideGeo, hairMat);
+  hairSideR.position.set(0.25,1.58,0); upper.add(hairSideR);
 
   const torso = new THREE.Mesh(new THREE.BoxGeometry(0.5,0.68,0.3), shirt);
-  torso.position.y = 1.06; g.add(torso);
+  torso.position.y = 1.06; upper.add(torso);
+  const collar = new THREE.Mesh(new THREE.BoxGeometry(0.52,0.06,0.32), shirtTrim);
+  collar.position.y = 1.38; upper.add(collar);
   const belt = new THREE.Mesh(new THREE.BoxGeometry(0.52,0.08,0.32), beltMat);
-  belt.position.y = 0.72; g.add(belt);
+  belt.position.y = 0.72; upper.add(belt);
+
+  const pack = new THREE.Mesh(new THREE.BoxGeometry(0.34,0.4,0.16), packMat);
+  pack.position.set(0,1.08,0.23); upper.add(pack);
+  const strapGeo = new THREE.BoxGeometry(0.07,0.4,0.03);
+  const strapL = new THREE.Mesh(strapGeo, strapMat);
+  strapL.position.set(-0.14,1.16,0.16); upper.add(strapL);
+  const strapR = new THREE.Mesh(strapGeo, strapMat);
+  strapR.position.set(0.14,1.16,0.16); upper.add(strapR);
 
   const mkLimb = (geo, mat, x, y)=>{
     const m = new THREE.Mesh(geo, mat);
@@ -956,7 +978,7 @@ function buildPlayerModel(){
   const mkArm = (x)=>{
     const shoulder = new THREE.Group();
     shoulder.position.set(x, 1.4, 0);
-    g.add(shoulder);
+    upper.add(shoulder);
     const sleeveGeo = new THREE.BoxGeometry(0.18,0.36,0.18); sleeveGeo.translate(0,-0.18,0);
     const sleeve = new THREE.Mesh(sleeveGeo, shirt); shoulder.add(sleeve);
     const hand = new THREE.Mesh(new THREE.BoxGeometry(0.16,0.16,0.16), skin);
@@ -975,7 +997,7 @@ function buildPlayerModel(){
   g.position.set(P.x, P.y, P.z);
   scene.add(g);
   playerGroup = g;
-  playerParts = {armL, armR, legL, legR};
+  playerParts = {armL, armR, legL, legR, upper};
 }
 function buildCompanionModel(){
   const g = new THREE.Group();
@@ -1290,6 +1312,7 @@ function updatePlayerModel(dt,t){
   }
   playerParts.legL.rotation.x = -swing;
   playerParts.legR.rotation.x = swing;
+  playerParts.upper.position.y = Math.sin(t*1.6)*0.012*(1-Math.min(1,lastSpeed*3));
   if(lastSpeed > 0.15 && !flyMode && Math.abs(P.y-visY) < 1.2){
     footTimer -= dt;
     if(footTimer <= 0){
