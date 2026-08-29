@@ -160,6 +160,7 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
   <div class="set"><span>Suara huruf</span><select id="selVoice2"></select></div>
   <div class="set" style="border:none"><span>Kecepatan bicara</span><input id="rngRate2" type="range" min="0.5" max="1.1" step="0.05" value="0.8"></div>
   <button class="btn ghost" id="btnToggleSfx">🔊 Efek Suara: Aktif</button>
+  <button class="btn ghost" id="btnToggleMusic">🎵 Musik Latar: Aktif</button>
   <button class="btn ghost" id="btnToggleFly">🚶 Mode Jalan (bukan Terbang)</button>
   <button class="btn gold" id="btnShare">📸 Bagikan Pulauku</button>
   <button class="btn" id="btnResume">Lanjut Main</button>
@@ -232,15 +233,15 @@ const Speech = {
 /* ============================================================
    EFEK SUARA — sintesis ringan, tanpa file audio
    ============================================================ */
-let sfxOn = true;
+let sfxOn = true, musicOn = true;
+let _audioCtx = null;
+function getAudioCtx(){
+  if(!_audioCtx){ try{ _audioCtx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
+  if(_audioCtx.state === 'suspended') _audioCtx.resume().catch(()=>{});
+  return _audioCtx;
+}
 const SFX = (function(){
-  let ctx = null;
-  function getCtx(){
-    if(!sfxOn) return null;
-    if(!ctx){ try{ ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ return null; } }
-    if(ctx.state === 'suspended') ctx.resume().catch(()=>{});
-    return ctx;
-  }
+  function getCtx(){ return sfxOn ? getAudioCtx() : null; }
   function tone(freq, dur, type, peak, delay){
     const c = getCtx(); if(!c) return;
     const t0 = c.currentTime + (delay||0);
@@ -273,12 +274,54 @@ const SFX = (function(){
     jump(){ try{ tone(440,0.12,'triangle',0.14); }catch(e){} },
     critterPop(){ try{ tone(660,0.1,'sine',0.2); tone(880,0.12,'sine',0.17,0.06); tone(1100,0.14,'sine',0.14,0.12); }catch(e){} },
     weaponUp(){ try{ tone(392,0.12,'triangle',0.17); tone(523,0.12,'triangle',0.17,0.09); tone(659,0.18,'triangle',0.19,0.18); }catch(e){} },
-    letterFound(){ try{ tone(784,0.1,'sine',0.15); tone(988,0.14,'sine',0.13,0.07); }catch(e){} }
+    letterFound(){ try{ tone(784,0.1,'sine',0.15); tone(988,0.14,'sine',0.13,0.07); }catch(e){} },
+    finale(){ try{
+      tone(523,0.18,'triangle',0.2); tone(659,0.18,'triangle',0.2,0.16);
+      tone(784,0.18,'triangle',0.2,0.32); tone(1047,0.4,'triangle',0.24,0.48);
+      tone(784,0.16,'sine',0.16,0.7); tone(1047,0.3,'sine',0.2,0.86);
+    }catch(e){} }
   };
 })();
 function haptic(pattern){
   try{ if(navigator.vibrate) navigator.vibrate(pattern); }catch(e){}
 }
+
+/* ============================================================
+   MUSIK LATAR — drone lembut yang berubah seiring siang/malam
+   ============================================================ */
+const Music = (function(){
+  let master=null, o1=null, o2=null, o3=null, lfo=null, running=false;
+  function ensure(){
+    if(running) return true;
+    const c = getAudioCtx(); if(!c) return false;
+    master = c.createGain(); master.gain.value = 0;
+    master.connect(c.destination);
+    o1 = c.createOscillator(); o1.type='sine'; o1.frequency.value=130.81; // C3
+    o2 = c.createOscillator(); o2.type='sine'; o2.frequency.value=196.00; // G3
+    o3 = c.createOscillator(); o3.type='triangle'; o3.frequency.value=261.63; // C4
+    const g1=c.createGain(), g2=c.createGain(), g3=c.createGain();
+    g1.gain.value=0.05; g2.gain.value=0.035; g3.gain.value=0.02;
+    o1.connect(g1); g1.connect(master);
+    o2.connect(g2); g2.connect(master);
+    o3.connect(g3); g3.connect(master);
+    lfo = c.createOscillator(); lfo.frequency.value = 0.06;
+    const lfoGain = c.createGain(); lfoGain.gain.value = 0.018;
+    lfo.connect(lfoGain); lfoGain.connect(master.gain);
+    o1.start(); o2.start(); o3.start(); lfo.start();
+    running = true;
+    return true;
+  }
+  function setMood(dayT){
+    if(!running) return;
+    const night = dayT>=0.6 && dayT<=0.9;
+    o2.frequency.setTargetAtTime(night ? 174.61 : 196.00, master.context.currentTime, 2.5); // F3 at night, G3 by day
+  }
+  function setEnabled(on){
+    if(on){ if(!ensure()) return; master.gain.setTargetAtTime(0.09, master.context.currentTime, 1.2); }
+    else if(running){ master.gain.setTargetAtTime(0, master.context.currentTime, 1.2); }
+  }
+  return { ensure, setMood, setEnabled };
+})();
 
 /* ============================================================
    THREE — dunia voxel
@@ -311,8 +354,15 @@ function speck(x,s,colors,n){
   }
 }
 const T = {};
-const HOTBAR = ['grassTop','dirt','stone','sand','wood','leaf'];
-const HOTBAR_LABEL = {grassTop:'Rumput',dirt:'Tanah',stone:'Batu',sand:'Pasir',wood:'Kayu',leaf:'Daun'};
+const LEGO_COLORS = [
+  ['legoRed','#E4423A'],['legoBlue','#2E6FE0'],['legoYellow','#F4C430'],
+  ['legoGreen','#3FA34D'],['legoOrange','#F2872E'],['legoWhite','#F2F2F2']
+];
+const HOTBAR = ['grassTop','dirt','stone','sand','wood','leaf', ...LEGO_COLORS.map(c=>c[0])];
+const HOTBAR_LABEL = {grassTop:'Rumput',dirt:'Tanah',stone:'Batu',sand:'Pasir',wood:'Kayu',leaf:'Daun',
+  legoRed:'Lego Merah',legoBlue:'Lego Biru',legoYellow:'Lego Kuning',legoGreen:'Lego Hijau',legoOrange:'Lego Oranye',legoWhite:'Lego Putih'};
+const BLOCK_DEBRIS_COLOR = {grassTop:0x6CBF4F, dirt:0x9A6B44, stone:0x8D949B, sand:0xE6D3A2, wood:0x8A5C38, leaf:0x4F9E48,
+  legoRed:0xE4423A, legoBlue:0x2E6FE0, legoYellow:0xF4C430, legoGreen:0x3FA34D, legoOrange:0xF2872E, legoWhite:0xF2F2F2};
 function buildTextures(){
   T.grassTop = tex((x,s)=>{x.fillStyle='#6CBF4F';x.fillRect(0,0,s,s);speck(x,s,['#7FD05E','#5CA842','#84D967'],46);});
   T.grassSide= tex((x,s)=>{x.fillStyle='#9A6B44';x.fillRect(0,0,s,s);speck(x,s,['#8A5D3A','#A97A50'],34);
@@ -373,6 +423,18 @@ function buildTextures(){
     });
     x.fillStyle=body; x.beginPath(); x.ellipse(s/2,s*0.5,s*0.045,s*0.26,0,0,Math.PI*2); x.fill();
   }, 40, true));
+  LEGO_COLORS.forEach(([key,hex])=>{
+    T[key] = tex((x,s)=>{
+      x.fillStyle=hex; x.fillRect(0,0,s,s);
+      x.fillStyle='rgba(255,255,255,.25)';
+      for(let gx=0;gx<2;gx++)for(let gy=0;gy<2;gy++){
+        x.beginPath();
+        x.arc(s*(0.28+gx*0.44), s*(0.28+gy*0.44), s*0.12, 0, Math.PI*2);
+        x.fill();
+      }
+      x.strokeStyle='rgba(0,0,0,.15)'; x.lineWidth=2; x.strokeRect(1,1,s-2,s-2);
+    }, 32, true);
+  });
 }
 function letterTex(letter){
   return tex((x,s)=>{
@@ -465,6 +527,7 @@ function buildWorld(){
     wood : new THREE.MeshLambertMaterial({map:T.wood}),
     leaf : new THREE.MeshLambertMaterial({map:T.leaf})
   };
+  LEGO_COLORS.forEach(([key])=>{ mats[key] = new THREE.MeshLambertMaterial({map:T[key]}); });
   MATS = mats;
   const m4 = new THREE.Matrix4();
   for(const k in cells){
@@ -621,6 +684,7 @@ function updateSky(dt,t){
   if(sky.bg !== lastSkyBg){ lastSkyBg = sky.bg; document.body.style.background = sky.bg; }
   starGroup.children.forEach(s=>{ s.material.opacity += (sky.star - s.material.opacity)*k; });
   moonSprite.material.opacity += (sky.star - moonSprite.material.opacity)*k;
+  Music.setMood(dayT);
 }
 
 function initThree(){
@@ -834,11 +898,25 @@ function buildCritters(){
     const eyeR = new THREE.Mesh(eyeGeo, eyeMat); eyeR.position.set(0.09,0.05,0.22); g.add(eyeR);
     g.position.set(home.x, heightAt(home.x,home.z)+0.3, home.z);
     scene.add(g);
-    critters.push({ group:g, home, tx:home.x, tz:home.z, waitT:Math.random()*2, popped:false, respawnAt:0, phase:Math.random()*10 });
+    critters.push({ group:g, home, tx:home.x, tz:home.z, waitT:Math.random()*2, popped:false, respawnAt:0, phase:Math.random()*10, tamed:false, name:null });
   }
 }
+let tamedCritter = null;
+const PET_NAMES = ['Kelip','Momo','Boba','Kiki','Dodo','Tutu','Miko','Coco'];
 function updateCritters(dt,t){
   critters.forEach(c=>{
+    if(c.tamed){
+      const ang = P.yaw - 2.35;
+      const tx = P.x + Math.sin(ang)*1.5;
+      const tz = P.z + Math.cos(ang)*1.5;
+      const k = Math.min(1, dt*2.0);
+      const gx = c.group.position.x + (tx-c.group.position.x)*k;
+      const gz = c.group.position.z + (tz-c.group.position.z)*k;
+      const bob = Math.abs(Math.sin(t*5+c.phase))*0.1;
+      c.group.position.set(gx, heightAt(gx,gz)+0.3+bob, gz);
+      if(Math.hypot(tx-gx, tz-gz) > 0.05) c.group.rotation.y = Math.atan2(tx-gx, tz-gz);
+      return;
+    }
     if(c.popped){
       if(t >= c.respawnAt){
         c.popped = false;
@@ -871,6 +949,15 @@ function popCritter(c, t){
   SFX.critterPop(); haptic([10,25,10]);
   toast('✨ Kena! Makhluk usilnya kabur sebentar~');
 }
+function tameCritter(c){
+  c.tamed = true;
+  c.name = PET_NAMES[(Math.random()*PET_NAMES.length)|0];
+  tamedCritter = c;
+  spawnBurst(c.group.position.x, c.group.position.y+0.2, c.group.position.z, 0xFF9F6B);
+  SFX.critterPop(); haptic([12,30,12,30,20]);
+  toast('🐾 '+c.name+' jadi teman barumu! Dia bakal ikut kamu terus~', 3600);
+  saveWorld();
+}
 const bursts = [];
 function spawnBurst(x,y,z,color){
   for(let i=0;i<8;i++){
@@ -881,6 +968,17 @@ function spawnBurst(x,y,z,color){
     scene.add(spr);
     const ang = Math.random()*Math.PI*2, spd = 0.8+Math.random()*1.2;
     bursts.push({ spr, vx:Math.cos(ang)*spd, vz:Math.sin(ang)*spd, vy:1.3+Math.random()*0.8, life:0.55, maxLife:0.55 });
+  }
+}
+function spawnDust(x,y,z,color){
+  for(let i=0;i<5;i++){
+    const mat = new THREE.SpriteMaterial({map:T.glow, color, transparent:true, depthWrite:false, opacity:0.75});
+    const spr = new THREE.Sprite(mat);
+    spr.scale.set(0.16,0.16,1);
+    spr.position.set(x,y,z);
+    scene.add(spr);
+    const ang = Math.random()*Math.PI*2, spd = 0.4+Math.random()*0.6;
+    bursts.push({ spr, vx:Math.cos(ang)*spd, vz:Math.sin(ang)*spd, vy:0.5+Math.random()*0.4, life:0.3, maxLife:0.3 });
   }
 }
 function updateBursts(dt){
@@ -914,7 +1012,9 @@ function hits(x,y,z){
 let lastSpeed = 0;
 let visY = P.y;
 let flyMode = false;
+let landKick = 0;
 function step(dt){
+  const wasGrounded = P.ground;
   const sp = flyMode ? 5.6 : 4.4;
   let fx = 0, fz = 0;
   if(keys['w']||keys['arrowup']) fz -= 1;
@@ -952,10 +1052,14 @@ function step(dt){
   } else {
     P.vy -= 24*dt;
     if(P.vy < -30) P.vy = -30;
+    const preVy = P.vy;
     P.y += P.vy*dt;
     P.ground = false;
     if(hits(P.x,P.y,P.z)){
-      if(P.vy <= 0){ P.y = Math.ceil(P.y); P.ground = true; }
+      if(P.vy <= 0){
+        P.y = Math.ceil(P.y); P.ground = true;
+        if(!wasGrounded && preVy < -3.5) landKick = Math.min(0.3, -preVy*0.03);
+      }
       else P.y = Math.floor(P.y+1.6) - 1.6 - 0.02;
       P.vy = 0;
     }
@@ -976,12 +1080,13 @@ function updateCamera(){
   const horiz = dist*Math.cos(P.pitch);
   const camX = P.x + Math.sin(P.yaw)*horiz;
   const camZ = P.z + Math.cos(P.yaw)*horiz;
-  let camY = visY + height + dist*Math.sin(P.pitch);
+  let camY = visY + height + dist*Math.sin(P.pitch) - landKick;
   const floorY = heightAt(camX,camZ)+0.7;
   if(camY < floorY) camY = floorY;
   cam.position.set(camX, camY, camZ);
   cam.lookAt(P.x, visY+1.15, P.z);
 }
+let footTimer = 0;
 function updatePlayerModel(dt,t){
   playerGroup.position.set(P.x, visY, P.z);
   playerGroup.rotation.y = P.yaw;
@@ -997,8 +1102,19 @@ function updatePlayerModel(dt,t){
   }
   playerParts.legL.rotation.x = -swing;
   playerParts.legR.rotation.x = swing;
+  if(lastSpeed > 0.15 && !flyMode && Math.abs(P.y-visY) < 1.2){
+    footTimer -= dt;
+    if(footTimer <= 0){
+      footTimer = 0.3;
+      spawnDust(P.x, visY+0.06, P.z, 0xC9B486);
+    }
+  } else {
+    footTimer = 0.08;
+  }
 }
+let celebrating = false, celebrateUntil = 0;
 function updateCompanion(dt,t){
+  if(celebrating && t > celebrateUntil) celebrating = false;
   const tx = P.x + Math.sin(P.yaw+0.7)*1.9;
   const tz = P.z + Math.cos(P.yaw+0.7)*1.9;
   const k = Math.min(1, dt*2.4);
@@ -1006,18 +1122,23 @@ function updateCompanion(dt,t){
   moState.z += (tz-moState.z)*k;
   const gy = heightAt(moState.x, moState.z);
   moState.y += (gy-moState.y)*Math.min(1,dt*5);
-  moGroup.position.set(moState.x, moState.y + Math.sin(t*2.4)*0.05, moState.z);
-  const ang = Math.atan2(P.x-moState.x, P.z-moState.z);
-  moGroup.rotation.y = ang;
+  const bob = celebrating ? Math.abs(Math.sin(t*9))*0.28 : Math.sin(t*2.4)*0.05;
+  moGroup.position.set(moState.x, moState.y + bob, moState.z);
+  if(celebrating){
+    moGroup.rotation.y += dt*7;
+  } else {
+    moGroup.rotation.y = Math.atan2(P.x-moState.x, P.z-moState.z);
+  }
   const moving = Math.hypot(tx-moState.x, tz-moState.z) > 0.08;
-  const swing = moving ? Math.sin(t*8)*0.5 : 0;
+  const swing = (moving || celebrating) ? Math.sin(t*8)*0.5 : 0;
   moParts.legL.rotation.x = swing; moParts.legR.rotation.x = -swing;
 }
 
 /* ============================================================
    GALI & BANGUN
    ============================================================ */
-const inv = {grassTop:14, dirt:14, stone:14, sand:10, wood:12, leaf:10};
+const inv = {grassTop:14, dirt:14, stone:14, sand:10, wood:12, leaf:10,
+  legoRed:60, legoBlue:60, legoYellow:60, legoGreen:60, legoOrange:60, legoWhite:60};
 let selectedSlot = 0;
 function raycastVoxel(origin, dir, maxDist){
   const step = 0.08;
@@ -1056,7 +1177,8 @@ function mineTarget(){
   }else return;
   solids.delete(k);
   inv[type] = (inv[type]||0)+1;
-  SFX.mine(); haptic(8);
+  SFX.mine(); haptic(8); mineCount++;
+  spawnDust(x+0.5, y+0.5, z+0.5, BLOCK_DEBRIS_COLOR[type]||0xAAAAAA);
   updateHotbar(); saveWorld();
 }
 function placeTarget(){
@@ -1075,7 +1197,8 @@ function placeTarget(){
   placedBlocks.set(k, {mesh, type});
   solids.add(k);
   inv[type]--;
-  SFX.place(); haptic(8);
+  SFX.place(); haptic(8); placeCount++;
+  spawnDust(x+0.5, y+0.5, z+0.5, BLOCK_DEBRIS_COLOR[type]||0xAAAAAA);
   updateHotbar(); saveWorld();
 }
 
@@ -1092,11 +1215,14 @@ function proximity(t){
     if(d<1.5 && dy<2.2) collectLetter(b);
   }
   for(const c of critters){
-    if(c.popped) continue;
+    if(c.popped || c.tamed) continue;
     const d = Math.hypot(c.group.position.x-P.x, c.group.position.z-P.z);
     if(d < 1.1){
-      if(currentWeaponTier >= 0){ popCritter(c, t); attackAnim = 0.18; }
-      else {
+      if(currentWeaponTier >= 0){
+        if(!tamedCritter) tameCritter(c);
+        else popCritter(c, t);
+        attackAnim = 0.18;
+      } else {
         c.tx = c.group.position.x + (c.group.position.x-P.x)*3;
         c.tz = c.group.position.z + (c.group.position.z-P.z)*3;
         c.waitT = 0.1;
@@ -1114,7 +1240,25 @@ function collectLetter(b){
   Speech.say([{ar:b.letter.ar, lat:b.letter.name}]);
   saveWorld();
   if(collected.size === L.length){
-    setTimeout(()=>toast('🏆 Semua 28 huruf hijaiyah ditemukan, hebat Ibra!'), 1700);
+    setTimeout(()=>{
+      toast('🏆 Semua 28 huruf hijaiyah ditemukan, hebat Ibra!', 4200);
+      SFX.finale(); haptic([15,60,15,60,15,80,30]);
+      celebrating = true; celebrateUntil = performance.now()/1000 + 6;
+      fireworksAt(P.x, visY+2, P.z);
+      setTimeout(()=>fireworksAt(P.x, visY+2, P.z), 900);
+      setTimeout(()=>fireworksAt(P.x, visY+2, P.z), 1900);
+    }, 1700);
+  }
+}
+function fireworksAt(cx, cy, cz){
+  const colors = [0xFFD874, 0xFF6F91, 0x8FD3EC, 0x7FC8A9, 0xE0B84D];
+  for(let i=0;i<6;i++){
+    setTimeout(()=>{
+      const ox = cx + (Math.random()-0.5)*6;
+      const oz = cz + (Math.random()-0.5)*6;
+      const oy = cy + 2 + Math.random()*3;
+      spawnBurst(ox, oy, oz, colors[i%colors.length]);
+    }, i*180);
   }
 }
 
@@ -1122,13 +1266,17 @@ function collectLetter(b){
    PENYIMPANAN
    ============================================================ */
 const SAVE_KEY = 'bm-pulau-hijaiyah-v1';
+let isFirstTime = true;
+try{ isFirstTime = !localStorage.getItem(SAVE_KEY); }catch(e){}
+let mineCount = 0, placeCount = 0;
 function saveWorld(){
   try{
     const mined = [];
     blockIndex.forEach((rec,k)=>{ if(rec.taken) mined.push(k); });
     const placed = [];
     placedBlocks.forEach((rec,k)=>{ placed.push(k+'|'+rec.type); });
-    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv, flyMode, sfxOn }));
+    const petIdx = tamedCritter ? critters.indexOf(tamedCritter) : -1;
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv, flyMode, sfxOn, musicOn, petIdx, petName: tamedCritter ? tamedCritter.name : null }));
   }catch(e){}
 }
 function loadWorld(){
@@ -1158,6 +1306,12 @@ function loadWorld(){
     if(data.inv) Object.assign(inv, data.inv);
     if(typeof data.flyMode === 'boolean') flyMode = data.flyMode;
     if(typeof data.sfxOn === 'boolean') sfxOn = data.sfxOn;
+    if(typeof data.musicOn === 'boolean') musicOn = data.musicOn;
+    if(typeof data.petIdx === 'number' && data.petIdx >= 0 && critters[data.petIdx]){
+      const pet = critters[data.petIdx];
+      pet.tamed = true; pet.name = data.petName || PET_NAMES[0];
+      tamedCritter = pet;
+    }
     updateWeapon(false);
   }catch(e){}
 }
@@ -1412,9 +1566,18 @@ $('#btnPlay').onclick = ()=>{
   veil.start.classList.remove('on');
   running = true;
   SFX.warm();
+  if(musicOn) Music.setEnabled(true);
   buildHotbar(); updateHotbar(); updateJournalBadge();
   Speech.say([{ar:'بِسْمِ اللهِ', lat:'Bismillah'}]);
   setTimeout(()=>toast('Jelajahi pulau, gali & bangun sesukamu ✨'), 900);
+  if(isFirstTime){
+    setTimeout(()=>{ if(mineCount===0 && placeCount===0 && collected.size===0)
+      toast('Baby Mo: Jalan-jalan yuk, cari kotak keemasan di pulau! ✨', 3800); }, 7000);
+    setTimeout(()=>{ if(collected.size===0)
+      toast('Baby Mo: Dekati kotak keemasan buat dengar hurufnya! 🔤', 3800); }, 17000);
+    setTimeout(()=>{ if(mineCount===0)
+      toast('Baby Mo: Coba tekan ⛏️ Gali di dekat balok, ya! 🪨', 3800); }, 29000);
+  }
 };
 $('#btnBack').onclick = ()=>{ location.href = 'index.html'; };
 $('#btnJournal').onclick = ()=>{ buildJournal(); running=false; veil.journal.classList.add('on'); };
@@ -1422,9 +1585,11 @@ $('#btnCloseJournal').onclick = ()=>{ veil.journal.classList.remove('on'); runni
 
 function updateToggleButtons(){
   $('#btnToggleSfx').textContent = sfxOn ? '🔊 Efek Suara: Aktif' : '🔇 Efek Suara: Mati';
+  $('#btnToggleMusic').textContent = musicOn ? '🎵 Musik Latar: Aktif' : '🔇 Musik Latar: Mati';
   $('#btnToggleFly').textContent = flyMode ? '🕊️ Mode Terbang: Aktif' : '🚶 Mode Jalan (bukan Terbang)';
 }
 $('#btnToggleSfx').onclick = ()=>{ sfxOn = !sfxOn; if(sfxOn) SFX.warm(); updateToggleButtons(); saveWorld(); };
+$('#btnToggleMusic').onclick = ()=>{ musicOn = !musicOn; Music.setEnabled(musicOn); updateToggleButtons(); saveWorld(); };
 $('#btnShare').onclick = ()=>{ shareBuild(); };
 $('#btnToggleFly').onclick = ()=>{
   flyMode = !flyMode;
@@ -1458,6 +1623,7 @@ function tick(){
   if(running){ step(dt); proximity(t); }
   maybeBuildPrompt(t);
   visY += (P.y - visY) * Math.min(1, dt*14);
+  landKick *= Math.max(0, 1 - dt*9);
   updatePlayerModel(dt,t);
   updateCompanion(dt,t);
   updateCritters(dt,t);
