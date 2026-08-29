@@ -1347,7 +1347,8 @@ function playerOccupies(x,y,z){
 }
 function mineTarget(){
   const dir = new THREE.Vector3(); cam.getWorldDirection(dir);
-  const hit = raycastVoxel(cam.position, dir, 6);
+  const eye = new THREE.Vector3(P.x, visY+1.15, P.z);
+  const hit = raycastVoxel(eye, dir, 6);
   if(!hit){ toast('Tidak ada balok di sana'); return; }
   const {x,y,z} = hit;
   if(y<=0){ toast('Sudah sampai dasar pulau'); return; }
@@ -1371,7 +1372,8 @@ function mineTarget(){
 }
 function placeTarget(){
   const dir = new THREE.Vector3(); cam.getWorldDirection(dir);
-  const hit = raycastVoxel(cam.position, dir, 6);
+  const eye = new THREE.Vector3(P.x, visY+1.15, P.z);
+  const hit = raycastVoxel(eye, dir, 6);
   if(!hit || !hit.before){ toast('Arahkan ke tempat kosong'); return; }
   const {x,y,z} = hit.before;
   if(y<0 || y>MAXH+3 || Math.abs(x)>=HALF || Math.abs(z)>=HALF) return;
