@@ -465,6 +465,28 @@ function buildTextures(){
     });
     x.globalAlpha=1;
   },256,true);
+  T.bird = tex((x,s)=>{
+    x.clearRect(0,0,s,s);
+    x.strokeStyle='#4A3A2A'; x.lineWidth=s*0.1; x.lineCap='round';
+    x.beginPath();
+    x.moveTo(s*0.04,s*0.6);
+    x.quadraticCurveTo(s*0.5,s*0.1,s*0.5,s*0.48);
+    x.quadraticCurveTo(s*0.5,s*0.1,s*0.96,s*0.6);
+    x.stroke();
+  },32,true);
+  T.glowSoft = tex((x,s)=>{
+    const g = x.createRadialGradient(s/2,s/2,0,s/2,s/2,s/2);
+    g.addColorStop(0,'rgba(255,255,255,.95)'); g.addColorStop(1,'rgba(255,255,255,0)');
+    x.fillStyle=g; x.fillRect(0,0,s,s);
+  },64,true);
+  T.chest = tex((x,s)=>{
+    x.fillStyle='#8A5C38'; x.fillRect(0,0,s,s);
+    x.fillStyle='#6B4423'; x.fillRect(0,0,s,s*0.12);
+    x.fillStyle='#E0B84D';
+    x.fillRect(s*0.42,0,s*0.16,s);
+    x.beginPath(); x.arc(s*0.5,s*0.12,s*0.09,0,Math.PI*2); x.fill();
+    speck(x,s,['#7B5131','#96683F'],18);
+  },32,true);
 }
 function letterTex(letter){
   return tex((x,s)=>{
@@ -650,6 +672,55 @@ function buildLandmarks(){
   caveLight.position.set(caveInfo.chamber.x+0.5, caveInfo.chamber.y+0.6, caveInfo.chamber.z+0.5);
   scene.add(caveLight);
 }
+
+/* ============================================================
+   JEMBATAN BATU — lompat ke pulau kecil untuk peti harta karun
+   (tantangan lompat ringan, tanpa hukuman kalau jatuh ke laut)
+   ============================================================ */
+const BRIDGE_START = {x:0, z:HALF-1};
+let chestPos = null, chestOpened = false;
+function buildBridge(){
+  const stoneMat = new THREE.MeshLambertMaterial({map:T.stone});
+  const sandMat = new THREE.MeshLambertMaterial({map:T.sand});
+  const by = 2;
+  // each value is center-to-center spacing; platforms are 2 cells deep, so
+  // the real open-water gap a player must jump is (spacing - 2).
+  const gapSeq = [2.6,3.2,2.7,3.3,2.6,3.1,2.7,3.2];
+  let gz = BRIDGE_START.z;
+  gapSeq.forEach(gap=>{
+    gz += gap;
+    const cx = Math.round(BRIDGE_START.x), cz = Math.round(gz);
+    [[0,0],[1,0],[0,1],[1,1]].forEach(([dx,dz])=>{
+      const x=cx+dx, z=cz+dz, k=key(x,by,z);
+      if(!solids.has(k)){
+        const m = new THREE.Mesh(blockGeo, stoneMat);
+        m.position.set(x+0.5, by+0.5, z+0.5);
+        scene.add(m);
+        solids.add(k);
+      }
+    });
+  });
+  gz += 2.8;
+  const ix = Math.round(BRIDGE_START.x)-1, iz = Math.round(gz);
+  for(let dx=0; dx<3; dx++) for(let dz=0; dz<3; dz++){
+    const x=ix+dx, z=iz+dz, k=key(x,by,z);
+    if(!solids.has(k)){
+      const m = new THREE.Mesh(blockGeo, sandMat);
+      m.position.set(x+0.5, by+0.5, z+0.5);
+      scene.add(m);
+      solids.add(k);
+    }
+  }
+  chestPos = {x: ix+1.5, y: by+1, z: iz+1.5};
+  const chestMesh = new THREE.Mesh(new THREE.BoxGeometry(0.62,0.5,0.42), new THREE.MeshLambertMaterial({map:T.chest}));
+  chestMesh.position.set(chestPos.x, chestPos.y+0.25, chestPos.z);
+  scene.add(chestMesh);
+  const chestGlow = new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow, color:0xFFD874, transparent:true, depthWrite:false}));
+  chestGlow.scale.set(1.7,1.7,1);
+  chestGlow.position.set(chestPos.x, chestPos.y+0.1, chestPos.z);
+  scene.add(chestGlow);
+}
+
 function updateLandmarks(){
   if(!peakVisited){
     const d = Math.hypot(P.x-(PEAK.x+0.5), P.z-(PEAK.z+0.5));
@@ -664,6 +735,16 @@ function updateLandmarks(){
     if(d < 3 && Math.abs(P.y-caveInfo.chamber.y) < 3){
       caveVisited = true;
       toast('🕯️ Ketemu gua rahasia! Ada yang bersinar di sini~', 3200);
+      SFX.weaponUp(); saveWorld();
+    }
+  }
+  if(!chestOpened && chestPos){
+    const d = Math.hypot(P.x-chestPos.x, P.z-chestPos.z);
+    if(d < 1.6 && Math.abs(P.y-chestPos.y) < 2.5){
+      chestOpened = true;
+      LEGO_COLORS.forEach(([k])=>{ inv[k] = (inv[k]||0)+15; });
+      updateHotbar();
+      toast('🎁 Peti harta karun! +15 Lego tiap warna, hebat berhasil lompat sampai sini!', 3400);
       SFX.weaponUp(); saveWorld();
     }
   }
@@ -701,6 +782,55 @@ function updateFish(dt,t){
     f.spr.position.x = f.home.x + Math.cos(ang)*3;
     f.spr.position.z = f.home.z + Math.sin(ang)*3;
     f.spr.material.rotation = -ang - (f.dir>0?Math.PI/2:-Math.PI/2);
+  });
+}
+
+/* ============================================================
+   BURUNG — melingkar tinggi di langit, bikin pulau terasa hidup
+   ============================================================ */
+const birds = [];
+function buildBirds(){
+  const mat = new THREE.SpriteMaterial({map:T.bird, transparent:true, depthWrite:false});
+  for(let i=0;i<7;i++){
+    const a = (i/7)*Math.PI*2;
+    const home = {x:Math.cos(a)*(10+Math.random()*9), z:Math.sin(a)*(10+Math.random()*9), y:15+Math.random()*7};
+    const spr = new THREE.Sprite(mat);
+    spr.scale.set(0.9,0.5,1);
+    scene.add(spr);
+    birds.push({spr, home, phase:Math.random()*20, speed:0.22+Math.random()*0.1, dir:Math.random()<0.5?1:-1});
+  }
+}
+function updateBirds(t){
+  birds.forEach(b=>{
+    const ang = t*b.speed*b.dir + b.phase;
+    b.spr.position.set(b.home.x+Math.cos(ang)*9, b.home.y+Math.sin(t*0.6+b.phase)*0.6, b.home.z+Math.sin(ang)*9);
+    b.spr.material.rotation = Math.sin(t*9+b.phase)*0.3;
+  });
+}
+
+/* ============================================================
+   KUNANG-KUNANG — hidup di malam hari, mengikuti siklus siang/malam
+   ============================================================ */
+const fireflies = [];
+function buildFireflies(){
+  for(let i=0;i<16;i++){
+    const a = Math.random()*Math.PI*2, r = Math.random()*(HALF-3);
+    const home = {x:Math.cos(a)*r, z:Math.sin(a)*r};
+    home.y = heightAt(Math.round(home.x), Math.round(home.z));
+    const mat = new THREE.SpriteMaterial({map:T.glowSoft, color:0xCFFF8A, transparent:true, depthWrite:false, opacity:0});
+    const spr = new THREE.Sprite(mat);
+    spr.scale.set(0.22,0.22,1);
+    scene.add(spr);
+    fireflies.push({spr, home, phase:Math.random()*20});
+  }
+}
+function updateFireflies(dt,t){
+  fireflies.forEach(f=>{
+    const {home, phase} = f;
+    f.spr.position.set(home.x+Math.sin(t*0.55+phase)*1.6, home.y+0.9+Math.sin(t*1.7+phase)*0.35, home.z+Math.cos(t*0.5+phase)*1.6);
+    const twinkle = 0.4+0.6*Math.max(0, Math.sin(t*2.4+phase*3));
+    const target = nightAmt*twinkle*0.9;
+    f.spr.material.opacity += (target - f.spr.material.opacity)*Math.min(1, dt*3);
   });
 }
 
@@ -832,7 +962,7 @@ function skyAt(dayT){
   }
   return kf[0];
 }
-let starGroup, moonSprite, lastSkyBg = '';
+let starGroup, moonSprite, lastSkyBg = '', nightAmt = 0;
 function buildSky(){
   starGroup = new THREE.Group();
   for(let i=0;i<40;i++){
@@ -863,6 +993,7 @@ function updateSky(dt,t){
   if(sky.bg !== lastSkyBg){ lastSkyBg = sky.bg; document.body.style.background = sky.bg; }
   starGroup.children.forEach(s=>{ s.material.opacity += (sky.star - s.material.opacity)*k; });
   moonSprite.material.opacity += (sky.star - moonSprite.material.opacity)*k;
+  nightAmt = sky.star;
   Music.setMood(dayT);
 }
 
@@ -881,7 +1012,7 @@ function initThree(){
   clock = new THREE.Clock();
   buildTextures(); planSpots(); buildWorld(); placeLetters();
   buildWater(); buildClouds(); buildButterflies(); buildCritters(); buildSky();
-  buildLandmarks(); buildDistantIslands(); buildFish(); buildWeather();
+  buildLandmarks(); buildBridge(); buildDistantIslands(); buildFish(); buildBirds(); buildFireflies(); buildWeather();
   buildPlayerModel(); buildCompanionModel();
   loadWorld();
   const cv = renderer.domElement;
@@ -1491,7 +1622,7 @@ function saveWorld(){
     const placed = [];
     placedBlocks.forEach((rec,k)=>{ placed.push(k+'|'+rec.type); });
     const petIdx = tamedCritter ? critters.indexOf(tamedCritter) : -1;
-    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv, flyMode, sfxOn, musicOn, petIdx, petName: tamedCritter ? tamedCritter.name : null, peakVisited, caveVisited }));
+    localStorage.setItem(SAVE_KEY, JSON.stringify({ collected:[...collected], mined, placed, inv, flyMode, sfxOn, musicOn, petIdx, petName: tamedCritter ? tamedCritter.name : null, peakVisited, caveVisited, chestOpened }));
   }catch(e){}
 }
 function loadWorld(){
@@ -1529,6 +1660,7 @@ function loadWorld(){
     }
     if(typeof data.peakVisited === 'boolean') peakVisited = data.peakVisited;
     if(typeof data.caveVisited === 'boolean') caveVisited = data.caveVisited;
+    if(typeof data.chestOpened === 'boolean') chestOpened = data.chestOpened;
     updateWeapon(false);
   }catch(e){}
 }
@@ -1847,6 +1979,8 @@ function tick(){
   updateBursts(dt);
   updateSky(dt,t);
   updateFish(dt,t);
+  updateBirds(t);
+  updateFireflies(dt,t);
   updateWeather(dt,t);
   updateCamera();
 
