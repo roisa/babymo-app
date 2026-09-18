@@ -163,6 +163,7 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
   <button class="btn ghost" id="btnToggleMusic">🎵 Musik Latar: Aktif</button>
   <button class="btn ghost" id="btnToggleFly">🚶 Mode Jalan (bukan Terbang)</button>
   <button class="btn gold" id="btnShare">📸 Bagikan Pulauku</button>
+  <button class="btn ghost" id="btnGoHutan">🌟 Hutan Ajaib (dunia baru)</button>
   <button class="btn" id="btnResume">Lanjut Main</button>
   <a class="btn ghost" id="btnHome" href="index.html" style="display:block;text-decoration:none;text-align:center">← Kembali ke Beranda</a>
   <button class="btn ghost" id="btnReset">Ulangi dari Awal (hapus progres)</button>
@@ -674,6 +675,42 @@ function buildLandmarks(){
 }
 
 /* ============================================================
+   PORTAL — jalan menuju Hutan Ajaib (dunia kedua), terbuka setelah
+   Ibra menemukan cukup banyak huruf di Pulau Hijaiyah
+   ============================================================ */
+const PORTAL_POS = {x:-15, z:-15};
+const PORTAL_UNLOCK_AT = 5;
+let portalRing = null, portalTriggered = false;
+function buildPortal(){
+  const py = heightAt(PORTAL_POS.x, PORTAL_POS.z);
+  const ringMat = new THREE.MeshLambertMaterial({color:0x8A5CFF, emissive:0x4B2E8A, emissiveIntensity:0.55, side:THREE.DoubleSide});
+  const ring = new THREE.Mesh(new THREE.TorusGeometry(1.1,0.13,8,20), ringMat);
+  ring.position.set(PORTAL_POS.x+0.5, py+1+1.3, PORTAL_POS.z+0.5);
+  scene.add(ring);
+  portalRing = ring;
+  const glow = new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow, color:0x8A5CFF, transparent:true, depthWrite:false}));
+  glow.scale.set(2.6,2.6,1);
+  glow.position.copy(ring.position);
+  scene.add(glow);
+}
+function updatePortal(dt){
+  if(portalRing) portalRing.rotation.z += dt*0.6;
+}
+function checkPortal(){
+  if(portalTriggered) return;
+  const d = Math.hypot(P.x-(PORTAL_POS.x+0.5), P.z-(PORTAL_POS.z+0.5));
+  if(d > 1.8) return;
+  if(collected.size >= PORTAL_UNLOCK_AT){
+    portalTriggered = true;
+    toast('🌟 Masuk ke Hutan Ajaib...', 1400);
+    SFX.weaponUp();
+    setTimeout(()=>{ location.href = 'babymo-hutan-ajaib.html'; }, 900);
+  } else {
+    toast('🔒 Kumpulkan '+(PORTAL_UNLOCK_AT-collected.size)+' huruf lagi untuk buka Hutan Ajaib!', 2600);
+  }
+}
+
+/* ============================================================
    JEMBATAN BATU — lompat ke pulau kecil untuk peti harta karun
    (tantangan lompat ringan, tanpa hukuman kalau jatuh ke laut)
    ============================================================ */
@@ -1012,7 +1049,7 @@ function initThree(){
   clock = new THREE.Clock();
   buildTextures(); planSpots(); buildWorld(); placeLetters();
   buildWater(); buildClouds(); buildButterflies(); buildCritters(); buildSky();
-  buildLandmarks(); buildBridge(); buildDistantIslands(); buildFish(); buildBirds(); buildFireflies(); buildWeather();
+  buildLandmarks(); buildPortal(); buildBridge(); buildDistantIslands(); buildFish(); buildBirds(); buildFireflies(); buildWeather();
   buildPlayerModel(); buildCompanionModel();
   loadWorld();
   const cv = renderer.domElement;
@@ -1940,6 +1977,10 @@ function updateToggleButtons(){
 $('#btnToggleSfx').onclick = ()=>{ sfxOn = !sfxOn; if(sfxOn) SFX.warm(); updateToggleButtons(); saveWorld(); };
 $('#btnToggleMusic').onclick = ()=>{ musicOn = !musicOn; Music.setEnabled(musicOn); updateToggleButtons(); saveWorld(); };
 $('#btnShare').onclick = ()=>{ shareBuild(); };
+$('#btnGoHutan').onclick = ()=>{
+  if(collected.size >= PORTAL_UNLOCK_AT){ location.href = 'babymo-hutan-ajaib.html'; }
+  else toast('🔒 Kumpulkan '+(PORTAL_UNLOCK_AT-collected.size)+' huruf lagi untuk buka Hutan Ajaib!', 2600);
+};
 $('#btnToggleFly').onclick = ()=>{
   flyMode = !flyMode;
   updateToggleButtons();
@@ -1969,7 +2010,8 @@ function tick(){
   const dt = Math.min(0.05, clock.getDelta());
   const t = performance.now()/1000;
 
-  if(running){ step(dt); proximity(t); updateLandmarks(); }
+  if(running){ step(dt); proximity(t); updateLandmarks(); checkPortal(); }
+  updatePortal(dt);
   maybeBuildPrompt(t);
   visY += (P.y - visY) * Math.min(1, dt*14);
   landKick *= Math.max(0, 1 - dt*9);
