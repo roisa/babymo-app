@@ -10,13 +10,16 @@
      - same-origin static → cache-first (fast), refreshed in background.
      - cross-origin (fonts) → opportunistic cache.
    ============================================================ */
-const CACHE = "babymo-games-v23";
+const CACHE = "babymo-games-v24";
 
 const SHELL = [
   "/",
   "/index.html",
   "/manifest.webmanifest",
   "/bm-kit.js",
+  "/bm-icons.js",
+  "/bm-buttons.css",
+  "/bm-bright.css",
   "/fonts/fonts.css",
   "/babymo-pray-with-mo.html",
   "/babymo-puzzle.html",
