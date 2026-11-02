@@ -325,6 +325,26 @@ body::before{
 <meta name="twitter:description" content="Puzzle interaktif untuk mengenal maskot Baby Mo — seru, ramah anak, dan edukatif.">
 <meta name="twitter:image" content="https://play.babymo.id/og/babymo-puzzle.jpg">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Kenalan dengan Baby Mo — Baby Mo","url":"https://play.babymo.id/babymo-puzzle.html","description":"Puzzle interaktif untuk mengenal maskot Baby Mo — seru, ramah anak, dan edukatif.","inLanguage":"id-ID","genre":"Puzzle","image":"https://play.babymo.id/og/babymo-puzzle.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":2,"suggestedMaxAge":6},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Kenalan dengan Baby Mo","item":"https://play.babymo.id/babymo-puzzle.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{--bg:#F2F6FC;--bg2:#FFFFFF;--cream:#152230;--cream-dim:#5A6878;--gold:#F08C00;--gold-lt:#E8590C;--green-glow:#0B8A4A;--border:rgba(21,34,48,.10);}
+.grid{background:rgba(255,255,255,.7);border-color:#fff;box-shadow:0 18px 40px -22px rgba(30,60,110,.55),0 0 0 1px rgba(21,34,48,.05);}
+.mystery-label::before,.mystery-label::after{background:rgba(21,34,48,.15);}
+.celeb-bg{background:linear-gradient(175deg,rgba(242,246,252,.92),rgba(232,240,252,.96));}
+.intro-card{background:linear-gradient(170deg,#FFFFFF 0%,#FFF8EA 60%,#FFF1D6 100%);box-shadow:0 -18px 40px -24px rgba(30,60,110,.45);}
+.pill-orange{color:#C2410C;}
+.mystery-label{color:#8A97A6;}
+.sub-hint{color:#5A6878;}
+[class*="hub"],[class*="back-btn"],.top-btn,.icon-btn{background:rgba(255,255,255,.88)!important;border-color:rgba(21,34,48,.08)!important;color:#152230!important;}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+.play-btn.play-share{background:rgba(255,255,255,.78)!important;background-image:none!important;color:#152230!important;-webkit-text-fill-color:#152230;text-shadow:none;border:1px solid #fff;box-shadow:0 0 0 .5px rgba(21,34,48,.1),inset 0 1px 0 #fff,0 8px 18px -12px rgba(30,60,110,.45)!important;}
+/* contrast fixes after the bright theme */
+.mystery-label{color:#6B7787;}
+.bubble-sub{color:#5A6878;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
 
@@ -422,7 +442,7 @@ body::before{
       <a href="./index.html" class="play-btn">
         🎮 Yuk Main Bersama Baby Mo!
       </a>
-      <a href="#" class="play-btn" style="background:rgba(240,232,216,.08);color:#E8B060;margin-top:10px;" onclick="event.preventDefault();window.BabyMo&&BabyMo.share({title:'Kenalan dengan Baby Mo',message:'Kenalan yuk sama Baby Mo — sahabat kecil islami! 🐻'})">📤 Bagikan Baby Mo</a>
+      <a href="#" class="play-btn play-share" style="margin-top:10px;" onclick="event.preventDefault();window.BabyMo&&BabyMo.share({title:'Kenalan dengan Baby Mo',message:'Kenalan yuk sama Baby Mo — sahabat kecil islami! 🐻'})">📤 Bagikan Baby Mo</a>
     </div>
 
   </div>

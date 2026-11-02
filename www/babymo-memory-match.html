@@ -335,6 +335,37 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 <meta name="twitter:description" content="Cocokkan kartu sambil melatih daya ingat bersama Baby Mo.">
 <meta name="twitter:image" content="https://play.babymo.id/og/babymo-memory-match.jpg">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Memory Match — Baby Mo","url":"https://play.babymo.id/babymo-memory-match.html","description":"Cocokkan kartu sambil melatih daya ingat bersama Baby Mo.","inLanguage":"id-ID","genre":"Memory","image":"https://play.babymo.id/og/babymo-memory-match.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Memory Match","item":"https://play.babymo.id/babymo-memory-match.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{--gold:#F08C00;--green:#12A15A;--green2:#2DC76D;--shadow-dk:rgba(30,60,110,.28);}
+#app{background:
+  radial-gradient(ellipse 70% 45% at 0% 0%,rgba(120,200,255,.45),transparent 70%),
+  radial-gradient(ellipse 60% 40% at 100% 8%,rgba(255,180,210,.40),transparent 70%),
+  radial-gradient(ellipse 70% 45% at 100% 85%,rgba(190,170,255,.38),transparent 70%),
+  radial-gradient(ellipse 70% 45% at 0% 100%,rgba(130,230,180,.38),transparent 70%),#F2F6FC;}
+.s-dot{background:#FFC83D;}
+.cloud-el{opacity:.35;}
+.home-title h1,.mode-name,.s-hdr h2{color:#152230;text-shadow:none;}
+.home-title p,.mode-desc,.win-sub,.sk-text span,.prog-label,.prog-pct,.stat-lbl,.trophy-tname,.trophy-best,.tier-label,.stk-slot-name{color:#5A6878;}
+.mode-card,.back-btn,.moves-tag,.reaction-bubble,.btn-sec{background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.08);color:#152230;
+  box-shadow:0 0 0 .5px rgba(21,34,48,.05),0 10px 22px -16px rgba(30,60,110,.45);}
+.mode-card.dreamtime{background:linear-gradient(135deg,#EFE9FF,#D9CEFF);border-color:rgba(138,121,217,.35);}
+.mode-card.hijaiyah,.mode-card.hijaiyah-half{background:linear-gradient(135deg,#E2F8EA,#CDEFE8);border-color:rgba(48,180,110,.35);}
+.prog-wrap{background:rgba(21,34,48,.08);}
+.c-back{background:linear-gradient(150deg,#8EDCFF,#46A5FF 55%,#2F74EA);border-color:rgba(255,255,255,.85);
+  box-shadow:0 8px 18px -8px rgba(47,116,234,.55),inset 0 1px 0 rgba(255,255,255,.5);}
+.c-front{border-color:rgba(240,140,0,.25);box-shadow:0 8px 18px -10px rgba(30,60,110,.45);}
+.stk-sticky-hdr{background:rgba(255,255,255,.75);}
+.c-back svg{filter:grayscale(1) brightness(2.4);opacity:.85;}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+/* contrast fixes after the bright theme */
+.g-title,.win-title,#win-moves-txt,.prog-big-count,.stat-val{color:#D9480F!important;}
+.trophies-label,.tier-label,.tier-label span{color:#5A6878!important;}
+a[href="index.html"]{color:#5A6878!important;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
 <div id="app">

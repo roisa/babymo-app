@@ -391,19 +391,47 @@
     var st = document.createElement("style");
     st.id = "bm-mo-style";
     st.textContent =
-      "#bm-mo{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom));" +
-      "transform:translate(-50%,150%);z-index:99998;display:flex;align-items:flex-end;gap:10px;" +
-      "pointer-events:none;transition:transform .42s cubic-bezier(.2,.9,.25,1.2);max-width:92vw;}" +
-      "#bm-mo.show{transform:translate(-50%,0);}" +
-      "#bm-mo .bm-pose{position:relative;flex:0 0 auto;width:78px;height:78px;border-radius:50%;" +
-      "background:radial-gradient(circle at 50% 58%, rgba(63,208,140,.55), rgba(12,42,32,.55) 60%, rgba(12,42,32,0) 74%);" +
-      "display:flex;align-items:flex-end;justify-content:center;overflow:hidden;" +
-      "box-shadow:0 6px 16px rgba(0,0,0,.4), inset 0 0 0 1px rgba(255,255,255,.10);}" +
-      "#bm-mo .bm-pose img{width:74px;height:74px;object-fit:contain;object-position:bottom;filter:drop-shadow(0 4px 10px rgba(0,0,0,.35));}" +
-      "#bm-mo .bm-bub{background:#fff;color:#173a27;font:800 14px/1.3 'Nunito',system-ui,sans-serif;" +
-      "padding:11px 15px;border-radius:16px;box-shadow:0 8px 26px rgba(0,0,0,.35);position:relative;max-width:240px;}" +
-      "#bm-mo .bm-bub::after{content:'';position:absolute;left:-7px;bottom:16px;border:7px solid transparent;border-right-color:#fff;}";
+      "#bm-mo{position:fixed;left:max(12px,env(safe-area-inset-left));bottom:calc(var(--bm-mo-lift,0px) + 14px + env(safe-area-inset-bottom));" +
+      "transform:translateY(170%);opacity:0;z-index:99998;display:flex;align-items:flex-end;gap:8px;" +
+      "pointer-events:none;transition:transform .42s cubic-bezier(.2,.9,.25,1.2),opacity .25s ease;max-width:calc(100vw - 24px);}" +
+      "#bm-mo.show{transform:translateY(0);opacity:1;}" +
+      "@media(min-width:760px){#bm-mo{left:max(24px,calc(50vw - 360px));}}" +
+      // Transparent Baby Mo: no circle behind him, just a soft shadow under
+      // the cut-out so he reads on both bright and dark game backgrounds.
+      "#bm-mo .bm-pose{position:relative;flex:0 0 auto;width:68px;height:72px;" +
+      "background:none;display:flex;align-items:flex-end;justify-content:center;}" +
+      "#bm-mo .bm-pose img{width:68px;height:72px;object-fit:contain;object-position:bottom;" +
+      "filter:drop-shadow(0 6px 10px rgba(30,60,110,.28));}" +
+      "#bm-mo .bm-bub{background:#fff;color:#173a27;font:800 13.5px/1.3 'Nunito',system-ui,sans-serif;" +
+      "padding:9px 13px;border-radius:18px 18px 18px 6px;position:relative;max-width:min(260px,calc(100vw - 110px));margin-bottom:14px;" +
+      "box-shadow:0 0 0 .5px rgba(21,34,48,.08),0 12px 26px -12px rgba(30,60,110,.45);}" +
+      "#bm-mo .bm-bub::after{content:'';position:absolute;left:-6px;bottom:8px;border:6px solid transparent;border-right-color:#fff;border-bottom-color:#fff;}";
     document.head.appendChild(st);
+  }
+  // Height of anything pinned to the bottom of the screen on the left side
+  // (tab bars, sticky CTA bars, on-screen game controls) so Baby Mo pops up
+  // above it instead of covering it.
+  function bottomBarHeight(self) {
+    var h = innerHeight, lift = 0;
+    try {
+      var xs = [24, 90, 170];
+      for (var i = 0; i < xs.length; i++) {
+        var stack = document.elementsFromPoint(xs[i], h - 6);
+        for (var j = 0; j < stack.length; j++) {
+          var el = stack[j];
+          if (el === self || self.contains(el) || el === document.body || el === document.documentElement) continue;
+          for (var n = el; n && n !== document.body; n = n.parentElement) {
+            var pos = getComputedStyle(n).position;
+            if (pos === "fixed" || pos === "sticky") {
+              var r = n.getBoundingClientRect();
+              if (r.bottom >= h - 2 && r.height < h * 0.45) lift = Math.max(lift, h - r.top);
+              break;
+            }
+          }
+        }
+      }
+    } catch (e) {}
+    return Math.min(Math.round(lift), Math.round(h * 0.45));
   }
   var moTimer = null;
   function react(type, opts) {
@@ -423,6 +451,7 @@
         (cfg.poses ? pickNoRepeat(cfg.poses, type + "_pose") : (cfg.pose || "baby-mo-pose-01"));
       box.querySelector("img").src = POSE + poseName + ".png";
       box.querySelector(".bm-bub").textContent = msg;
+      box.style.setProperty("--bm-mo-lift", bottomBarHeight(box) + "px");
       void box.offsetWidth;
       box.classList.add("show");
       // Matching sound (silent if muted); win also drops a star in the jar
