@@ -338,6 +338,12 @@ body::before{
 [class*="hub"],[class*="back-btn"],.top-btn,.icon-btn{background:rgba(255,255,255,.88)!important;border-color:rgba(21,34,48,.08)!important;color:#152230!important;}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+.play-btn.play-share{background:rgba(255,255,255,.78)!important;background-image:none!important;color:#152230!important;-webkit-text-fill-color:#152230;text-shadow:none;border:1px solid #fff;box-shadow:0 0 0 .5px rgba(21,34,48,.1),inset 0 1px 0 #fff,0 8px 18px -12px rgba(30,60,110,.45)!important;}
+/* contrast fixes after the bright theme */
+.mystery-label{color:#6B7787;}
+.bubble-sub{color:#5A6878;}
+</style>
 </head>
 <body>
 
@@ -435,7 +441,7 @@ body::before{
       <a href="./index.html" class="play-btn">
         🎮 Yuk Main Bersama Baby Mo!
       </a>
-      <a href="#" class="play-btn" style="background:rgba(240,232,216,.08);color:#E8B060;margin-top:10px;" onclick="event.preventDefault();window.BabyMo&&BabyMo.share({title:'Kenalan dengan Baby Mo',message:'Kenalan yuk sama Baby Mo — sahabat kecil islami! 🐻'})">📤 Bagikan Baby Mo</a>
+      <a href="#" class="play-btn play-share" style="margin-top:10px;" onclick="event.preventDefault();window.BabyMo&&BabyMo.share({title:'Kenalan dengan Baby Mo',message:'Kenalan yuk sama Baby Mo — sahabat kecil islami! 🐻'})">📤 Bagikan Baby Mo</a>
     </div>
 
   </div>

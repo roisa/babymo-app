@@ -10,8 +10,8 @@
 /* ── Primary (filled) buttons ───────────────────────────────────────── */
 .w-start, .sound-btn, .nav-btn-pri, .q-next-btn, .q-play-btn, .c-btn-pri,
 .start-btn, .btn-pri, .btn-primary, .play-btn, .btn-gold, .cta, .abtn-main,
-.big-btn:not(.secondary), .checkin-btn, .rec-btn-play, .dz-btn-play, .gbtn,
-.btn:not(.ghost):not(.btn-secondary):not(.btn-soft), .name-btn, .denied-retry {
+.big-btn:not(.secondary), .checkin-btn, .rec-btn-play, .dz-btn-play, .gbtn, .loc-btn,
+.guide-nav-btn.next, .dzikir-nav-btn.next, .btn:not(.ghost):not(.btn-secondary):not(.btn-soft), .name-btn, .denied-retry {
   border: none;
   box-shadow:
     inset 0 18px 16px -14px rgba(255, 255, 255, .45),
@@ -22,6 +22,52 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+/* ── One colour language for every game ─────────────────────────────
+   Primary  = "Mint"  : fresh green gradient, white bold text
+   Sunny    = "Mango" : warm orange gradient, white bold text
+   Every label sits on a deep enough base for white text, with a tiny
+   text-shadow so it stays crisp on the glossy top highlight. */
+.w-start, .sound-btn, .nav-btn-pri, .q-next-btn, .q-play-btn, .c-btn-pri,
+.start-btn, .btn-pri, .play-btn, .cta, .abtn-main, .big-btn:not(.secondary),
+.rec-btn-play, .dz-btn-play, .guide-nav-btn.next, .dzikir-nav-btn.next,
+.btn-primary, .btn:not(.ghost):not(.btn-secondary):not(.btn-soft):not(.gold):not(.btn-gold),
+.name-btn, .denied-retry, .loc-btn {
+  background: linear-gradient(180deg, #34CF83 0%, #0E9F5A 50%, #077A43 100%) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  text-shadow: 0 1px 1.5px rgba(0, 70, 35, .38);
+  font-weight: 800;
+}
+.btn-gold, .btn.gold {
+  background: linear-gradient(180deg, #FFA53A 0%, #F06A0E 50%, #C94F06 100%) !important;
+  color: #fff !important;
+  -webkit-text-fill-color: #fff;
+  text-shadow: 0 1px 1.5px rgba(120, 45, 0, .38);
+  font-weight: 800;
+}
+/* games that set the label colour with a stronger selector */
+.dz-btn.dz-btn-play, .rec-btn.rec-btn-play { color: #fff !important; }
+/* gradient pseudo-glows some games add on top fight the new palette */
+.cta::before { display: none !important; }
+/* "speaking" state keeps a visible difference: deeper green + pulse */
+.sound-btn.speaking {
+  background: linear-gradient(180deg, #0E9F5A 0%, #077A43 55%, #056236 100%) !important;
+}
+/* disabled primaries read as clearly unavailable */
+:is(.nav-btn-pri, .q-next-btn, .start-btn, .btn-pri, .btn-primary, .btn, .loc-btn, .name-btn, .cta)[disabled] {
+  background: #DCE3EC !important;
+  color: #6B7787 !important;
+  -webkit-text-fill-color: #6B7787;
+  text-shadow: none;
+  box-shadow: none !important;
+}
+/* soft focus ring for keyboards */
+:is(.w-start, .sound-btn, .nav-btn-pri, .q-next-btn, .c-btn-pri, .start-btn, .btn-pri, .play-btn,
+    .cta, .abtn-main, .big-btn, .btn-primary, .btn, .btn-gold, .name-btn):focus-visible {
+  outline: 3px solid rgba(23, 178, 106, .45);
+  outline-offset: 3px;
+}
+
 /* ── Secondary buttons: clear frosted glass ─────────────────────────── */
 .w-back, .nav-btn-sec, .c-btn-sec, .speed-btn, .l-back, .q-back, .btn-sec,
 .hub-back-btn, .g-back, .back-btn, .btn-secondary, .btn-soft, .abtn-sec,
@@ -30,6 +76,8 @@
   background-color: rgba(255, 255, 255, .72) !important;
   background-image: none !important;
   color: #152230 !important;
+  -webkit-text-fill-color: #152230;
+  font-weight: 700;
   border: 1px solid rgba(255, 255, 255, .95) !important;
   -webkit-backdrop-filter: blur(16px) saturate(170%);
   backdrop-filter: blur(16px) saturate(170%);
