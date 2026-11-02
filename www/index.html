@@ -16,6 +16,13 @@
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#F2F6FC">
+<script>
+/* Theme: "auto" (follow the phone), "light" or "dark" — applied before paint */
+(function(){try{var m=localStorage.getItem('bm_theme')||'auto';
+var d=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
+document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();
+</script>
+
 
 <link rel="manifest" href="manifest.webmanifest">
 
@@ -767,6 +774,118 @@ body::before{
 /* contrast fixes after the bright theme */
 :root{--cream-faint:#6B7787;}
 </style>
+<style id="bm-dark">
+/* ═══════════ DARK THEME (iOS-style night sky) ═══════════
+   Active when <html data-theme="dark"> — set by the theme script from the
+   saved choice (Auto / Light / Dark) or the phone's own setting. Keeps the
+   colourful buttons, app icons and Baby Mo; only surfaces and text change. */
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0B1020; --bg-elev:#161C2F; --bg-elev2:#1C2338;
+  --surface:#161C2F; --surface-2:#1C2338;
+  --green-lt:#4ADE80;
+  --cream:#F2F5FA; --cream-dim:#AEB8C7; --cream-faint:#8794A6;
+  --hairline:rgba(255,255,255,.07);
+  --hairline-strong:rgba(255,255,255,.12);
+  --blur-bg:rgba(14,19,36,.72);
+  --card-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 12px 28px -18px rgba(0,0,0,.8);
+}
+html[data-theme="dark"] body{background:var(--bg); color:var(--cream);}
+html[data-theme="dark"] body::before{
+  background:
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(56,120,255,.30), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 8%, rgba(190,90,220,.24), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 100% 85%, rgba(110,80,255,.24), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 0% 100%, rgba(20,184,166,.22), transparent 70%);
+}
+html[data-theme="dark"] .stars i{color:#FFE7A3; opacity:.55; text-shadow:0 0 8px rgba(255,220,120,.6);}
+
+html[data-theme="dark"] .navbar{background:rgba(11,16,32,.62);}
+html[data-theme="dark"] .nav-btn{color:var(--cream); background:rgba(255,255,255,.09); box-shadow:0 0 0 .5px var(--hairline-strong), 0 4px 10px -6px rgba(0,0,0,.6);}
+html[data-theme="dark"] .nav-btn:active{background:rgba(255,255,255,.16);}
+html[data-theme="dark"] .star-pill{background:linear-gradient(180deg,#FFD66B,#F5A300); color:#3D2600; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 4px 14px -6px rgba(245,163,0,.7);}
+
+html[data-theme="dark"] .large-title em{background:linear-gradient(95deg,#4ADE80 0%,#2DD4BF 35%,#60A5FA 68%,#A78BFA 100%); -webkit-background-clip:text; background-clip:text;}
+
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] #pane-companion .hero,
+html[data-theme="dark"] #pane-doa .hero{
+  background:
+    radial-gradient(ellipse 70% 70% at 100% 100%, rgba(167,139,250,.28), transparent 60%),
+    linear-gradient(135deg,#2B2457 0%,#1E2B57 50%,#123E4E 100%) !important;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.08);
+}
+html[data-theme="dark"] #pane-companion .hero{background:radial-gradient(ellipse 70% 70% at 100% 100%, rgba(45,212,191,.25), transparent 60%),linear-gradient(135deg,#123B33 0%,#123A47 50%,#1C2A55 100%) !important;}
+html[data-theme="dark"] .hero::before{background:radial-gradient(circle at 92% 8%, rgba(255,255,255,.14), transparent 38%);}
+html[data-theme="dark"] .hero-eyebrow{color:#FDBA74;}
+html[data-theme="dark"] .hero-greet{color:var(--cream);}
+html[data-theme="dark"] .hero-greet .ar{color:#6EE7B7;}
+html[data-theme="dark"] .hero-msg{color:#C9D2DE;}
+html[data-theme="dark"] .hero-img-glow{background:radial-gradient(circle, rgba(255,230,160,.35), transparent 65%) !important;}
+html[data-theme="dark"] .hero-img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.55));}
+html[data-theme="dark"] .hero-btn.alt{background:rgba(255,255,255,.1); color:var(--cream); box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 .5px var(--hairline-strong);}
+
+html[data-theme="dark"] .sec-link{color:#64B5FF;}
+html[data-theme="dark"] .qs{background:var(--bg-elev);}
+
+html[data-theme="dark"] .h-card{background:linear-gradient(160deg,#3A2338,#2A1C3D); border:1px solid rgba(255,255,255,.07); box-shadow:0 16px 30px -20px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.07);}
+html[data-theme="dark"] .h-card.doa{background:linear-gradient(160deg,#16305A,#112445);}
+html[data-theme="dark"] .h-card.dream{background:linear-gradient(160deg,#2C2560,#1F1A48);}
+html[data-theme="dark"] .h-card.dua{background:linear-gradient(160deg,#41330F,#2E240C);}
+html[data-theme="dark"] .h-card-tag{color:#FDBA74;}
+html[data-theme="dark"] .h-card.doa .h-card-tag{color:#7DD3FC;}
+html[data-theme="dark"] .h-card.dream .h-card-tag{color:#C4B5FD;}
+html[data-theme="dark"] .h-card.dua .h-card-tag{color:#FCD34D;}
+html[data-theme="dark"] .h-card-sub{color:#B8C2D0;}
+html[data-theme="dark"] [data-i18n="feat_start"]{color:#FDBA74 !important;}
+
+html[data-theme="dark"] .ai-badge{border-color:var(--bg);}
+html[data-theme="dark"] .ai-square.has-art{box-shadow:0 10px 18px -10px rgba(0,0,0,.8);}
+
+html[data-theme="dark"] .list-group{background:var(--bg-elev);}
+html[data-theme="dark"] .lrow:active{background:rgba(255,255,255,.06);}
+html[data-theme="dark"] .lrow-icon.brand{background:radial-gradient(circle at 50% 38%,#2E3756,#1E2540);}
+html[data-theme="dark"] .lrow-sub .ar,
+html[data-theme="dark"] .profile-arabic,
+html[data-theme="dark"] .foot .ar{color:#6EE7B7;}
+html[data-theme="dark"] .lrow-chev{color:#5C687C;}
+html[data-theme="dark"] .profile-avatar::before{background:radial-gradient(circle, rgba(255,214,120,.28), rgba(140,110,255,.18) 45%, transparent 70%);}
+html[data-theme="dark"] .profile-tag{color:#FDBA74;}
+
+html[data-theme="dark"] .tabbar{background:rgba(22,28,47,.8); border-color:rgba(255,255,255,.08); box-shadow:0 0 0 .5px rgba(0,0,0,.6), 0 18px 36px -18px rgba(0,0,0,.9);}
+html[data-theme="dark"] .tab{color:#8794A6;}
+html[data-theme="dark"] .tab.active{color:#6EE7B7; background:rgba(52,211,153,.16);}
+
+html[data-theme="dark"] .toast{background:rgba(30,37,58,.95); color:var(--cream); box-shadow:0 0 0 .5px var(--hairline-strong), 0 12px 28px -12px rgba(0,0,0,.8);}
+html[data-theme="dark"] .foot .br{color:#4ADE80;}
+html[data-theme="dark"] .install-hint{background:linear-gradient(135deg,#3B2A18,#3A1E31); border-color:rgba(255,255,255,.08);}
+html[data-theme="dark"] .install-hint b{color:#FDBA74;}
+html[data-theme="dark"] .install-hint .x:active{background:rgba(255,255,255,.08);}
+
+html[data-theme="dark"] .lang-pick{background:
+  radial-gradient(ellipse 80% 50% at 0% 0%, rgba(56,120,255,.35), transparent 70%),
+  radial-gradient(ellipse 70% 45% at 100% 10%, rgba(190,90,220,.3), transparent 70%),
+  radial-gradient(ellipse 80% 50% at 50% 100%, rgba(20,184,166,.3), transparent 70%),
+  #0B1020;}
+html[data-theme="dark"] .lang-btn{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.1); box-shadow:0 14px 28px -18px rgba(0,0,0,.9);}
+html[data-theme="dark"] .lang-toggle{background:var(--bg-elev);}
+html[data-theme="dark"] .trust-pill{color:#6EE7B7; background:rgba(48,209,88,.14); border-color:rgba(48,209,88,.3);}
+
+html[data-theme="dark"] #appLoader{background:radial-gradient(ellipse 80% 50% at 0% 0%,rgba(56,120,255,.35),transparent 70%),radial-gradient(ellipse 70% 45% at 100% 100%,rgba(190,90,220,.3),transparent 70%),#0B1020 !important;}
+html[data-theme="dark"] #appLoader > div:not(:has(#loaderBar)){color:#F2F5FA !important;}
+html[data-theme="dark"] #loaderPct{color:#AEB8C7 !important;}
+
+@media (min-width:520px){
+  html[data-theme="dark"] body{background:#070B16;}
+  html[data-theme="dark"] .app{background:var(--bg); box-shadow:0 0 60px rgba(0,0,0,.6);}
+}
+/* smooth switch */
+html.theme-anim body, html.theme-anim .navbar, html.theme-anim .tabbar, html.theme-anim .list-group,
+html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:background .35s ease, color .35s ease, border-color .35s ease;}
+/* theme toggle icon */
+#themeBtn svg{width:19px; height:19px; display:block;}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -850,6 +969,7 @@ body::before{
     </div>
     <div class="nav-title" id="navTitle">Baby Mo</div>
     <div class="nav-trailing">
+      <button class="nav-btn" id="themeBtn" aria-label="Tema" title="Tema"></button>
       <button class="nav-btn" id="muteBtn" aria-label="Suara">🔊</button>
       <button class="nav-btn" id="sparkleBtn" aria-label="Sparkle">✨</button>
     </div>
@@ -1556,6 +1676,35 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     burst(r.left+r.width/2, r.top+r.height/2, 6);
   });
 });
+
+/* ── Theme toggle: Auto → Light → Dark ── */
+(function(){
+  var ICONS={
+    auto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M12 3.8a8.2 8.2 0 0 1 0 16.4z" fill="currentColor" stroke="none"/></svg>',
+    light:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.4" fill="#FFB400" stroke="#F59E0B"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M5.4 18.6l1.5-1.5M17.1 6.9l1.5-1.5"/></svg>',
+    dark:'<svg viewBox="0 0 24 24"><path fill="#FFD66B" d="M19.8 14.6A8.4 8.4 0 1 1 9.4 4.2a6.6 6.6 0 0 0 10.4 10.4z"/><path fill="#fff" d="M17.6 3.2c.25 1.3.75 1.8 2.05 2.05-1.3.25-1.8.75-2.05 2.05-.25-1.3-.75-1.8-2.05-2.05 1.3-.25 1.8-.75 2.05-2.05z"/></svg>'
+  };
+  var LABEL={id:{auto:'Tema: Otomatis (ikut HP)',light:'Tema: Terang ☀️',dark:'Tema: Gelap 🌙'},
+             en:{auto:'Theme: Auto (follows phone)',light:'Theme: Light ☀️',dark:'Theme: Dark 🌙'}};
+  var mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+  var meta=document.querySelector('meta[name="theme-color"]');
+  function mode(){try{return localStorage.getItem('bm_theme')||'auto'}catch(e){return 'auto'}}
+  function apply(){
+    var m=mode(), dark=m==='dark'||(m==='auto'&&mq&&mq.matches);
+    document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+    if(meta) meta.setAttribute('content',dark?'#0B1020':'#F2F6FC');
+    var b=document.getElementById('themeBtn'); if(b){b.innerHTML=ICONS[m]; b.setAttribute('aria-label',(LABEL[curLang==='en'?'en':'id'])[m]);}
+  }
+  apply();
+  if(mq&&mq.addEventListener) mq.addEventListener('change',function(){if(mode()==='auto')apply();});
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    var order=['auto','light','dark'], next=order[(order.indexOf(mode())+1)%3];
+    try{localStorage.setItem('bm_theme',next)}catch(e){}
+    document.documentElement.classList.add('theme-anim');
+    apply(); showToast((LABEL[curLang==='en'?'en':'id'])[next]);
+    setTimeout(function(){document.documentElement.classList.remove('theme-anim')},450);
+  });
+})();
 </script>
 <script src="/bm-kit.js" defer></script>
 <script>
