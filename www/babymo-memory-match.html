@@ -360,6 +360,13 @@ body{font-family:'Nunito',sans-serif;display:flex;align-items:center;justify-con
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+/* first badge hint */
+.first-badge{align-items:center;gap:10px;width:100%;box-sizing:border-box;margin:0 0 14px;padding:12px;border-radius:18px;background:linear-gradient(135deg,#FFF6D6,#FFE9F1);}
+.first-badge .fb-ico{font-size:28px;}
+.first-badge .fb-txt{flex:1;font-size:12.5px;color:#5A6878;line-height:1.35;text-align:left;}
+.first-badge .fb-txt b{display:block;font-size:14px;color:#152230;}
+.first-badge .fb-go{width:auto!important;padding:10px 16px!important;font-size:15px!important;margin:0!important;}
+
 /* readable text: nothing under ~11.5px */
 .mode-badge{font-size:11px!important;}
 .stat-lbl,.tier-label,.tier-label span{font-size:11.5px!important;}
@@ -527,6 +534,11 @@ a[href="index.html"]{color:#5A6878!important;}
         <span class="prog-label">Lencana Terkumpul</span>
         <div class="prog-bar-big"><div class="prog-bar-inner" id="badges-bar" style="width:0%"></div></div>
         <div class="prog-pct" id="badges-pct">0%</div>
+      </div>
+      <div class="first-badge" id="first-badge" style="display:none">
+        <span class="fb-ico">🌟</span>
+        <span class="fb-txt"><b>Lencana pertamamu menunggu!</b>Selesaikan mode Mudah untuk mendapat Bintang Pertama.</span>
+        <button class="btn-primary fb-go" onclick="startGame('easy')">Main</button>
       </div>
 
       <!-- Stats chips -->
@@ -1057,6 +1069,9 @@ function renderStickers() {
 
   // ── Progress header ──
   document.getElementById('badges-count').textContent = `${count} / ${total}`;
+  // First badge hint for brand-new players
+  const fb = document.getElementById('first-badge');
+  if (fb) fb.style.display = count === 0 ? 'flex' : 'none';
   document.getElementById('badges-bar').style.width   = pct + '%';
   document.getElementById('badges-pct').textContent   = pct + '% selesai';
 

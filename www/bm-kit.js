@@ -474,6 +474,54 @@
     } catch (e) {}
   }
 
+
+  // ---- "Coba juga" — suggest a related game on the win screen ----
+  var NEXT = {
+    "babymo-puzzle":          ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Doa dari pagi sampai malam 🤲"],
+    "babymo-doa-harian":      ["dua-journey",  "babymo-dua-game.html",       "Dua Journey",    "Cocokkan doa dengan momennya 🃏"],
+    "babymo-dua-game":        ["pray-with-mo", "babymo-pray-with-mo.html",   "Sholat Bareng Mo","Belajar gerakan sholat 🕌"],
+    "babymo-arabic-spelling": ["hijaiyah",     "babymo-hijaiyah.html",       "Pulau Hijaiyah", "Cari 28 huruf di pulau 🏝️"],
+    "babymo-dreamtime":       ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Ulangi doa sebelum tidur 🌙"],
+    "babymo-look-and-find":   ["memory-match", "babymo-memory-match.html",   "Memory Match",   "Balik kartu, ingat letaknya 🧠"],
+    "babymo-memory-match":    ["cari-baby-mo", "babymo-look-and-find.html",  "Cari Baby Mo",   "Baby Mo sedang bersembunyi 🔍"],
+    "baby-mo-forehand-beat":  ["memory-match", "babymo-memory-match.html",   "Memory Match",   "Latih daya ingatmu 🧠"],
+    "babymo-puzzle-katabaik": ["kata-islam",   "babymo-arabic-spelling.html","Kata Islam",     "Susun kata Arab pertamamu 🔤"],
+    "babymo-pray-with-mo":    ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Doa-doa harian si kecil 🤲"]
+  };
+  function addNextGame(winEl) {
+    try {
+      var key = (location.pathname.split("/").pop() || "").replace(/\.html$/, "");
+      var n = NEXT[key];
+      if (!n || !winEl || winEl.querySelector(".bm-next")) return;
+      // Popups: put the card inside the popup card, not beside it
+      var inner = winEl.querySelector(".modal, .modal-card, .modal-box, .success-card");
+      if (inner) winEl = inner;
+      // Hero blocks at the top of a results page: put the card at the end of the page
+      if (winEl.classList.contains("complete-hero") && winEl.parentElement) winEl = winEl.parentElement;
+      if (!document.getElementById("bm-next-style")) {
+        var st = document.createElement("style"); st.id = "bm-next-style";
+        st.textContent =
+          ".bm-next{display:flex;align-items:center;gap:12px;width:100%;max-width:360px;box-sizing:border-box;margin:16px auto 8px;padding:10px 12px;" +
+          "border-radius:20px;background:rgba(255,255,255,.9);border:1px solid #fff;text-decoration:none;color:#152230;text-align:left;" +
+          "box-shadow:0 0 0 .5px rgba(21,34,48,.08),0 12px 24px -14px rgba(30,60,110,.45);font-family:'Nunito',system-ui,sans-serif;" +
+          "animation:bmNext .5s .6s both cubic-bezier(.2,.9,.25,1.2);position:relative;z-index:2;}" +
+          "@keyframes bmNext{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}" +
+          ".bm-next:active{transform:scale(.97)}" +
+          ".bm-next img{width:48px;height:48px;border-radius:12px;flex:0 0 48px;box-shadow:0 6px 12px -6px rgba(0,0,0,.4)}" +
+          ".bm-next .t{flex:1;min-width:0}.bm-next .e{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#E8590C}" +
+          ".bm-next .n{display:block;font-size:16px;font-weight:900;line-height:1.2}.bm-next .h{display:block;font-size:13px;font-weight:700;color:#5A6878}" +
+          ".bm-next .c{font-size:22px;color:#8A97A6;font-weight:700}";
+        document.head.appendChild(st);
+      }
+      var a = document.createElement("a");
+      a.className = "bm-next"; a.href = "/" + n[1];
+      a.innerHTML = '<img alt="" src="/icons/games/' + n[0] + '.svg"><span class="t"><span class="e">Coba juga</span>' +
+        '<span class="n">' + n[2] + '</span><span class="h">' + n[3] + '</span></span><span class="c">›</span>';
+      a.addEventListener("click", function () { track("next_game", { to: n[0] }); });
+      winEl.appendChild(a);
+    } catch (e) {}
+  }
+
   // Auto-celebrate when a known win/complete screen becomes visible (once).
   var WIN_SEL =
     "#completeScreen,#s-success,#gameover,#s-complete,#celebration,#celebOverlay,.complete-hero,#bdone,#pjdone";
@@ -491,7 +539,7 @@
         if (fired) return;
         var els = document.querySelectorAll(WIN_SEL);
         for (var i = 0; i < els.length; i++) {
-          if (vis(els[i])) { fired = true; react("win"); if (obs) obs.disconnect(); return; }
+          if (vis(els[i])) { fired = true; react("win"); addNextGame(els[i]); if (obs) obs.disconnect(); return; }
         }
       }
       obs = new MutationObserver(check);
