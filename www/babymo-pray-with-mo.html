@@ -785,6 +785,17 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+.cta-bar a{background:linear-gradient(120deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%)!important;color:#fff!important;text-shadow:0 1px 1.5px rgba(0,70,35,.38);box-shadow:inset 0 18px 16px -14px rgba(255,255,255,.45),0 12px 24px -12px rgba(10,143,160,.6)!important;}
+/* "wudhu first" banner on the home screen */
+.wudhu-banner{display:flex;align-items:center;gap:12px;margin:14px 0 4px;padding:8px 14px 8px 8px;border-radius:22px;text-decoration:none;color:#152230;
+  background:linear-gradient(120deg,#E0F4FF,#D6EEFF 60%,#E9E4FF);box-shadow:inset 0 1px 0 #fff,0 12px 24px -16px rgba(3,105,161,.55);border:1px solid rgba(255,255,255,.9)}
+.wudhu-banner img{width:68px;height:68px;object-fit:contain;border-radius:16px;background:#fff;flex:0 0 68px}
+.wudhu-banner .wb-text{flex:1;min-width:0}
+.wudhu-banner b{display:block;font-size:16px}
+.wudhu-banner .wb-text span{display:block;font-size:13px;color:#4A5A6B;font-weight:700;margin-top:2px}
+.wudhu-banner .wb-chev{font-size:24px;color:#0369A1;font-weight:700}
+.wudhu-banner:active{transform:scale(.98)}
+
 /* real Baby Mo renders on the finish panels */
 .dc-mo{width:140px;height:140px;object-fit:contain;display:block;margin:0 auto 4px;filter:drop-shadow(0 8px 14px rgba(30,60,110,.22));}
 .modal-mo{width:150px;height:150px;object-fit:contain;display:block;margin:-6px auto 2px;filter:drop-shadow(0 8px 14px rgba(30,60,110,.22));animation:celebBounce 1.4s ease infinite;}
@@ -862,6 +873,11 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
       </div>
     </div>
 
+    <a class="wudhu-banner" href="./babymo-wudhu.html">
+      <img src="wudhu-assets/w02-tangan.webp" alt="">
+      <span class="wb-text"><b>Wudhu dulu, yuk! 💧</b><span>Sebelum sholat, bersihkan diri bareng Mo</span></span>
+      <span class="wb-chev">›</span>
+    </a>
     <div class="features">
       <div class="feat-card" onclick="showView('guide')">
         <div class="fc-icon">🕌</div>
