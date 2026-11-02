@@ -125,6 +125,23 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+/* compact voice settings + first-time guide */
+.voice-set{margin-top:14px;text-align:left;border-radius:14px;background:rgba(21,34,48,.04);padding:2px 12px;}
+.voice-set summary{cursor:pointer;min-height:44px;display:flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:#152230;list-style:none;}
+.voice-set summary::-webkit-details-marker{display:none;}
+.voice-set summary::after{content:'›';margin-left:auto;font-size:20px;transition:transform .2s;color:#8A97A6;}
+.voice-set[open] summary::after{transform:rotate(90deg);}
+#voiceFlag{font-weight:700;color:#6B7787;font-size:13px;}
+.voice-set #voiceWarn{margin-bottom:10px;font-size:12.5px;}
+.panel.coach{text-align:center;}
+.coach-mo{width:84px;height:84px;object-fit:contain;margin:-6px auto 2px;display:block;filter:drop-shadow(0 8px 12px rgba(30,60,110,.3));}
+.coach h2{margin:0 0 12px;font-size:22px;color:#152230;}
+.coach-steps{display:flex;flex-direction:column;gap:9px;text-align:left;margin-bottom:14px;}
+.coach-step{display:flex;align-items:center;gap:12px;background:#F4F7FC;border-radius:16px;padding:9px 11px;color:#152230;}
+.coach-step b{display:block;font-size:14.5px;}
+.coach-step small{display:block;font-size:12.5px;color:#5A6878;font-weight:700;margin-top:1px;}
+.coach-ico{flex:0 0 46px;height:46px;border-radius:14px;background:#fff;display:grid;place-items:center;font-size:24px;box-shadow:0 6px 14px -8px rgba(30,60,110,.45);}
+
 /* readable text: nothing under ~11.5px */
 #jLabel{font-size:12px!important;}
 .abtn span{font-size:11px!important;}
@@ -161,12 +178,22 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 <div class="veil on" id="vStart"><div class="panel">
   <div style="font-family:var(--ar);font-size:56px;line-height:1;color:var(--green-lt);padding-bottom:8px">ا ب ت</div>
   <h1>Pulau Hijaiyah</h1>
-  <p>Ibra &amp; Baby Mo menjelajahi pulau voxel bersama-sama. Jalan-jalan bebas, gali balok, bangun apa saja, dan temukan huruf-huruf hijaiyah yang tersembunyi di sekitar pulau.</p>
-  <div class="set"><span>Suara huruf</span><select id="selVoice"></select></div>
-  <div class="set" style="border:none"><span>Kecepatan bicara</span><input id="rngRate" type="range" min="0.5" max="1.1" step="0.05" value="0.8"></div>
-  <div id="voiceWarn"></div>
+  <p>Ibra &amp; Baby Mo menjelajahi pulau kotak-kotak. Jalan-jalan, gali, bangun, dan temukan 28 huruf hijaiyah yang tersembunyi!</p>
   <button class="btn" id="btnPlay">Mulai Petualangan</button>
-  <p style="font-size:12px;margin-top:12px">HP/tablet: joystick kiri jalan · geser kanan lihat sekeliling · ⛏️ gali · 🧱 bangun.<br>Komputer: WASD jalan · mouse lihat sekeliling · klik kiri gali · klik kanan bangun.</p>
+  <details class="voice-set" id="voiceSet">
+    <summary>🔊 Pengaturan suara <span id="voiceFlag"></span></summary>
+    <div class="set"><span>Suara huruf</span><select id="selVoice"></select></div>
+    <div class="set" style="border:none"><span>Kecepatan bicara</span><input id="rngRate" type="range" min="0.5" max="1.1" step="0.05" value="0.8"></div>
+    <div id="voiceWarn"></div>
+  </details>
+</div></div>
+
+<!-- FIRST-TIME GUIDE -->
+<div class="veil" id="vCoach"><div class="panel coach">
+  <img class="coach-mo" src="baby-mo-poses/baby-mo-idea.webp" alt="">
+  <h2>Cara main</h2>
+  <div class="coach-steps" id="coachSteps"></div>
+  <button class="btn" id="btnCoachGo">Ayo jelajah! ▶</button>
 </div></div>
 
 <!-- JOURNAL -->
@@ -1763,8 +1790,9 @@ function syncVoiceUI(){
   const w = $('#voiceWarn');
   if(!Speech.ar){
     w.style.display = 'block';
-    w.innerHTML = '<b>Belum ada suara Arab di perangkat ini.</b> Sementara memakai suara Indonesia dengan ejaan latin (ba, bi, bu). Untuk suara asli: pasang bahasa Arab di pengaturan sistem (Android: Setelan → Bahasa → tambah <i>العربية</i>; iOS/Mac: Settings → Accessibility → Spoken Content → Voices → Arabic).';
-  } else w.style.display = 'none';
+    w.innerHTML = '<b>Suara Arab belum ada di HP ini.</b> Sementara Baby Mo membaca dengan ejaan latin (ba, bi, bu). Untuk suara Arab asli, tambahkan bahasa Arab di pengaturan HP (Android: Setelan → Bahasa; iPhone: Pengaturan → Aksesibilitas → Konten Lisan → Suara).';
+    const f=$('#voiceFlag'); if(f) f.textContent='· ejaan latin';
+  } else { w.style.display = 'none'; const f=$('#voiceFlag'); if(f) f.textContent='· Arab ✓'; }
 }
 function pickVoice(name){
   Speech.chosen = Speech.voices.find(v=>v.name===name) || Speech.chosen;
@@ -1775,7 +1803,20 @@ $('#selVoice2').onchange = e=>pickVoice(e.target.value);
 $('#rngRate').oninput = e=>{ Speech.rate = +e.target.value; $('#rngRate2').value = e.target.value; };
 $('#rngRate2').oninput = e=>{ Speech.rate = +e.target.value; $('#rngRate').value = e.target.value; };
 
+function showCoach(go){
+  const steps = isTouch ? [
+    ['🕹️','Geser joystick kiri','untuk berjalan'],['👉','Geser layar kanan','untuk melihat sekeliling'],
+    ['⛏️','Tombol GALI · 🧱 BANGUN','ambil atau pasang balok'],['🟨','Dekati kotak emas','dengar hurufnya & kumpulkan 28!']
+  ] : [
+    ['⌨️','W A S D','untuk berjalan · Spasi untuk lompat'],['🖱️','Gerakkan mouse','untuk melihat sekeliling'],
+    ['⛏️','Klik kiri gali · klik kanan bangun','ambil atau pasang balok'],['🟨','Dekati kotak emas','dengar hurufnya & kumpulkan 28!']
+  ];
+  $('#coachSteps').innerHTML = steps.map(s=>'<div class="coach-step"><div class="coach-ico">'+s[0]+'</div><div><b>'+s[1]+'</b><small>'+s[2]+'</small></div></div>').join('');
+  const v=$('#vCoach'); v.classList.add('on');
+  $('#btnCoachGo').onclick=()=>{ v.classList.remove('on'); go(); };
+}
 $('#btnPlay').onclick = ()=>{
+  if(isFirstTime && !window.__coached){ window.__coached=true; veil.start.classList.remove('on'); showCoach(()=>$('#btnPlay').onclick()); return; }
   veil.start.classList.remove('on');
   running = true;
   SFX.warm();
