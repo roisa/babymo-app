@@ -151,47 +151,62 @@
         '<g class="swing"><rect x="252" y="44" width="4" height="10" fill="#9FB5AA"/><rect x="240" y="52" width="28" height="40" rx="6" fill="#A7E3C9"/><rect x="240" y="80" width="28" height="6" fill="#7FD0AE"/></g>'
     },
 
-    /* 4 · Sebelum makan — warm table, steam rising */
+    /* 4 · Sebelum makan — a tidy table, steam rising; Mo stands on the floor beside it */
     eating: {
       pose: "baby-mo-pose-05",
-      svg: '<defs><pattern id="dsCloth" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="20" height="20" fill="#FFF"/><rect width="10" height="10" fill="#FFB3B3"/><rect x="10" y="10" width="10" height="10" fill="#FFB3B3"/></pattern>' +
-        '<clipPath id="dsWin2"><rect x="150" y="16" width="96" height="62" rx="10"/></clipPath></defs>' +
-        '<rect width="400" height="180" fill="#FFF4D8"/><circle cx="60" cy="20" r="90" fill="#FFE9B3" opacity=".7"/>' +
-        '<g clip-path="url(#dsWin2)"><rect x="150" y="16" width="96" height="62" fill="#BFE6FF"/><circle class="glow" cx="222" cy="36" r="13" fill="#FFD25A"/>' + cloud(180, 52, .55) + '</g>' +
-        '<rect x="150" y="16" width="96" height="62" rx="10" fill="none" stroke="#fff" stroke-width="6"/><path d="M198 16v62" stroke="#fff" stroke-width="4"/>' +
-        '<path d="M0 118h290v14H0z" fill="url(#dsCloth)"/><rect x="0" y="130" width="290" height="50" fill="#D69A64"/><rect x="0" y="128" width="290" height="6" fill="#B97D4A"/>' +
-        '<ellipse cx="74" cy="114" rx="40" ry="9" fill="#fff"/><ellipse cx="74" cy="110" rx="34" ry="7" fill="#F3F6FA"/>' +
-        '<path d="M52 110c0-14 10-22 22-22s22 8 22 22z" fill="#fff" stroke="#E5ECF3"/><circle cx="64" cy="98" r="2" fill="#E5ECF3"/><circle cx="80" cy="96" r="2" fill="#E5ECF3"/>' +
-        '<ellipse cx="90" cy="106" rx="10" ry="6" fill="#FFF"/><circle cx="90" cy="105" r="4" fill="#FFC94A"/>' +
-        '<path class="steam" d="M62 82c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-        '<path class="steam s2" d="M76 80c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-        '<path class="steam s3" d="M88 84c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-        '<path d="M134 100h48l-4 16a8 8 0 0 1-8 6h-24a8 8 0 0 1-8-6z" fill="#7DD3FC"/><ellipse cx="158" cy="100" rx="24" ry="5" fill="#F59E0B"/>' +
-        '<path class="steam" d="M150 92c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/><path class="steam s2" d="M164 90c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-        '<rect x="196" y="88" width="20" height="30" rx="4" fill="#E0F4FF" stroke="#9ED8F5" stroke-width="2"/><rect x="198" y="100" width="16" height="16" rx="2" fill="#7DD3FC" opacity=".7"/>' +
-        '<g class="float2"><circle cx="240" cy="108" r="10" fill="#FF6B6B"/><path d="M240 98q2-6 7-6" stroke="#5A8F3C" stroke-width="2.4" fill="none"/></g>' +
-        '<rect x="22" y="112" width="4" height="22" rx="2" fill="#A9B8C8" transform="rotate(-12 24 122)"/><rect x="122" y="112" width="4" height="22" rx="2" fill="#A9B8C8" transform="rotate(12 124 122)"/>'
+      svg: '<defs><pattern id="dsCloth" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#FFF"/><rect width="8" height="8" fill="#FFB3B3"/><rect x="8" y="8" width="8" height="8" fill="#FFB3B3"/></pattern>' +
+        '<clipPath id="dsWin2"><rect x="150" y="14" width="96" height="62" rx="10"/></clipPath></defs>' +
+        '<rect width="400" height="180" fill="#FFF4D8"/><circle cx="60" cy="10" r="90" fill="#FFE9B3" opacity=".7"/>' +
+        '<g clip-path="url(#dsWin2)"><rect x="150" y="14" width="96" height="62" fill="#BFE6FF"/><circle class="glow" cx="224" cy="34" r="12" fill="#FFD25A"/>' + cloud(180, 50, .5) + '</g>' +
+        '<rect x="150" y="14" width="96" height="62" rx="10" fill="none" stroke="#fff" stroke-width="6"/><path d="M198 14v62" stroke="#fff" stroke-width="4"/>' +
+        floor("#E9BE8F", "#D9A974") +
+        // table: legs on the floor, cloth on top
+        '<rect x="34" y="128" width="10" height="34" rx="3" fill="#B97D4A"/><rect x="236" y="128" width="10" height="34" rx="3" fill="#B97D4A"/>' +
+        '<rect x="20" y="118" width="240" height="12" rx="4" fill="#C98A5B"/>' +
+        '<path d="M18 108h244v12c-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-10 0z" fill="url(#dsCloth)"/>' +
+        // plate: rice + egg
+        '<ellipse cx="74" cy="107" rx="36" ry="6" fill="#fff" stroke="#E5ECF3"/><path d="M50 106c0-13 10-20 20-20s20 7 20 20z" fill="#fff" stroke="#E5ECF3"/>' +
+        '<circle cx="62" cy="96" r="1.8" fill="#E5ECF3"/><circle cx="76" cy="93" r="1.8" fill="#E5ECF3"/><ellipse cx="96" cy="103" rx="10" ry="5" fill="#fff" stroke="#F1E6C8"/><circle cx="96" cy="102" r="3.6" fill="#FFC94A"/>' +
+        '<path class="steam" d="M62 80c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+        '<path class="steam s2" d="M74 78c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+        // soup bowl
+        '<path d="M126 92h44c0 10-8 16-22 16s-22-6-22-16z" fill="#7DD3FC"/><ellipse cx="148" cy="92" rx="22" ry="4.5" fill="#F59E0B"/><rect x="138" y="106" width="20" height="3" rx="1.5" fill="#5BB8E8"/>' +
+        '<path class="steam s3" d="M142 84c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/><path class="steam" d="M155 82c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
+        // glass of water + apple, standing on the cloth
+        '<path d="M188 82h20l-2 26h-16z" fill="#E0F4FF" stroke="#9ED8F5" stroke-width="2"/><path d="M190 94h16l-1.2 13h-13.6z" fill="#7DD3FC" opacity=".7"/>' +
+        '<circle cx="232" cy="99" r="9" fill="#FF6B6B"/><path d="M232 90q2-6 7-6" stroke="#5A8F3C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M233 89c2-4 6-5 9-4-2 4-6 5-9 4z" fill="#7BC46A"/>'
     },
 
-    /* 5 · Doa belajar — desk, flipping page, floating letters */
+    /* 5 · Doa belajar — a tidy desk, page flipping, letters floating; Mo stands on the floor */
     study: {
       pose: "baby-mo-idea",
       svg: '<defs><radialGradient id="dsLamp" cx=".5" cy="0"><stop offset="0" stop-color="#FFF4C2" stop-opacity=".95"/><stop offset="1" stop-color="#FFF4C2" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="#EEE8FF"/><circle cx="340" cy="30" r="110" fill="#E3DAFF" opacity=".7"/>' +
-        '<rect x="18" y="20" width="110" height="8" rx="3" fill="#B993E8"/><rect x="18" y="62" width="110" height="8" rx="3" fill="#B993E8"/>' +
-        '<rect x="24" y="30" width="12" height="32" rx="2" fill="#FF8FAE"/><rect x="38" y="34" width="10" height="28" rx="2" fill="#7DD3FC"/><rect x="50" y="28" width="13" height="34" rx="2" fill="#FFC94A"/>' +
-        '<rect x="66" y="36" width="10" height="26" rx="2" fill="#86E0A9"/><rect x="80" y="30" width="12" height="32" rx="2" fill="#A78BFA"/><rect x="96" y="40" width="22" height="22" rx="4" fill="#FFB98A" transform="rotate(-8 107 51)"/>' +
-        '<path d="M150 40l-10 22h46l-10-22z" fill="#7C5CE0"/><rect x="161" y="62" width="4" height="54" fill="#5B42B8"/><ellipse cx="163" cy="118" rx="18" ry="5" fill="#5B42B8"/>' +
-        '<path class="glow" d="M140 62h46l40 60H100z" fill="url(#dsLamp)"/>' +
-        '<rect x="0" y="122" width="300" height="10" rx="3" fill="#B98552"/><rect x="0" y="132" width="300" height="48" fill="#D9A56E"/>' +
-        '<path d="M60 120l40-6 40 6v-30l-40-6-40 6z" fill="#fff" stroke="#D7CCF5" stroke-width="2"/><path d="M100 114V84" stroke="#D7CCF5" stroke-width="2"/>' +
-        '<path d="M68 96h24M68 102h20M108 96h24M108 102h18" stroke="#C7BCEB" stroke-width="2.4" stroke-linecap="round"/>' +
-        '<path class="page" d="M100 84l38 6v30l-38-6z" fill="#FAF7FF" stroke="#D7CCF5" stroke-width="2"/>' +
-        '<g transform="rotate(-14 176 116)"><rect x="150" y="113" width="44" height="6" rx="2" fill="#FFC94A"/><path d="M194 113l8 3-8 3z" fill="#F4D3A8"/><rect x="146" y="113" width="6" height="6" rx="1.5" fill="#FF8FAE"/></g>' +
-        '<text class="letter" x="204" y="92" font-family="Amiri Quran, Amiri, serif" font-size="22" fill="#7C5CE0">ا</text>' +
-        '<text class="letter l2" x="226" y="84" font-family="Amiri Quran, Amiri, serif" font-size="22" fill="#E8590C">ب</text>' +
-        '<text class="letter l3" x="248" y="96" font-family="Amiri Quran, Amiri, serif" font-size="22" fill="#0A9488">ت</text>' +
-        sparkle(230, 40, .8, "twinkle", "#FFC94A") + sparkle(262, 70, .6, "twinkle t2", "#A78BFA") + sparkle(214, 20, .5, "twinkle t3", "#FF8FAE")
+        '<rect width="400" height="180" fill="#EEE8FF"/><circle cx="340" cy="20" r="110" fill="#E3DAFF" opacity=".7"/>' +
+        // wall shelf with upright books and a little plant
+        '<rect x="20" y="58" width="116" height="7" rx="3" fill="#B993E8"/>' +
+        '<rect x="26" y="26" width="12" height="32" rx="2" fill="#FF8FAE"/><rect x="40" y="30" width="10" height="28" rx="2" fill="#7DD3FC"/><rect x="52" y="24" width="13" height="34" rx="2" fill="#FFC94A"/>' +
+        '<rect x="67" y="32" width="10" height="26" rx="2" fill="#86E0A9"/><rect x="79" y="27" width="12" height="31" rx="2" fill="#A78BFA"/>' +
+        '<path d="M104 44h22l-3 14h-16z" fill="#E9897A"/><path d="M115 44c-6-10-2-16 0-18 2 2 6 8 0 18M115 44c-10-4-12-10-11-13 3 0 9 3 11 13M115 44c10-4 12-10 11-13-3 0-9 3-11 13" fill="#5FBF7A"/>' +
+        floor("#D9B48A", "#C99E70") +
+        // desk on legs
+        '<rect x="34" y="124" width="10" height="38" rx="3" fill="#B98552"/><rect x="226" y="124" width="10" height="38" rx="3" fill="#B98552"/>' +
+        '<rect x="24" y="126" width="222" height="12" rx="3" fill="#C9935E"/><rect x="18" y="116" width="234" height="10" rx="4" fill="#D9A56E"/>' +
+        // lamp standing on the desk
+        '<path class="glow" d="M150 62h44l34 54H118z" fill="url(#dsLamp)"/>' +
+        '<path d="M154 40l-10 22h46l-10-22z" fill="#7C5CE0"/><rect x="165" y="62" width="4" height="50" fill="#5B42B8"/><ellipse cx="167" cy="114" rx="16" ry="4" fill="#5B42B8"/>' +
+        // open book lying flat on the desk + pencil beside it
+        '<path d="M52 115l38-5 38 5v-3l-38-5-38 5z" fill="#C7BCEB"/>' +
+        '<path d="M52 112c12-6 26-7 38-4v-18c-12-3-26-2-38 4z" fill="#fff" stroke="#D7CCF5" stroke-width="2"/>' +
+        '<path d="M60 98l22-4M60 104l18-3" stroke="#C7BCEB" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<path d="M128 112c-12-6-26-7-38-4v-18c12-3 26-2 38 4z" fill="#fff" stroke="#D7CCF5" stroke-width="2"/>' +
+        '<path d="M98 94l22 4M98 100l18 3" stroke="#C7BCEB" stroke-width="2.2" stroke-linecap="round"/>' +
+        '<path class="page" d="M90 108v-18c10-3 22-2 32 3v18c-10-5-22-6-32-3z" fill="#FAF7FF" stroke="#D7CCF5" stroke-width="1.6"/>' +
+        '<rect x="196" y="110" width="34" height="5" rx="2" fill="#FFC94A"/><path d="M230 110l7 2.5-7 2.5z" fill="#F4D3A8"/><rect x="192" y="110" width="5" height="5" rx="1.5" fill="#FF8FAE"/>' +
+        // letters floating up from the book
+        '<text class="letter" x="74" y="84" font-family="Amiri Quran, Amiri, serif" font-size="20" fill="#7C5CE0">ا</text>' +
+        '<text class="letter l2" x="92" y="80" font-family="Amiri Quran, Amiri, serif" font-size="20" fill="#E8590C">ب</text>' +
+        '<text class="letter l3" x="112" y="84" font-family="Amiri Quran, Amiri, serif" font-size="20" fill="#0A9488">ت</text>' +
+        sparkle(232, 40, .8, "twinkle", "#FFC94A") + sparkle(256, 76, .6, "twinkle t2", "#A78BFA") + sparkle(214, 20, .5, "twinkle t3", "#FF8FAE")
     },
 
     /* 6 · Sebelum tidur — night room, moon, stars, Zzz */
