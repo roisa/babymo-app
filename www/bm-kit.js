@@ -486,6 +486,7 @@
     "babymo-memory-match":    ["cari-baby-mo", "babymo-look-and-find.html",  "Cari Baby Mo",   "Baby Mo sedang bersembunyi 🔍"],
     "baby-mo-forehand-beat":  ["memory-match", "babymo-memory-match.html",   "Memory Match",   "Latih daya ingatmu 🧠"],
     "babymo-puzzle-katabaik": ["kata-islam",   "babymo-arabic-spelling.html","Kata Islam",     "Susun kata Arab pertamamu 🔤"],
+    "babymo-wudhu":           ["pray-with-mo", "babymo-pray-with-mo.html",   "Sholat Bareng Mo","Lanjut belajar sholat 🕌"],
     "babymo-pray-with-mo":    ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Doa-doa harian si kecil 🤲"]
   };
   function addNextGame(winEl) {
