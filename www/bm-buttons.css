@@ -17,14 +17,15 @@
     inset 0 18px 16px -14px rgba(255, 255, 255, .45),
     inset 0 1px 0 rgba(255, 255, 255, .6),
     inset 0 -1px 0 rgba(0, 0, 0, .10),
-    0 10px 22px -12px rgba(30, 60, 110, .55) !important;
+    0 12px 24px -12px var(--bm-glow, rgba(30, 60, 110, .55)) !important;
   transition: transform 260ms cubic-bezier(.34, 1.56, .64, 1), box-shadow 220ms ease, filter 220ms ease !important;
   -webkit-tap-highlight-color: transparent;
 }
 
 /* ── One colour language for every game ─────────────────────────────
-   Primary  = "Mint"  : fresh green gradient, white bold text
-   Sunny    = "Mango" : warm orange gradient, white bold text
+   Primary  = "Lagoon": green → teal → ocean blue, white bold text
+   Sunny    = "Sunset": mango orange → coral pink, white bold text
+   Both are two-colour diagonals with a matching coloured glow.
    Every label sits on a deep enough base for white text, with a tiny
    text-shadow so it stays crisp on the glossy top highlight. */
 .w-start, .sound-btn, .nav-btn-pri, .q-next-btn, .q-play-btn, .c-btn-pri,
@@ -32,14 +33,16 @@
 .rec-btn-play, .dz-btn-play, .guide-nav-btn.next, .dzikir-nav-btn.next,
 .btn-primary, .btn:not(.ghost):not(.btn-secondary):not(.btn-soft):not(.gold):not(.btn-gold),
 .name-btn, .denied-retry, .loc-btn {
-  background: linear-gradient(180deg, #34CF83 0%, #0E9F5A 50%, #077A43 100%) !important;
+  background: linear-gradient(120deg, #10A765 0%, #0A9488 52%, #0A7FB0 100%) !important;
+  --bm-glow: rgba(10, 143, 160, .6);
   color: #fff !important;
   -webkit-text-fill-color: #fff;
   text-shadow: 0 1px 1.5px rgba(0, 70, 35, .38);
   font-weight: 800;
 }
 .btn-gold, .btn.gold {
-  background: linear-gradient(180deg, #FFA53A 0%, #F06A0E 50%, #C94F06 100%) !important;
+  background: linear-gradient(120deg, #FF8F0F 0%, #F2603A 50%, #E23E6E 100%) !important;
+  --bm-glow: rgba(236, 90, 100, .55);
   color: #fff !important;
   -webkit-text-fill-color: #fff;
   text-shadow: 0 1px 1.5px rgba(120, 45, 0, .38);
@@ -51,7 +54,7 @@
 .cta::before { display: none !important; }
 /* "speaking" state keeps a visible difference: deeper green + pulse */
 .sound-btn.speaking {
-  background: linear-gradient(180deg, #0E9F5A 0%, #077A43 55%, #056236 100%) !important;
+  background: linear-gradient(120deg, #0B8F57 0%, #08857C 52%, #07739A 100%) !important;
 }
 /* disabled primaries read as clearly unavailable */
 :is(.nav-btn-pri, .q-next-btn, .start-btn, .btn-pri, .btn-primary, .btn, .loc-btn, .name-btn, .cta)[disabled] {
