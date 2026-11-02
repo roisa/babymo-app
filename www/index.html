@@ -771,6 +771,13 @@ body::before{
 <meta name="twitter:image" content="https://play.babymo.id/og/index.jpg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Baby Mo","url":"https://play.babymo.id/","inLanguage":"id-ID","publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"}}</script>
 <style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+.qs-lbl,.h-card-tag,.ai-sub,[data-i18n=feat_start]{font-size:11.5px!important;}
+.tab span,.tab{font-size:11px;}
+/* kid-sized nav buttons */
+.nav-btn{width:40px;height:40px;font-size:18px;}
+.star-pill{width:auto;height:40px;padding:0 14px;}
+#themeBtn svg{width:21px;height:21px;}
 /* contrast fixes after the bright theme */
 :root{--cream-faint:#6B7787;}
 </style>
@@ -898,7 +905,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
   gap:18px;
   transition:opacity .4s ease;
 ">
-  <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(80,50,140,.25));animation:loaderBob 2s ease-in-out infinite;">
+  <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo" style="width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(80,50,140,.25));animation:loaderBob 2s ease-in-out infinite;">
   <div style="font-family:-apple-system,system-ui,sans-serif;font-size:18px;font-weight:800;color:#152230;letter-spacing:-.01em;">Baby Mo</div>
   <div style="width:140px;height:4px;border-radius:4px;background:rgba(21,34,48,.08);overflow:hidden;margin-top:4px;">
     <div id="loaderBar" style="height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,#12A15A,#10B5A0,#2F9BEA,#8B6CF5);transition:width .3s ease;"></div>
@@ -944,7 +951,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
 </script>
 
 <div class="lang-pick" id="langPick">
-  <img class="lang-pick-logo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo">
+  <img class="lang-pick-logo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo">
   <h2>🌙 Baby Mo Games</h2>
   <p>Pilih Bahasa / Choose Language</p>
   <button class="lang-btn" onclick="pickLang('id')">
@@ -998,7 +1005,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow"></div>
-            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-pose-05.png" alt="Baby Mo" draggable="false">
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-pose-05.webp" alt="Baby Mo" draggable="false">
           </div>
         </div>
         <div class="hero-cta">
@@ -1203,7 +1210,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow"></div>
-            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-idea.png" alt="Baby Mo" draggable="false" loading="lazy">
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-idea.webp" alt="Baby Mo" draggable="false" loading="lazy">
           </div>
         </div>
         <div class="hero-cta">
@@ -1261,7 +1268,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(255,255,255,.95),transparent 65%);"></div>
-            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-run.png" alt="Baby Mo" draggable="false" loading="lazy">
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-run.webp" alt="Baby Mo" draggable="false" loading="lazy">
           </div>
         </div>
         <div class="hero-cta">
@@ -1356,7 +1363,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
 
       <div class="profile-head">
         <div class="profile-avatar">
-          <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" loading="lazy">
+          <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo" draggable="false" loading="lazy">
         </div>
         <div class="profile-name">Baby Mo Games</div>
         <div class="profile-tag">🌙 Islamic Early Learning</div>
@@ -1714,7 +1721,7 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
   var POSES=['baby-mo-pose-01','baby-mo-pose-05','baby-mo-idea','baby-mo-ok',
     'baby-mo-yes','baby-mo-yeyy','baby-mo-wow','baby-mo-alright','baby-mo-pose-19',
     'baby-mo-pose-22','baby-mo-pose-33','baby-mo-run'];
-  try{ POSES.forEach(function(p){var i=new Image();i.src='baby-mo-poses/'+p+'.png';}); }catch(e){}
+  try{ POSES.forEach(function(p){var i=new Image();i.src='baby-mo-poses/'+p+'.webp';}); }catch(e){}
   if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
   var imgs=[].slice.call(document.querySelectorAll('img.hero-img[data-mo]'));
   imgs.forEach(function(img){ img.style.transition='opacity .35s ease'; });
@@ -1722,7 +1729,7 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     imgs.forEach(function(img){
       // only rotate the hero in the visible tab pane
       var pane=img.closest('.tab-pane'); if(pane && !pane.classList.contains('active')) return;
-      var next='baby-mo-poses/'+POSES[Math.floor(Math.random()*POSES.length)]+'.png';
+      var next='baby-mo-poses/'+POSES[Math.floor(Math.random()*POSES.length)]+'.webp';
       if(img.getAttribute('src')===next) return;
       img.style.opacity='0';
       setTimeout(function(){ img.src=next; img.onload=function(){img.style.opacity='1';}; }, 350);

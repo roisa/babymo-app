@@ -130,7 +130,7 @@
     // "← Game Hub" style plain links
     var links = root.tagName === "A" ? [root] : root.querySelectorAll("a");
     Array.prototype.forEach.call(links, function (a) {
-      if (!a.className && LINK_RE.test(a.textContent)) out.push(a);
+      if ((!a.className || a.classList.contains('bm-link')) && LINK_RE.test(a.textContent)) { a.classList.add('bm-link'); out.push(a); }
     });
     return out;
   }
@@ -141,7 +141,9 @@
     ".bm-i{width:1.18em;height:1.18em;display:inline-block;vertical-align:-.22em;flex:0 0 auto;overflow:visible}" +
     ".bm-i-l{margin-inline-end:.42em}.bm-i-r{margin-inline-start:.42em}" +
     ".bm-i-star{width:1.1em;height:1.1em}" +
-    "[dir=rtl] .bm-i-back,[dir=rtl] .bm-i-next{transform:scaleX(-1)}";
+    "[dir=rtl] .bm-i-back,[dir=rtl] .bm-i-next{transform:scaleX(-1)}" +
+    /* plain \"← Game Hub\" links get a kid-sized tap area */
+    ".bm-link{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding-left:12px;padding-right:12px}";
 
   function start() {
     var st = document.createElement("style");

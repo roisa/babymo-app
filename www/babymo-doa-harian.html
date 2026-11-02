@@ -325,6 +325,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+.w-badge,.wp-label,.wp-time,.scene-time,.q-stim-label,.cst-l{font-size:11.5px!important;}
 /* contrast fixes after the bright theme */
 .q-title{color:#D9480F;}
 </style>
@@ -338,7 +340,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ════ WELCOME ════ -->
 <div class="screen active" id="welcomeScreen">
   <div class="w-mo-wrap">
-    <img class="w-mo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+    <img class="w-mo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
   </div>
   <div class="w-mo-shadow"></div>
   <div class="w-badge">🌙 Baby Mo Game · Doa</div>
@@ -375,7 +377,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
     <div class="scene-time" id="sceneTime">Pagi 🌅</div>
     <div class="scene-mo-wrap">
-      <img id="sceneMo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+      <img id="sceneMo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
     </div>
   </div>
   <div class="dua-card">
@@ -434,7 +436,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <button class="q-next-btn" id="qNextBtn" onclick="nextQuestion()">Lanjut →</button>
   </div>
   <div class="mo-quiz-wrap hidden" id="moQuizWrap">
-    <img id="moQuizImg" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+    <img id="moQuizImg" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
   </div>
 </div>
 
@@ -442,7 +444,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ════ COMPLETE SCREEN ════ -->
 <div class="screen" id="completeScreen">
   <div class="c-mascot-wrap">
-    <img class="c-mascot" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+    <img class="c-mascot" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
   </div>
   <div class="c-card">
     <div class="c-title" id="cTitle">Masya Allah! 🌟</div>

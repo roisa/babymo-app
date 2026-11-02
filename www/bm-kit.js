@@ -17,7 +17,7 @@
   "use strict";
 
   var PLAY_ORIGIN = "https://play.babymo.id";
-  var MASCOT_SRC = "/Logo_Baby_Mo_Transparant.png";
+  var MASCOT_SRC = "/Logo_Baby_Mo_Transparant.webp";
 
   // ---- CONFIG ------------------------------------------------
   // Privacy-first analytics via Cloudflare Web Analytics — free, no
@@ -377,7 +377,7 @@
       list.forEach(function (name) {
         var im = new Image();
         im.decoding = "async";
-        im.src = POSE + name + ".png";
+        im.src = POSE + name + ".webp";
       });
     } catch (e) {}
   }
@@ -455,7 +455,7 @@
       var msg = opts.message || fillName(pickNoRepeat(cfg[moLang()] || cfg.id, type + "_msg"));
       var poseName = opts.pose ||
         (cfg.poses ? pickNoRepeat(cfg.poses, type + "_pose") : (cfg.pose || "baby-mo-pose-01"));
-      box.querySelector("img").src = POSE + poseName + ".png";
+      box.querySelector("img").src = POSE + poseName + ".webp";
       box.querySelector(".bm-bub").textContent = msg;
       var atTop = type === "win" || opts.top === true;
       box.classList.remove("show");

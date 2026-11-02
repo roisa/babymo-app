@@ -132,3 +132,14 @@
 @media (prefers-reduced-motion: reduce) {
   :is(.w-start, .sound-btn, .btn, .btn-primary, .btn-pri, .big-btn, .back-btn, .icon-btn):active { transform: none !important; }
 }
+
+/* ── Kid-sized tap targets ──────────────────────────────────────────
+   Small fingers need ~44px. Round icon buttons grow to 44px; text links
+   used as buttons get taller padding. */
+.icon-btn, .back-btn:not(.big-btn), .hint-btn, .modal-close, .celeb-close, .sheet-close,
+.back-float, .stage-nav, #game-back {
+  min-width: 44px !important;
+  min-height: 44px !important;
+}
+.topbar-action { min-height: 40px !important; padding-left: 12px !important; padding-right: 12px !important; }
+.hdr-back, .map-hub-btn, .btn-soft, .l-back, .g-back, .w-back { min-height: 44px !important; }
