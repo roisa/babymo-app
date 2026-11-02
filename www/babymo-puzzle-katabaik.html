@@ -965,6 +965,12 @@ body{
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+.celeb-arabic{color:#0B8A4A!important;}
+/* celebration actions: big "Lagi!" on top, three small actions below (no clipping) */
+.celebration-actions{display:grid!important;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;max-width:380px;margin-left:auto;margin-right:auto;padding:0 16px;box-sizing:border-box;}
+.celebration-actions .btn{width:100%;min-width:0;padding-left:8px;padding-right:8px;justify-content:center;}
+.celebration-actions #celebNewBtn{grid-column:1/-1;order:-1;font-size:18px;padding-top:14px;padding-bottom:14px;}
+.celeb-title{background:linear-gradient(95deg,#F06A0E,#E23E6E)!important;-webkit-background-clip:text!important;background-clip:text!important;color:transparent!important;-webkit-text-fill-color:transparent!important;}
 /* contrast fixes after the bright theme */
 .counter-pill{color:#D9480F;}
 .eyebrow{color:#6B7787;}
