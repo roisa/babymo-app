@@ -280,6 +280,27 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 <meta name="twitter:description" content="Temukan Baby Mo yang tersembunyi di setiap scene — melatih observasi.">
 <meta name="twitter:image" content="https://play.babymo.id/og/babymo-look-and-find.jpg">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Cari Baby Mo — Baby Mo","url":"https://play.babymo.id/babymo-look-and-find.html","description":"Temukan Baby Mo yang tersembunyi di setiap scene — melatih observasi.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-look-and-find.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Cari Baby Mo","item":"https://play.babymo.id/babymo-look-and-find.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+#s-home,#s-complete{background:
+  radial-gradient(ellipse 70% 45% at 0% 0%,rgba(120,200,255,.45),transparent 70%),
+  radial-gradient(ellipse 60% 40% at 100% 8%,rgba(255,180,210,.40),transparent 70%),
+  radial-gradient(ellipse 70% 45% at 0% 100%,rgba(130,230,180,.38),transparent 70%),#F2F6FC;}
+.map-title{color:#E8590C;text-shadow:none;}
+.map-footer{background:linear-gradient(0deg,rgba(242,246,252,.95) 0%,transparent 100%);}
+.map-hub-btn{color:#152230;background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.1);box-shadow:0 10px 22px -16px rgba(30,60,110,.5);}
+.map-node{background:rgba(255,255,255,.9);border-color:rgba(48,180,110,.25);box-shadow:0 12px 24px -18px rgba(30,60,110,.5);}
+.map-node.locked{opacity:.55;border-color:rgba(21,34,48,.08);}
+.map-node.current{background:linear-gradient(135deg,#FFFBEA,#FFF1C7);border-color:#F5B800;}
+.map-node.done{background:linear-gradient(135deg,#F0FBF4,#DFF6E8);}
+.node-icon{background:linear-gradient(135deg,#E3F7EA,#C9EFD7);}
+.node-name{color:#152230;}
+.node-desc{color:#5A6878;}
+.se{color:rgba(21,34,48,.15);}
+.node-badge.done-chk{color:#12A15A;}
+.map-moon{opacity:.6;}
+.comp-baby{filter:drop-shadow(0 10px 22px rgba(80,50,140,.25));}
+</style>
 </head>
 <body>
 <canvas id="cvs"></canvas>
