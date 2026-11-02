@@ -1,0 +1,83 @@
+/* Baby Mo — iOS 26 "Liquid Glass" buttons for every game.
+   Layers the iOS feel on top of each game's own button colours:
+   - a glass sheen + bright rim via inset shadows (works over any colour or
+     gradient, so each game keeps its palette)
+   - soft, colour-neutral elevation instead of hard 3D "ledges"
+   - a springy press (scale .95) like iOS
+   Secondary buttons become clear frosted glass; round icon buttons become
+   glass circles. Link AFTER the game's own <style>. */
+
+/* ── Primary (filled) buttons ───────────────────────────────────────── */
+.w-start, .sound-btn, .nav-btn-pri, .q-next-btn, .q-play-btn, .c-btn-pri,
+.start-btn, .btn-pri, .btn-primary, .play-btn, .btn-gold, .cta, .abtn-main,
+.big-btn:not(.secondary), .checkin-btn, .rec-btn-play, .dz-btn-play, .gbtn,
+.btn:not(.ghost):not(.btn-secondary):not(.btn-soft), .name-btn, .denied-retry {
+  border: none;
+  box-shadow:
+    inset 0 18px 16px -14px rgba(255, 255, 255, .45),
+    inset 0 1px 0 rgba(255, 255, 255, .6),
+    inset 0 -1px 0 rgba(0, 0, 0, .10),
+    0 10px 22px -12px rgba(30, 60, 110, .55) !important;
+  transition: transform 260ms cubic-bezier(.34, 1.56, .64, 1), box-shadow 220ms ease, filter 220ms ease !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Secondary buttons: clear frosted glass ─────────────────────────── */
+.w-back, .nav-btn-sec, .c-btn-sec, .speed-btn, .l-back, .q-back, .btn-sec,
+.hub-back-btn, .g-back, .back-btn, .btn-secondary, .btn-soft, .abtn-sec,
+.map-hub-btn, .hint-btn, .guide-nav-btn.prev, .dzikir-nav-btn.prev,
+.hdr-back, .big-btn.secondary, .btn.ghost, .c-share {
+  background-color: rgba(255, 255, 255, .72) !important;
+  background-image: none !important;
+  color: #152230 !important;
+  border: 1px solid rgba(255, 255, 255, .95) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  backdrop-filter: blur(16px) saturate(170%);
+  box-shadow:
+    0 0 0 .5px rgba(21, 34, 48, .10),
+    inset 0 1px 0 #fff,
+    0 8px 18px -12px rgba(30, 60, 110, .45) !important;
+  transition: transform 260ms cubic-bezier(.34, 1.56, .64, 1), box-shadow 220ms ease !important;
+}
+/* keep the selected speed chip clearly selected */
+.speed-btn.active {
+  background-color: rgba(220, 247, 232, .9) !important;
+  color: #0B6B3A !important;
+  box-shadow: 0 0 0 1.5px rgba(18, 161, 90, .55), inset 0 1px 0 #fff !important;
+}
+
+/* ── Round icon buttons: glass circles ──────────────────────────────── */
+.icon-btn, .modal-close, .celeb-close, .sheet-close, .stage-nav,
+.nav-prev, .nav-next, .topbar-action, .refresh, .compass-btn, .back-float {
+  background-color: rgba(255, 255, 255, .78) !important;
+  background-image: none !important;
+  color: #152230 !important;
+  border: 1px solid rgba(255, 255, 255, .95) !important;
+  -webkit-backdrop-filter: blur(16px) saturate(170%);
+  backdrop-filter: blur(16px) saturate(170%);
+  box-shadow: 0 0 0 .5px rgba(21, 34, 48, .10), inset 0 1px 0 #fff, 0 8px 18px -12px rgba(30, 60, 110, .5) !important;
+  transition: transform 260ms cubic-bezier(.34, 1.56, .64, 1) !important;
+}
+.icon-btn.muted { background-color: rgba(255, 228, 228, .85) !important; color: #C62828 !important; }
+
+/* ── Press + hover: the iOS squish ──────────────────────────────────── */
+:is(.w-start, .sound-btn, .nav-btn-pri, .q-next-btn, .q-play-btn, .c-btn-pri, .start-btn, .btn-pri,
+    .btn-primary, .play-btn, .btn-gold, .cta, .abtn-main, .big-btn, .checkin-btn, .rec-btn-play,
+    .dz-btn-play, .gbtn, .btn, .name-btn, .denied-retry, .w-back, .nav-btn-sec, .c-btn-sec,
+    .speed-btn, .l-back, .q-back, .btn-sec, .hub-back-btn, .g-back, .back-btn, .btn-secondary,
+    .btn-soft, .abtn-sec, .map-hub-btn, .hint-btn, .guide-nav-btn, .dzikir-nav-btn, .hdr-back,
+    .c-share, .icon-btn, .modal-close, .celeb-close, .sheet-close, .stage-nav, .nav-prev,
+    .nav-next, .topbar-action, .refresh, .compass-btn, .back-float, .lvl-btn, .mode-card,
+    .wp-item, .map-node, .preview-chip):active {
+  transform: scale(.95) !important;
+  filter: brightness(.97);
+}
+@media (hover: hover) {
+  :is(.w-start, .sound-btn, .nav-btn-pri, .q-next-btn, .c-btn-pri, .start-btn, .btn-pri, .btn-primary,
+      .play-btn, .btn-gold, .cta, .abtn-main, .big-btn, .checkin-btn, .gbtn, .btn):hover {
+    filter: saturate(1.08) brightness(1.04);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.w-start, .sound-btn, .btn, .btn-primary, .btn-pri, .big-btn, .back-btn, .icon-btn):active { transform: none !important; }
+}
