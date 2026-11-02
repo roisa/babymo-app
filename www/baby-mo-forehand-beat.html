@@ -1886,7 +1886,19 @@ document.getElementById('start-btn').addEventListener('click', () => {
   ensureAudio();
   // load best score
   try { state.bestScore = parseInt(localStorage.getItem('babymo_best') || '0', 10); } catch(e) {}
-  startGame();
+  // First time only: a quick "how to play" card before the first run
+  if (window.BabyMo && BabyMo.coach) {
+    BabyMo.coach({
+      key: 'forehand', pose: 'baby-mo-yeyy',
+      title: 'Cara main Forehand Beat', sub: 'Bantu Baby Mo melompat mengikuti irama!',
+      steps: [
+        { icon: '👆', text: 'Ketuk layar', sub: 'Baby Mo melompat' },
+        { icon: '✨', text: 'Ketuk 3× cepat', sub: 'Baby Mo terbang tinggi!' },
+        { icon: '🚧', text: 'Lompati rintangan', sub: 'Kerucut, bola, net… kamu punya 3 nyawa ❤️' }
+      ],
+      button: 'Ayo mulai! ▶'
+    }, startGame);
+  } else startGame();
 });
 document.getElementById('replay-btn').addEventListener('click', startGame);
 document.getElementById('home-btn').addEventListener('click', quitToHome);

@@ -771,6 +771,25 @@ body::before{
 <meta name="twitter:image" content="https://play.babymo.id/og/index.jpg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Baby Mo","url":"https://play.babymo.id/","inLanguage":"id-ID","publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"}}</script>
 <style id="bm-fixes">
+/* child's name chip + sheet */
+.large-title em{overflow-wrap:anywhere;}
+.name-chip{margin-top:10px;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 16px;border-radius:20px;border:1px solid rgba(255,255,255,.95);
+  background:rgba(255,255,255,.8);color:var(--cream);font:700 14px/1 inherit;font-family:inherit;box-shadow:0 0 0 .5px var(--hairline-strong),0 8px 18px -12px rgba(30,60,110,.45);cursor:pointer;}
+.name-chip[hidden]{display:none;}
+.name-sheet{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(40,60,90,.28);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);}
+.name-sheet.open{display:flex;}
+.name-card{width:100%;max-width:340px;background:var(--bg-elev);border-radius:26px;padding:24px 20px 18px;text-align:center;box-shadow:0 30px 60px -20px rgba(20,40,80,.45);color:var(--cream);}
+.name-card .nm-emoji{font-size:40px;line-height:1;}
+.name-card h3{margin:10px 0 4px;font-size:20px;font-weight:900;}
+.name-card p{margin:0 0 14px;font-size:14px;color:var(--cream-dim);}
+.name-card input{width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1.5px solid var(--hairline-strong);background:var(--surface-2);color:var(--cream);font:700 17px/1 inherit;font-family:inherit;text-align:center;outline:none;}
+.name-card input:focus{border-color:#0A9488;box-shadow:0 0 0 4px rgba(10,148,136,.15);}
+.nm-row{display:flex;gap:10px;margin-top:14px;}
+.nm-row button{flex:1;min-height:46px;border-radius:16px;font:800 15px/1 inherit;font-family:inherit;cursor:pointer;border:none;}
+.nm-cancel{background:var(--surface-2);color:var(--cream-dim);}
+.nm-save{justify-content:center;}
+html[data-theme="dark"] .name-chip{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.1);}
+
 /* readable text: nothing under ~11.5px */
 .qs-lbl,.h-card-tag,.ai-sub,[data-i18n=feat_start]{font-size:11.5px!important;}
 .tab span,.tab{font-size:11px;}
@@ -990,6 +1009,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
       <div class="large-title-wrap">
         <h1 class="large-title" data-i18n-html="home_title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</h1>
         <div class="large-subtitle" id="greetSub">Bismillah, yuk mulai belajar!</div>
+        <button class="name-chip" id="nameChip" type="button" onclick="openNameSheet()" hidden>✏️ <span data-i18n="name_chip">Siapa nama si kecil?</span></button>
       </div>
 
       <!-- Hero -->
@@ -1381,6 +1401,15 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
         </div>
       </div>
 
+      <div class="list-group-title" data-i18n="name_group">Si Kecil</div>
+      <div class="list-group">
+        <a class="lrow" href="#" onclick="event.preventDefault();openNameSheet()">
+          <div class="lrow-icon blue">👧</div>
+          <div class="lrow-text"><div class="lrow-title" data-i18n="name_row">Nama si kecil</div><div class="lrow-sub" id="nameRowSub">—</div></div>
+          <div class="lrow-chev">›</div>
+        </a>
+      </div>
+
       <div class="list-group-title" data-i18n="about_app">Aplikasi</div>
       <div class="list-group">
         <div class="lrow">
@@ -1468,6 +1497,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
 <script>
 /* ===== i18n TRANSLATION SYSTEM ===== */
 const I18N={
+  name_chip:{id:'Siapa nama si kecil?',en:"What's your little one's name?"},name_group:{id:'Si Kecil',en:'Your Child'},name_row:{id:'Nama si kecil',en:"Child's name"},
   trust_free:{id:'✓ Gratis',en:'✓ Free'},
   trust_noads:{id:'✓ Tanpa Iklan',en:'✓ No Ads'},
   trust_offline:{id:'✓ Main Tanpa Internet',en:'✓ Works Offline'},
@@ -1545,6 +1575,39 @@ const GREETINGS={
   night2:{id:'Selamat malam! Yuk belajar doa malam 🌙',en:"Good night! Let's learn the night dua 🌙"},
 };
 let curLang=localStorage.getItem('bm_lang')||'';
+
+/* ── Child's name: shared with Pray with Mo & the prayer companion (mo_child_name) ── */
+function childName(){try{return (localStorage.getItem('mo_child_name')||'').trim()}catch(e){return ''}}
+function escHtml(t){return t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderName(){
+  const n=childName(), en=curLang==='en';
+  const t=document.querySelector('[data-i18n-html="home_title"]');
+  if(t&&n) t.innerHTML=(en?'Hi, <em>':'Halo, <em>')+escHtml(n)+'</em>!<br>'+(en?"Let's play! 🌙":'Ayo main! 🌙');
+  const chip=document.getElementById('nameChip'); if(chip) chip.hidden=!!n;
+  const sub=document.getElementById('nameRowSub'); if(sub) sub.textContent=n||(en?'Not set yet':'Belum diisi');
+}
+function openNameSheet(){
+  let o=document.getElementById('nameSheet');
+  const en=curLang==='en';
+  if(!o){
+    o=document.createElement('div');o.id='nameSheet';o.className='name-sheet';
+    o.innerHTML='<div class="name-card" role="dialog" aria-modal="true"><div class="nm-emoji">👋</div><h3 id="nmTitle"></h3><p id="nmSub"></p><input id="nmInput" maxlength="20" autocomplete="off"><div class="nm-row"><button type="button" class="nm-cancel" id="nmCancel"></button><button type="button" class="hero-btn nm-save" id="nmSave"></button></div></div>';
+    document.body.appendChild(o);
+    o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')});
+    o.querySelector('#nmCancel').onclick=()=>o.classList.remove('open');
+    const save=()=>{const v=o.querySelector('#nmInput').value.trim();if(!v){o.querySelector('#nmInput').focus();return}
+      try{localStorage.setItem('mo_child_name',v)}catch(e){} o.classList.remove('open'); renderName(); showToast((curLang==='en'?'Nice to meet you, ':'Senang kenalan, ')+v+'! 💚');};
+    o.querySelector('#nmSave').onclick=save;
+    o.querySelector('#nmInput').addEventListener('keydown',e=>{if(e.key==='Enter')save()});
+  }
+  o.querySelector('#nmTitle').textContent=en?"Assalamu'alaikum!":"Assalamu'alaikum!";
+  o.querySelector('#nmSub').textContent=en?'What is your name? Mo wants to say hi 😊':'Siapa nama kamu? Mo mau kenalan 😊';
+  o.querySelector('#nmInput').placeholder=en?'Type your name…':'Ketik nama kamu…';
+  o.querySelector('#nmInput').value=childName();
+  o.querySelector('#nmCancel').textContent=en?'Later':'Nanti';
+  o.querySelector('#nmSave').textContent=en?'Save':'Simpan';
+  o.classList.add('open'); setTimeout(()=>o.querySelector('#nmInput').focus(),250);
+}
 function applyLang(lang){
   curLang=lang;
   document.querySelectorAll('[data-i18n]').forEach(el=>{
@@ -1560,6 +1623,7 @@ function applyLang(lang){
   if(h<5)gk='night';else if(h<11)gk='morning';else if(h<15)gk='afternoon';else if(h<18)gk='evening';else gk='night2';
   const gs=document.getElementById('greetSub');
   if(gs)gs.textContent=GREETINGS[gk][lang];
+  try{renderName()}catch(e){}
   document.querySelectorAll('#langToggle .lang-opt').forEach(b=>{
     b.classList.toggle('active',b.dataset.lang===lang);
   });

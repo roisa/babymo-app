@@ -474,6 +474,54 @@
     } catch (e) {}
   }
 
+
+  // ---- "Coba juga" — suggest a related game on the win screen ----
+  var NEXT = {
+    "babymo-puzzle":          ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Doa dari pagi sampai malam 🤲"],
+    "babymo-doa-harian":      ["dua-journey",  "babymo-dua-game.html",       "Dua Journey",    "Cocokkan doa dengan momennya 🃏"],
+    "babymo-dua-game":        ["pray-with-mo", "babymo-pray-with-mo.html",   "Sholat Bareng Mo","Belajar gerakan sholat 🕌"],
+    "babymo-arabic-spelling": ["hijaiyah",     "babymo-hijaiyah.html",       "Pulau Hijaiyah", "Cari 28 huruf di pulau 🏝️"],
+    "babymo-dreamtime":       ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Ulangi doa sebelum tidur 🌙"],
+    "babymo-look-and-find":   ["memory-match", "babymo-memory-match.html",   "Memory Match",   "Balik kartu, ingat letaknya 🧠"],
+    "babymo-memory-match":    ["cari-baby-mo", "babymo-look-and-find.html",  "Cari Baby Mo",   "Baby Mo sedang bersembunyi 🔍"],
+    "baby-mo-forehand-beat":  ["memory-match", "babymo-memory-match.html",   "Memory Match",   "Latih daya ingatmu 🧠"],
+    "babymo-puzzle-katabaik": ["kata-islam",   "babymo-arabic-spelling.html","Kata Islam",     "Susun kata Arab pertamamu 🔤"],
+    "babymo-pray-with-mo":    ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Doa-doa harian si kecil 🤲"]
+  };
+  function addNextGame(winEl) {
+    try {
+      var key = (location.pathname.split("/").pop() || "").replace(/\.html$/, "");
+      var n = NEXT[key];
+      if (!n || !winEl || winEl.querySelector(".bm-next")) return;
+      // Popups: put the card inside the popup card, not beside it
+      var inner = winEl.querySelector(".modal, .modal-card, .modal-box, .success-card");
+      if (inner) winEl = inner;
+      // Hero blocks at the top of a results page: put the card at the end of the page
+      if (winEl.classList.contains("complete-hero") && winEl.parentElement) winEl = winEl.parentElement;
+      if (!document.getElementById("bm-next-style")) {
+        var st = document.createElement("style"); st.id = "bm-next-style";
+        st.textContent =
+          ".bm-next{display:flex;align-items:center;gap:12px;width:100%;max-width:360px;box-sizing:border-box;margin:16px auto 8px;padding:10px 12px;" +
+          "border-radius:20px;background:rgba(255,255,255,.9);border:1px solid #fff;text-decoration:none;color:#152230;text-align:left;" +
+          "box-shadow:0 0 0 .5px rgba(21,34,48,.08),0 12px 24px -14px rgba(30,60,110,.45);font-family:'Nunito',system-ui,sans-serif;" +
+          "animation:bmNext .5s .6s both cubic-bezier(.2,.9,.25,1.2);position:relative;z-index:2;}" +
+          "@keyframes bmNext{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}" +
+          ".bm-next:active{transform:scale(.97)}" +
+          ".bm-next img{width:48px;height:48px;border-radius:12px;flex:0 0 48px;box-shadow:0 6px 12px -6px rgba(0,0,0,.4)}" +
+          ".bm-next .t{flex:1;min-width:0}.bm-next .e{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#E8590C}" +
+          ".bm-next .n{display:block;font-size:16px;font-weight:900;line-height:1.2}.bm-next .h{display:block;font-size:13px;font-weight:700;color:#5A6878}" +
+          ".bm-next .c{font-size:22px;color:#8A97A6;font-weight:700}";
+        document.head.appendChild(st);
+      }
+      var a = document.createElement("a");
+      a.className = "bm-next"; a.href = "/" + n[1];
+      a.innerHTML = '<img alt="" src="/icons/games/' + n[0] + '.svg"><span class="t"><span class="e">Coba juga</span>' +
+        '<span class="n">' + n[2] + '</span><span class="h">' + n[3] + '</span></span><span class="c">›</span>';
+      a.addEventListener("click", function () { track("next_game", { to: n[0] }); });
+      winEl.appendChild(a);
+    } catch (e) {}
+  }
+
   // Auto-celebrate when a known win/complete screen becomes visible (once).
   var WIN_SEL =
     "#completeScreen,#s-success,#gameover,#s-complete,#celebration,#celebOverlay,.complete-hero,#bdone,#pjdone";
@@ -491,7 +539,7 @@
         if (fired) return;
         var els = document.querySelectorAll(WIN_SEL);
         for (var i = 0; i < els.length; i++) {
-          if (vis(els[i])) { fired = true; react("win"); if (obs) obs.disconnect(); return; }
+          if (vis(els[i])) { fired = true; react("win"); addNextGame(els[i]); if (obs) obs.disconnect(); return; }
         }
       }
       obs = new MutationObserver(check);
@@ -575,6 +623,58 @@
     return total;
   }
 
+
+  // ---- First-time "how to play" card --------------------------
+  // BabyMo.coach({key, title, steps:[{icon, text}], button, pose}, done)
+  // Shows once per game (remembered in localStorage), then calls done().
+  function coach(opts, done) {
+    done = done || function () {};
+    var k = "bm_coach_" + (opts.key || location.pathname);
+    try { if (!opts.force && localStorage.getItem(k)) { done(); return false; } } catch (e) { done(); return false; }
+    if (!document.getElementById("bm-coach-style")) {
+      var st = document.createElement("style"); st.id = "bm-coach-style";
+      st.textContent =
+        "#bm-coach{position:fixed;inset:0;z-index:99999;display:flex;align-items:center;justify-content:center;padding:20px;" +
+        "background:rgba(40,60,90,.32);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);animation:bmcIn .25s ease;}" +
+        "@keyframes bmcIn{from{opacity:0}to{opacity:1}}" +
+        "#bm-coach .c-card{width:100%;max-width:360px;background:#fff;border-radius:28px;padding:22px 20px 18px;text-align:center;color:#152230;" +
+        "font-family:'Nunito',system-ui,sans-serif;box-shadow:0 30px 60px -20px rgba(20,40,80,.5);animation:bmcPop .4s cubic-bezier(.2,.9,.25,1.2);}" +
+        "@keyframes bmcPop{from{transform:scale(.9);opacity:0}to{transform:none;opacity:1}}" +
+        "#bm-coach .c-mo{width:84px;height:84px;object-fit:contain;margin:-58px auto 4px;display:block;filter:drop-shadow(0 8px 12px rgba(30,60,110,.3));}" +
+        "#bm-coach h3{margin:0 0 4px;font-size:21px;font-weight:900;}" +
+        "#bm-coach .c-sub{margin:0 0 14px;font-size:14px;color:#5A6878;font-weight:700;}" +
+        "#bm-coach .c-steps{display:flex;flex-direction:column;gap:10px;text-align:left;}" +
+        "#bm-coach .c-step{display:flex;align-items:center;gap:12px;background:#F4F7FC;border-radius:18px;padding:10px 12px;}" +
+        "#bm-coach .c-ico{flex:0 0 52px;height:52px;border-radius:16px;display:grid;place-items:center;font-size:28px;background:#fff;" +
+        "box-shadow:0 6px 14px -8px rgba(30,60,110,.45);animation:bmcBob 1.6s ease-in-out infinite;}" +
+        "#bm-coach .c-step:nth-child(2) .c-ico{animation-delay:.3s}#bm-coach .c-step:nth-child(3) .c-ico{animation-delay:.6s}#bm-coach .c-step:nth-child(4) .c-ico{animation-delay:.9s}" +
+        "@keyframes bmcBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.05)}}" +
+        "#bm-coach .c-txt{font-size:15px;font-weight:800;line-height:1.3;}#bm-coach .c-txt small{display:block;font-size:13px;font-weight:700;color:#5A6878;margin-top:2px;}" +
+        "#bm-coach .c-go{margin-top:16px;width:100%;min-height:54px;border:none;border-radius:20px;cursor:pointer;color:#fff;font:900 18px/1 'Nunito',system-ui,sans-serif;" +
+        "background:linear-gradient(120deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%);text-shadow:0 1px 1.5px rgba(0,70,35,.38);" +
+        "box-shadow:inset 0 18px 16px -14px rgba(255,255,255,.45),0 12px 24px -12px rgba(10,143,160,.6);}" +
+        "#bm-coach .c-go:active{transform:scale(.96)}" +
+        "@media (prefers-reduced-motion:reduce){#bm-coach .c-ico{animation:none}}";
+      document.head.appendChild(st);
+    }
+    var o = document.createElement("div"); o.id = "bm-coach"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");
+    var esc = function (t) { return String(t).replace(/[&<>]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]; }); };
+    var steps = (opts.steps || []).map(function (x) {
+      return '<div class="c-step"><div class="c-ico">' + esc(x.icon) + '</div><div class="c-txt">' + esc(x.text) +
+        (x.sub ? "<small>" + esc(x.sub) + "</small>" : "") + "</div></div>";
+    }).join("");
+    o.innerHTML = '<div class="c-card"><img class="c-mo" alt="" src="' + POSE + (opts.pose || "baby-mo-idea") + '.webp">' +
+      "<h3>" + esc(opts.title || "Cara main") + "</h3>" + (opts.sub ? '<p class="c-sub">' + esc(opts.sub) + "</p>" : "") +
+      '<div class="c-steps">' + steps + '</div><button type="button" class="c-go">' + esc(opts.button || "Ayo mulai! ▶") + "</button></div>";
+    document.body.appendChild(o);
+    o.querySelector(".c-go").addEventListener("click", function (e) {
+      e.stopPropagation();
+      try { localStorage.setItem(k, "1"); } catch (er) {}
+      o.remove(); done();
+    });
+    return true;
+  }
+
   // ---- Expose + init ----------------------------------------
   window.BabyMo = window.BabyMo || {};
   window.BabyMo.share = share;
@@ -582,6 +682,7 @@
   window.BabyMo.track = track;
   window.BabyMo.toast = toast;
   window.BabyMo.react = react;
+  window.BabyMo.coach = coach;
   window.BabyMo.sfx = playSfx;
   window.BabyMo.isMuted = isMuted;
   window.BabyMo.setMuted = setMuted;
