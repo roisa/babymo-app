@@ -15,7 +15,7 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<meta name="theme-color" content="#0B1C12">
+<meta name="theme-color" content="#F2F6FC">
 
 <link rel="manifest" href="manifest.webmanifest">
 
@@ -576,6 +576,166 @@ body::before{
   .icon-grid{grid-template-columns:repeat(6,1fr);}
 }
 
+
+/* ═══════════ BRIGHT THEME (iOS-style, colourful, kid-friendly) ═══════════
+   Re-maps the original dark palette: the old "cream" text tokens become ink,
+   surfaces become white glass, and colour comes from pastel washes, the
+   app icons and a gradient large title. */
+:root{
+  --bg:#F2F6FC; --bg-elev:#FFFFFF; --bg-elev2:#FFFFFF;
+  --surface:#FFFFFF; --surface-2:#F7F9FC;
+  --green:#12A15A; --green-mid:#22C06E; --green-lt:#0E8A4A; --green-deep:#0B6B3A;
+  --gold:#F59F00; --gold-lt:#E8590C; --gold-soft:#FFB340;
+  --cream:#152230; --cream-dim:#5A6878; --cream-faint:#8A97A6;
+  --red:#FF3B30; --blue:#007AFF;
+  --hairline:rgba(21,34,48,.08);
+  --hairline-strong:rgba(21,34,48,.12);
+  --blur-bg:rgba(255,255,255,.72);
+  --card-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 10px 28px -18px rgba(30,60,110,.35), 0 2px 6px -2px rgba(30,60,110,.08);
+}
+body{background:var(--bg); color:var(--cream);}
+/* Pastel sky: sky, peach, lilac and mint washes */
+body::before{
+  background:
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(120,200,255,.45), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 8%, rgba(255,180,210,.40), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 100% 85%, rgba(190,170,255,.38), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 0% 100%, rgba(130,230,180,.38), transparent 70%);
+}
+.stars i{color:#FFB800; opacity:.35; text-shadow:0 0 6px rgba(255,190,0,.4);}
+@keyframes tw{0%,100%{opacity:.18;transform:scale(1)}50%{opacity:.6;transform:scale(1.4)}}
+
+/* Nav bar: white glass */
+.navbar{background:rgba(255,255,255,.62); border-bottom-color:transparent;}
+.navbar.condensed{border-bottom-color:var(--hairline);}
+.nav-btn{color:var(--cream); background:rgba(255,255,255,.75); box-shadow:0 0 0 .5px var(--hairline-strong), 0 4px 10px -6px rgba(30,60,110,.35);}
+.nav-btn:active{background:#fff;}
+.star-pill{background:linear-gradient(180deg,#FFF3C4,#FFE08A); border:none; color:#9A5A00;
+  box-shadow:inset 0 1px 0 #fff, 0 4px 12px -6px rgba(245,159,0,.7);}
+
+/* Large title: vibrant gradient like babymo.id */
+.large-title{color:var(--cream);}
+.large-title em{
+  background:linear-gradient(95deg,#12A15A 0%,#10B5A0 35%,#2F9BEA 68%,#8B6CF5 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+}
+
+/* Hero: sunny pastel card */
+.hero{
+  background:
+    radial-gradient(ellipse 70% 70% at 100% 100%, rgba(255,255,255,.7), transparent 60%),
+    linear-gradient(135deg,#FFF1C2 0%,#FFD9E6 48%,#DCD6FF 100%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 18px 40px -22px rgba(140,90,200,.55), inset 0 1px 0 #fff;
+}
+.hero::before{background:radial-gradient(circle at 92% 8%, rgba(255,255,255,.75), transparent 38%);}
+.hero-eyebrow{color:#C2410C;}
+.hero-greet{color:var(--cream);}
+.hero-greet .ar{color:#0B6B3A;}
+.hero-msg{color:#4A5563;}
+.hero-img-glow{background:radial-gradient(circle, rgba(255,255,255,.95), transparent 65%);}
+.hero-img{filter:drop-shadow(0 10px 18px rgba(80,50,140,.28));}
+.hero-btn{
+  background:linear-gradient(180deg,#3DDC84,#12A15A);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 10px 22px -10px rgba(18,161,90,.75);
+}
+.hero-btn.alt{background:rgba(255,255,255,.8); color:var(--cream);
+  box-shadow:inset 0 1px 0 #fff, 0 0 0 .5px var(--hairline-strong), 0 8px 18px -12px rgba(30,60,110,.4);}
+
+/* Section text */
+.sec-link{color:#0A84FF;}
+
+/* Quick stats: white glass tiles with colourful icon bubbles */
+.qs{background:var(--bg-elev); border:none; box-shadow:var(--card-shadow);}
+.qs-icon{width:40px; height:40px; margin:0 auto 6px; border-radius:13px; display:grid; place-items:center;
+  font-size:20px; filter:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
+.quick-row .qs:nth-child(1) .qs-icon{background:linear-gradient(160deg,#FFD38A,#FF9F0A);}
+.quick-row .qs:nth-child(2) .qs-icon{background:linear-gradient(160deg,#9FD8FF,#0A84FF);}
+.quick-row .qs:nth-child(3) .qs-icon{background:linear-gradient(160deg,#B9F6CA,#30D158); font-family:var(--font-ar); color:#fff; font-weight:700;}
+.qs-num{color:var(--cream);}
+
+/* Featured cards: pastel colour per game, dark text */
+.h-card{
+  background:linear-gradient(160deg,#FFE7D6,#FFC9DA);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 16px 30px -20px rgba(160,80,120,.6), inset 0 1px 0 #fff;
+}
+.h-card.doa{background:linear-gradient(160deg,#DDF3FF,#B9DCFF);  box-shadow:0 16px 30px -20px rgba(40,110,200,.6), inset 0 1px 0 #fff;}
+.h-card.dream{background:linear-gradient(160deg,#ECE6FF,#CFC2FF); box-shadow:0 16px 30px -20px rgba(100,70,200,.6), inset 0 1px 0 #fff;}
+.h-card.dua{background:linear-gradient(160deg,#FFF4CF,#FFD98A);   box-shadow:0 16px 30px -20px rgba(200,140,20,.6), inset 0 1px 0 #fff;}
+.h-card-tag{color:#C2410C;}
+.h-card.doa .h-card-tag{color:#0060DF;} .h-card.dream .h-card-tag{color:#5B3FD6;} .h-card.dua .h-card-tag{color:#9A5A00;}
+.h-card-title{color:var(--cream);}
+.h-card-sub{color:#4A5563;}
+
+/* App icon grid labels */
+.ai-label{color:var(--cream); font-weight:800;}
+.ai-sub{color:var(--cream-faint);}
+.ai-badge{border-color:#fff; background:#FF3B30;}
+.ai-square.has-art{box-shadow:0 10px 18px -10px rgba(30,60,110,.55);}
+
+/* Grouped lists: white inset groups (iOS Settings) */
+.list-group{background:var(--bg-elev); border:none; box-shadow:var(--card-shadow);}
+.list-group-title{color:var(--cream-dim);}
+.lrow:active{background:rgba(21,34,48,.05);}
+.lrow-icon{background:linear-gradient(160deg,#5BE38A,#28B463); box-shadow:inset 0 1px 0 rgba(255,255,255,.45);}
+.lrow-icon.gold{background:linear-gradient(160deg,#FFC94D,#FF9500);}
+.lrow-icon.blue{background:linear-gradient(160deg,#6CC7FF,#0A84FF);}
+.lrow-icon.purple{background:linear-gradient(160deg,#C98BFF,#9B51E0);}
+.lrow-icon.red{background:linear-gradient(160deg,#FF8A80,#FF3B30);}
+.lrow-icon.brand{background:radial-gradient(circle at 50% 38%,#FFFFFF,#F1F5FB);}
+.lrow-icon.has-art{background:none; box-shadow:0 4px 10px -6px rgba(30,60,110,.5);}
+.lrow-sub .ar{color:#0B6B3A;}
+.lrow-chev{color:#B4BFCC;}
+
+/* Profile */
+.profile-avatar::before{background:radial-gradient(circle, rgba(255,214,120,.55), rgba(190,170,255,.25) 45%, transparent 70%);}
+.profile-avatar img{filter:drop-shadow(0 10px 18px rgba(80,50,140,.25));}
+.profile-tag{color:#E8590C;}
+.profile-arabic{color:#0B6B3A;}
+
+/* Tab bar: floating Liquid Glass capsule */
+.tabbar{
+  margin:0 12px calc(8px + env(safe-area-inset-bottom)); height:62px; padding-bottom:0;
+  border-radius:31px; border:1px solid rgba(255,255,255,.95);
+  background:rgba(255,255,255,.78);
+  box-shadow:0 0 0 .5px var(--hairline-strong), 0 18px 36px -18px rgba(30,60,110,.45);
+}
+.tab{color:#8A97A6; border-radius:24px; margin:5px 2px;}
+.tab.active{color:#0B8A4A; background:linear-gradient(180deg,#E3F9EC,#CFF3DE);}
+.scroller{padding-bottom:calc(62px + 28px + env(safe-area-inset-bottom));}
+
+/* Toast, footer, install hint */
+.toast{background:rgba(255,255,255,.92); color:var(--cream); border:none; box-shadow:0 0 0 .5px var(--hairline-strong), 0 12px 28px -12px rgba(30,60,110,.45);}
+.foot{color:var(--cream-faint);}
+.foot .br{color:#0B8A4A;}
+.foot .ar{color:#0B6B3A;}
+.install-hint{background:linear-gradient(135deg,#FFF1D6,#FFE3EC); border:1px solid rgba(255,255,255,.95); color:var(--cream); box-shadow:var(--card-shadow);}
+.install-hint b{color:#E8590C;}
+.install-hint .x:active{background:rgba(21,34,48,.06);}
+
+/* Language picker: colourful welcome */
+.lang-pick{background:
+  radial-gradient(ellipse 80% 50% at 0% 0%, rgba(120,200,255,.55), transparent 70%),
+  radial-gradient(ellipse 70% 45% at 100% 10%, rgba(255,180,210,.55), transparent 70%),
+  radial-gradient(ellipse 80% 50% at 50% 100%, rgba(150,230,180,.55), transparent 70%),
+  #F7FAFF;}
+.lang-pick-logo{filter:drop-shadow(0 12px 22px rgba(80,50,140,.25));}
+.lang-btn{background:rgba(255,255,255,.85); border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 0 0 .5px var(--hairline-strong), 0 14px 28px -18px rgba(30,60,110,.5);}
+.lang-btn:active{border-color:#12A15A;}
+.lang-toggle{background:#fff; border-color:var(--hairline-strong);}
+.lang-opt.active{background:linear-gradient(180deg,#3DDC84,#12A15A);}
+
+/* Trust pills */
+.trust-pill{color:#0B6B3A; background:rgba(48,209,88,.14); border:.5px solid rgba(48,209,88,.3);}
+
+/* Tablet frames: light backdrop */
+@media (min-width:520px){
+  body{background:#E8EEF8;}
+  .app{background:var(--bg); box-shadow:0 0 60px rgba(30,60,110,.18);}
+}
+
 /* Shared SVG game icons (generated by babymo-web/scripts/generate-game-icons.py) */
 .ai-square.has-art{background:none; box-shadow:0 8px 16px -6px rgba(0,0,0,.5); overflow:visible;}
 .ai-square.has-art .ai-art{border-radius:var(--r-icon);}
@@ -605,17 +765,17 @@ body::before{
 <!-- Inline loading screen — renders instantly before any external CSS/JS -->
 <div id="appLoader" style="
   position:fixed;inset:0;z-index:99999;
-  background:#0B1C12;
+  background:radial-gradient(ellipse 80% 50% at 0% 0%,rgba(120,200,255,.5),transparent 70%),radial-gradient(ellipse 70% 45% at 100% 100%,rgba(255,180,210,.5),transparent 70%),#F7FAFF;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:18px;
   transition:opacity .4s ease;
 ">
-  <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.4));animation:loaderBob 2s ease-in-out infinite;">
-  <div style="font-family:-apple-system,system-ui,sans-serif;font-size:18px;font-weight:800;color:#F0E8D8;letter-spacing:-.01em;">Baby Mo</div>
-  <div style="width:140px;height:4px;border-radius:4px;background:rgba(240,232,216,.1);overflow:hidden;margin-top:4px;">
-    <div id="loaderBar" style="height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,#4A8860,#6DB882,#C89040);transition:width .3s ease;"></div>
+  <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(80,50,140,.25));animation:loaderBob 2s ease-in-out infinite;">
+  <div style="font-family:-apple-system,system-ui,sans-serif;font-size:18px;font-weight:800;color:#152230;letter-spacing:-.01em;">Baby Mo</div>
+  <div style="width:140px;height:4px;border-radius:4px;background:rgba(21,34,48,.08);overflow:hidden;margin-top:4px;">
+    <div id="loaderBar" style="height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,#12A15A,#10B5A0,#2F9BEA,#8B6CF5);transition:width .3s ease;"></div>
   </div>
-  <div id="loaderPct" style="font-family:-apple-system,system-ui,sans-serif;font-size:11px;font-weight:700;color:rgba(240,232,216,.4);letter-spacing:.5px;">Bismillah...</div>
+  <div id="loaderPct" style="font-family:-apple-system,system-ui,sans-serif;font-size:11px;font-weight:700;color:#5A6878;letter-spacing:.5px;">Bismillah...</div>
 </div>
 <style>
 @keyframes loaderBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.04)}}
@@ -833,8 +993,8 @@ body::before{
         <div class="ai-square has-art g-puzzle" style="flex-shrink:0;margin-bottom:0;width:60px;height:60px;font-size:30px;border-radius:16px;"><img class="ai-art" src="./icons/games/puzzle.svg" alt="" draggable="false"></div>
         <div style="flex:1;min-width:0;">
           <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:3px;" data-i18n="feat_start">✨ Mulai di sini</div>
-          <div style="font-size:17px;font-weight:900;color:#fff;line-height:1.2;" data-i18n="feat_kenalan">Kenalan Baby Mo</div>
-          <div style="font-size:11px;color:rgba(240,232,216,.65);font-weight:600;margin-top:2px;" data-i18n="feat_kenalan_sub">Puzzle interaktif · Perkenalan</div>
+          <div style="font-size:17px;font-weight:900;color:var(--cream);line-height:1.2;" data-i18n="feat_kenalan">Kenalan Baby Mo</div>
+          <div style="font-size:11px;color:var(--cream-dim);font-weight:600;margin-top:2px;" data-i18n="feat_kenalan_sub">Puzzle interaktif · Perkenalan</div>
         </div>
         <div style="color:var(--cream-faint);font-size:18px;">›</div>
       </a>
@@ -905,10 +1065,10 @@ body::before{
         <div class="large-subtitle" data-i18n="comp_sub">Panduan sholat interaktif untuk si kecil</div>
       </div>
 
-      <div class="hero" style="background:linear-gradient(135deg,#1E3F2A,#0D2318);">
+      <div class="hero" style="background:linear-gradient(135deg,#D9F7E6 0%,#C6F0F2 50%,#DDE9FF 100%);">
         <div class="hero-row">
           <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#6DB882;box-shadow:0 0 8px #6DB882;"></span> <span data-i18n="comp_eyebrow">Panduan Interaktif</span></div>
+            <div class="hero-eyebrow"><span class="dot" style="background:#30D158;box-shadow:0 0 8px #30D158;"></span> <span data-i18n="comp_eyebrow">Panduan Interaktif</span></div>
             <div class="hero-greet" data-i18n="comp_greet">Yuk Sholat Bareng Baby Mo!</div>
             <div class="hero-msg" data-i18n="comp_msg">Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.</div>
           </div>
@@ -963,20 +1123,20 @@ body::before{
         <div class="large-subtitle" data-i18n="doa_sub">6 doa untuk hari-hari Baby Mo</div>
       </div>
 
-      <div class="hero" style="background:linear-gradient(135deg,#1F3D5C,#0F1F30);">
+      <div class="hero" style="background:linear-gradient(135deg,#DDF3FF 0%,#D6E4FF 50%,#EDE3FF 100%);">
         <div class="hero-row">
           <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#7AB8D8;box-shadow:0 0 8px #7AB8D8;"></span> <span data-i18n="doa_eyebrow">Pilihan Hari Ini</span></div>
+            <div class="hero-eyebrow"><span class="dot" style="background:#0A84FF;box-shadow:0 0 8px #0A84FF;"></span> <span data-i18n="doa_eyebrow">Pilihan Hari Ini</span></div>
             <div class="hero-greet" data-i18n="doa_greet">Belajar Doa bersama Baby Mo</div>
             <div class="hero-msg" data-i18n="doa_msg">Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.</div>
           </div>
           <div class="hero-img-wrap">
-            <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(122,184,216,.45),transparent 65%);"></div>
+            <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(255,255,255,.95),transparent 65%);"></div>
             <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-run.png" alt="Baby Mo" draggable="false" loading="lazy">
           </div>
         </div>
         <div class="hero-cta">
-          <a class="hero-btn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5E8BD0,#2D4F8A);" data-i18n="doa_btn">🌙 Mulai Belajar Doa</a>
+          <a class="hero-btn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5AC8FA,#0A84FF);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 22px -10px rgba(10,132,255,.7);" data-i18n="doa_btn">🌙 Mulai Belajar Doa</a>
         </div>
       </div>
 
