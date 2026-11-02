@@ -8,7 +8,7 @@
   <g clip-path="url(#sq)">
     <rect width="100" height="100" fill="url(#bg)"/>
     <ellipse cx="50" cy="8" rx="70" ry="44" fill="url(#sheen)"/>
-    <g filter="url(#sh)"><circle cx="38" cy="60" r="20" fill="#fff"/><path d="M22 50c8 3 13 11 12 23M54 50c-8 3-13 11-12 23" fill="none" stroke="#65A30D" stroke-width="3.2" stroke-linecap="round"/><path d="M66 22v31" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M66 22l14 5v9l-14-5z" fill="#fff"/><ellipse cx="60" cy="54" rx="8" ry="6.5" fill="#fff" transform="rotate(-20 60 54)"/></g>
+    <g filter="url(#sh)"><circle cx="35" cy="63" r="19" fill="#fff"/><path d="M19.5 52c7.5 6 7.5 16 0 22M50.5 52c-7.5 6-7.5 16 0 22" fill="none" stroke="#65A30D" stroke-width="3.4" stroke-linecap="round"/><path d="M72 20v34" stroke="#fff" stroke-width="5" stroke-linecap="round"/><path d="M72 20l13 5v9l-13-5z" fill="#fff"/><ellipse cx="65" cy="55" rx="8.5" ry="6.8" fill="#fff" transform="rotate(-20 65 55)"/></g>
     <rect x=".75" y=".75" width="98.5" height="98.5" rx="22.4" fill="none" stroke="#fff" stroke-opacity=".28" stroke-width="1.5"/>
   </g>
 </svg>
