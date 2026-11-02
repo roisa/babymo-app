@@ -335,6 +335,7 @@ html[data-lang="en"] .meaning-en{display:none;}
 .q-title{color:#D9480F;}
 </style>
 <script src="bm-icons.js" defer></script>
+<script src="doa-scenes.js"></script>
 </head>
 <body>
 
@@ -778,6 +779,7 @@ function loadDua(idx){
   se.style.animation = 'none';
   requestAnimationFrame(() => { se.style.animation = 'scenePop .5s cubic-bezier(.34,1.56,.64,1)'; });
 
+  if(window.renderDoaScene) renderDoaScene(d.id);
   setSceneMoExpression('normal');
 
   document.getElementById('duaTitle').textContent  = d.title;
