@@ -783,6 +783,8 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+.hero-greeting,.tip-label,.ps-sub,.badge,.stat .lbl,.lbl,.ln-hint{font-size:11.5px!important;}
 /* dzikir screen + popups in the bright theme */
 .dzikir-dot{color:#5A6878!important;background:rgba(255,255,255,.8)!important;border-color:rgba(21,34,48,.08)!important;}
 .dzikir-badge{color:#9A5A00!important;background:rgba(245,159,0,.16)!important;}
@@ -842,7 +844,7 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
           </div>
         </div>
         <div class="hero-mo">
-          <img src="mo-pray-assets/mo-waving-mat.png" alt="Mo">
+          <img src="mo-pray-assets/mo-waving-mat.webp" alt="Mo">
         </div>
       </div>
     </div>
@@ -881,7 +883,7 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
     <div class="mo-stage-guide">
       <button class="stage-nav nav-prev" onclick="prevStep()">‹</button>
       <div class="sound-bars" id="soundBars"><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div></div>
-      <img id="moImage" src="mo-pray-assets/mo-takbir.png" alt="Mo pose">
+      <img id="moImage" src="mo-pray-assets/mo-takbir.webp" alt="Mo pose">
       <button class="stage-nav nav-next" onclick="nextStep()">›</button>
     </div>
 
@@ -928,7 +930,7 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
     <div class="progress-mo-card">
       <div class="progress-mo-stage">
         <div class="progress-mo-portrait">
-          <img id="progressMoImg" src="mo-pray-assets/mo-waving-mat.png" alt="Mo">
+          <img id="progressMoImg" src="mo-pray-assets/mo-waving-mat.webp" alt="Mo">
         </div>
         <div class="progress-speech">
           <p class="ps-msg" id="progressMoMsg">Yuk latihan sholat hari ini!</p>
@@ -985,7 +987,7 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
     <!-- Closing encouragement card — fills the page tail with a friendly Mo signoff -->
     <div class="prog-closer">
       <div class="prog-closer-mo">
-        <img src="baby-mo-poses/baby-mo-ok.png" alt="" onerror="this.onerror=null;this.src='baby-mo-poses/baby-mo-pose-05.png'">
+        <img src="baby-mo-poses/baby-mo-ok.webp" alt="" onerror="this.onerror=null;this.src='baby-mo-poses/baby-mo-pose-05.webp'">
       </div>
       <div class="prog-closer-text">
         <div class="prog-closer-msg">Kerennn! Terus belajar ya 🌟</div>
@@ -1069,8 +1071,8 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 
 <script>
 var STEPS=[
-  {id:1,name:'Takbiratul Ihram',nameAr:'تَكْبِيرَةُ الإِحْرَام',desc:'Angkat kedua tangan sejajar telinga dan ucapkan takbir',image:'mo-pray-assets/mo-takbir.png',imageGuide:'mo-pray-assets/mo-takbir-mat.png',thumb:'mo-pray-assets/mo-takbir.png',recitations:[{arabic:'اللَّهُ أَكْبَرُ',latin:'Allahu Akbar',meaning:'Allah Maha Besar'}],tip:'Niatkan sholat dalam hati, lalu angkat tangan dan ucapkan takbir dengan tenang 🤲'},
-  {id:2,name:'Qiyam',nameAr:'قِيَام',desc:'Berdiri tegak, tangan di dada, baca Al-Fatiha',image:'mo-pray-assets/mo-qiyam.png',imageGuide:'mo-pray-assets/mo-qiyam-mat.png',thumb:'mo-pray-assets/mo-qiyam.png',recitations:[
+  {id:1,name:'Takbiratul Ihram',nameAr:'تَكْبِيرَةُ الإِحْرَام',desc:'Angkat kedua tangan sejajar telinga dan ucapkan takbir',image:'mo-pray-assets/mo-takbir.webp',imageGuide:'mo-pray-assets/mo-takbir-mat.webp',thumb:'mo-pray-assets/mo-takbir.webp',recitations:[{arabic:'اللَّهُ أَكْبَرُ',latin:'Allahu Akbar',meaning:'Allah Maha Besar'}],tip:'Niatkan sholat dalam hati, lalu angkat tangan dan ucapkan takbir dengan tenang 🤲'},
+  {id:2,name:'Qiyam',nameAr:'قِيَام',desc:'Berdiri tegak, tangan di dada, baca Al-Fatiha',image:'mo-pray-assets/mo-qiyam.webp',imageGuide:'mo-pray-assets/mo-qiyam-mat.webp',thumb:'mo-pray-assets/mo-qiyam.webp',recitations:[
     {arabic:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',latin:'Bismillahir Rahmanir Raheem',meaning:'Dengan nama Allah Yang Maha Pengasih, Maha Penyayang'},
     {arabic:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',latin:'Alhamdu lillahi Rabbil aalameen',meaning:'Segala puji bagi Allah, Tuhan seluruh alam'},
     {arabic:'الرَّحْمَٰنِ الرَّحِيمِ',latin:'Ar-Rahmanir Raheem',meaning:'Yang Maha Pengasih, Maha Penyayang'},
@@ -1079,11 +1081,11 @@ var STEPS=[
     {arabic:'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',latin:'Ihdinas siratal mustaqeem',meaning:'Tunjukilah kami jalan yang lurus'},
     {arabic:'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',latin:"Siratal ladhina an'amta alayhim, ghayril maghdubi alayhim wa lad daalleen",meaning:'Jalan orang yang Engkau beri nikmat, bukan jalan mereka yang dimurkai dan bukan pula jalan mereka yang sesat'}
   ],tip:"Baca Al-Fatiha pelan-pelan biar lebih khusyu' 📖"},
-  {id:3,name:"Ruku'",nameAr:'رُكُوع',desc:'Membungkuk, tangan di lutut, punggung lurus',image:'mo-pray-assets/mo-ruku.png',imageGuide:'mo-pray-assets/mo-ruku.png',thumb:'mo-pray-assets/mo-ruku.png',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الْعَظِيمِ',latin:'Subhana Rabbiyal Azeem',meaning:'Maha Suci Tuhanku Yang Maha Agung',repeat:3}],tip:"Bungkukkan badan sampai punggung lurus, tangan pegang lutut 🙏"},
-  {id:4,name:"I'tidal",nameAr:'اِعْتِدَال',desc:"Bangkit berdiri tegak dari ruku'",image:'mo-pray-assets/mo-itidal.png',imageGuide:'mo-pray-assets/mo-itidal.png',thumb:'mo-pray-assets/mo-itidal.png',recitations:[{arabic:'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ',latin:"Sami'allahu liman hamidah",meaning:'Allah mendengar orang yang memuji-Nya'},{arabic:'رَبَّنَا وَلَكَ الْحَمْدُ',latin:'Rabbana wa lakal hamd',meaning:'Ya Tuhan kami, bagi-Mu segala puji'}],tip:'Berdiri tegak kembali dengan tenang ✨'},
-  {id:5,name:'Sujud',nameAr:'سُجُود',desc:'Sujud dengan 7 anggota badan menyentuh lantai',image:'mo-pray-assets/mo-sujud.png',imageGuide:'mo-pray-assets/mo-sujud.png',thumb:'mo-pray-assets/mo-sujud.png',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الأَعْلَى',latin:"Subhana Rabbiyal A'la",meaning:'Maha Suci Tuhanku Yang Maha Tinggi',repeat:3}],tip:'7 anggota: dahi, 2 telapak tangan, 2 lutut, 2 ujung kaki 🌟'},
-  {id:6,name:'Duduk',nameAr:'جُلُوس',desc:'Duduk di antara dua sujud',image:'mo-pray-assets/mo-sitting.png',imageGuide:'mo-pray-assets/mo-sitting.png',thumb:'mo-pray-assets/mo-sitting.png',recitations:[{arabic:'رَبِّ اغْفِرْ لِي وَارْحَمْنِي',latin:'Rabbighfir li warhamni',meaning:'Ya Tuhanku, ampunilah aku dan sayangilah aku',repeat:2}],tip:'Duduk dengan tenang, mohon ampun kepada Allah 💚'},
-  {id:7,name:'Tashahhud & Salam',nameAr:'تَشَهُّد وَسَلَام',desc:'Duduk akhir, baca tahiyyat, lalu salam',image:'mo-pray-assets/mo-tashahhud.png',imageGuide:'mo-pray-assets/mo-tashahhud.png',thumb:'mo-pray-assets/mo-tashahhud.png',recitations:[
+  {id:3,name:"Ruku'",nameAr:'رُكُوع',desc:'Membungkuk, tangan di lutut, punggung lurus',image:'mo-pray-assets/mo-ruku.webp',imageGuide:'mo-pray-assets/mo-ruku.webp',thumb:'mo-pray-assets/mo-ruku.webp',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الْعَظِيمِ',latin:'Subhana Rabbiyal Azeem',meaning:'Maha Suci Tuhanku Yang Maha Agung',repeat:3}],tip:"Bungkukkan badan sampai punggung lurus, tangan pegang lutut 🙏"},
+  {id:4,name:"I'tidal",nameAr:'اِعْتِدَال',desc:"Bangkit berdiri tegak dari ruku'",image:'mo-pray-assets/mo-itidal.webp',imageGuide:'mo-pray-assets/mo-itidal.webp',thumb:'mo-pray-assets/mo-itidal.webp',recitations:[{arabic:'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ',latin:"Sami'allahu liman hamidah",meaning:'Allah mendengar orang yang memuji-Nya'},{arabic:'رَبَّنَا وَلَكَ الْحَمْدُ',latin:'Rabbana wa lakal hamd',meaning:'Ya Tuhan kami, bagi-Mu segala puji'}],tip:'Berdiri tegak kembali dengan tenang ✨'},
+  {id:5,name:'Sujud',nameAr:'سُجُود',desc:'Sujud dengan 7 anggota badan menyentuh lantai',image:'mo-pray-assets/mo-sujud.webp',imageGuide:'mo-pray-assets/mo-sujud.webp',thumb:'mo-pray-assets/mo-sujud.webp',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الأَعْلَى',latin:"Subhana Rabbiyal A'la",meaning:'Maha Suci Tuhanku Yang Maha Tinggi',repeat:3}],tip:'7 anggota: dahi, 2 telapak tangan, 2 lutut, 2 ujung kaki 🌟'},
+  {id:6,name:'Duduk',nameAr:'جُلُوس',desc:'Duduk di antara dua sujud',image:'mo-pray-assets/mo-sitting.webp',imageGuide:'mo-pray-assets/mo-sitting.webp',thumb:'mo-pray-assets/mo-sitting.webp',recitations:[{arabic:'رَبِّ اغْفِرْ لِي وَارْحَمْنِي',latin:'Rabbighfir li warhamni',meaning:'Ya Tuhanku, ampunilah aku dan sayangilah aku',repeat:2}],tip:'Duduk dengan tenang, mohon ampun kepada Allah 💚'},
+  {id:7,name:'Tashahhud & Salam',nameAr:'تَشَهُّد وَسَلَام',desc:'Duduk akhir, baca tahiyyat, lalu salam',image:'mo-pray-assets/mo-tashahhud.webp',imageGuide:'mo-pray-assets/mo-tashahhud.webp',thumb:'mo-pray-assets/mo-tashahhud.webp',recitations:[
     {arabic:'التَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ لِلَّهِ',latin:'At-tahiyyatul mubarakatush shalawatuth thayyibatu lillah',meaning:'Segala penghormatan, keberkahan, sholawat dan kebaikan hanya bagi Allah'},
     {arabic:'السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ',latin:'Assalamu alaika ayyuhan nabiyyu wa rahmatullahi wa barakatuh',meaning:'Salam sejahtera untukmu wahai Nabi, rahmat Allah dan berkah-Nya'},
     {arabic:'السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ',latin:'Assalamu alaina wa ala ibadillahis shaliheen',meaning:'Salam sejahtera atas kami dan atas hamba-hamba Allah yang shaleh'},
@@ -1103,19 +1105,19 @@ var LENCANA=[
 ];
 
 var PRAY_ITEMS=[
-  {name:'Subuh',icon:'🌅',desc:'Sholat pagi sebelum matahari terbit',thumb:'mo-pray-assets/mo-takbir.png'},
-  {name:'Dzuhur',icon:'☀️',desc:'Sholat tengah hari',thumb:'mo-pray-assets/mo-qiyam.png'},
-  {name:'Ashar',icon:'🌤',desc:'Sholat sore hari',thumb:'mo-pray-assets/mo-ruku.png'},
-  {name:'Maghrib',icon:'🌅',desc:'Sholat setelah matahari terbenam',thumb:'mo-pray-assets/mo-sujud.png'},
-  {name:'Isya',icon:'🌙',desc:'Sholat malam hari',thumb:'mo-pray-assets/mo-tashahhud.png'}
+  {name:'Subuh',icon:'🌅',desc:'Sholat pagi sebelum matahari terbit',thumb:'mo-pray-assets/mo-takbir.webp'},
+  {name:'Dzuhur',icon:'☀️',desc:'Sholat tengah hari',thumb:'mo-pray-assets/mo-qiyam.webp'},
+  {name:'Ashar',icon:'🌤',desc:'Sholat sore hari',thumb:'mo-pray-assets/mo-ruku.webp'},
+  {name:'Maghrib',icon:'🌅',desc:'Sholat setelah matahari terbenam',thumb:'mo-pray-assets/mo-sujud.webp'},
+  {name:'Isya',icon:'🌙',desc:'Sholat malam hari',thumb:'mo-pray-assets/mo-tashahhud.webp'}
 ];
 var PROGRESS_MO=[
-  {img:'mo-pray-assets/mo-waving-mat.png',msg:'Yuk latihan sholat hari ini!',sub:'Mo nungguin kamu 😊'},
-  {img:'mo-pray-assets/mo-takbir-mat.png',msg:'Bagus! Satu sholat sudah dilatih',sub:'Lanjut terus ya! 🌟'},
-  {img:'mo-pray-assets/mo-qiyam-mat.png',msg:'Hebat! Dua sholat sudah beres',sub:'Mo bangga sama kamu 💚'},
-  {img:'mo-pray-assets/mo-ruku.png',msg:'Tiga sholat sudah! Keren banget',sub:'Terus semangat! ✨'},
-  {img:'mo-pray-assets/mo-sujud.png',msg:'Hampir semua! Satu lagi yaa!',sub:'Mo excited banget! 🤩'},
-  {img:'mo-pray-assets/mo-tashahhud.png',msg:'Masya Allah! Semua 5 sholat selesai!',sub:'Mo sayang kamu 🌙💚'}
+  {img:'mo-pray-assets/mo-waving-mat.webp',msg:'Yuk latihan sholat hari ini!',sub:'Mo nungguin kamu 😊'},
+  {img:'mo-pray-assets/mo-takbir-mat.webp',msg:'Bagus! Satu sholat sudah dilatih',sub:'Lanjut terus ya! 🌟'},
+  {img:'mo-pray-assets/mo-qiyam-mat.webp',msg:'Hebat! Dua sholat sudah beres',sub:'Mo bangga sama kamu 💚'},
+  {img:'mo-pray-assets/mo-ruku.webp',msg:'Tiga sholat sudah! Keren banget',sub:'Terus semangat! ✨'},
+  {img:'mo-pray-assets/mo-sujud.webp',msg:'Hampir semua! Satu lagi yaa!',sub:'Mo excited banget! 🤩'},
+  {img:'mo-pray-assets/mo-tashahhud.webp',msg:'Masya Allah! Semua 5 sholat selesai!',sub:'Mo sayang kamu 🌙💚'}
 ];
 
 var currentStep=0,currentRecPage=0,stepsViewed={};

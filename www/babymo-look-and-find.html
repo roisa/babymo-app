@@ -303,6 +303,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+.node-desc{font-size:12px!important;}
 /* contrast fixes after the bright theme */
 .comp-title{color:#E8590C;text-shadow:none;}
 .comp-msg{color:#5A6878;}
@@ -380,7 +382,7 @@ const LEVELS=[
     {id:"moon_pillow",label:"Bantal",e:"🌙",cx:44,cy:67},
     {id:"lantern",label:"Lentera",e:"🏮",cx:14,cy:54},
     {id:"brush",label:"Sikat",e:"🪥",cx:87,cy:54},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:67,cy:25,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:67,cy:25,mo:true}
   ]},
   {id:2,name:"Ruang Keluarga",emoji:"🏠",desc:"Bantu Baby Mo & cari 5 benda! 🌿",sticker:"🕌",msg:"Alhamdulillah, rapi sekali! 🌿",
    objects:[
@@ -389,7 +391,7 @@ const LEVELS=[
     {id:"buku",label:"Buku",e:"📖",cx:13,cy:54},
     {id:"susu",label:"Susu",e:"🥛",cx:72,cy:44},
     {id:"bulan",label:"Bulan",e:"☪️",cx:32,cy:38},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-26.png",cx:84,cy:28,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-26.webp",cx:84,cy:28,mo:true}
   ]},
   {id:3,name:"Taman Mimpi 🌸",emoji:"🌸",desc:"Cari Baby Mo di taman bintang! 🌟",sticker:"🌟",msg:"Subhanallah, indah sekali! 🌙",
    objects:[
@@ -398,7 +400,7 @@ const LEVELS=[
     {id:"kunang",label:"Kunang",e:"✨",cx:66,cy:52},
     {id:"bunga",label:"Bunga",e:"🌸",cx:18,cy:78},
     {id:"balon",label:"Balon",e:"🎈",cx:40,cy:42},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-wow.png",cx:84,cy:70,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-wow.webp",cx:84,cy:70,mo:true}
   ]},
   {id:4,name:"Pasar Ramadan",emoji:"🌙",desc:"Cari Baby Mo di pasar malam! 🏮",sticker:"🌙",msg:"Selamat malam Ramadan! 🌙",
    objects:[
@@ -407,7 +409,7 @@ const LEVELS=[
     {id:"kue",label:"Kue",e:"🌙",cx:44,cy:66},
     {id:"minum",label:"Minum",e:"💧",cx:66,cy:74},
     {id:"bedug",label:"Bedug",e:"🥁",cx:88,cy:66},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-09.png",cx:11,cy:46,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-09.webp",cx:11,cy:46,mo:true}
   ]},
   {id:5,name:"Halaman Masjid",emoji:"🕌",desc:"Cari Baby Mo di halaman masjid! 🤲",sticker:"🤲",msg:"MasyaAllah, masjid yang cantik! 🕌",
    objects:[
@@ -416,7 +418,7 @@ const LEVELS=[
     {id:"lampu",label:"Lentera",e:"🏮",cx:16,cy:38},
     {id:"kucing",label:"Kucing",e:"🐱",cx:78,cy:78},
     {id:"rehal",label:"Rehal",e:"📚",cx:50,cy:64},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-yeyy.png",cx:13,cy:58,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-yeyy.webp",cx:13,cy:58,mo:true}
   ]},
   {id:6,name:"Dapur Baby Mo",emoji:"🍳",desc:"Cari 5 benda dapur & Baby Mo! 🍎",sticker:"🍎",msg:"Dapur jadi bersih! 🍽️",
    objects:[
@@ -425,7 +427,7 @@ const LEVELS=[
     {id:"apel",label:"Apel",e:"🍎",cx:44,cy:68},
     {id:"roti",label:"Roti",e:"🍞",cx:64,cy:66},
     {id:"sendok",label:"Sendok",e:"🥄",cx:84,cy:50},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:50,cy:30,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:50,cy:30,mo:true}
   ]},
   {id:7,name:"Kelas Baby Mo",emoji:"📚",desc:"Cari 5 benda sekolah & Baby Mo! ✏️",sticker:"⭐",msg:"Pintar belajar! 📚",
    objects:[
@@ -434,7 +436,7 @@ const LEVELS=[
     {id:"penggaris",label:"Penggaris",e:"📏",cx:64,cy:66},
     {id:"gunting",label:"Gunting",e:"✂️",cx:82,cy:58},
     {id:"pensil",label:"Pensil",e:"✏️",cx:70,cy:40},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:16,cy:36,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:16,cy:36,mo:true}
   ]},
   {id:8,name:"Pantai Baby Mo",emoji:"🏖️",desc:"Cari 5 benda pantai & Baby Mo! 🐚",sticker:"🐚",msg:"Seru main di pantai! 🌊",
    objects:[
@@ -443,7 +445,7 @@ const LEVELS=[
     {id:"kerang",label:"Kerang",e:"🐚",cx:26,cy:82},
     {id:"kepiting",label:"Kepiting",e:"🦀",cx:50,cy:82},
     {id:"ember",label:"Ember",e:"🪣",cx:74,cy:76},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:13,cy:62,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:13,cy:62,mo:true}
   ]},
   {id:9,name:"Kebun Binatang",emoji:"🦁",desc:"Cari 5 hewan & Baby Mo! 🦁",sticker:"🦁",msg:"Seru di kebun binatang! 🦁",
    objects:[
@@ -452,7 +454,7 @@ const LEVELS=[
     {id:"singa",label:"Singa",e:"🦁",cx:70,cy:56},
     {id:"jerapah",label:"Jerapah",e:"🦒",cx:84,cy:40},
     {id:"gajah",label:"Gajah",e:"🐘",cx:44,cy:70},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:14,cy:64,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:14,cy:64,mo:true}
   ]},
   {id:10,name:"Taman Bermain",emoji:"🛝",desc:"Cari 5 benda & Baby Mo! 🎈",sticker:"🎈",msg:"Asyik bermain! 🎉",
    objects:[
@@ -461,7 +463,7 @@ const LEVELS=[
     {id:"bola",label:"Bola",e:"⚽",cx:40,cy:76},
     {id:"sepeda",label:"Sepeda",e:"🚲",cx:18,cy:72},
     {id:"eskrim",label:"Es Krim",e:"🍦",cx:76,cy:64},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:88,cy:48,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:88,cy:48,mo:true}
   ]},
   {id:11,name:"Kebun Baby Mo",emoji:"🚜",desc:"Cari 5 benda kebun & Baby Mo! 🥕",sticker:"🐔",msg:"Panen di kebun! 🌾",
    objects:[
@@ -470,7 +472,7 @@ const LEVELS=[
     {id:"sapi",label:"Sapi",e:"🐄",cx:68,cy:68},
     {id:"wortel",label:"Wortel",e:"🥕",cx:30,cy:78},
     {id:"ayam",label:"Ayam",e:"🐔",cx:52,cy:80},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:88,cy:56,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:88,cy:56,mo:true}
   ]},
   {id:12,name:"Bawah Laut",emoji:"🐠",desc:"Cari 5 hewan laut & Baby Mo! 🐠",sticker:"🐠",msg:"Indahnya bawah laut! 🌊",
    objects:[
@@ -479,7 +481,7 @@ const LEVELS=[
     {id:"gurita",label:"Gurita",e:"🐙",cx:76,cy:58},
     {id:"bintang",label:"Bintang Laut",img:"starfish.svg",cx:22,cy:82},
     {id:"kepiting",label:"Kepiting",e:"🦀",cx:50,cy:84},
-    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.png",cx:84,cy:76,mo:true}
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:84,cy:76,mo:true}
   ]}
 ];
 
@@ -487,7 +489,7 @@ const LEVELS=[
 const CHEER_POSES=['baby-mo-yeyy','baby-mo-wow','baby-mo-yes','baby-mo-alright','baby-mo-thank-you','baby-mo-ok','baby-mo-pose-26','baby-mo-idea'];
 // preload poses so they appear instantly
 [...new Set([...CHEER_POSES,'baby-mo-pose-05','baby-mo-pose-26','baby-mo-wow','baby-mo-pose-09','baby-mo-yeyy'])]
-  .forEach(p=>{const im=new Image();im.src='baby-mo-poses/'+p+'.png';});
+  .forEach(p=>{const im=new Image();im.src='baby-mo-poses/'+p+'.webp';});
 
 // =============================================
 // STATE
@@ -627,7 +629,7 @@ function doFound(id,div){
   foundTxt(fx,fy,isMo?'Ketemu Baby Mo! 🎉':null);
   updateTrayItem(id);
   updateDots();
-  setTimeout(()=>babyReact(isMo?(obj.img.split('/').pop().replace('.png','')):null),380);
+  setTimeout(()=>babyReact(isMo?(obj.img.split('/').pop().replace(/\.(png|webp)$/,'')):null),380);
   setTimeout(()=>{if(found.size>=LEVELS[curLv].objects.length)setTimeout(showComplete,600);},700);
   clearHint();
 }
@@ -674,7 +676,7 @@ function babyReact(pose){
   const p=pose||CHEER_POSES[Math.floor(Math.random()*CHEER_POSES.length)];
   const el=document.createElement('img');
   el.className='baby-react-img';
-  el.src='baby-mo-poses/'+p+'.png';
+  el.src='baby-mo-poses/'+p+'.webp';
   el.alt='';
   wrap.appendChild(el);setTimeout(()=>el.remove(),1200);
 }
@@ -723,7 +725,7 @@ function showComplete(){
   const lv=LEVELS[curLv];
   // celebrate with a random Baby Mo pose
   const cb=document.querySelector('.comp-baby');
-  if(cb)cb.src='baby-mo-poses/'+CHEER_POSES[Math.floor(Math.random()*CHEER_POSES.length)]+'.png';
+  if(cb)cb.src='baby-mo-poses/'+CHEER_POSES[Math.floor(Math.random()*CHEER_POSES.length)]+'.webp';
   document.getElementById('sticker').textContent=lv.sticker;
   document.getElementById('comp-msg').textContent=lv.msg;
   prog[lv.id]=3;localStorage.setItem('bmo2',JSON.stringify(prog));
@@ -862,7 +864,7 @@ function bedroomSVG(){return`<defs>
 <rect x="60" y="74" width="20" height="9" rx="2" fill="#c9b27a"/>
 <rect x="34" y="80" width="72" height="76" rx="9" fill="#fbf7ee"/>
 <rect x="40" y="86" width="60" height="64" rx="5" fill="#e7e9ee"/>
-<svg x="42" y="88" width="56" height="60"><image href="baby-mo-poses/baby-mo-pose-01.png" x="-42" y="-13" width="140" height="140" style="filter:grayscale(1) contrast(1.06) brightness(1.03)"/></svg>
+<svg x="42" y="88" width="56" height="60"><image href="baby-mo-poses/baby-mo-pose-01.webp" x="-42" y="-13" width="140" height="140" style="filter:grayscale(1) contrast(1.06) brightness(1.03)"/></svg>
 <rect x="40" y="86" width="60" height="64" rx="5" fill="none" stroke="#fbf7ee" stroke-width="3"/>
 <rect x="34" y="80" width="72" height="76" rx="9" fill="none" stroke="#e6ddca" stroke-width="2.5"/>
 <!-- bookshelf -->
@@ -924,7 +926,7 @@ function livingRoomSVG(){return`<defs>
 <rect x="104" y="46" width="136" height="64" rx="12" fill="none" stroke="#ffe6a2" stroke-width="2.5" opacity=".65"/>
 <!-- framed B&W Baby Mo photo -->
 <rect x="18" y="58" width="62" height="66" rx="8" fill="#fbf7ee"/><rect x="23" y="63" width="52" height="56" rx="5" fill="#e7e9ee"/>
-<svg x="25" y="65" width="48" height="52"><image href="baby-mo-poses/baby-mo-yes.png" x="-36" y="-11" width="120" height="120" style="filter:grayscale(1) contrast(1.06) brightness(1.03)"/></svg>
+<svg x="25" y="65" width="48" height="52"><image href="baby-mo-poses/baby-mo-yes.webp" x="-36" y="-11" width="120" height="120" style="filter:grayscale(1) contrast(1.06) brightness(1.03)"/></svg>
 <rect x="18" y="58" width="62" height="66" rx="8" fill="none" stroke="#e6ddca" stroke-width="2.5"/>
 <!-- plant -->
 <path d="M40 330 H78 L72 354 H46 Z" fill="#e07a52"/><rect x="34" y="322" width="50" height="11" rx="4" fill="#f0916a"/>

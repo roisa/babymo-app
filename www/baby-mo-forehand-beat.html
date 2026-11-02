@@ -475,7 +475,7 @@ a[href="index.html"]{color:#2F7A1C!important;opacity:1!important;}
     <div id="hud">
       <div class="hud-pill" id="score-pill">
         <div>
-          <div class="label">Score</div>
+          <div class="label">Skor</div>
           <div class="num" id="score-num">0</div>
         </div>
       </div>
@@ -485,7 +485,7 @@ a[href="index.html"]{color:#2F7A1C!important;opacity:1!important;}
         <span class="heart" id="heart-3">❤️</span>
       </div>
       <div id="ctrl-cluster">
-        <button class="icon-btn" id="sound-btn" aria-label="Toggle sound">🔊</button>
+        <button class="icon-btn" id="sound-btn" aria-label="Suara">🔊</button>
         <button class="icon-btn" id="pause-btn" aria-label="Pause">⏸</button>
       </div>
     </div>
@@ -497,7 +497,7 @@ a[href="index.html"]{color:#2F7A1C!important;opacity:1!important;}
     <div id="combo"></div>
 
     <!-- Tap to jump hint -->
-    <div id="tap-hint">👆 Tap to jump · Tap 3× to soar!</div>
+    <div id="tap-hint">👆 Ketuk untuk lompat · Ketuk 3× untuk terbang!</div>
 
     <!-- Home screen -->
     <div id="home" class="screen">
@@ -508,19 +508,19 @@ a[href="index.html"]{color:#2F7A1C!important;opacity:1!important;}
 
       <div class="logo-wrap"><img id="logo-img" alt="Baby Mo" /></div>
       <div class="tagline">Forehand <span class="accent">Beat</span> 🎾</div>
-      <button class="big-btn" id="start-btn">Tap to Start</button>
-      <div class="hint"><span class="emoji">❤️</span> 3 lives &nbsp;·&nbsp; <span class="emoji">✨</span> Tap 3× to soar!</div>
+      <button class="big-btn" id="start-btn">Ketuk untuk Mulai</button>
+      <div class="hint"><span class="emoji">❤️</span> 3 nyawa &nbsp;·&nbsp; <span class="emoji">✨</span> Ketuk 3× untuk terbang!</div>
       <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">← Game Hub</a>
     </div>
 
     <!-- Pause screen -->
     <div id="pause" class="screen hidden">
       <div class="panel">
-        <h1>Paused</h1>
-        <div class="sub">Take a breather 🌿</div>
+        <h1>Jeda dulu</h1>
+        <div class="sub">Tarik napas sebentar 🌿</div>
         <div class="panel-btns">
-          <button class="big-btn" id="resume-btn">Resume</button>
-          <button class="big-btn secondary" id="quit-btn">Home</button>
+          <button class="big-btn" id="resume-btn">Lanjut</button>
+          <button class="big-btn secondary" id="quit-btn">Menu</button>
         </div>
         <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
       </div>
@@ -529,28 +529,28 @@ a[href="index.html"]{color:#2F7A1C!important;opacity:1!important;}
     <!-- Game over screen -->
     <div id="gameover" class="screen hidden">
       <div class="panel">
-        <h1 id="go-title">Great Job!</h1>
-        <div class="sub" id="go-sub">Let's try again? 💚</div>
+        <h1 id="go-title">Hebat!</h1>
+        <div class="sub" id="go-sub">Coba lagi, yuk? 💚</div>
         <div class="stat-row">
           <div class="stat-card">
             <div class="v" id="go-score">0</div>
-            <div class="l">Score</div>
+            <div class="l">Skor</div>
           </div>
           <div class="stat-card gold">
             <div class="v" id="go-stars">⭐ 0</div>
-            <div class="l">Stars</div>
+            <div class="l">Bintang</div>
           </div>
         </div>
         <div class="stat-row" style="margin-top:-4px;">
           <div class="stat-card" style="background:linear-gradient(180deg,#E1F2FE 0%,#BFE2F8 100%); border-color:rgba(91,192,235,0.35);">
             <div class="v" id="go-best" style="color:var(--blue-deep);">0</div>
-            <div class="l">Best</div>
+            <div class="l">Terbaik</div>
           </div>
         </div>
         <div class="panel-btns">
-          <button class="big-btn" id="replay-btn">Play Again</button>
-          <button class="big-btn secondary" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('go-score')||{}).textContent||'',(document.getElementById('go-stars')||{}).textContent||'','I played Forehand Beat with Baby Mo! 🎵')">📤 Share</button>
-          <button class="big-btn secondary" id="home-btn">Home</button>
+          <button class="big-btn" id="replay-btn">Main Lagi</button>
+          <button class="big-btn secondary" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('go-score')||{}).textContent||'',(document.getElementById('go-stars')||{}).textContent||'','I played Forehand Beat with Baby Mo! 🎵')">📤 Bagikan</button>
+          <button class="big-btn secondary" id="home-btn">Menu</button>
         </div>
         <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
       </div>
@@ -1665,7 +1665,7 @@ function doJump() {
       if (b > state.songTime + 0.5) break;
     }
     if (nearestBeat < 0.12) {
-      showCombo('PERFECT!', 'on the beat 🎵');
+      showCombo('SEMPURNA!', 'pas dengan iramanya 🎵');
       if (navigator.vibrate) navigator.vibrate(15);
     }
   } else if (state.airJumps < MAX_AIR_JUMPS) {
@@ -1676,7 +1676,7 @@ function doJump() {
     sfx('boost');
     spawnSparkles(PLAYER_X, p.y - 50);
     if (state.airJumps === 2) {
-      showCombo('TRIPLE JUMP!', 'soaring high ✨');
+      showCombo('LOMPAT 3×!', 'terbang tinggi ✨');
       if (navigator.vibrate) navigator.vibrate(18);
     } else {
       if (navigator.vibrate) navigator.vibrate(8);
@@ -1711,7 +1711,7 @@ function takeDamage(o) {
   }
   // Grant invincibility window
   state.invincibleUntil = performance.now() + INV_DURATION_MS;
-  showCombo('OUCH!', `${state.hearts} ❤️ left`);
+  showCombo('ADUH!', `sisa ${state.hearts} ❤️`);
   updateHud();
 }
 
@@ -1802,11 +1802,11 @@ function gameOver() {
   document.getElementById('go-best').textContent = state.bestScore;
   // encouraging message
   const msgs = [
-    ['Great Job!', "Let's try again? 💚"],
-    ['Nice run!', "Wanna go further? 🎾"],
-    ['You did it!', "One more try? ✨"],
-    ['So close!', "I bet you can do better! 💪"],
-    ['Way to go!', "Tap replay to keep grooving 🎵"]
+    ['Hebat!', "Coba lagi, yuk? 💚"],
+    ['Keren!', "Mau lebih jauh lagi? 🎾"],
+    ['Kamu berhasil!', "Sekali lagi? ✨"],
+    ['Sedikit lagi!', "Pasti bisa lebih hebat! 💪"],
+    ['Mantap!', "Ketuk Main Lagi untuk terus bergoyang 🎵"]
   ];
   const m = msgs[Math.min(msgs.length - 1, Math.floor(state.score / 60))];
   document.getElementById('go-title').textContent = m[0];

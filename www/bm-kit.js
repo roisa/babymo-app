@@ -17,7 +17,7 @@
   "use strict";
 
   var PLAY_ORIGIN = "https://play.babymo.id";
-  var MASCOT_SRC = "/Logo_Baby_Mo_Transparant.png";
+  var MASCOT_SRC = "/Logo_Baby_Mo_Transparant.webp";
 
   // ---- CONFIG ------------------------------------------------
   // Privacy-first analytics via Cloudflare Web Analytics — free, no
@@ -377,7 +377,7 @@
       list.forEach(function (name) {
         var im = new Image();
         im.decoding = "async";
-        im.src = POSE + name + ".png";
+        im.src = POSE + name + ".webp";
       });
     } catch (e) {}
   }
@@ -405,7 +405,13 @@
       "#bm-mo .bm-bub{background:#fff;color:#173a27;font:800 13.5px/1.3 'Nunito',system-ui,sans-serif;" +
       "padding:9px 13px;border-radius:18px 18px 18px 6px;position:relative;max-width:min(260px,calc(100vw - 110px));margin-bottom:14px;" +
       "box-shadow:0 0 0 .5px rgba(21,34,48,.08),0 12px 26px -12px rgba(30,60,110,.45);}" +
-      "#bm-mo .bm-bub::after{content:'';position:absolute;left:-6px;bottom:8px;border:6px solid transparent;border-right-color:#fff;border-bottom-color:#fff;}";
+      "#bm-mo .bm-bub::after{content:'';position:absolute;left:-6px;bottom:8px;border:6px solid transparent;border-right-color:#fff;border-bottom-color:#fff;}" +
+      // On win screens Baby Mo drops in from the top so he never covers the
+      // "Main Lagi" / "Bagikan" buttons at the bottom.
+      "#bm-mo.top{top:calc(env(safe-area-inset-top) + 64px);bottom:auto;align-items:flex-start;transform:translateY(-220%);}" +
+      "#bm-mo.top.show{transform:translateY(0);}" +
+      "#bm-mo.top .bm-bub{margin-bottom:0;margin-top:16px;border-radius:6px 18px 18px 18px;}" +
+      "#bm-mo.top .bm-bub::after{top:8px;bottom:auto;border-right-color:#fff;border-bottom-color:transparent;border-top-color:#fff;}";
     document.head.appendChild(st);
   }
   // Height of anything pinned to the bottom of the screen on the left side
@@ -449,9 +455,12 @@
       var msg = opts.message || fillName(pickNoRepeat(cfg[moLang()] || cfg.id, type + "_msg"));
       var poseName = opts.pose ||
         (cfg.poses ? pickNoRepeat(cfg.poses, type + "_pose") : (cfg.pose || "baby-mo-pose-01"));
-      box.querySelector("img").src = POSE + poseName + ".png";
+      box.querySelector("img").src = POSE + poseName + ".webp";
       box.querySelector(".bm-bub").textContent = msg;
-      box.style.setProperty("--bm-mo-lift", bottomBarHeight(box) + "px");
+      var atTop = type === "win" || opts.top === true;
+      box.classList.remove("show");
+      box.classList.toggle("top", atTop);
+      box.style.setProperty("--bm-mo-lift", atTop ? "0px" : bottomBarHeight(box) + "px");
       void box.offsetWidth;
       box.classList.add("show");
       // Matching sound (silent if muted); win also drops a star in the jar

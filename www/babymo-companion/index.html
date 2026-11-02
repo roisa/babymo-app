@@ -753,6 +753,13 @@ body{font-family:var(--font);background:var(--cream);color:var(--ink);-webkit-fo
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Sholat Bareng Mo — Baby Mo","url":"https://play.babymo.id/babymo-companion/","description":"Jadwal sholat, arah kiblat, dan streak harian untuk membiasakan ibadah.","inLanguage":"id-ID","genre":"Lifestyle","image":"https://play.babymo.id/og/babymo-companion.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":10},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Sholat Bareng Mo","item":"https://play.babymo.id/babymo-companion/"}]}]}</script>
 <link rel="stylesheet" href="../bm-buttons.css">
 <style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+.mo-sub,.pc-name,.qibla-lbl,.hijri-pill,.ev-date,.kalender-foot,.tl{font-size:11.5px!important;}
+.ev-days small{font-size:10.5px!important;}
+/* kid-sized tap targets */
+.edit-name-btn{width:36px!important;height:36px!important;font-size:15px!important;}
+.today-pill,.loc-btn{min-height:40px!important;}
+.denied-retry{min-height:46px!important;}
 .q-source{color:#FFE7A3!important;}
 /* bright theme for every tab (was warm cream) */
 body{background:#F2F6FC;}
@@ -956,7 +963,7 @@ em{color:#B45309!important;}
     <div class="mo-area">
       <div class="mo-wrap" id="moPortrait">
         <div class="mo-glow"></div>
-        <img id="moImg" src="../baby-mo-poses/baby-mo-pose-05.png" alt="Baby Mo" />
+        <img id="moImg" src="../baby-mo-poses/baby-mo-pose-05.webp" alt="Baby Mo" />
       </div>
       <div class="mo-mat" aria-hidden="true">
         <svg viewBox="0 0 200 54" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
@@ -1239,11 +1246,11 @@ const PRAYER_KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
 const MO={
   /* Generic moods use the rich 3D pose set; prayer-specific poses
      (praying/sujood/astagfirullah) stay on the dedicated mo-assets. */
-  waving:'../baby-mo-poses/baby-mo-pose-05.png',praying:'mo-assets/mo-praying.png',
-  hopeful:'../baby-mo-poses/baby-mo-idea.png',surprised:'../baby-mo-poses/baby-mo-wow.png',
-  thankful:'../baby-mo-poses/baby-mo-thank-you.png',grateful:'../baby-mo-poses/baby-mo-yes.png',
-  excited:'../baby-mo-poses/baby-mo-yeyy.png',sujood:'mo-assets/mo-sujood.png',
-  astagfirullah:'mo-assets/mo-astagfirullah.png',sad:'../baby-mo-poses/baby-mo-pose-15.png',
+  waving:'../baby-mo-poses/baby-mo-pose-05.webp',praying:'mo-assets/mo-praying.png',
+  hopeful:'../baby-mo-poses/baby-mo-idea.webp',surprised:'../baby-mo-poses/baby-mo-wow.webp',
+  thankful:'../baby-mo-poses/baby-mo-thank-you.webp',grateful:'../baby-mo-poses/baby-mo-yes.webp',
+  excited:'../baby-mo-poses/baby-mo-yeyy.webp',sujood:'mo-assets/mo-sujood.png',
+  astagfirullah:'mo-assets/mo-astagfirullah.png',sad:'../baby-mo-poses/baby-mo-pose-15.webp',
 };
 
 let userLoc=null,prayerTimes=null,prayerMinutes=null;

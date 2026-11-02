@@ -10,7 +10,7 @@
      - same-origin static → cache-first (fast), refreshed in background.
      - cross-origin (fonts) → opportunistic cache.
    ============================================================ */
-const CACHE = "babymo-games-v25";
+const CACHE = "babymo-games-v26";
 
 const SHELL = [
   "/",
@@ -34,29 +34,29 @@ const SHELL = [
   "/baby-mo-forehand-beat.html",
   "/babymo-companion/",
   "/babymo-companion/index.html",
-  "/Logo_Baby_Mo_Transparant.png",
+  "/Logo_Baby_Mo_Transparant.webp",
   "/brand/babymo-logo.png",
   "/Baby_Mo_Menyapa.png",
   "/babymo_running.png",
   // Mo Companion reaction poses (precache the ones the kit picks from)
-  "/baby-mo-poses/baby-mo-pose-01.png",
-  "/baby-mo-poses/baby-mo-pose-05.png",
-  "/baby-mo-poses/baby-mo-idea.png",
-  "/baby-mo-poses/baby-mo-ok.png",
-  "/baby-mo-poses/baby-mo-yes.png",
-  "/baby-mo-poses/baby-mo-alright.png",
-  "/baby-mo-poses/baby-mo-yeyy.png",
-  "/baby-mo-poses/baby-mo-wow.png",
-  "/baby-mo-poses/baby-mo-thank-you.png",
-  "/baby-mo-poses/baby-mo-pose-07.png",
-  "/baby-mo-poses/baby-mo-pose-08.png",
-  "/baby-mo-poses/baby-mo-pose-09.png",
-  "/baby-mo-poses/baby-mo-pose-12.png",
-  "/baby-mo-poses/baby-mo-pose-15.png",
-  "/baby-mo-poses/baby-mo-pose-19.png",
-  "/baby-mo-poses/baby-mo-pose-22.png",
-  "/baby-mo-poses/baby-mo-pose-27.png",
-  "/baby-mo-poses/baby-mo-pose-33.png",
+  "/baby-mo-poses/baby-mo-pose-01.webp",
+  "/baby-mo-poses/baby-mo-pose-05.webp",
+  "/baby-mo-poses/baby-mo-idea.webp",
+  "/baby-mo-poses/baby-mo-ok.webp",
+  "/baby-mo-poses/baby-mo-yes.webp",
+  "/baby-mo-poses/baby-mo-alright.webp",
+  "/baby-mo-poses/baby-mo-yeyy.webp",
+  "/baby-mo-poses/baby-mo-wow.webp",
+  "/baby-mo-poses/baby-mo-thank-you.webp",
+  "/baby-mo-poses/baby-mo-pose-07.webp",
+  "/baby-mo-poses/baby-mo-pose-08.webp",
+  "/baby-mo-poses/baby-mo-pose-09.webp",
+  "/baby-mo-poses/baby-mo-pose-12.webp",
+  "/baby-mo-poses/baby-mo-pose-15.webp",
+  "/baby-mo-poses/baby-mo-pose-19.webp",
+  "/baby-mo-poses/baby-mo-pose-22.webp",
+  "/baby-mo-poses/baby-mo-pose-27.webp",
+  "/baby-mo-poses/baby-mo-pose-33.webp",
 ];
 
 self.addEventListener("install", (e) => {

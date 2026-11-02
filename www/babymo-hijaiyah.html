@@ -125,6 +125,9 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+#jLabel{font-size:12px!important;}
+.abtn span{font-size:11px!important;}
 /* contrast fixes after the bright theme */
 :root{--green-lt:#12A15A;}
 #jLabel{color:#0B8A4A;}
@@ -1016,7 +1019,7 @@ function buildCompanionModel(){
 
   let face = null;
   try{
-    const faceTex = new THREE.TextureLoader().load('baby-mo-poses/baby-mo-pose-05.png');
+    const faceTex = new THREE.TextureLoader().load('baby-mo-poses/baby-mo-pose-05.webp');
     face = new THREE.Sprite(new THREE.SpriteMaterial({map:faceTex, transparent:true}));
     face.scale.set(0.85,0.85,1);
     face.position.y = 1.02;
