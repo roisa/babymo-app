@@ -771,6 +771,9 @@ body::before{
 <meta name="twitter:image" content="https://play.babymo.id/og/index.jpg">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Baby Mo","url":"https://play.babymo.id/","inLanguage":"id-ID","publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"}}</script>
 <style id="bm-fixes">
+/* language pill in the top bar */
+.nav-btn.lang-pill{width:auto;min-width:40px;padding:0 10px;font-size:13px;font-weight:900;letter-spacing:.04em;}
+
 /* child's name chip + sheet */
 .large-title em{overflow-wrap:anywhere;}
 .name-chip{margin-top:10px;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 16px;border-radius:20px;border:1px solid rgba(255,255,255,.95);
@@ -995,6 +998,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
     </div>
     <div class="nav-title" id="navTitle">Baby Mo</div>
     <div class="nav-trailing">
+      <button class="nav-btn lang-pill" id="langBtn" aria-label="Bahasa / Language" title="Bahasa / Language" onclick="toggleLang()">ID</button>
       <button class="nav-btn" id="themeBtn" aria-label="Tema" title="Tema"></button>
       <button class="nav-btn" id="muteBtn" aria-label="Suara">🔊</button>
       <button class="nav-btn" id="sparkleBtn" aria-label="Sparkle">✨</button>
@@ -1624,6 +1628,7 @@ function applyLang(lang){
   const gs=document.getElementById('greetSub');
   if(gs)gs.textContent=GREETINGS[gk][lang];
   try{renderName()}catch(e){}
+  const lb=document.getElementById('langBtn'); if(lb){ lb.textContent=lang==='en'?'EN':'ID'; }
   document.querySelectorAll('#langToggle .lang-opt').forEach(b=>{
     b.classList.toggle('active',b.dataset.lang===lang);
   });
@@ -1647,7 +1652,12 @@ function setLang(lang){
   localStorage.setItem('bm_lang',lang);
   applyLang(lang);
 }
-window.pickLang=pickLang;window.setLang=setLang;
+function toggleLang(){
+  const next=(curLang==='en')?'id':'en';
+  setLang(next);
+  showToast(next==='en'?'🇬🇧 English — games too':'🇮🇩 Bahasa Indonesia — game juga');
+}
+window.pickLang=pickLang;window.setLang=setLang;window.toggleLang=toggleLang;
 if(curLang){document.getElementById('langPick').classList.add('hide');applyLang(curLang);}
 
 (function(){

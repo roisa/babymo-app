@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<script src="i18n/doa.js"></script>
+<script src="bm-i18n.js"></script>
 <meta name="description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
 <title>Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
@@ -325,6 +327,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
+/* English mode: the meaning is already shown in English above */
+html[data-lang="en"] .meaning-en{display:none;}
 /* readable text: nothing under ~11.5px */
 .w-badge,.wp-label,.wp-time,.scene-time,.q-stim-label,.cst-l{font-size:11.5px!important;}
 /* contrast fixes after the bright theme */
@@ -828,7 +832,7 @@ function loadQuestion(qi){
     btn.className = 'q-choice';
     btn.innerHTML = `
       <span class="qc-emoji">${c.emoji}</span>
-      <span class="qc-label">${c.label}</span>
+      <span class="qc-label" data-k="${c.label}">${c.label}</span>
       <span class="qc-result">✓</span>
     `;
     btn.onclick = () => handleAnswer(btn, c.correct, d);
@@ -871,7 +875,7 @@ function handleAnswer(btn, isCorrect, dua){
     if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
     document.querySelectorAll('.q-choice').forEach(b => {
       const lbl = b.querySelector('.qc-label');
-      if(lbl && lbl.textContent === DUAS[QUIZ_Q[quizIdx]].quizLabel) b.classList.add('correct');
+      if(lbl && (lbl.dataset.k || lbl.textContent) === DUAS[QUIZ_Q[quizIdx]].quizLabel) b.classList.add('correct');
     });
     fb.className = 'q-feedback q-fb-wrong show';
     document.getElementById('qfbEmoji').textContent   = '🔄';
