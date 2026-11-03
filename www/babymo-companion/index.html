@@ -1276,7 +1276,7 @@ function renderGreeting(){
   else if(h<15)g='Selamat siang';else if(h<18)g='Selamat sore';
   else g='Selamat malam';
   const name=localStorage.getItem('mo_child_name')||'sahabat';
-  document.getElementById('salam').innerHTML=`${g}, <em>${name}</em><button class="edit-name-btn" onclick="openEditName()">✏️</button>`;
+  document.getElementById('salam').innerHTML=`${g}, <em>${name}</em>`;
 }
 function openEditName(){
   let o=document.getElementById('nameOverlay');
@@ -1936,17 +1936,7 @@ document.getElementById('qShare').addEventListener('click',async()=>{
   else{try{await navigator.clipboard.writeText(tx);const b=document.getElementById('qShare');const o=b.textContent;b.textContent='✓ Tersalin';setTimeout(()=>b.textContent=o,1500);}catch(e){}}
 });
 
-/* ===== NAME PROMPT ===== */
-(function(){
-  if(!localStorage.getItem('mo_child_name')){
-    const o=document.getElementById('nameOverlay');o.style.display='';
-    const inp=document.getElementById('nameInput'),btn=document.getElementById('nameBtn');
-    function sv(){const n=inp.value.trim();if(!n){inp.focus();return;}localStorage.setItem('mo_child_name',n);o.style.opacity='0';setTimeout(()=>{o.style.display='none';},400);renderGreeting();}
-    btn.addEventListener('click',sv);inp.addEventListener('keydown',e=>{if(e.key==='Enter')sv();});
-    setTimeout(()=>inp.focus(),500);
-  }
-})();
-
+/* The child's name is set on the hub, not here */
 /* ===== INIT ===== */
 renderGreeting();renderDates();refreshStreaks();renderStats();renderQ(dailyQIdx());
 setTimeout(renderEvents,100);

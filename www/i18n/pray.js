@@ -2,7 +2,7 @@
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
   "Pray with Mo — Panduan Sholat Interaktif untuk Anak | Baby Mo": "Pray with Mo — Interactive Prayer Guide for Kids | Baby Mo",
   "Wudhu dulu, yuk! 💧": "Wudu first! 💧", "Sebelum sholat, bersihkan diri bareng Mo": "Before praying, get clean with Mo",
-  "Selamat pagi": "Good morning", "Selamat siang": "Good afternoon", "Selamat sore": "Good afternoon", "Selamat malam": "Good evening",
+  "Selamat pagi": "Good morning", "Selamat siang": "Good afternoon", "Selamat sore": "Good afternoon", "Selamat malam": "Good evening", "Selamat pagi!": "Good morning!", "Selamat siang!": "Good afternoon!", "Selamat sore!": "Good afternoon!", "Selamat malam!": "Good evening!",
   "Yuk sholat": "Let's pray", "bareng Mo!": "with Mo!", "Yuk latihan sholat hari ini!": "Let's practice praying today!", "Mo nungguin kamu 😊": "Mo is waiting for you 😊",
   "Assalamu'alaikum!": "Assalamu'alaikum!", "Siapa nama kamu? Mo mau kenalan 😊": "What's your name? Mo wants to say hi 😊", "Ketik nama kamu...": "Type your name...", "✨ Bismillah, Mulai!": "✨ Bismillah, Let's Go!",
   "Panduan Sholat": "Prayer Guide", "7 langkah gerakan & bacaan": "7 steps: movements & recitations", "Progress": "Progress", "Streak & rewards kamu": "Your streak & rewards",
