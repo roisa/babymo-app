@@ -96,7 +96,7 @@ body{background-image:
 .hero-section{
   background:linear-gradient(170deg,#0e3b2e 0%,#143d31 40%,#1a4a3c 70%,#1c5a47 100%);
   border-radius:0 0 28px 28px;margin:-58px -18px 14px;position:relative;overflow:hidden;
-  padding:calc(var(--safe-top) + 52px) 20px 0;
+  padding:calc(var(--safe-top) + 66px) 20px 0;
   animation:rise .5s ease-out backwards;
 }
 .hero-section::before{
@@ -767,7 +767,7 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 .hero-section{background:
   radial-gradient(ellipse 70% 70% at 100% 100%,rgba(255,255,255,.7),transparent 60%),
   linear-gradient(160deg,#FFF1C2 0%,#FFD9E6 48%,#DCD6FF 100%);}
-.hero-greeting{color:#C2410C;opacity:1;}
+.hero-greeting{color:#C2410C;opacity:1;text-transform:none!important;letter-spacing:.1px!important;font-size:14px!important;font-weight:800;line-height:1.3;margin-bottom:8px;overflow-wrap:anywhere;}
 .hero-title{color:#152230;}
 .hero-title em{color:#12A15A;}
 .hero-prayer{background:rgba(255,255,255,.75);border-color:rgba(255,255,255,.95);color:#152230;}
@@ -1734,5 +1734,10 @@ function loadRealPrayerTimes(){
 </div>
 
 <script src="/bm-kit.js" defer></script>
+<script>
+(function(){var tb=document.querySelector('.topbar');if(!tb)return;var raf=0;
+function upd(){raf=0;var home=document.body.dataset.view==='home'||!document.body.dataset.view;tb.classList.toggle('on-hero',home&&window.scrollY<12);}
+window.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(upd)},{passive:true});})();
+</script>
 </body>
 </html>
