@@ -143,3 +143,24 @@
 }
 .topbar-action { min-height: 40px !important; padding-left: 12px !important; padding-right: 12px !important; }
 .hdr-back, .map-hub-btn, .btn-soft, .l-back, .g-back, .w-back { min-height: 44px !important; }
+
+/* ── Classic dark-green theme (hub set to dark): dark glass instead of
+      white glass for secondary and round buttons ──────────────────────── */
+html[data-bm-theme="classic"] :is(.w-back, .nav-btn-sec, .c-btn-sec, .speed-btn, .l-back, .q-back, .btn-sec,
+.hub-back-btn, .g-back, .back-btn, .btn-secondary, .btn-soft, .abtn-sec,
+.map-hub-btn, .hint-btn, .guide-nav-btn.prev, .dzikir-nav-btn.prev,
+.hdr-back, .big-btn.secondary, .btn.ghost, .c-share,
+.icon-btn, .modal-close, .celeb-close, .sheet-close, .stage-nav,
+.nav-prev, .nav-next, .topbar-action, .refresh, .compass-btn, .back-float) {
+  background-color: rgba(255, 255, 255, .10) !important;
+  color: #F0E8D8 !important;
+  -webkit-text-fill-color: #F0E8D8;
+  border: 1px solid rgba(255, 255, 255, .16) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .10), 0 8px 18px -12px rgba(0, 0, 0, .6) !important;
+}
+html[data-bm-theme="classic"] .speed-btn.active {
+  background-color: rgba(48, 209, 88, .22) !important;
+  color: #B9F6CA !important;
+  -webkit-text-fill-color: #B9F6CA;
+}
+html[data-bm-theme="classic"] .icon-btn.muted { background-color: rgba(255, 90, 90, .22) !important; color: #FFC9C9 !important; -webkit-text-fill-color: #FFC9C9; }

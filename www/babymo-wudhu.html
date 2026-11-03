@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="bm-theme.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <script src="i18n/wudhu.js"></script>
@@ -123,6 +124,24 @@ h1,h2,.fred{font-family:'Fredoka','Nunito',sans-serif;letter-spacing:-.01em}
 .done-actions .btn-primary,.done-actions .btn-sec{width:100%;min-height:54px;border-radius:20px;border:none;font:900 17px/1 'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none}
 .done-actions .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media (prefers-reduced-motion:reduce){.drops span,.splash{display:none}}
+</style>
+<style id="bm-classic">
+/* Classic dark-green look when the hub theme is dark */
+html[data-bm-theme="classic"]{--ink:#F0E8D8;--ink-2:#C9D6CC;--ink-3:#9FB3A8;--water-d:#7DD3FC;--card:#163A2C;--hair:rgba(255,255,255,.10)}
+html[data-bm-theme="classic"] body{background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(52,211,153,.18) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 100% 90%,rgba(56,189,248,.14),transparent 70%),linear-gradient(170deg,#0E3B2E 0%,#123E33 50%,#0B2A21 100%);background-attachment:fixed}
+html[data-bm-theme="classic"] .hero{background:linear-gradient(160deg,#164B3A 0%,#12403A 55%,#1C3550 100%)}
+html[data-bm-theme="classic"] .hero .bubble,html[data-bm-theme="classic"] .arabic-card,html[data-bm-theme="classic"] .ocard,html[data-bm-theme="classic"] .stage .num,html[data-bm-theme="classic"] .stage .count-tag{background:#163A2C;color:var(--ink);box-shadow:0 0 0 .5px rgba(255,255,255,.1),0 10px 22px -16px rgba(0,0,0,.7)}
+html[data-bm-theme="classic"] .stage{background:linear-gradient(180deg,#174634 0%,#123B2D 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 34px -22px rgba(0,0,0,.8)}
+html[data-bm-theme="classic"] .ocard img{background:#1E4A39}
+html[data-bm-theme="classic"] .arabic-card .ar{color:#6EE7B7}
+html[data-bm-theme="classic"] .arabic-card .lat,html[data-bm-theme="classic"] .hint{color:#FDBA74}
+html[data-bm-theme="classic"] .tip{background:rgba(253,186,116,.14);color:#FDE3B5}
+html[data-bm-theme="classic"] .pill{background:rgba(125,211,252,.14);color:#BAE6FD}
+html[data-bm-theme="classic"] .levels button{background:rgba(255,255,255,.08);color:var(--ink)}
+html[data-bm-theme="classic"] .track span{background:rgba(255,255,255,.08)}
+html[data-bm-theme="classic"] .dots i{background:rgba(255,255,255,.18)}
+html[data-bm-theme="classic"] .counter i{background:rgba(125,211,252,.14)}
+html[data-bm-theme="classic"] .title-block h1 em{background:linear-gradient(95deg,#7DD3FC,#6EE7B7 50%,#C4B5FD);-webkit-background-clip:text;background-clip:text}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <script src="bm-icons.js" defer></script>
