@@ -1229,25 +1229,11 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
     <section class="tab-pane" id="pane-companion" data-title="Sholat">
       <div class="large-title-wrap">
         <div class="large-title" data-i18n-html="comp_title">Sholat <em>Bareng Mo</em></div>
-        <div class="large-subtitle" data-i18n="comp_sub">Panduan sholat interaktif untuk si kecil</div>
+        <div class="large-subtitle" data-i18n="comp_sub">Waktu sholat, streak &amp; kiblat — semua di sini</div>
       </div>
 
-      <div class="hero" style="background:linear-gradient(135deg,#D9F7E6 0%,#C6F0F2 50%,#DDE9FF 100%);">
-        <div class="hero-row">
-          <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#30D158;box-shadow:0 0 8px #30D158;"></span> <span data-i18n="comp_eyebrow">Panduan Interaktif</span></div>
-            <div class="hero-greet" data-i18n="comp_greet">Yuk Sholat Bareng Baby Mo!</div>
-            <div class="hero-msg" data-i18n="comp_msg">Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.</div>
-          </div>
-          <div class="hero-img-wrap">
-            <div class="hero-img-glow"></div>
-            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-idea.webp" alt="Baby Mo" draggable="false" loading="lazy">
-          </div>
-        </div>
-        <div class="hero-cta">
-          <a class="hero-btn" href="./babymo-companion/index.html" data-i18n="comp_btn">🕌 Mulai Sholat Bareng Mo</a>
-        </div>
-      </div>
+      <div id="prayerHub"></div>
+      <div class="ph-tools" id="prayerTools"></div>
 
       <div class="list-group-title" data-i18n="comp_features">Fitur Sholat</div>
       <div class="list-group">
@@ -1272,14 +1258,6 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="comp_f2_t">Doa Setelah Sholat</div>
             <div class="lrow-sub" data-i18n="comp_f2_s">Dzikir & doa pendek setelah sholat</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-        <a class="lrow" href="./babymo-pray-with-mo.html?view=times">
-          <div class="lrow-icon blue">⏰</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="comp_f3_t">Waktu Sholat</div>
-            <div class="lrow-sub" data-i18n="comp_f3_s">Kenali 5 waktu sholat harian</div>
           </div>
           <div class="lrow-chev">›</div>
         </a>
@@ -1573,7 +1551,7 @@ const I18N={
   about_brand:{id:'Brand',en:'Brand'},about_mission:{id:'Misi',en:'Mission'},
   about_mission_s:{id:'Belajar Islam sambil bermain',en:'Learn Islam through play'},
   comp_title:{id:'Sholat <em>Bareng Mo</em>',en:'Pray <em>with Mo</em>'},
-  comp_sub:{id:'Panduan sholat interaktif untuk si kecil',en:'Interactive prayer guide for kids'},
+  comp_sub:{id:'Waktu sholat, streak & kiblat — semua di sini',en:'Prayer times, streak & qibla — all in one place'},
   comp_eyebrow:{id:'Panduan Interaktif',en:'Interactive Guide'},
   comp_greet:{id:'Yuk Sholat Bareng Baby Mo!',en:"Let's Pray with Baby Mo!"},
   comp_msg:{id:'Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.',en:'Learn prayer movements and recitations with an interactive guide from Baby Mo.'},
@@ -1644,6 +1622,7 @@ function applyLang(lang){
   const gs=document.getElementById('greetSub');
   if(gs)gs.textContent=GREETINGS[gk][lang];
   try{renderName()}catch(e){}
+  try{window.bmPrayerRender&&bmPrayerRender()}catch(e){}
   const lb=document.getElementById('langBtn'); if(lb){ lb.textContent=lang==='en'?'EN':'ID'; }
   document.querySelectorAll('#langToggle .lang-opt').forEach(b=>{
     b.classList.toggle('active',b.dataset.lang===lang);
@@ -1804,6 +1783,7 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
+<script src="/bm-prayer.js" defer></script>
 <script>
 /* Bring the hero Baby Mo to life: gently rotate [data-mo] images through a
    friendly pose set with a soft cross-fade. Respects reduced motion. */
