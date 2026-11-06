@@ -21,6 +21,7 @@
 		8683D6801CD792BA7808420B /* BabyMoKit in Frameworks */ = {isa = PBXBuildFile; productRef = B118453DD5D91D96CA9D7FD3 /* BabyMoKit */; };
 		AA315CC51A5D8C8E4E624CFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D5C33319C824C91B136A0 /* Assets.xcassets */; };
 		AFC321DF85E96B9041503EEC /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F52543971D8771CE499B18 /* ReminderService.swift */; };
+		CB646C3CF81261A4B783EB59 /* BabyMoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F67F75967494B1E3049026 /* BabyMoUITests.swift */; };
 		CBCCAE56470634F42D555C4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7266C14639694838AC3063AF /* Assets.xcassets */; };
 		D5C63C8DA24A715661845294 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2C5D925FD3CABBBD28657E /* RootView.swift */; };
 		D834F852830AC81EF1FE8AD9 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B768CD5C74BB6B49EE64F08 /* OnboardingView.swift */; };
@@ -36,6 +37,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = EC63C4841E484CAB46BA1135;
 			remoteInfo = "BabyMo Watch App";
+		};
+		EF0DEC898363F28B9EC2EE0B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 70D1F02CBB9FB8F1CCEF1F53 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 700680E745A2A94748B1FE95;
+			remoteInfo = BabyMo;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -56,6 +64,7 @@
 /* Begin PBXFileReference section */
 		2044E868DF1919140C24B1EC /* WebActivityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebActivityView.swift; sourceTree = "<group>"; };
 		27FF2389DC6B3E802BC832E2 /* CharacterCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterCollectionView.swift; sourceTree = "<group>"; };
+		335D952FB49AD2676FA17F9C /* BabyMoUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = BabyMoUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		352746F8CEDA300B0B203B45 /* ModuleBrowserView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBrowserView.swift; sourceTree = "<group>"; };
 		3F2C5D925FD3CABBBD28657E /* RootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootView.swift; sourceTree = "<group>"; };
 		59AB2526B4279F21CB27163E /* BabyMoWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyMoWatchApp.swift; sourceTree = "<group>"; };
@@ -69,6 +78,7 @@
 		79F52543971D8771CE499B18 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
 		87448C3044BF13CC11E3E628 /* iPadSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSidebar.swift; sourceTree = "<group>"; };
 		8E8D5C33319C824C91B136A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9F67F75967494B1E3049026 /* BabyMoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyMoUITests.swift; sourceTree = "<group>"; };
 		BC20633327F05DB728FB5351 /* MoImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoImage.swift; sourceTree = "<group>"; };
 		BD70481A0AF57855FF503C87 /* ParentDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentDashboardView.swift; sourceTree = "<group>"; };
 		C1021301190C5AD7854A6F1A /* BabyMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BabyMo.entitlements; sourceTree = "<group>"; };
@@ -136,6 +146,7 @@
 			children = (
 				5DD00C9ACF19929134DFD0F1 /* BabyMo Watch App.app */,
 				5E6A21954B6B12E8FEC3C7DD /* BabyMo.app */,
+				335D952FB49AD2676FA17F9C /* BabyMoUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -185,6 +196,7 @@
 			children = (
 				F81592CFEF8969EF97798E08 /* BabyMo */,
 				9A4A05620EB6A7544A859F50 /* BabyMoApp */,
+				A91BE087ECD24B770F4D1B33 /* BabyMoUITests */,
 				18DBBE8EACBA3ABB810F70F3 /* BabyMoWatch */,
 				83B9D7C3B598C74EEDA01F33 /* Packages */,
 				1A59BC99DE35E60DAD62F6FE /* Products */,
@@ -230,6 +242,14 @@
 			);
 			name = BabyMoApp;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		A91BE087ECD24B770F4D1B33 /* BabyMoUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A9F67F75967494B1E3049026 /* BabyMoUITests.swift */,
+			);
+			path = BabyMoUITests;
 			sourceTree = "<group>";
 		};
 		B44EB0B78D8E75BE19A334D0 /* App */ = {
@@ -304,6 +324,24 @@
 			productReference = 5E6A21954B6B12E8FEC3C7DD /* BabyMo.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BAC556ED1D20F5C1519CF644 /* BabyMoUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B2D90AF405B96C6322C99B41 /* Build configuration list for PBXNativeTarget "BabyMoUITests" */;
+			buildPhases = (
+				8C257ED8E3FA6936ABCB22D3 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				30A304FB8F9DA1D2DE49E913 /* PBXTargetDependency */,
+			);
+			name = BabyMoUITests;
+			packageProductDependencies = (
+			);
+			productName = BabyMoUITests;
+			productReference = 335D952FB49AD2676FA17F9C /* BabyMoUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		EC63C4841E484CAB46BA1135 /* BabyMo Watch App */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D57CF3E805C6AC8976F97613 /* Build configuration list for PBXNativeTarget "BabyMo Watch App" */;
@@ -337,6 +375,11 @@
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
+					BAC556ED1D20F5C1519CF644 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+						TestTargetID = 700680E745A2A94748B1FE95;
+					};
 					EC63C4841E484CAB46BA1135 = {
 						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
@@ -361,6 +404,7 @@
 			projectRoot = "";
 			targets = (
 				700680E745A2A94748B1FE95 /* BabyMo */,
+				BAC556ED1D20F5C1519CF644 /* BabyMoUITests */,
 				EC63C4841E484CAB46BA1135 /* BabyMo Watch App */,
 			);
 		};
@@ -387,6 +431,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8C257ED8E3FA6936ABCB22D3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CB646C3CF81261A4B783EB59 /* BabyMoUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CC3B137E20A54BCD99980602 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -422,6 +474,11 @@
 			isa = PBXTargetDependency;
 			target = EC63C4841E484CAB46BA1135 /* BabyMo Watch App */;
 			targetProxy = 2DEFE3F25FB7AB251A5A23A8 /* PBXContainerItemProxy */;
+		};
+		30A304FB8F9DA1D2DE49E913 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 700680E745A2A94748B1FE95 /* BabyMo */;
+			targetProxy = EF0DEC898363F28B9EC2EE0B /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -609,6 +666,40 @@
 			};
 			name = Debug;
 		};
+		C18DC6B298C356EC06F82136 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = id.babymo.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BabyMo;
+			};
+			name = Release;
+		};
+		E3EFC0446B95589A1281A209 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = id.babymo.app.uitests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = BabyMo;
+			};
+			name = Debug;
+		};
 		EAF16CA40329E32742B888F7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -639,6 +730,15 @@
 			buildConfigurations = (
 				96A4FCFC43126018ACA92225 /* Debug */,
 				2823155E854AEF8EA9CEE1B7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		B2D90AF405B96C6322C99B41 /* Build configuration list for PBXNativeTarget "BabyMoUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				E3EFC0446B95589A1281A209 /* Debug */,
+				C18DC6B298C356EC06F82136 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

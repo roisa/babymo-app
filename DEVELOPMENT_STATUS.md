@@ -22,13 +22,14 @@ avoids hand-editing the Capacitor `pbxproj`.
 | Native iOS app `BabyMo` | ✅ Builds, installs, launches; Mo character art renders natively |
 | watchOS app `BabyMo Watch App` | ✅ Builds, installs, **launches standalone** on unpaired Apple Watch Series 11 sim; Hijaiyah challenge verified on screen |
 | Embedded web bundle | ✅ All 13 HTML activities packaged into app (`public/`) |
+| UI tests (`BabyMoUITests`) | ✅ **3/3 pass on iPhone 17 Pro and iPad Pro 13″** (onboarding→home, parents' corner, games catalog) |
 
 ## Phases
 - [x] **Phase 1 — Audit & architecture** — audit, branches, decision recorded.
 - [x] **Phase 2 — Xcode project & targets** — `BabyMoKit` + XcodeGen project with iOS + watchOS targets, all building.
 - [x] **Phase 3 — Shared design system & assets** — tokens, fonts, components in `BabyMoKit`. _(Character art integration deferred to Phase 8.)_
-- [~] **Phase 4 — iPhone app** — Home, Learn/Games/Stories browser, Character Collection, Parent Dashboard, onboarding, embedded-web activity wrapper, native Mo art. _Remaining: native stories, more game nativization._
-- [~] **Phase 5 — iPad experience** — `NavigationSplitView` sidebar layout in place; needs richer tablet surfaces.
+- [x] **Phase 4 — iPhone app** — Home, Learn/Games/Stories browser, Character Collection, onboarding, embedded-web activity wrapper, native Mo art. Kid tabs capped at 5; Parent Dashboard is a "parents' corner" sheet behind the Home toolbar button. _Further game nativization tracked under Phase 8._
+- [x] **Phase 5 — iPad experience** — split-view sidebar (explicit-button rows with gold highlight), centered onboarding column, adaptive home grid; verified by screenshot + UI tests on iPad Pro 13″.
 - [x] **Phase 6 — Apple Watch app** — daily Hijaiyah challenge, streak, rewards, contextual daily reminder, runs independently of the iPhone (`WKRunsIndependentlyOfCompanionApp`), WatchConnectivity sync. _Optional complications deferred to Phase 8._
 - [x] **Phase 7 — Backend & sync (code complete)** — CloudKit-ready SwiftData models (no unique constraints, inline defaults, optional relationships), `BabyMoModelContainer` degrades CloudKit → local → memory, `ProfileSync` snapshot/merge (union days, max totals, earliest-achievement; identity never overwritten by Watch placeholder), `ConnectivityBridge` over `updateApplicationContext`. ⚠️ _End-to-end CloudKit sync unverified until the account holder enables the iCloud capability + signing; entitlements files are in place._
 - [ ] **Phase 8–10 — Polish, testing, App Store prep**

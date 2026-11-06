@@ -6,6 +6,7 @@ import BabyMoKit
 /// learning. Mirrors the web home tab but native.
 struct HomeView: View {
     let profile: ChildProfile
+    @State private var showParentDashboard = false
 
     private var streak: Int { ProgressService.currentStreak(for: profile) }
 
@@ -29,6 +30,32 @@ struct HomeView: View {
         .background(BabyMoColor.heroGradient.ignoresSafeArea())
         .navigationTitle("Baby Mo")
         .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            ToolbarItem(placement: .topBarTrailing) {
+                // A sheet (not NavigationLink) — reliable in both the iPhone
+                // tab context and the iPad split-view detail.
+                Button {
+                    showParentDashboard = true
+                } label: {
+                    Image(systemName: "figure.and.child.holdinghands")
+                        .foregroundStyle(BabyMoColor.gold)
+                }
+                .accessibilityLabel("Orang Tua")
+                .accessibilityIdentifier("open-parent-dashboard")
+            }
+        }
+        .sheet(isPresented: $showParentDashboard) {
+            NavigationStack {
+                ParentDashboardView(profile: profile)
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Button("Tutup") { showParentDashboard = false }
+                                .tint(BabyMoColor.gold)
+                        }
+                    }
+            }
+            .preferredColorScheme(.dark)
+        }
     }
 
     private var header: some View {
@@ -81,7 +108,8 @@ struct HomeView: View {
         VStack(alignment: .leading, spacing: BabyMoSpacing.md) {
             Text("Lanjut Belajar")
                 .font(BabyMoFont.title(18)).foregroundStyle(BabyMoColor.cream)
-            LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible())], spacing: BabyMoSpacing.md) {
+            // Adaptive: 2 columns on iPhone, 3-4 on iPad widths.
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 160), spacing: BabyMoSpacing.md)], spacing: BabyMoSpacing.md) {
                 ForEach(Array(ActivityCatalog.all.prefix(6))) { activity in
                     NavigationLink {
                         ActivityScreen(activity: activity, profile: profile)

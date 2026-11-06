@@ -63,6 +63,9 @@ struct OnboardingView: View {
                 .padding(.top, BabyMoSpacing.sm)
             }
             .padding(BabyMoSpacing.lg)
+            // Keep a readable column on iPad instead of stretching edge-to-edge.
+            .frame(maxWidth: 560)
+            .frame(maxWidth: .infinity)
         }
         .background(BabyMoColor.heroGradient.ignoresSafeArea())
     }

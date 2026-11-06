@@ -32,12 +32,25 @@ struct RootView: View {
                 }
             }
         }
-        .onAppear(perform: startSync)
+        .onAppear {
+            seedProfileIfRequested()
+            startSync()
+        }
         .onChange(of: scenePhase) { _, phase in
             // Push the latest aggregates to the Watch whenever we background —
             // applicationContext delivers it when the Watch next wakes.
             if phase == .background || phase == .inactive { pushSnapshot() }
         }
+    }
+
+    /// Test/demo hook: `--seed-profile` creates a default profile, used by UI
+    /// tests and simulator verification to get past onboarding deterministically.
+    private func seedProfileIfRequested() {
+        guard ProcessInfo.processInfo.arguments.contains("--seed-profile"),
+              profiles.isEmpty else { return }
+        let profile = ChildProfile(name: "Mo Kecil", age: 5, buddy: .mo)
+        context.insert(profile)
+        try? context.save()
     }
 
     // MARK: Watch sync (Phase 7)
@@ -69,8 +82,11 @@ struct MainTabsView: View {
         if useSidebar {
             iPadSidebar(profile: profile, selection: $selection)
         } else {
+            // iPhone keeps ≤5 kid-facing tabs (6+ would overflow into a "More"
+            // tab). The Parent Dashboard lives behind the toolbar button on
+            // Home — the standard "parents' corner" pattern for kids' apps.
             TabView(selection: $selection) {
-                ForEach(AppSection.allCases) { section in
+                ForEach(AppSection.tabSections) { section in
                     section.destination(profile: profile)
                         .tabItem { Label(section.title, systemImage: section.systemImage) }
                         .tag(section)
@@ -84,6 +100,9 @@ struct MainTabsView: View {
 enum AppSection: String, CaseIterable, Identifiable {
     case home, learn, games, stories, characters, parent
     var id: String { rawValue }
+
+    /// Sections shown in the iPhone tab bar (parent moves to Home's toolbar).
+    static var tabSections: [AppSection] { allCases.filter { $0 != .parent } }
 
     var title: String {
         switch self {

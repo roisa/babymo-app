@@ -49,6 +49,20 @@ targets:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
 
+  # ──────────────────────────── UI tests (iOS) ───────────────────────────────
+  BabyMoUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    deploymentTarget: "17.0"
+    sources:
+      - path: BabyMoUITests
+    dependencies:
+      - target: BabyMo
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: id.babymo.app.uitests
+        TEST_TARGET_NAME: BabyMo
+
   # ──────────────────────────── Apple Watch app ──────────────────────────────
   BabyMo Watch App:
     type: application
