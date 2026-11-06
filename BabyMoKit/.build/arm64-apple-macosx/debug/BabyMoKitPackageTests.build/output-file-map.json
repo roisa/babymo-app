@@ -1,0 +1,11 @@
+{
+  "": {
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/master.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swiftdeps"
+  }
+}

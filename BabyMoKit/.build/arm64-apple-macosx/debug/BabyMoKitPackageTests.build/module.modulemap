@@ -1,0 +1,4 @@
+module BabyMoKitPackageTests {
+    header "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/BabyMoKitPackageTests-Swift.h"
+    requires objc
+}

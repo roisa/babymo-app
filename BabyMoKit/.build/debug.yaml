@@ -1,0 +1,112 @@
+client:
+  name: basic
+  file-system: device-agnostic
+tools: {}
+targets:
+  "BabyMoKit-arm64-apple-macosx16.0-debug.module": ["<BabyMoKit-arm64-apple-macosx16.0-debug.module>"]
+  "BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.module": ["<BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.module>"]
+  "BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.test": ["<BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.test>"]
+  "BabyMoKitTests-arm64-apple-macosx16.0-debug.module": ["<BabyMoKitTests-arm64-apple-macosx16.0-debug.module>"]
+  "PackageStructure": ["<PackageStructure>"]
+  "main": ["<BabyMoKit-arm64-apple-macosx16.0-debug.module>"]
+  "test": ["<BabyMoKit-arm64-apple-macosx16.0-debug.module>","<BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.test>","<BabyMoKitTests-arm64-apple-macosx16.0-debug.module>"]
+default: "main"
+nodes:
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/":
+    is-directory-structure: true
+    content-exclusion-patterns: [".git",".build"]
+commands:
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoButton.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoCard.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/AchievementCatalog.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/ActivityCatalog.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/LearningActivity.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/MoCharacter.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoColor.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoTheme.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Models/Models.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Progress/StreakCalculator.swift"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources"]
+    description: "Write auxiliary file /Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources"
+
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources"]
+    description: "Write auxiliary file /Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources"
+
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift":
+    tool: test-entry-point-tool
+    inputs: []
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift"]
+
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.product/Objects.LinkFileList":
+    tool: write-auxiliary-file
+    inputs: ["<link-file-list>","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/BabyMoKitTests.swift.o"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.product/Objects.LinkFileList"]
+    description: "Write auxiliary file /Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.product/Objects.LinkFileList"
+
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources":
+    tool: write-auxiliary-file
+    inputs: ["<sources-file-list>","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/BabyMoKitTests.swift"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources"]
+    description: "Write auxiliary file /Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources"
+
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt":
+    tool: write-auxiliary-file
+    inputs: ["<swift-get-version>","/Library/Developer/CommandLineTools/usr/bin/swiftc"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"]
+    always-out-of-date: "true"
+    description: "Write auxiliary file /Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+
+  "<BabyMoKit-arm64-apple-macosx16.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule"]
+    outputs: ["<BabyMoKit-arm64-apple-macosx16.0-debug.module>"]
+
+  "<BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitPackageTests.swiftmodule"]
+    outputs: ["<BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.module>"]
+
+  "<BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.test>":
+    tool: phony
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.xctest/Contents/MacOS/BabyMoKitPackageTests"]
+    outputs: ["<BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.test>"]
+
+  "<BabyMoKitTests-arm64-apple-macosx16.0-debug.module>":
+    tool: phony
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/BabyMoKitTests.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule"]
+    outputs: ["<BabyMoKitTests-arm64-apple-macosx16.0-debug.module>"]
+
+  "C.BabyMoKit-arm64-apple-macosx16.0-debug.module":
+    tool: shell
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoButton.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoCard.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/AchievementCatalog.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/ActivityCatalog.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/LearningActivity.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/MoCharacter.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoColor.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoTheme.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Models/Models.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Progress/StreakCalculator.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule"]
+    description: "Compiling Swift Module 'BabyMoKit' (10 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","BabyMoKit","-emit-dependencies","-emit-module","-emit-module-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule","-output-file-map","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources","-I","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx14.0","-enable-batch-mode","-index-store-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j8","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoKit-Swift.h","-swift-version","5","-F","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-Xcc","-g","-package-name","babymokit"]
+
+  "C.BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.module":
+    tool: shell
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitPackageTests.swiftmodule"]
+    description: "Compiling Swift Module 'BabyMoKitPackageTests' (1 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","BabyMoKitPackageTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitPackageTests.swiftmodule","-output-file-map","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources","-I","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx14.0","-enable-batch-mode","-index-store-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j8","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-emit-objc-header","-emit-objc-header-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/BabyMoKitPackageTests-Swift.h","-F","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-Xcc","-g","-package-name","babymokit"]
+
+  "C.BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.test":
+    tool: shell
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/BabyMoKitTests.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.product/Objects.LinkFileList"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.xctest/Contents/MacOS/BabyMoKitPackageTests"]
+    description: "Linking ./.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.xctest/Contents/MacOS/BabyMoKitPackageTests"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-L","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug","-o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.xctest/Contents/MacOS/BabyMoKitPackageTests","-module-name","BabyMoKitPackageTests","-Xlinker","-no_warn_duplicate_libraries","-Xlinker","-bundle","-Xlinker","-rpath","-Xlinker","@loader_path/../../../","@/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.product/Objects.LinkFileList","-target","arm64-apple-macosx14.0","-Xlinker","-add_ast_path","-Xlinker","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitPackageTests.swiftmodule","-Xlinker","-add_ast_path","-Xlinker","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule","-F","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xlinker","-rpath","-Xlinker","/Library/Developer/CommandLineTools/Library/Developer/Frameworks"]
+
+  "C.BabyMoKitTests-arm64-apple-macosx16.0-debug.module":
+    tool: shell
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/BabyMoKitTests.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources"]
+    outputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/BabyMoKitTests.swift.o","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule"]
+    description: "Compiling Swift Module 'BabyMoKitTests' (1 sources)"
+    args: ["/Library/Developer/CommandLineTools/usr/bin/swiftc","-module-name","BabyMoKitTests","-emit-dependencies","-emit-module","-emit-module-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule","-output-file-map","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/output-file-map.json","-parse-as-library","-incremental","-c","@/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources","-I","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules","-target","arm64-apple-macosx14.0","-enable-batch-mode","-index-store-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store","-Onone","-enable-testing","-j8","-DSWIFT_PACKAGE","-DDEBUG","-module-cache-path","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache","-parseable-output","-parse-as-library","-swift-version","5","-F","/Library/Developer/CommandLineTools/Library/Developer/Frameworks","-sdk","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-g","-Xcc","-isysroot","-Xcc","/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk","-Xcc","-fPIC","-Xcc","-g","-package-name","babymokit"]
+
+  "PackageStructure":
+    tool: package-structure-tool
+    inputs: ["/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Package.swift","/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Package.resolved"]
+    outputs: ["<PackageStructure>"]
+    description: "Planning build"
+    allow-missing-inputs: true
+

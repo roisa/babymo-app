@@ -1,0 +1,65 @@
+{
+  "": {
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/master.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoButton.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoCard.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/AchievementCatalog.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/ActivityCatalog.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/LearningActivity.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/MoCharacter.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoColor.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoTheme.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Models/Models.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swiftdeps"
+  },
+  "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Progress/StreakCalculator.swift": {
+    "dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.d",
+    "object": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o",
+    "swiftmodule": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator~partial.swiftmodule",
+    "swift-dependencies": "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swiftdeps"
+  }
+}

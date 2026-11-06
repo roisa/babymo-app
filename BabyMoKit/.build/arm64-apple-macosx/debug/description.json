@@ -1,0 +1,685 @@
+{
+  "builtTestProducts" : [
+    {
+      "binaryPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.xctest/Contents/MacOS/BabyMoKitPackageTests",
+      "packagePath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit",
+      "productName" : "BabyMoKitPackageTests"
+    }
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.BabyMoKit-arm64-apple-macosx16.0-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources",
+      "importPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoButton.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoCard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/AchievementCatalog.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/ActivityCatalog.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/LearningActivity.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/MoCharacter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoColor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoTheme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Models/Models.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Progress/StreakCalculator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BabyMoKit",
+      "moduleOutputPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule",
+      "objects" : [
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoKit-Swift.h",
+        "-swift-version",
+        "5",
+        "-F",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "babymokit"
+      ],
+      "outputFileMapPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoButton.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoCard.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/AchievementCatalog.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/ActivityCatalog.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/LearningActivity.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/MoCharacter.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoColor.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoTheme.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Models/Models.swift",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Progress/StreakCalculator.swift"
+      ],
+      "tempsPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.BabyMoKitPackageTests-arm64-apple-macosx16.0-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources",
+      "importPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BabyMoKitPackageTests",
+      "moduleOutputPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitPackageTests.swiftmodule",
+      "objects" : [
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-emit-objc-header",
+        "-emit-objc-header-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/BabyMoKitPackageTests-Swift.h",
+        "-F",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "babymokit"
+      ],
+      "outputFileMapPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitPackageTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift"
+      ],
+      "tempsPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build",
+      "wholeModuleOptimization" : false
+    },
+    "C.BabyMoKitTests-arm64-apple-macosx16.0-debug.module" : {
+      "executable" : "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "fileList" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources",
+      "importPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/BabyMoKitTests.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKit.swiftmodule"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources"
+        }
+      ],
+      "isLibrary" : true,
+      "moduleName" : "BabyMoKitTests",
+      "moduleOutputPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule",
+      "objects" : [
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/BabyMoKitTests.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx14.0",
+        "-enable-batch-mode",
+        "-index-store-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j8",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-module-cache-path",
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-parse-as-library",
+        "-swift-version",
+        "5",
+        "-F",
+        "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+        "-sdk",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "babymokit"
+      ],
+      "outputFileMapPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/BabyMoKitTests.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules/BabyMoKitTests.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/BabyMoKitTests.swift"
+      ],
+      "tempsPath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "BabyMoKit" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "BabyMoKit",
+      "-package-name",
+      "babymokit",
+      "-incremental",
+      "-c",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoButton.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoCard.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/AchievementCatalog.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/ActivityCatalog.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/LearningActivity.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/MoCharacter.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoColor.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoTheme.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Models/Models.swift",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Progress/StreakCalculator.swift",
+      "-I",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoKit-Swift.h",
+      "-swift-version",
+      "5",
+      "-F",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "babymokit",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ],
+    "BabyMoKitPackageTests" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "BabyMoKitPackageTests",
+      "-package-name",
+      "babymokit",
+      "-incremental",
+      "-c",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift",
+      "-I",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-emit-objc-header",
+      "-emit-objc-header-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/BabyMoKitPackageTests-Swift.h",
+      "-F",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "babymokit",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ],
+    "BabyMoKitTests" : [
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc",
+      "-module-name",
+      "BabyMoKitTests",
+      "-package-name",
+      "babymokit",
+      "-incremental",
+      "-c",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/BabyMoKitTests.swift",
+      "-I",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx14.0",
+      "-enable-batch-mode",
+      "-index-store-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j8",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-module-cache-path",
+      "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-parse-as-library",
+      "-swift-version",
+      "5",
+      "-F",
+      "/Library/Developer/CommandLineTools/Library/Developer/Frameworks",
+      "-sdk",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "babymokit",
+      "-driver-use-frontend-path",
+      "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "BabyMoKit" : [
+
+    ],
+    "BabyMoKitPackageTests" : [
+      "BabyMoKitTests",
+      "BabyMoKit"
+    ],
+    "BabyMoKitTests" : [
+      "BabyMoKit"
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+    "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift" : {
+      "inputs" : [
+
+      ],
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift"
+        }
+      ]
+    }
+  },
+  "writeCommands" : {
+    "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoButton.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Components/BabyMoCard.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/AchievementCatalog.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/ActivityCatalog.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/LearningActivity.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Content/MoCharacter.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoColor.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/DesignSystem/BabyMoTheme.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Models/Models.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Sources/BabyMoKit/Progress/StreakCalculator.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/sources"
+    },
+    "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.derived/runner.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/sources"
+    },
+    "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/AchievementCatalog.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/ActivityCatalog.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoButton.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoCard.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoColor.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/BabyMoTheme.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/LearningActivity.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/MoCharacter.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/Models.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKit.build/StreakCalculator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.build/runner.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/BabyMoKitTests.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitPackageTests.product/Objects.LinkFileList"
+    },
+    "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/Tests/BabyMoKitTests/BabyMoKitTests.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/BabyMoKitTests.build/sources"
+    },
+    "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Library/Developer/CommandLineTools/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/roisa/Desktop/BabyMoApp/BabyMoKit/.build/arm64-apple-macosx/debug/swift-version--1AB21518FC5DEDBE.txt"
+    }
+  }
+}
