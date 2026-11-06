@@ -1,0 +1,8 @@
+# XcodeGen generates BabyMo.xcodeproj from project.yml; the project is committed
+# for convenience, but transient user/build state is not.
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/
+.swiftpm/
+DerivedData/
+build/
