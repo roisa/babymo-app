@@ -47,8 +47,8 @@ public enum ProgressRecorder {
 
     /// Award any milestone the profile now qualifies for but hasn't earned yet.
     public static func evaluateAchievements(for profile: ChildProfile, in context: ModelContext, now: Date = .now) {
-        let earned = Set(profile.achievements.map(\.achievementID))
-        let completedRecords = profile.records.filter(\.completed)
+        let earned = Set(profile.achievementsList.map(\.achievementID))
+        let completedRecords = profile.recordsList.filter(\.completed)
         let completedCount = completedRecords.count
         let streak = StreakCalculator.currentStreak(activeDays: profile.activeDays, today: now)
 

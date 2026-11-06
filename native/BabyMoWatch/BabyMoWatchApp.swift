@@ -4,13 +4,9 @@ import BabyMoKit
 
 @main
 struct BabyMoWatchApp: App {
-    let container: ModelContainer = {
-        let schema = Schema([ChildProfile.self, ActivityRecord.self, EarnedAchievement.self])
-        let config = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-        if let c = try? ModelContainer(for: schema, configurations: [config]) { return c }
-        let mem = ModelConfiguration(schema: schema, isStoredInMemoryOnly: true)
-        return try! ModelContainer(for: schema, configurations: [mem])
-    }()
+    /// CloudKit-synced when entitlements allow, else local — the Watch always
+    /// works standalone (brief §6).
+    let container = BabyMoModelContainer.make()
 
     var body: some Scene {
         WindowGroup {

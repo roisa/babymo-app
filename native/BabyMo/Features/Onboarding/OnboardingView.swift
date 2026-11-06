@@ -14,9 +14,8 @@ struct OnboardingView: View {
         ScrollView {
             VStack(spacing: BabyMoSpacing.xl) {
                 VStack(spacing: BabyMoSpacing.sm) {
-                    Image(systemName: "sparkles")
-                        .font(.system(size: 44))
-                        .foregroundStyle(BabyMoColor.gold)
+                    MoImage(emotion: .waving)
+                        .frame(height: 130)
                     Text("Assalamualaikum!")
                         .font(BabyMoFont.display(28))
                         .foregroundStyle(BabyMoColor.cream)

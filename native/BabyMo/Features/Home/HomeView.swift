@@ -32,7 +32,9 @@ struct HomeView: View {
     }
 
     private var header: some View {
-        HStack(alignment: .top) {
+        HStack(alignment: .center, spacing: BabyMoSpacing.md) {
+            MoImage(emotion: .waving)
+                .frame(width: 84, height: 84)
             VStack(alignment: .leading, spacing: BabyMoSpacing.xs) {
                 Text("Assalamualaikum,")
                     .font(BabyMoFont.body(16)).foregroundStyle(BabyMoColor.creamDim)

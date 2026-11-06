@@ -18,19 +18,19 @@ avoids hand-editing the Capacitor `pbxproj`.
 | Target | State |
 |---|---|
 | Capacitor `App` (existing) | ✅ Builds (unchanged, preserved) |
-| `BabyMoKit` package | ✅ Builds (iOS SDK) · ✅ 10/10 tests pass |
-| Native iOS app `BabyMo` | ✅ Builds, installs, **launches & renders** on iPhone 17 Pro sim |
-| watchOS app `BabyMo Watch App` | ✅ Builds on Apple Watch Series 11 sim |
+| `BabyMoKit` package | ✅ Builds (iOS SDK) · ✅ **16/16 tests pass** (streaks, catalog, sync-merge, recorder) |
+| Native iOS app `BabyMo` | ✅ Builds, installs, launches; Mo character art renders natively |
+| watchOS app `BabyMo Watch App` | ✅ Builds, installs, **launches standalone** on unpaired Apple Watch Series 11 sim; Hijaiyah challenge verified on screen |
 | Embedded web bundle | ✅ All 13 HTML activities packaged into app (`public/`) |
 
 ## Phases
 - [x] **Phase 1 — Audit & architecture** — audit, branches, decision recorded.
 - [x] **Phase 2 — Xcode project & targets** — `BabyMoKit` + XcodeGen project with iOS + watchOS targets, all building.
 - [x] **Phase 3 — Shared design system & assets** — tokens, fonts, components in `BabyMoKit`. _(Character art integration deferred to Phase 8.)_
-- [~] **Phase 4 — iPhone app** — Home, Learn/Games/Stories browser, Character Collection, Parent Dashboard, onboarding, embedded-web activity wrapper all built & running. _Remaining: native stories, polish, more game nativization._
+- [~] **Phase 4 — iPhone app** — Home, Learn/Games/Stories browser, Character Collection, Parent Dashboard, onboarding, embedded-web activity wrapper, native Mo art. _Remaining: native stories, more game nativization._
 - [~] **Phase 5 — iPad experience** — `NavigationSplitView` sidebar layout in place; needs richer tablet surfaces.
-- [~] **Phase 6 — Apple Watch app** — daily Hijaiyah challenge, streak, rewards, standalone store. _Remaining: reminders, complications, WatchConnectivity._
-- [ ] **Phase 7 — Backend, auth & sync** — SwiftData models done; CloudKit + WatchConnectivity sync pending.
+- [x] **Phase 6 — Apple Watch app** — daily Hijaiyah challenge, streak, rewards, contextual daily reminder, runs independently of the iPhone (`WKRunsIndependentlyOfCompanionApp`), WatchConnectivity sync. _Optional complications deferred to Phase 8._
+- [x] **Phase 7 — Backend & sync (code complete)** — CloudKit-ready SwiftData models (no unique constraints, inline defaults, optional relationships), `BabyMoModelContainer` degrades CloudKit → local → memory, `ProfileSync` snapshot/merge (union days, max totals, earliest-achievement; identity never overwritten by Watch placeholder), `ConnectivityBridge` over `updateApplicationContext`. ⚠️ _End-to-end CloudKit sync unverified until the account holder enables the iCloud capability + signing; entitlements files are in place._
 - [ ] **Phase 8–10 — Polish, testing, App Store prep**
 
 ## Completed
@@ -60,7 +60,8 @@ avoids hand-editing the Capacitor `pbxproj`.
 - [ ] Physical-device testing for Watch connectivity & audio.
 
 ## Next steps
-1. Phase 7: attach CloudKit to the SwiftData container + WatchConnectivity bridge.
-2. Phase 6: Watch reminders (notifications) + complication.
-3. Phase 8: integrate Mo character PNGs into native SwiftUI screens; intro audio.
-4. Add UI tests; wire CI build for both targets.
+1. Phase 5: richer iPad surfaces (two-column home, larger game canvas).
+2. Phase 8: intro audio on launch, celebration animations on achievement unlock,
+   optional Watch complication / WidgetKit widget.
+3. Phase 9: XCUIAutomation UI tests (onboarding → activity → dashboard), multi-size runs.
+4. Phase 10: real app icons from brand art, App Store metadata, privacy manifest.

@@ -6,6 +6,7 @@ import BabyMoKit
 /// syncs with iPhone/iCloud. Uses vertical paging for simple one-thumb flow.
 struct WatchRootView: View {
     @Environment(\.modelContext) private var context
+    @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \ChildProfile.createdAt) private var profiles: [ChildProfile]
 
     private var profile: ChildProfile? { profiles.first }
@@ -24,15 +25,36 @@ struct WatchRootView: View {
             }
         }
         .background(BabyMoColor.bg)
+        .onAppear(perform: startSync)
+        .onChange(of: scenePhase) { _, phase in
+            if phase == .background || phase == .inactive { pushSnapshot() }
+        }
     }
 
     /// The Watch creates a lightweight local profile so it never depends on the
-    /// phone being connected (brief §6).
+    /// phone being connected (brief §6). A later sync from the iPhone replaces
+    /// the placeholder identity via `ProfileSync.merge`.
     private func ensureProfile() {
         guard profiles.isEmpty else { return }
         let p = ChildProfile(name: "Teman Mo", age: 4, buddy: .mo)
         context.insert(p)
         try? context.save()
+    }
+
+    // MARK: iPhone sync (Phase 7)
+
+    private func startSync() {
+        ConnectivityBridge.shared.onSnapshotReceived = { snapshot in
+            guard let profile else { return }
+            ProfileSync.merge(snapshot, into: profile, in: context)
+        }
+        ConnectivityBridge.shared.activate()
+        pushSnapshot()
+    }
+
+    private func pushSnapshot() {
+        guard let profile else { return }
+        ConnectivityBridge.shared.push(ProfileSync.snapshot(of: profile))
     }
 }
 
@@ -61,12 +83,15 @@ struct DailyChallengeView: View {
                 } label: {
                     Text(option)
                         .font(BabyMoFont.body(16))
+                        .foregroundStyle(BabyMoColor.cream)
                         .frame(maxWidth: .infinity)
                 }
+                .buttonStyle(.borderedProminent)
                 .tint(tint(for: option))
             }
         }
         .padding(.horizontal, 4)
+        .padding(.top, 2)
         .navigationTitle("Hijaiyah")
     }
 
@@ -82,6 +107,9 @@ struct DailyChallengeView: View {
         answered = correct
         if correct {
             ProgressRecorder.recordWatchChallenge(for: profile, in: context)
+            ConnectivityBridge.shared.push(ProfileSync.snapshot(of: profile))
+            // Contextual permission ask: only after the child has engaged once.
+            Task { await ReminderService.scheduleDailyReminder() }
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
                 question = HijaiyahQuiz.random()
                 answered = nil
@@ -110,7 +138,7 @@ struct StreakView: View {
 struct RewardsView: View {
     let profile: ChildProfile
     private var earned: [Achievement] {
-        let ids = Set(profile.achievements.map(\.achievementID))
+        let ids = Set(profile.achievementsList.map(\.achievementID))
         return AchievementCatalog.all.filter { ids.contains($0.id) }
     }
 

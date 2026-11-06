@@ -7,7 +7,7 @@ struct ParentDashboardView: View {
     let profile: ChildProfile
 
     private var completed: [ActivityRecord] {
-        profile.records.filter(\.completed).sorted { $0.completedAt > $1.completedAt }
+        profile.recordsList.filter(\.completed).sorted { $0.completedAt > $1.completedAt }
     }
     private var totalMinutes: Int { profile.totalLearningSeconds / 60 }
     private var streak: Int { ProgressService.currentStreak(for: profile) }
@@ -36,7 +36,7 @@ struct ParentDashboardView: View {
     private var achievementsSection: some View {
         VStack(alignment: .leading, spacing: BabyMoSpacing.md) {
             Text("Pencapaian").font(BabyMoFont.title(18)).foregroundStyle(BabyMoColor.cream)
-            let earnedIDs = Set(profile.achievements.map(\.achievementID))
+            let earnedIDs = Set(profile.achievementsList.map(\.achievementID))
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 100), spacing: BabyMoSpacing.md)], spacing: BabyMoSpacing.md) {
                 ForEach(AchievementCatalog.all) { achievement in
                     let unlocked = earnedIDs.contains(achievement.id)

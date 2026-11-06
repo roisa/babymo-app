@@ -6,6 +6,7 @@ import BabyMoKit
 /// then the main tabbed experience. iPad gets a sidebar layout (Phase 5).
 struct RootView: View {
     @Environment(\.modelContext) private var context
+    @Environment(\.scenePhase) private var scenePhase
     @Query(sort: \ChildProfile.createdAt) private var profiles: [ChildProfile]
     @Environment(\.horizontalSizeClass) private var sizeClass
 
@@ -27,9 +28,32 @@ struct RootView: View {
                     context.insert(profile)
                     try? context.save()
                     selectedProfileID = profile.id
+                    pushSnapshot()
                 }
             }
         }
+        .onAppear(perform: startSync)
+        .onChange(of: scenePhase) { _, phase in
+            // Push the latest aggregates to the Watch whenever we background —
+            // applicationContext delivers it when the Watch next wakes.
+            if phase == .background || phase == .inactive { pushSnapshot() }
+        }
+    }
+
+    // MARK: Watch sync (Phase 7)
+
+    private func startSync() {
+        ConnectivityBridge.shared.onSnapshotReceived = { snapshot in
+            guard let profile = activeProfile else { return }
+            ProfileSync.merge(snapshot, into: profile, in: context)
+        }
+        ConnectivityBridge.shared.activate()
+        pushSnapshot()
+    }
+
+    private func pushSnapshot() {
+        guard let profile = activeProfile else { return }
+        ConnectivityBridge.shared.push(ProfileSync.snapshot(of: profile))
     }
 }
 

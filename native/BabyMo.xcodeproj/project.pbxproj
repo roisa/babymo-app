@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1942DAFFB103D11431A0846A /* iPadSidebar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 87448C3044BF13CC11E3E628 /* iPadSidebar.swift */; };
 		25D43A74C65B6B7355202EFB /* ParentDashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD70481A0AF57855FF503C87 /* ParentDashboardView.swift */; };
+		29AF429FA99FEE389BA49389 /* MoImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC20633327F05DB728FB5351 /* MoImage.swift */; };
 		2E1A637A60CDA70475976ED6 /* WebContent in Resources */ = {isa = PBXBuildFile; fileRef = FEC1E93315F8C8C9A3E86630 /* WebContent */; };
 		4125CC309E2488418088768B /* BabyMoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3BC5B90F63EEC6979C2A910 /* BabyMoApp.swift */; };
 		51D26B8E37FE7C8008D6CEE6 /* ModuleBrowserView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 352746F8CEDA300B0B203B45 /* ModuleBrowserView.swift */; };
@@ -19,6 +20,7 @@
 		75F0954CA7468445CFC3AF06 /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A075574830BCCAC302C21 /* WatchRootView.swift */; };
 		8683D6801CD792BA7808420B /* BabyMoKit in Frameworks */ = {isa = PBXBuildFile; productRef = B118453DD5D91D96CA9D7FD3 /* BabyMoKit */; };
 		AA315CC51A5D8C8E4E624CFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D5C33319C824C91B136A0 /* Assets.xcassets */; };
+		AFC321DF85E96B9041503EEC /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F52543971D8771CE499B18 /* ReminderService.swift */; };
 		CBCCAE56470634F42D555C4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7266C14639694838AC3063AF /* Assets.xcassets */; };
 		D5C63C8DA24A715661845294 /* RootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F2C5D925FD3CABBBD28657E /* RootView.swift */; };
 		D834F852830AC81EF1FE8AD9 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B768CD5C74BB6B49EE64F08 /* OnboardingView.swift */; };
@@ -63,9 +65,13 @@
 		67D7432B5AA5C95BB8928179 /* ProgressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressService.swift; sourceTree = "<group>"; };
 		716FCC622586BFA2F1185B19 /* BabyMoKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BabyMoKit; path = ../BabyMoKit; sourceTree = SOURCE_ROOT; };
 		7266C14639694838AC3063AF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		78B0C11D2D2E02562F6869F7 /* BabyMoWatch.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BabyMoWatch.entitlements; sourceTree = "<group>"; };
+		79F52543971D8771CE499B18 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
 		87448C3044BF13CC11E3E628 /* iPadSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSidebar.swift; sourceTree = "<group>"; };
 		8E8D5C33319C824C91B136A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BC20633327F05DB728FB5351 /* MoImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoImage.swift; sourceTree = "<group>"; };
 		BD70481A0AF57855FF503C87 /* ParentDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentDashboardView.swift; sourceTree = "<group>"; };
+		C1021301190C5AD7854A6F1A /* BabyMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BabyMo.entitlements; sourceTree = "<group>"; };
 		C72A075574830BCCAC302C21 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
 		E3BC5B90F63EEC6979C2A910 /* BabyMoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyMoApp.swift; sourceTree = "<group>"; };
 		F962F135214E930CAD7D1D68 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
@@ -117,7 +123,9 @@
 			isa = PBXGroup;
 			children = (
 				7266C14639694838AC3063AF /* Assets.xcassets */,
+				78B0C11D2D2E02562F6869F7 /* BabyMoWatch.entitlements */,
 				59AB2526B4279F21CB27163E /* BabyMoWatchApp.swift */,
+				79F52543971D8771CE499B18 /* ReminderService.swift */,
 				C72A075574830BCCAC302C21 /* WatchRootView.swift */,
 			);
 			path = BabyMoWatch;
@@ -130,6 +138,14 @@
 				5E6A21954B6B12E8FEC3C7DD /* BabyMo.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1D71A69ABDBE2544609656FD /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				BC20633327F05DB728FB5351 /* MoImage.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		2878BC5898AE324CD025D024 /* Support */ = {
@@ -252,8 +268,10 @@
 		F81592CFEF8969EF97798E08 /* BabyMo */ = {
 			isa = PBXGroup;
 			children = (
+				C1021301190C5AD7854A6F1A /* BabyMo.entitlements */,
 				E3BC5B90F63EEC6979C2A910 /* BabyMoApp.swift */,
 				B44EB0B78D8E75BE19A334D0 /* App */,
+				1D71A69ABDBE2544609656FD /* Components */,
 				0568DA223CD8E0635135F0D5 /* Features */,
 				45A1C9F8E5863372AF928B2F /* Resources */,
 				2878BC5898AE324CD025D024 /* Support */,
@@ -374,6 +392,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F01DCA9CB901E6F404CEE1F9 /* BabyMoWatchApp.swift in Sources */,
+				AFC321DF85E96B9041503EEC /* ReminderService.swift in Sources */,
 				75F0954CA7468445CFC3AF06 /* WatchRootView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -385,6 +404,7 @@
 				4125CC309E2488418088768B /* BabyMoApp.swift in Sources */,
 				5D9033D17524E3971DF9AFE5 /* CharacterCollectionView.swift in Sources */,
 				E74AC3393A6264E118CE8BDD /* HomeView.swift in Sources */,
+				29AF429FA99FEE389BA49389 /* MoImage.swift in Sources */,
 				51D26B8E37FE7C8008D6CEE6 /* ModuleBrowserView.swift in Sources */,
 				D834F852830AC81EF1FE8AD9 /* OnboardingView.swift in Sources */,
 				25D43A74C65B6B7355202EFB /* ParentDashboardView.swift in Sources */,
@@ -411,6 +431,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BabyMo/BabyMo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -431,8 +452,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "";
+				CODE_SIGN_ENTITLEMENTS = BabyMoWatch/BabyMoWatch.entitlements;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = id.babymo.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = id.babymo.app.watchkitapp;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -445,8 +467,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				INFOPLIST_KEY_CLKComplicationPrincipalClass = "";
+				CODE_SIGN_ENTITLEMENTS = BabyMoWatch/BabyMoWatch.entitlements;
 				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = id.babymo.app;
+				INFOPLIST_KEY_WKRunsIndependentlyOfCompanionApp = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = id.babymo.app.watchkitapp;
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
@@ -591,6 +614,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = BabyMo/BabyMo.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

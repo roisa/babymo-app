@@ -28,14 +28,19 @@ private struct CharacterCard: View {
     var body: some View {
         BabyMoCard {
             VStack(spacing: BabyMoSpacing.sm) {
-                Circle()
-                    .fill(character.hasArt ? BabyMoColor.goldGradient : BabyMoColor.greenGradient)
-                    .frame(width: 88, height: 88)
-                    .overlay(
-                        Text(String(character.displayName.prefix(1)))
-                            .font(BabyMoFont.display(36)).foregroundStyle(BabyMoColor.bg)
-                    )
-                    .opacity(character.hasArt ? 1 : 0.5)
+                if character == .mo {
+                    MoImage(emotion: .excited)
+                        .frame(width: 88, height: 88)
+                } else {
+                    Circle()
+                        .fill(BabyMoColor.greenGradient)
+                        .frame(width: 88, height: 88)
+                        .overlay(
+                            Text(String(character.displayName.prefix(1)))
+                                .font(BabyMoFont.display(36)).foregroundStyle(BabyMoColor.bg)
+                        )
+                        .opacity(0.5)
+                }
 
                 Text(character.displayName)
                     .font(BabyMoFont.title(17)).foregroundStyle(BabyMoColor.cream)
