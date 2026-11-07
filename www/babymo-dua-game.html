@@ -1,20 +1,24 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="bm-theme.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="description" content="Baby Mo's Dua Journey - Islamic Early Learning Game for Kids">
-<title>🌙 Baby Mo's Dua Journey</title>
+<script src="i18n/dua.js"></script>
+<script src="bm-i18n.js"></script>
+<meta name="description" content="Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.">
+<title>Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
-  --bg:#0B1C12;--bg2:#0F2016;--bg3:#132818;
-  --green:#2C5A3E;--green-lt:#4A8860;--green-glow:#5DAA78;
-  --gold:#C89040;--gold-lt:#E8B060;--gold-dim:#8A6028;
-  --cream:#F0E8D8;--cream-dim:#9AA098;
-  --card-back:#142218;--card-ara:#1A3828;--card-mean:#1E3020;
-  --red:#C04840;--star:#F0C040;
-  --border:rgba(93,170,120,.12);
+  /* Fresh iOS-style palette — brighter emerald→teal, soft glass surfaces */
+  --bg:#0A2118;--bg2:#0C2A20;--bg3:#0E3326;
+  --green:#1FA971;--green-lt:#3FD08C;--green-glow:#7BE8B0;
+  --gold:#E0B84D;--gold-lt:#FFD874;--gold-dim:#A88330;
+  --cream:#F2F7F2;--cream-dim:#9FB5A8;
+  --card-back:rgba(255,255,255,.055);--card-ara:rgba(91,198,232,.10);--card-mean:rgba(255,255,255,.05);
+  --red:#FF6B5C;--star:#FFD874;
+  --border:rgba(255,255,255,.10);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 html,body{height:100%;overflow:hidden;}
@@ -22,13 +26,15 @@ body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--cream);pos
 body::before{
   content:'';position:fixed;inset:0;
   background:
-    radial-gradient(ellipse 60% 40% at 15% 25%,rgba(44,90,62,.25),transparent),
-    radial-gradient(ellipse 50% 35% at 85% 75%,rgba(200,144,64,.08),transparent);
+    radial-gradient(ellipse 70% 55% at 20% 8%,rgba(31,169,113,.32),transparent 70%),
+    radial-gradient(ellipse 65% 50% at 85% 18%,rgba(91,198,232,.16),transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 108%,rgba(224,184,77,.12),transparent 70%),
+    linear-gradient(180deg,#0C2A20 0%,#0A2118 55%,#081B14 100%);
   pointer-events:none;z-index:0;
 }
 .star-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.star-bg span{position:absolute;color:var(--gold);font-size:10px;animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;opacity:.08;}
-@keyframes twinkle{0%,100%{opacity:.04;transform:scale(1)}50%{opacity:.18;transform:scale(1.2)}}
+.star-bg span{position:absolute;color:var(--gold-lt);font-size:10px;animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;opacity:.08;}
+@keyframes twinkle{0%,100%{opacity:.05;transform:scale(1)}50%{opacity:.24;transform:scale(1.2)}}
 
 /* ── SCREENS ── */
 .screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;padding:0 18px 24px;overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
@@ -36,6 +42,9 @@ body::before{
 
 /* ════ WELCOME ════ */
 #welcomeScreen{justify-content:flex-start;padding-top:calc(24px + env(safe-area-inset-top));}
+/* On tall screens (iPad/desktop) vertically center the welcome content so it
+   isn't top-stacked with a big empty bottom. */
+@media(min-height:760px){#welcomeScreen,#completeScreen{justify-content:center;}}
 .welcome-top{text-align:center;width:100%;padding-bottom:16px;}
 
 .mascot-wrap{position:relative;width:140px;height:140px;margin:0 auto 14px;}
@@ -63,35 +72,36 @@ body::before{
 .game-sub{font-size:12px;color:var(--cream-dim);margin-bottom:4px;}
 
 /* Level buttons */
-.level-wrap{width:100%;max-width:400px;}
-.level-title{font-size:10px;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream-dim);text-align:center;margin-bottom:12px;}
-.level-list{display:flex;flex-direction:column;gap:9px;}
-.lvl-btn{background:var(--card-back);border:1.5px solid var(--border);border-radius:16px;padding:14px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.18s ease;width:100%;}
+.level-wrap{width:100%;max-width:420px;}
+.level-title{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream-dim);text-align:center;margin-bottom:12px;}
+.level-list{display:flex;flex-direction:column;gap:10px;}
+.lvl-btn{background:var(--card-back);border:1px solid var(--border);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);border-radius:20px;padding:15px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.18s ease;width:100%;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px -8px rgba(0,0,0,.4);}
 .lvl-btn:active{transform:scale(.97);}
-.lvl-btn.sel{border-color:var(--gold);background:rgba(200,144,64,.07);}
-.lvl-icon{font-size:28px;flex-shrink:0;}
+.lvl-btn.sel{border-color:var(--gold-lt);background:rgba(255,216,116,.10);box-shadow:0 0 0 1px rgba(255,216,116,.3),0 8px 22px -8px rgba(224,184,77,.4);}
+.lvl-icon{font-size:28px;flex-shrink:0;filter:drop-shadow(0 2px 5px rgba(0,0,0,.25));}
 .lvl-info{flex:1;text-align:left;}
 .lvl-name{font-size:15px;font-weight:800;color:var(--cream);line-height:1.2;}
 .lvl-desc{font-size:12px;color:var(--cream-dim);margin-top:2px;}
-.lvl-badge{font-size:10px;font-weight:700;letter-spacing:.5px;background:rgba(74,136,96,.18);color:var(--green-glow);padding:4px 10px;border-radius:20px;flex-shrink:0;}
+.lvl-badge{font-size:10px;font-weight:800;letter-spacing:.5px;background:rgba(123,232,176,.14);color:var(--green-glow);padding:5px 11px;border-radius:999px;flex-shrink:0;}
 
 .start-btn{
-  width:100%;max-width:400px;margin-top:16px;padding:17px;
-  background:linear-gradient(135deg,var(--green),#3A7050);
-  border:none;border-radius:16px;
+  width:100%;max-width:420px;margin-top:16px;padding:17px;
+  background:linear-gradient(135deg,var(--green-lt),var(--green));
+  border:none;border-radius:20px;
   font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
-  color:#fff;cursor:pointer;
-  box-shadow:0 6px 28px rgba(44,90,62,.55);
-  transition:.18s;letter-spacing:.3px;
+  color:#06231A;cursor:pointer;
+  box-shadow:0 8px 26px -6px rgba(63,208,140,.55),inset 0 1px 0 rgba(255,255,255,.3);
+  transition:transform .15s ease, box-shadow .15s ease;letter-spacing:.3px;
 }
-.start-btn:active{transform:scale(.97);}
+.start-btn:active{transform:scale(.97);box-shadow:0 4px 14px -6px rgba(63,208,140,.5),inset 0 1px 0 rgba(255,255,255,.3);}
 
 .hub-back-btn{
-  display:block;width:100%;max-width:400px;
+  display:block;width:100%;max-width:420px;
   margin-top:10px;padding:13px;
   background:var(--card-back);
-  border:1.5px solid var(--border);
-  border-radius:14px;
+  border:1px solid var(--border);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-radius:16px;
   font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
   color:var(--cream-dim);text-align:center;text-decoration:none;
   transition:.15s;cursor:pointer;
@@ -310,7 +320,62 @@ body::before{
 
 .scroll-hint{font-size:11px;color:var(--cream-dim);text-align:center;margin-top:8px;animation:fadeHint 3s ease 1s forwards;flex-shrink:0;}
 @keyframes fadeHint{0%{opacity:1;}80%{opacity:1;}100%{opacity:0;}}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.btn-row,.card-grid,.g-header,.hint-strip,.level-wrap,.prog-wrap{max-width:680px!important;}}
+
+/* bm-letterbox: comfortable centered column on tablet/desktop */
+@media(min-width:760px){.screen{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-dua-game.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo">
+<meta property="og:description" content="Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.">
+<meta property="og:url" content="https://play.babymo.id/babymo-dua-game.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-dua-game.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo">
+<meta name="twitter:description" content="Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-dua-game.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Dua Journey — Baby Mo","url":"https://play.babymo.id/babymo-dua-game.html","description":"Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-dua-game.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":6},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Dua Journey","item":"https://play.babymo.id/babymo-dua-game.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{
+  --bg:#F2F6FC;--bg2:#FFFFFF;--bg3:#F7F9FC;
+  --green:#12A15A;--green-lt:#2DC76D;--green-glow:#0B8A4A;
+  --gold:#F08C00;--gold-lt:#D9480F;--gold-dim:#B45309;
+  --cream:#152230;--cream-dim:#5A6878;
+  --card-back:linear-gradient(160deg,#BFE6FF,#7CC3FF);--card-ara:#E6F4FF;--card-mean:#FFF4DB;
+  --star:#FFB800;--border:rgba(21,34,48,.10);
+}
+.cb{border-color:rgba(255,255,255,.85);box-shadow:0 8px 18px -10px rgba(47,116,234,.55),inset 0 1px 0 rgba(255,255,255,.55);}
+.cb-moon{opacity:.85;filter:drop-shadow(0 2px 4px rgba(30,60,110,.25));}
+.cb-txt{color:rgba(255,255,255,.95);text-shadow:0 1px 2px rgba(30,60,110,.35);}
+.cb::before,.cb::after{color:rgba(255,255,255,.7);}
+.ca{background:linear-gradient(150deg,#FFFFFF,#FFF6E1);border-color:rgba(240,140,0,.28);box-shadow:0 8px 18px -10px rgba(30,60,110,.45);}
+.ca-arabic{color:#0B6B3A;}
+.cm{background:linear-gradient(150deg,#FFFFFF,#E8F7EE);border-color:rgba(18,161,90,.25);box-shadow:0 8px 18px -10px rgba(30,60,110,.45);}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+/* English mode: the meaning is already shown in English */
+html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
+/* readable text: nothing under ~11.5px */
+.level-title,.lvl-badge,.g-level,.cst-l,.dr-title{font-size:11.5px!important;}
+</style>
+<style id="bm-bright-fixes">
+/* contrast fixes after the bright theme */
+.arabic-tagline{color:#0B6B3A;}
+.brand-tag{color:#6B7787;}
+.lvl-btn{background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.08);box-shadow:0 10px 22px -16px rgba(30,60,110,.45);}
+.lvl-btn.sel{background:linear-gradient(135deg,#FFF6DD,#FFEBC2);border-color:#F5B800;box-shadow:0 0 0 1.5px rgba(245,184,0,.45),0 10px 22px -14px rgba(245,159,0,.5);}
+.lvl-desc{color:#5A6878;}
+.lvl-badge{background:rgba(18,161,90,.12);color:#0B6B3A;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
 
@@ -325,7 +390,7 @@ body::before{
 <div class="screen active" id="welcomeScreen">
   <div class="welcome-top">
     <div class="mascot-wrap">
-      <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+      <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
     </div>
     <div class="mascot-shadow"></div>
     <div class="game-title">Dua Journey 🌙</div>
@@ -405,7 +470,7 @@ body::before{
   <div class="comp-card">
 
     <div class="comp-mascot-wrap">
-      <img class="comp-mascot" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+      <img class="comp-mascot" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
     </div>
 
     <div class="comp-title" id="compTitle">Masya Allah! 🌟</div>
@@ -435,6 +500,7 @@ body::before{
     <button class="btn-pri" onclick="playAgain()">🔄 Main Lagi!</button>
   </div>
   <div class="btn-row" style="margin-top:9px;">
+    <button class="btn-sec" onclick="window.BabyMo&&BabyMo.shareScore(document.getElementById('cStars').textContent,'','Aku menyelesaikan Dua Journey bareng Baby Mo! 🌟')">📤 Bagikan</button>
     <button class="btn-sec" onclick="changeLevelFromComplete()">⚙️ Ganti Level</button>
     <button class="btn-sec" onclick="goHome()">🏠 Ke Hub</button>
   </div>
@@ -613,6 +679,7 @@ function checkMatch(){
 
   if(isMatch){
     matched++;
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('correct');
     const pct = (matched/activeDuas.length)*100;
     document.getElementById('progBar').style.width = pct+'%';
     document.getElementById('matchDisp').textContent = matched;
@@ -629,6 +696,7 @@ function checkMatch(){
   } else {
     a.classList.add('wrong');
     b.classList.add('wrong');
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
     setTimeout(()=>{
       a.classList.remove('flipped','wrong');
       b.classList.remove('flipped','wrong');
@@ -734,5 +802,6 @@ function changeLevelFromComplete(){
   showScreen('welcomeScreen');
 }
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

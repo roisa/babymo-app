@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="bm-theme.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<script src="i18n/beat.js"></script>
+<script src="bm-i18n.js"></script>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="theme-color" content="#A8E063" />
 <meta name="mobile-web-app-capable" content="yes" />
-<title>Baby Mo · Forehand Beat</title>
+<title>Forehand Beat — Game Ritme Musik untuk Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
   :root {
@@ -78,11 +81,17 @@
   /* === HUD === */
   #hud {
     position: absolute; top: 0; left: 0; right: 0;
-    padding: max(env(safe-area-inset-top), 14px) 14px 0;
-    display: flex; align-items: center; justify-content: space-between;
+    padding: max(env(safe-area-inset-top), 18px) max(env(safe-area-inset-right), 16px) 0 max(env(safe-area-inset-left), 16px);
+    display: flex; align-items: flex-start; justify-content: space-between;
     gap: 10px;
     z-index: 10;
     pointer-events: none;
+    flex-wrap: nowrap;
+  }
+  /* Desktop/iPad: more top breathing room + cap so the HUD pills never
+     touch the top edge or crowd the center hearts on a wide screen. */
+  @media (min-width: 760px) {
+    #hud { padding-top: max(env(safe-area-inset-top), 26px); padding-left: 28px; padding-right: 28px; }
   }
   .hud-pill {
     background: rgba(255,255,255,0.92);
@@ -417,7 +426,41 @@
     .stat-card .v { font-size: 22px; }
     .big-btn { font-size: 18px; padding: 12px 28px; }
   }
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.panel{max-width:680px!important;}}
+
+/* Desktop / iMac: the game world is responsive (WORLD_W follows the viewport
+   aspect), so the canvas fills the screen widescreen — no letterbox bars.
+   The #frame already spans 100vw×100vh; just keep the start/over panels
+   from getting too wide on a big screen. */
+@media(min-width:760px){
+  #hud { padding-left: max(env(safe-area-inset-left), 24px); padding-right: max(env(safe-area-inset-right), 24px); }
+}
 </style>
+<link rel="canonical" href="https://play.babymo.id/baby-mo-forehand-beat.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Forehand Beat — Game Ritme Musik untuk Anak | Baby Mo">
+<meta property="og:description" content="Ikuti irama dengan ketukan ceria — game ritme untuk anak.">
+<meta property="og:url" content="https://play.babymo.id/baby-mo-forehand-beat.html">
+<meta property="og:image" content="https://play.babymo.id/og/baby-mo-forehand-beat.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Forehand Beat — Game Ritme Musik untuk Anak | Baby Mo">
+<meta name="twitter:description" content="Ikuti irama dengan ketukan ceria — game ritme untuk anak.">
+<meta name="twitter:image" content="https://play.babymo.id/og/baby-mo-forehand-beat.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Forehand Beat — Baby Mo","url":"https://play.babymo.id/baby-mo-forehand-beat.html","description":"Ikuti irama dengan ketukan ceria — game ritme untuk anak.","inLanguage":"id-ID","genre":"Music","image":"https://play.babymo.id/og/baby-mo-forehand-beat.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":8},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Forehand Beat","item":"https://play.babymo.id/baby-mo-forehand-beat.html"}]}]}</script>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+.accent{color:#D9480F!important;text-shadow:0 1px 0 rgba(255,255,255,.6);}
+/* contrast fixes */
+.label,#tap-hint,.tagline,.hint,.hint .emoji{color:#2F7A1C!important;}
+#go-stars{color:#9A5A00!important;}
+a[href="index.html"]{color:#2F7A1C!important;opacity:1!important;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
   <div id="frame">
@@ -435,7 +478,7 @@
     <div id="hud">
       <div class="hud-pill" id="score-pill">
         <div>
-          <div class="label">Score</div>
+          <div class="label">Skor</div>
           <div class="num" id="score-num">0</div>
         </div>
       </div>
@@ -445,7 +488,7 @@
         <span class="heart" id="heart-3">❤️</span>
       </div>
       <div id="ctrl-cluster">
-        <button class="icon-btn" id="sound-btn" aria-label="Toggle sound">🔊</button>
+        <button class="icon-btn" id="sound-btn" aria-label="Suara">🔊</button>
         <button class="icon-btn" id="pause-btn" aria-label="Pause">⏸</button>
       </div>
     </div>
@@ -457,7 +500,7 @@
     <div id="combo"></div>
 
     <!-- Tap to jump hint -->
-    <div id="tap-hint">👆 Tap to jump · Tap 3× to soar!</div>
+    <div id="tap-hint">👆 Ketuk untuk lompat · Ketuk 3× untuk terbang!</div>
 
     <!-- Home screen -->
     <div id="home" class="screen">
@@ -468,19 +511,19 @@
 
       <div class="logo-wrap"><img id="logo-img" alt="Baby Mo" /></div>
       <div class="tagline">Forehand <span class="accent">Beat</span> 🎾</div>
-      <button class="big-btn" id="start-btn">Tap to Start</button>
-      <div class="hint"><span class="emoji">❤️</span> 3 lives &nbsp;·&nbsp; <span class="emoji">✨</span> Tap 3× to soar!</div>
+      <button class="big-btn" id="start-btn">Ketuk untuk Mulai</button>
+      <div class="hint"><span class="emoji">❤️</span> 3 nyawa &nbsp;·&nbsp; <span class="emoji">✨</span> Ketuk 3× untuk terbang!</div>
       <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">← Game Hub</a>
     </div>
 
     <!-- Pause screen -->
     <div id="pause" class="screen hidden">
       <div class="panel">
-        <h1>Paused</h1>
-        <div class="sub">Take a breather 🌿</div>
+        <h1>Jeda dulu</h1>
+        <div class="sub">Tarik napas sebentar 🌿</div>
         <div class="panel-btns">
-          <button class="big-btn" id="resume-btn">Resume</button>
-          <button class="big-btn secondary" id="quit-btn">Home</button>
+          <button class="big-btn" id="resume-btn">Lanjut</button>
+          <button class="big-btn secondary" id="quit-btn">Menu</button>
         </div>
         <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
       </div>
@@ -489,27 +532,28 @@
     <!-- Game over screen -->
     <div id="gameover" class="screen hidden">
       <div class="panel">
-        <h1 id="go-title">Great Job!</h1>
-        <div class="sub" id="go-sub">Let's try again? 💚</div>
+        <h1 id="go-title">Hebat!</h1>
+        <div class="sub" id="go-sub">Coba lagi, yuk? 💚</div>
         <div class="stat-row">
           <div class="stat-card">
             <div class="v" id="go-score">0</div>
-            <div class="l">Score</div>
+            <div class="l">Skor</div>
           </div>
           <div class="stat-card gold">
             <div class="v" id="go-stars">⭐ 0</div>
-            <div class="l">Stars</div>
+            <div class="l">Bintang</div>
           </div>
         </div>
         <div class="stat-row" style="margin-top:-4px;">
           <div class="stat-card" style="background:linear-gradient(180deg,#E1F2FE 0%,#BFE2F8 100%); border-color:rgba(91,192,235,0.35);">
             <div class="v" id="go-best" style="color:var(--blue-deep);">0</div>
-            <div class="l">Best</div>
+            <div class="l">Terbaik</div>
           </div>
         </div>
         <div class="panel-btns">
-          <button class="big-btn" id="replay-btn">Play Again</button>
-          <button class="big-btn secondary" id="home-btn">Home</button>
+          <button class="big-btn" id="replay-btn">Main Lagi</button>
+          <button class="big-btn secondary" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('go-score')||{}).textContent||'',(document.getElementById('go-stars')||{}).textContent||'','I played Forehand Beat with Baby Mo! 🎵')">📤 Bagikan</button>
+          <button class="big-btn secondary" id="home-btn">Menu</button>
         </div>
         <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
       </div>
@@ -557,12 +601,26 @@ const OBSTACLE_PATTERN = [
 const canvas = document.getElementById('game');
 const ctx = canvas.getContext('2d');
 
-// Logical (game world) dimensions, fixed aspect 9:16
-const WORLD_W = 540;
+// Logical (game world) dimensions. Height is fixed (all physics/ground are
+// pinned to it); WIDTH is responsive to the viewport aspect so the world is a
+// tall portrait on phones and a wide widescreen stage on desktop/iMac — more
+// horizontal runner track, no letterbox bars. Recomputed in resize().
 const WORLD_H = 960;
+let WORLD_W = 540;
+const WORLD_W_MIN = 540;   // phone portrait
+const WORLD_W_MAX = 1707;  // ~16:9 on a tall stage
+
+function computeWorldW() {
+  const ar = window.innerWidth / window.innerHeight; // viewport aspect
+  // World aspect follows the viewport so the canvas fills it with no bars,
+  // clamped so the world never gets absurdly wide/narrow.
+  WORLD_W = Math.max(WORLD_W_MIN, Math.min(WORLD_W_MAX, Math.round(WORLD_H * ar)));
+}
+computeWorldW();
 let scale = 1, offsetX = 0, offsetY = 0;
 
 function resize() {
+  computeWorldW();
   const rect = canvas.getBoundingClientRect();
   const dpr = Math.min(window.devicePixelRatio || 1, 2);
   canvas.width = Math.round(rect.width * dpr);
@@ -573,6 +631,7 @@ function resize() {
   scale = Math.min(sx, sy);
   offsetX = (canvas.width - WORLD_W * scale) / 2;
   offsetY = (canvas.height - WORLD_H * scale) / 2;
+  if (typeof rebuildBackground === 'function') rebuildBackground();
 }
 window.addEventListener('resize', resize);
 
@@ -591,7 +650,9 @@ const BUFFER_MS = 110;           // buffer for early taps
 const BASE_SPEED = 280;          // px/s
 const MAX_SPEED = 460;
 const SPEED_RAMP = 4;            // +px/s per second of total play time
-const SPAWN_LEAD_X = WORLD_W + 80; // where obstacles enter from
+// Obstacles enter just past the right edge. WORLD_W is responsive, so this
+// must read it live (function, not a frozen const).
+const spawnLeadX = () => WORLD_W + 80;
 const SONG_DURATION = 39.32;     // seconds (used to detect song loop)
 const MAX_HEARTS = 3;
 const MAX_AIR_JUMPS = 2;          // 1 ground + 2 air = up to 3 jumps total
@@ -729,27 +790,32 @@ logoImg.src = ASSETS.logo;
 document.getElementById('logo-img').src = ASSETS.logo;
 
 /* ─── Background (parallax) ─────────────────────────────────────────────── */
+// Decoration counts scale with world width so a wide desktop stage stays
+// populated (vs. a near-empty sky on a 1707-wide world).
 const bgState = {
-  cloudsFar: Array.from({length: 5}, (_,i) => ({
+  cloudsFar: [], cloudsNear: [], trees: [], grassBlades: [],
+  bgScrollFar: 0, bgScrollNear: 0, bgScrollGround: 0
+};
+function rebuildBackground() {
+  const wf = WORLD_W / 540; // density factor relative to the original portrait
+  bgState.cloudsFar = Array.from({length: Math.round(5 * wf)}, () => ({
     x: Math.random() * WORLD_W, y: 80 + Math.random() * 120,
     s: 0.5 + Math.random() * 0.4, w: 60 + Math.random() * 50
-  })),
-  cloudsNear: Array.from({length: 3}, (_,i) => ({
+  }));
+  bgState.cloudsNear = Array.from({length: Math.round(3 * wf)}, () => ({
     x: Math.random() * WORLD_W, y: 180 + Math.random() * 80,
     s: 0.9 + Math.random() * 0.4, w: 80 + Math.random() * 60
-  })),
-  trees: Array.from({length: 8}, (_,i) => ({
+  }));
+  bgState.trees = Array.from({length: Math.round(8 * wf)}, (_,i) => ({
     x: i * 90 + Math.random() * 30, h: 120 + Math.random() * 50,
     color: ['#7BBE52','#6CC247','#94D26F'][i%3]
-  })),
-  grassBlades: Array.from({length: 50}, (_,i) => ({
+  }));
+  bgState.grassBlades = Array.from({length: Math.round(50 * wf)}, () => ({
     x: Math.random() * WORLD_W, y: GROUND_Y + 18 + Math.random() * 20,
     h: 6 + Math.random() * 8
-  })),
-  bgScrollFar: 0,
-  bgScrollNear: 0,
-  bgScrollGround: 0
-};
+  }));
+}
+rebuildBackground();
 
 function drawCloud(x, y, w) {
   ctx.fillStyle = 'rgba(255,255,255,0.92)';
@@ -1084,7 +1150,7 @@ function spawnObstacle(beatTime) {
   const type = OBSTACLE_TYPES.find(o => o.key === key);
   state.obstacles.push({
     type: key,
-    x: SPAWN_LEAD_X,
+    x: spawnLeadX(),
     y: GROUND_Y,
     w: type.w, h: type.h,
     targetTime: beatTime,
@@ -1523,7 +1589,7 @@ function update(dt) {
     const beat = BEATS[state.obstacleIdx];
     const pIdx = (state.obstacleIdx + state.patternOffset) % OBSTACLE_PATTERN.length;
     const wantSpawn = OBSTACLE_PATTERN[pIdx] === 1;
-    const travel = (SPAWN_LEAD_X - PLAYER_X) / state.speed;
+    const travel = (spawnLeadX() - PLAYER_X) / state.speed;
     if (beat < WARMUP) { state.obstacleIdx++; continue; }
     if (state.songTime >= beat - travel) {
       if (wantSpawn) spawnObstacle(beat);
@@ -1602,7 +1668,7 @@ function doJump() {
       if (b > state.songTime + 0.5) break;
     }
     if (nearestBeat < 0.12) {
-      showCombo('PERFECT!', 'on the beat 🎵');
+      showCombo('SEMPURNA!', 'pas dengan iramanya 🎵');
       if (navigator.vibrate) navigator.vibrate(15);
     }
   } else if (state.airJumps < MAX_AIR_JUMPS) {
@@ -1613,7 +1679,7 @@ function doJump() {
     sfx('boost');
     spawnSparkles(PLAYER_X, p.y - 50);
     if (state.airJumps === 2) {
-      showCombo('TRIPLE JUMP!', 'soaring high ✨');
+      showCombo('LOMPAT 3×!', 'terbang tinggi ✨');
       if (navigator.vibrate) navigator.vibrate(18);
     } else {
       if (navigator.vibrate) navigator.vibrate(8);
@@ -1648,7 +1714,7 @@ function takeDamage(o) {
   }
   // Grant invincibility window
   state.invincibleUntil = performance.now() + INV_DURATION_MS;
-  showCombo('OUCH!', `${state.hearts} ❤️ left`);
+  showCombo('ADUH!', `sisa ${state.hearts} ❤️`);
   updateHud();
 }
 
@@ -1739,11 +1805,11 @@ function gameOver() {
   document.getElementById('go-best').textContent = state.bestScore;
   // encouraging message
   const msgs = [
-    ['Great Job!', "Let's try again? 💚"],
-    ['Nice run!', "Wanna go further? 🎾"],
-    ['You did it!', "One more try? ✨"],
-    ['So close!', "I bet you can do better! 💪"],
-    ['Way to go!', "Tap replay to keep grooving 🎵"]
+    ['Hebat!', "Coba lagi, yuk? 💚"],
+    ['Keren!', "Mau lebih jauh lagi? 🎾"],
+    ['Kamu berhasil!', "Sekali lagi? ✨"],
+    ['Sedikit lagi!', "Pasti bisa lebih hebat! 💪"],
+    ['Mantap!', "Ketuk Main Lagi untuk terus bergoyang 🎵"]
   ];
   const m = msgs[Math.min(msgs.length - 1, Math.floor(state.score / 60))];
   document.getElementById('go-title').textContent = m[0];
@@ -1823,7 +1889,19 @@ document.getElementById('start-btn').addEventListener('click', () => {
   ensureAudio();
   // load best score
   try { state.bestScore = parseInt(localStorage.getItem('babymo_best') || '0', 10); } catch(e) {}
-  startGame();
+  // First time only: a quick "how to play" card before the first run
+  if (window.BabyMo && BabyMo.coach) {
+    BabyMo.coach({
+      key: 'forehand', pose: 'baby-mo-yeyy',
+      title: 'Cara main Forehand Beat', sub: 'Bantu Baby Mo melompat mengikuti irama!',
+      steps: [
+        { icon: '👆', text: 'Ketuk layar', sub: 'Baby Mo melompat' },
+        { icon: '✨', text: 'Ketuk 3× cepat', sub: 'Baby Mo terbang tinggi!' },
+        { icon: '🚧', text: 'Lompati rintangan', sub: 'Kerucut, bola, net… kamu punya 3 nyawa ❤️' }
+      ],
+      button: 'Ayo mulai! ▶'
+    }, startGame);
+  } else startGame();
 });
 document.getElementById('replay-btn').addEventListener('click', startGame);
 document.getElementById('home-btn').addEventListener('click', quitToHome);
@@ -1847,5 +1925,6 @@ document.addEventListener('gesturestart', e => e.preventDefault());
 resize();
 requestAnimationFrame(loop);
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

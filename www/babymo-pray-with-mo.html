@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="bm-theme.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover,maximum-scale=1,user-scalable=no">
-<title>Pray with Mo</title>
+<script src="i18n/pray.js"></script>
+<script src="bm-i18n.js"></script>
+<title>Pray with Mo — Panduan Sholat Interaktif untuk Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -18,7 +21,12 @@
 }
 html{height:100%}
 body{min-height:100%;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:var(--cream);color:var(--ink);-webkit-tap-highlight-color:transparent;-webkit-text-size-adjust:100%;overscroll-behavior-x:none;overflow-y:auto;-webkit-overflow-scrolling:touch}
-body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),transparent 40%),radial-gradient(circle at 90% 30%,rgba(232,154,148,.08),transparent 40%);background-attachment:fixed}
+body{background-image:
+  radial-gradient(ellipse 60% 30% at 50% 0%,rgba(252,224,170,.55),transparent 60%),
+  radial-gradient(circle at 8% 12%,rgba(31,169,113,.11),transparent 42%),
+  radial-gradient(circle at 92% 26%,rgba(249,115,22,.08),transparent 42%),
+  radial-gradient(circle at 90% 82%,rgba(91,198,232,.07),transparent 45%);
+  background-attachment:fixed}
 
 /* ===== TOP BAR ===== */
 .topbar{
@@ -58,21 +66,38 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 .view.active{display:block}
 
 /* ===== CARD BASE ===== */
-.card{background:#fff;border-radius:22px;padding:20px;margin-bottom:14px;box-shadow:var(--shadow);position:relative;overflow:hidden;border:1px solid rgba(14,59,46,.06);animation:rise .5s ease-out backwards}
+.card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:20px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px -10px rgba(0,0,0,.45);
+  position:relative;overflow:hidden;
+  animation:rise .5s ease-out backwards;
+}
 .card:nth-child(1){animation-delay:.05s}.card:nth-child(2){animation-delay:.1s}.card:nth-child(3){animation-delay:.15s}.card:nth-child(4){animation-delay:.2s}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 .card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:14px}
-.card-title{font-family:'Fraunces',serif;font-weight:600;font-size:18px;color:var(--green-deep);letter-spacing:-.01em}
-.card-sub{font-size:11px;color:var(--ink-soft);margin-top:2px}
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;background:var(--green-soft);color:var(--green-deep);font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:999px;white-space:nowrap}
-.badge.gold{background:var(--gold-soft);color:#8a6a30}
+.card-title{font-family:'Fraunces',serif;font-weight:700;font-size:18px;color:var(--cream);letter-spacing:-.01em}
+.card-sub{font-size:11px;color:rgba(250,245,234,.6);margin-top:3px;line-height:1.4}
+.badge{
+  display:inline-flex;align-items:center;gap:4px;padding:5px 11px;
+  background:rgba(95,203,154,.16);color:#5FCB9A;
+  border:1px solid rgba(95,203,154,.32);
+  font-size:10px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;
+  border-radius:999px;white-space:nowrap;
+}
+.badge.gold{
+  background:rgba(201,162,95,.16);color:var(--gold-lt, #fff8e8);
+  border-color:rgba(201,162,95,.32);
+}
 
 /* ===== HOME: HERO ===== */
 .hero-section{
   background:linear-gradient(170deg,#0e3b2e 0%,#143d31 40%,#1a4a3c 70%,#1c5a47 100%);
   border-radius:0 0 28px 28px;margin:-58px -18px 14px;position:relative;overflow:hidden;
-  padding:calc(var(--safe-top) + 52px) 20px 0;
+  padding:calc(var(--safe-top) + 66px) 20px 0;
   animation:rise .5s ease-out backwards;
 }
 .hero-section::before{
@@ -89,13 +114,22 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 @keyframes sparkle{0%,100%{opacity:0;transform:translateY(0) scale(.6)}30%{opacity:.6;transform:translateY(-10px) scale(1)}70%{opacity:.4;transform:translateY(-18px) scale(.8)}}
 .hero-body{display:flex;align-items:flex-end;gap:0;position:relative;z-index:1}
 .hero-left{flex:1;padding:0 0 18px 2px}
-.hero-greeting{color:var(--gold-soft);font-size:12px;margin-bottom:2px}
-.hero-title{font-family:'Fraunces',serif;color:#fff;font-size:24px;font-weight:700;line-height:1.15;margin-bottom:10px}
+.hero-greeting{color:var(--gold);font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.6px;margin-bottom:6px;opacity:.85}
+.hero-title{font-family:'Fraunces',serif;color:#fff;font-size:30px;font-weight:700;line-height:1.08;margin-bottom:12px;letter-spacing:-.015em}
 .hero-title em{font-style:normal;color:var(--gold)}
 .hero-prayer{
   display:flex;align-items:center;gap:8px;
-  background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.12);
-  padding:8px 12px;border-radius:14px;
+  background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  padding:10px 14px;border-radius:16px;
+  position:relative;overflow:hidden;
+}
+.hero-prayer .hp-progress{
+  position:absolute;left:0;bottom:0;height:2.5px;width:0;
+  background:linear-gradient(90deg,#5FCB9A,#F6B45A,#C9A25F);
+  border-radius:0 2px 0 0;
+  box-shadow:0 0 8px rgba(201,162,95,.55);
+  transition:width .6s ease;
 }
 .hero-prayer .hp-info{flex:1}
 .hero-prayer .hp-name{font-family:'Fraunces',serif;font-size:16px;font-weight:600;color:#fff;line-height:1}
@@ -108,19 +142,34 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 .hero-prayer .hp-pulse{width:5px;height:5px;border-radius:50%;background:var(--gold);animation:pulse 2s infinite}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(201,162,95,.7)}70%{box-shadow:0 0 0 6px rgba(201,162,95,0)}100%{box-shadow:0 0 0 0 rgba(201,162,95,0)}}
 .hero-mo{flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;position:relative}
-.hero-mo img{height:170px;object-fit:contain;display:block;margin-bottom:-2px;mix-blend-mode:multiply;clip-path:inset(2px)}
+.hero-mo img{height:170px;object-fit:contain;display:block;margin-bottom:-2px;filter:drop-shadow(0 10px 18px rgba(14,59,46,.28))}
 
 /* ===== HOME: FEATURES ===== */
-.features{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.feat-card{background:#fff;border:1px solid rgba(14,59,46,.06);border-radius:18px;padding:16px 14px;cursor:pointer;box-shadow:0 4px 14px rgba(14,59,46,.06);transition:transform .15s;animation:rise .5s ease-out backwards}
+.features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
+.feat-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:18px 16px;cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 8px 22px -10px rgba(0,0,0,.45);
+  transition:transform .15s ease, box-shadow .15s ease, background .2s;
+  animation:rise .5s ease-out backwards;
+}
 .feat-card:nth-child(1){animation-delay:.15s}.feat-card:nth-child(2){animation-delay:.18s}.feat-card:nth-child(3){animation-delay:.21s}.feat-card:nth-child(4){animation-delay:.24s}
 .feat-card:active{transform:scale(.97)}
-.feat-card .fc-icon{font-size:28px;margin-bottom:8px}
-.feat-card .fc-title{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--green-deep);margin-bottom:2px}
-.feat-card .fc-sub{font-size:10px;color:var(--ink-soft);line-height:1.3}
+.feat-card:hover{background:rgba(255,255,255,.07);transform:translateY(-1px)}
+/* Playful coloured icon chips per feature card (kid-friendly) */
+.feat-card .fc-icon{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 6px 14px -4px rgba(0,0,0,.35)}
+.feat-card:nth-child(1) .fc-icon{background:linear-gradient(160deg,#FFE3B0,#F6B45A)}
+.feat-card:nth-child(2) .fc-icon{background:linear-gradient(160deg,#FFE08A,#F4C04A)}
+.feat-card:nth-child(3) .fc-icon{background:linear-gradient(160deg,#BCE9D2,#5FCB9A)}
+.feat-card:nth-child(4) .fc-icon{background:linear-gradient(160deg,#FFD3CE,#F39A92)}
+.feat-card .fc-icon{font-size:30px;margin-bottom:10px}
+.feat-card .fc-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:2px;letter-spacing:-.005em}
+.feat-card .fc-sub{font-size:11px;color:rgba(250,245,234,.55);line-height:1.35}
 
 /* ===== HOME: STEP STRIP ===== */
-.section-title{font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--green-deep);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.section-title{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:12px;display:flex;align-items:center;gap:8px;letter-spacing:-.005em}
 .step-strip{
   display:flex;align-items:flex-start;gap:0;
   overflow-x:scroll;-webkit-overflow-scrolling:touch;
@@ -130,72 +179,136 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 }
 .step-strip::-webkit-scrollbar{display:none}
 .step-chip{
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  flex-shrink:0;width:68px;cursor:pointer;transition:transform .15s;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  flex-shrink:0;width:84px;cursor:pointer;transition:transform .15s;
   scroll-snap-align:start;
 }
-.step-chip:active{transform:scale(.93)}
+.step-chip:active{transform:scale(.94)}
 .step-chip .sc-img{
-  width:56px;height:56px;border-radius:16px;background:#fff;
-  border:2px solid rgba(14,59,46,.08);overflow:hidden;
+  width:68px;height:68px;border-radius:18px;
+  background:rgba(255,255,255,.05);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.10);overflow:hidden;
   display:flex;align-items:center;justify-content:center;
-  box-shadow:0 2px 8px rgba(14,59,46,.06);transition:all .2s;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 4px 12px -4px rgba(0,0,0,.35);
+  transition:all .2s;
 }
 .step-chip .sc-img img{width:100%;height:100%;object-fit:contain}
 .step-chip .sc-num{
-  width:18px;height:18px;border-radius:50%;background:var(--green-deep);
-  color:var(--gold-soft);font-size:9px;font-weight:800;
+  width:22px;height:22px;border-radius:50%;
+  background:linear-gradient(160deg,#F6B45A,#C9A25F);
+  color:#1a1208;font-size:11px;font-weight:900;
   display:flex;align-items:center;justify-content:center;
-  margin-top:-10px;position:relative;z-index:1;border:2px solid var(--cream);
+  margin-top:-12px;position:relative;z-index:1;
+  border:2px solid var(--green-deep);
+  box-shadow:0 2px 6px rgba(0,0,0,.4);
 }
-.step-chip .sc-name{font-size:9px;font-weight:700;color:var(--ink-soft);text-align:center;line-height:1.2;margin-top:-2px}
+.step-chip .sc-name{font-size:11px;font-weight:700;color:rgba(250,245,234,.85);text-align:center;line-height:1.2;margin-top:0}
 .step-arrow{
   flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  width:16px;height:56px;color:var(--gold);font-size:14px;font-weight:700;
+  width:16px;height:68px;color:rgba(201,162,95,.6);font-size:13px;font-weight:700;
 }
 
 /* ===== GUIDE: STEP INDICATOR ===== */
-.step-indicator{display:flex;align-items:center;justify-content:center;gap:4px;margin-bottom:16px;flex-wrap:wrap;padding-top:4px}
-.step-dot{width:30px;height:30px;border-radius:50%;background:#fff;border:1.5px dashed rgba(14,59,46,.2);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--ink-soft);transition:all .3s;cursor:pointer}
-.step-dot.active{background:var(--gold-soft);border:2px solid var(--gold);color:#8a6a30;transform:scale(1.1);box-shadow:0 0 0 6px rgba(201,162,95,.15)}
-.step-dot.done{background:var(--green-deep);border:1.5px solid var(--green-deep);color:var(--gold-soft)}
-.step-dot-line{width:8px;height:2px;background:rgba(14,59,46,.12);border-radius:1px}
-.step-dot-line.done{background:var(--green-mid)}
+.step-indicator{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:6px;margin-bottom:20px;padding:8px 4px 12px;
+  position:relative;
+}
+.step-indicator::before{
+  content:'';position:absolute;left:22px;right:22px;top:50%;
+  height:2px;background:rgba(255,255,255,.06);border-radius:1px;z-index:0;
+}
+.step-dot{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
+  border:1.5px solid rgba(255,255,255,.14);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;color:rgba(250,245,234,.55);
+  transition:all .25s ease;cursor:pointer;
+  position:relative;z-index:1;
+}
+.step-dot:active{transform:scale(.92)}
+.step-dot.active{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  border:2px solid var(--gold-lt);color:#1a1208;
+  transform:scale(1.18);
+  box-shadow:0 0 0 6px rgba(201,162,95,.18), 0 6px 14px -4px rgba(201,162,95,.45);
+}
+.step-dot.done{
+  background:rgba(95,203,154,.16);border:1.5px solid rgba(95,203,154,.42);
+  color:#5FCB9A;
+}
+.step-dot-line{width:8px;height:2px;background:rgba(255,255,255,.06);border-radius:1px}
+.step-dot-line.done{background:rgba(95,203,154,.4)}
 
 /* ===== GUIDE: MO STAGE ===== */
-.mo-stage-guide{background:linear-gradient(160deg,#fffaef 0%,#fdf2e3 50%,var(--cream-2) 100%);border-radius:24px;margin-bottom:14px;display:flex;align-items:center;justify-content:center;min-height:260px;position:relative;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--gold-soft)}
-.mo-stage-guide img{height:230px;object-fit:contain;transition:opacity .3s ease;position:relative;z-index:1}
-.mo-stage-guide img.switching{opacity:0}
-.mo-stage-guide .stage-nav{position:absolute;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:rgba(14,59,46,.7);border:none;color:var(--gold-soft);font-size:16px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;transition:background .2s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-.mo-stage-guide .stage-nav:active{background:rgba(14,59,46,.9)}
-.mo-stage-guide .nav-prev{left:10px}
-.mo-stage-guide .nav-next{right:10px}
+.mo-stage-guide{
+  background:linear-gradient(160deg,#fffaef 0%,#fdf2e3 50%,var(--cream-2) 100%);
+  border-radius:24px;margin-bottom:14px;
+  display:flex;align-items:center;justify-content:center;
+  min-height:260px;position:relative;overflow:hidden;
+  box-shadow:0 14px 36px -10px rgba(0,0,0,.55), inset 0 1px 0 rgba(255,255,255,.5);
+  border:1px solid rgba(255,255,255,.08);
+}
+.mo-stage-guide::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:6px;
+  background:linear-gradient(90deg, transparent, rgba(201,162,95,.45), transparent);
+  pointer-events:none;
+}
+.mo-stage-guide img{height:230px;object-fit:contain;transition:opacity .3s ease, transform .3s ease;position:relative;z-index:1}
+.mo-stage-guide img.switching{opacity:0;transform:scale(.94)}
+.mo-stage-guide .stage-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(14,59,46,.55);border:1px solid rgba(255,255,255,.12);
+  color:#fff;font-size:18px;font-weight:700;cursor:pointer;
+  z-index:5;display:flex;align-items:center;justify-content:center;line-height:1;
+  transition:background .2s, transform .15s;
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
+  box-shadow:0 4px 12px -2px rgba(0,0,0,.35);
+}
+.mo-stage-guide .stage-nav:active{background:rgba(14,59,46,.85);transform:translateY(-50%) scale(.92)}
+.mo-stage-guide .nav-prev{left:8px}
+.mo-stage-guide .nav-next{right:8px}
 
 /* ===== GUIDE: STEP INFO ===== */
-.step-info{margin-bottom:12px}
-.step-name-row{display:flex;align-items:baseline;gap:10px;margin-bottom:4px;flex-wrap:wrap}
-.step-name{font-family:'Fraunces',serif;font-size:22px;font-weight:600;color:var(--green-deep)}
-.step-name-ar{font-family:'Amiri',serif;font-size:18px;color:var(--gold)}
-.step-desc{font-size:12px;color:var(--ink-soft);line-height:1.4}
+.step-info{margin-bottom:14px}
+.step-name-row{display:flex;align-items:baseline;gap:10px;margin-bottom:6px;flex-wrap:wrap}
+.step-name{font-family:'Fraunces',serif;font-size:24px;font-weight:700;color:var(--cream);letter-spacing:-.01em}
+.step-name-ar{font-family:'Amiri',serif;font-size:20px;color:var(--gold-lt, #fff8e8)}
+.step-desc{font-size:13px;color:rgba(250,245,234,.65);line-height:1.45}
 
 /* ===== GUIDE: RECITATION ===== */
-.recitation-card{background:#fff;border-radius:22px;padding:20px;margin-bottom:12px;box-shadow:var(--shadow);border:1px solid rgba(14,59,46,.06)}
-.recitation-arabic{font-family:'Amiri',serif;font-size:28px;color:var(--green-deep);text-align:center;direction:rtl;line-height:1.7;margin-bottom:12px}
-.recitation-latin{font-size:13px;color:var(--gold);text-align:center;margin-bottom:4px;font-weight:600;font-style:italic}
-.recitation-meaning{font-size:11px;color:var(--ink-soft);text-align:center;line-height:1.4;margin-bottom:14px}
-.recitation-repeat{font-size:11px;color:var(--pink-deep);text-align:center;font-weight:700;margin-bottom:10px}
+.recitation-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:22px 20px;margin-bottom:12px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px -10px rgba(0,0,0,.45);
+}
+.recitation-arabic{font-family:'Amiri',serif;font-size:30px;color:#fff;text-align:center;direction:rtl;line-height:1.7;margin-bottom:14px;text-shadow:0 0 18px rgba(201,162,95,.15)}
+.recitation-latin{font-size:14px;color:var(--gold-lt, #fff8e8);text-align:center;margin-bottom:4px;font-weight:600;font-style:italic;letter-spacing:.01em}
+.recitation-meaning{font-size:12px;color:rgba(250,245,234,.62);text-align:center;line-height:1.4;margin-bottom:14px}
+.recitation-repeat{font-size:11px;color:var(--pink-deep);text-align:center;font-weight:700;margin-bottom:10px;letter-spacing:.3px}
 .recitation-controls{display:flex;align-items:center;justify-content:center;gap:14px}
-.rec-btn{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:transform .15s}
+.rec-btn{width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;transition:transform .15s, background .15s}
 .rec-btn:active{transform:scale(.9)}
-.rec-btn-play{width:48px;height:48px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));color:var(--gold-soft);font-size:20px;box-shadow:0 6px 16px rgba(14,59,46,.25)}
-.rec-btn-small{background:var(--cream-2);color:var(--ink-soft);font-size:14px}
-.recitation-page{font-size:10px;color:var(--ink-soft);text-align:center;margin-top:8px;font-weight:600}
+.rec-btn-play{width:54px;height:54px;background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;font-size:22px;box-shadow:0 8px 20px -4px rgba(95,203,154,.55), inset 0 1px 0 rgba(255,255,255,.22)}
+.rec-btn-small{background:rgba(255,255,255,.06);color:rgba(250,245,234,.72);font-size:14px;border:1px solid rgba(255,255,255,.10)}
+.rec-btn-small:hover{background:rgba(255,255,255,.10)}
+.recitation-page{font-size:10px;color:rgba(250,245,234,.55);text-align:center;margin-top:10px;font-weight:600;letter-spacing:.4px}
 .rec-progress{display:flex;gap:3px;margin-bottom:14px;padding:0 2px}
-.rec-seg{flex:1;height:5px;border-radius:3px;background:var(--cream-2);transition:background .3s,box-shadow .3s;cursor:pointer}
-.rec-seg.done{background:var(--green-deep)}
-.rec-seg.active{background:var(--gold);box-shadow:0 0 8px rgba(201,162,95,.4)}
-.rec-word{display:inline;transition:color .2s,text-shadow .2s}
-.rec-word.highlight{color:var(--gold);text-shadow:0 0 14px rgba(201,162,95,.5)}
+.rec-seg{flex:1;height:4px;border-radius:2px;background:rgba(255,255,255,.08);transition:background .3s,box-shadow .3s;cursor:pointer}
+.rec-seg.done{background:rgba(95,203,154,.5)}
+.rec-seg.active{background:var(--gold-lt, #fff8e8);box-shadow:0 0 10px rgba(201,162,95,.5)}
+.rec-word{display:inline;transition:color .2s,text-shadow .2s, transform .2s;}
+.rec-word.highlight{
+  color:#FFD27A;
+  text-shadow:0 0 12px rgba(255,210,122,.9), 0 0 24px rgba(255,210,122,.5);
+  font-weight:700;
+}
 .sound-bars{position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;align-items:flex-end;gap:3px;height:24px;z-index:10;opacity:0;transition:opacity .3s}
 .sound-bars.active{opacity:1}
 .sound-bar{width:4px;border-radius:2px;background:var(--gold)}
@@ -208,162 +321,290 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 @keyframes soundWave{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
 
 /* ===== GUIDE: TIP ===== */
-.tip-card{background:linear-gradient(135deg,#fffaef,#fdf2e3);border:1px solid var(--gold-soft);border-radius:18px;padding:14px;display:flex;align-items:flex-start;gap:10px;margin-bottom:14px}
-.tip-avatar{font-size:22px;flex-shrink:0}
-.tip-label{font-size:9px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:.3px;margin-bottom:2px}
-.tip-text{font-size:11px;color:var(--ink-soft);line-height:1.4}
+.tip-card{
+  background:linear-gradient(135deg, rgba(201,162,95,.10), rgba(201,162,95,.04));
+  border:1px solid rgba(201,162,95,.28);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-radius:18px;padding:14px;display:flex;align-items:flex-start;gap:10px;margin-bottom:14px
+}
+.tip-avatar{font-size:24px;flex-shrink:0;filter:drop-shadow(0 2px 6px rgba(0,0,0,.3))}
+.tip-label{font-size:10px;font-weight:800;color:var(--gold-lt, #fff8e8);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:4px}
+.tip-text{font-size:12px;color:rgba(250,245,234,.78);line-height:1.45}
 
 /* ===== GUIDE: NAV BUTTONS ===== */
 .guide-nav-btns{display:flex;gap:10px;margin-bottom:18px}
-.guide-nav-btn{flex:1;padding:14px;border-radius:16px;border:none;font-family:'Fraunces',serif;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s}
+.guide-nav-btn{
+  flex:1;padding:15px;border-radius:18px;border:none;
+  font-family:'Fraunces',serif;font-size:15px;font-weight:700;cursor:pointer;
+  transition:transform .15s, background .2s, opacity .2s;letter-spacing:-.005em;
+}
 .guide-nav-btn:active{transform:scale(.97)}
-.guide-nav-btn.prev{background:var(--cream-2);color:var(--ink-soft);border:1px solid rgba(14,59,46,.1)}
-.guide-nav-btn.next{background:linear-gradient(135deg,var(--green-deep),var(--green-mid));color:var(--cream);box-shadow:0 6px 16px rgba(14,59,46,.2)}
-.guide-nav-btn:disabled{opacity:.35;pointer-events:none}
+.guide-nav-btn.prev{
+  background:rgba(255,255,255,.05);color:var(--cream);
+  border:1px solid rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+}
+.guide-nav-btn.prev:hover{background:rgba(255,255,255,.08)}
+.guide-nav-btn.next{
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;
+  box-shadow:0 8px 20px -4px rgba(95,203,154,.5), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.guide-nav-btn:disabled{opacity:.32;pointer-events:none}
 
-/* ===== DZIKIR VIEW ===== */
+/* ===== DZIKIR VIEW (iOS-26 glass) ===== */
 .dzikir-nav{display:flex;gap:6px;justify-content:center;margin-bottom:16px;flex-wrap:wrap;padding-top:4px}
 .dzikir-dot{
-  padding:6px 14px;border-radius:999px;font-size:11px;font-weight:700;
-  background:var(--cream-2);color:var(--ink-soft);border:1.5px solid transparent;
+  padding:7px 14px;border-radius:999px;font-size:11px;font-weight:800;
+  background:rgba(255,255,255,.045);color:rgba(250,245,234,.6);
+  border:1px solid rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);
   cursor:pointer;transition:all .25s;white-space:nowrap;
 }
-.dzikir-dot.active{background:var(--green-deep);color:var(--gold-soft);border-color:var(--green-deep);transform:scale(1.05)}
-.dzikir-dot.done{background:var(--green-soft);color:var(--green-deep);border-color:var(--green-mid)}
-.dzikir-card{
-  background:#fff;border-radius:28px;padding:28px 22px;margin-bottom:14px;
-  box-shadow:var(--shadow);border:1px solid rgba(14,59,46,.06);text-align:center;
-  animation:rise .5s ease-out backwards;
+.dzikir-dot.active{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);color:#1a1208;
+  border-color:var(--gold-lt);transform:scale(1.06);
+  box-shadow:0 4px 12px -2px rgba(201,162,95,.45);
 }
-.dzikir-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--green-deep);margin-bottom:4px}
-.dzikir-badge{display:inline-block;padding:3px 10px;border-radius:999px;background:var(--gold-soft);color:#8a6a30;font-size:10px;font-weight:700;margin-bottom:16px}
-.dzikir-arabic{font-family:'Amiri',serif;font-size:36px;color:var(--green-deep);direction:rtl;line-height:1.7;margin-bottom:14px;min-height:70px;transition:font-size .3s}
-.dzikir-arabic.long-text{font-size:22px;line-height:1.8}
-.dzikir-latin{font-size:14px;color:var(--gold);font-weight:600;font-style:italic;margin-bottom:4px}
-.dzikir-meaning{font-size:12px;color:var(--ink-soft);margin-bottom:20px;line-height:1.4}
+.dzikir-dot.done{
+  background:rgba(95,203,154,.16);color:#5FCB9A;
+  border-color:rgba(95,203,154,.42);
+}
+.dzikir-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:28px;padding:28px 22px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 12px 32px -10px rgba(0,0,0,.5);
+  text-align:center;animation:rise .5s ease-out backwards;
+}
+.dzikir-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:6px;letter-spacing:-.01em}
+.dzikir-badge{
+  display:inline-block;padding:4px 12px;border-radius:999px;
+  background:rgba(201,162,95,.16);color:var(--gold-lt, #fff8e8);
+  border:1px solid rgba(201,162,95,.32);
+  font-size:10px;font-weight:800;margin-bottom:18px;letter-spacing:.5px;
+}
+.dzikir-arabic{font-family:'Amiri',serif;font-size:38px;color:#fff;direction:rtl;line-height:1.7;margin-bottom:14px;min-height:70px;transition:font-size .3s;text-shadow:0 0 18px rgba(201,162,95,.15)}
+.dzikir-arabic.long-text{font-size:24px;line-height:1.8}
+.dzikir-latin{font-size:14px;color:var(--gold-lt, #fff8e8);font-weight:600;font-style:italic;margin-bottom:4px;letter-spacing:.01em}
+.dzikir-meaning{font-size:12px;color:rgba(250,245,234,.62);margin-bottom:20px;line-height:1.45}
 .tasbih-wrap{display:flex;flex-direction:column;align-items:center;margin-bottom:20px}
 .tasbih-circle{
-  width:120px;height:120px;border-radius:50%;
-  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
+  width:130px;height:130px;border-radius:50%;
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  box-shadow:0 8px 24px rgba(14,59,46,.25);cursor:pointer;
-  transition:transform .15s;position:relative;
+  box-shadow:0 12px 30px -6px rgba(95,203,154,.55), inset 0 1px 0 rgba(255,255,255,.22);
+  cursor:pointer;transition:transform .15s;position:relative;
   -webkit-tap-highlight-color:transparent;
 }
 .tasbih-circle:active{transform:scale(.95)}
-.tasbih-count{font-family:'Fraunces',serif;font-size:36px;font-weight:700;color:var(--gold-soft);line-height:1}
-.tasbih-total{font-size:11px;color:rgba(250,245,234,.5);margin-top:2px}
-.tasbih-label{font-size:11px;color:var(--ink-soft);margin-top:8px;font-weight:600}
+.tasbih-count{font-family:'Fraunces',serif;font-size:40px;font-weight:800;color:#fff;line-height:1;text-shadow:0 1px 4px rgba(0,0,0,.25)}
+.tasbih-total{font-size:11px;color:rgba(255,255,255,.65);margin-top:2px;font-weight:600}
+.tasbih-label{font-size:11px;color:rgba(250,245,234,.62);margin-top:10px;font-weight:700;letter-spacing:.4px}
 .tasbih-ring{
   position:absolute;inset:-4px;border-radius:50%;
-  border:3px solid transparent;border-top-color:var(--gold);
+  border:3px solid transparent;border-top-color:var(--gold-lt, #fff8e8);
   transition:transform .3s ease;
+  filter:drop-shadow(0 0 6px rgba(255,248,232,.5));
 }
 .dzikir-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:8px}
 .dz-btn{
-  width:44px;height:44px;border-radius:50%;border:none;cursor:pointer;
+  width:44px;height:44px;border-radius:50%;border:1px solid rgba(255,255,255,.10);cursor:pointer;
   display:flex;align-items:center;justify-content:center;font-size:18px;
-  transition:transform .15s;background:var(--cream-2);color:var(--ink-soft);
+  transition:transform .15s, background .15s;
+  background:rgba(255,255,255,.06);color:rgba(250,245,234,.72);
 }
 .dz-btn:active{transform:scale(.9)}
+.dz-btn:hover{background:rgba(255,255,255,.10)}
 .dz-btn-play{
-  width:56px;height:56px;font-size:22px;
-  background:linear-gradient(135deg,var(--green-deep),var(--green-mid));
-  color:var(--gold-soft);box-shadow:0 6px 16px rgba(14,59,46,.25);
+  width:56px;height:56px;font-size:22px;border:none;
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;
+  box-shadow:0 8px 20px -4px rgba(95,203,154,.55), inset 0 1px 0 rgba(255,255,255,.22);
 }
-.dz-btn-play.playing{background:linear-gradient(135deg,#c2410c,#ea580c);color:#fff}
-.dzikir-progress{height:4px;background:var(--cream-2);border-radius:2px;margin-top:14px;overflow:hidden}
-.dzikir-progress-fill{height:100%;background:linear-gradient(90deg,var(--green-deep),var(--gold));border-radius:2px;transition:width .3s ease}
+.dz-btn-play.playing{background:linear-gradient(160deg,#FF8A65,#E54F3D);box-shadow:0 8px 20px -4px rgba(255,138,101,.5), inset 0 1px 0 rgba(255,255,255,.22)}
+.dzikir-progress{height:4px;background:rgba(255,255,255,.08);border-radius:2px;margin-top:14px;overflow:hidden}
+.dzikir-progress-fill{height:100%;background:linear-gradient(90deg,#5FCB9A,#C9A25F);border-radius:2px;transition:width .3s ease;box-shadow:0 0 8px rgba(201,162,95,.4)}
 .dzikir-nav-btns{display:flex;gap:10px;margin-bottom:18px}
-.dzikir-nav-btn{flex:1;padding:14px;border-radius:16px;border:none;font-family:'Fraunces',serif;font-size:15px;font-weight:600;cursor:pointer;transition:transform .15s}
+.dzikir-nav-btn{
+  flex:1;padding:15px;border-radius:18px;border:none;
+  font-family:'Fraunces',serif;font-size:15px;font-weight:700;cursor:pointer;
+  transition:transform .15s, background .2s, opacity .2s;letter-spacing:-.005em;
+}
 .dzikir-nav-btn:active{transform:scale(.97)}
-.dzikir-nav-btn.prev{background:var(--cream-2);color:var(--ink-soft);border:1px solid rgba(14,59,46,.1)}
-.dzikir-nav-btn.next{background:linear-gradient(135deg,var(--green-deep),var(--green-mid));color:var(--cream);box-shadow:0 6px 16px rgba(14,59,46,.2)}
-.dzikir-nav-btn:disabled{opacity:.35;pointer-events:none}
-.dzikir-complete{text-align:center;padding:20px;background:linear-gradient(135deg,#fffaef,#fdf2e3);border:1px solid var(--gold-soft);border-radius:22px;margin-bottom:14px}
-.dzikir-complete .dc-emoji{font-size:44px;margin-bottom:8px}
-.dzikir-complete .dc-title{font-family:'Fraunces',serif;font-size:18px;font-weight:600;color:var(--green-deep)}
-.dzikir-complete .dc-sub{font-size:12px;color:var(--ink-soft);margin-top:4px}
+.dzikir-nav-btn.prev{
+  background:rgba(255,255,255,.05);color:var(--cream);
+  border:1px solid rgba(255,255,255,.10);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+}
+.dzikir-nav-btn.prev:hover{background:rgba(255,255,255,.08)}
+.dzikir-nav-btn.next{
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;
+  box-shadow:0 8px 20px -4px rgba(95,203,154,.5), inset 0 1px 0 rgba(255,255,255,.22);
+}
+.dzikir-nav-btn:disabled{opacity:.32;pointer-events:none}
+.dzikir-complete{
+  text-align:center;padding:24px 20px;margin-bottom:14px;border-radius:22px;
+  background:linear-gradient(135deg, rgba(201,162,95,.10), rgba(201,162,95,.04));
+  border:1px solid rgba(201,162,95,.28);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+}
+.dzikir-complete .dc-emoji{font-size:46px;margin-bottom:10px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.35))}
+.dzikir-complete .dc-title{font-family:'Fraunces',serif;font-size:19px;font-weight:700;color:var(--cream);letter-spacing:-.005em}
+.dzikir-complete .dc-sub{font-size:12px;color:rgba(250,245,234,.72);margin-top:5px;line-height:1.4}
 
-/* ===== PROGRESS ===== */
-.progress-hero{text-align:center;margin-bottom:16px;padding-top:4px;animation:rise .5s ease-out backwards}
-.progress-star{font-size:44px;margin-bottom:6px}
-.progress-title{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:var(--green-deep);margin-bottom:2px}
-.progress-subtitle{font-size:12px;color:var(--ink-soft)}
+/* ===== PROGRESS (iOS-26 glass) ===== */
+.progress-hero{text-align:center;margin-bottom:18px;padding-top:4px;animation:rise .5s ease-out backwards}
+.progress-star{font-size:46px;margin-bottom:8px;filter:drop-shadow(0 4px 12px rgba(201,162,95,.45))}
+.progress-title{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--cream);margin-bottom:4px;letter-spacing:-.01em}
+.progress-subtitle{font-size:12px;color:rgba(250,245,234,.62)}
 
-.streak-card{background:#fff;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid rgba(14,59,46,.06)}
+.streak-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:18px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px -10px rgba(0,0,0,.45);
+}
 .streak-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-.streak-label{font-family:'Fraunces',serif;font-size:15px;font-weight:600;color:var(--green-deep)}
-.streak-count{font-size:12px;color:var(--green-mid);font-weight:700}
+.streak-label{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--cream);letter-spacing:-.005em}
+.streak-count{font-size:12px;color:#5FCB9A;font-weight:800}
 .streak-days{display:flex;justify-content:space-between;gap:4px}
 .streak-day{flex:1;text-align:center}
-.streak-day .sd-circle{width:34px;height:34px;border-radius:50%;background:#fff;border:1.5px dashed rgba(14,59,46,.2);display:flex;align-items:center;justify-content:center;font-size:13px;margin:0 auto 4px;transition:all .3s;color:var(--ink-soft)}
-.streak-day .sd-circle.done{background:var(--green-deep);border:1.5px solid var(--green-deep);color:var(--gold-soft)}
-.streak-day .sd-circle.done::before{content:'✓';font-weight:700}
-.streak-day .sd-circle.today{background:var(--gold-soft);border:2px solid var(--gold);animation:glow 2s ease-in-out infinite}
+.streak-day .sd-circle{
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.045);
+  border:1.5px dashed rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;margin:0 auto 5px;transition:all .3s;
+  color:rgba(250,245,234,.5);
+}
+.streak-day .sd-circle.done{
+  background:linear-gradient(160deg,#5FCB9A,#2C5A3E);
+  border:1.5px solid rgba(95,203,154,.55);color:#fff;
+  box-shadow:0 4px 10px -2px rgba(95,203,154,.4);
+}
+.streak-day .sd-circle.done::before{content:'✓';font-weight:800}
+.streak-day .sd-circle.today{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  border:2px solid var(--gold-lt, #fff8e8);
+  animation:glow 2s ease-in-out infinite;color:#1a1208;
+}
 @keyframes glow{0%,100%{box-shadow:0 0 0 0 rgba(201,162,95,.5)}50%{box-shadow:0 0 0 8px rgba(201,162,95,0)}}
-.streak-day .sd-label{font-size:9px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft)}
-.streak-bar{height:5px;background:var(--cream-2);border-radius:3px;margin-top:12px;overflow:hidden}
-.streak-bar-fill{height:100%;background:linear-gradient(90deg,var(--green-deep),var(--green-mid));border-radius:3px;transition:width .6s ease}
+.streak-day .sd-label{font-size:9px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;color:rgba(250,245,234,.5)}
+.streak-bar{height:5px;background:rgba(255,255,255,.08);border-radius:3px;margin-top:12px;overflow:hidden}
+.streak-bar-fill{height:100%;background:linear-gradient(90deg,#5FCB9A,#C9A25F);border-radius:3px;transition:width .6s ease;box-shadow:0 0 8px rgba(201,162,95,.35)}
 
-.streak-stats{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:14px;border-top:1px dashed rgba(14,59,46,.15)}
+.streak-stats{display:flex;align-items:center;justify-content:space-between;margin-top:16px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.10)}
 .stat{text-align:center;flex:1}
-.stat .num{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--green-deep);line-height:1}
-.stat .lbl{font-size:9px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
-.stat-divider{width:1px;height:28px;background:rgba(14,59,46,.15)}
+.stat .num{font-family:'Fraunces',serif;font-size:24px;font-weight:800;color:var(--cream);line-height:1;letter-spacing:-.015em}
+.stat .lbl{font-size:9px;color:rgba(250,245,234,.55);letter-spacing:.6px;text-transform:uppercase;margin-top:5px;font-weight:700}
+.stat-divider{width:1px;height:28px;background:rgba(255,255,255,.10)}
 
-.rewards-card{background:#fff;border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);border:1px solid rgba(14,59,46,.06)}
+.rewards-card{
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
+  border:1px solid rgba(255,255,255,.10);
+  border-radius:22px;padding:18px;margin-bottom:14px;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 10px 26px -10px rgba(0,0,0,.45);
+}
 .rewards-grid{display:flex;gap:10px;overflow-x:auto;padding:4px 0;-webkit-overflow-scrolling:touch}
+.rewards-grid::-webkit-scrollbar{display:none}
 .reward-item{flex-shrink:0;width:66px;text-align:center}
-.reward-badge{width:52px;height:52px;border-radius:16px;background:var(--cream);border:2px solid rgba(14,59,46,.08);display:flex;align-items:center;justify-content:center;font-size:22px;margin:0 auto 4px;transition:all .3s}
-.reward-badge.unlocked{border-color:var(--gold);background:var(--gold-lt);box-shadow:0 4px 12px rgba(201,162,95,.2)}
-.reward-badge.locked{filter:grayscale(1);opacity:.4}
-.reward-cost{font-size:9px;font-weight:700;color:var(--gold)}
+.reward-badge{
+  width:54px;height:54px;border-radius:16px;
+  background:rgba(255,255,255,.045);
+  border:2px solid rgba(255,255,255,.10);
+  display:flex;align-items:center;justify-content:center;
+  font-size:24px;margin:0 auto 5px;transition:all .3s;
+}
+.reward-badge.unlocked{
+  border-color:var(--gold-lt, #fff8e8);
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  box-shadow:0 6px 14px -3px rgba(201,162,95,.5), inset 0 1px 0 rgba(255,255,255,.25);
+}
+.reward-badge.locked{filter:grayscale(1);opacity:.35}
+.reward-cost{font-size:10px;font-weight:800;color:var(--gold-lt, #fff8e8);letter-spacing:.2px}
 
 /* ===== PROGRESS: PRAYER CAROUSEL ===== */
-.pray-segments{display:flex;gap:4px;margin-bottom:12px}
-.pray-seg{flex:1;height:6px;border-radius:3px;background:var(--cream-2);transition:background .3s}
-.pray-seg.done{background:var(--green-deep)}
-.pray-seg.active{background:var(--gold)}
+.pray-segments{display:flex;gap:4px;margin-bottom:14px}
+.pray-seg{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.08);transition:background .3s, box-shadow .3s}
+.pray-seg.done{background:rgba(95,203,154,.55)}
+.pray-seg.active{background:var(--gold-lt, #fff8e8);box-shadow:0 0 10px rgba(201,162,95,.5)}
 .pray-carousel{display:flex;overflow-x:scroll;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;touch-action:pan-x;gap:12px;padding:0 0 8px;margin:0 -4px}
 .pray-carousel::-webkit-scrollbar{display:none}
 .pray-slide{
   flex:0 0 calc(100% - 8px);scroll-snap-align:center;
   display:flex;align-items:center;gap:14px;
-  padding:16px;background:var(--cream);border-radius:18px;
-  border:1.5px solid transparent;transition:all .25s;cursor:pointer;
+  padding:16px;border-radius:20px;
+  background:rgba(255,255,255,.045);
+  -webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);
+  border:1.5px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 6px 18px -8px rgba(0,0,0,.4);
+  transition:all .25s;cursor:pointer;
   -webkit-tap-highlight-color:transparent;
 }
 .pray-slide:active{transform:scale(.98)}
-.pray-slide.checked{background:var(--green-soft);border-color:rgba(14,59,46,.15)}
-.pray-slide .ps-mo{width:56px;height:56px;border-radius:16px;background:var(--cream-2);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center}
-.pray-slide .ps-mo img{width:100%;height:100%;object-fit:contain;mix-blend-mode:multiply}
-.pray-slide.checked .ps-mo{background:var(--gold-soft)}
+.pray-slide.checked{
+  background:linear-gradient(160deg, rgba(95,203,154,.18), rgba(95,203,154,.08));
+  border-color:rgba(95,203,154,.4);
+}
+.pray-slide .ps-mo{
+  width:56px;height:56px;border-radius:16px;
+  background:linear-gradient(160deg,#fffaef,#fdf2e3);
+  overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.4), 0 3px 8px -2px rgba(0,0,0,.25);
+}
+.pray-slide .ps-mo img{width:100%;height:100%;object-fit:contain}
+.pray-slide.checked .ps-mo{background:linear-gradient(160deg, rgba(201,162,95,.2), rgba(95,203,154,.18))}
 .pray-slide .ps-info{flex:1;min-width:0}
-.pray-slide .ps-name{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--green-deep);display:flex;align-items:center;gap:6px}
-.pray-slide .ps-desc{font-size:11px;color:var(--ink-soft);margin-top:2px}
-.pray-slide.checked .ps-desc{color:var(--green-mid)}
+.pray-slide .ps-name{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:var(--cream);display:flex;align-items:center;gap:6px;letter-spacing:-.005em}
+.pray-slide .ps-desc{font-size:11px;color:rgba(250,245,234,.6);margin-top:2px}
+.pray-slide.checked .ps-desc{color:#5FCB9A}
 .pray-slide .ps-check{
-  width:36px;height:36px;border-radius:50%;background:#fff;
-  border:2px dashed rgba(14,59,46,.18);display:flex;align-items:center;
-  justify-content:center;flex-shrink:0;transition:all .3s;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(255,255,255,.045);
+  border:2px dashed rgba(255,255,255,.20);
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;transition:all .3s;
   font-size:16px;color:transparent;
 }
-.pray-slide.checked .ps-check{background:var(--green-deep);border:2px solid var(--green-deep);color:var(--gold-soft)}
-.pray-slide.checked .ps-check::after{content:'✓';font-weight:700;font-size:16px}
+.pray-slide.checked .ps-check{
+  background:linear-gradient(160deg,#5FCB9A,#2C5A3E);
+  border:2px solid rgba(95,203,154,.6);color:#fff;
+  box-shadow:0 4px 10px -2px rgba(95,203,154,.45);
+}
+.pray-slide.checked .ps-check::after{content:'✓';font-weight:800;font-size:16px}
 @keyframes checkPop{0%{transform:scale(0)}50%{transform:scale(1.2)}100%{transform:scale(1)}}
 .pray-slide.just-checked .ps-check{animation:checkPop .4s cubic-bezier(.34,1.56,.64,1)}
-.progress-mo-card{background:linear-gradient(160deg,#fffaef 0%,#fdf2e3 100%);border:1px solid var(--gold-soft);border-radius:22px;padding:18px;margin-bottom:14px;box-shadow:var(--shadow);animation:rise .5s ease-out backwards}
-.progress-mo-stage{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:center}
+.progress-mo-card{
+  background:linear-gradient(160deg,#fffaef 0%,#fdf2e3 100%);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;padding:18px;margin-bottom:14px;
+  box-shadow:0 14px 36px -10px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.5);
+  animation:rise .5s ease-out backwards;
+  position:relative;overflow:hidden;
+}
+.progress-mo-card::after{
+  content:'';position:absolute;left:0;right:0;bottom:0;height:5px;
+  background:linear-gradient(90deg, transparent, rgba(201,162,95,.45), transparent);
+  pointer-events:none;
+}
+.progress-mo-stage{display:grid;grid-template-columns:100px 1fr;gap:12px;align-items:center;position:relative;z-index:1}
 .progress-mo-portrait{height:120px;display:flex;align-items:flex-end;justify-content:center}
-.progress-mo-portrait img{max-height:110px;max-width:100%;object-fit:contain;mix-blend-mode:multiply;transition:opacity .3s}
+.progress-mo-portrait img{max-height:110px;max-width:100%;object-fit:contain;transition:opacity .3s;filter:drop-shadow(0 4px 10px rgba(0,0,0,.18))}
 @keyframes moBounce{0%{transform:scale(.85) rotate(-3deg);opacity:0}60%{transform:scale(1.05) rotate(2deg);opacity:1}100%{transform:scale(1) rotate(0deg);opacity:1}}
 .progress-mo-portrait img.bounce{animation:moBounce .5s cubic-bezier(.34,1.56,.64,1)}
-.progress-speech{position:relative;background:#fff;border-radius:16px;padding:12px;box-shadow:0 4px 12px rgba(14,59,46,.06);border:1px solid rgba(14,59,46,.06)}
+.progress-speech{position:relative;background:#fff;border-radius:16px;padding:13px 14px;box-shadow:0 4px 12px rgba(14,59,46,.10);border:1px solid rgba(14,59,46,.06)}
 .progress-speech::before{content:'';position:absolute;left:-8px;top:20px;width:0;height:0;border-top:7px solid transparent;border-bottom:7px solid transparent;border-right:9px solid #fff}
-.progress-speech .ps-msg{font-family:'Fraunces',serif;font-size:14px;font-weight:500;color:var(--green-deep);line-height:1.35;margin:0 0 3px}
-.progress-speech .ps-sub{font-size:10px;color:var(--ink-soft)}
-.pray-all-done{text-align:center;padding:14px;background:linear-gradient(135deg,var(--green-deep),var(--green-mid));color:var(--cream);border-radius:16px;margin-top:14px;font-family:'Fraunces',serif;font-size:15px;font-weight:600;animation:rise .5s ease-out backwards}
+.progress-speech .ps-msg{font-family:'Fraunces',serif;font-size:14px;font-weight:600;color:var(--green-deep);line-height:1.4;margin:0 0 3px}
+.progress-speech .ps-sub{font-size:10px;color:var(--ink-soft);font-weight:600}
+.pray-all-done{
+  text-align:center;padding:15px;border-radius:18px;margin-top:14px;
+  background:linear-gradient(160deg,#5FCB9A 0%,#2C5A3E 100%);color:#fff;
+  font-family:'Fraunces',serif;font-size:15px;font-weight:700;letter-spacing:-.005em;
+  box-shadow:0 8px 20px -4px rgba(95,203,154,.5), inset 0 1px 0 rgba(255,255,255,.22);
+  animation:rise .5s ease-out backwards;
+}
 
 /* ===== MODALS ===== */
 .modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(14,59,46,.55);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .4s}
@@ -395,7 +636,207 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 
 /* ===== CELEB BOUNCE ===== */
 @keyframes celebBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.modal-card{max-width:680px!important;}}
+
+/* iMac/desktop — keep content a centered column, consistent with the portal */
+@media(min-width:820px){.view{max-width:860px;margin-left:auto;margin-right:auto;}.topbar{padding-left:max(16px,calc((100vw - 860px)/2 + 4px));padding-right:max(16px,calc((100vw - 860px)/2 + 4px));}}
+
+/* ===== PROGRESS v2: Capaian Belajarmu + Lencana Mo ===== */
+.cap-row{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:14px 16px;margin-bottom:12px;
+  cursor:pointer;transition:transform .15s, background .2s;
+}
+.cap-row:active{transform:scale(.985)}
+.cap-row:hover{background:rgba(255,255,255,.055)}
+.cap-row-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;gap:8px}
+.cap-row-label{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--cream);letter-spacing:-.005em}
+.cap-row-count{font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:var(--gold-lt,#fff8e8);letter-spacing:-.01em}
+.cap-row-count span{font-size:13px;color:rgba(250,245,234,.45);font-weight:700}
+.cap-segments{display:flex;gap:4px;margin-bottom:8px}
+.cap-seg{flex:1;height:6px;border-radius:3px;background:rgba(255,255,255,.08);transition:background .3s, box-shadow .3s}
+.cap-seg.done{background:linear-gradient(90deg,#5FCB9A,#C9A25F);box-shadow:0 0 8px rgba(201,162,95,.35)}
+.cap-row-hint{font-size:11px;color:rgba(250,245,234,.5);font-weight:600;letter-spacing:.01em}
+
+.lencana-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+
+/* Progress closing card — fills the empty viewport tail with a friendly Mo signoff */
+.prog-closer{
+  margin-top:14px;padding:18px 16px;
+  display:flex;align-items:center;gap:12px;border-radius:20px;
+  background:linear-gradient(135deg, rgba(95,203,154,.10), rgba(95,203,154,.04));
+  border:1px solid rgba(95,203,154,.25);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+}
+.prog-closer-mo{
+  width:64px;height:64px;flex-shrink:0;
+  background:linear-gradient(160deg,#fffaef,#fdf2e3);
+  border-radius:50%;border:2px solid rgba(95,203,154,.4);
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 4px 10px -2px rgba(0,0,0,.25);
+}
+.prog-closer-mo img{width:80%;height:80%;object-fit:contain;}
+.prog-closer-text{flex:1;min-width:0;}
+.prog-closer-msg{font-family:'Fraunces',serif;font-size:14px;font-weight:700;color:var(--cream);line-height:1.3;letter-spacing:-.005em;}
+.prog-closer-sub{font-size:11px;color:rgba(250,245,234,.62);margin-top:3px;line-height:1.4;}
+.lencana{
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:12px 8px 10px;border-radius:16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.08);
+  transition:all .3s;
+}
+.lencana.unlocked{
+  background:linear-gradient(160deg, rgba(201,162,95,.14), rgba(95,203,154,.08));
+  border-color:rgba(201,162,95,.4);
+  box-shadow:0 4px 12px -3px rgba(201,162,95,.3), inset 0 1px 0 rgba(255,255,255,.08);
+}
+.lencana .ln-icon{
+  width:48px;height:48px;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;font-size:24px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);
+  margin-bottom:8px;transition:all .3s;
+}
+.lencana.unlocked .ln-icon{
+  background:linear-gradient(160deg,#FFE08A,#C9A25F);
+  border-color:var(--gold-lt,#fff8e8);
+  box-shadow:0 4px 10px -3px rgba(201,162,95,.5), inset 0 1px 0 rgba(255,255,255,.22);
+  filter:none;
+}
+.lencana:not(.unlocked) .ln-icon{filter:grayscale(1);opacity:.4}
+.lencana .ln-name{font-size:11px;font-weight:800;color:var(--cream);line-height:1.2;letter-spacing:-.003em;margin-bottom:3px}
+.lencana:not(.unlocked) .ln-name{color:rgba(250,245,234,.55)}
+.lencana .ln-hint{font-size:9px;font-weight:600;color:rgba(250,245,234,.45);line-height:1.25;min-height:11px}
+.lencana.unlocked .ln-hint{color:rgba(95,203,154,.85);font-weight:700}
+
+/* bm-letterbox: comfortable centered column on tablet/desktop */
+@media(min-width:760px){.main{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}
+body{background:#06100A;}
+
+/* ===== PINNED BOTTOM CTA (Home view only) ===== */
+.cta-bar{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  padding:14px 18px calc(14px + var(--safe-bottom));
+  background:linear-gradient(180deg, transparent 0%, rgba(11,28,18,.7) 35%, rgba(11,28,18,.95) 100%);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  pointer-events:none;
+  /* Hidden by default; only the Home view (body[data-view="home"]) flips this on.
+     Without this, the blurred strip + gradient lingered at the bottom of Guide,
+     Progress, and Dzikir views even when the inner anchor was invisible. */
+  opacity:0;visibility:hidden;
+  transition:opacity .25s ease, visibility 0s .25s;
+}
+body[data-view="home"] .cta-bar{
+  opacity:1;visibility:visible;
+  transition:opacity .25s ease;
+}
+@media(min-width:760px){.cta-bar{padding-left:max(18px,calc((100vw - 560px)/2));padding-right:max(18px,calc((100vw - 560px)/2));}}
+.cta-bar > a{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  padding:15px 22px;border-radius:999px;
+  background:linear-gradient(180deg,#5FCB9A 0%,#2C5A3E 100%);
+  color:#fff;font-family:'Fraunces',serif;font-weight:700;font-size:16px;text-decoration:none;
+  box-shadow:0 10px 26px -6px rgba(95,203,154,.55),inset 0 1px 0 rgba(255,255,255,.22);
+  transform:translateY(28px);opacity:0;
+  transition:transform .35s cubic-bezier(.34,1.56,.64,1), opacity .25s, background .15s;
+}
+.cta-bar > a:active{background:linear-gradient(180deg,#4FB387 0%,#234A33 100%);transform:translateY(0) scale(.97);}
+body[data-view="home"] .cta-bar{pointer-events:auto;}
+body[data-view="home"] .cta-bar > a{transform:translateY(0);opacity:1;}
+body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-pray-with-mo.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Pray with Mo — Panduan Sholat Interaktif untuk Anak | Baby Mo">
+<meta property="og:description" content="Belajar gerakan &amp; bacaan sholat langkah demi langkah bersama Baby Mo — plus dzikir &amp; doa.">
+<meta property="og:url" content="https://play.babymo.id/babymo-pray-with-mo.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-pray-with-mo.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Pray with Mo — Panduan Sholat Interaktif untuk Anak | Baby Mo">
+<meta name="twitter:description" content="Belajar gerakan &amp; bacaan sholat langkah demi langkah bersama Baby Mo — plus dzikir &amp; doa.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-pray-with-mo.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Pray with Mo — Baby Mo","url":"https://play.babymo.id/babymo-pray-with-mo.html","description":"Belajar gerakan & bacaan sholat langkah demi langkah bersama Baby Mo — plus dzikir & doa.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-pray-with-mo.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":10},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Pray with Mo","item":"https://play.babymo.id/babymo-pray-with-mo.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+.topbar{background:rgba(255,255,255,.78);-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);box-shadow:0 0 0 .5px rgba(21,34,48,.08),0 8px 20px -14px rgba(30,60,110,.45);}
+.hero-section{background:
+  radial-gradient(ellipse 70% 70% at 100% 100%,rgba(255,255,255,.7),transparent 60%),
+  linear-gradient(160deg,#FFF1C2 0%,#FFD9E6 48%,#DCD6FF 100%);}
+.hero-greeting{color:#C2410C;opacity:1;text-transform:none!important;letter-spacing:.1px!important;font-size:14px!important;font-weight:800;line-height:1.3;margin-bottom:8px;overflow-wrap:anywhere;}
+.hero-title{color:#152230;}
+.hero-title em{color:#12A15A;}
+.hero-prayer{background:rgba(255,255,255,.75);border-color:rgba(255,255,255,.95);color:#152230;}
+.topbar-title,.card-title,.hero-prayer .hp-name,.feat-card .fc-title,.section-title,.step-chip .sc-name,.step-name,.dzikir-title,.tasbih-count,.dzikir-complete .dc-title,.progress-title,.stat .num,.pray-slide .ps-name,.cap-row-label,.prog-closer-msg,.lencana .ln-name{color:#152230!important;}
+.card-sub,.feat-card .fc-sub,.step-desc,.recitation-meaning,.recitation-page,.tip-text,.dzikir-meaning,.tasbih-total,.tasbih-label,.dzikir-complete .dc-sub,.progress-subtitle,.streak-label,.streak-day .sd-label,.stat .lbl,.pray-slide .ps-desc,.cap-row-count span,.cap-row-hint,.prog-closer-sub,.lencana:not(.unlocked) .ln-name,.lencana .ln-hint{color:#5A6878!important;}
+.recitation-arabic,.dzikir-arabic{color:#0B6B3A!important;}
+.rec-btn-small{color:#152230!important;}
+.back-btn{background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.1);color:#152230;}
+.step-dot{background:rgba(255,255,255,.85);border-color:rgba(21,34,48,.12);color:#5A6878;}
+.step-dot-line{background:rgba(21,34,48,.12);}
+.recitation-latin{color:#C2410C;}
+.cta-bar{background:linear-gradient(180deg,transparent 0%,rgba(242,246,252,.75) 35%,rgba(242,246,252,.95) 100%);}
+.guide-nav-btn.prev,.dzikir-nav-btn.prev{background:rgba(255,255,255,.88)!important;color:#152230!important;border-color:rgba(21,34,48,.1)!important;}
+
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+.cta-bar a{background:linear-gradient(120deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%)!important;color:#fff!important;text-shadow:0 1px 1.5px rgba(0,70,35,.38);box-shadow:inset 0 18px 16px -14px rgba(255,255,255,.45),0 12px 24px -12px rgba(10,143,160,.6)!important;}
+/* "wudhu first" banner on the home screen */
+.wudhu-banner{display:flex;align-items:center;gap:12px;margin:14px 0 4px;padding:8px 14px 8px 8px;border-radius:22px;text-decoration:none;color:#152230;
+  background:linear-gradient(120deg,#E0F4FF,#D6EEFF 60%,#E9E4FF);box-shadow:inset 0 1px 0 #fff,0 12px 24px -16px rgba(3,105,161,.55);border:1px solid rgba(255,255,255,.9)}
+.wudhu-banner img{width:68px;height:68px;object-fit:contain;border-radius:16px;background:#fff;flex:0 0 68px}
+.wudhu-banner .wb-text{flex:1;min-width:0}
+.wudhu-banner b{display:block;font-size:16px}
+.wudhu-banner .wb-text span{display:block;font-size:13px;color:#4A5A6B;font-weight:700;margin-top:2px}
+.wudhu-banner .wb-chev{font-size:24px;color:#0369A1;font-weight:700}
+.wudhu-banner:active{transform:scale(.98)}
+html[data-bm-theme="classic"] .wudhu-banner{color:#F0E8D8;background:linear-gradient(120deg,#164B3A,#12403A 60%,#1C3550);border-color:rgba(255,255,255,.1);box-shadow:0 12px 24px -16px rgba(0,0,0,.7)}
+html[data-bm-theme="classic"] .wudhu-banner img{background:#1E4A39}
+html[data-bm-theme="classic"] .wudhu-banner .wb-text span{color:#C9D6CC}
+html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
+
+/* real Baby Mo renders on the finish panels */
+.dc-mo{width:140px;height:140px;object-fit:contain;display:block;margin:0 auto 4px;filter:drop-shadow(0 8px 14px rgba(30,60,110,.22));}
+.modal-mo{width:150px;height:150px;object-fit:contain;display:block;margin:-6px auto 2px;filter:drop-shadow(0 8px 14px rgba(30,60,110,.22));animation:celebBounce 1.4s ease infinite;}
+
+/* first-time progress card */
+.prog-start{flex-direction:column;align-items:center;text-align:center;gap:8px;margin-top:14px;padding:16px;border-radius:20px;background:linear-gradient(135deg,#E9FBF1,#E3F2FF);}
+.prog-start .ps-emoji{font-size:34px;line-height:1;}
+.prog-start .ps-text b{display:block;font-size:16px;color:#152230;}
+.prog-start .ps-text span{display:block;font-size:13.5px;color:#5A6878;margin-top:3px;}
+.prog-start .ps-go{margin-top:6px;}
+
+/* readable text: nothing under ~11.5px */
+.hero-greeting,.tip-label,.ps-sub,.badge,.stat .lbl,.lbl,.ln-hint{font-size:11.5px!important;}
+</style>
+<style id="bm-bright-fixes">
+/* dzikir screen + popups in the bright theme */
+.dzikir-dot{color:#5A6878!important;background:rgba(255,255,255,.8)!important;border-color:rgba(21,34,48,.08)!important;}
+.dzikir-badge{color:#9A5A00!important;background:rgba(245,159,0,.16)!important;}
+.dzikir-latin{color:#C2560C!important;}
+.modal-overlay{background:rgba(40,60,90,.28)!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);}
+.modal-title{color:#152230!important;}
+.modal-desc{color:#5A6878!important;}
+.tasbih-circle{background:linear-gradient(135deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%)!important;}
+
+/* contrast fixes after the bright theme */
+.hp-time,#countdown{color:#152230!important;}
+.step-name-ar{color:#0B6B3A!important;}
+.tip-label{color:#C2560C!important;}
+.badge.gold{color:#9A5A00!important;}
+.tasbih-count{color:#fff!important;}
+.tasbih-total{color:rgba(255,255,255,.85)!important;}
+.tasbih-label{color:#5A6878!important;}
+.dz-btn{color:#152230!important;}
+.modal-highlight{color:#9A5A00!important;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
 
@@ -430,14 +871,20 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
               <div class="hp-pulse"></div>
               <span id="countdown">--:--:--</span>
             </div>
+            <div class="hp-progress" id="prayerProgress"></div>
           </div>
         </div>
         <div class="hero-mo">
-          <img src="mo-pray-assets/mo-waving-mat.png" alt="Mo">
+          <img src="mo-pray-assets/mo-waving-mat.webp" alt="Mo">
         </div>
       </div>
     </div>
 
+    <a class="wudhu-banner" href="./babymo-wudhu.html">
+      <img src="wudhu-assets/w02-tangan.webp" alt="">
+      <span class="wb-text"><b>Wudhu dulu, yuk! 💧</b><span>Sebelum sholat, bersihkan diri bareng Mo</span></span>
+      <span class="wb-chev">›</span>
+    </a>
     <div class="features">
       <div class="feat-card" onclick="showView('guide')">
         <div class="fc-icon">🕌</div>
@@ -472,7 +919,7 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
     <div class="mo-stage-guide">
       <button class="stage-nav nav-prev" onclick="prevStep()">‹</button>
       <div class="sound-bars" id="soundBars"><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div></div>
-      <img id="moImage" src="mo-pray-assets/mo-takbir.png" alt="Mo pose">
+      <img id="moImage" src="mo-pray-assets/mo-takbir.webp" alt="Mo pose">
       <button class="stage-nav nav-next" onclick="nextStep()">›</button>
     </div>
 
@@ -519,7 +966,7 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
     <div class="progress-mo-card">
       <div class="progress-mo-stage">
         <div class="progress-mo-portrait">
-          <img id="progressMoImg" src="mo-pray-assets/mo-waving-mat.png" alt="Mo">
+          <img id="progressMoImg" src="mo-pray-assets/mo-waving-mat.webp" alt="Mo">
         </div>
         <div class="progress-speech">
           <p class="ps-msg" id="progressMoMsg">Yuk latihan sholat hari ini!</p>
@@ -528,33 +975,40 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
       </div>
     </div>
 
-    <!-- Daily prayer practice -->
+    <!-- Capaian Belajarmu: real learning progress -->
     <div class="card">
       <div class="card-head">
         <div>
-          <div class="card-title">Latihan Hari Ini</div>
-          <div class="card-sub">Swipe & tap untuk tandai selesai</div>
+          <div class="card-title">Capaian Belajarmu</div>
+          <div class="card-sub">Yang sudah kamu pelajari bareng Mo</div>
         </div>
-        <span class="badge gold" id="todayPrayBadge">0/5</span>
       </div>
-      <div class="pray-segments" id="praySegments"></div>
-      <div class="pray-carousel" id="prayCarousel"></div>
-      <div id="prayAllDoneMsg"></div>
-    </div>
 
-    <!-- Weekly streak -->
-    <div class="card">
-      <div class="card-head">
-        <div>
-          <div class="card-title">Minggu Ini</div>
-          <div class="card-sub">Streak latihan mingguan kamu</div>
+      <div class="cap-row" onclick="showView('guide')">
+        <div class="cap-row-head">
+          <div class="cap-row-label">🕌 Langkah Sholat</div>
+          <div class="cap-row-count" id="stepMasteredCount">0 <span>/7</span></div>
         </div>
-        <span class="badge" id="streakCount">0/7 Hari</span>
+        <div class="cap-segments" id="stepSegments"></div>
+        <div class="cap-row-hint" id="stepMasteredHint">Buka Panduan Sholat untuk mulai belajar</div>
       </div>
-      <div class="streak-days" id="streakDays"></div>
-      <div class="streak-bar"><div class="streak-bar-fill" id="streakBar" style="width:0%"></div></div>
-      <div class="streak-stats">
-        <div class="stat"><div class="num" id="statPrayers">0</div><div class="lbl">Latihan</div></div>
+
+      <div class="cap-row" onclick="showView('dzikir')">
+        <div class="cap-row-head">
+          <div class="cap-row-label">📿 Jenis Dzikir</div>
+          <div class="cap-row-count" id="dzMasteredCount">0 <span>/6</span></div>
+        </div>
+        <div class="cap-segments" id="dzSegments"></div>
+        <div class="cap-row-hint" id="dzMasteredHint">Tap untuk coba dzikir baru</div>
+      </div>
+
+      <div class="prog-start" id="progStart" style="display:none">
+        <div class="ps-emoji">🌱</div>
+        <div class="ps-text"><b>Belum ada latihan — yuk mulai!</b><span>Langkah pertama: Takbiratul Ihram. Mo temani pelan-pelan 💚</span></div>
+        <button class="btn-primary ps-go" onclick="showView('guide')">Mulai Latihan Sholat</button>
+      </div>
+      <div class="streak-stats" id="streakStats">
+        <div class="stat"><div class="num" id="statPrayers">0</div><div class="lbl">Sholat Lengkap</div></div>
         <div class="stat-divider"></div>
         <div class="stat"><div class="num" id="statDuas">0</div><div class="lbl">Bacaan</div></div>
         <div class="stat-divider"></div>
@@ -562,13 +1016,24 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
       </div>
     </div>
 
-    <!-- Rewards -->
+    <!-- Lencana Mo: real milestone badges -->
     <div class="card">
       <div class="card-head">
-        <div><div class="card-title">Rewards</div><div class="card-sub">Kumpulkan bintang dan buka hadiah seru!</div></div>
-        <div class="badge gold">⭐ <span id="rewardStars">0</span></div>
+        <div><div class="card-title">Lencana Mo</div><div class="card-sub">Capai pencapaian, buka lencana baru!</div></div>
+        <div class="badge gold" id="badgeProgress">0/6</div>
       </div>
-      <div class="rewards-grid" id="rewardsGrid"></div>
+      <div class="lencana-grid" id="lencanaGrid"></div>
+    </div>
+
+    <!-- Closing encouragement card — fills the page tail with a friendly Mo signoff -->
+    <div class="prog-closer">
+      <div class="prog-closer-mo">
+        <img src="baby-mo-poses/baby-mo-ok.webp" alt="" onerror="this.onerror=null;this.src='baby-mo-poses/baby-mo-pose-05.webp'">
+      </div>
+      <div class="prog-closer-text">
+        <div class="prog-closer-msg">Kerennn! Terus belajar ya 🌟</div>
+        <div class="prog-closer-sub">Mo bangga banget sama kamu — sedikit demi sedikit, makin pintar sholatnya!</div>
+      </div>
     </div>
   </div>
 
@@ -598,7 +1063,7 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
     </div>
     <div id="dzikirComplete" style="display:none">
       <div class="dzikir-complete">
-        <div class="dc-emoji">🤲</div>
+        <img class="dc-mo" src="mo-pray-assets/mo-doa.webp" alt="Baby Mo berdoa setelah sholat">
         <div class="dc-title">Masya Allah! Dzikir selesai</div>
         <div class="dc-sub">Semoga Allah menerima ibadah kamu</div>
         <button class="btn-primary" style="margin-top:14px" id="dzCompleteNext" onclick="nextDzikir()">Selanjutnya →</button>
@@ -615,7 +1080,7 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 <!-- CELEBRATION -->
 <div class="modal-overlay" id="celebOverlay">
   <div class="modal-card">
-    <div class="modal-emoji" style="animation:celebBounce 1s ease infinite">🌟</div>
+    <img class="modal-mo" src="mo-pray-assets/mo-salam-right.webp" alt="Baby Mo salam">
     <h2 class="modal-title">Masya Allah!</h2>
     <p class="modal-desc">Kamu sudah belajar semua gerakan sholat! Terus berlatih ya</p>
     <div class="modal-highlight">+5 ⭐ Bintang</div>
@@ -623,22 +1088,12 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
   </div>
 </div>
 
-<!-- NAME PROMPT -->
-<div class="modal-overlay" id="nameOverlay" style="z-index:350">
-  <div class="modal-card">
-    <div class="modal-emoji" style="animation:none">👋</div>
-    <h2 class="modal-title" id="namePromptTitle">Assalamu'alaikum!</h2>
-    <p class="modal-desc" id="namePromptDesc">Siapa nama kamu? Mo mau kenalan 😊</p>
-    <input type="text" id="nameInput" class="name-input" placeholder="Ketik nama kamu..." maxlength="20" autocomplete="off">
-    <button class="btn-primary" onclick="saveName()">✨ Bismillah, Mulai!</button>
-  </div>
-</div>
-
 <!-- PRAYER TIMES -->
 <div class="modal-overlay" id="timesOverlay" style="z-index:310">
   <div class="modal-card" style="padding:24px 20px">
     <div class="modal-emoji" style="animation:none;font-size:40px">🕌</div>
-    <h2 class="modal-title" style="margin-bottom:16px">Waktu Sholat Hari Ini</h2>
+    <h2 class="modal-title" style="margin-bottom:4px">Waktu Sholat Hari Ini</h2>
+    <div id="prayerTimesCity" style="font-size:12px;color:var(--ink-soft);font-weight:600;margin-bottom:14px"></div>
     <div id="prayerTimesList" style="text-align:left"></div>
     <button class="btn-primary" style="margin-top:16px" onclick="closePrayerTimes()">Tutup</button>
   </div>
@@ -646,8 +1101,8 @@ body{background-image:radial-gradient(circle at 10% 0%,rgba(201,162,95,.10),tran
 
 <script>
 var STEPS=[
-  {id:1,name:'Takbiratul Ihram',nameAr:'تَكْبِيرَةُ الإِحْرَام',desc:'Angkat kedua tangan sejajar telinga dan ucapkan takbir',image:'mo-pray-assets/mo-takbir.png',imageGuide:'mo-pray-assets/mo-takbir-mat.png',thumb:'mo-pray-assets/mo-takbir.png',recitations:[{arabic:'اللَّهُ أَكْبَرُ',latin:'Allahu Akbar',meaning:'Allah Maha Besar'}],tip:'Niatkan sholat dalam hati, lalu angkat tangan dan ucapkan takbir dengan tenang 🤲'},
-  {id:2,name:'Qiyam',nameAr:'قِيَام',desc:'Berdiri tegak, tangan di dada, baca Al-Fatiha',image:'mo-pray-assets/mo-qiyam.png',imageGuide:'mo-pray-assets/mo-qiyam-mat.png',thumb:'mo-pray-assets/mo-qiyam.png',recitations:[
+  {id:1,name:'Takbiratul Ihram',nameAr:'تَكْبِيرَةُ الإِحْرَام',desc:'Angkat kedua tangan sejajar telinga dan ucapkan takbir',image:'mo-pray-assets/mo-takbir.webp',imageGuide:'mo-pray-assets/mo-takbir-mat.webp',thumb:'mo-pray-assets/mo-takbir.webp',recitations:[{arabic:'اللَّهُ أَكْبَرُ',latin:'Allahu Akbar',meaning:'Allah Maha Besar'}],tip:'Niatkan sholat dalam hati, lalu angkat tangan dan ucapkan takbir dengan tenang 🤲'},
+  {id:2,name:'Qiyam',nameAr:'قِيَام',desc:'Berdiri tegak, tangan di dada, baca Al-Fatiha',image:'mo-pray-assets/mo-qiyam.webp',imageGuide:'mo-pray-assets/mo-qiyam-mat.webp',thumb:'mo-pray-assets/mo-qiyam.webp',recitations:[
     {arabic:'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ',latin:'Bismillahir Rahmanir Raheem',meaning:'Dengan nama Allah Yang Maha Pengasih, Maha Penyayang'},
     {arabic:'الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ',latin:'Alhamdu lillahi Rabbil aalameen',meaning:'Segala puji bagi Allah, Tuhan seluruh alam'},
     {arabic:'الرَّحْمَٰنِ الرَّحِيمِ',latin:'Ar-Rahmanir Raheem',meaning:'Yang Maha Pengasih, Maha Penyayang'},
@@ -656,11 +1111,11 @@ var STEPS=[
     {arabic:'اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ',latin:'Ihdinas siratal mustaqeem',meaning:'Tunjukilah kami jalan yang lurus'},
     {arabic:'صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ',latin:"Siratal ladhina an'amta alayhim, ghayril maghdubi alayhim wa lad daalleen",meaning:'Jalan orang yang Engkau beri nikmat, bukan jalan mereka yang dimurkai dan bukan pula jalan mereka yang sesat'}
   ],tip:"Baca Al-Fatiha pelan-pelan biar lebih khusyu' 📖"},
-  {id:3,name:"Ruku'",nameAr:'رُكُوع',desc:'Membungkuk, tangan di lutut, punggung lurus',image:'mo-pray-assets/mo-ruku.png',imageGuide:'mo-pray-assets/mo-ruku.png',thumb:'mo-pray-assets/mo-ruku.png',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الْعَظِيمِ',latin:'Subhana Rabbiyal Azeem',meaning:'Maha Suci Tuhanku Yang Maha Agung',repeat:3}],tip:"Bungkukkan badan sampai punggung lurus, tangan pegang lutut 🙏"},
-  {id:4,name:"I'tidal",nameAr:'اِعْتِدَال',desc:"Bangkit berdiri tegak dari ruku'",image:'mo-pray-assets/mo-itidal.png',imageGuide:'mo-pray-assets/mo-itidal.png',thumb:'mo-pray-assets/mo-itidal.png',recitations:[{arabic:'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ',latin:"Sami'allahu liman hamidah",meaning:'Allah mendengar orang yang memuji-Nya'},{arabic:'رَبَّنَا وَلَكَ الْحَمْدُ',latin:'Rabbana wa lakal hamd',meaning:'Ya Tuhan kami, bagi-Mu segala puji'}],tip:'Berdiri tegak kembali dengan tenang ✨'},
-  {id:5,name:'Sujud',nameAr:'سُجُود',desc:'Sujud dengan 7 anggota badan menyentuh lantai',image:'mo-pray-assets/mo-sujud.png',imageGuide:'mo-pray-assets/mo-sujud.png',thumb:'mo-pray-assets/mo-sujud.png',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الأَعْلَى',latin:"Subhana Rabbiyal A'la",meaning:'Maha Suci Tuhanku Yang Maha Tinggi',repeat:3}],tip:'7 anggota: dahi, 2 telapak tangan, 2 lutut, 2 ujung kaki 🌟'},
-  {id:6,name:'Duduk',nameAr:'جُلُوس',desc:'Duduk di antara dua sujud',image:'mo-pray-assets/mo-sitting.png',imageGuide:'mo-pray-assets/mo-sitting.png',thumb:'mo-pray-assets/mo-sitting.png',recitations:[{arabic:'رَبِّ اغْفِرْ لِي وَارْحَمْنِي',latin:'Rabbighfir li warhamni',meaning:'Ya Tuhanku, ampunilah aku dan sayangilah aku',repeat:2}],tip:'Duduk dengan tenang, mohon ampun kepada Allah 💚'},
-  {id:7,name:'Tashahhud & Salam',nameAr:'تَشَهُّد وَسَلَام',desc:'Duduk akhir, baca tahiyyat, lalu salam',image:'mo-pray-assets/mo-tashahhud.png',imageGuide:'mo-pray-assets/mo-tashahhud.png',thumb:'mo-pray-assets/mo-tashahhud.png',recitations:[
+  {id:3,name:"Ruku'",nameAr:'رُكُوع',desc:'Membungkuk, tangan di lutut, punggung lurus',image:'mo-pray-assets/mo-ruku.webp',imageGuide:'mo-pray-assets/mo-ruku.webp',thumb:'mo-pray-assets/mo-ruku.webp',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الْعَظِيمِ',latin:'Subhana Rabbiyal Azeem',meaning:'Maha Suci Tuhanku Yang Maha Agung',repeat:3}],tip:"Bungkukkan badan sampai punggung lurus, tangan pegang lutut 🙏"},
+  {id:4,name:"I'tidal",nameAr:'اِعْتِدَال',desc:"Bangkit berdiri tegak dari ruku'",image:'mo-pray-assets/mo-itidal.webp',imageGuide:'mo-pray-assets/mo-itidal.webp',thumb:'mo-pray-assets/mo-itidal.webp',recitations:[{arabic:'سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ',latin:"Sami'allahu liman hamidah",meaning:'Allah mendengar orang yang memuji-Nya'},{arabic:'رَبَّنَا وَلَكَ الْحَمْدُ',latin:'Rabbana wa lakal hamd',meaning:'Ya Tuhan kami, bagi-Mu segala puji'}],tip:'Berdiri tegak kembali dengan tenang ✨'},
+  {id:5,name:'Sujud',nameAr:'سُجُود',desc:'Sujud dengan 7 anggota badan menyentuh lantai',image:'mo-pray-assets/mo-sujud.webp',imageGuide:'mo-pray-assets/mo-sujud.webp',thumb:'mo-pray-assets/mo-sujud.webp',recitations:[{arabic:'سُبْحَانَ رَبِّيَ الأَعْلَى',latin:"Subhana Rabbiyal A'la",meaning:'Maha Suci Tuhanku Yang Maha Tinggi',repeat:3}],tip:'7 anggota: dahi, 2 telapak tangan, 2 lutut, 2 ujung kaki 🌟'},
+  {id:6,name:'Duduk',nameAr:'جُلُوس',desc:'Duduk di antara dua sujud',image:'mo-pray-assets/mo-sitting.webp',imageGuide:'mo-pray-assets/mo-sitting.webp',thumb:'mo-pray-assets/mo-sitting.webp',recitations:[{arabic:'رَبِّ اغْفِرْ لِي وَارْحَمْنِي',latin:'Rabbighfir li warhamni',meaning:'Ya Tuhanku, ampunilah aku dan sayangilah aku',repeat:2}],tip:'Duduk dengan tenang, mohon ampun kepada Allah 💚'},
+  {id:7,name:'Tashahhud & Salam',nameAr:'تَشَهُّد وَسَلَام',desc:'Duduk akhir, baca tahiyyat, lalu salam',image:'mo-pray-assets/mo-tashahhud.webp',imageGuide:'mo-pray-assets/mo-tashahhud.webp',thumb:'mo-pray-assets/mo-tashahhud.webp',recitations:[
     {arabic:'التَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ لِلَّهِ',latin:'At-tahiyyatul mubarakatush shalawatuth thayyibatu lillah',meaning:'Segala penghormatan, keberkahan, sholawat dan kebaikan hanya bagi Allah'},
     {arabic:'السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ',latin:'Assalamu alaika ayyuhan nabiyyu wa rahmatullahi wa barakatuh',meaning:'Salam sejahtera untukmu wahai Nabi, rahmat Allah dan berkah-Nya'},
     {arabic:'السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ',latin:'Assalamu alaina wa ala ibadillahis shaliheen',meaning:'Salam sejahtera atas kami dan atas hamba-hamba Allah yang shaleh'},
@@ -669,22 +1124,30 @@ var STEPS=[
 ];
 
 var PRAYERS=[{name:'Subuh',icon:'🌅',h:4,m:35},{name:'Dzuhur',icon:'☀️',h:12,m:0},{name:'Ashar',icon:'🌤',h:15,m:15},{name:'Maghrib',icon:'🌅',h:17,m:55},{name:'Isya',icon:'🌙',h:19,m:10}];
-var REWARDS=[{stars:5,emoji:'🧢'},{stars:15,emoji:'🏮'},{stars:30,emoji:'🕌'},{stars:50,emoji:'🌟'},{stars:80,emoji:'🐸'},{stars:100,emoji:'👑'}];
+/* Real-progress milestone badges — each tied to actual learning activity */
+var LENCANA=[
+  {key:'start',  name:'Mulai Belajar',  icon:'🌱', hintLocked:'Dengar 1 bacaan pertama',     hintDone:'Selesai!',      unlock:function(p){return p.duas>=1;}},
+  {key:'khatam', name:'Khatam Panduan', icon:'🕌', hintLocked:'Selesaikan 7 langkah sholat',  hintDone:'7 langkah ✓',   unlock:function(p){return p.prayers>=1;}},
+  {key:'dzPem',  name:'Dzikir Pemula',  icon:'📿', hintLocked:'Coba 3 jenis dzikir',          hintDone:'3 dzikir ✓',    unlock:function(p){return p.dzDone>=3;}},
+  {key:'tenSh',  name:'10 Sholat',      icon:'🌟', hintLocked:'10 sholat lengkap',            hintDone:'Istiqomah!',    unlock:function(p){return p.prayers>=10;}},
+  {key:'bacaan', name:'Bacaan Master',  icon:'💎', hintLocked:'50 bacaan dipelajari',         hintDone:'Master!',       unlock:function(p){return p.duas>=50;}},
+  {key:'master', name:'Mo Master',      icon:'👑', hintLocked:'Buka 5 lencana lainnya',       hintDone:'Mashallah!',    unlock:function(p){return p.others>=5;}},
+];
 
 var PRAY_ITEMS=[
-  {name:'Subuh',icon:'🌅',desc:'Sholat pagi sebelum matahari terbit',thumb:'mo-pray-assets/mo-takbir.png'},
-  {name:'Dzuhur',icon:'☀️',desc:'Sholat tengah hari',thumb:'mo-pray-assets/mo-qiyam.png'},
-  {name:'Ashar',icon:'🌤',desc:'Sholat sore hari',thumb:'mo-pray-assets/mo-ruku.png'},
-  {name:'Maghrib',icon:'🌅',desc:'Sholat setelah matahari terbenam',thumb:'mo-pray-assets/mo-sujud.png'},
-  {name:'Isya',icon:'🌙',desc:'Sholat malam hari',thumb:'mo-pray-assets/mo-tashahhud.png'}
+  {name:'Subuh',icon:'🌅',desc:'Sholat pagi sebelum matahari terbit',thumb:'mo-pray-assets/mo-takbir.webp'},
+  {name:'Dzuhur',icon:'☀️',desc:'Sholat tengah hari',thumb:'mo-pray-assets/mo-qiyam.webp'},
+  {name:'Ashar',icon:'🌤',desc:'Sholat sore hari',thumb:'mo-pray-assets/mo-ruku.webp'},
+  {name:'Maghrib',icon:'🌅',desc:'Sholat setelah matahari terbenam',thumb:'mo-pray-assets/mo-sujud.webp'},
+  {name:'Isya',icon:'🌙',desc:'Sholat malam hari',thumb:'mo-pray-assets/mo-tashahhud.webp'}
 ];
 var PROGRESS_MO=[
-  {img:'mo-pray-assets/mo-waving-mat.png',msg:'Yuk latihan sholat hari ini!',sub:'Mo nungguin kamu 😊'},
-  {img:'mo-pray-assets/mo-takbir-mat.png',msg:'Bagus! Satu sholat sudah dilatih',sub:'Lanjut terus ya! 🌟'},
-  {img:'mo-pray-assets/mo-qiyam-mat.png',msg:'Hebat! Dua sholat sudah beres',sub:'Mo bangga sama kamu 💚'},
-  {img:'mo-pray-assets/mo-ruku.png',msg:'Tiga sholat sudah! Keren banget',sub:'Terus semangat! ✨'},
-  {img:'mo-pray-assets/mo-sujud.png',msg:'Hampir semua! Satu lagi yaa!',sub:'Mo excited banget! 🤩'},
-  {img:'mo-pray-assets/mo-tashahhud.png',msg:'Masya Allah! Semua 5 sholat selesai!',sub:'Mo sayang kamu 🌙💚'}
+  {img:'mo-pray-assets/mo-waving-mat.webp',msg:'Yuk latihan sholat hari ini!',sub:'Mo nungguin kamu 😊'},
+  {img:'mo-pray-assets/mo-takbir-mat.webp',msg:'Bagus! Satu sholat sudah dilatih',sub:'Lanjut terus ya! 🌟'},
+  {img:'mo-pray-assets/mo-qiyam-mat.webp',msg:'Hebat! Dua sholat sudah beres',sub:'Mo bangga sama kamu 💚'},
+  {img:'mo-pray-assets/mo-ruku.webp',msg:'Tiga sholat sudah! Keren banget',sub:'Terus semangat! ✨'},
+  {img:'mo-pray-assets/mo-sujud.webp',msg:'Hampir semua! Satu lagi yaa!',sub:'Mo excited banget! 🤩'},
+  {img:'mo-pray-assets/mo-tashahhud.webp',msg:'Masya Allah! Semua 5 sholat selesai!',sub:'Mo sayang kamu 🌙💚'}
 ];
 
 var currentStep=0,currentRecPage=0,stepsViewed={};
@@ -700,6 +1163,7 @@ function todayKey(){var d=new Date();return d.getFullYear()+'-'+String(d.getMont
 function showView(name){
   document.querySelectorAll('.view').forEach(function(v){v.classList.remove('active')});
   document.getElementById('view'+name.charAt(0).toUpperCase()+name.slice(1)).classList.add('active');
+  document.body.dataset.view=name;
   window.scrollTo(0,0);
   var titles={home:'Pray with Mo',guide:'Panduan Sholat',progress:'Progress Sholat',dzikir:'Dzikir & Doa'};
   document.getElementById('topTitle').textContent=titles[name]||'Pray with Mo';
@@ -738,10 +1202,10 @@ function renderHomeStepList(){
 }
 
 function renderHomeGreeting(){
-  var name=localStorage.getItem(KEY_NAME)||'sahabat';
+  var name=(localStorage.getItem(KEY_NAME)||'').trim();
   var h=new Date().getHours(),greet;
   if(h<4)greet='Selamat malam';else if(h<11)greet='Selamat pagi';else if(h<15)greet='Selamat siang';else if(h<18)greet='Selamat sore';else greet='Selamat malam';
-  document.getElementById('heroGreeting').textContent=greet+', '+name+'!';
+  document.getElementById('heroGreeting').textContent=name?greet+', '+name+'!':greet+'!';
 }
 
 function goToStep(idx){stopRecitation();currentStep=Math.max(0,Math.min(STEPS.length-1,idx));currentRecPage=0;renderStep();setTimeout(function(){playRecitation(true)},400)}
@@ -861,7 +1325,33 @@ function finishGuide(){
 function showCelebration(){
   var stats=loadStats();stats.prayers++;stats.stars+=5;saveStats(stats);
   var streak=loadStreak();streak[todayKey()]=true;saveStreak(streak);
+  /* Sync with the Companion's per-prayer streak (mo_prayer_streaks_v1) so one
+     completed walkthrough bumps the relevant prayer's streak everywhere. */
+  syncCompanionStreak();
   document.getElementById('celebOverlay').classList.add('open');spawnConfetti();updateTopStars();
+}
+
+/* Map pray-with-mo's PRAYERS index → Companion's PRAYER_KEYS (same prayers, same order) */
+var COMPANION_PRAYER_KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
+function syncCompanionStreak(){
+  try{
+    var idx=getCurrentPrayer();
+    var key=COMPANION_PRAYER_KEYS[idx];
+    if(!key)return;
+    var raw=localStorage.getItem('mo_prayer_streaks_v1');
+    var s=raw?JSON.parse(raw):{};
+    var today=todayKey();
+    var ydate=new Date();ydate.setDate(ydate.getDate()-1);
+    var yest=ydate.getFullYear()+'-'+String(ydate.getMonth()+1).padStart(2,'0')+'-'+String(ydate.getDate()).padStart(2,'0');
+    var cur=s[key]||{count:0,lastDate:null,best:0,total:0};
+    if(cur.lastDate===today)return; /* already checked today */
+    if(cur.lastDate===yest)cur.count+=1;else cur.count=1;
+    cur.lastDate=today;
+    cur.total=(cur.total||0)+1;
+    cur.best=Math.max(cur.best||0,cur.count);
+    s[key]=cur;
+    localStorage.setItem('mo_prayer_streaks_v1',JSON.stringify(s));
+  }catch(e){}
 }
 function closeCelebration(){document.getElementById('celebOverlay').classList.remove('open');showView('dzikir')}
 function spawnConfetti(){
@@ -884,14 +1374,34 @@ function renderPrayerNow(){
   updateCountdown();
 }
 function updateCountdown(){
-  var p=PRAYERS[getCurrentPrayer()],now=new Date(),target=new Date(now);
+  var idx=getCurrentPrayer(),p=PRAYERS[idx],now=new Date(),target=new Date(now);
   target.setHours(p.h,p.m,0,0);if(target<=now)target.setDate(target.getDate()+1);
   var diff=Math.max(0,Math.floor((target-now)/1000)),h=Math.floor(diff/3600),m=Math.floor((diff%3600)/60),s=diff%60;
   document.getElementById('countdown').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  // Live-Activity progress bar — fills as we approach the next prayer
+  var prevIdx=idx===0?PRAYERS.length-1:idx-1,prev=PRAYERS[prevIdx],prevTarget=new Date(now);
+  prevTarget.setHours(prev.h,prev.m,0,0);
+  if(prevTarget>=target)prevTarget.setDate(prevTarget.getDate()-1);
+  var interval=Math.max(1,target-prevTarget),elapsed=Math.max(0,Math.min(interval,now-prevTarget));
+  var bar=document.getElementById('prayerProgress');
+  if(bar)bar.style.width=(100*elapsed/interval).toFixed(2)+'%';
 }
 setInterval(updateCountdown,1000);
 
+/* Read the city the prayer times were computed for, so users can verify it's right */
+function getPrayerCityLabel(){
+  try{
+    const m=JSON.parse(localStorage.getItem('mo_manual_city')||'null');
+    if(m&&m.n)return '📍 '+m.n+' · pilihan manual';
+    const r=JSON.parse(localStorage.getItem('mo_reverse_city')||'null');
+    if(r&&r.n)return '📍 '+r.n+' · otomatis dari lokasimu';
+    const loc=JSON.parse(localStorage.getItem('mo_cached_loc')||'null');
+    if(loc&&typeof loc.lat==='number')return '📍 Lokasi tersimpan ('+loc.lat.toFixed(2)+', '+loc.lng.toFixed(2)+')';
+  }catch(e){}
+  return '🌐 Jadwal default · aktifkan lokasi di Sholat Bareng Mo untuk waktu akurat';
+}
 function showPrayerTimes(){
+  document.getElementById('prayerTimesCity').textContent=getPrayerCityLabel();
   var idx=getCurrentPrayer(),html='';
   PRAYERS.forEach(function(p,i){
     var t=String(p.h).padStart(2,'0')+':'+String(p.m).padStart(2,'0'),n=i===idx;
@@ -906,6 +1416,7 @@ function loadPrayPractice(){var k='mo_pray_practice_'+todayKey();try{return JSON
 function savePrayPractice(d){var k='mo_pray_practice_'+todayKey();try{localStorage.setItem(k,JSON.stringify(d))}catch(e){}}
 
 function renderPrayChecklist(){
+  if(!document.getElementById('prayCarousel'))return; /* daily checklist removed from Progress v2 */
   var practice=loadPrayPractice(),checked=0;
   var segHtml='',carHtml='';
   PRAY_ITEMS.forEach(function(p,i){
@@ -953,25 +1464,59 @@ function togglePrayPractice(name,el){
 }
 
 function renderProgress(){
-  var stats=loadStats(),streak=loadStreak();
+  var stats=loadStats();
   document.getElementById('statPrayers').textContent=stats.prayers;
   document.getElementById('statDuas').textContent=stats.duas;
   document.getElementById('statStars').textContent=stats.stars;
-  document.getElementById('rewardStars').textContent=stats.stars;
-  var now=new Date(),dow=now.getDay(),mon=new Date(now);mon.setDate(now.getDate()-((dow+6)%7));
-  var dns=['Sen','Sel','Rab','Kam','Jum','Sab','Min'],html='',wd=0;
-  for(var i=0;i<7;i++){var d=new Date(mon);d.setDate(mon.getDate()+i);
-    var key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    var done=!!streak[key],isToday=key===todayKey();if(done)wd++;
-    var cls='sd-circle';if(done)cls+=' done';if(isToday&&!done)cls+=' today';
-    html+='<div class="streak-day"><div class="'+cls+'"></div><div class="sd-label">'+dns[i]+'</div></div>'}
-  document.getElementById('streakDays').innerHTML=html;
-  document.getElementById('streakCount').textContent=wd+'/7 Hari';
-  document.getElementById('streakBar').style.width=Math.round(wd/7*100)+'%';
-  var rhtml='';REWARDS.forEach(function(r){var u=stats.stars>=r.stars;
-    rhtml+='<div class="reward-item"><div class="reward-badge'+(u?' unlocked':' locked')+'">'+r.emoji+'</div><div class="reward-cost">⭐ '+r.stars+'</div></div>'});
-  document.getElementById('rewardsGrid').innerHTML=rhtml;
-  renderPrayChecklist();
+
+  /* Mastery: count distinct steps where at least one dua page has been heard */
+  var stepsTotal=STEPS.length,stepsDone=0,segS='';
+  for(var i=0;i<stepsTotal;i++){
+    var hit=false;
+    for(var k=0;k<localStorage.length;k++){var lk=localStorage.key(k);if(lk&&lk.indexOf('mo_dua_'+i+'_')===0){hit=true;break;}}
+    if(hit)stepsDone++;
+    segS+='<div class="cap-seg'+(hit?' done':'')+'"></div>';
+  }
+  document.getElementById('stepSegments').innerHTML=segS;
+  document.getElementById('stepMasteredCount').innerHTML=stepsDone+' <span>/'+stepsTotal+'</span>';
+  document.getElementById('stepMasteredHint').textContent =
+    stepsDone===0      ? 'Tap untuk mulai belajar langkah sholat' :
+    stepsDone<stepsTotal ? 'Lanjutkan ke langkah berikutnya bareng Mo' :
+                         '🎉 Mashallah! Semua langkah sudah dikuasai';
+
+  /* Mastery: count distinct dzikir where at least one full cycle completed */
+  var dzTotal=DZIKIR.length,dzDone=0,segD='';
+  for(var j=0;j<dzTotal;j++){
+    var d=localStorage.getItem('mo_dzikir_done_'+j)==='1';
+    if(d)dzDone++;
+    segD+='<div class="cap-seg'+(d?' done':'')+'"></div>';
+  }
+  document.getElementById('dzSegments').innerHTML=segD;
+  document.getElementById('dzMasteredCount').innerHTML=dzDone+' <span>/'+dzTotal+'</span>';
+  /* Friendly first-time state instead of a row of zeros */
+  var fresh = !stats.prayers && !stats.duas && !stats.stars && !stepsDone && !dzDone;
+  document.getElementById('progStart').style.display = fresh ? 'flex' : 'none';
+  document.getElementById('streakStats').style.display = fresh ? 'none' : '';
+  document.getElementById('dzMasteredHint').textContent =
+    dzDone===0      ? 'Tap untuk coba dzikir pertama' :
+    dzDone<dzTotal  ? 'Coba '+(dzTotal-dzDone)+' jenis dzikir lagi' :
+                      '🎉 Semua dzikir sudah dicoba';
+
+  /* Milestone badges */
+  var prog={prayers:stats.prayers,duas:stats.duas,stars:stats.stars,dzDone:dzDone,stepsDone:stepsDone,others:0};
+  /* compute "others" first by counting first 5 unlocks (master depends on others) */
+  for(var b=0;b<LENCANA.length-1;b++){if(LENCANA[b].unlock(prog))prog.others++;}
+  var unlockedCount=0,lhtml='';
+  LENCANA.forEach(function(l){
+    var u=l.unlock(prog);if(u)unlockedCount++;
+    lhtml+='<div class="lencana'+(u?' unlocked':'')+'">'+
+      '<div class="ln-icon">'+l.icon+'</div>'+
+      '<div class="ln-name">'+l.name+'</div>'+
+      '<div class="ln-hint">'+(u?l.hintDone:'🔒 '+l.hintLocked)+'</div>'+
+    '</div>';
+  });
+  document.getElementById('lencanaGrid').innerHTML=lhtml;
+  document.getElementById('badgeProgress').textContent=unlockedCount+'/'+LENCANA.length;
 }
 
 /* ===== DZIKIR ===== */
@@ -1019,6 +1564,7 @@ function renderDzikir(){
   document.getElementById('dzProgress').style.width=pct+'%';
   document.getElementById('tasbihRing').style.transform='rotate('+(tasbihCurrent/d.count*360)+'deg)';
   var done=tasbihCurrent>=d.count;
+  if(done){try{localStorage.setItem('mo_dzikir_done_'+currentDzikir,'1');}catch(e){}}
   var completeEl=document.getElementById('dzikirComplete');
   var navBtns=document.querySelector('.dzikir-nav-btns');
   completeEl.style.display=done?'block':'none';
@@ -1126,23 +1672,57 @@ function stopDzikirPlay(){
   if(el)el.querySelectorAll('.rec-word.highlight').forEach(function(e){e.classList.remove('highlight')});
 }
 
-function saveName(){
-  var name=document.getElementById('nameInput').value.trim();
-  if(!name){document.getElementById('nameInput').focus();return}
-  localStorage.setItem(KEY_NAME,name);
-  document.getElementById('nameOverlay').classList.remove('open');
-  renderHomeGreeting();
+
+/* Fetch real prayer times for cached location (set by Companion) so this page shares the
+   same numbers as the Companion's Sholat tab instead of hardcoded defaults. */
+function loadRealPrayerTimes(){
+  var raw;try{raw=localStorage.getItem('mo_cached_loc');}catch(e){return;}
+  if(!raw)return;
+  var loc;try{loc=JSON.parse(raw);}catch(e){return;}
+  if(!loc||typeof loc.lat!=='number')return;
+  var d=new Date();
+  var ds=String(d.getDate()).padStart(2,'0')+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+d.getFullYear();
+  fetch('https://api.aladhan.com/v1/timings/'+ds+'?latitude='+loc.lat+'&longitude='+loc.lng+'&method=20')
+    .then(function(r){return r.json();})
+    .then(function(data){
+      var t=data&&data.data&&data.data.timings;if(!t)return;
+      var map={Subuh:t.Fajr,Dzuhur:t.Dhuhr,Ashar:t.Asr,Maghrib:t.Maghrib,Isya:t.Isha};
+      PRAYERS.forEach(function(p){
+        var v=map[p.name];if(!v)return;
+        var parts=v.slice(0,5).split(':');
+        p.h=parseInt(parts[0],10);p.m=parseInt(parts[1],10);
+      });
+      renderPrayerNow();
+    })
+    .catch(function(){});
 }
-document.getElementById('nameInput').addEventListener('keydown',function(e){if(e.key==='Enter')saveName()});
 
 (function init(){
-  if(!localStorage.getItem(KEY_NAME)){
-    document.getElementById('nameOverlay').classList.add('open');
-    setTimeout(function(){document.getElementById('nameInput').focus()},500);
-  }
+  document.body.dataset.view='home';
+  /* The child's name is set on the hub (Beranda / Tentang), not here */
   renderHomeGreeting();renderPrayerNow();renderHomeStepList();
   renderStepIndicator();renderProgress();updateTopStars();
+  /* Real prayer times if location was cached by the Companion */
+  loadRealPrayerTimes();
+  /* Deep-link from the hub: ?view=dzikir opens dzikir view; ?view=times pops the prayer-times sheet */
+  try{
+    var params=new URLSearchParams(window.location.search);
+    var v=params.get('view');
+    if(v==='dzikir')setTimeout(function(){showView('dzikir');},50);
+    else if(v==='times')setTimeout(function(){showPrayerTimes();},150);
+  }catch(e){}
 })();
+</script>
+
+<div class="cta-bar" aria-hidden="false">
+  <a href="#" onclick="event.preventDefault();showView('guide');">🕌 Mulai Latihan Sholat</a>
+</div>
+
+<script src="/bm-kit.js" defer></script>
+<script>
+(function(){var tb=document.querySelector('.topbar');if(!tb)return;var raf=0;
+function upd(){raf=0;var home=document.body.dataset.view==='home'||!document.body.dataset.view;tb.classList.toggle('on-hero',home&&window.scrollY<12);}
+window.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(upd)},{passive:true});})();
 </script>
 </body>
 </html>

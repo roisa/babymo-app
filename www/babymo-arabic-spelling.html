@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="id" dir="ltr">
 <head>
+<script src="bm-theme.js"></script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<script src="i18n/kata.js"></script>
+<script src="bm-i18n.js"></script>
 <meta name="theme-color" content="#03100c" />
-<meta name="description" content="Susun Huruf — Baby Mo Arabic Spelling Game for Kids" />
-<title>🔤 Susun Huruf · Baby Mo</title>
+<meta name="description" content="Susun huruf untuk mengeja kosakata islami dalam bahasa Arab.">
+<title>Kata Islam — Belajar Menyusun Kata Arab untuk Anak | Baby Mo</title>
 
 <link rel="stylesheet" href="fonts/fonts.css">
 
@@ -1045,7 +1048,55 @@
     .card { opacity: 1; transform: none; }
     .cta-wrap { opacity: 1; transform: none; }
   }
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.app{max-width:680px!important;}}
+
+/* bm-letterbox: comfortable centered column on tablet/desktop */
+@media(min-width:760px){.app{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-arabic-spelling.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Kata Islam — Belajar Menyusun Kata Arab untuk Anak | Baby Mo">
+<meta property="og:description" content="Susun huruf untuk mengeja kosakata islami dalam bahasa Arab.">
+<meta property="og:url" content="https://play.babymo.id/babymo-arabic-spelling.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-arabic-spelling.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kata Islam — Belajar Menyusun Kata Arab untuk Anak | Baby Mo">
+<meta name="twitter:description" content="Susun huruf untuk mengeja kosakata islami dalam bahasa Arab.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-arabic-spelling.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Kata Islam — Baby Mo","url":"https://play.babymo.id/babymo-arabic-spelling.html","description":"Susun huruf untuk mengeja kosakata islami dalam bahasa Arab.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-arabic-spelling.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":4,"suggestedMaxAge":8},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Kata Islam","item":"https://play.babymo.id/babymo-arabic-spelling.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{
+  --bg-deepest:#F2F6FC;--bg-deep:#FFFFFF;--bg-mid:#F7F9FC;
+  --text:#152230;--text-soft:#5A6878;--text-faint:#8A97A6;
+  --ivory:#152230;--gold:#E8890C;--gold-soft:#F59F00;--gold-deep:#B45309;
+  --emerald-soft:#0B8A4A;
+}
+.card,.section[data-section="family"] .card,.section[data-section="nature"] .card{
+  background:linear-gradient(160deg,#FFFFFF 0%,#F2FBF6 100%);
+  border-color:rgba(16,185,129,.22);
+  box-shadow:inset 0 1px 0 #fff,0 14px 28px -18px rgba(30,60,110,.45);
+}
+.section[data-section="family"] .card{background:linear-gradient(160deg,#FFFFFF 0%,#FFF0F6 100%);border-color:rgba(244,114,182,.28);}
+.section[data-section="nature"] .card{background:linear-gradient(160deg,#FFFFFF 0%,#F3FBE6 100%);border-color:rgba(132,204,22,.3);}
+.cta-backdrop{background:linear-gradient(to top,#F2F6FC 0%,rgba(242,246,252,.85) 40%,transparent 100%);}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+.section-count,.stat-label,.cta-hint{font-size:11.5px!important;}
+</style>
+<style id="bm-bright-fixes">
+/* contrast fixes after the bright theme */
+:root{--gold-soft:#C2560C;--text-faint:#6B7787;}
+.word-ghost{color:rgba(21,34,48,.10);}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 
 <body>
@@ -1064,7 +1115,7 @@
     <header class="hero">
       <div class="mascot">
         <div class="mascot-glow"></div>
-        <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo mascot" />
+        <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo mascot" />
       </div>
       <h1>Susun Huruf <span class="sparkle" aria-hidden="true">✨</span></h1>
       <div class="section-preview" id="sectionChips">
@@ -1120,7 +1171,7 @@
     <header class="complete-hero">
       <div class="mascot">
         <div class="mascot-glow"></div>
-        <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo mascot" />
+        <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo mascot" />
       </div>
       <div class="complete-section-tag" id="completeSectionTag">
         <span aria-hidden="true">❤️</span><span id="completeSectionName">Keluarga</span>
@@ -1149,6 +1200,7 @@
     <div class="learned-list" id="learnedList"></div>
 
     <div class="actions">
+      <button class="btn-secondary" type="button" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('completeStars')||{}).textContent||'',' ','Aku belajar kata-kata Islam bareng Baby Mo! 🔤')">📤 Bagikan</button>
       <button class="btn-secondary" type="button" id="btnReplay">🔄 Main Lagi</button>
       <button class="btn-primary" type="button" id="btnNext">🌙 Lanjut</button>
     </div>
@@ -1513,9 +1565,13 @@ function onTileTap(tile) {
   }
   if (!target) {
     tile.classList.add('wrong');
+    // Encourage on a wrong tap (a reaction every correct letter would be
+    // too noisy in a spelling game — correct letters just get a soft sfx).
+    if (window.BabyMo && BabyMo.react) BabyMo.react('wrong');
     setTimeout(function () { tile.classList.remove('wrong'); }, 450);
     return;
   }
+  if (window.BabyMo && BabyMo.sfx) BabyMo.sfx('correct');
   flyLetterToSlot(tile, target, letter);
 }
 
@@ -1777,5 +1833,6 @@ document.addEventListener('visibilitychange', function () {
   if (document.hidden) cancelSpeech();
 });
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

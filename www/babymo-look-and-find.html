@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="bm-theme.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<script src="i18n/find.js"></script>
+<script src="bm-i18n.js"></script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<title>Baby Mo Look &amp; Find 🌙</title>
+<title>Cari Baby Mo — Game Look &amp; Find Anak (Cari Objek) | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 /* ===== RESET & BASE ===== */
@@ -14,12 +17,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 
 /* ===== CSS VARIABLES — BabyMo Brand ===== */
 :root{
-  --green:#3CB54A;--green-dark:#2a8435;--green-glow:#5dd96e;
-  --orange:#FF8C42;--yellow:#FFD23F;--red:#E8401C;
-  --white:#FFFFFF;--cream:#FFF8EC;--dark:#0d2018;
+  /* Fresh, friendly emerald — softer than the old bright green */
+  --green:#1FA971;--green-dark:#137A52;--green-glow:#3FD08C;
+  --orange:#FF9A4D;--yellow:#FFD874;--red:#FF6B5C;
+  --white:#FFFFFF;--cream:#F4FBF6;--dark:#0d2018;
   --shadow:rgba(0,0,0,0.35);
-  --ui-bg:rgba(255,255,255,0.97);
-  --card-bg:#f0faf2;
+  --ui-bg:rgba(248,253,250,0.98);
+  --card-bg:#eefaf2;
 }
 
 /* ===== PARTICLE CANVAS ===== */
@@ -31,7 +35,10 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 
 /* ===== ADVENTURE MAP (HOME + LEVEL SELECT) ===== */
 #s-home{
-  background:radial-gradient(ellipse at 50% 15%, #1e5a2e 0%, #0d2018 70%);
+  background:
+    radial-gradient(ellipse 80% 50% at 50% 6%, rgba(63,208,140,.30), transparent 60%),
+    radial-gradient(ellipse 70% 45% at 85% 22%, rgba(91,198,232,.14), transparent 60%),
+    radial-gradient(ellipse at 50% 18%, #156A40 0%, #0C2418 72%);
   padding:0;justify-content:flex-start;overflow:hidden;
 }
 .map-header{
@@ -100,8 +107,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .g-header{
   width:100%;padding:calc(env(safe-area-inset-top) + 8px) 12px 8px;
   display:flex;align-items:center;gap:8px;flex-shrink:0;
-  background:var(--green);
-  box-shadow:0 3px 0 var(--green-dark);
+  background:linear-gradient(135deg,var(--green-glow),var(--green));
+  box-shadow:0 4px 14px -4px rgba(31,169,113,.5);
 }
 .g-title{font-family:'Fredoka One',cursive;font-size:15px;color:#fff;flex:1;text-align:center;text-shadow:0 1px 0 rgba(0,0,0,0.2);}
 .g-dots{display:flex;gap:5px;}
@@ -119,9 +126,9 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 /* ===== TAP TARGETS (HTML — iOS safe) ===== */
 .obj-bubble{
   position:absolute;transform:translate(-50%,-50%);
-  width:76px;height:76px;border-radius:50%;
+  width:86px;height:86px;border-radius:50%;
   display:flex;align-items:center;justify-content:center;
-  font-size:34px;
+  font-size:38px;
   background:rgba(255,255,255,0.18);
   border:2.5px solid rgba(255,255,255,0.25);
   box-shadow:0 4px 16px rgba(0,0,0,0.25);
@@ -134,6 +141,33 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   z-index:20;
 }
 @keyframes bubbleFloat{0%,100%{transform:translate(-50%,-50%) translateY(0)}50%{transform:translate(-50%,-50%) translateY(-7px)}}
+/* image targets (e.g. the hidden Baby Mo) */
+.obj-bubble img{width:88%;height:88%;object-fit:contain;pointer-events:none;filter:drop-shadow(0 3px 6px rgba(0,0,0,.3));}
+/* the hidden Baby Mo blends in like the other bubbles (a bit hidden) … */
+.obj-bubble.ob-mo{
+  width:80px;height:80px;font-size:0;
+  background:rgba(255,255,255,.05);
+  border:1.5px solid rgba(255,255,255,.13);
+  box-shadow:0 2px 9px rgba(0,0,0,.16);
+}
+.obj-bubble.ob-mo img{opacity:.97;}
+/* … then bursts into a happy reveal when found */
+.obj-bubble.mo-reveal{
+  animation:moReveal 1.15s cubic-bezier(.18,.9,.3,1.35) forwards !important;
+  z-index:48 !important;
+  background:radial-gradient(circle at 50% 40%,rgba(255,233,160,.55),rgba(255,255,255,.18)) !important;
+  border-color:rgba(255,210,63,.9) !important;
+  box-shadow:0 0 34px rgba(255,210,63,.7),0 8px 22px rgba(0,0,0,.3) !important;
+}
+.obj-bubble.mo-reveal img{opacity:1;}
+@keyframes moReveal{
+  0%{transform:translate(-50%,-50%) scale(1)}
+  35%{transform:translate(-50%,-50%) scale(1.75) rotate(-7deg)}
+  52%{transform:translate(-50%,-50%) scale(1.55) rotate(7deg)}
+  68%{transform:translate(-50%,-50%) scale(1.68) rotate(-3deg)}
+  84%{transform:translate(-50%,-50%) scale(1.6) rotate(0);opacity:1}
+  100%{transform:translate(-50%,-50%) scale(1.55);opacity:0}
+}
 .obj-bubble.hint{animation:hintGlow 1.4s ease-in-out infinite !important;}
 @keyframes hintGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,215,63,0);border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.18)}50%{box-shadow:0 0 0 12px rgba(255,215,63,0.15),0 0 30px rgba(255,215,63,0.5);border-color:#FFD23F;background:rgba(255,215,78,0.3)}}
 .obj-bubble.found-anim{animation:objFnd .55s ease forwards !important;}
@@ -169,7 +203,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .ti{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0;width:52px;padding:5px 3px;background:var(--card-bg);border-radius:14px;border:2.5px solid rgba(60,181,74,0.2);transition:all .3s;}
 .ti.found{background:#f5f5f5;border-color:#ddd;opacity:.5;}
 .ti.found .ti-icon{filter:grayscale(1);}
-.ti-icon{font-size:24px;}
+.ti-icon{font-size:24px;height:30px;line-height:1;display:flex;align-items:center;justify-content:center;}
 .ti-lbl{font-size:8px;color:#4a7a54;font-weight:900;text-align:center;line-height:1.2;text-transform:uppercase;letter-spacing:.3px;}
 
 /* ===== COMPLETE SCREEN ===== */
@@ -195,7 +229,93 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .abtn-main:active{transform:translateY(6px);box-shadow:0 0px 0 #1e5c26,0 3px 10px rgba(60,181,74,.2);}
 .abtn-sec{background:rgba(255,255,255,.12);color:var(--cream);border:2px solid rgba(255,255,255,.2);}
 .abtn-sec:active{transform:scale(.95);}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.map-node{max-width:680px!important;}}
+
+/* bm-letterbox: comfortable centered column on tablet/desktop */
+@media(min-width:760px){.screen{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}body{background:#06100A;}}
+/* Tablet: on a tall iPad the flex:1 scene stretched very tall with sparse
+   objects. Cap the play scene to a comfortable aspect and centre it so the
+   room reads as one cohesive picture; the tray stays pinned below. */
+@media(min-width:760px){
+  #s-game{justify-content:center!important;gap:14px;}
+  .scene-wrap{flex:0 0 auto!important;width:100%;aspect-ratio:3/4;max-height:72vh;border-radius:22px;}
+  /* Toddler-friendly: chunkier tap targets + tray on tablet */
+  .obj-bubble{width:104px;height:104px;font-size:46px;}
+  .obj-bubble.ob-mo{width:100px;height:100px;}
+  .ti{width:64px;padding:7px 4px;}
+  .ti-icon{font-size:30px;height:38px;}
+  .ti-img{width:38px;height:38px;}
+  .ti-lbl{font-size:9.5px;}
+  .bmo-face{width:62px;height:62px;}
+}
+
+/* Warmer, brighter rooms — keeps the cosy night mood but less muddy */
+.scene-svg{filter:saturate(1.14) brightness(1.1) contrast(1.02);}
+.scene-wrap::after{content:'';position:absolute;inset:0;pointer-events:none;z-index:6;
+  background:radial-gradient(ellipse 70% 45% at 50% 22%,rgba(255,224,150,.12),transparent 60%);}
+
+/* a Baby Mo pose cheers from the corner on every find */
+.baby-react-img{position:absolute;left:50%;bottom:4%;transform:translateX(-50%);
+  width:34%;max-width:160px;pointer-events:none;z-index:45;
+  filter:drop-shadow(0 8px 16px rgba(0,0,0,.45));animation:brImg 1.15s cubic-bezier(.175,.885,.32,1.275) forwards;}
+@keyframes brImg{0%{transform:translateX(-50%) translateY(40px) scale(.4);opacity:0}
+  22%{transform:translateX(-50%) translateY(0) scale(1.08);opacity:1}
+  72%{transform:translateX(-50%) translateY(0) scale(1);opacity:1}
+  100%{transform:translateX(-50%) translateY(14px) scale(.9);opacity:0}}
+
+/* tray item images (hidden Baby Mo) */
+.ti-img{width:30px;height:30px;object-fit:contain;}
+.ti.found .ti-img{filter:grayscale(1);}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-look-and-find.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Cari Baby Mo — Game Look &amp; Find Anak (Cari Objek) | Baby Mo">
+<meta property="og:description" content="Temukan Baby Mo yang tersembunyi di setiap scene — melatih observasi.">
+<meta property="og:url" content="https://play.babymo.id/babymo-look-and-find.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-look-and-find.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Cari Baby Mo — Game Look &amp; Find Anak (Cari Objek) | Baby Mo">
+<meta name="twitter:description" content="Temukan Baby Mo yang tersembunyi di setiap scene — melatih observasi.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-look-and-find.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Cari Baby Mo — Baby Mo","url":"https://play.babymo.id/babymo-look-and-find.html","description":"Temukan Baby Mo yang tersembunyi di setiap scene — melatih observasi.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-look-and-find.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Cari Baby Mo","item":"https://play.babymo.id/babymo-look-and-find.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+#s-home,#s-complete{background:
+  radial-gradient(ellipse 70% 45% at 0% 0%,rgba(120,200,255,.45),transparent 70%),
+  radial-gradient(ellipse 60% 40% at 100% 8%,rgba(255,180,210,.40),transparent 70%),
+  radial-gradient(ellipse 70% 45% at 0% 100%,rgba(130,230,180,.38),transparent 70%),#F2F6FC;}
+.map-title{color:#E8590C;text-shadow:none;}
+.map-footer{background:linear-gradient(0deg,rgba(242,246,252,.95) 0%,transparent 100%);}
+.map-hub-btn{color:#152230;background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.1);box-shadow:0 10px 22px -16px rgba(30,60,110,.5);}
+.map-node{background:rgba(255,255,255,.9);border-color:rgba(48,180,110,.25);box-shadow:0 12px 24px -18px rgba(30,60,110,.5);}
+.map-node.locked{opacity:.55;border-color:rgba(21,34,48,.08);}
+.map-node.current{background:linear-gradient(135deg,#FFFBEA,#FFF1C7);border-color:#F5B800;}
+.map-node.done{background:linear-gradient(135deg,#F0FBF4,#DFF6E8);}
+.node-icon{background:linear-gradient(135deg,#E3F7EA,#C9EFD7);}
+.node-name{color:#152230;}
+.node-desc{color:#5A6878;}
+.se{color:rgba(21,34,48,.15);}
+.node-badge.done-chk{color:#12A15A;}
+.map-moon{opacity:.6;}
+.comp-baby{filter:drop-shadow(0 10px 22px rgba(80,50,140,.25));}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+/* readable text: nothing under ~11.5px */
+.node-desc{font-size:12px!important;}
+</style>
+<style id="bm-bright-fixes">
+/* contrast fixes after the bright theme */
+.comp-title{color:#E8590C;text-shadow:none;}
+.comp-msg{color:#5A6878;}
+#s-complete a[href="index.html"]{color:#5A6878!important;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
 <canvas id="cvs"></canvas>
@@ -249,7 +369,8 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   <p class="comp-msg" id="comp-msg">Kamu luar biasa!</p>
   <div class="act-btns">
     <button class="abtn abtn-main" id="btn-next">Lanjut ▶</button>
-    <button class="abtn abtn-sec" id="btn-menu">🏠 Menu</button>
+    <button class="abtn abtn-sec" onclick="window.BabyMo&&BabyMo.share({message:'Aku menemukan semua Baby Mo yang tersembunyi! 🔍'})">📤 Bagikan</button>
+    <button class="abtn abtn-sec" id="btn-menu">🗺️ Menu</button>
   </div>
   <a href="index.html" style="margin-top:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.55);text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
 </div>
@@ -259,47 +380,121 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 // LEVEL DATA
 // =============================================
 const LEVELS=[
-  {id:1,name:"Kamar Baby Mo",emoji:"🛏️",desc:"Temukan 5 benda di kamar tidur!",sticker:"🧸",msg:"Kamar Baby Mo jadi rapi! ✨",
+  {id:1,name:"Kamar Baby Mo",emoji:"🛏️",desc:"Cari 5 benda & Baby Mo! 🧸",sticker:"🧸",msg:"Kamar Baby Mo jadi rapi! ✨",
    objects:[
-    {id:"teddy",label:"Beruang",e:"🧸",cx:72,cy:42},
+    {id:"teddy",label:"Beruang",e:"🧸",cx:58,cy:47},
     {id:"slippers",label:"Sandal",e:"🥿",cx:20,cy:82},
-    {id:"moon_pillow",label:"Bantal",e:"🌙",cx:47,cy:67},
+    {id:"moon_pillow",label:"Bantal",e:"🌙",cx:44,cy:67},
     {id:"lantern",label:"Lentera",e:"🏮",cx:14,cy:54},
-    {id:"brush",label:"Sikat",e:"🪥",cx:84,cy:30}
+    {id:"brush",label:"Sikat",e:"🪥",cx:87,cy:54},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:67,cy:25,mo:true}
   ]},
-  {id:2,name:"Ruang Keluarga",emoji:"🏠",desc:"Bantu Baby Mo di ruang keluarga!",sticker:"🕌",msg:"Alhamdulillah, rapi sekali! 🌿",
+  {id:2,name:"Ruang Keluarga",emoji:"🏠",desc:"Bantu Baby Mo & cari 5 benda! 🌿",sticker:"🕌",msg:"Alhamdulillah, rapi sekali! 🌿",
    objects:[
-    {id:"sajadah",label:"Sajadah",e:"🟦",cx:50,cy:86},
-    {id:"kurma",label:"Kurma",e:"🌴",cx:63,cy:56},
-    {id:"buku",label:"Buku",e:"📖",cx:26,cy:46},
-    {id:"susu",label:"Susu",e:"🥛",cx:72,cy:52},
-    {id:"bulan",label:"Bulan",e:"☪️",cx:16,cy:20}
+    {id:"sajadah",label:"Sajadah",img:"sajadah.svg",cx:46,cy:87},
+    {id:"kurma",label:"Kurma",e:"🌴",cx:50,cy:50},
+    {id:"buku",label:"Buku",e:"📖",cx:13,cy:54},
+    {id:"susu",label:"Susu",e:"🥛",cx:72,cy:44},
+    {id:"bulan",label:"Bulan",e:"☪️",cx:32,cy:38},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-26.webp",cx:84,cy:28,mo:true}
   ]},
-  {id:3,name:"Taman Mimpi 🌸",emoji:"🌸",desc:"Malam ajaib di taman bintang!",sticker:"🌟",msg:"Subhanallah, indah sekali! 🌙",
+  {id:3,name:"Taman Mimpi 🌸",emoji:"🌸",desc:"Cari Baby Mo di taman bintang! 🌟",sticker:"🌟",msg:"Subhanallah, indah sekali! 🌙",
    objects:[
-    {id:"bintang",label:"Bintang",e:"⭐",cx:84,cy:22},
-    {id:"awan",label:"Awan",e:"☁️",cx:30,cy:17},
-    {id:"kunang",label:"Kunang",e:"✨",cx:63,cy:67},
-    {id:"bunga",label:"Bunga",e:"🌸",cx:19,cy:76},
-    {id:"balon",label:"Balon",e:"🎈",cx:52,cy:34}
+    {id:"bintang",label:"Bintang",e:"⭐",cx:58,cy:20},
+    {id:"awan",label:"Awan",e:"☁️",cx:26,cy:16},
+    {id:"kunang",label:"Kunang",e:"✨",cx:66,cy:52},
+    {id:"bunga",label:"Bunga",e:"🌸",cx:18,cy:78},
+    {id:"balon",label:"Balon",e:"🎈",cx:40,cy:42},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-wow.webp",cx:84,cy:70,mo:true}
   ]},
-  {id:4,name:"Pasar Ramadan",emoji:"🌙",desc:"Cari benda di pasar malam Ramadan!",sticker:"🌙",msg:"Selamat malam Ramadan! 🌙",
+  {id:4,name:"Pasar Ramadan",emoji:"🌙",desc:"Cari Baby Mo di pasar malam! 🏮",sticker:"🌙",msg:"Selamat malam Ramadan! 🌙",
    objects:[
-    {id:"lentera",label:"Lentera",e:"🏮",cx:73,cy:28},
-    {id:"samosa",label:"Samosa",e:"🥟",cx:40,cy:69},
-    {id:"kue",label:"Kue",e:"🌙",cx:57,cy:64},
-    {id:"minum",label:"Minum",e:"💧",cx:24,cy:77},
-    {id:"bedug",label:"Bedug",e:"🥁",cx:79,cy:73}
+    {id:"lentera",label:"Lentera",e:"🏮",cx:72,cy:26},
+    {id:"samosa",label:"Samosa",e:"🥟",cx:22,cy:70},
+    {id:"kue",label:"Kue",e:"🌙",cx:44,cy:66},
+    {id:"minum",label:"Minum",e:"💧",cx:66,cy:74},
+    {id:"bedug",label:"Bedug",e:"🥁",cx:88,cy:66},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-09.webp",cx:11,cy:46,mo:true}
   ]},
-  {id:5,name:"Halaman Masjid",emoji:"🕌",desc:"Jelajahi halaman masjid!",sticker:"🤲",msg:"MasyaAllah, masjid yang cantik! 🕌",
+  {id:5,name:"Halaman Masjid",emoji:"🕌",desc:"Cari Baby Mo di halaman masjid! 🤲",sticker:"🤲",msg:"MasyaAllah, masjid yang cantik! 🕌",
    objects:[
-    {id:"sandal",label:"Sandal",e:"👟",cx:28,cy:87},
-    {id:"tasbih",label:"Tasbih",e:"📿",cx:67,cy:52},
-    {id:"lampu",label:"Lentera",e:"🏮",cx:18,cy:40},
-    {id:"kucing",label:"Kucing",e:"🐱",cx:77,cy:77},
-    {id:"rehal",label:"Rehal",e:"📚",cx:51,cy:62}
+    {id:"sandal",label:"Sandal",e:"👟",cx:26,cy:86},
+    {id:"tasbih",label:"Tasbih",e:"📿",cx:70,cy:50},
+    {id:"lampu",label:"Lentera",e:"🏮",cx:16,cy:38},
+    {id:"kucing",label:"Kucing",e:"🐱",cx:78,cy:78},
+    {id:"rehal",label:"Rehal",e:"📚",cx:50,cy:64},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-yeyy.webp",cx:13,cy:58,mo:true}
+  ]},
+  {id:6,name:"Dapur Baby Mo",emoji:"🍳",desc:"Cari 5 benda dapur & Baby Mo! 🍎",sticker:"🍎",msg:"Dapur jadi bersih! 🍽️",
+   objects:[
+    {id:"teko",label:"Teko",e:"🫖",cx:16,cy:44},
+    {id:"panci",label:"Panci",e:"🍲",cx:20,cy:66},
+    {id:"apel",label:"Apel",e:"🍎",cx:44,cy:68},
+    {id:"roti",label:"Roti",e:"🍞",cx:64,cy:66},
+    {id:"sendok",label:"Sendok",e:"🥄",cx:84,cy:50},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:50,cy:30,mo:true}
+  ]},
+  {id:7,name:"Kelas Baby Mo",emoji:"📚",desc:"Cari 5 benda sekolah & Baby Mo! ✏️",sticker:"⭐",msg:"Pintar belajar! 📚",
+   objects:[
+    {id:"globe",label:"Globe",e:"🌐",cx:18,cy:66},
+    {id:"krayon",label:"Krayon",e:"🖍️",cx:42,cy:70},
+    {id:"penggaris",label:"Penggaris",e:"📏",cx:64,cy:66},
+    {id:"gunting",label:"Gunting",e:"✂️",cx:82,cy:58},
+    {id:"pensil",label:"Pensil",e:"✏️",cx:70,cy:40},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:16,cy:36,mo:true}
+  ]},
+  {id:8,name:"Pantai Baby Mo",emoji:"🏖️",desc:"Cari 5 benda pantai & Baby Mo! 🐚",sticker:"🐚",msg:"Seru main di pantai! 🌊",
+   objects:[
+    {id:"ikan",label:"Ikan",e:"🐠",cx:34,cy:50},
+    {id:"bola",label:"Bola",e:"🏐",cx:56,cy:44},
+    {id:"kerang",label:"Kerang",e:"🐚",cx:26,cy:82},
+    {id:"kepiting",label:"Kepiting",e:"🦀",cx:50,cy:82},
+    {id:"ember",label:"Ember",e:"🪣",cx:74,cy:76},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:13,cy:62,mo:true}
+  ]},
+  {id:9,name:"Kebun Binatang",emoji:"🦁",desc:"Cari 5 hewan & Baby Mo! 🦁",sticker:"🦁",msg:"Seru di kebun binatang! 🦁",
+   objects:[
+    {id:"monyet",label:"Monyet",e:"🐵",cx:30,cy:44},
+    {id:"burung",label:"Burung",e:"🦜",cx:58,cy:26},
+    {id:"singa",label:"Singa",e:"🦁",cx:70,cy:56},
+    {id:"jerapah",label:"Jerapah",e:"🦒",cx:84,cy:40},
+    {id:"gajah",label:"Gajah",e:"🐘",cx:44,cy:70},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:14,cy:64,mo:true}
+  ]},
+  {id:10,name:"Taman Bermain",emoji:"🛝",desc:"Cari 5 benda & Baby Mo! 🎈",sticker:"🎈",msg:"Asyik bermain! 🎉",
+   objects:[
+    {id:"layang",label:"Layang",e:"🪁",cx:30,cy:22},
+    {id:"balon",label:"Balon",e:"🎈",cx:62,cy:30},
+    {id:"bola",label:"Bola",e:"⚽",cx:40,cy:76},
+    {id:"sepeda",label:"Sepeda",e:"🚲",cx:18,cy:72},
+    {id:"eskrim",label:"Es Krim",e:"🍦",cx:76,cy:64},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:88,cy:48,mo:true}
+  ]},
+  {id:11,name:"Kebun Baby Mo",emoji:"🚜",desc:"Cari 5 benda kebun & Baby Mo! 🥕",sticker:"🐔",msg:"Panen di kebun! 🌾",
+   objects:[
+    {id:"jagung",label:"Jagung",e:"🌽",cx:20,cy:56},
+    {id:"telur",label:"Telur",e:"🥚",cx:58,cy:48},
+    {id:"sapi",label:"Sapi",e:"🐄",cx:68,cy:68},
+    {id:"wortel",label:"Wortel",e:"🥕",cx:30,cy:78},
+    {id:"ayam",label:"Ayam",e:"🐔",cx:52,cy:80},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:88,cy:56,mo:true}
+  ]},
+  {id:12,name:"Bawah Laut",emoji:"🐠",desc:"Cari 5 hewan laut & Baby Mo! 🐠",sticker:"🐠",msg:"Indahnya bawah laut! 🌊",
+   objects:[
+    {id:"ikan",label:"Ikan",e:"🐠",cx:60,cy:36},
+    {id:"kura",label:"Kura-kura",e:"🐢",cx:30,cy:44},
+    {id:"gurita",label:"Gurita",e:"🐙",cx:76,cy:58},
+    {id:"bintang",label:"Bintang Laut",img:"starfish.svg",cx:22,cy:82},
+    {id:"kepiting",label:"Kepiting",e:"🦀",cx:50,cy:84},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-05.webp",cx:84,cy:76,mo:true}
   ]}
 ];
+
+// celebratory poses popped on each find + on the win screen
+const CHEER_POSES=['baby-mo-yeyy','baby-mo-wow','baby-mo-yes','baby-mo-alright','baby-mo-thank-you','baby-mo-ok','baby-mo-pose-26','baby-mo-idea'];
+// preload poses so they appear instantly
+[...new Set([...CHEER_POSES,'baby-mo-pose-05','baby-mo-pose-26','baby-mo-wow','baby-mo-pose-09','baby-mo-yeyy'])]
+  .forEach(p=>{const im=new Image();im.src='baby-mo-poses/'+p+'.webp';});
 
 // =============================================
 // STATE
@@ -372,13 +567,14 @@ function buildScene(lv){
   lv.objects.forEach((obj,i)=>{
     if(found.has(obj.id))return;
     const div=document.createElement('div');
-    div.className='obj-bubble';
+    div.className='obj-bubble'+(obj.mo?' ob-mo':'');
     div.setAttribute('data-id',obj.id);
     div.setAttribute('data-svgx',(obj.cx/100)*VBW);
     div.setAttribute('data-svgy',(obj.cy/100)*VBH);
     div.style.setProperty('--bf-dur',(2.8+i*0.4)+'s');
     div.style.setProperty('--bf-del',(i*0.3)+'s');
-    div.textContent=obj.e;
+    if(obj.img){const im=document.createElement('img');im.src=obj.img;im.alt=obj.label;div.appendChild(im);}
+    else div.textContent=obj.e;
 
     // iOS touch - must be touchstart with preventDefault
     div.addEventListener('touchstart',function(e){
@@ -421,14 +617,24 @@ function doFound(id,div){
   const fx=dRect.left+dRect.width/2-wRect.left;
   const fy=dRect.top+dRect.height/2-wRect.top;
 
-  div.classList.add('found-anim');
-  setTimeout(()=>div.remove(),600);
+  const obj=LEVELS[curLv].objects.find(o=>o.id===id);
+  const isMo=obj&&obj.mo;
+
+  if(isMo){
+    // Baby Mo was hiding — pop him up with a bouncy reveal instead of vanishing
+    div.classList.add('mo-reveal');
+    setTimeout(()=>div.remove(),1150);
+  }else{
+    div.classList.add('found-anim');
+    setTimeout(()=>div.remove(),600);
+  }
 
   sparkle(fx,fy,true);
-  foundTxt(fx,fy);
+  if(isMo){chime([659,784,988,1175],0.14);setTimeout(()=>sparkle(fx,fy,true),300);}
+  foundTxt(fx,fy,isMo?'Ketemu Baby Mo! 🎉':null);
   updateTrayItem(id);
   updateDots();
-  setTimeout(()=>babyReact(),380);
+  setTimeout(()=>babyReact(isMo?(obj.img.split('/').pop().replace(/\.(png|webp)$/,'')):null),380);
   setTimeout(()=>{if(found.size>=LEVELS[curLv].objects.length)setTimeout(showComplete,600);},700);
   clearHint();
 }
@@ -459,23 +665,25 @@ function sparkle(x,y,ok){
   fx.appendChild(div);setTimeout(()=>div.remove(),950);
 }
 
-function foundTxt(x,y){
+function foundTxt(x,y,forced){
   const msgs=['MasyaAllah! 🌟','Bagus! ⭐','Yay! 🎉','Keren! ✨','Hebat! 🌙','Alhamdulillah! 💛','Pintar! 🌸'];
   const fx=document.getElementById('fx-wrap');
   const el=document.createElement('div');
   el.className='found-txt';
   el.style.cssText=`left:${x}px;top:${y}px;position:absolute;`;
-  el.textContent=msgs[Math.floor(Math.random()*msgs.length)];
+  el.textContent=forced||msgs[Math.floor(Math.random()*msgs.length)];
   fx.appendChild(el);setTimeout(()=>el.remove(),1500);
 }
 
-function babyReact(){
+// A real Baby Mo pose cheers from the bottom on every find.
+function babyReact(pose){
   const wrap=document.getElementById('scene-wrap');
-  const rs=['😄','🥰','😁','🌟','💛','🤩','😍'];
-  const el=document.createElement('div');
-  el.className='baby-react';
-  el.textContent=rs[Math.floor(Math.random()*rs.length)];
-  wrap.appendChild(el);setTimeout(()=>el.remove(),1050);
+  const p=pose||CHEER_POSES[Math.floor(Math.random()*CHEER_POSES.length)];
+  const el=document.createElement('img');
+  el.className='baby-react-img';
+  el.src='baby-mo-poses/'+p+'.webp';
+  el.alt='';
+  wrap.appendChild(el);setTimeout(()=>el.remove(),1200);
 }
 
 function updateTrayItem(id){
@@ -491,7 +699,10 @@ function updateDots(){
 }
 
 function buildTray(lv){
-  document.getElementById('tray-items').innerHTML=lv.objects.map(o=>`<div class="ti ${found.has(o.id)?'found':''}" data-id="${o.id}"><span class="ti-icon">${o.e}</span><span class="ti-lbl">${o.label}</span></div>`).join('');
+  document.getElementById('tray-items').innerHTML=lv.objects.map(o=>{
+    const icon=o.img?`<img class="ti-img" src="${o.img}" alt="">`:`<span class="ti-icon">${o.e}</span>`;
+    return `<div class="ti ${found.has(o.id)?'found':''}" data-id="${o.id}">${icon}<span class="ti-lbl">${o.label}</span></div>`;
+  }).join('');
 }
 
 // =============================================
@@ -517,6 +728,9 @@ function clearHint(){
 function showComplete(){
   completeSnd();
   const lv=LEVELS[curLv];
+  // celebrate with a random Baby Mo pose
+  const cb=document.querySelector('.comp-baby');
+  if(cb)cb.src='baby-mo-poses/'+CHEER_POSES[Math.floor(Math.random()*CHEER_POSES.length)]+'.webp';
   document.getElementById('sticker').textContent=lv.sticker;
   document.getElementById('comp-msg').textContent=lv.msg;
   prog[lv.id]=3;localStorage.setItem('bmo2',JSON.stringify(prog));
@@ -602,246 +816,399 @@ function getSceneSVG(id){
   if(id===3)return gardenSVG();
   if(id===4)return marketSVG();
   if(id===5)return masjidSVG();
+  if(id===6)return kitchenSVG();
+  if(id===7)return classroomSVG();
+  if(id===8)return beachSVG();
+  if(id===9)return zooSVG();
+  if(id===10)return playgroundSVG();
+  if(id===11)return farmSVG();
+  if(id===12)return seaSVG();
   return bedroomSVG();
 }
 
-function bedroomSVG(){return`<defs><linearGradient id="bg1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0f2b3d"/><stop offset="100%" stop-color="#1a3a2a"/></linearGradient></defs>
-<rect width="375" height="420" fill="url(#bg1)"/>
-<rect x="0" y="345" width="375" height="75" fill="#0d2018"/>
-<rect x="0" y="342" width="375" height="5" fill="#1a4028"/>
-<rect x="255" y="20" width="98" height="118" fill="#1a2d4a" rx="10"/><rect x="261" y="26" width="86" height="106" fill="#0d1f33" rx="8"/>
-<line x1="304" y1="26" x2="304" y2="132" stroke="#1a2d4a" stroke-width="5"/><line x1="261" y1="79" x2="347" y2="79" stroke="#1a2d4a" stroke-width="5"/>
-<circle cx="284" cy="57" r="21" fill="#1a2d4a"/><circle cx="295" cy="52" r="21" fill="#f5c94e" opacity=".84"/>
-<circle cx="323" cy="44" r="2" fill="#fffde0" opacity=".8"/><circle cx="312" cy="100" r="1.5" fill="#fffde0" opacity=".6"/><circle cx="334" cy="113" r="1.5" fill="#fffde0" opacity=".7"/>
-<rect x="255" y="20" width="98" height="118" fill="none" stroke="#1e4030" stroke-width="4" rx="10"/>
-<rect x="252" y="140" width="103" height="148" fill="#1e3a28" rx="8"/>
-<rect x="257" y="145" width="93" height="40" fill="#142b1e" rx="4"/>
-<rect x="257" y="190" width="93" height="40" fill="#142b1e" rx="4"/>
-<rect x="257" y="235" width="93" height="40" fill="#142b1e" rx="4"/>
-<rect x="261" y="149" width="11" height="32" fill="#c0392b" rx="2"/><rect x="274" y="151" width="9" height="30" fill="#2980b9" rx="2"/>
-<rect x="285" y="148" width="13" height="33" fill="#27ae60" rx="2"/><rect x="300" y="150" width="9" height="31" fill="#f39c12" rx="2"/>
-<rect x="313" y="152" width="8" height="29" fill="#8e44ad" rx="2"/>
-<rect x="261" y="194" width="9" height="32" fill="#e74c3c" rx="2"/><rect x="272" y="196" width="12" height="30" fill="#1abc9c" rx="2"/>
-<rect x="286" y="193" width="10" height="33" fill="#f1c40f" rx="2"/><rect x="299" y="195" width="13" height="31" fill="#9b59b6" rx="2"/>
-<circle cx="281" cy="256" r="9" fill="#f5c94e" opacity=".65"/><rect x="296" y="241" width="17" height="26" fill="#2c3e50" rx="3"/>
-<rect x="8" y="268" width="73" height="76" fill="#1e3a28" rx="8"/><rect x="12" y="272" width="65" height="33" fill="#142b1e" rx="4"/>
-<rect x="30" y="248" width="11" height="24" fill="#f5c94e" opacity=".52"/><ellipse cx="36" cy="248" rx="22" ry="9" fill="#f5c94e" opacity=".72"/>
-<circle cx="36" cy="248" r="33" fill="rgba(245,201,78,0.07)"/>
-<rect x="57" y="267" width="193" height="36" fill="#162b1e" rx="10"/><rect x="57" y="287" width="193" height="82" fill="#1e3a28" rx="0 0 14 14"/>
-<ellipse cx="122" cy="308" rx="40" ry="20" fill="#243824"/><ellipse cx="196" cy="308" rx="40" ry="20" fill="#243824"/>
-<rect x="62" y="325" width="183" height="44" fill="#1a3820" rx="0 0 10 10"/>
-<line x1="62" y1="343" x2="245" y2="343" stroke="rgba(245,201,78,.1)" stroke-width="2"/>
-<rect x="0" y="113" width="61" height="232" fill="#162b1e" rx="0 8 8 0"/>
-<rect x="4" y="117" width="53" height="224" fill="#1a3228" rx="6"/>
-<line x1="30" y1="117" x2="30" y2="341" stroke="#0f2018" stroke-width="2"/>
-<circle cx="18" cy="234" r="4" fill="#f5c94e" opacity=".55"/><circle cx="43" cy="234" r="4" fill="#f5c94e" opacity=".55"/>
-<rect x="0" y="113" width="61" height="53" fill="#1e3a28" rx="0 8 0 0"/>
-<line x1="183" y1="0" x2="183" y2="23" stroke="#1e3a28" stroke-width="5"/>
-<ellipse cx="183" cy="27" rx="27" ry="11" fill="#1e3a28"/><circle cx="183" cy="27" r="14" fill="#f5c94e" opacity=".7"/>
-<circle cx="183" cy="27" r="34" fill="rgba(245,201,78,0.05)"/>
-<ellipse cx="156" cy="355" rx="96" ry="19" fill="#1a4030" opacity=".55"/>
-<ellipse cx="156" cy="355" rx="86" ry="14" fill="none" stroke="rgba(245,201,78,.18)" stroke-width="2"/>
-<text x="213" y="197" font-size="11" opacity=".2" fill="#f5c94e">✦</text><text x="106" y="76" font-size="9" opacity=".18" fill="#f5c94e">✦</text>`;}
+function bedroomSVG(){return`<defs>
+<linearGradient id="bdWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#474c8c"/><stop offset="55%" stop-color="#5d6dac"/><stop offset="100%" stop-color="#7184bb"/></linearGradient>
+<linearGradient id="bdFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98a52"/><stop offset="100%" stop-color="#a06a39"/></linearGradient>
+<linearGradient id="bdSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#162247"/><stop offset="100%" stop-color="#2f3f72"/></linearGradient>
+<radialGradient id="bdMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="70%" stop-color="#ffe6a2"/><stop offset="100%" stop-color="#f3c869"/></radialGradient>
+<radialGradient id="bdLampGlow" cx="50%" cy="34%" r="65%"><stop offset="0%" stop-color="rgba(255,226,150,.5)"/><stop offset="100%" stop-color="rgba(255,226,150,0)"/></radialGradient>
+<radialGradient id="bdWarm" cx="50%" cy="0%" r="95%"><stop offset="0%" stop-color="rgba(255,221,160,.18)"/><stop offset="60%" stop-color="rgba(255,221,160,0)"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#bdWall)"/>
+<rect width="375" height="420" fill="url(#bdWarm)"/>
+<g fill="#ffffff" opacity=".05"><circle cx="40" cy="60" r="2.4"/><circle cx="120" cy="40" r="2"/><circle cx="205" cy="64" r="2.2"/><circle cx="92" cy="158" r="2"/><circle cx="165" cy="120" r="2.2"/><circle cx="300" cy="172" r="2"/></g>
+<!-- floor -->
+<rect x="0" y="332" width="375" height="88" fill="url(#bdFloor)"/>
+<rect x="0" y="326" width="375" height="9" fill="#8a5a30"/><rect x="0" y="324" width="375" height="3" fill="#caa06a" opacity=".6"/>
+<g stroke="#875a2f" stroke-width="2" opacity=".4"><line x1="70" y1="335" x2="48" y2="420"/><line x1="160" y1="335" x2="150" y2="420"/><line x1="250" y1="335" x2="262" y2="420"/><line x1="330" y1="335" x2="352" y2="420"/></g>
+<!-- window -->
+<rect x="232" y="26" width="128" height="128" rx="20" fill="#3a4f86"/>
+<rect x="238" y="32" width="116" height="116" rx="15" fill="url(#bdSky)"/>
+<circle cx="284" cy="74" r="40" fill="#ffe6a2" opacity=".14"/>
+<circle cx="284" cy="74" r="26" fill="url(#bdMoon)"/><circle cx="276" cy="68" r="5" fill="#f0c25e" opacity=".5"/><circle cx="293" cy="83" r="3.5" fill="#f0c25e" opacity=".45"/>
+<g fill="#fff7da"><circle cx="322" cy="50" r="1.6"/><circle cx="312" cy="120" r="1.4"/><circle cx="340" cy="100" r="1.5"/><circle cx="258" cy="122" r="1.3"/></g>
+<text x="318" y="58" font-size="10" fill="#fff7da" opacity=".8">✦</text>
+<rect x="294" y="32" width="4" height="116" fill="#3a4f86"/><rect x="238" y="86" width="116" height="4" fill="#3a4f86"/>
+<rect x="232" y="26" width="128" height="128" rx="20" fill="none" stroke="#eef2ff" stroke-width="5"/>
+<rect x="226" y="150" width="140" height="9" rx="4" fill="#eef2ff"/>
+<!-- curtains over the window (a little hiding spot) -->
+<rect x="218" y="17" width="156" height="7" rx="3.5" fill="#7a5638"/>
+<circle cx="219" cy="20.5" r="6" fill="#8a6440"/><circle cx="373" cy="20.5" r="6" fill="#8a6440"/>
+<path d="M223 22 H369 V43 Q347 55 326 43 Q305 55 284 43 Q263 55 242 43 Q231 50 223 43 Z" fill="#ef8a63"/>
+<path d="M224 22 H272 V153 Q260 163 250 153 Q240 163 230 153 Q226 157 224 153 Z" fill="#ff9e7a"/>
+<g stroke="#e87f5a" stroke-width="2" opacity=".45" fill="none"><path d="M238 30 V151"/><path d="M250 30 V153"/><path d="M261 30 V151"/></g>
+<path d="M320 22 H368 V153 Q358 163 348 153 Q338 163 328 153 Q324 157 320 153 Z" fill="#ff9e7a"/>
+<g stroke="#e87f5a" stroke-width="2" opacity=".45" fill="none"><path d="M332 30 V153"/><path d="M344 30 V151"/><path d="M356 30 V153"/></g>
+<!-- pendant lamp (cord runs from ceiling into the shade) -->
+<rect x="143" y="0" width="14" height="6" rx="3" fill="#34477a"/>
+<line x1="150" y1="3" x2="150" y2="52" stroke="#3a4f86" stroke-width="3"/>
+<circle cx="150" cy="52" r="3.5" fill="#34477a"/>
+<ellipse cx="150" cy="98" rx="62" ry="44" fill="url(#bdLampGlow)"/>
+<path d="M126 64 Q150 40 174 64 Z" fill="#ffd166"/><ellipse cx="150" cy="64" rx="24" ry="6.5" fill="#f5b942"/><circle cx="150" cy="70" r="5.5" fill="#fff3c4"/>
+<!-- framed Baby Mo photo on the wall -->
+<rect x="60" y="74" width="20" height="9" rx="2" fill="#c9b27a"/>
+<rect x="34" y="80" width="72" height="76" rx="9" fill="#fbf7ee"/>
+<rect x="40" y="86" width="60" height="64" rx="5" fill="#e7e9ee"/>
+<svg x="42" y="88" width="56" height="60"><image href="baby-mo-poses/baby-mo-pose-01.webp" x="-42" y="-13" width="140" height="140" style="filter:grayscale(1) contrast(1.06) brightness(1.03)"/></svg>
+<rect x="40" y="86" width="60" height="64" rx="5" fill="none" stroke="#fbf7ee" stroke-width="3"/>
+<rect x="34" y="80" width="72" height="76" rx="9" fill="none" stroke="#e6ddca" stroke-width="2.5"/>
+<!-- bookshelf -->
+<rect x="246" y="170" width="116" height="160" rx="10" fill="#b87a44"/><rect x="251" y="175" width="106" height="150" rx="6" fill="#a86c38"/>
+<rect x="251" y="220" width="106" height="6" fill="#8a5a30"/><rect x="251" y="268" width="106" height="6" fill="#8a5a30"/>
+<rect x="258" y="182" width="12" height="36" rx="2" fill="#ff6b5c"/><rect x="272" y="184" width="10" height="34" rx="2" fill="#6cc0e8"/><rect x="284" y="180" width="13" height="38" rx="2" fill="#6bbf59"/><rect x="299" y="183" width="10" height="35" rx="2" fill="#ffd166"/><rect x="311" y="181" width="11" height="37" rx="2" fill="#b497e0"/>
+<circle cx="341" cy="201" r="13" fill="#ffb3a0"/><circle cx="336" cy="198" r="1.8" fill="#5a3a2a"/><circle cx="346" cy="198" r="1.8" fill="#5a3a2a"/><path d="M336 205 Q341 209 346 205" stroke="#5a3a2a" stroke-width="1.5" fill="none"/>
+<rect x="258" y="230" width="11" height="36" rx="2" fill="#4ec5b0"/><rect x="271" y="232" width="13" height="34" rx="2" fill="#ff8c66"/><rect x="286" y="229" width="10" height="37" rx="2" fill="#ffd166"/><rect x="298" y="231" width="12" height="35" rx="2" fill="#6cc0e8"/><rect x="312" y="230" width="10" height="36" rx="2" fill="#ff6b5c"/>
+<rect x="332" y="240" width="22" height="26" rx="4" fill="#7c5cff" opacity=".85"/><circle cx="343" cy="250" r="3" fill="#fff3c4"/>
+<rect x="258" y="280" width="42" height="40" rx="6" fill="#8a5a30" opacity=".45"/><circle cx="279" cy="301" r="13" fill="#ffd166"/><path d="M273 301 a6 6 0 0 1 12 0" fill="#f5b942"/>
+<rect x="312" y="286" width="40" height="34" rx="6" fill="#8a5a30" opacity=".45"/>
+<!-- bed -->
+<rect x="6" y="246" width="36" height="92" rx="10" fill="#b06a3e"/><rect x="11" y="251" width="26" height="62" rx="7" fill="#c8814f"/>
+<circle cx="24" cy="263" r="8" fill="#ffe6a2"/><path d="M19 263 a5 5 0 0 1 10 0" fill="#f3c869"/>
+<rect x="34" y="300" width="148" height="40" rx="10" fill="#f3e3c8"/>
+<path d="M34 314 H182 V330 Q182 340 172 340 H44 Q34 340 34 330 Z" fill="#4ec5b0"/>
+<path d="M34 300 H182 V316 H34 Z" fill="#38a896" opacity=".92"/>
+<rect x="40" y="288" width="46" height="26" rx="9" fill="#fff6e6"/><circle cx="150" cy="326" r="6" fill="#fff3c4" opacity=".5"/>
+<!-- plant: pot drawn first, then the stem rises out of the soil (connected) -->
+<path d="M192 316 H228 L222 340 H198 Z" fill="#e07a52"/>
+<rect x="186" y="308" width="48" height="11" rx="4" fill="#f0916a"/>
+<ellipse cx="210" cy="313" rx="15" ry="3" fill="#6b4327"/>
+<path d="M210 313 q-9 -20 -3 -38" stroke="#4ea84e" stroke-width="5" fill="none" stroke-linecap="round"/>
+<ellipse cx="198" cy="285" rx="11" ry="7" fill="#6bbf59" transform="rotate(-32 198 285)"/>
+<ellipse cx="222" cy="289" rx="11" ry="7" fill="#5bb85a" transform="rotate(28 222 289)"/>
+<ellipse cx="208" cy="274" rx="10.5" ry="8" fill="#7ace66"/>
+<!-- rug -->
+<ellipse cx="150" cy="374" rx="92" ry="22" fill="#e6b85c"/><ellipse cx="150" cy="374" rx="74" ry="16" fill="#f3d488"/><ellipse cx="150" cy="374" rx="50" ry="10" fill="#e6b85c" opacity=".55"/>
+<g fill="#fff7da" opacity=".5"><text x="150" y="205" font-size="10">✦</text><text x="120" y="252" font-size="8">⋆</text><text x="222" y="150" font-size="9">✦</text></g>`;}
 
-function livingRoomSVG(){return`<defs><linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1a2a1a"/><stop offset="100%" stop-color="#0d1e12"/></linearGradient></defs>
-<rect width="375" height="420" fill="url(#bg2)"/>
-<rect x="0" y="348" width="375" height="72" fill="#0a1a0a"/>
-<rect x="0" y="345" width="375" height="5" fill="#1a3a1a"/>
-<rect x="10" y="16" width="84" height="108" fill="#1a2a3a" rx="10"/><rect x="15" y="21" width="74" height="98" fill="#0d1f2d" rx="8"/>
-<circle cx="33" cy="52" r="16" fill="#1a2a3a"/><circle cx="43" cy="47" r="16" fill="#f5c94e" opacity=".8"/>
-<circle cx="66" cy="31" r="1.5" fill="#fffde0" opacity=".8"/><circle cx="51" cy="88" r="1.5" fill="#fffde0" opacity=".6"/>
-<line x1="52" y1="21" x2="52" y2="119" stroke="#1a2a3a" stroke-width="4"/>
-<line x1="15" y1="69" x2="89" y2="69" stroke="#1a2a3a" stroke-width="4"/>
-<rect x="10" y="16" width="84" height="108" fill="none" stroke="#1e3e1e" stroke-width="4" rx="10"/>
-<rect x="150" y="28" width="68" height="90" fill="#122a12" rx="4"/><rect x="154" y="32" width="60" height="82" fill="#0d1f0d" rx="3"/>
-<text x="184" y="58" text-anchor="middle" font-size="13" fill="rgba(245,201,78,.78)" font-family="serif">بسم</text>
-<text x="184" y="78" text-anchor="middle" font-size="13" fill="rgba(245,201,78,.78)" font-family="serif">الله</text>
-<text x="184" y="96" text-anchor="middle" font-size="11" fill="rgba(245,201,78,.52)" font-family="serif">الرحمن</text>
-<g opacity=".12" transform="translate(238,38)"><polygon points="36,0 72,36 36,72 0,36" fill="none" stroke="#f5c94e" stroke-width="2"/><circle cx="36" cy="36" r="14" fill="none" stroke="#f5c94e" stroke-width="1.5"/></g>
-<rect x="0" y="156" width="90" height="133" fill="#162b16" rx="0 8 8 0"/>
-<rect x="4" y="160" width="82" height="125" fill="#0f1f0f" rx="4"/>
-<rect x="4" y="160" width="82" height="40" fill="#0d1a0d" rx="4 4 0 0"/>
-<rect x="4" y="205" width="82" height="40" fill="#0d1a0d"/>
-<rect x="8" y="164" width="10" height="32" fill="#c0392b" rx="2"/><rect x="20" y="166" width="12" height="30" fill="#2980b9" rx="2"/><rect x="34" y="163" width="10" height="33" fill="#27ae60" rx="2"/><rect x="47" y="165" width="14" height="31" fill="#f39c12" rx="2"/><circle cx="73" cy="179" r="7" fill="#f5c94e" opacity=".62"/>
-<rect x="283" y="160" width="92" height="192" fill="#162b16" rx="8"/>
-<rect x="287" y="164" width="84" height="53" fill="#0f1f0f" rx="4"/>
-<rect x="289" y="166" width="80" height="49" fill="#0d1a0d" rx="3"/>
-<rect x="291" y="168" width="76" height="45" fill="#1a4030" rx="2" opacity=".45"/>
-<rect x="287" y="222" width="84" height="33" fill="#0f1f0f" rx="4"/><rect x="287" y="260" width="84" height="33" fill="#0f1f0f" rx="4"/><rect x="287" y="298" width="84" height="33" fill="#0f1f0f" rx="4"/>
-<rect x="66" y="260" width="207" height="90" fill="#1a3a1a" rx="16"/>
-<rect x="66" y="260" width="207" height="46" fill="#1e4020" rx="16 16 0 0"/>
-<rect x="56" y="263" width="26" height="80" fill="#163016" rx="8 0 0 8"/><rect x="286" y="263" width="26" height="80" fill="#163016" rx="0 8 8 0"/>
-<rect x="76" y="265" width="76" height="44" fill="#204020" rx="8"/><rect x="162" y="265" width="76" height="44" fill="#204020" rx="8"/>
-<ellipse cx="114" cy="287" rx="29" ry="16" fill="#243824"/><ellipse cx="200" cy="287" rx="29" ry="16" fill="#243824"/>
-<rect x="126" y="353" width="118" height="16" fill="#1a3a1a" rx="6"/>
-<rect x="134" y="368" width="5" height="19" fill="#122a12" rx="2"/><rect x="249" y="368" width="5" height="19" fill="#122a12" rx="2"/>
-<rect x="76" y="350" width="212" height="15" fill="#1e4a8a" rx="4" opacity=".74"/>
-<rect x="81" y="351" width="202" height="13" fill="none" stroke="rgba(245,201,78,.3)" stroke-width="1.5" rx="3"/>
-<line x1="88" y1="350" x2="86" y2="365" stroke="#f5c94e" stroke-width="1.5" opacity=".38"/>
-<line x1="101" y1="350" x2="99" y2="365" stroke="#f5c94e" stroke-width="1.5" opacity=".38"/>
-<line x1="271" y1="350" x2="273" y2="365" stroke="#f5c94e" stroke-width="1.5" opacity=".38"/>
-<line x1="131" y1="0" x2="131" y2="23" stroke="#1e3a1e" stroke-width="5"/><circle cx="131" cy="27" r="15" fill="#1e3a1e"/><circle cx="131" cy="27" r="9" fill="#f5c94e" opacity=".64"/><circle cx="131" cy="27" r="28" fill="rgba(245,201,78,0.05)"/>
-<ellipse cx="186" cy="362" rx="100" ry="14" fill="#1a3a2a" opacity=".42"/>`;}
+function livingRoomSVG(){return`<defs>
+<linearGradient id="lrWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4f8a86"/><stop offset="55%" stop-color="#61a09a"/><stop offset="100%" stop-color="#77b4ab"/></linearGradient>
+<linearGradient id="lrFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98a52"/><stop offset="100%" stop-color="#a06a39"/></linearGradient>
+<linearGradient id="lrSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#16224a"/><stop offset="100%" stop-color="#2f3f72"/></linearGradient>
+<radialGradient id="lrMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="70%" stop-color="#ffe6a2"/><stop offset="100%" stop-color="#f3c869"/></radialGradient>
+<radialGradient id="lrWarm" cx="50%" cy="0%" r="95%"><stop offset="0%" stop-color="rgba(255,221,160,.16)"/><stop offset="60%" stop-color="rgba(255,221,160,0)"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#lrWall)"/><rect width="375" height="420" fill="url(#lrWarm)"/>
+<rect x="0" y="330" width="375" height="90" fill="url(#lrFloor)"/>
+<rect x="0" y="324" width="375" height="9" fill="#8a5a30"/><rect x="0" y="322" width="375" height="3" fill="#caa06a" opacity=".6"/>
+<g stroke="#875a2f" stroke-width="2" opacity=".4"><line x1="70" y1="333" x2="48" y2="420"/><line x1="180" y1="333" x2="172" y2="420"/><line x1="290" y1="333" x2="304" y2="420"/></g>
+<!-- window + curtains (Baby Mo's hiding spot) -->
+<rect x="244" y="24" width="116" height="120" rx="18" fill="#3a4f86"/>
+<rect x="250" y="30" width="104" height="108" rx="13" fill="url(#lrSky)"/>
+<circle cx="300" cy="66" r="22" fill="url(#lrMoon)"/><circle cx="293" cy="60" r="4" fill="#f0c25e" opacity=".5"/>
+<g fill="#fff7da"><circle cx="268" cy="56" r="1.4"/><circle cx="332" cy="104" r="1.5"/><circle cx="320" cy="46" r="1.3"/></g>
+<rect x="300" y="30" width="4" height="108" fill="#3a4f86"/><rect x="250" y="80" width="104" height="4" fill="#3a4f86"/>
+<rect x="244" y="24" width="116" height="120" rx="18" fill="none" stroke="#eef2ff" stroke-width="5"/>
+<rect x="238" y="140" width="128" height="9" rx="4" fill="#eef2ff"/>
+<rect x="232" y="16" width="142" height="7" rx="3.5" fill="#7a5638"/><circle cx="233" cy="19.5" r="6" fill="#8a6440"/>
+<path d="M236 21 H368 V40 Q349 51 330 40 Q311 51 292 40 Q273 51 254 40 Q244 47 236 40 Z" fill="#6fb6a8"/>
+<path d="M238 21 H280 V146 Q269 155 259 146 Q249 155 239 146 Q237 150 238 146 Z" fill="#88ccbd"/>
+<g stroke="#5fa394" stroke-width="2" opacity=".45" fill="none"><path d="M250 28 V145"/><path d="M261 28 V146"/><path d="M271 28 V145"/></g>
+<path d="M330 21 H372 V146 Q362 155 352 146 Q342 155 332 146 Q330 150 330 146 Z" fill="#88ccbd"/>
+<g stroke="#5fa394" stroke-width="2" opacity=".45" fill="none"><path d="M342 28 V146"/><path d="M354 28 V145"/><path d="M364 28 V146"/></g>
+<!-- Bismillah calligraphy -->
+<rect x="104" y="46" width="136" height="64" rx="12" fill="#2e7d6e"/><rect x="110" y="52" width="124" height="52" rx="8" fill="#1f5e54"/>
+<text x="172" y="86" text-anchor="middle" font-size="16" fill="#ffe6a2" font-family="'Amiri Quran', 'Amiri', serif">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</text>
+<rect x="104" y="46" width="136" height="64" rx="12" fill="none" stroke="#ffe6a2" stroke-width="2.5" opacity=".65"/>
+<!-- framed B&W Baby Mo photo -->
+<rect x="18" y="58" width="62" height="66" rx="8" fill="#fbf7ee"/><rect x="23" y="63" width="52" height="56" rx="5" fill="#e7e9ee"/>
+<svg x="25" y="65" width="48" height="52"><image href="baby-mo-poses/baby-mo-yes.webp" x="-36" y="-11" width="120" height="120" style="filter:grayscale(1) contrast(1.06) brightness(1.03)"/></svg>
+<rect x="18" y="58" width="62" height="66" rx="8" fill="none" stroke="#e6ddca" stroke-width="2.5"/>
+<!-- plant -->
+<path d="M40 330 H78 L72 354 H46 Z" fill="#e07a52"/><rect x="34" y="322" width="50" height="11" rx="4" fill="#f0916a"/>
+<ellipse cx="59" cy="327" rx="16" ry="3" fill="#6b4327"/>
+<path d="M59 327 q-10 -22 -3 -42" stroke="#4ea84e" stroke-width="5" fill="none" stroke-linecap="round"/>
+<ellipse cx="46" cy="298" rx="12" ry="7.5" fill="#6bbf59" transform="rotate(-32 46 298)"/><ellipse cx="73" cy="302" rx="12" ry="7.5" fill="#5bb85a" transform="rotate(28 73 302)"/><ellipse cx="58" cy="285" rx="11" ry="8" fill="#7ace66"/>
+<!-- sofa -->
+<rect x="92" y="282" width="204" height="44" rx="14" fill="#ff9e7a"/>
+<rect x="86" y="300" width="216" height="56" rx="16" fill="#ff8c66"/>
+<rect x="82" y="296" width="22" height="62" rx="9" fill="#f3784f"/><rect x="284" y="296" width="22" height="62" rx="9" fill="#f3784f"/>
+<rect x="114" y="300" width="76" height="32" rx="9" fill="#ffd166"/><rect x="198" y="300" width="76" height="32" rx="9" fill="#6cc0e8"/>
+<!-- rug -->
+<ellipse cx="190" cy="378" rx="122" ry="22" fill="#e6b85c"/><ellipse cx="190" cy="378" rx="98" ry="16" fill="#f3d488"/>
+<g fill="#fff7da" opacity=".45"><text x="100" y="180" font-size="9">✦</text><text x="208" y="150" font-size="8">⋆</text></g>`;}
+
 
 function gardenSVG(){return`<defs>
-<linearGradient id="bg3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#040a18"/><stop offset="55%" stop-color="#0d1e3a"/><stop offset="100%" stop-color="#0a2218"/></linearGradient>
-<radialGradient id="mg3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#f5c94e" stop-opacity=".22"/><stop offset="100%" stop-color="#f5c94e" stop-opacity="0"/></radialGradient>
+<linearGradient id="gdSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#39397a"/><stop offset="50%" stop-color="#585aa2"/><stop offset="100%" stop-color="#8083bd"/></linearGradient>
+<radialGradient id="gdMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="70%" stop-color="#ffe6a2"/><stop offset="100%" stop-color="#f3c869"/></radialGradient>
+<radialGradient id="gdGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,230,162,.3)"/><stop offset="100%" stop-color="rgba(255,230,162,0)"/></radialGradient>
+<linearGradient id="gdHillA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#74bd7a"/><stop offset="100%" stop-color="#5aa066"/></linearGradient>
+<linearGradient id="gdHillB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#61ae9c"/><stop offset="100%" stop-color="#4f9888"/></linearGradient>
 </defs>
-<rect width="375" height="420" fill="url(#bg3)"/>
-<circle cx="28" cy="36" r="1.5" fill="#fffde0" opacity=".8"/><circle cx="78" cy="16" r="1" fill="#fffde0" opacity=".7"/>
-<circle cx="148" cy="12" r="2" fill="#fffde0" opacity=".9"/><circle cx="228" cy="22" r="1.5" fill="#fffde0" opacity=".7"/>
-<circle cx="288" cy="40" r="1" fill="#fffde0" opacity=".6"/><circle cx="353" cy="26" r="1.5" fill="#fffde0" opacity=".8"/>
-<circle cx="108" cy="56" r="1" fill="#fffde0" opacity=".5"/><circle cx="338" cy="66" r="1.5" fill="#fffde0" opacity=".6"/>
-<circle cx="193" cy="41" r="1" fill="#fffde0" opacity=".7"/><circle cx="258" cy="11" r="1" fill="#fffde0" opacity=".6"/>
-<circle cx="300" cy="76" r="50" fill="url(#mg3)"/>
-<circle cx="300" cy="76" r="38" fill="#f5c94e" opacity=".86"/>
-<circle cx="311" cy="68" r="38" fill="#0d1e3a"/><circle cx="319" cy="66" r="38" fill="#f5c94e" opacity=".86"/>
-<circle cx="308" cy="90" r="4" fill="#e5b93e" opacity=".4"/><circle cx="326" cy="70" r="3" fill="#e5b93e" opacity=".3"/>
-<ellipse cx="187" cy="393" rx="193" ry="43" fill="#0a2218"/>
-<ellipse cx="187" cy="383" rx="183" ry="33" fill="#0d2a20"/>
-<rect x="16" y="333" width="22" height="57" fill="#071508"/>
-<ellipse cx="30" cy="302" rx="50" ry="68" fill="#0a2010"/><ellipse cx="14" cy="276" rx="37" ry="54" fill="#0d2818"/>
-<rect x="4" y="316" width="15" height="64" fill="#071508"/>
-<rect x="328" y="336" width="22" height="57" fill="#071508"/>
-<ellipse cx="340" cy="306" rx="50" ry="68" fill="#0a2010"/><ellipse cx="356" cy="281" rx="33" ry="50" fill="#0d2818"/>
-<ellipse cx="187" cy="374" rx="63" ry="15" fill="#122a1a" opacity=".72"/>
-<rect x="180" y="193" width="9" height="140" fill="#1a3a28"/>
-<ellipse cx="184" cy="193" rx="23" ry="9" fill="#1a3a28"/><circle cx="184" cy="189" r="14" fill="#f5c94e" opacity=".74"/>
-<circle cx="184" cy="189" r="30" fill="rgba(245,201,78,0.07)"/>
-<rect x="90" y="350" width="4" height="23" fill="#1a5028"/><circle cx="92" cy="350" r="10" fill="#ff6b9d" opacity=".84"/><circle cx="92" cy="350" r="5" fill="#ffe066" opacity=".9"/>
-<rect x="144" y="366" width="4" height="17" fill="#1a5028"/><circle cx="146" cy="366" r="9" fill="#ff9a5c" opacity=".82"/><circle cx="146" cy="366" r="4" fill="#ffe066" opacity=".9"/>
-<rect x="235" y="361" width="4" height="20" fill="#1a5028"/><circle cx="237" cy="361" r="10" fill="#b48be8" opacity=".84"/><circle cx="237" cy="361" r="5" fill="#ffe066" opacity=".9"/>
-<rect x="280" y="371" width="4" height="14" fill="#1a5028"/><circle cx="282" cy="371" r="8" fill="#ff6b9d" opacity=".78"/><circle cx="282" cy="371" r="4" fill="#ffe066" opacity=".9"/>
-<ellipse cx="157" cy="380" rx="43" ry="14" fill="#0d2035" opacity=".74"/>
-<ellipse cx="157" cy="380" rx="37" ry="10" fill="none" stroke="rgba(100,180,255,.24)" stroke-width="1.5"/>
-<rect x="255" y="346" width="9" height="14" fill="#f5f5dc" opacity=".64"/>
-<ellipse cx="259" cy="346" rx="14" ry="6" fill="#c0392b" opacity=".68"/>
-<circle cx="88" cy="286" r="3" fill="#fffde0" opacity=".38"/>
-<circle cx="276" cy="256" r="2.5" fill="#fffde0" opacity=".3"/><circle cx="316" cy="316" r="2" fill="#fffde0" opacity=".32"/>`;}
+<rect width="375" height="420" fill="url(#gdSky)"/>
+<g fill="#fff7da"><circle cx="40" cy="50" r="1.6"/><circle cx="110" cy="30" r="1.2"/><circle cx="170" cy="62" r="1.8"/><circle cx="150" cy="22" r="1.3"/><circle cx="230" cy="44" r="1.5"/><circle cx="60" cy="104" r="1.3"/><circle cx="205" cy="104" r="1.2"/><circle cx="276" cy="120" r="1.4"/></g>
+<text x="120" y="84" font-size="11" fill="#fff7da" opacity=".7">✦</text><text x="250" y="150" font-size="9" fill="#fff7da" opacity=".55">⋆</text>
+<circle cx="312" cy="66" r="46" fill="url(#gdGlow)"/><circle cx="312" cy="66" r="28" fill="url(#gdMoon)"/><circle cx="304" cy="60" r="4.5" fill="#f0c25e" opacity=".45"/><circle cx="320" cy="74" r="3" fill="#f0c25e" opacity=".4"/>
+<path d="M0 300 Q120 252 240 290 Q320 314 375 296 V420 H0 Z" fill="url(#gdHillB)"/>
+<ellipse cx="150" cy="378" rx="82" ry="20" fill="#6fc0d8" opacity=".5"/><ellipse cx="150" cy="376" rx="62" ry="13" fill="#8ad4e8" opacity=".45"/>
+<path d="M0 340 Q90 312 200 338 Q300 360 375 338 V420 H0 Z" fill="url(#gdHillA)"/>
+<rect x="40" y="250" width="13" height="94" rx="5" fill="#a8703f"/>
+<circle cx="46" cy="238" r="30" fill="#5aa066"/><circle cx="26" cy="252" r="23" fill="#6bbf72"/><circle cx="64" cy="252" r="23" fill="#6bbf72"/><circle cx="46" cy="262" r="25" fill="#7ace7e"/>
+<rect x="232" y="278" width="10" height="64" rx="4" fill="#a8703f"/>
+<circle cx="237" cy="268" r="21" fill="#5fae9c"/><circle cx="223" cy="278" r="16" fill="#6fc0a8"/><circle cx="251" cy="278" r="16" fill="#6fc0a8"/>
+<ellipse cx="318" cy="356" rx="46" ry="30" fill="#5aa066"/><circle cx="296" cy="346" r="22" fill="#6bbf72"/><circle cx="320" cy="338" r="26" fill="#6bbf72"/><circle cx="344" cy="348" r="20" fill="#5aa066"/><circle cx="330" cy="356" r="22" fill="#7ace7e"/>
+<g><rect x="92" y="350" width="4" height="22" rx="2" fill="#3f8a4f"/><circle cx="94" cy="348" r="9" fill="#ff8fb3"/><circle cx="94" cy="348" r="4" fill="#ffe066"/></g>
+<g><rect x="128" y="360" width="4" height="18" rx="2" fill="#3f8a4f"/><circle cx="130" cy="358" r="8" fill="#ffb15c"/><circle cx="130" cy="358" r="3.5" fill="#ffe066"/></g>
+<g><rect x="186" y="356" width="4" height="20" rx="2" fill="#3f8a4f"/><circle cx="188" cy="354" r="9" fill="#b48be8"/><circle cx="188" cy="354" r="4" fill="#ffe066"/></g>
+<g><rect x="62" y="372" width="4" height="16" rx="2" fill="#3f8a4f"/><circle cx="64" cy="370" r="7" fill="#7cc8e0"/><circle cx="64" cy="370" r="3" fill="#ffe066"/></g>
+<g fill="#fff3a8"><circle cx="120" cy="240" r="3"/><circle cx="210" cy="208" r="2.4"/><circle cx="268" cy="280" r="2.6"/><circle cx="92" cy="300" r="2.2"/></g>
+<g fill="#fff3a8" opacity=".3"><circle cx="120" cy="240" r="8"/><circle cx="210" cy="208" r="7"/><circle cx="268" cy="280" r="7"/></g>`;}
 
-function marketSVG(){return`<defs><linearGradient id="bg4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0d0800"/><stop offset="100%" stop-color="#1a1200"/></linearGradient></defs>
-<rect width="375" height="420" fill="url(#bg4)"/>
-<circle cx="23" cy="21" r="1.5" fill="#fffde0" opacity=".8"/><circle cx="98" cy="11" r="1" fill="#fffde0" opacity=".7"/>
-<circle cx="198" cy="16" r="2" fill="#fffde0" opacity=".9"/><circle cx="308" cy="26" r="1.5" fill="#fffde0" opacity=".7"/>
-<circle cx="358" cy="11" r="1" fill="#fffde0" opacity=".6"/><circle cx="148" cy="36" r="1" fill="#fffde0" opacity=".5"/>
-<circle cx="268" cy="46" r="1.5" fill="#fffde0" opacity=".6"/>
-<circle cx="48" cy="51" r="25" fill="#f5c94e" opacity=".84"/><circle cx="57" cy="44" r="25" fill="#0d0800"/><circle cx="63" cy="42" r="25" fill="#f5c94e" opacity=".84"/>
-<path d="M 0 86 Q 90 71 187 86 Q 280 101 375 86" stroke="rgba(245,201,78,.3)" stroke-width="2" fill="none"/>
-<circle cx="47" cy="75" r="5.5" fill="#ff9a5c" opacity=".78"/><circle cx="94" cy="78" r="5.5" fill="#f5c94e" opacity=".78"/>
-<circle cx="140" cy="84" r="5.5" fill="#ff6b9d" opacity=".78"/><circle cx="187" cy="86" r="5.5" fill="#f5c94e" opacity=".78"/>
-<circle cx="234" cy="92" r="5.5" fill="#7ecb8f" opacity=".78"/><circle cx="281" cy="96" r="5.5" fill="#f5c94e" opacity=".78"/>
-<circle cx="328" cy="90" r="5.5" fill="#ff9a5c" opacity=".78"/>
-<rect x="0" y="352" width="375" height="68" fill="#0d0a00"/>
-<rect x="0" y="350" width="375" height="4" fill="#2a2000"/>
-<rect x="16" y="223" width="137" height="130" fill="#2a1a00" rx="8"/>
-<rect x="16" y="223" width="137" height="40" fill="#f5c94e" opacity=".84" rx="8 8 0 0"/>
-<text x="85" y="249" text-anchor="middle" font-size="12" fill="#1a0a00" font-weight="900">🌙 Ramadan Kareem</text>
-<rect x="21" y="268" width="127" height="28" fill="#1a1000" rx="4"/>
-<rect x="21" y="300" width="127" height="28" fill="#1a1000" rx="4"/>
-<rect x="21" y="332" width="127" height="18" fill="#1a1000" rx="4"/>
-<circle cx="46" cy="357" r="13" fill="#1a0a00"/><circle cx="46" cy="357" r="7" fill="#2a1a00"/>
-<circle cx="121" cy="357" r="13" fill="#1a0a00"/><circle cx="121" cy="357" r="7" fill="#2a1a00"/>
-<rect x="220" y="213" width="143" height="140" fill="#1a0a00" rx="8"/>
-<rect x="220" y="213" width="143" height="40" fill="#c0392b" opacity=".9" rx="8 8 0 0"/>
-<text x="291" y="237" text-anchor="middle" font-size="12" fill="#fff8e7" font-weight="900">🍢 Jajanan Pasar</text>
-<rect x="225" y="258" width="133" height="25" fill="#150800" rx="4"/>
-<rect x="225" y="287" width="133" height="25" fill="#150800" rx="4"/>
-<rect x="225" y="316" width="133" height="25" fill="#150800" rx="4"/>
-<rect x="225" y="345" width="133" height="18" fill="#150800" rx="4"/>
-<circle cx="246" cy="360" r="13" fill="#150800"/><circle cx="246" cy="360" r="7" fill="#1a0a00"/>
-<circle cx="341" cy="360" r="13" fill="#150800"/><circle cx="341" cy="360" r="7" fill="#1a0a00"/>
-<line x1="90" y1="91" x2="90" y2="126" stroke="#2a1a00" stroke-width="2.5"/>
-<ellipse cx="90" cy="141" rx="20" ry="25" fill="#c0392b" opacity=".94"/>
-<rect x="82" y="124" width="16" height="9" fill="#a93226"/>
-<ellipse cx="90" cy="166" rx="11" ry="6" fill="#a93226"/>
-<circle cx="90" cy="141" r="9" fill="#f5c94e" opacity=".5"/>
-<circle cx="90" cy="141" r="38" fill="rgba(192,57,43,0.05)"/>
-<line x1="290" y1="91" x2="290" y2="126" stroke="#2a1a00" stroke-width="2.5"/>
-<ellipse cx="290" cy="141" rx="20" ry="25" fill="#f5c94e" opacity=".94"/>
-<rect x="282" y="124" width="16" height="9" fill="#e5b93e"/>
-<ellipse cx="290" cy="166" rx="11" ry="6" fill="#e5b93e"/>
-<circle cx="290" cy="141" r="9" fill="#fff8e7" opacity=".5"/>
-<circle cx="290" cy="141" r="38" fill="rgba(245,201,78,0.06)"/>
-<line x1="187" y1="86" x2="187" y2="121" stroke="#2a1a00" stroke-width="2.5"/>
-<ellipse cx="187" cy="136" rx="20" ry="25" fill="#27ae60" opacity=".94"/>
-<rect x="179" y="119" width="16" height="9" fill="#229954"/>
-<ellipse cx="187" cy="161" rx="11" ry="6" fill="#229954"/>
-<circle cx="187" cy="136" r="9" fill="#7ecb8f" opacity=".5"/>
-<circle cx="187" cy="136" r="38" fill="rgba(39,174,96,0.05)"/>
-<ellipse cx="172" cy="340" rx="14" ry="29" fill="#0d0800" opacity=".55"/>
-<circle cx="172" cy="306" r="12" fill="#0d0800" opacity=".55"/>
-<path d="M 76 220 Q 71 205 78 195" stroke="rgba(255,255,255,.13)" stroke-width="2.5" fill="none" stroke-linecap="round"/>`;}
+function marketSVG(){return`<defs>
+<linearGradient id="mkSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2b2b66"/><stop offset="60%" stop-color="#43417e"/><stop offset="100%" stop-color="#5d4d86"/></linearGradient>
+<linearGradient id="mkGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b88a52"/><stop offset="100%" stop-color="#946b3c"/></linearGradient>
+<radialGradient id="mkMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#mkSky)"/>
+<g fill="#fff7da"><circle cx="40" cy="30" r="1.5"/><circle cx="120" cy="20" r="1.2"/><circle cx="210" cy="34" r="1.6"/><circle cx="300" cy="22" r="1.3"/><circle cx="350" cy="54" r="1.4"/><circle cx="150" cy="64" r="1.2"/></g>
+<circle cx="50" cy="52" r="23" fill="url(#mkMoon)"/><circle cx="60" cy="46" r="23" fill="#2b2b66"/>
+<path d="M0 96 Q187 78 375 96" stroke="#ffd874" stroke-width="1.5" fill="none" opacity=".4"/>
+<g><circle cx="60" cy="92" r="5" fill="#ff8c66"/><circle cx="110" cy="88" r="5" fill="#ffd166"/><circle cx="160" cy="85" r="5" fill="#6cc0e8"/><circle cx="214" cy="85" r="5" fill="#ff8fb3"/><circle cx="264" cy="88" r="5" fill="#7ace7e"/><circle cx="314" cy="92" r="5" fill="#ffd166"/></g>
+<g fill="#ffd874" opacity=".22"><circle cx="60" cy="92" r="11"/><circle cx="160" cy="85" r="11"/><circle cx="264" cy="88" r="11"/></g>
+<rect x="0" y="354" width="375" height="66" fill="url(#mkGround)"/><rect x="0" y="350" width="375" height="6" fill="#7a5630"/>
+<g stroke="#7a5630" stroke-width="1.5" opacity=".4"><line x1="60" y1="356" x2="50" y2="420"/><line x1="160" y1="356" x2="156" y2="420"/><line x1="270" y1="356" x2="282" y2="420"/></g>
+<!-- left stall -->
+<rect x="16" y="150" width="9" height="204" fill="#9c6b3a"/><rect x="150" y="150" width="9" height="204" fill="#9c6b3a"/>
+<rect x="10" y="248" width="156" height="106" rx="6" fill="#a8703f"/><rect x="10" y="248" width="156" height="14" fill="#c08850"/>
+<rect x="12" y="150" width="152" height="34" rx="6" fill="#e8584e"/>
+<g fill="#fff1e6"><rect x="24" y="150" width="18" height="34"/><rect x="60" y="150" width="18" height="34"/><rect x="96" y="150" width="18" height="34"/><rect x="132" y="150" width="18" height="34"/></g>
+<path d="M12 184 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 L164 184 Z" fill="#e8584e"/>
+<circle cx="44" cy="286" r="14" fill="#ffb15c"/><circle cx="80" cy="288" r="13" fill="#ff8fb3"/><rect x="104" y="274" width="42" height="22" rx="6" fill="#7ace7e"/>
+<!-- right stall -->
+<rect x="216" y="150" width="9" height="204" fill="#9c6b3a"/><rect x="350" y="150" width="9" height="204" fill="#9c6b3a"/>
+<rect x="210" y="248" width="156" height="106" rx="6" fill="#a8703f"/><rect x="210" y="248" width="156" height="14" fill="#c08850"/>
+<rect x="212" y="150" width="152" height="34" rx="6" fill="#2e9d8a"/>
+<g fill="#eafff8"><rect x="224" y="150" width="18" height="34"/><rect x="260" y="150" width="18" height="34"/><rect x="296" y="150" width="18" height="34"/><rect x="332" y="150" width="18" height="34"/></g>
+<path d="M212 184 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 L364 184 Z" fill="#2e9d8a"/>
+<circle cx="244" cy="286" r="14" fill="#ffd166"/><circle cx="280" cy="288" r="13" fill="#ff8c66"/><rect x="304" y="274" width="42" height="22" rx="6" fill="#b48be8"/>
+<!-- hanging lantern center -->
+<line x1="187" y1="96" x2="187" y2="120" stroke="#9c6b3a" stroke-width="2.5"/>
+<rect x="181" y="118" width="12" height="6" rx="2" fill="#c0392b"/><ellipse cx="187" cy="140" rx="16" ry="20" fill="#ff6b5c"/><ellipse cx="187" cy="160" rx="9" ry="5" fill="#c0392b"/><circle cx="187" cy="140" r="7" fill="#fff3c4" opacity=".6"/><circle cx="187" cy="140" r="30" fill="rgba(255,210,99,.07)"/>`;}
 
-function masjidSVG(){return`<defs><linearGradient id="bg5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#0a1520"/><stop offset="100%" stop-color="#0d2020"/></linearGradient></defs>
-<rect width="375" height="420" fill="url(#bg5)"/>
-<circle cx="28" cy="26" r="1.5" fill="#fffde0" opacity=".8"/><circle cx="98" cy="14" r="1" fill="#fffde0" opacity=".7"/>
-<circle cx="183" cy="18" r="2" fill="#fffde0" opacity=".9"/><circle cx="258" cy="11" r="1.5" fill="#fffde0" opacity=".7"/>
-<circle cx="343" cy="24" r="1" fill="#fffde0" opacity=".6"/><circle cx="58" cy="51" r="1" fill="#fffde0" opacity=".5"/>
-<circle cx="303" cy="51" r="1.5" fill="#fffde0" opacity=".6"/>
-<circle cx="322" cy="56" r="28" fill="#f5c94e" opacity=".84"/>
-<circle cx="332" cy="49" r="28" fill="#0a1520"/><circle cx="339" cy="46" r="28" fill="#f5c94e" opacity=".84"/>
-<rect x="0" y="355" width="375" height="65" fill="#0a1808"/>
-<rect x="0" y="352" width="375" height="5" fill="#1a3020"/>
-<line x1="0" y1="368" x2="375" y2="368" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-<line x1="0" y1="383" x2="375" y2="383" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-<line x1="62" y1="352" x2="62" y2="420" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-<line x1="124" y1="352" x2="124" y2="420" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-<line x1="187" y1="352" x2="187" y2="420" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-<line x1="250" y1="352" x2="250" y2="420" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-<line x1="312" y1="352" x2="312" y2="420" stroke="rgba(255,255,255,.05)" stroke-width="1"/>
-<rect x="87" y="146" width="202" height="217" fill="#162535" rx="4"/>
-<ellipse cx="187" cy="146" rx="84" ry="54" fill="#1e3545"/>
-<rect x="103" y="146" width="168" height="17" fill="#162535"/>
-<ellipse cx="187" cy="144" rx="64" ry="42" fill="#1a3040"/>
-<ellipse cx="187" cy="142" rx="44" ry="30" fill="#1e3a4a"/>
-<circle cx="187" cy="106" r="14" fill="#f5c94e" opacity=".84"/>
-<circle cx="193" cy="102" r="14" fill="#1e3545"/><circle cx="197" cy="100" r="14" fill="#f5c94e" opacity=".84"/>
-<polygon points="187,92 190,100 197,100 192,104.5 194.5,112 187,107 179.5,112 182,104.5 177,100 184,100" fill="#f5c94e" opacity=".92"/>
-<rect x="107" y="181" width="37" height="54" fill="#0d1f2d" rx="18 18 0 0"/>
-<rect x="112" y="186" width="27" height="46" fill="#0a1a28" rx="13 13 0 0"/>
-<circle cx="125" cy="216" r="5" fill="#f5c94e" opacity=".22"/>
-<rect x="168" y="181" width="38" height="54" fill="#0d1f2d" rx="19 19 0 0"/>
-<rect x="173" y="186" width="28" height="46" fill="#0a1a28" rx="14 14 0 0"/>
-<circle cx="187" cy="216" r="5" fill="#f5c94e" opacity=".22"/>
-<rect x="229" y="181" width="37" height="54" fill="#0d1f2d" rx="18 18 0 0"/>
-<rect x="234" y="186" width="27" height="46" fill="#0a1a28" rx="13 13 0 0"/>
-<circle cx="247" cy="216" r="5" fill="#f5c94e" opacity=".22"/>
-<rect x="157" y="291" width="60" height="74" fill="#0d1f2d" rx="30 30 0 0"/>
-<rect x="162" y="296" width="50" height="69" fill="#091828" rx="25 25 0 0"/>
-<path d="M 164 296 Q 187 271 210 296" stroke="rgba(245,201,78,.32)" stroke-width="2.5" fill="none"/>
-<rect x="44" y="216" width="33" height="187" fill="#162535" rx="4"/>
-<ellipse cx="60" cy="216" rx="23" ry="14" fill="#1e3545"/>
-<polygon points="60,185 68,214 52,214" fill="#1e3545"/>
-<circle cx="60" cy="185" r="7" fill="#f5c94e" opacity=".72"/>
-<circle cx="60" cy="185" r="15" fill="rgba(245,201,78,0.07)"/>
-<rect x="51" y="256" width="18" height="25" fill="#0a1520" rx="9 9 0 0"/>
-<rect x="51" y="306" width="18" height="25" fill="#0a1520" rx="9 9 0 0"/>
-<rect x="295" y="216" width="33" height="187" fill="#162535" rx="4"/>
-<ellipse cx="311" cy="216" rx="23" ry="14" fill="#1e3545"/>
-<polygon points="311,185 319,214 303,214" fill="#1e3545"/>
-<circle cx="311" cy="185" r="7" fill="#f5c94e" opacity=".72"/>
-<circle cx="311" cy="185" r="15" fill="rgba(245,201,78,0.07)"/>
-<rect x="302" y="256" width="18" height="25" fill="#0a1520" rx="9 9 0 0"/>
-<rect x="302" y="306" width="18" height="25" fill="#0a1520" rx="9 9 0 0"/>
-<ellipse cx="187" cy="370" rx="37" ry="14" fill="#0d2030" opacity=".84"/>
-<rect x="182" y="350" width="10" height="25" fill="#1a2a3a" rx="3"/>
-<ellipse cx="187" cy="350" rx="23" ry="8" fill="#1a2a3a"/>
-<ellipse cx="187" cy="370" rx="30" ry="10" fill="none" stroke="rgba(100,180,255,.28)" stroke-width="1.5"/>
-<rect x="41" y="337" width="7" height="23" fill="#1a3a20" rx="2"/>
-<circle cx="44" cy="335" r="7" fill="#f5c94e" opacity=".54"/>
-<circle cx="44" cy="335" r="15" fill="rgba(245,201,78,0.06)"/>
-<rect x="323" y="337" width="7" height="23" fill="#1a3a20" rx="2"/>
-<circle cx="326" cy="335" r="7" fill="#f5c94e" opacity=".54"/>
-<circle cx="326" cy="335" r="15" fill="rgba(245,201,78,0.06)"/>
-<ellipse cx="26" cy="311" rx="28" ry="54" fill="#0a2010"/>
-<rect x="17" y="343" width="17" height="36" fill="#061508"/>
-<ellipse cx="349" cy="311" rx="28" ry="54" fill="#0a2010"/>
-<rect x="341" y="343" width="17" height="36" fill="#061508"/>
-<g opacity=".1" transform="translate(89,148)">
-<polygon points="0,0 23,23 0,46 -23,23" fill="none" stroke="#f5c94e" stroke-width="1.5"/>
-<polygon points="46,0 69,23 46,46 23,23" fill="none" stroke="#f5c94e" stroke-width="1.5"/>
-<polygon points="92,0 115,23 92,46 69,23" fill="none" stroke="#f5c94e" stroke-width="1.5"/>
-</g>`;}
+function masjidSVG(){return`<defs>
+<linearGradient id="mjSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5e"/><stop offset="60%" stop-color="#2f5c7e"/><stop offset="100%" stop-color="#4d8098"/></linearGradient>
+<linearGradient id="mjFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8d4a8"/><stop offset="100%" stop-color="#cdb281"/></linearGradient>
+<radialGradient id="mjMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="100%" stop-color="#ffe6a2"/></radialGradient>
+<linearGradient id="mjWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f1e4c4"/><stop offset="100%" stop-color="#e2d1a8"/></linearGradient>
+<linearGradient id="mjDome" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#48c4aa"/><stop offset="100%" stop-color="#2e9d8a"/></linearGradient>
+</defs>
+<rect width="375" height="420" fill="url(#mjSky)"/>
+<g fill="#fff7da"><circle cx="40" cy="40" r="1.5"/><circle cx="120" cy="26" r="1.2"/><circle cx="250" cy="36" r="1.6"/><circle cx="296" cy="20" r="1.3"/><circle cx="80" cy="92" r="1.2"/><circle cx="352" cy="104" r="1.3"/></g>
+<circle cx="322" cy="58" r="26" fill="url(#mjMoon)"/><circle cx="332" cy="52" r="26" fill="#1e3a5e"/>
+<rect x="0" y="356" width="375" height="64" fill="url(#mjFloor)"/><rect x="0" y="352" width="375" height="5" fill="#b89a68"/>
+<g stroke="#b89a68" stroke-width="1.5" opacity=".5"><line x1="0" y1="386" x2="375" y2="386"/><line x1="70" y1="356" x2="60" y2="420"/><line x1="160" y1="356" x2="156" y2="420"/><line x1="250" y1="356" x2="262" y2="420"/></g>
+<!-- left minaret (Baby Mo hides here) -->
+<rect x="46" y="184" width="34" height="174" rx="5" fill="url(#mjWall)"/><rect x="44" y="176" width="38" height="10" rx="3" fill="#d8c084"/>
+<rect x="46" y="246" width="34" height="6" fill="#d8c084"/><rect x="46" y="306" width="34" height="6" fill="#d8c084"/>
+<path d="M48 176 Q63 138 78 176 Z" fill="url(#mjDome)"/><line x1="63" y1="150" x2="63" y2="142" stroke="#ffd166" stroke-width="2"/><circle cx="63" cy="138" r="5" fill="#ffd166"/><circle cx="66" cy="136" r="4.5" fill="#2f5c7e"/>
+<rect x="55" y="252" width="16" height="22" rx="8" fill="#c98a52"/>
+<!-- right minaret -->
+<rect x="295" y="184" width="34" height="174" rx="5" fill="url(#mjWall)"/><rect x="293" y="176" width="38" height="10" rx="3" fill="#d8c084"/>
+<rect x="295" y="246" width="34" height="6" fill="#d8c084"/><rect x="295" y="306" width="34" height="6" fill="#d8c084"/>
+<path d="M297 176 Q312 138 327 176 Z" fill="url(#mjDome)"/><line x1="312" y1="150" x2="312" y2="142" stroke="#ffd166" stroke-width="2"/><circle cx="312" cy="138" r="5" fill="#ffd166"/><circle cx="315" cy="136" r="4.5" fill="#2f5c7e"/>
+<rect x="304" y="252" width="16" height="22" rx="8" fill="#c98a52"/>
+<!-- main building -->
+<rect x="92" y="172" width="190" height="188" rx="6" fill="url(#mjWall)"/><rect x="92" y="172" width="190" height="188" rx="6" fill="none" stroke="#d8c084" stroke-width="2"/>
+<rect x="120" y="150" width="134" height="26" rx="6" fill="#e7d6ae"/>
+<ellipse cx="187" cy="150" rx="84" ry="52" fill="url(#mjDome)"/><ellipse cx="166" cy="134" rx="20" ry="28" fill="#62d4ba" opacity=".4"/>
+<line x1="187" y1="98" x2="187" y2="84" stroke="#ffd166" stroke-width="3"/><circle cx="187" cy="78" r="7" fill="#ffd166"/><circle cx="191" cy="75" r="6.5" fill="#1e3a5e"/>
+<path d="M118 250 q0 -22 22 -22 q22 0 22 22 V300 H118 Z" fill="#ffcf6b"/><path d="M124 250 q0 -16 16 -16 q16 0 16 16 V296 H124 Z" fill="#ffe39a"/>
+<path d="M212 250 q0 -22 22 -22 q22 0 22 22 V300 H212 Z" fill="#ffcf6b"/><path d="M218 250 q0 -16 16 -16 q16 0 16 16 V296 H218 Z" fill="#ffe39a"/>
+<path d="M160 360 V236 q0 -27 27 -27 q27 0 27 27 V360 Z" fill="#3a6e7a"/><path d="M166 360 V236 q0 -21 21 -21 q21 0 21 21 V360 Z" fill="#2e5a64"/><line x1="187" y1="214" x2="187" y2="360" stroke="#24474f" stroke-width="2"/>
+<line x1="110" y1="172" x2="110" y2="188" stroke="#9c6b3a" stroke-width="2"/><ellipse cx="110" cy="198" rx="9" ry="12" fill="#ff8c66"/><circle cx="110" cy="198" r="4" fill="#fff3c4" opacity=".6"/>
+<line x1="264" y1="172" x2="264" y2="188" stroke="#9c6b3a" stroke-width="2"/><ellipse cx="264" cy="198" rx="9" ry="12" fill="#ffd166"/><circle cx="264" cy="198" r="4" fill="#fff3c4" opacity=".6"/>
+<g><circle cx="26" cy="350" r="18" fill="#5aa066"/><circle cx="44" cy="352" r="14" fill="#6bbf72"/></g>
+<g><circle cx="349" cy="350" r="18" fill="#5aa066"/><circle cx="331" cy="352" r="14" fill="#6bbf72"/></g>`;}
+
+function kitchenSVG(){return`<defs>
+<linearGradient id="ktWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f4d89a"/><stop offset="100%" stop-color="#f0c87e"/></linearGradient>
+<linearGradient id="ktFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d9b48a"/><stop offset="100%" stop-color="#c29a6c"/></linearGradient>
+<linearGradient id="ktSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd0e6"/><stop offset="100%" stop-color="#bfe6f0"/></linearGradient>
+<radialGradient id="ktWarm" cx="50%" cy="0%" r="95%"><stop offset="0%" stop-color="rgba(255,240,200,.25)"/><stop offset="60%" stop-color="rgba(255,240,200,0)"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#ktWall)"/><rect width="375" height="420" fill="url(#ktWarm)"/>
+<g fill="none" stroke="#e0b878" stroke-width="1.5" opacity=".45"><line x1="0" y1="250" x2="375" y2="250"/><line x1="0" y1="276" x2="375" y2="276"/><line x1="48" y1="250" x2="48" y2="288"/><line x1="120" y1="250" x2="120" y2="288"/><line x1="255" y1="250" x2="255" y2="288"/><line x1="330" y1="250" x2="330" y2="288"/></g>
+<rect x="0" y="330" width="375" height="90" fill="url(#ktFloor)"/>
+<g fill="#b88e60" opacity=".5"><rect x="0" y="330" width="46" height="45"/><rect x="92" y="330" width="46" height="45"/><rect x="184" y="330" width="46" height="45"/><rect x="276" y="330" width="46" height="45"/><rect x="46" y="375" width="46" height="45"/><rect x="138" y="375" width="46" height="45"/><rect x="230" y="375" width="46" height="45"/><rect x="322" y="375" width="46" height="45"/></g>
+<!-- window + curtain (Baby Mo hides here) -->
+<rect x="138" y="44" width="100" height="104" rx="14" fill="#cfa05a"/>
+<rect x="144" y="50" width="88" height="92" rx="10" fill="url(#ktSky)"/>
+<circle cx="170" cy="78" r="20" fill="rgba(255,240,160,.35)"/><circle cx="170" cy="78" r="13" fill="#fff3b0"/>
+<g fill="#fff" opacity=".8"><ellipse cx="206" cy="74" rx="13" ry="7"/><ellipse cx="198" cy="70" rx="8" ry="5"/></g>
+<rect x="186" y="50" width="4" height="92" fill="#cfa05a"/><rect x="144" y="92" width="88" height="4" fill="#cfa05a"/>
+<rect x="138" y="44" width="100" height="104" rx="14" fill="none" stroke="#fff6e6" stroke-width="5"/>
+<rect x="130" y="38" width="116" height="7" rx="3.5" fill="#a8703f"/>
+<path d="M134 43 H242 V40 Q224 50 206 40 Q188 50 170 40 Q152 50 134 40 Z" fill="#ff8c66"/>
+<path d="M134 43 H170 V140 Q160 149 150 140 Q140 149 134 140 Z" fill="#ffa884"/>
+<path d="M206 43 H242 V140 Q232 149 222 140 Q212 149 206 140 Z" fill="#ffa884"/>
+<!-- upper cabinets -->
+<rect x="8" y="150" width="96" height="56" rx="8" fill="#5fb0a6"/><rect x="12" y="154" width="42" height="48" rx="5" fill="#6fc0b4"/><rect x="58" y="154" width="42" height="48" rx="5" fill="#6fc0b4"/><circle cx="50" cy="178" r="2.5" fill="#3a8478"/><circle cx="62" cy="178" r="2.5" fill="#3a8478"/>
+<rect x="270" y="150" width="98" height="56" rx="8" fill="#5fb0a6"/><rect x="274" y="154" width="43" height="48" rx="5" fill="#6fc0b4"/><rect x="321" y="154" width="43" height="48" rx="5" fill="#6fc0b4"/>
+<!-- left counter + stove -->
+<rect x="0" y="288" width="150" height="14" rx="4" fill="#ece0c8"/><rect x="0" y="302" width="150" height="58" fill="#4f9e94"/>
+<rect x="8" y="308" width="64" height="46" rx="6" fill="#5fb0a6"/><rect x="78" y="308" width="64" height="46" rx="6" fill="#5fb0a6"/>
+<rect x="14" y="266" width="58" height="24" rx="4" fill="#cfd6db"/><circle cx="28" cy="278" r="6" fill="#9aa4ab"/><circle cx="52" cy="278" r="6" fill="#9aa4ab"/>
+<!-- center island -->
+<rect x="150" y="300" width="112" height="60" rx="8" fill="#a8703f"/><rect x="150" y="300" width="112" height="12" fill="#c08850"/>
+<!-- fridge -->
+<rect x="300" y="214" width="66" height="146" rx="10" fill="#eaf3f0"/><rect x="300" y="214" width="66" height="146" rx="10" fill="none" stroke="#cfe0db" stroke-width="2"/><line x1="300" y1="276" x2="366" y2="276" stroke="#cfe0db" stroke-width="2"/><rect x="306" y="224" width="5" height="40" rx="2" fill="#bcd2cc"/><rect x="306" y="286" width="5" height="40" rx="2" fill="#bcd2cc"/>
+<!-- wall clock -->
+<circle cx="284" cy="120" r="15" fill="#fff6e6"/><circle cx="284" cy="120" r="15" fill="none" stroke="#cfa05a" stroke-width="2"/><line x1="284" y1="120" x2="284" y2="111" stroke="#a8703f" stroke-width="1.5"/><line x1="284" y1="120" x2="291" y2="120" stroke="#a8703f" stroke-width="1.5"/>
+<ellipse cx="200" cy="388" rx="118" ry="19" fill="#ff9e7a" opacity=".45"/>`;}
+
+function classroomSVG(){return`<defs>
+<linearGradient id="clWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7cc3c0"/><stop offset="100%" stop-color="#99d6d0"/></linearGradient>
+<linearGradient id="clFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98a52"/><stop offset="100%" stop-color="#a06a39"/></linearGradient>
+<linearGradient id="clSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd0e6"/><stop offset="100%" stop-color="#bfe6f0"/></linearGradient>
+</defs>
+<rect width="375" height="420" fill="url(#clWall)"/>
+<rect x="0" y="330" width="375" height="90" fill="url(#clFloor)"/><rect x="0" y="324" width="375" height="9" fill="#8a5a30"/>
+<g stroke="#875a2f" stroke-width="2" opacity=".4"><line x1="80" y1="333" x2="64" y2="420"/><line x1="200" y1="333" x2="196" y2="420"/><line x1="300" y1="333" x2="312" y2="420"/></g>
+<!-- window left + curtain (Baby Mo hides here) -->
+<rect x="14" y="40" width="96" height="108" rx="14" fill="#5a8a86"/>
+<rect x="20" y="46" width="84" height="96" rx="10" fill="url(#clSky)"/>
+<circle cx="44" cy="74" r="13" fill="#fff3b0"/><g fill="#fff" opacity=".8"><ellipse cx="80" cy="66" rx="14" ry="8"/><ellipse cx="72" cy="62" rx="9" ry="6"/></g>
+<rect x="62" y="46" width="4" height="96" fill="#5a8a86"/><rect x="20" y="90" width="84" height="4" fill="#5a8a86"/>
+<rect x="14" y="40" width="96" height="108" rx="14" fill="none" stroke="#eef6f4" stroke-width="5"/>
+<rect x="8" y="34" width="108" height="7" rx="3.5" fill="#a8703f"/>
+<path d="M12 39 H112 V40 Q95 50 78 40 Q61 50 44 40 Q28 50 12 40 Z" fill="#ffd166"/>
+<path d="M12 39 H44 V140 Q35 149 26 140 Q18 149 12 140 Z" fill="#ffe08a"/>
+<path d="M82 39 H112 V140 Q103 149 94 140 Q86 149 82 140 Z" fill="#ffe08a"/>
+<!-- blackboard -->
+<rect x="130" y="44" width="182" height="96" rx="8" fill="#a8703f"/><rect x="136" y="50" width="170" height="84" rx="5" fill="#3a6b54"/>
+<text x="221" y="86" text-anchor="middle" font-size="25" fill="#fff6e6" font-family="'Fredoka One',cursive">A B C</text>
+<text x="221" y="116" text-anchor="middle" font-size="17" fill="#ffe39a" font-family="'Fredoka One',cursive">1 2 3</text>
+<!-- clock -->
+<circle cx="240" cy="172" r="15" fill="#fff6e6"/><circle cx="240" cy="172" r="15" fill="none" stroke="#a8703f" stroke-width="2.5"/><line x1="240" y1="172" x2="240" y2="162" stroke="#3a3a3a" stroke-width="2"/><line x1="240" y1="172" x2="248" y2="172" stroke="#3a3a3a" stroke-width="2"/>
+<!-- bookshelf right -->
+<rect x="322" y="150" width="48" height="180" rx="6" fill="#b87a44"/><rect x="326" y="158" width="40" height="6" fill="#8a5a30"/><rect x="326" y="206" width="40" height="6" fill="#8a5a30"/><rect x="326" y="254" width="40" height="6" fill="#8a5a30"/>
+<g><rect x="330" y="166" width="8" height="38" rx="2" fill="#ff6b5c"/><rect x="340" y="168" width="7" height="36" rx="2" fill="#6cc0e8"/><rect x="349" y="165" width="9" height="39" rx="2" fill="#ffd166"/><rect x="360" y="167" width="6" height="37" rx="2" fill="#6bbf59"/></g>
+<g><rect x="330" y="214" width="8" height="38" rx="2" fill="#b497e0"/><rect x="340" y="216" width="8" height="36" rx="2" fill="#ff8c66"/><rect x="350" y="213" width="9" height="39" rx="2" fill="#4ec5b0"/></g>
+<!-- teacher desk -->
+<rect x="120" y="300" width="150" height="58" rx="8" fill="#c98a52"/><rect x="120" y="300" width="150" height="12" fill="#d9a36a"/><rect x="128" y="316" width="44" height="38" rx="5" fill="#b87a44"/>
+<ellipse cx="195" cy="386" rx="120" ry="19" fill="#ff9e7a" opacity=".4"/>`;}
+
+function beachSVG(){return`<defs>
+<linearGradient id="bcSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6cc4e8"/><stop offset="100%" stop-color="#abe2f1"/></linearGradient>
+<linearGradient id="bcSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e9fd0"/><stop offset="100%" stop-color="#52bbe0"/></linearGradient>
+<linearGradient id="bcSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f1dda2"/><stop offset="100%" stop-color="#e3c87e"/></linearGradient>
+<radialGradient id="bcSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#bcSky)"/>
+<circle cx="320" cy="58" r="50" fill="rgba(255,240,160,.35)"/><circle cx="320" cy="58" r="30" fill="url(#bcSun)"/>
+<g fill="#fff" opacity=".85"><ellipse cx="92" cy="62" rx="34" ry="16"/><ellipse cx="70" cy="56" rx="20" ry="13"/><ellipse cx="114" cy="56" rx="20" ry="13"/></g>
+<g fill="#fff" opacity=".7"><ellipse cx="222" cy="104" rx="26" ry="12"/><ellipse cx="208" cy="99" rx="15" ry="10"/></g>
+<rect x="0" y="232" width="375" height="92" fill="url(#bcSea)"/>
+<g stroke="#cdeefa" stroke-width="2" fill="none" opacity=".55"><path d="M0 254 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0"/><path d="M0 284 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0"/></g>
+<path d="M256 232 h26 l-5 13 h-16 Z" fill="#fff"/><polygon points="268,210 268,231 285,231" fill="#ff6b5c"/><line x1="268" y1="208" x2="268" y2="231" stroke="#a8703f" stroke-width="2"/>
+<path d="M0 300 Q187 282 375 300 V420 H0 Z" fill="url(#bcSand)"/>
+<!-- palm tree -->
+<path d="M48 364 Q42 312 56 272" stroke="#b07a3f" stroke-width="11" fill="none" stroke-linecap="round"/>
+<g fill="#3aa860"><ellipse cx="56" cy="266" rx="34" ry="12" transform="rotate(-16 56 266)"/><ellipse cx="56" cy="266" rx="34" ry="12" transform="rotate(16 56 266)"/><ellipse cx="40" cy="256" rx="30" ry="11" transform="rotate(-52 40 256)"/><ellipse cx="72" cy="256" rx="30" ry="11" transform="rotate(52 72 256)"/></g>
+<circle cx="56" cy="268" r="6" fill="#8a5a30"/>
+<!-- sandcastle -->
+<rect x="158" y="330" width="62" height="34" fill="#e0b870"/><rect x="150" y="316" width="22" height="48" fill="#e0b870"/><rect x="206" y="316" width="22" height="48" fill="#e0b870"/>
+<polygon points="161,316 150,316 155.5,302" fill="#d9a85a"/><polygon points="217,316 206,316 211.5,302" fill="#d9a85a"/>
+<rect x="180" y="322" width="18" height="42" fill="#d9a85a"/><polygon points="198,322 180,322 189,308" fill="#d9a85a"/>
+<line x1="189" y1="308" x2="189" y2="298" stroke="#a8703f" stroke-width="1.5"/><polygon points="189,298 189,307 198,302" fill="#ff6b5c"/>
+<!-- beach umbrella (Baby Mo hides here) -->
+<line x1="314" y1="364" x2="322" y2="286" stroke="#9c6b3a" stroke-width="4"/>
+<path d="M268 290 A55 28 0 0 1 378 290 Z" fill="#ff6b5c"/>
+<polygon points="323,262 295,290 323,290" fill="#fff1e6"/><polygon points="323,262 351,290 323,290" fill="#fff1e6"/>
+<path d="M268 290 q14 7 28 0 q14 7 28 0 q14 7 28 0 q14 7 26 0" fill="none" stroke="#e8584e" stroke-width="2" opacity=".5"/>
+<!-- shells -->
+<path d="M96 392 l3 7 7 .5 -5.5 4.8 1.8 7 -6.3 -3.8 -6.3 3.8 1.8 -7 -5.5 -4.8 7 -.5 Z" fill="#ffb15c"/>
+<circle cx="248" cy="394" r="7" fill="#ff8fb3"/><path d="M241 394 a7 7 0 0 1 14 0 Z" fill="#ffa9c4"/>`;}
+
+function zooSVG(){return`<defs>
+<linearGradient id="zoSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7ec8ec"/><stop offset="100%" stop-color="#b6e6f4"/></linearGradient>
+<linearGradient id="zoGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#82cd6c"/><stop offset="100%" stop-color="#5faf56"/></linearGradient>
+<radialGradient id="zoSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#zoSky)"/>
+<circle cx="324" cy="56" r="46" fill="rgba(255,240,160,.35)"/><circle cx="324" cy="56" r="28" fill="url(#zoSun)"/>
+<g fill="#fff" opacity=".85"><ellipse cx="92" cy="56" rx="32" ry="15"/><ellipse cx="72" cy="50" rx="19" ry="12"/><ellipse cx="112" cy="50" rx="19" ry="12"/></g>
+<path d="M0 300 Q120 270 240 296 Q320 314 375 300 V420 H0 Z" fill="url(#zoGrass)"/>
+<rect x="118" y="148" width="139" height="22" rx="6" fill="#d2483c"/><text x="187" y="164" text-anchor="middle" font-size="11" fill="#fff6e6" font-family="'Fredoka One',cursive">KEBUN BINATANG</text>
+<rect x="120" y="168" width="12" height="140" fill="#9c6b3a"/><rect x="243" y="168" width="12" height="140" fill="#9c6b3a"/>
+<ellipse cx="200" cy="372" rx="92" ry="20" fill="#6fc0d8" opacity=".55"/><ellipse cx="200" cy="370" rx="70" ry="14" fill="#8ad4e8" opacity=".5"/>
+<rect x="40" y="250" width="15" height="92" rx="5" fill="#a8703f"/>
+<circle cx="47" cy="236" r="34" fill="#5aa066"/><circle cx="24" cy="252" r="26" fill="#6bbf72"/><circle cx="70" cy="252" r="26" fill="#6bbf72"/><circle cx="47" cy="262" r="28" fill="#7ace7e"/>
+<rect x="320" y="270" width="12" height="72" rx="4" fill="#a8703f"/>
+<circle cx="326" cy="258" r="24" fill="#5fae6c"/><circle cx="310" cy="270" r="18" fill="#6fc07a"/><circle cx="342" cy="270" r="18" fill="#6fc07a"/>
+<g fill="#ece0c8"><rect x="100" y="320" width="8" height="34" rx="2"/><rect x="130" y="320" width="8" height="34" rx="2"/><rect x="160" y="320" width="8" height="34" rx="2"/></g><rect x="96" y="328" width="80" height="6" fill="#d8c8a8"/>
+<g><circle cx="285" cy="334" r="18" fill="#5aa066"/><circle cx="302" cy="336" r="14" fill="#6bbf72"/></g>`;}
+
+function playgroundSVG(){return`<defs>
+<linearGradient id="pgSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7ec8ec"/><stop offset="100%" stop-color="#b6e6f4"/></linearGradient>
+<linearGradient id="pgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#82cd6c"/><stop offset="100%" stop-color="#5faf56"/></linearGradient>
+<radialGradient id="pgSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#pgSky)"/>
+<circle cx="52" cy="54" r="44" fill="rgba(255,240,160,.35)"/><circle cx="52" cy="54" r="26" fill="url(#pgSun)"/>
+<g fill="#fff" opacity=".85"><ellipse cx="252" cy="60" rx="32" ry="15"/><ellipse cx="232" cy="54" rx="19" ry="12"/><ellipse cx="272" cy="54" rx="19" ry="12"/></g>
+<rect x="0" y="316" width="375" height="104" fill="url(#pgGrass)"/>
+<rect x="20" y="206" width="120" height="9" rx="4" fill="#5a8ab0"/><rect x="22" y="210" width="9" height="112" rx="3" fill="#6f9fc4"/><rect x="129" y="210" width="9" height="112" rx="3" fill="#6f9fc4"/>
+<line x1="55" y1="216" x2="55" y2="286" stroke="#cfa05a" stroke-width="2"/><line x1="75" y1="216" x2="75" y2="286" stroke="#cfa05a" stroke-width="2"/><rect x="52" y="286" width="26" height="7" rx="3" fill="#ff6b5c"/>
+<line x1="95" y1="216" x2="95" y2="286" stroke="#cfa05a" stroke-width="2"/><line x1="115" y1="216" x2="115" y2="286" stroke="#cfa05a" stroke-width="2"/><rect x="92" y="286" width="26" height="7" rx="3" fill="#ffd166"/>
+<rect x="300" y="200" width="9" height="122" rx="3" fill="#6f9fc4"/><rect x="338" y="248" width="9" height="74" rx="3" fill="#6f9fc4"/>
+<rect x="294" y="192" width="50" height="16" rx="6" fill="#ff8c66"/>
+<path d="M300 208 L258 300 Q256 312 268 312 L300 312 Z" fill="#ffd166"/><path d="M300 208 L266 300" stroke="#f5b942" stroke-width="3" fill="none"/>
+<rect x="120" y="318" width="120" height="8" rx="4" fill="#6cc0e8" transform="rotate(-7 180 322)"/><circle cx="180" cy="332" r="12" fill="#ff6b5c"/>
+<rect x="150" y="348" width="92" height="40" rx="6" fill="#e3c87e"/><rect x="150" y="348" width="92" height="8" rx="4" fill="#caa45e"/>`;}
+
+function farmSVG(){return`<defs>
+<linearGradient id="fmSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd2ec"/><stop offset="100%" stop-color="#c2e9f3"/></linearGradient>
+<linearGradient id="fmField" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8ace6e"/><stop offset="100%" stop-color="#69b052"/></linearGradient>
+<radialGradient id="fmSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#fmSky)"/>
+<circle cx="60" cy="54" r="44" fill="rgba(255,240,160,.35)"/><circle cx="60" cy="54" r="26" fill="url(#fmSun)"/>
+<g fill="#fff" opacity=".85"><ellipse cx="244" cy="56" rx="30" ry="14"/><ellipse cx="226" cy="50" rx="18" ry="11"/></g>
+<path d="M0 290 Q120 268 240 288 Q320 302 375 290 V420 H0 Z" fill="url(#fmField)"/>
+<rect x="40" y="224" width="22" height="96" fill="#ece0c8"/><polygon points="38,224 64,224 51,200" fill="#c0392b"/>
+<g transform="translate(51,210)" fill="#fff6e6"><rect x="-3" y="-26" width="6" height="52" rx="2" transform="rotate(22)"/><rect x="-26" y="-3" width="52" height="6" rx="2" transform="rotate(22)"/></g><circle cx="51" cy="210" r="4" fill="#a8703f"/>
+<rect x="248" y="226" width="112" height="100" fill="#d2483c"/><polygon points="248,226 360,226 348,196 260,196" fill="#b23a2e"/>
+<rect x="289" y="262" width="36" height="64" fill="#fff1e6"/><line x1="307" y1="262" x2="307" y2="326" stroke="#d2483c" stroke-width="2"/><line x1="289" y1="294" x2="325" y2="294" stroke="#d2483c" stroke-width="2"/>
+<polygon points="297,206 317,206 307,192" fill="#fff1e6"/><rect x="300" y="206" width="14" height="12" fill="#fff1e6"/>
+<g><ellipse cx="150" cy="350" rx="28" ry="20" fill="#ecc760"/><path d="M122 350 h56 M150 330 v40 M132 336 l36 28 M168 336 l-36 28" stroke="#d8b048" stroke-width="2" fill="none" opacity=".6"/></g>
+<g fill="#ece0c8"><rect x="70" y="334" width="7" height="28" rx="2"/><rect x="100" y="334" width="7" height="28" rx="2"/></g><rect x="66" y="340" width="48" height="5" fill="#d8c8a8"/>
+<ellipse cx="200" cy="394" rx="68" ry="13" fill="#6fc0d8" opacity=".5"/>`;}
+
+function seaSVG(){return`<defs>
+<linearGradient id="seWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a86c8"/><stop offset="60%" stop-color="#1f6ca8"/><stop offset="100%" stop-color="#185a90"/></linearGradient>
+<linearGradient id="seSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ecd9a0"/><stop offset="100%" stop-color="#d8bf80"/></linearGradient>
+</defs>
+<rect width="375" height="420" fill="url(#seWater)"/>
+<g fill="#bfe6f8" opacity=".1"><polygon points="60,0 110,0 70,420 20,420"/><polygon points="200,0 240,0 220,420 160,420"/><polygon points="320,0 360,0 340,420 290,420"/></g>
+<g fill="#bfe6f8" opacity=".4"><circle cx="90" cy="120" r="5"/><circle cx="100" cy="100" r="3"/><circle cx="300" cy="160" r="6"/><circle cx="312" cy="140" r="3"/><circle cx="210" cy="90" r="4"/></g>
+<path d="M0 350 Q120 332 240 350 Q320 362 375 350 V420 H0 Z" fill="url(#seSand)"/>
+<ellipse cx="120" cy="356" rx="40" ry="22" fill="#5a7a8a"/><ellipse cx="150" cy="352" rx="26" ry="16" fill="#6a8a9a"/>
+<g><path d="M320 360 q-6 -40 6 -56 q10 14 4 56 Z" fill="#ff6b8c"/><path d="M338 360 q4 -30 14 -42 q4 18 -2 42 Z" fill="#ff9a5c"/><path d="M306 360 q-8 -26 -2 -40 q12 12 10 40 Z" fill="#b48be8"/></g>
+<g><path d="M40 360 q-6 -34 4 -50 q10 14 6 50 Z" fill="#ffb15c"/><path d="M56 360 q4 -26 12 -36 q4 16 0 36 Z" fill="#ff6b8c"/></g>
+<g stroke="#3aa86a" stroke-width="6" fill="none" stroke-linecap="round"><path d="M180 360 q-10 -20 0 -40 q10 -18 0 -38"/><path d="M196 360 q10 -18 2 -36 q-8 -16 2 -34"/></g>
+<rect x="240" y="334" width="46" height="26" rx="4" fill="#a8703f"/><rect x="240" y="334" width="46" height="9" fill="#c08850"/><path d="M240 334 q23 -13 46 0" fill="#b87a44"/><circle cx="263" cy="348" r="3" fill="#ffd166"/>
+<path d="M70 392 l3 7 7 .5 -5.5 4.8 1.8 7 -6.3 -3.8 -6.3 3.8 1.8 -7 -5.5 -4.8 7 -.5 Z" fill="#ff8c66"/>`;}
 
 // =============================================
 // EVENT WIRING
@@ -882,5 +1249,6 @@ window.addEventListener('load',()=>{
   document.getElementById('btn-menu').addEventListener('click',()=>showScreen('home'));
 });
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

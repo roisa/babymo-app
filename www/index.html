@@ -3,17 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="description" content="Baby Mo Games — Islamic Early Learning App for Kids">
-<title>Baby Mo Games</title>
+<meta name="description" content="Kumpulan game &amp; aktivitas islami untuk anak: panduan sholat, doa harian, hijaiyah, kata baik &amp; puzzle seru bersama Baby Mo. Gratis &amp; ramah anak.">
+<title>Baby Mo — Game Islami &amp; Belajar Sholat, Doa, Hijaiyah untuk Anak</title>
 
 <!-- iOS PWA: makes "Add to Home Screen" launch this fullscreen like a native app -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Baby Mo">
-<link rel="apple-touch-icon" href="Logo_Baby_Mo_Transparant.png">
-<link rel="icon" type="image/png" href="Logo_Baby_Mo_Transparant.png">
-<meta name="theme-color" content="#0B1C12">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<meta name="theme-color" content="#F2F6FC">
+<script>
+/* Theme: "auto" (follow the phone), "light" or "dark" — applied before paint */
+(function(){try{var m=localStorage.getItem('bm_theme')||'auto';
+var d=m==='dark'||(m==='auto'&&matchMedia('(prefers-color-scheme: dark)').matches);
+document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();
+</script>
+
 
 <link rel="manifest" href="manifest.webmanifest">
 
@@ -113,6 +122,12 @@ body::before{
   font-size:17px; cursor:pointer; transition:transform .15s, background .15s;
 }
 .nav-btn:active{transform:scale(.88); background:rgba(200,144,64,.12);}
+.star-pill{width:auto; padding:0 11px; gap:4px; border-radius:999px;
+  background:rgba(232,176,96,.14); border:.5px solid rgba(232,176,96,.3);
+  font-size:14px; font-weight:900; color:var(--gold-lt);}
+.star-pill #starCount{font-family:var(--font); font-weight:900;}
+@keyframes starBump{0%,100%{transform:scale(1)}40%{transform:scale(1.3)}}
+.star-pill.bump{animation:starBump .4s ease;}
 
 /* ============= SCROLL AREA ============= */
 .scroller{
@@ -382,6 +397,9 @@ body::before{
 .lrow-icon.blue{background:linear-gradient(160deg,#5E8BD0,#2D4F8A);}
 .lrow-icon.purple{background:linear-gradient(160deg,#9B6DCA,#5A2D8F);}
 .lrow-icon.red{background:linear-gradient(160deg,#E07060,#9C3A2A);}
+.lrow-icon.brand{background:radial-gradient(circle at 50% 38%,#FFFDF7,#F3E9D4); padding:3px;}
+.lrow-icon.brand img{width:100%; height:100%; object-fit:contain; display:block;}
+.foot .br .br-logo{height:16px; width:auto; vertical-align:-3px; margin-right:4px;}
 .lrow-body{flex:1; min-width:0;}
 .lrow-title{font-size:15px; font-weight:700; color:var(--cream); margin-bottom:1px;}
 .lrow-sub{font-size:12px; color:var(--cream-dim); font-weight:600;
@@ -519,33 +537,404 @@ body::before{
 }
 .lang-opt.active{background:var(--green);color:#fff;}
 
-/* Larger screens — keep mobile feel, just center */
-@media (min-width:520px){
+/* ===== PARENT-TRUST PILLS ===== */
+.trust-row{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px;margin:-6px 0 22px;}
+.trust-pill{font-size:11px;font-weight:800;letter-spacing:.2px;color:var(--green-lt,#6DB882);
+  background:rgba(109,184,130,.10);border:.5px solid rgba(109,184,130,.22);padding:6px 11px;border-radius:999px;}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+/* Large phones / small tablets — keep the cozy phone-frame look, centered */
+@media (min-width:520px) and (max-width:819px){
   body{background:#06100A;}
-  .app{
-    max-width:430px; margin:0 auto;
-    background:var(--bg);
-    box-shadow:0 0 60px rgba(0,0,0,.5);
-  }
+  .app{max-width:430px;margin:0 auto;background:var(--bg);box-shadow:0 0 60px rgba(0,0,0,.5);}
 }
+
+/* ===== TABLET / iPad — use the room ===== */
+@media (min-width:820px){
+  body{background:#06100A;}
+  .app{max-width:920px;margin:0 auto;background:var(--bg);box-shadow:0 0 90px rgba(0,0,0,.5);}
+  .large-title{font-size:44px;}
+  .large-title-wrap{padding:10px 32px 16px;}
+  .sec-head{padding:0 32px;}
+  .large-subtitle{font-size:16px;}
+  .hero{margin:10px 32px 26px;min-height:260px;padding:28px 28px 24px;}
+  .hero-greet{font-size:26px;}
+  .hero-msg{font-size:15px;}
+  .hero-img-wrap{width:160px;height:160px;}
+  .hero-img{width:172px;height:172px;}
+  .quick-row{padding:0 32px;margin-bottom:26px;gap:14px;}
+  .qs{padding:18px 12px 16px;}
+  .qs-num{font-size:24px;}
+  .trust-row{padding:0 32px;}
+  .h-scroll{padding:2px 32px 8px;gap:16px;}
+  .h-card{flex:0 0 300px;height:190px;}
+  .icon-grid{grid-template-columns:repeat(5,1fr);gap:26px 14px;padding:10px 32px;}
+  .ai-square{width:84px;height:84px;font-size:42px;}
+  .ai-square .ar{font-size:46px;}
+  .ai-label{font-size:13px;max-width:104px;}
+  .ai-sub{font-size:11px;}
+  .list-group,.install-hint{margin-left:32px;margin-right:32px;}
+  .lrow-title{font-size:16px;}
+}
+
+/* ===== LARGE / LANDSCAPE iPad ===== */
+@media (min-width:1100px){
+  .app{max-width:1080px;}
+  .icon-grid{grid-template-columns:repeat(6,1fr);}
+}
+
+
+/* ═══════════ BRIGHT THEME (iOS-style, colourful, kid-friendly) ═══════════
+   Re-maps the original dark palette: the old "cream" text tokens become ink,
+   surfaces become white glass, and colour comes from pastel washes, the
+   app icons and a gradient large title. */
+:root{
+  --bg:#F2F6FC; --bg-elev:#FFFFFF; --bg-elev2:#FFFFFF;
+  --surface:#FFFFFF; --surface-2:#F7F9FC;
+  --green:#12A15A; --green-mid:#22C06E; --green-lt:#0E8A4A; --green-deep:#0B6B3A;
+  --gold:#F59F00; --gold-lt:#E8590C; --gold-soft:#FFB340;
+  --cream:#152230; --cream-dim:#5A6878; --cream-faint:#8A97A6;
+  --red:#FF3B30; --blue:#007AFF;
+  --hairline:rgba(21,34,48,.08);
+  --hairline-strong:rgba(21,34,48,.12);
+  --blur-bg:rgba(255,255,255,.72);
+  --card-shadow:0 1px 0 rgba(255,255,255,.9) inset, 0 10px 28px -18px rgba(30,60,110,.35), 0 2px 6px -2px rgba(30,60,110,.08);
+}
+body{background:var(--bg); color:var(--cream);}
+/* Pastel sky: sky, peach, lilac and mint washes */
+body::before{
+  background:
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(120,200,255,.45), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 8%, rgba(255,180,210,.40), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 100% 85%, rgba(190,170,255,.38), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 0% 100%, rgba(130,230,180,.38), transparent 70%);
+}
+.stars i{color:#FFB800; opacity:.35; text-shadow:0 0 6px rgba(255,190,0,.4);}
+@keyframes tw{0%,100%{opacity:.18;transform:scale(1)}50%{opacity:.6;transform:scale(1.4)}}
+
+/* Nav bar: white glass */
+.navbar{background:rgba(255,255,255,.62); border-bottom-color:transparent;}
+.navbar.condensed{border-bottom-color:var(--hairline);}
+.nav-btn{color:var(--cream); background:rgba(255,255,255,.75); box-shadow:0 0 0 .5px var(--hairline-strong), 0 4px 10px -6px rgba(30,60,110,.35);}
+.nav-btn:active{background:#fff;}
+.star-pill{background:linear-gradient(180deg,#FFF3C4,#FFE08A); border:none; color:#9A5A00;
+  box-shadow:inset 0 1px 0 #fff, 0 4px 12px -6px rgba(245,159,0,.7);}
+
+/* Large title: vibrant gradient like babymo.id */
+.large-title{color:var(--cream);}
+.large-title em{
+  background:linear-gradient(95deg,#12A15A 0%,#10B5A0 35%,#2F9BEA 68%,#8B6CF5 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent; -webkit-text-fill-color:transparent;
+}
+
+/* Hero: sunny pastel card */
+.hero{
+  background:
+    radial-gradient(ellipse 70% 70% at 100% 100%, rgba(255,255,255,.7), transparent 60%),
+    linear-gradient(135deg,#FFF1C2 0%,#FFD9E6 48%,#DCD6FF 100%);
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 18px 40px -22px rgba(140,90,200,.55), inset 0 1px 0 #fff;
+}
+.hero::before{background:radial-gradient(circle at 92% 8%, rgba(255,255,255,.75), transparent 38%);}
+.hero-eyebrow{color:#C2410C;}
+.hero-greet{color:var(--cream);}
+.hero-greet .ar{color:#0B6B3A;}
+.hero-msg{color:#4A5563;}
+.hero-img-glow{background:radial-gradient(circle, rgba(255,255,255,.95), transparent 65%);}
+.hero-img{filter:drop-shadow(0 10px 18px rgba(80,50,140,.28));}
+.hero-btn{
+  background:linear-gradient(180deg,#3DDC84,#12A15A);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5), 0 10px 22px -10px rgba(18,161,90,.75);
+}
+.hero-btn.alt{background:rgba(255,255,255,.8); color:var(--cream);
+  box-shadow:inset 0 1px 0 #fff, 0 0 0 .5px var(--hairline-strong), 0 8px 18px -12px rgba(30,60,110,.4);}
+
+/* Section text */
+.sec-link{color:#0A84FF;}
+
+/* Quick stats: white glass tiles with colourful icon bubbles */
+.qs{background:var(--bg-elev); border:none; box-shadow:var(--card-shadow);}
+.qs-icon{width:40px; height:40px; margin:0 auto 6px; border-radius:13px; display:grid; place-items:center;
+  font-size:20px; filter:none; box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
+.quick-row .qs:nth-child(1) .qs-icon{background:linear-gradient(160deg,#FFD38A,#FF9F0A);}
+.quick-row .qs:nth-child(2) .qs-icon{background:linear-gradient(160deg,#9FD8FF,#0A84FF);}
+.quick-row .qs:nth-child(3) .qs-icon{background:linear-gradient(160deg,#B9F6CA,#30D158); font-family:var(--font-ar); color:#fff; font-weight:700;}
+.qs-num{color:var(--cream);}
+
+/* Featured cards: pastel colour per game, dark text */
+.h-card{
+  background:linear-gradient(160deg,#FFE7D6,#FFC9DA);
+  border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 16px 30px -20px rgba(160,80,120,.6), inset 0 1px 0 #fff;
+}
+.h-card.doa{background:linear-gradient(160deg,#DDF3FF,#B9DCFF);  box-shadow:0 16px 30px -20px rgba(40,110,200,.6), inset 0 1px 0 #fff;}
+.h-card.dream{background:linear-gradient(160deg,#ECE6FF,#CFC2FF); box-shadow:0 16px 30px -20px rgba(100,70,200,.6), inset 0 1px 0 #fff;}
+.h-card.dua{background:linear-gradient(160deg,#FFF4CF,#FFD98A);   box-shadow:0 16px 30px -20px rgba(200,140,20,.6), inset 0 1px 0 #fff;}
+.h-card-tag{color:#C2410C;}
+.h-card.doa .h-card-tag{color:#0060DF;} .h-card.dream .h-card-tag{color:#5B3FD6;} .h-card.dua .h-card-tag{color:#9A5A00;}
+.h-card-title{color:var(--cream);}
+.h-card-sub{color:#4A5563;}
+
+/* App icon grid labels */
+.ai-label{color:var(--cream); font-weight:800;}
+.ai-sub{color:var(--cream-faint);}
+.ai-badge{border-color:#fff; background:#FF3B30;}
+.ai-square.has-art{box-shadow:0 10px 18px -10px rgba(30,60,110,.55);}
+
+/* Grouped lists: white inset groups (iOS Settings) */
+.list-group{background:var(--bg-elev); border:none; box-shadow:var(--card-shadow);}
+.list-group-title{color:var(--cream-dim);}
+.lrow:active{background:rgba(21,34,48,.05);}
+.lrow-icon{background:linear-gradient(160deg,#5BE38A,#28B463); box-shadow:inset 0 1px 0 rgba(255,255,255,.45);}
+.lrow-icon.gold{background:linear-gradient(160deg,#FFC94D,#FF9500);}
+.lrow-icon.blue{background:linear-gradient(160deg,#6CC7FF,#0A84FF);}
+.lrow-icon.purple{background:linear-gradient(160deg,#C98BFF,#9B51E0);}
+.lrow-icon.red{background:linear-gradient(160deg,#FF8A80,#FF3B30);}
+.lrow-icon.brand{background:radial-gradient(circle at 50% 38%,#FFFFFF,#F1F5FB);}
+.lrow-icon.has-art{background:none; box-shadow:0 4px 10px -6px rgba(30,60,110,.5);}
+.lrow-sub .ar{color:#0B6B3A;}
+.lrow-chev{color:#B4BFCC;}
+
+/* Profile */
+.profile-avatar::before{background:radial-gradient(circle, rgba(255,214,120,.55), rgba(190,170,255,.25) 45%, transparent 70%);}
+.profile-avatar img{filter:drop-shadow(0 10px 18px rgba(80,50,140,.25));}
+.profile-tag{color:#E8590C;}
+.profile-arabic{color:#0B6B3A;}
+
+/* Tab bar: floating Liquid Glass capsule */
+.tabbar{
+  margin:0 12px calc(8px + env(safe-area-inset-bottom)); height:62px; padding-bottom:0;
+  border-radius:31px; border:1px solid rgba(255,255,255,.95);
+  background:rgba(255,255,255,.78);
+  box-shadow:0 0 0 .5px var(--hairline-strong), 0 18px 36px -18px rgba(30,60,110,.45);
+}
+.tab{color:#8A97A6; border-radius:24px; margin:5px 2px;}
+.tab.active{color:#0B8A4A; background:linear-gradient(180deg,#E3F9EC,#CFF3DE);}
+.scroller{padding-bottom:calc(62px + 28px + env(safe-area-inset-bottom));}
+
+/* Toast, footer, install hint */
+.toast{background:rgba(255,255,255,.92); color:var(--cream); border:none; box-shadow:0 0 0 .5px var(--hairline-strong), 0 12px 28px -12px rgba(30,60,110,.45);}
+.foot{color:var(--cream-faint);}
+.foot .br{color:#0B8A4A;}
+.foot .ar{color:#0B6B3A;}
+.install-hint{background:linear-gradient(135deg,#FFF1D6,#FFE3EC); border:1px solid rgba(255,255,255,.95); color:var(--cream); box-shadow:var(--card-shadow);}
+.install-hint b{color:#E8590C;}
+.install-hint .x:active{background:rgba(21,34,48,.06);}
+
+/* Language picker: colourful welcome */
+.lang-pick{background:
+  radial-gradient(ellipse 80% 50% at 0% 0%, rgba(120,200,255,.55), transparent 70%),
+  radial-gradient(ellipse 70% 45% at 100% 10%, rgba(255,180,210,.55), transparent 70%),
+  radial-gradient(ellipse 80% 50% at 50% 100%, rgba(150,230,180,.55), transparent 70%),
+  #F7FAFF;}
+.lang-pick-logo{filter:drop-shadow(0 12px 22px rgba(80,50,140,.25));}
+.lang-btn{background:rgba(255,255,255,.85); border:1px solid rgba(255,255,255,.95);
+  box-shadow:0 0 0 .5px var(--hairline-strong), 0 14px 28px -18px rgba(30,60,110,.5);}
+.lang-btn:active{border-color:#12A15A;}
+.lang-toggle{background:#fff; border-color:var(--hairline-strong);}
+.lang-opt.active{background:linear-gradient(180deg,#3DDC84,#12A15A);}
+
+/* Trust pills */
+.trust-pill{color:#0B6B3A; background:rgba(48,209,88,.14); border:.5px solid rgba(48,209,88,.3);}
+
+/* Tablet frames: light backdrop */
+@media (min-width:520px){
+  body{background:#E8EEF8;}
+  .app{background:var(--bg); box-shadow:0 0 60px rgba(30,60,110,.18);}
+}
+
+/* bm-hub-buttons: iOS sheen + spring press */
+.hero-btn,.lang-btn,.nav-btn{transition:transform 260ms cubic-bezier(.34,1.56,.64,1),box-shadow .2s ease!important;}
+.hero-btn:not(.alt){background:linear-gradient(120deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%)!important;color:#fff!important;text-shadow:0 1px 1.5px rgba(0,70,35,.38);box-shadow:inset 0 18px 16px -14px rgba(255,255,255,.45),inset 0 1px 0 rgba(255,255,255,.6),0 12px 24px -12px rgba(10,143,160,.6)!important;}
+.hero-btn:active,.lang-btn:active,.nav-btn:active{transform:scale(.95)!important;}
+/* Shared SVG game icons (generated by babymo-web/scripts/generate-game-icons.py) */
+.ai-square.has-art{background:none; box-shadow:0 8px 16px -6px rgba(0,0,0,.5); overflow:visible;}
+.ai-square.has-art .ai-art{border-radius:var(--r-icon);}
+.ai-square.has-art::after{display:none;}
+.ai-art,.lrow-art{width:100%; height:100%; display:block; border-radius:inherit;}
+.lrow-icon.has-art{background:none; padding:0; overflow:hidden;}
+.h-card-em.has-art{opacity:1; width:46px; height:46px; font-size:0;}
+.h-art{width:100%; height:100%; display:block; border-radius:24%; box-shadow:0 6px 14px -6px rgba(0,0,0,.55);}
 </style>
+<link rel="canonical" href="https://play.babymo.id/">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Baby Mo — Game Islami &amp; Belajar Sholat, Doa, Hijaiyah untuk Anak">
+<meta property="og:description" content="Kumpulan game &amp; aktivitas islami untuk anak: panduan sholat, doa harian, hijaiyah, kata baik &amp; puzzle seru bersama Baby Mo. Gratis &amp; ramah anak.">
+<meta property="og:url" content="https://play.babymo.id/">
+<meta property="og:image" content="https://play.babymo.id/og/index.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Baby Mo — Game Islami &amp; Belajar Sholat, Doa, Hijaiyah untuk Anak">
+<meta name="twitter:description" content="Kumpulan game &amp; aktivitas islami untuk anak: panduan sholat, doa harian, hijaiyah, kata baik &amp; puzzle seru bersama Baby Mo. Gratis &amp; ramah anak.">
+<meta name="twitter:image" content="https://play.babymo.id/og/index.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Baby Mo","url":"https://play.babymo.id/","inLanguage":"id-ID","publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"}}</script>
+<style id="bm-fixes">
+/* phones: the large title already names the page; keep the top bar clear for its buttons */
+@media (max-width:440px){.nav-title{display:none;}}
+/* language pill in the top bar */
+.nav-btn.lang-pill{width:auto;min-width:40px;padding:0 10px;font-size:13px;font-weight:900;letter-spacing:.04em;}
+
+/* child's name chip + sheet */
+.large-title em{overflow-wrap:anywhere;}
+.name-chip{margin-top:10px;display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 16px;border-radius:20px;border:1px solid rgba(255,255,255,.95);
+  background:rgba(255,255,255,.8);color:var(--cream);font:700 14px/1 inherit;font-family:inherit;box-shadow:0 0 0 .5px var(--hairline-strong),0 8px 18px -12px rgba(30,60,110,.45);cursor:pointer;}
+.name-chip[hidden]{display:none;}
+.name-sheet{position:fixed;inset:0;z-index:9000;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(40,60,90,.28);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);}
+.name-sheet.open{display:flex;}
+.name-card{width:100%;max-width:340px;background:var(--bg-elev);border-radius:26px;padding:24px 20px 18px;text-align:center;box-shadow:0 30px 60px -20px rgba(20,40,80,.45);color:var(--cream);}
+.name-card .nm-emoji{font-size:40px;line-height:1;}
+.name-card h3{margin:10px 0 4px;font-size:20px;font-weight:900;}
+.name-card p{margin:0 0 14px;font-size:14px;color:var(--cream-dim);}
+.name-card input{width:100%;box-sizing:border-box;height:48px;border-radius:14px;border:1.5px solid var(--hairline-strong);background:var(--surface-2);color:var(--cream);font:700 17px/1 inherit;font-family:inherit;text-align:center;outline:none;}
+.name-card input:focus{border-color:#0A9488;box-shadow:0 0 0 4px rgba(10,148,136,.15);}
+.nm-row{display:flex;gap:10px;margin-top:14px;}
+.nm-row button{flex:1;min-height:46px;border-radius:16px;font:800 15px/1 inherit;font-family:inherit;cursor:pointer;border:none;}
+.nm-cancel{background:var(--surface-2);color:var(--cream-dim);}
+.nm-save{justify-content:center;}
+html[data-theme="dark"] .name-chip{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.1);}
+
+/* readable text: nothing under ~11.5px */
+.qs-lbl,.h-card-tag,.ai-sub,[data-i18n=feat_start]{font-size:11.5px!important;}
+.tab span,.tab{font-size:11px;}
+/* kid-sized nav buttons */
+.nav-btn{width:40px;height:40px;font-size:18px;}
+.star-pill{width:auto;height:40px;padding:0 14px;}
+#themeBtn svg{width:21px;height:21px;}
+/* contrast fixes after the bright theme */
+:root{--cream-faint:#6B7787;}
+</style>
+<style id="bm-dark">
+/* ═══════════ DARK THEME (iOS-style night sky) ═══════════
+   Active when <html data-theme="dark"> — set by the theme script from the
+   saved choice (Auto / Light / Dark) or the phone's own setting. Keeps the
+   colourful buttons, app icons and Baby Mo; only surfaces and text change. */
+html[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0B1020; --bg-elev:#161C2F; --bg-elev2:#1C2338;
+  --surface:#161C2F; --surface-2:#1C2338;
+  --green-lt:#4ADE80;
+  --cream:#F2F5FA; --cream-dim:#AEB8C7; --cream-faint:#8794A6;
+  --hairline:rgba(255,255,255,.07);
+  --hairline-strong:rgba(255,255,255,.12);
+  --blur-bg:rgba(14,19,36,.72);
+  --card-shadow:0 1px 0 rgba(255,255,255,.05) inset, 0 12px 28px -18px rgba(0,0,0,.8);
+}
+html[data-theme="dark"] body{background:var(--bg); color:var(--cream);}
+html[data-theme="dark"] body::before{
+  background:
+    radial-gradient(ellipse 70% 45% at 0% 0%, rgba(56,120,255,.30), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 100% 8%, rgba(190,90,220,.24), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 100% 85%, rgba(110,80,255,.24), transparent 70%),
+    radial-gradient(ellipse 70% 45% at 0% 100%, rgba(20,184,166,.22), transparent 70%);
+}
+html[data-theme="dark"] .stars i{color:#FFE7A3; opacity:.55; text-shadow:0 0 8px rgba(255,220,120,.6);}
+
+html[data-theme="dark"] .navbar{background:rgba(11,16,32,.62);}
+html[data-theme="dark"] .nav-btn{color:var(--cream); background:rgba(255,255,255,.09); box-shadow:0 0 0 .5px var(--hairline-strong), 0 4px 10px -6px rgba(0,0,0,.6);}
+html[data-theme="dark"] .nav-btn:active{background:rgba(255,255,255,.16);}
+html[data-theme="dark"] .star-pill{background:linear-gradient(180deg,#FFD66B,#F5A300); color:#3D2600; box-shadow:inset 0 1px 0 rgba(255,255,255,.6), 0 4px 14px -6px rgba(245,163,0,.7);}
+
+html[data-theme="dark"] .large-title em{background:linear-gradient(95deg,#4ADE80 0%,#2DD4BF 35%,#60A5FA 68%,#A78BFA 100%); -webkit-background-clip:text; background-clip:text;}
+
+html[data-theme="dark"] .hero,
+html[data-theme="dark"] #pane-companion .hero,
+html[data-theme="dark"] #pane-doa .hero{
+  background:
+    radial-gradient(ellipse 70% 70% at 100% 100%, rgba(167,139,250,.28), transparent 60%),
+    linear-gradient(135deg,#2B2457 0%,#1E2B57 50%,#123E4E 100%) !important;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 40px -22px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.08);
+}
+html[data-theme="dark"] #pane-companion .hero{background:radial-gradient(ellipse 70% 70% at 100% 100%, rgba(45,212,191,.25), transparent 60%),linear-gradient(135deg,#123B33 0%,#123A47 50%,#1C2A55 100%) !important;}
+html[data-theme="dark"] .hero::before{background:radial-gradient(circle at 92% 8%, rgba(255,255,255,.14), transparent 38%);}
+html[data-theme="dark"] .hero-eyebrow{color:#FDBA74;}
+html[data-theme="dark"] .hero-greet{color:var(--cream);}
+html[data-theme="dark"] .hero-greet .ar{color:#6EE7B7;}
+html[data-theme="dark"] .hero-msg{color:#C9D2DE;}
+html[data-theme="dark"] .hero-img-glow{background:radial-gradient(circle, rgba(255,230,160,.35), transparent 65%) !important;}
+html[data-theme="dark"] .hero-img{filter:drop-shadow(0 10px 18px rgba(0,0,0,.55));}
+html[data-theme="dark"] .hero-btn.alt{background:rgba(255,255,255,.1); color:var(--cream); box-shadow:inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 .5px var(--hairline-strong);}
+
+html[data-theme="dark"] .sec-link{color:#64B5FF;}
+html[data-theme="dark"] .qs{background:var(--bg-elev);}
+
+html[data-theme="dark"] .h-card{background:linear-gradient(160deg,#3A2338,#2A1C3D); border:1px solid rgba(255,255,255,.07); box-shadow:0 16px 30px -20px rgba(0,0,0,.9), inset 0 1px 0 rgba(255,255,255,.07);}
+html[data-theme="dark"] .h-card.doa{background:linear-gradient(160deg,#16305A,#112445);}
+html[data-theme="dark"] .h-card.dream{background:linear-gradient(160deg,#2C2560,#1F1A48);}
+html[data-theme="dark"] .h-card.dua{background:linear-gradient(160deg,#41330F,#2E240C);}
+html[data-theme="dark"] .h-card-tag{color:#FDBA74;}
+html[data-theme="dark"] .h-card.doa .h-card-tag{color:#7DD3FC;}
+html[data-theme="dark"] .h-card.dream .h-card-tag{color:#C4B5FD;}
+html[data-theme="dark"] .h-card.dua .h-card-tag{color:#FCD34D;}
+html[data-theme="dark"] .h-card-sub{color:#B8C2D0;}
+html[data-theme="dark"] [data-i18n="feat_start"]{color:#FDBA74 !important;}
+
+html[data-theme="dark"] .ai-badge{border-color:var(--bg);}
+html[data-theme="dark"] .ai-square.has-art{box-shadow:0 10px 18px -10px rgba(0,0,0,.8);}
+
+html[data-theme="dark"] .list-group{background:var(--bg-elev);}
+html[data-theme="dark"] .lrow:active{background:rgba(255,255,255,.06);}
+html[data-theme="dark"] .lrow-icon.brand{background:radial-gradient(circle at 50% 38%,#2E3756,#1E2540);}
+html[data-theme="dark"] .lrow-sub .ar,
+html[data-theme="dark"] .profile-arabic,
+html[data-theme="dark"] .foot .ar{color:#6EE7B7;}
+html[data-theme="dark"] .lrow-chev{color:#5C687C;}
+html[data-theme="dark"] .profile-avatar::before{background:radial-gradient(circle, rgba(255,214,120,.28), rgba(140,110,255,.18) 45%, transparent 70%);}
+html[data-theme="dark"] .profile-tag{color:#FDBA74;}
+
+html[data-theme="dark"] .tabbar{background:rgba(22,28,47,.8); border-color:rgba(255,255,255,.08); box-shadow:0 0 0 .5px rgba(0,0,0,.6), 0 18px 36px -18px rgba(0,0,0,.9);}
+html[data-theme="dark"] .tab{color:#8794A6;}
+html[data-theme="dark"] .tab.active{color:#6EE7B7; background:rgba(52,211,153,.16);}
+
+html[data-theme="dark"] .toast{background:rgba(30,37,58,.95); color:var(--cream); box-shadow:0 0 0 .5px var(--hairline-strong), 0 12px 28px -12px rgba(0,0,0,.8);}
+html[data-theme="dark"] .foot .br{color:#4ADE80;}
+html[data-theme="dark"] .install-hint{background:linear-gradient(135deg,#3B2A18,#3A1E31); border-color:rgba(255,255,255,.08);}
+html[data-theme="dark"] .install-hint b{color:#FDBA74;}
+html[data-theme="dark"] .install-hint .x:active{background:rgba(255,255,255,.08);}
+
+html[data-theme="dark"] .lang-pick{background:
+  radial-gradient(ellipse 80% 50% at 0% 0%, rgba(56,120,255,.35), transparent 70%),
+  radial-gradient(ellipse 70% 45% at 100% 10%, rgba(190,90,220,.3), transparent 70%),
+  radial-gradient(ellipse 80% 50% at 50% 100%, rgba(20,184,166,.3), transparent 70%),
+  #0B1020;}
+html[data-theme="dark"] .lang-btn{background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.1); box-shadow:0 14px 28px -18px rgba(0,0,0,.9);}
+html[data-theme="dark"] .lang-toggle{background:var(--bg-elev);}
+html[data-theme="dark"] .trust-pill{color:#6EE7B7; background:rgba(48,209,88,.14); border-color:rgba(48,209,88,.3);}
+
+html[data-theme="dark"] #appLoader{background:radial-gradient(ellipse 80% 50% at 0% 0%,rgba(56,120,255,.35),transparent 70%),radial-gradient(ellipse 70% 45% at 100% 100%,rgba(190,90,220,.3),transparent 70%),#0B1020 !important;}
+html[data-theme="dark"] #appLoader > div:not(:has(#loaderBar)){color:#F2F5FA !important;}
+html[data-theme="dark"] #loaderPct{color:#AEB8C7 !important;}
+
+@media (min-width:520px){
+  html[data-theme="dark"] body{background:#070B16;}
+  html[data-theme="dark"] .app{background:var(--bg); box-shadow:0 0 60px rgba(0,0,0,.6);}
+}
+/* smooth switch */
+html.theme-anim body, html.theme-anim .navbar, html.theme-anim .tabbar, html.theme-anim .list-group,
+html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:background .35s ease, color .35s ease, border-color .35s ease;}
+/* theme toggle icon */
+#themeBtn svg{width:19px; height:19px; display:block;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
 
 <!-- Inline loading screen — renders instantly before any external CSS/JS -->
 <div id="appLoader" style="
   position:fixed;inset:0;z-index:99999;
-  background:#0B1C12;
+  background:radial-gradient(ellipse 80% 50% at 0% 0%,rgba(120,200,255,.5),transparent 70%),radial-gradient(ellipse 70% 45% at 100% 100%,rgba(255,180,210,.5),transparent 70%),#F7FAFF;
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   gap:18px;
   transition:opacity .4s ease;
 ">
-  <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" style="width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.4));animation:loaderBob 2s ease-in-out infinite;">
-  <div style="font-family:-apple-system,system-ui,sans-serif;font-size:18px;font-weight:800;color:#F0E8D8;letter-spacing:-.01em;">Baby Mo</div>
-  <div style="width:140px;height:4px;border-radius:4px;background:rgba(240,232,216,.1);overflow:hidden;margin-top:4px;">
-    <div id="loaderBar" style="height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,#4A8860,#6DB882,#C89040);transition:width .3s ease;"></div>
+  <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo" style="width:88px;height:88px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(80,50,140,.25));animation:loaderBob 2s ease-in-out infinite;">
+  <div style="font-family:-apple-system,system-ui,sans-serif;font-size:18px;font-weight:800;color:#152230;letter-spacing:-.01em;">Baby Mo</div>
+  <div style="width:140px;height:4px;border-radius:4px;background:rgba(21,34,48,.08);overflow:hidden;margin-top:4px;">
+    <div id="loaderBar" style="height:100%;width:0%;border-radius:4px;background:linear-gradient(90deg,#12A15A,#10B5A0,#2F9BEA,#8B6CF5);transition:width .3s ease;"></div>
   </div>
-  <div id="loaderPct" style="font-family:-apple-system,system-ui,sans-serif;font-size:11px;font-weight:700;color:rgba(240,232,216,.4);letter-spacing:.5px;">Bismillah...</div>
+  <div id="loaderPct" style="font-family:-apple-system,system-ui,sans-serif;font-size:11px;font-weight:700;color:#5A6878;letter-spacing:.5px;">Bismillah...</div>
 </div>
 <style>
 @keyframes loaderBob{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-6px) scale(1.04)}}
@@ -586,7 +975,7 @@ body::before{
 </script>
 
 <div class="lang-pick" id="langPick">
-  <img class="lang-pick-logo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo">
+  <img class="lang-pick-logo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo">
   <h2>🌙 Baby Mo Games</h2>
   <p>Pilih Bahasa / Choose Language</p>
   <button class="lang-btn" onclick="pickLang('id')">
@@ -606,9 +995,14 @@ body::before{
 
   <!-- ============ NAV BAR ============ -->
   <header class="navbar" id="navbar">
-    <div class="nav-leading"></div>
+    <div class="nav-leading">
+      <button class="nav-btn star-pill" id="starPill" aria-label="Bintang Mo" title="Bintang Mo">⭐ <span id="starCount">0</span></button>
+    </div>
     <div class="nav-title" id="navTitle">Baby Mo</div>
     <div class="nav-trailing">
+      <button class="nav-btn lang-pill" id="langBtn" aria-label="Bahasa / Language" title="Bahasa / Language" onclick="toggleLang()">ID</button>
+      <button class="nav-btn" id="themeBtn" aria-label="Tema" title="Tema"></button>
+      <button class="nav-btn" id="muteBtn" aria-label="Suara">🔊</button>
       <button class="nav-btn" id="sparkleBtn" aria-label="Sparkle">✨</button>
     </div>
   </header>
@@ -619,8 +1013,9 @@ body::before{
     <!-- ============= TAB 1: BERANDA (HOME) ============= -->
     <section class="tab-pane active" id="pane-home" data-title="Baby Mo">
       <div class="large-title-wrap">
-        <div class="large-title" data-i18n-html="home_title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</div>
+        <h1 class="large-title" data-i18n-html="home_title">Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙</h1>
         <div class="large-subtitle" id="greetSub">Bismillah, yuk mulai belajar!</div>
+        <button class="name-chip" id="nameChip" type="button" onclick="openNameSheet()" hidden>✏️ <span data-i18n="name_chip">Siapa nama si kecil?</span></button>
       </div>
 
       <!-- Hero -->
@@ -636,7 +1031,7 @@ body::before{
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow"></div>
-            <img class="hero-img" src="Baby_Mo_Menyapa.png" alt="Baby Mo waving" draggable="false">
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-pose-05.webp" alt="Baby Mo" draggable="false">
           </div>
         </div>
         <div class="hero-cta">
@@ -647,9 +1042,17 @@ body::before{
 
       <!-- Quick stats -->
       <div class="quick-row">
-        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">10</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
+        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">11</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
         <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">6</div><div class="qs-lbl" data-i18n="qs_doa">Doa</div></div>
         <div class="qs"><div class="qs-icon">ك</div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
+      </div>
+
+      <!-- Parent-trust signals -->
+      <div class="trust-row" aria-label="Kenapa orang tua tenang">
+        <span class="trust-pill" data-i18n="trust_free">✓ Gratis</span>
+        <span class="trust-pill" data-i18n="trust_noads">✓ Tanpa Iklan</span>
+        <span class="trust-pill" data-i18n="trust_offline">✓ Main Tanpa Internet</span>
+        <span class="trust-pill" data-i18n="trust_safe">✓ Aman untuk Anak</span>
       </div>
 
       <!-- Featured horizontal scroll -->
@@ -660,25 +1063,25 @@ body::before{
         </div>
         <div class="h-scroll">
           <a class="h-card doa" href="./babymo-doa-harian.html">
-            <div class="h-card-em">🌙</div>
+            <div class="h-card-em has-art"><img class="h-art" src="./icons/games/doa-harian.svg" alt="" draggable="false"></div>
             <div class="h-card-tag" data-i18n="hc_doa_tag">🔊 Audio Arab</div>
             <div class="h-card-title" data-i18n="hc_doa_title">Doa Harian</div>
             <div class="h-card-sub" data-i18n="hc_doa_sub">6 doa · 3–7 tahun</div>
           </a>
           <a class="h-card" href="./babymo-puzzle.html">
-            <div class="h-card-em">🧩</div>
+            <div class="h-card-em has-art"><img class="h-art" src="./icons/games/puzzle.svg" alt="" draggable="false"></div>
             <div class="h-card-tag" data-i18n="hc_puzzle_tag">✨ Populer</div>
             <div class="h-card-title" data-i18n="hc_puzzle_title">Kenalan dengan Baby Mo</div>
             <div class="h-card-sub" data-i18n="hc_puzzle_sub">Puzzle interaktif · 2–6 tahun</div>
           </a>
           <a class="h-card dream" href="./babymo-dreamtime.html">
-            <div class="h-card-em">🛌</div>
+            <div class="h-card-em has-art"><img class="h-art" src="./icons/games/dreamtime.svg" alt="" draggable="false"></div>
             <div class="h-card-tag" data-i18n="hc_dream_tag">🌙 Malam</div>
             <div class="h-card-title">Baby Mo Dreamtime</div>
             <div class="h-card-sub" data-i18n="hc_dream_sub">Bedtime routine · 2–5 tahun</div>
           </a>
           <a class="h-card dua" href="./babymo-dua-game.html">
-            <div class="h-card-em">🃏</div>
+            <div class="h-card-em has-art"><img class="h-art" src="./icons/games/dua-journey.svg" alt="" draggable="false"></div>
             <div class="h-card-tag" data-i18n="hc_dua_tag">⭐ Memori</div>
             <div class="h-card-title">Dua Journey</div>
             <div class="h-card-sub" data-i18n="hc_dua_sub">3 level · 3–6 tahun</div>
@@ -691,7 +1094,7 @@ body::before{
         <div class="sec-head"><div class="sec-title" data-i18n="sec_kategori">Kategori</div></div>
         <div class="list-group">
           <a class="lrow" onclick="switchTab('doa')">
-            <div class="lrow-icon blue">🌙</div>
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/doa-harian.svg" alt="" draggable="false"></div>
             <div class="lrow-body">
               <div class="lrow-title" data-i18n="cat_doa_t">Doa Harian</div>
               <div class="lrow-sub" data-i18n="cat_doa_s">6 doa dari bangun hingga tidur</div>
@@ -699,15 +1102,15 @@ body::before{
             <div class="lrow-chev">›</div>
           </a>
           <a class="lrow" href="./babymo-hijaiyah.html">
-            <div class="lrow-icon gold"><span style="font-family:var(--font-ar)">ك</span></div>
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/hijaiyah.svg" alt="" draggable="false"></div>
             <div class="lrow-body">
-              <div class="lrow-title" data-i18n="cat_hij_t">Huruf Hijaiyah</div>
-              <div class="lrow-sub" data-i18n="cat_hij_s">Kenali 28 huruf Arab</div>
+              <div class="lrow-title" data-i18n="cat_hij_t">Pulau Hijaiyah</div>
+              <div class="lrow-sub" data-i18n="cat_hij_s">Jelajah, gali & bangun bareng Baby Mo</div>
             </div>
             <div class="lrow-chev">›</div>
           </a>
           <a class="lrow" href="./babymo-arabic-spelling.html">
-            <div class="lrow-icon purple">🔤</div>
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/kata-islam.svg" alt="" draggable="false"></div>
             <div class="lrow-body">
               <div class="lrow-title" data-i18n="cat_kata_t">Kata Islam</div>
               <div class="lrow-sub" data-i18n="cat_kata_s">Susun kata Arab</div>
@@ -715,7 +1118,7 @@ body::before{
             <div class="lrow-chev">›</div>
           </a>
           <a class="lrow" href="./baby-mo-forehand-beat.html">
-            <div class="lrow-icon red">🎵</div>
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/forehand-beat.svg" alt="" draggable="false"></div>
             <div class="lrow-body">
               <div class="lrow-title">Forehand Beat</div>
               <div class="lrow-sub" data-i18n="cat_beat_s">Game ritme seru</div>
@@ -723,7 +1126,7 @@ body::before{
             <div class="lrow-chev">›</div>
           </a>
           <a class="lrow" onclick="switchTab('companion')">
-            <div class="lrow-icon" style="background:linear-gradient(160deg,#2C5A3E,#1A3D2A);">🕌</div>
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/streak-sholat-mo.svg" alt="" draggable="false"></div>
             <div class="lrow-body">
               <div class="lrow-title" data-i18n="cat_comp_t">Sholat Bareng Mo</div>
               <div class="lrow-sub" data-i18n="cat_comp_s">Panduan sholat interaktif</div>
@@ -734,7 +1137,7 @@ body::before{
       </div>
 
       <div class="foot">
-        <div class="br">🐻 Baby Mo · id</div>
+        <div class="br"><img class="br-logo" src="brand/babymo-logo.png" alt="">Baby Mo · id</div>
         <div class="ar">بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
         <div data-i18n="foot_home">Islamic Early Learning untuk Si Kecil</div>
       </div>
@@ -744,70 +1147,75 @@ body::before{
     <section class="tab-pane" id="pane-games" data-title="Game">
       <div class="large-title-wrap">
         <div class="large-title" data-i18n-html="game_title">Game <em>Baby Mo</em></div>
-        <div class="large-subtitle" data-i18n="game_sub">10 game islami untuk si kecil</div>
+        <div class="large-subtitle" data-i18n="game_sub">11 game islami untuk si kecil</div>
       </div>
 
       <!-- Featured: Kenalan Baby Mo -->
       <a href="./babymo-puzzle.html" class="h-card" style="margin:4px 16px 18px;flex:none;height:auto;padding:16px 18px;display:flex;flex-direction:row;align-items:center;gap:14px;">
-        <div class="ai-square g-puzzle" style="flex-shrink:0;margin-bottom:0;width:60px;height:60px;font-size:30px;border-radius:16px;">🧩</div>
+        <div class="ai-square has-art g-puzzle" style="flex-shrink:0;margin-bottom:0;width:60px;height:60px;font-size:30px;border-radius:16px;"><img class="ai-art" src="./icons/games/puzzle.svg" alt="" draggable="false"></div>
         <div style="flex:1;min-width:0;">
-          <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-lt);margin-bottom:3px;" data-i18n="feat_start">✨ Mulai di sini</div>
-          <div style="font-size:17px;font-weight:900;color:#fff;line-height:1.2;" data-i18n="feat_kenalan">Kenalan Baby Mo</div>
-          <div style="font-size:11px;color:rgba(240,232,216,.65);font-weight:600;margin-top:2px;" data-i18n="feat_kenalan_sub">Puzzle interaktif · Perkenalan</div>
+          <div style="font-size:9px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;color:#B93D07;margin-bottom:3px;" data-i18n="feat_start">✨ Mulai di sini</div>
+          <div style="font-size:17px;font-weight:900;color:var(--cream);line-height:1.2;" data-i18n="feat_kenalan">Kenalan Baby Mo</div>
+          <div style="font-size:11px;color:var(--cream-dim);font-weight:600;margin-top:2px;" data-i18n="feat_kenalan_sub">Puzzle interaktif · Perkenalan</div>
         </div>
-        <div style="color:var(--cream-faint);font-size:18px;">›</div>
+        <div class="lrow-chev" style="font-size:18px;">›</div>
       </a>
 
       <div class="sec-head" style="margin-top:4px;">
         <div class="sec-title" data-i18n="sec_semua">Semua Game</div>
-        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;" data-i18n="sec_count">10 game</span>
+        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;" data-i18n="sec_count">11 game</span>
       </div>
 
       <div class="icon-grid">
         <a class="app-icon" href="./babymo-doa-harian.html">
-          <div class="ai-square g-doa">🌙<div class="ai-badge">🔊</div></div>
+          <div class="ai-square has-art g-doa"><img class="ai-art" src="./icons/games/doa-harian.svg" alt="" draggable="false"><div class="ai-badge">🔊</div></div>
           <div class="ai-label" data-i18n="g_doa">Doa Harian</div>
           <div class="ai-sub">Audio</div>
         </a>
         <a class="app-icon" href="./babymo-dua-game.html">
-          <div class="ai-square g-dua">🃏</div>
+          <div class="ai-square has-art g-dua"><img class="ai-art" src="./icons/games/dua-journey.svg" alt="" draggable="false"></div>
           <div class="ai-label">Dua Journey</div>
           <div class="ai-sub" data-i18n="g_dua_sub">Memori</div>
         </a>
         <a class="app-icon" href="./babymo-arabic-spelling.html">
-          <div class="ai-square g-kata">🔤</div>
+          <div class="ai-square has-art g-kata"><img class="ai-art" src="./icons/games/kata-islam.svg" alt="" draggable="false"></div>
           <div class="ai-label" data-i18n="g_kata">Kata Islam</div>
           <div class="ai-sub" data-i18n="g_kata_sub">Susun</div>
         </a>
         <a class="app-icon" href="./babymo-dreamtime.html">
-          <div class="ai-square g-dream">🛌</div>
+          <div class="ai-square has-art g-dream"><img class="ai-art" src="./icons/games/dreamtime.svg" alt="" draggable="false"></div>
           <div class="ai-label">Dreamtime</div>
           <div class="ai-sub" data-i18n="g_dream_sub">Tidur</div>
         </a>
         <a class="app-icon" href="./babymo-hijaiyah.html">
-          <div class="ai-square g-hijaiyah"><span class="ar">ك</span></div>
-          <div class="ai-label">Hijaiyah</div>
-          <div class="ai-sub" data-i18n="g_hij_sub">Huruf</div>
+          <div class="ai-square has-art g-hijaiyah"><img class="ai-art" src="./icons/games/hijaiyah.svg" alt="" draggable="false"></div>
+          <div class="ai-label">Pulau Hijaiyah</div>
+          <div class="ai-sub" data-i18n="g_hij_sub">Jelajah</div>
         </a>
         <a class="app-icon" href="./babymo-puzzle-katabaik.html">
-          <div class="ai-square g-kbaik">💖</div>
+          <div class="ai-square has-art g-kbaik"><img class="ai-art" src="./icons/games/kata-baik.svg" alt="" draggable="false"></div>
           <div class="ai-label" data-i18n="g_kbaik">Kata Baik</div>
           <div class="ai-sub" data-i18n="g_kbaik_sub">Akhlak</div>
         </a>
         <a class="app-icon" href="./babymo-look-and-find.html">
-          <div class="ai-square g-find">🔍</div>
+          <div class="ai-square has-art g-find"><img class="ai-art" src="./icons/games/cari-baby-mo.svg" alt="" draggable="false"></div>
           <div class="ai-label" data-i18n="g_find">Cari Baby Mo</div>
           <div class="ai-sub">Look &amp; Find</div>
         </a>
         <a class="app-icon" href="./babymo-memory-match.html">
-          <div class="ai-square g-memory">🃏</div>
+          <div class="ai-square has-art g-memory"><img class="ai-art" src="./icons/games/memory-match.svg" alt="" draggable="false"></div>
           <div class="ai-label">Memory Match</div>
           <div class="ai-sub" data-i18n="g_mem_sub">Kartu</div>
         </a>
         <a class="app-icon" href="./baby-mo-forehand-beat.html">
-          <div class="ai-square g-beat">🎵</div>
+          <div class="ai-square has-art g-beat"><img class="ai-art" src="./icons/games/forehand-beat.svg" alt="" draggable="false"></div>
           <div class="ai-label">Forehand Beat</div>
           <div class="ai-sub" data-i18n="g_beat_sub">Ritme</div>
+        </a>
+        <a class="app-icon" href="./babymo-wudhu.html">
+          <div class="ai-square has-art g-wudhu"><img class="ai-art" src="./icons/games/wudhu.svg" alt="" draggable="false"></div>
+          <div class="ai-label" data-i18n="g_wudhu">Wudhu</div>
+          <div class="ai-sub" data-i18n="g_wudhu_sub">Baru ✨</div>
         </a>
       </div>
 
@@ -821,49 +1229,35 @@ body::before{
     <section class="tab-pane" id="pane-companion" data-title="Sholat">
       <div class="large-title-wrap">
         <div class="large-title" data-i18n-html="comp_title">Sholat <em>Bareng Mo</em></div>
-        <div class="large-subtitle" data-i18n="comp_sub">Panduan sholat interaktif untuk si kecil</div>
+        <div class="large-subtitle" data-i18n="comp_sub">Waktu sholat, streak &amp; kiblat — semua di sini</div>
       </div>
 
-      <div class="hero" style="background:linear-gradient(135deg,#1E3F2A,#0D2318);">
-        <div class="hero-row">
-          <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#6DB882;box-shadow:0 0 8px #6DB882;"></span> <span data-i18n="comp_eyebrow">Panduan Interaktif</span></div>
-            <div class="hero-greet" data-i18n="comp_greet">Yuk Sholat Bareng Baby Mo!</div>
-            <div class="hero-msg" data-i18n="comp_msg">Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.</div>
-          </div>
-          <div class="hero-img-wrap">
-            <div class="hero-img-glow"></div>
-            <img class="hero-img" src="Baby_Mo_Menyapa.png" alt="Baby Mo" draggable="false" loading="lazy">
-          </div>
-        </div>
-        <div class="hero-cta">
-          <a class="hero-btn" href="./babymo-companion/index.html" data-i18n="comp_btn">🕌 Mulai Sholat Bareng Mo</a>
-        </div>
-      </div>
+      <div id="prayerHub"></div>
+      <div class="ph-tools" id="prayerTools"></div>
 
       <div class="list-group-title" data-i18n="comp_features">Fitur Sholat</div>
       <div class="list-group">
+        <a class="lrow" href="./babymo-wudhu.html">
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/wudhu.svg" alt="" draggable="false"></div>
+          <div class="lrow-body">
+            <div class="lrow-title" data-i18n="comp_wudhu_t">Wudhu Bareng Mo</div>
+            <div class="lrow-sub" data-i18n="comp_wudhu_s">Langkah wudhu + game urutkan · Baru</div>
+          </div>
+          <div class="lrow-chev">›</div>
+        </a>
         <a class="lrow" href="./babymo-pray-with-mo.html">
-          <div class="lrow-icon">🕌</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/pray-with-mo.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="comp_f1_t">Panduan Sholat</div>
             <div class="lrow-sub" data-i18n="comp_f1_s">Gerakan & bacaan sholat lengkap</div>
           </div>
           <div class="lrow-chev">›</div>
         </a>
-        <a class="lrow" href="./babymo-companion/index.html">
+        <a class="lrow" href="./babymo-pray-with-mo.html?view=dzikir">
           <div class="lrow-icon gold">🤲</div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="comp_f2_t">Doa Setelah Sholat</div>
             <div class="lrow-sub" data-i18n="comp_f2_s">Dzikir & doa pendek setelah sholat</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-        <a class="lrow" href="./babymo-companion/index.html">
-          <div class="lrow-icon blue">⏰</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="comp_f3_t">Waktu Sholat</div>
-            <div class="lrow-sub" data-i18n="comp_f3_s">Kenali 5 waktu sholat harian</div>
           </div>
           <div class="lrow-chev">›</div>
         </a>
@@ -882,20 +1276,20 @@ body::before{
         <div class="large-subtitle" data-i18n="doa_sub">6 doa untuk hari-hari Baby Mo</div>
       </div>
 
-      <div class="hero" style="background:linear-gradient(135deg,#1F3D5C,#0F1F30);">
+      <div class="hero" style="background:linear-gradient(135deg,#DDF3FF 0%,#D6E4FF 50%,#EDE3FF 100%);">
         <div class="hero-row">
           <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#7AB8D8;box-shadow:0 0 8px #7AB8D8;"></span> <span data-i18n="doa_eyebrow">Pilihan Hari Ini</span></div>
+            <div class="hero-eyebrow"><span class="dot" style="background:#0A84FF;box-shadow:0 0 8px #0A84FF;"></span> <span data-i18n="doa_eyebrow">Pilihan Hari Ini</span></div>
             <div class="hero-greet" data-i18n="doa_greet">Belajar Doa bersama Baby Mo</div>
             <div class="hero-msg" data-i18n="doa_msg">Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.</div>
           </div>
           <div class="hero-img-wrap">
-            <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(122,184,216,.45),transparent 65%);"></div>
-            <img class="hero-img" src="babymo_running.png" alt="Baby Mo" draggable="false" loading="lazy">
+            <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(255,255,255,.95),transparent 65%);"></div>
+            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-run.webp" alt="Baby Mo" draggable="false" loading="lazy">
           </div>
         </div>
         <div class="hero-cta">
-          <a class="hero-btn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5E8BD0,#2D4F8A);" data-i18n="doa_btn">🌙 Mulai Belajar Doa</a>
+          <a class="hero-btn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5AC8FA,#0A84FF);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 22px -10px rgba(10,132,255,.7);" data-i18n="doa_btn">🌙 Mulai Belajar Doa</a>
         </div>
       </div>
 
@@ -954,7 +1348,7 @@ body::before{
       <div class="list-group-title" data-i18n="doa_other">Lainnya</div>
       <div class="list-group">
         <a class="lrow" href="./babymo-dua-game.html">
-          <div class="lrow-icon purple">🃏</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/dua-journey.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title">Dua Journey</div>
             <div class="lrow-sub" data-i18n="doa_dua_s">Cocokkan doa dengan artinya</div>
@@ -962,7 +1356,7 @@ body::before{
           <div class="lrow-chev">›</div>
         </a>
         <a class="lrow" href="./babymo-dreamtime.html">
-          <div class="lrow-icon">🛌</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/dreamtime.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title">Baby Mo Dreamtime</div>
             <div class="lrow-sub" data-i18n="doa_dream_s">Doa &amp; rutinitas tidur</div>
@@ -986,7 +1380,7 @@ body::before{
 
       <div class="profile-head">
         <div class="profile-avatar">
-          <img src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" loading="lazy">
+          <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo" draggable="false" loading="lazy">
         </div>
         <div class="profile-name">Baby Mo Games</div>
         <div class="profile-tag">🌙 Islamic Early Learning</div>
@@ -1004,6 +1398,15 @@ body::before{
         </div>
       </div>
 
+      <div class="list-group-title" data-i18n="name_group">Si Kecil</div>
+      <div class="list-group">
+        <a class="lrow" href="#" onclick="event.preventDefault();openNameSheet()">
+          <div class="lrow-icon blue">👧</div>
+          <div class="lrow-text"><div class="lrow-title" data-i18n="name_row">Nama si kecil</div><div class="lrow-sub" id="nameRowSub">—</div></div>
+          <div class="lrow-chev">›</div>
+        </a>
+      </div>
+
       <div class="list-group-title" data-i18n="about_app">Aplikasi</div>
       <div class="list-group">
         <div class="lrow">
@@ -1017,7 +1420,7 @@ body::before{
           <div class="lrow-icon">🎮</div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="about_total">Total Game</div>
-            <div class="lrow-sub" data-i18n="about_total_s">10 game siap dimainkan</div>
+            <div class="lrow-sub" data-i18n="about_total_s">11 game siap dimainkan</div>
           </div>
         </div>
       </div>
@@ -1025,7 +1428,7 @@ body::before{
       <div class="list-group-title" data-i18n="about_brand">Brand</div>
       <div class="list-group">
         <div class="lrow">
-          <div class="lrow-icon">🐻</div>
+          <div class="lrow-icon brand"><img src="brand/babymo-logo.png" alt="Baby Mo" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title">Baby Mo</div>
             <div class="lrow-sub">babymo.id</div>
@@ -1041,7 +1444,7 @@ body::before{
       </div>
 
       <div class="foot">
-        <div class="br">🐻 Baby Mo · id</div>
+        <div class="br"><img class="br-logo" src="brand/babymo-logo.png" alt="">Baby Mo · id</div>
         <div class="ar">جَزَاكُمُ اللَّهُ خَيْرًا</div>
         <div>Made with 💚 for our little ones</div>
       </div>
@@ -1091,6 +1494,12 @@ body::before{
 <script>
 /* ===== i18n TRANSLATION SYSTEM ===== */
 const I18N={
+  g_wudhu:{id:'Wudhu',en:'Wudu'},g_wudhu_sub:{id:'Baru ✨',en:'New ✨'},comp_wudhu_t:{id:'Wudhu Bareng Mo',en:'Wudu with Mo'},comp_wudhu_s:{id:'Langkah wudhu + game urutkan · Baru',en:'Wudu steps + ordering game · New'},
+  name_chip:{id:'Siapa nama si kecil?',en:"What's your little one's name?"},name_group:{id:'Si Kecil',en:'Your Child'},name_row:{id:'Nama si kecil',en:"Child's name"},
+  trust_free:{id:'✓ Gratis',en:'✓ Free'},
+  trust_noads:{id:'✓ Tanpa Iklan',en:'✓ No Ads'},
+  trust_offline:{id:'✓ Main Tanpa Internet',en:'✓ Works Offline'},
+  trust_safe:{id:'✓ Aman untuk Anak',en:'✓ Kid-Safe'},
   home_title:{id:'Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙',en:'Hello, <em>Baby Mo</em><br>Your Little Friend! 🌙'},
   hero_eyebrow:{id:'Featured Hari Ini',en:'Featured Today'},
   hero_msg:{id:'Ayo belajar 6 doa harian dengan suara Arab asli bersama Baby Mo.',en:'Learn 6 daily duas with authentic Arabic voice with Baby Mo.'},
@@ -1106,19 +1515,19 @@ const I18N={
   hc_dua_tag:{id:'⭐ Memori',en:'⭐ Memory'},hc_dua_sub:{id:'3 level · 3–6 tahun',en:'3 levels · Ages 3–6'},
   sec_kategori:{id:'Kategori',en:'Categories'},
   cat_doa_t:{id:'Doa Harian',en:'Daily Duas'},cat_doa_s:{id:'6 doa dari bangun hingga tidur',en:'6 duas from waking to sleeping'},
-  cat_hij_t:{id:'Huruf Hijaiyah',en:'Hijaiyah Letters'},cat_hij_s:{id:'Kenali 28 huruf Arab',en:'Learn 28 Arabic letters'},
+  cat_hij_t:{id:'Pulau Hijaiyah',en:'Hijaiyah Island'},cat_hij_s:{id:'Jelajah, gali & bangun bareng Baby Mo',en:'Explore, dig & build with Baby Mo'},
   cat_kata_t:{id:'Kata Islam',en:'Islamic Words'},cat_kata_s:{id:'Susun kata Arab',en:'Arrange Arabic words'},
   cat_beat_s:{id:'Game ritme seru',en:'Fun rhythm game'},
   cat_comp_t:{id:'Sholat Bareng Mo',en:'Pray with Mo'},cat_comp_s:{id:'Panduan sholat interaktif',en:'Interactive prayer guide'},
   foot_home:{id:'Islamic Early Learning untuk Si Kecil',en:'Islamic Early Learning for Little Ones'},
   game_title:{id:'Game <em>Baby Mo</em>',en:'<em>Baby Mo</em> Games'},
-  game_sub:{id:'10 game islami untuk si kecil',en:'10 Islamic games for kids'},
+  game_sub:{id:'11 game islami untuk si kecil',en:'11 Islamic games for kids'},
   feat_start:{id:'✨ Mulai di sini',en:'✨ Start here'},feat_kenalan:{id:'Kenalan Baby Mo',en:'Meet Baby Mo'},
   feat_kenalan_sub:{id:'Puzzle interaktif · Perkenalan',en:'Interactive puzzle · Introduction'},
-  sec_semua:{id:'Semua Game',en:'All Games'},sec_count:{id:'10 game',en:'10 games'},
+  sec_semua:{id:'Semua Game',en:'All Games'},sec_count:{id:'11 game',en:'11 games'},
   g_doa:{id:'Doa Harian',en:'Daily Dua'},g_dua_sub:{id:'Memori',en:'Memory'},
   g_kata:{id:'Kata Islam',en:'Islamic Words'},g_kata_sub:{id:'Susun',en:'Spelling'},
-  g_dream_sub:{id:'Tidur',en:'Sleep'},g_hij_sub:{id:'Huruf',en:'Letters'},
+  g_dream_sub:{id:'Tidur',en:'Sleep'},g_hij_sub:{id:'Jelajah',en:'Explore'},
   g_kbaik:{id:'Kata Baik',en:'Good Words'},g_kbaik_sub:{id:'Akhlak',en:'Character'},
   g_find:{id:'Cari Baby Mo',en:'Find Baby Mo'},g_mem_sub:{id:'Kartu',en:'Cards'},g_beat_sub:{id:'Ritme',en:'Rhythm'},
   foot_game:{id:'Ya Allah, manfaatkanlah ilmu yang telah Engkau ajarkan kepada kami',en:'O Allah, benefit us with the knowledge You have taught us'},
@@ -1138,11 +1547,11 @@ const I18N={
   foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
   about_title:{id:'Tentang',en:'About'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
   about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
-  about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'10 game siap dimainkan',en:'10 games ready to play'},
+  about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'11 game siap dimainkan',en:'11 games ready to play'},
   about_brand:{id:'Brand',en:'Brand'},about_mission:{id:'Misi',en:'Mission'},
   about_mission_s:{id:'Belajar Islam sambil bermain',en:'Learn Islam through play'},
   comp_title:{id:'Sholat <em>Bareng Mo</em>',en:'Pray <em>with Mo</em>'},
-  comp_sub:{id:'Panduan sholat interaktif untuk si kecil',en:'Interactive prayer guide for kids'},
+  comp_sub:{id:'Waktu sholat, streak & kiblat — semua di sini',en:'Prayer times, streak & qibla — all in one place'},
   comp_eyebrow:{id:'Panduan Interaktif',en:'Interactive Guide'},
   comp_greet:{id:'Yuk Sholat Bareng Baby Mo!',en:"Let's Pray with Baby Mo!"},
   comp_msg:{id:'Belajar gerakan dan bacaan sholat dengan panduan interaktif bersama Baby Mo.',en:'Learn prayer movements and recitations with an interactive guide from Baby Mo.'},
@@ -1164,6 +1573,39 @@ const GREETINGS={
   night2:{id:'Selamat malam! Yuk belajar doa malam 🌙',en:"Good night! Let's learn the night dua 🌙"},
 };
 let curLang=localStorage.getItem('bm_lang')||'';
+
+/* ── Child's name: shared with Pray with Mo & the prayer companion (mo_child_name) ── */
+function childName(){try{return (localStorage.getItem('mo_child_name')||'').trim()}catch(e){return ''}}
+function escHtml(t){return t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function renderName(){
+  const n=childName(), en=curLang==='en';
+  const t=document.querySelector('[data-i18n-html="home_title"]');
+  if(t&&n) t.innerHTML=(en?'Hi, <em>':'Halo, <em>')+escHtml(n)+'</em>!<br>'+(en?"Let's play! 🌙":'Ayo main! 🌙');
+  const chip=document.getElementById('nameChip'); if(chip) chip.hidden=!!n;
+  const sub=document.getElementById('nameRowSub'); if(sub) sub.textContent=n||(en?'Not set yet':'Belum diisi');
+}
+function openNameSheet(){
+  let o=document.getElementById('nameSheet');
+  const en=curLang==='en';
+  if(!o){
+    o=document.createElement('div');o.id='nameSheet';o.className='name-sheet';
+    o.innerHTML='<div class="name-card" role="dialog" aria-modal="true"><div class="nm-emoji">👋</div><h3 id="nmTitle"></h3><p id="nmSub"></p><input id="nmInput" maxlength="20" autocomplete="off"><div class="nm-row"><button type="button" class="nm-cancel" id="nmCancel"></button><button type="button" class="hero-btn nm-save" id="nmSave"></button></div></div>';
+    document.body.appendChild(o);
+    o.addEventListener('click',e=>{if(e.target===o)o.classList.remove('open')});
+    o.querySelector('#nmCancel').onclick=()=>o.classList.remove('open');
+    const save=()=>{const v=o.querySelector('#nmInput').value.trim();if(!v){o.querySelector('#nmInput').focus();return}
+      try{localStorage.setItem('mo_child_name',v)}catch(e){} o.classList.remove('open'); renderName(); showToast((curLang==='en'?'Nice to meet you, ':'Senang kenalan, ')+v+'! 💚');};
+    o.querySelector('#nmSave').onclick=save;
+    o.querySelector('#nmInput').addEventListener('keydown',e=>{if(e.key==='Enter')save()});
+  }
+  o.querySelector('#nmTitle').textContent=en?"Assalamu'alaikum!":"Assalamu'alaikum!";
+  o.querySelector('#nmSub').textContent=en?'What is your name? Mo wants to say hi 😊':'Siapa nama kamu? Mo mau kenalan 😊';
+  o.querySelector('#nmInput').placeholder=en?'Type your name…':'Ketik nama kamu…';
+  o.querySelector('#nmInput').value=childName();
+  o.querySelector('#nmCancel').textContent=en?'Later':'Nanti';
+  o.querySelector('#nmSave').textContent=en?'Save':'Simpan';
+  o.classList.add('open'); setTimeout(()=>o.querySelector('#nmInput').focus(),250);
+}
 function applyLang(lang){
   curLang=lang;
   document.querySelectorAll('[data-i18n]').forEach(el=>{
@@ -1179,6 +1621,9 @@ function applyLang(lang){
   if(h<5)gk='night';else if(h<11)gk='morning';else if(h<15)gk='afternoon';else if(h<18)gk='evening';else gk='night2';
   const gs=document.getElementById('greetSub');
   if(gs)gs.textContent=GREETINGS[gk][lang];
+  try{renderName()}catch(e){}
+  try{window.bmPrayerRender&&bmPrayerRender()}catch(e){}
+  const lb=document.getElementById('langBtn'); if(lb){ lb.textContent=lang==='en'?'EN':'ID'; }
   document.querySelectorAll('#langToggle .lang-opt').forEach(b=>{
     b.classList.toggle('active',b.dataset.lang===lang);
   });
@@ -1202,7 +1647,12 @@ function setLang(lang){
   localStorage.setItem('bm_lang',lang);
   applyLang(lang);
 }
-window.pickLang=pickLang;window.setLang=setLang;
+function toggleLang(){
+  const next=(curLang==='en')?'id':'en';
+  setLang(next);
+  showToast(next==='en'?'🇬🇧 English — games too':'🇮🇩 Bahasa Indonesia — game juga');
+}
+window.pickLang=pickLang;window.setLang=setLang;window.toggleLang=toggleLang;
 if(curLang){document.getElementById('langPick').classList.add('hide');applyLang(curLang);}
 
 (function(){
@@ -1302,6 +1752,77 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     burst(r.left+r.width/2, r.top+r.height/2, 6);
   });
 });
+
+/* ── Theme toggle: Auto → Light → Dark ── */
+(function(){
+  var ICONS={
+    auto:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.2"/><path d="M12 3.8a8.2 8.2 0 0 1 0 16.4z" fill="currentColor" stroke="none"/></svg>',
+    light:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="4.4" fill="#FFB400" stroke="#F59E0B"/><path d="M12 2.6v2.2M12 19.2v2.2M2.6 12h2.2M19.2 12h2.2M5.4 5.4l1.5 1.5M17.1 17.1l1.5 1.5M5.4 18.6l1.5-1.5M17.1 6.9l1.5-1.5"/></svg>',
+    dark:'<svg viewBox="0 0 24 24"><path fill="#FFD66B" d="M19.8 14.6A8.4 8.4 0 1 1 9.4 4.2a6.6 6.6 0 0 0 10.4 10.4z"/><path fill="#fff" d="M17.6 3.2c.25 1.3.75 1.8 2.05 2.05-1.3.25-1.8.75-2.05 2.05-.25-1.3-.75-1.8-2.05-2.05 1.3-.25 1.8-.75 2.05-2.05z"/></svg>'
+  };
+  var LABEL={id:{auto:'Tema: Otomatis (ikut HP)',light:'Tema: Terang ☀️ — game ceria',dark:'Tema: Gelap 🌙 — game hijau klasik'},
+             en:{auto:'Theme: Auto (follows phone)',light:'Theme: Light ☀️ — bright games',dark:'Theme: Dark 🌙 — classic green games'}};
+  var mq=window.matchMedia?matchMedia('(prefers-color-scheme: dark)'):null;
+  var meta=document.querySelector('meta[name="theme-color"]');
+  function mode(){try{return localStorage.getItem('bm_theme')||'auto'}catch(e){return 'auto'}}
+  function apply(){
+    var m=mode(), dark=m==='dark'||(m==='auto'&&mq&&mq.matches);
+    document.documentElement.setAttribute('data-theme',dark?'dark':'light');
+    if(meta) meta.setAttribute('content',dark?'#0B1020':'#F2F6FC');
+    var b=document.getElementById('themeBtn'); if(b){b.innerHTML=ICONS[m]; b.setAttribute('aria-label',(LABEL[curLang==='en'?'en':'id'])[m]);}
+  }
+  apply();
+  if(mq&&mq.addEventListener) mq.addEventListener('change',function(){if(mode()==='auto')apply();});
+  document.getElementById('themeBtn').addEventListener('click',function(){
+    var order=['auto','light','dark'], next=order[(order.indexOf(mode())+1)%3];
+    try{localStorage.setItem('bm_theme',next)}catch(e){}
+    document.documentElement.classList.add('theme-anim');
+    apply(); showToast((LABEL[curLang==='en'?'en':'id'])[next]);
+    setTimeout(function(){document.documentElement.classList.remove('theme-anim')},450);
+  });
+})();
+</script>
+<script src="/bm-kit.js" defer></script>
+<script src="/bm-prayer.js" defer></script>
+<script>
+/* Bring the hero Baby Mo to life: gently rotate [data-mo] images through a
+   friendly pose set with a soft cross-fade. Respects reduced motion. */
+(function(){
+  var POSES=['baby-mo-pose-01','baby-mo-pose-05','baby-mo-idea','baby-mo-ok',
+    'baby-mo-yes','baby-mo-yeyy','baby-mo-wow','baby-mo-alright','baby-mo-pose-19',
+    'baby-mo-pose-22','baby-mo-pose-33','baby-mo-run'];
+  try{ POSES.forEach(function(p){var i=new Image();i.src='baby-mo-poses/'+p+'.webp';}); }catch(e){}
+  if(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var imgs=[].slice.call(document.querySelectorAll('img.hero-img[data-mo]'));
+  imgs.forEach(function(img){ img.style.transition='opacity .35s ease'; });
+  setInterval(function(){
+    imgs.forEach(function(img){
+      // only rotate the hero in the visible tab pane
+      var pane=img.closest('.tab-pane'); if(pane && !pane.classList.contains('active')) return;
+      var next='baby-mo-poses/'+POSES[Math.floor(Math.random()*POSES.length)]+'.webp';
+      if(img.getAttribute('src')===next) return;
+      img.style.opacity='0';
+      setTimeout(function(){ img.src=next; img.onload=function(){img.style.opacity='1';}; }, 350);
+    });
+  }, 5000);
+})();
+</script>
+<script>
+/* Star jar count + sound toggle (reads the shared BabyMo kit). */
+(function(){
+  function ready(fn){ if(window.BabyMo&&BabyMo.getStars) fn(); else setTimeout(function(){ready(fn);},120); }
+  ready(function(){
+    var pill=document.getElementById('starPill'), cnt=document.getElementById('starCount'), mute=document.getElementById('muteBtn');
+    function render(){ if(cnt) cnt.textContent=BabyMo.getStars(); if(mute) mute.textContent=BabyMo.isMuted()?'🔇':'🔊'; }
+    render();
+    // refresh when returning to the portal (stars earned in a game)
+    window.addEventListener('pageshow',render);
+    document.addEventListener('visibilitychange',function(){ if(!document.hidden) render(); });
+    if(mute) mute.addEventListener('click',function(){ BabyMo.setMuted(!BabyMo.isMuted()); render(); if(!BabyMo.isMuted())BabyMo.sfx('tap'); });
+    if(pill) pill.addEventListener('click',function(){ BabyMo.sfx('star'); pill.classList.remove('bump'); void pill.offsetWidth; pill.classList.add('bump');
+      BabyMo.toast('⭐ Kamu punya '+BabyMo.getStars()+' bintang Mo!'); });
+  });
+})();
 </script>
 </body>
 </html>

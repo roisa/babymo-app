@@ -1,33 +1,41 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
+<script src="bm-theme.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="description" content="Doa Harian — Belajar doa sehari-hari bersama Baby Mo!">
-<title>🌙 Doa Harian · BabyMo</title>
+<script src="i18n/doa.js"></script>
+<script src="bm-i18n.js"></script>
+<meta name="description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<title>Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <!-- ResponsiveVoice: Google-quality TTS, far better than Web Speech API for Arabic -->
 <script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
 <style>
 :root{
-  --bg:#0B1C12;--bg2:#0F2016;
-  --card:#162014;--card2:#1C2A1A;
-  --green:#2C5A3E;--green-lt:#4A8860;--green-glow:#6DB882;
-  --gold:#C89040;--gold-lt:#E8B060;
-  --cream:#F0E8D8;--cream-dim:#7A8078;
-  --border:rgba(93,170,120,.12);
-  --red:#C85040;--blue:#4080C0;
+  /* Fresh iOS-style palette — brighter emerald→teal, soft glass surfaces */
+  --bg:#0A2118;--bg2:#0C2A20;
+  --card:rgba(255,255,255,.055);--card2:rgba(255,255,255,.08);
+  --green:#1FA971;--green-lt:#3FD08C;--green-glow:#7BE8B0;
+  --gold:#E0B84D;--gold-lt:#FFD874;
+  --cream:#F2F7F2;--cream-dim:#9FB5A8;
+  --border:rgba(255,255,255,.10);
+  --red:#FF6B5C;--blue:#5BC6E8;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--cream);}
+/* Soft, alive iOS-y backdrop: layered emerald + teal + gold glows */
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:radial-gradient(ellipse 65% 45% at 15% 15%,rgba(44,90,62,.22),transparent),
-             radial-gradient(ellipse 55% 35% at 85% 85%,rgba(200,144,64,.07),transparent);}
+  background:
+    radial-gradient(ellipse 70% 55% at 20% 8%,rgba(31,169,113,.32),transparent 70%),
+    radial-gradient(ellipse 65% 50% at 85% 18%,rgba(91,198,232,.16),transparent 70%),
+    radial-gradient(ellipse 80% 60% at 50% 108%,rgba(224,184,77,.12),transparent 70%),
+    linear-gradient(180deg,#0C2A20 0%,#0A2118 55%,#081B14 100%);}
 
 .stars{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.stars i{position:absolute;font-style:normal;color:var(--gold);opacity:.06;animation:tw var(--d,3s) var(--dl,0s) ease-in-out infinite;}
-@keyframes tw{0%,100%{opacity:.03}50%{opacity:.18}}
+.stars i{position:absolute;font-style:normal;color:var(--gold-lt);opacity:.06;animation:tw var(--d,3s) var(--dl,0s) ease-in-out infinite;}
+@keyframes tw{0%,100%{opacity:.04}50%{opacity:.24}}
 
 .screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
 .screen.active{display:flex;}
@@ -55,28 +63,30 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   50%     {transform:scaleX(.8); opacity:.3;}
 }
 
-.w-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(61,106,72,.18);border:1px solid rgba(93,170,120,.2);color:var(--green-glow);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:5px 13px;border-radius:20px;margin-bottom:10px;}
-.w-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green-glow);animation:blink 2s infinite;}
+.w-badge{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.07);border:1px solid var(--border);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);color:var(--green-glow);font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;padding:6px 14px;border-radius:999px;margin-bottom:10px;}
+.w-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--green-glow);box-shadow:0 0 8px var(--green-glow);animation:blink 2s infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-.w-title{font-size:clamp(24px,7vw,32px);font-weight:900;color:var(--gold-lt);margin-bottom:4px;text-shadow:0 2px 12px rgba(200,144,64,.3);}
-.w-arabic{font-family:'Scheherazade New',serif;font-size:20px;color:var(--gold);direction:rtl;margin-bottom:5px;opacity:.85;}
+.w-title{font-size:clamp(26px,7.5vw,34px);font-weight:900;letter-spacing:-.02em;color:var(--gold-lt);margin-bottom:4px;text-shadow:0 2px 18px rgba(255,216,116,.28);}
+.w-arabic{font-family:'Scheherazade New',serif;font-size:21px;color:var(--gold);direction:rtl;margin-bottom:6px;opacity:.9;}
 .w-sub{font-size:13px;color:var(--cream-dim);margin-bottom:24px;line-height:1.55;}
 
-.w-preview{width:100%;max-width:380px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:28px;}
-.wp-item{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:10px 6px;text-align:center;}
-.wp-icon{font-size:26px;margin-bottom:4px;}
-.wp-label{font-size:10px;font-weight:700;color:var(--cream);line-height:1.2;}
+.w-preview{width:100%;max-width:380px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:28px;}
+.wp-item{background:var(--card);border:1px solid var(--border);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);border-radius:18px;padding:13px 6px;text-align:center;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px -8px rgba(0,0,0,.4);transition:transform .15s ease;}
+.wp-item:active{transform:scale(.96);}
+.wp-icon{font-size:27px;margin-bottom:5px;filter:drop-shadow(0 2px 5px rgba(0,0,0,.25));}
+.wp-label{font-size:10px;font-weight:800;color:var(--cream);line-height:1.2;}
 .wp-time{font-size:9px;color:var(--cream-dim);margin-top:2px;}
 
-.w-start{width:100%;max-width:380px;padding:17px;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:16px;font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#fff;cursor:pointer;box-shadow:0 6px 24px rgba(44,90,62,.5);transition:.15s;}
-.w-start:active{transform:scale(.97);}
+.w-start{width:100%;max-width:380px;margin-bottom:16px;padding:17px;background:linear-gradient(135deg,var(--green-lt),var(--green));border:none;border-radius:20px;font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;color:#06231A;cursor:pointer;box-shadow:0 6px 20px -8px rgba(63,208,140,.55),inset 0 1px 0 rgba(255,255,255,.3);transition:transform .15s ease, box-shadow .15s ease;}
+.w-start:active{transform:scale(.97);box-shadow:0 4px 14px -8px rgba(63,208,140,.5),inset 0 1px 0 rgba(255,255,255,.3);}
 .w-back{
   display:block;width:100%;max-width:380px;
   margin-top:auto;margin-bottom:18px;margin-bottom:calc(18px + env(safe-area-inset-bottom));
   padding:13px;
   background:var(--card);
-  border:1.5px solid var(--border);
-  border-radius:14px;
+  border:1px solid var(--border);
+  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
+  border-radius:16px;
   font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
   color:var(--cream-dim);text-align:center;text-decoration:none;
   transition:.15s;cursor:pointer;flex-shrink:0;
@@ -133,9 +143,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .meaning-en{font-size:11px;color:var(--cream-dim);line-height:1.5;}
 
 .sound-section{width:100%;max-width:440px;margin-bottom:14px;flex-shrink:0;}
-.sound-btn{width:100%;height:62px;border-radius:31px;background:linear-gradient(135deg,#2C5A3E,#3A7050);border:none;font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 24px rgba(44,90,62,.45);position:relative;overflow:hidden;transition:.15s;margin-bottom:8px;animation:invitePulse 2.8s ease-in-out infinite;}
+.sound-btn{width:100%;height:62px;border-radius:31px;background:linear-gradient(135deg,var(--green-lt),var(--green));border:none;font-family:'Nunito',sans-serif;font-size:17px;font-weight:900;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 6px 24px rgba(44,90,62,.45);position:relative;overflow:hidden;transition:.15s;margin-bottom:8px;animation:invitePulse 2.8s ease-in-out infinite;}
 @keyframes invitePulse{0%,100%{box-shadow:0 6px 24px rgba(44,90,62,.45)}50%{box-shadow:0 6px 32px rgba(44,90,62,.7),0 0 0 6px rgba(93,170,120,.1)}}
-.sound-btn.speaking{background:linear-gradient(135deg,#1E4A30,#2A6040);animation:speakPulse .7s ease-in-out infinite;}
+.sound-btn.speaking{background:linear-gradient(135deg,var(--green),#0E7A52);animation:speakPulse .7s ease-in-out infinite;}
 @keyframes speakPulse{0%,100%{box-shadow:0 6px 18px rgba(44,90,62,.4),0 0 0 0 rgba(109,184,130,.4);}50%{box-shadow:0 6px 18px rgba(44,90,62,.4),0 0 0 14px rgba(109,184,130,.0);}}
 .sound-btn:active{transform:scale(.97);}
 .sound-btn-icon{font-size:24px;}
@@ -168,7 +178,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .q-stim-arabic{font-family:'Scheherazade New',serif;font-size:clamp(20px,5.5vw,30px);font-weight:700;color:var(--gold-lt);direction:rtl;line-height:1.5;text-shadow:0 2px 10px rgba(200,144,64,.2);margin-bottom:10px;animation:arabicIn .4s cubic-bezier(.34,1.56,.64,1);}
 .q-play-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--green),#3A7050);border:none;border-radius:24px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:900;color:#fff;padding:9px 20px;cursor:pointer;box-shadow:0 4px 14px rgba(44,90,62,.4);transition:.15s;animation:invitePulse 2.8s ease-in-out infinite;}
 .q-play-btn:active{transform:scale(.96);}
-.q-play-btn.speaking{background:linear-gradient(135deg,#1E4A30,#2A6040);animation:speakPulse .7s ease-in-out infinite;}
+.q-play-btn.speaking{background:linear-gradient(135deg,var(--green),#0E7A52);animation:speakPulse .7s ease-in-out infinite;}
 
 .q-prompt{width:100%;max-width:440px;text-align:center;margin-bottom:12px;flex-shrink:0;}
 .q-prompt-text{font-size:16px;font-weight:900;color:var(--cream);margin-bottom:2px;}
@@ -272,7 +282,63 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .toast.show{transform:translate(-50%,-50%) scale(1);}
 .toast-e{font-size:28px;}
 .toast-t{font-size:14px;font-weight:900;color:#fff;margin-top:2px;}
+
+/* tablet/iPad — widen the play area */
+@media(min-width:820px){.c-btns,.c-card,.c-share,.dua-card,.l-topbar,.nav-row,.q-choices,.q-feedback,.q-progress,.q-prompt,.q-stimulus,.q-topbar,.scene-card,.sound-section,.timeline,.w-preview,.w-start{max-width:680px!important;}}
+
+/* bm-letterbox: comfortable centered column on tablet/desktop */
+@media(min-width:760px){.screen{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#06100A;}}
 </style>
+<link rel="canonical" href="https://play.babymo.id/babymo-doa-harian.html">
+<meta name="robots" content="index,follow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Baby Mo">
+<meta property="og:locale" content="id_ID">
+<meta property="og:title" content="Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo">
+<meta property="og:description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<meta property="og:url" content="https://play.babymo.id/babymo-doa-harian.html">
+<meta property="og:image" content="https://play.babymo.id/og/babymo-doa-harian.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo">
+<meta name="twitter:description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<meta name="twitter:image" content="https://play.babymo.id/og/babymo-doa-harian.jpg">
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Doa Harian Anak — Baby Mo","url":"https://play.babymo.id/babymo-doa-harian.html","description":"Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-doa-harian.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Doa Harian Anak","item":"https://play.babymo.id/babymo-doa-harian.html"}]}]}</script>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{
+  --bg:#F2F6FC;--bg2:#FFFFFF;
+  --card:rgba(255,255,255,.86);--card2:#FFFFFF;
+  --green:#12A15A;--green-lt:#2DC76D;--green-glow:#0B8A4A;
+  --gold:#F08C00;--gold-lt:#D9480F;
+  --cream:#152230;--cream-dim:#5A6878;
+  --border:rgba(21,34,48,.10);
+}
+.wp-item,.dua-card,.speed-btn,.nav-btn-sec,.w-back,.l-back{box-shadow:0 0 0 .5px rgba(21,34,48,.06),0 10px 22px -16px rgba(30,60,110,.45)!important;}
+.w-badge{background:rgba(255,255,255,.8);}
+.w-title{color:#12A15A;text-shadow:none;}
+.w-arabic{color:#0B6B3A;}
+.w-mo{filter:drop-shadow(0 10px 18px rgba(80,50,140,.25));}
+.tl-dot{background:rgba(21,34,48,.10);}
+.tl-divider{background:rgba(21,34,48,.12);}
+.arabic-box{background:linear-gradient(180deg,#FFF8E6,#FFF1D6);border-color:rgba(240,140,0,.22);}
+.arabic-text{color:#0B6B3A;text-shadow:none;}
+.l-counter{background:rgba(18,161,90,.12);}
+.nav-btn-pri{background:linear-gradient(135deg,#2DC76D,#12A15A);box-shadow:0 8px 18px -8px rgba(18,161,90,.7);}
+.sound-btn{box-shadow:0 10px 22px -10px rgba(18,161,90,.75);}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+/* English mode: the meaning is already shown in English above */
+html[data-lang="en"] .meaning-en{display:none;}
+/* readable text: nothing under ~11.5px */
+.w-badge,.wp-label,.wp-time,.scene-time,.q-stim-label,.cst-l{font-size:11.5px!important;}
+</style>
+<style id="bm-bright-fixes">
+/* contrast fixes after the bright theme */
+.q-title{color:#D9480F;}
+</style>
+<script src="bm-icons.js" defer></script>
+<script src="doa-scenes.js"></script>
 </head>
 <body>
 
@@ -282,7 +348,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ════ WELCOME ════ -->
 <div class="screen active" id="welcomeScreen">
   <div class="w-mo-wrap">
-    <img class="w-mo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+    <img class="w-mo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
   </div>
   <div class="w-mo-shadow"></div>
   <div class="w-badge">🌙 Baby Mo Game · Doa</div>
@@ -319,7 +385,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
     <div class="scene-time" id="sceneTime">Pagi 🌅</div>
     <div class="scene-mo-wrap">
-      <img id="sceneMo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+      <img id="sceneMo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
     </div>
   </div>
   <div class="dua-card">
@@ -378,7 +444,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <button class="q-next-btn" id="qNextBtn" onclick="nextQuestion()">Lanjut →</button>
   </div>
   <div class="mo-quiz-wrap hidden" id="moQuizWrap">
-    <img id="moQuizImg" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+    <img id="moQuizImg" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
   </div>
 </div>
 
@@ -386,7 +452,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ════ COMPLETE SCREEN ════ -->
 <div class="screen" id="completeScreen">
   <div class="c-mascot-wrap">
-    <img class="c-mascot" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo"/>
+    <img class="c-mascot" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
   </div>
   <div class="c-card">
     <div class="c-title" id="cTitle">Masya Allah! 🌟</div>
@@ -487,10 +553,10 @@ const DUAS = [
     bg:'linear-gradient(160deg,#5060A0 0%,#0E1828 100%)',
     title:'Doa Sebelum Tidur',
     desc:'Baby Mo mau tidur. Baca doa ini dulu ya!',
-    arabic:'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا',
-    latin:"Bismika Allāhumma amūtu wa ahyā",
-    meaningId:'Dengan nama-Mu ya Allah, aku tidur dan aku bangun.',
-    meaningEn:'In Your name, O Allah, I sleep and I awaken.',
+    arabic:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ',
+    latin:"Bismika Allāhumma aḥyā wa bismika amūtu",
+    meaningId:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati.',
+    meaningEn:'With Your name, O Allah, I live and with Your name I die.',
     quizPrompt:'Doa ini dibaca saat...?',
     quizEmoji:'🌙', quizLabel:'Mau Tidur'
   }
@@ -716,6 +782,7 @@ function loadDua(idx){
   se.style.animation = 'none';
   requestAnimationFrame(() => { se.style.animation = 'scenePop .5s cubic-bezier(.34,1.56,.64,1)'; });
 
+  if(window.renderDoaScene) renderDoaScene(d.id);
   setSceneMoExpression('normal');
 
   document.getElementById('duaTitle').textContent  = d.title;
@@ -770,7 +837,7 @@ function loadQuestion(qi){
     btn.className = 'q-choice';
     btn.innerHTML = `
       <span class="qc-emoji">${c.emoji}</span>
-      <span class="qc-label">${c.label}</span>
+      <span class="qc-label" data-k="${c.label}">${c.label}</span>
       <span class="qc-result">✓</span>
     `;
     btn.onclick = () => handleAnswer(btn, c.correct, d);
@@ -806,12 +873,14 @@ function handleAnswer(btn, isCorrect, dua){
     document.getElementById('qfbMeaning').textContent = `"${dua.meaningId}"`;
     setMoQuiz('celebrate');
     playCorrect();
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('correct');
     spawnParticles(8);
   } else {
     btn.classList.add('wrong');
+    if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
     document.querySelectorAll('.q-choice').forEach(b => {
       const lbl = b.querySelector('.qc-label');
-      if(lbl && lbl.textContent === DUAS[QUIZ_Q[quizIdx]].quizLabel) b.classList.add('correct');
+      if(lbl && (lbl.dataset.k || lbl.textContent) === DUAS[QUIZ_Q[quizIdx]].quizLabel) b.classList.add('correct');
     });
     fb.className = 'q-feedback q-fb-wrong show';
     document.getElementById('qfbEmoji').textContent   = '🔄';
@@ -905,8 +974,9 @@ function restartGame(){
 function shareResult(){
   const stars = document.getElementById('cStarsDisp').textContent;
   const score = document.getElementById('cQuizScore').textContent;
-  const text  = `🌙 Doa Harian — BabyMo.id\nAku belajar 6 doa harian bersama Baby Mo!\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama di BabyMo.id 🐻\n#BabyMo #DoaHarian #BelajarIslam`;
-  if(navigator.share){ navigator.share({title:'BabyMo Doa Harian', text, url:'https://babymo.id'}).catch(()=>{}); }
+  if(window.BabyMo && BabyMo.shareScore){ BabyMo.shareScore(score, stars, 'Aku belajar 6 doa harian bersama Baby Mo! Yuk coba juga 🌙'); return; }
+  const text  = `🌙 Doa Harian — Baby Mo\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama Baby Mo!\nhttps://play.babymo.id/babymo-doa-harian.html\n#BabyMo #DoaHarian`;
+  if(navigator.share){ navigator.share({title:'Baby Mo — Doa Harian', text, url:'https://play.babymo.id/babymo-doa-harian.html'}).catch(()=>{}); }
   else{ navigator.clipboard?.writeText(text).then(() => showToast('📤','Disalin!')); }
 }
 
@@ -951,5 +1021,6 @@ function showToast(e, t){
   initVoices();
 })();
 </script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>

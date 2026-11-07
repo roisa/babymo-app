@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<script src="bm-theme.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="i18n/wudhu.js"></script>
+<script src="bm-i18n.js"></script>
+<title>Wudhu Bareng Mo — Belajar Wudhu untuk Anak | Baby Mo</title>
+<meta name="description" content="Belajar wudhu langkah demi langkah bersama Baby Mo: niat, membasuh tangan, berkumur, sampai doa setelah wudhu. Ada game urutkan langkah wudhu. Gratis & ramah anak.">
+<meta name="theme-color" content="#E6F6FF">
+<link rel="canonical" href="https://play.babymo.id/babymo-wudhu.html">
+<link rel="icon" href="icons/games/wudhu.svg" type="image/svg+xml">
+<meta property="og:title" content="Wudhu Bareng Mo — Belajar Wudhu untuk Anak">
+<meta property="og:description" content="Belajar wudhu langkah demi langkah bersama Baby Mo, lengkap dengan niat dan doa setelah wudhu.">
+<meta property="og:image" content="https://play.babymo.id/wudhu-assets/w01-niat.webp">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="bm-bright.css">
+<style>
+:root{
+  --ink:#152230; --ink-2:#4A5A6B; --ink-3:#6B7787;
+  --water:#0EA5E9; --water-d:#0369A1; --water-l:#E0F4FF;
+  --card:#fff; --hair:rgba(21,34,48,.08);
+  --ar:'Amiri Quran','Amiri','Scheherazade New',serif;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
+body{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);
+  background:radial-gradient(ellipse 80% 45% at 50% 0%,#D6F1FF 0%,transparent 70%),
+             radial-gradient(ellipse 60% 40% at 100% 90%,rgba(190,170,255,.28),transparent 70%),
+             radial-gradient(ellipse 60% 40% at 0% 80%,rgba(130,230,200,.28),transparent 70%),#F2F8FD;}
+.app{max-width:520px;margin:0 auto;min-height:100vh;min-height:100dvh;padding:calc(12px + env(safe-area-inset-top)) 16px calc(24px + env(safe-area-inset-bottom));position:relative}
+.screen{display:none}
+.screen.active{display:block;animation:fadeUp .35s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1,h2,.fred{font-family:'Fredoka','Nunito',sans-serif;letter-spacing:-.01em}
+
+/* top bar */
+.topbar{display:flex;align-items:center;gap:10px;min-height:48px}
+.topbar .grow{flex:1;min-width:0;text-align:center;font-weight:900;font-size:16px}
+.back-btn{display:inline-flex;align-items:center;gap:6px;padding:0 14px;height:44px;border-radius:22px;border:none;font:800 15px/1 'Nunito',sans-serif;cursor:pointer;text-decoration:none;color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:999px;background:rgba(14,165,233,.12);color:var(--water-d);font-weight:900;font-size:13px}
+
+/* HOME */
+.hero{position:relative;margin-top:6px;border-radius:30px;overflow:hidden;background:linear-gradient(160deg,#E7F7FF 0%,#D7EEFF 55%,#EDE7FF 100%);
+  box-shadow:inset 0 1px 0 #fff,0 18px 40px -22px rgba(3,105,161,.55);border:1px solid rgba(255,255,255,.9)}
+.hero img{display:block;width:100%;aspect-ratio:1/1;object-fit:contain;object-position:center bottom}
+.hero .bubble{position:absolute;left:14px;top:14px;max-width:62%;background:#fff;border-radius:18px 18px 18px 6px;padding:10px 13px;font-weight:800;font-size:14px;line-height:1.3;
+  box-shadow:0 10px 24px -14px rgba(30,60,110,.5)}
+.title-block{text-align:center;margin:18px 0 6px}
+.title-block h1{font-size:32px;line-height:1.1}
+.title-block h1 em{font-style:normal;background:linear-gradient(95deg,#0EA5E9,#10B5A0 50%,#8B6CF5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.title-block p{margin-top:6px;color:var(--ink-2);font-weight:700;font-size:15px}
+.chips{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:12px 0 4px}
+.home-actions{display:grid;gap:12px;margin-top:16px}
+.home-actions .btn-primary,.home-actions .btn-sec{width:100%;min-height:58px;border-radius:22px;font:900 18px/1 'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:10px;cursor:pointer;border:none}
+.home-actions .btn-sec{font-size:17px}
+.hub-link{display:block;text-align:center;margin-top:14px;color:var(--ink-3);font-weight:800;text-decoration:none}
+.why{margin-top:18px;background:rgba(255,255,255,.8);border-radius:20px;padding:14px 16px;font-size:14px;color:var(--ink-2);font-weight:700;line-height:1.45;box-shadow:0 0 0 .5px var(--hair)}
+.why b{color:var(--ink)}
+
+/* GUIDE */
+.dots{display:flex;gap:6px;justify-content:center;margin:8px 0 12px;flex-wrap:wrap}
+.dots i{width:9px;height:9px;border-radius:50%;background:rgba(21,34,48,.12);transition:all .25s}
+.dots i.done{background:#38BDF8}
+.dots i.now{width:24px;border-radius:5px;background:var(--water)}
+.stage{position:relative;border-radius:28px;overflow:hidden;background:linear-gradient(180deg,#EAF8FF 0%,#DDF0FF 100%);box-shadow:inset 0 1px 0 #fff,0 16px 34px -22px rgba(3,105,161,.55)}
+.stage img{display:block;width:100%;aspect-ratio:1/1;object-fit:contain;transition:opacity .25s}
+.stage .num{position:absolute;left:12px;top:12px;width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;font:900 18px/1 'Fredoka',sans-serif;color:var(--water-d);box-shadow:0 6px 14px -8px rgba(30,60,110,.5)}
+.stage .count-tag{position:absolute;right:12px;top:12px;padding:8px 12px;border-radius:14px;background:#fff;font-weight:900;font-size:14px;color:var(--water-d);box-shadow:0 6px 14px -8px rgba(30,60,110,.5)}
+.drops{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.drops span{position:absolute;top:-24px;font-size:22px;animation:fall 1.1s ease-in forwards}
+@keyframes fall{to{transform:translateY(420px);opacity:0}}
+.splash{position:absolute;left:50%;top:55%;width:40px;height:40px;margin:-20px;border-radius:50%;border:3px solid rgba(14,165,233,.6);animation:splash .6s ease-out forwards;pointer-events:none}
+@keyframes splash{to{transform:scale(4);opacity:0}}
+.step-title{margin:14px 2px 4px;font-size:22px;line-height:1.2}
+.step-text{color:var(--ink-2);font-weight:700;font-size:15.5px;line-height:1.45;margin:0 2px}
+.arabic-card{margin-top:12px;background:#fff;border-radius:22px;padding:14px 14px 12px;text-align:center;box-shadow:0 0 0 .5px var(--hair),0 10px 22px -16px rgba(30,60,110,.45)}
+.arabic-card .ar{font-family:var(--ar);font-size:24px;line-height:1.9;direction:rtl;color:#0B6B3A}
+.arabic-card .lat{font-style:italic;color:#C2410C;font-weight:700;font-size:14px;margin-top:4px}
+.arabic-card .arti{color:var(--ink-2);font-size:13.5px;font-weight:700;margin-top:4px;line-height:1.4}
+.arabic-card .src{color:var(--ink-3);font-size:12px;font-weight:800;margin-top:4px}
+.counter{display:flex;justify-content:center;gap:10px;margin:14px 0 4px}
+.counter i{width:30px;height:30px;border-radius:50%;background:rgba(14,165,233,.12);display:grid;place-items:center;font-style:normal;font-size:16px;transition:transform .25s}
+.counter i.on{background:linear-gradient(160deg,#7DD3FC,#0EA5E9);transform:scale(1.12);box-shadow:0 6px 12px -6px rgba(14,165,233,.8)}
+.wash-btn{margin-top:10px;width:100%;min-height:62px;border-radius:24px;border:none;cursor:pointer;color:#fff;font:900 20px/1 'Nunito',sans-serif;
+  background:linear-gradient(120deg,#38BDF8 0%,#0EA5E9 50%,#0369A1 100%);text-shadow:0 1px 1.5px rgba(0,50,90,.4);
+  box-shadow:inset 0 18px 16px -14px rgba(255,255,255,.45),0 14px 26px -12px rgba(3,105,161,.65);transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.wash-btn:active{transform:scale(.95)}
+.wash-btn.done{background:linear-gradient(120deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%)}
+.tip{display:flex;gap:10px;align-items:center;margin-top:12px;padding:10px 12px;border-radius:18px;background:#FFF8E6;color:#7A4B00;font-weight:800;font-size:13.5px;line-height:1.35}
+.tip img{width:40px;height:40px;object-fit:contain;flex:0 0 40px}
+.nav{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:14px}
+.nav button{min-height:52px;border-radius:20px;border:none;font:900 16px/1 'Nunito',sans-serif;cursor:pointer}
+.nav button[disabled]{opacity:.45;cursor:default}
+
+/* ORDER GAME */
+.order-head{text-align:center;margin:6px 0 10px}
+.order-head h2{font-size:22px}
+.order-head p{color:var(--ink-2);font-weight:700;font-size:14px;margin-top:4px}
+.levels{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+.levels button{min-height:40px;padding:0 16px;border-radius:20px;border:none;font:900 14px/1 'Nunito',sans-serif;cursor:pointer;background:rgba(255,255,255,.85);color:var(--ink);box-shadow:0 0 0 .5px var(--hair)}
+.levels button.on{background:linear-gradient(120deg,#38BDF8,#0369A1);color:#fff}
+.track{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:12px}
+.track span{width:34px;height:34px;border-radius:12px;display:grid;place-items:center;font:900 14px/1 'Fredoka',sans-serif;background:rgba(21,34,48,.06);color:var(--ink-3)}
+.track span.ok{background:linear-gradient(160deg,#7DD3FC,#0EA5E9);color:#fff}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.ocard{position:relative;border:none;cursor:pointer;background:#fff;border-radius:22px;padding:8px 8px 10px;text-align:center;box-shadow:0 0 0 .5px var(--hair),0 10px 20px -14px rgba(30,60,110,.45);transition:transform .2s,opacity .3s;font-family:'Nunito',sans-serif}
+.ocard img{width:100%;aspect-ratio:1/1;object-fit:contain;border-radius:16px;background:#EAF8FF}
+.ocard b{display:block;font-size:14px;font-weight:900;color:var(--ink);margin-top:6px;line-height:1.2}
+.ocard.used{opacity:.35;pointer-events:none}
+.ocard.used::after{content:attr(data-n);position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:50%;background:#10A765;color:#fff;display:grid;place-items:center;font:900 15px/1 'Fredoka',sans-serif}
+.ocard.shake{animation:shake .4s}
+@keyframes shake{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.hint{min-height:22px;text-align:center;font-weight:800;color:#C2410C;margin-bottom:8px;font-size:14px}
+
+/* COMPLETE */
+.done-card{text-align:center;padding-top:8px}
+.done-card img{width:min(78%,320px);aspect-ratio:1/1;object-fit:contain}
+.done-card h2{font-size:28px;margin-top:4px}
+.done-card p{color:var(--ink-2);font-weight:700;margin-top:6px}
+.stars{font-size:34px;margin:10px 0 4px;letter-spacing:6px}
+.done-actions{display:grid;gap:10px;margin-top:16px}
+.done-actions .btn-primary,.done-actions .btn-sec{width:100%;min-height:54px;border-radius:20px;border:none;font:900 17px/1 'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none}
+.done-actions .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (prefers-reduced-motion:reduce){.drops span,.splash{display:none}}
+</style>
+<style id="bm-classic">
+/* Classic dark-green look when the hub theme is dark */
+html[data-bm-theme="classic"]{--ink:#F0E8D8;--ink-2:#C9D6CC;--ink-3:#9FB3A8;--water-d:#7DD3FC;--card:#163A2C;--hair:rgba(255,255,255,.10)}
+html[data-bm-theme="classic"] body{background:radial-gradient(ellipse 80% 45% at 50% 0%,rgba(52,211,153,.18) 0%,transparent 70%),radial-gradient(ellipse 60% 40% at 100% 90%,rgba(56,189,248,.14),transparent 70%),linear-gradient(170deg,#0E3B2E 0%,#123E33 50%,#0B2A21 100%);background-attachment:fixed}
+html[data-bm-theme="classic"] .hero{background:linear-gradient(160deg,#164B3A 0%,#12403A 55%,#1C3550 100%)}
+html[data-bm-theme="classic"] .hero .bubble,html[data-bm-theme="classic"] .arabic-card,html[data-bm-theme="classic"] .ocard,html[data-bm-theme="classic"] .stage .num,html[data-bm-theme="classic"] .stage .count-tag{background:#163A2C;color:var(--ink);box-shadow:0 0 0 .5px rgba(255,255,255,.1),0 10px 22px -16px rgba(0,0,0,.7)}
+html[data-bm-theme="classic"] .stage{background:linear-gradient(180deg,#174634 0%,#123B2D 100%);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 34px -22px rgba(0,0,0,.8)}
+html[data-bm-theme="classic"] .ocard img{background:#1E4A39}
+html[data-bm-theme="classic"] .arabic-card .ar{color:#6EE7B7}
+html[data-bm-theme="classic"] .arabic-card .lat,html[data-bm-theme="classic"] .hint{color:#FDBA74}
+html[data-bm-theme="classic"] .tip{background:rgba(253,186,116,.14);color:#FDE3B5}
+html[data-bm-theme="classic"] .pill{background:rgba(125,211,252,.14);color:#BAE6FD}
+html[data-bm-theme="classic"] .levels button{background:rgba(255,255,255,.08);color:var(--ink)}
+html[data-bm-theme="classic"] .track span{background:rgba(255,255,255,.08)}
+html[data-bm-theme="classic"] .dots i{background:rgba(255,255,255,.18)}
+html[data-bm-theme="classic"] .counter i{background:rgba(125,211,252,.14)}
+html[data-bm-theme="classic"] .title-block h1 em{background:linear-gradient(95deg,#7DD3FC,#6EE7B7 50%,#C4B5FD);-webkit-background-clip:text;background-clip:text}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<script src="bm-icons.js" defer></script>
+</head>
+<body>
+<div class="app">
+
+  <!-- HOME -->
+  <section class="screen active" id="s-home">
+    <div class="topbar">
+      <a class="back-btn btn-sec" href="./index.html">← Game Hub</a>
+      <div class="grow"></div>
+      <span class="pill">💧 10 langkah</span>
+    </div>
+    <div class="hero">
+      <img src="wudhu-assets/w01-niat.webp" alt="Baby Mo bersiap wudhu">
+      <div class="bubble">Sebelum sholat, wudhu dulu yuk bareng Mo! 💧</div>
+    </div>
+    <div class="title-block">
+      <h1>Wudhu <em>Bareng Mo</em></h1>
+      <p>Belajar wudhu langkah demi langkah</p>
+    </div>
+    <div class="chips"><span class="pill">👶 Usia 3–7</span><span class="pill">🤲 Niat & doa</span><span class="pill">🧩 Game urutkan</span></div>
+    <div class="home-actions">
+      <button class="btn-primary" onclick="startGuide()">💧 Belajar Wudhu</button>
+      <button class="btn-sec" onclick="startOrder()">🧩 Urutkan Wudhu</button>
+    </div>
+    <div class="why"><b>Kenapa wudhu?</b> Wudhu membersihkan badan sebelum sholat. Allah menyukai orang-orang yang menyucikan diri 💚</div>
+  </section>
+
+  <!-- GUIDE -->
+  <section class="screen" id="s-guide">
+    <div class="topbar">
+      <button class="back-btn btn-sec" onclick="show('s-home')">← Menu</button>
+      <div class="grow" id="gCounter">Langkah 1 / 10</div>
+      <span style="width:72px"></span>
+    </div>
+    <div class="dots" id="gDots"></div>
+    <div class="stage" id="gStage">
+      <img id="gImg" src="wudhu-assets/w01-niat.webp" alt="">
+      <div class="num" id="gNum">1</div>
+      <div class="count-tag" id="gTag">3×</div>
+      <div class="drops" id="gDrops"></div>
+    </div>
+    <h2 class="step-title" id="gTitle"></h2>
+    <p class="step-text" id="gText"></p>
+    <div class="arabic-card" id="gArabic" hidden>
+      <div class="ar" id="gAr"></div><div class="lat" id="gLat"></div><div class="arti" id="gArti"></div><div class="src" id="gSrc"></div>
+    </div>
+    <div class="counter" id="gCount"></div>
+    <button class="wash-btn" id="gWash" onclick="wash()">💧 Basuh!</button>
+    <div class="tip"><img src="baby-mo-poses/baby-mo-idea.webp" alt=""><span id="gTip"></span></div>
+    <div class="nav">
+      <button class="btn-sec" id="gPrev" onclick="go(cur-1)">← Sebelumnya</button>
+      <button class="btn-primary" id="gNext" onclick="next()">Lanjut →</button>
+    </div>
+  </section>
+
+  <!-- ORDER GAME -->
+  <section class="screen" id="s-order">
+    <div class="topbar">
+      <button class="back-btn btn-sec" onclick="show('s-home')">← Menu</button>
+      <div class="grow">🧩 Urutkan Wudhu</div>
+      <span style="width:72px"></span>
+    </div>
+    <div class="order-head">
+      <h2>Mana yang duluan?</h2>
+      <p>Ketuk langkah wudhu sesuai urutannya!</p>
+    </div>
+    <div class="levels">
+      <button id="lvEasy" class="on" onclick="startOrder(5)">🌱 Mudah · 5</button>
+      <button id="lvHard" onclick="startOrder(10)">🌟 Hebat · 10</button>
+    </div>
+    <div class="track" id="oTrack"></div>
+    <div class="hint" id="oHint"></div>
+    <div class="cards" id="oCards"></div>
+  </section>
+
+  <!-- GUIDE COMPLETE -->
+  <section class="screen" id="completeScreen">
+    <div class="done-card">
+      <img src="wudhu-assets/w10-doa.webp" alt="Baby Mo berdoa setelah wudhu">
+      <h2>MasyaAllah, wudhumu selesai! 💧</h2>
+      <p>Badan sudah bersih — sekarang siap sholat!</p>
+      <div class="stars">⭐⭐⭐</div>
+      <div class="done-actions">
+        <a class="btn-primary" href="./babymo-pray-with-mo.html">🕌 Lanjut Sholat</a>
+        <div class="row">
+          <button class="btn-sec" onclick="startOrder()">🧩 Urutkan</button>
+          <button class="btn-sec" onclick="startGuide()">🔄 Ulang</button>
+        </div>
+        <button class="btn-sec" onclick="share()">📤 Bagikan</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ORDER COMPLETE -->
+  <section class="screen" id="s-complete">
+    <div class="done-card">
+      <img src="wudhu-assets/w02-tangan.webp" alt="Baby Mo">
+      <h2 id="oDoneTitle">Hebat! Urutannya benar semua! 🎉</h2>
+      <p id="oDoneSub">Kamu hafal urutan wudhu!</p>
+      <div class="stars" id="oStars">⭐⭐⭐</div>
+      <div class="done-actions">
+        <button class="btn-primary" onclick="startOrder(level===5?10:5)" id="oNextBtn">🌟 Coba Level Hebat</button>
+        <div class="row">
+          <button class="btn-sec" onclick="startOrder(level)">🔄 Main Lagi</button>
+          <button class="btn-sec" onclick="startGuide()">💧 Panduan</button>
+        </div>
+        <a class="btn-sec" href="./index.html">🏠 Game Hub</a>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+var STEPS = [
+  {img:'w01-niat', short:'Niat', title:'Niat & Bismillah', count:1, btn:'🤲 Bismillah', text:'Niatkan wudhu dalam hati, lalu ucapkan Bismillah.',
+   tip:'Wudhu itu membersihkan badan sebelum sholat 🤲',
+   ar:'نَوَيْتُ الْوُضُوْءَ لِرَفْعِ الْحَدَثِ الْأَصْغَرِ فَرْضًا لِلّٰهِ تَعَالَى',
+   lat:'Nawaitul wudhū\'a liraf\'il hadatsil ashghari fardhan lillāhi ta\'ālā',
+   arti:'Aku niat berwudhu untuk menghilangkan hadas kecil, karena Allah Ta\'ala.', say:'Bismillahirrahmanirrahim'},
+  {img:'w02-tangan', short:'Telapak tangan', title:'Membasuh Kedua Telapak Tangan', count:3, text:'Basuh kedua telapak tangan sampai ke sela-sela jari.', tip:'Gosok sela-sela jarinya juga ya ✋'},
+  {img:'w03-kumur', short:'Berkumur', title:'Berkumur', count:3, text:'Masukkan air ke mulut, kumur-kumur, lalu buang airnya.', tip:'Jangan ditelan ya, dibuang saja 💦'},
+  {img:'w04-hidung', short:'Hidung', title:'Membersihkan Hidung', count:3, text:'Hirup sedikit air ke hidung pelan-pelan, lalu keluarkan.', tip:'Pelan-pelan saja, sedikit air sudah cukup 👃'},
+  {img:'w05-wajah', short:'Wajah', title:'Membasuh Wajah', count:3, text:'Basuh seluruh wajah, dari dahi sampai dagu dan dari telinga ke telinga.', tip:'Seluruh wajah kena air ya 😊'},
+  {img:'w06-siku-a', alt:'w06-siku-b', short:'Tangan sampai siku', title:'Membasuh Tangan sampai Siku', count:3, text:'Basuh tangan kanan sampai siku, lalu tangan kiri.', tip:'Mulai dari yang kanan dulu ya 👉'},
+  {img:'w07-kepala', short:'Kepala', title:'Mengusap Kepala', count:3, text:'Basahi tangan, lalu usap sebagian kepala.', tip:'Cukup diusap dengan tangan yang basah 💧'},
+  {img:'w08-telinga', short:'Telinga', title:'Membersihkan Telinga', count:3, text:'Usap bagian dalam dan belakang kedua telinga.', tip:'Pakai jari telunjuk dan jempol 👂'},
+  {img:'w09-kaki-a', alt:'w09-kaki-b', short:'Kaki', title:'Membasuh Kaki sampai Mata Kaki', count:3, text:'Basuh kaki kanan sampai mata kaki, lalu kaki kiri.', tip:'Sela-sela jari kakinya juga ya 🦶'},
+  {img:'w10-doa', short:'Doa', title:'Doa Setelah Wudhu', count:1, btn:'🔊 Dengar Doa', text:'Selesai wudhu, angkat tangan dan baca doa.',
+   tip:'MasyaAllah, sekarang kamu siap sholat! 🕌',
+   ar:'أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ',
+   lat:'Asyhadu an lā ilāha illallāh, wahdahū lā syarīka lah, wa asyhadu anna Muhammadan \'abduhū wa rasūluh',
+   arti:'Aku bersaksi tiada Tuhan selain Allah Yang Maha Esa, tiada sekutu bagi-Nya, dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya.',
+   src:'HR. Muslim', sayAr:true}
+];
+var IMG = function(n){ return 'wudhu-assets/' + n + '.webp'; };
+// warm the image cache so steps swap instantly
+STEPS.forEach(function(s){ [s.img, s.alt].forEach(function(n){ if(n){ var i=new Image(); i.src=IMG(n); } }); });
+
+function show(id){
+  document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('active', s.id===id); });
+  window.scrollTo({top:0, behavior:'instant'});
+}
+
+/* ── speech ── */
+function speak(text, lang){
+  try{
+    var ss = window.speechSynthesis; if(!ss || (window.BabyMo && BabyMo.isMuted && BabyMo.isMuted())) return;
+    ss.cancel(); var u = new SpeechSynthesisUtterance(text); u.lang = lang || 'id-ID'; u.rate = .9;
+    var v = ss.getVoices().filter(function(x){ return x.lang && x.lang.toLowerCase().indexOf((u.lang).slice(0,2).toLowerCase())===0; })[0];
+    if(v) u.voice = v; ss.speak(u);
+  }catch(e){}
+}
+function hasArabicVoice(){ try{ return speechSynthesis.getVoices().some(function(v){ return /^ar/i.test(v.lang); }); }catch(e){ return false; } }
+function sfx(t){ try{ if(window.BabyMo && BabyMo.sfx) BabyMo.sfx(t); }catch(e){} }
+
+/* ── GUIDE ── */
+var cur = 0, taps = 0, alt = false;
+function startGuide(){ show('s-guide'); go(0); try{ BabyMo.track && BabyMo.track('wudhu_guide_start'); }catch(e){} }
+function go(i){
+  if(i < 0 || i >= STEPS.length) return;
+  cur = i; taps = 0; alt = false;
+  var s = STEPS[i];
+  var img = document.getElementById('gImg'); img.style.opacity = 0;
+  setTimeout(function(){ img.src = IMG(s.img); img.alt = s.title; img.style.opacity = 1; }, 120);
+  document.getElementById('gNum').textContent = i + 1;
+  document.getElementById('gCounter').textContent = 'Langkah ' + (i+1) + ' / ' + STEPS.length;
+  document.getElementById('gTag').textContent = s.count > 1 ? s.count + '×' : '1×';
+  document.getElementById('gTitle').textContent = s.title;
+  document.getElementById('gText').textContent = s.text;
+  document.getElementById('gTip').textContent = s.tip;
+  var ac = document.getElementById('gArabic');
+  if(s.ar){ ac.hidden = false; var $ = function(id){ return document.getElementById(id); };
+    $('gAr').textContent = s.ar; $('gLat').textContent = s.lat; $('gArti').textContent = '"' + s.arti + '"'; $('gSrc').textContent = s.src || ''; }
+  else ac.hidden = true;
+  var c = document.getElementById('gCount'); c.innerHTML = '';
+  for(var k = 0; k < s.count; k++){ var d = document.createElement('i'); d.textContent = '💧'; c.appendChild(d); }
+  var w = document.getElementById('gWash'); w.classList.remove('done'); w.textContent = s.btn || '💧 Basuh!';
+  document.getElementById('gPrev').disabled = i === 0;
+  document.getElementById('gNext').textContent = i === STEPS.length - 1 ? 'Selesai ✓' : 'Lanjut →';
+  var dots = document.getElementById('gDots'); dots.innerHTML = '';
+  STEPS.forEach(function(_, k){ var d = document.createElement('i'); if(k < i) d.className = 'done'; if(k === i) d.className = 'now'; dots.appendChild(d); });
+  setTimeout(function(){ speak(s.title + '. ' + s.text); }, 250);
+}
+function rain(){
+  var box = document.getElementById('gDrops');
+  for(var k = 0; k < 7; k++){
+    var d = document.createElement('span'); d.textContent = '💧';
+    d.style.left = (10 + Math.random() * 80) + '%'; d.style.animationDelay = (Math.random() * .25) + 's'; d.style.fontSize = (16 + Math.random() * 12) + 'px';
+    box.appendChild(d); setTimeout((function(n){ return function(){ n.remove(); }; })(d), 1500);
+  }
+  var sp = document.createElement('div'); sp.className = 'splash'; document.getElementById('gStage').appendChild(sp); setTimeout(function(){ sp.remove(); }, 700);
+}
+function wash(){
+  var s = STEPS[cur];
+  if(taps >= s.count){ // replay the sound / doa
+    if(s.ar) sayArabic(s); return;
+  }
+  taps++;
+  var pills = document.querySelectorAll('#gCount i'); if(pills[taps-1]) pills[taps-1].classList.add('on');
+  if(s.alt){ alt = !alt; document.getElementById('gImg').src = IMG(alt ? s.alt : s.img); }
+  if(s.ar) sayArabic(s); else { rain(); sfx('tap'); speak(String(taps)); }
+  if(navigator.vibrate) try{ navigator.vibrate(12); }catch(e){}
+  if(taps >= s.count){
+    var w = document.getElementById('gWash'); w.classList.add('done');
+    w.textContent = s.ar ? '🔁 Dengar lagi' : '✓ Bersih!';
+    if(!s.ar) sfx('correct');
+  }
+}
+function sayArabic(s){
+  if(s.say){ speak(s.say, hasArabicVoice() ? 'ar-SA' : 'id-ID'); return; }
+  if(hasArabicVoice()) speak(s.ar, 'ar-SA'); else speak(s.lat, 'id-ID');
+}
+function next(){
+  if(cur < STEPS.length - 1){ go(cur + 1); return; }
+  try{ BabyMo.track && BabyMo.track('wudhu_guide_done'); localStorage.setItem('bm_wudhu_done', '1'); }catch(e){}
+  show('completeScreen');
+  setTimeout(function(){ speak('MasyaAllah, wudhumu selesai! Sekarang siap sholat.'); }, 300);
+}
+
+/* ── ORDER GAME ── */
+var level = 5, order = [], want = 0, mistakes = 0;
+function startOrder(n){
+  level = n || level || 5; want = 0; mistakes = 0;
+  document.getElementById('lvEasy').classList.toggle('on', level === 5);
+  document.getElementById('lvHard').classList.toggle('on', level === 10);
+  var pool = STEPS.slice(0, level).map(function(s, i){ return {s:s, i:i}; });
+  for(var k = pool.length - 1; k > 0; k--){ var j = Math.floor(Math.random() * (k + 1)); var t = pool[k]; pool[k] = pool[j]; pool[j] = t; }
+  order = pool;
+  var tr = document.getElementById('oTrack'); tr.innerHTML = '';
+  for(var k2 = 0; k2 < level; k2++){ var sp = document.createElement('span'); sp.textContent = k2 + 1; tr.appendChild(sp); }
+  var cards = document.getElementById('oCards'); cards.innerHTML = '';
+  pool.forEach(function(p){
+    var b = document.createElement('button'); b.className = 'ocard'; b.dataset.i = p.i;
+    b.innerHTML = '<img src="' + IMG(p.s.img) + '" alt=""><b>' + p.s.short + '</b>';
+    b.onclick = function(){ pick(b, p.i); };
+    cards.appendChild(b);
+  });
+  document.getElementById('oHint').textContent = '';
+  show('s-order');
+}
+function pick(el, i){
+  if(i === want){
+    el.classList.add('used'); el.dataset.n = want + 1;
+    document.querySelectorAll('#oTrack span')[want].classList.add('ok');
+    want++; sfx('correct'); document.getElementById('oHint').textContent = '';
+    speak(STEPS[i].short);
+    if(want >= level) setTimeout(orderDone, 500);
+  } else {
+    mistakes++; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); sfx('wrong');
+    var h = document.getElementById('oHint');
+    h.textContent = want === 0 ? 'Hmm, wudhu dimulai dari niat dulu ya 🤲' : 'Hampir! Setelah "' + STEPS[want-1].short + '", apa ya? 🤔';
+  }
+}
+function orderDone(){
+  var stars = mistakes === 0 ? 3 : mistakes <= 2 ? 2 : 1;
+  document.getElementById('oStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
+  document.getElementById('oDoneTitle').textContent = mistakes === 0 ? 'Hebat! Urutannya benar semua! 🎉' : 'MasyaAllah, selesai! 🎉';
+  document.getElementById('oDoneSub').textContent = mistakes === 0 ? 'Kamu hafal urutan wudhu!' : 'Coba lagi biar tanpa salah, ya!';
+  var nb = document.getElementById('oNextBtn'); nb.textContent = level === 5 ? '🌟 Coba Level Hebat' : '🌱 Level Mudah';
+  try{ BabyMo.track && BabyMo.track('wudhu_order_done', {level:level, mistakes:mistakes}); }catch(e){}
+  show('s-complete');
+}
+
+function share(){
+  try{ if(window.BabyMo && BabyMo.share) BabyMo.share({title:'Wudhu Bareng Mo', message:'Aku sudah belajar wudhu bareng Baby Mo! 💧 Yuk coba juga'}); }catch(e){}
+}
+</script>
+<script src="/bm-kit.js" defer></script>
+</body>
+</html>
