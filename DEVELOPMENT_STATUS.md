@@ -32,7 +32,13 @@ avoids hand-editing the Capacitor `pbxproj`.
 - [x] **Phase 5 — iPad experience** — split-view sidebar (explicit-button rows with gold highlight), centered onboarding column, adaptive home grid; verified by screenshot + UI tests on iPad Pro 13″.
 - [x] **Phase 6 — Apple Watch app** — daily Hijaiyah challenge, streak, rewards, contextual daily reminder, runs independently of the iPhone (`WKRunsIndependentlyOfCompanionApp`), WatchConnectivity sync. _Optional complications deferred to Phase 8._
 - [x] **Phase 7 — Backend & sync (code complete)** — CloudKit-ready SwiftData models (no unique constraints, inline defaults, optional relationships), `BabyMoModelContainer` degrades CloudKit → local → memory, `ProfileSync` snapshot/merge (union days, max totals, earliest-achievement; identity never overwritten by Watch placeholder), `ConnectivityBridge` over `updateApplicationContext`. ⚠️ _End-to-end CloudKit sync unverified until the account holder enables the iCloud capability + signing; entitlements files are in place._
-- [ ] **Phase 8–10 — Polish, testing, App Store prep**
+- [~] **Phase 8–10 — Polish, testing, App Store prep** — Done: brand app icons
+  (generated from logo, opaque 1024px, both platforms), privacy manifests (no
+  tracking/collection), intro jingle on onboarding (ambient, silent-switch
+  respecting), UI test suite green on iPhone + iPad, [`APP_STORE.md`](APP_STORE.md)
+  with metadata + exact manual signing/capability steps. _Remaining (optional):
+  achievement celebration animation, WidgetKit widget/complication, archive +
+  TestFlight (needs team signing)._
 
 ## Completed
 - Authenticated GitHub access; `backup/pre-native-20261107` preserves the shipping Capacitor app; work on `native-ecosystem`.
@@ -61,8 +67,8 @@ avoids hand-editing the Capacitor `pbxproj`.
 - [ ] Physical-device testing for Watch connectivity & audio.
 
 ## Next steps
-1. Phase 5: richer iPad surfaces (two-column home, larger game canvas).
-2. Phase 8: intro audio on launch, celebration animations on achievement unlock,
-   optional Watch complication / WidgetKit widget.
-3. Phase 9: XCUIAutomation UI tests (onboarding → activity → dashboard), multi-size runs.
-4. Phase 10: real app icons from brand art, App Store metadata, privacy manifest.
+1. **[YOU]** Set team signing + iCloud capability (see `APP_STORE.md` §Signing),
+   then archive and TestFlight on a physical iPhone + paired Watch.
+2. Optional polish: achievement celebration overlay, WidgetKit widget +
+   Watch complication, nativize more games (start with Doa Harian).
+3. On your approval: push `native-ecosystem` to GitHub and open a PR to `main`.

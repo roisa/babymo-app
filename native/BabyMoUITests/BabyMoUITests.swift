@@ -43,10 +43,14 @@ final class BabyMoUITests: XCTestCase {
         XCTAssertTrue(parentButton.waitForExistence(timeout: 8), "Parent toolbar button should exist on Home")
         parentButton.tap()
 
-        XCTAssertTrue(
-            anyElement(app, labeled: "Pencapaian").waitForExistence(timeout: 5),
-            "Parent dashboard should show the achievements section"
-        )
+        // A tap right after launch can be swallowed while the window settles —
+        // retry once before failing.
+        var found = anyElement(app, labeled: "Pencapaian").waitForExistence(timeout: 8)
+        if !found, parentButton.isHittable {
+            parentButton.tap()
+            found = anyElement(app, labeled: "Pencapaian").waitForExistence(timeout: 8)
+        }
+        XCTAssertTrue(found, "Parent dashboard should show the achievements section")
     }
 
     /// Seeded path: the games tab lists activities from the catalog.

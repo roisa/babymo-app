@@ -18,7 +18,9 @@
 		5D9033D17524E3971DF9AFE5 /* CharacterCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FF2389DC6B3E802BC832E2 /* CharacterCollectionView.swift */; };
 		716F5A53C5438D01ABB2042F /* BabyMo Watch App.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = 5DD00C9ACF19929134DFD0F1 /* BabyMo Watch App.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		75F0954CA7468445CFC3AF06 /* WatchRootView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C72A075574830BCCAC302C21 /* WatchRootView.swift */; };
+		84578ACD0AFAFABE248894E8 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A7E2D7B481A15D94837691D7 /* PrivacyInfo.xcprivacy */; };
 		8683D6801CD792BA7808420B /* BabyMoKit in Frameworks */ = {isa = PBXBuildFile; productRef = B118453DD5D91D96CA9D7FD3 /* BabyMoKit */; };
+		8BAF2918DD25E1E6F6CF927D /* AudioService.swift in Sources */ = {isa = PBXBuildFile; fileRef = DF73A94C475356DDE11C205D /* AudioService.swift */; };
 		AA315CC51A5D8C8E4E624CFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8E8D5C33319C824C91B136A0 /* Assets.xcassets */; };
 		AFC321DF85E96B9041503EEC /* ReminderService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79F52543971D8771CE499B18 /* ReminderService.swift */; };
 		CB646C3CF81261A4B783EB59 /* BabyMoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F67F75967494B1E3049026 /* BabyMoUITests.swift */; };
@@ -28,6 +30,7 @@
 		E3EAC6E09C408B2868363250 /* ProgressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67D7432B5AA5C95BB8928179 /* ProgressService.swift */; };
 		E74AC3393A6264E118CE8BDD /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F962F135214E930CAD7D1D68 /* HomeView.swift */; };
 		F01DCA9CB901E6F404CEE1F9 /* BabyMoWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59AB2526B4279F21CB27163E /* BabyMoWatchApp.swift */; };
+		FEB77A7D84D0F30D5193F055 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = FC499AF09C216AA3BAB2A320 /* PrivacyInfo.xcprivacy */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -78,13 +81,16 @@
 		79F52543971D8771CE499B18 /* ReminderService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReminderService.swift; sourceTree = "<group>"; };
 		87448C3044BF13CC11E3E628 /* iPadSidebar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iPadSidebar.swift; sourceTree = "<group>"; };
 		8E8D5C33319C824C91B136A0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A7E2D7B481A15D94837691D7 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		A9F67F75967494B1E3049026 /* BabyMoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyMoUITests.swift; sourceTree = "<group>"; };
 		BC20633327F05DB728FB5351 /* MoImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoImage.swift; sourceTree = "<group>"; };
 		BD70481A0AF57855FF503C87 /* ParentDashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParentDashboardView.swift; sourceTree = "<group>"; };
 		C1021301190C5AD7854A6F1A /* BabyMo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = BabyMo.entitlements; sourceTree = "<group>"; };
 		C72A075574830BCCAC302C21 /* WatchRootView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchRootView.swift; sourceTree = "<group>"; };
+		DF73A94C475356DDE11C205D /* AudioService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioService.swift; sourceTree = "<group>"; };
 		E3BC5B90F63EEC6979C2A910 /* BabyMoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BabyMoApp.swift; sourceTree = "<group>"; };
 		F962F135214E930CAD7D1D68 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		FC499AF09C216AA3BAB2A320 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		FEC1E93315F8C8C9A3E86630 /* WebContent */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WebContent; path = ../ios/App/App/public; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
@@ -135,6 +141,7 @@
 				7266C14639694838AC3063AF /* Assets.xcassets */,
 				78B0C11D2D2E02562F6869F7 /* BabyMoWatch.entitlements */,
 				59AB2526B4279F21CB27163E /* BabyMoWatchApp.swift */,
+				A7E2D7B481A15D94837691D7 /* PrivacyInfo.xcprivacy */,
 				79F52543971D8771CE499B18 /* ReminderService.swift */,
 				C72A075574830BCCAC302C21 /* WatchRootView.swift */,
 			);
@@ -162,6 +169,7 @@
 		2878BC5898AE324CD025D024 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				DF73A94C475356DDE11C205D /* AudioService.swift */,
 				67D7432B5AA5C95BB8928179 /* ProgressService.swift */,
 			);
 			path = Support;
@@ -290,6 +298,7 @@
 			children = (
 				C1021301190C5AD7854A6F1A /* BabyMo.entitlements */,
 				E3BC5B90F63EEC6979C2A910 /* BabyMoApp.swift */,
+				FC499AF09C216AA3BAB2A320 /* PrivacyInfo.xcprivacy */,
 				B44EB0B78D8E75BE19A334D0 /* App */,
 				1D71A69ABDBE2544609656FD /* Components */,
 				0568DA223CD8E0635135F0D5 /* Features */,
@@ -416,6 +425,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA315CC51A5D8C8E4E624CFA /* Assets.xcassets in Resources */,
+				FEB77A7D84D0F30D5193F055 /* PrivacyInfo.xcprivacy in Resources */,
 				2E1A637A60CDA70475976ED6 /* WebContent in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -425,6 +435,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBCCAE56470634F42D555C4B /* Assets.xcassets in Resources */,
+				84578ACD0AFAFABE248894E8 /* PrivacyInfo.xcprivacy in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -453,6 +464,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BAF2918DD25E1E6F6CF927D /* AudioService.swift in Sources */,
 				4125CC309E2488418088768B /* BabyMoApp.swift in Sources */,
 				5D9033D17524E3971DF9AFE5 /* CharacterCollectionView.swift in Sources */,
 				E74AC3393A6264E118CE8BDD /* HomeView.swift in Sources */,

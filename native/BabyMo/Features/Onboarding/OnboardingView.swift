@@ -68,6 +68,8 @@ struct OnboardingView: View {
             .frame(maxWidth: .infinity)
         }
         .background(BabyMoColor.heroGradient.ignoresSafeArea())
+        .onAppear { AudioService.shared.playIntroOnce() }
+        .onDisappear { AudioService.shared.stop() }
     }
 }
 
