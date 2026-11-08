@@ -439,6 +439,21 @@
     } catch (e) {}
     return Math.min(Math.round(lift), Math.round(h * 0.45));
   }
+  // Is there a tappable control where Baby Mo would pop up (bottom-left)?
+  function coversButton(self, lift) {
+    try {
+      var h = innerHeight, w = Math.min(innerWidth, 380);
+      var x0 = innerWidth >= 760 ? Math.max(24, innerWidth / 2 - 360) : 12;
+      for (var y = h - lift - 18; y > h - lift - 96; y -= 18) {
+        for (var x = x0 + 10; x < x0 + w - 20; x += 40) {
+          var el = document.elementFromPoint(x, y);
+          if (!el || self.contains(el)) continue;
+          if (el.closest && el.closest('button,a[href],[role="button"],input,select,.btn,.btn-pri,.btn-sec')) return true;
+        }
+      }
+    } catch (e) {}
+    return false;
+  }
   var moTimer = null;
   function react(type, opts) {
     try {
@@ -458,9 +473,12 @@
       box.querySelector("img").src = POSE + poseName + ".webp";
       box.querySelector(".bm-bub").textContent = msg;
       var atTop = type === "win" || opts.top === true;
+      var lift = atTop ? 0 : bottomBarHeight(box);
+      // Never sit on top of a button: if the bottom-left spot is busy, drop in from the top
+      if (!atTop && coversButton(box, lift)) atTop = true;
       box.classList.remove("show");
       box.classList.toggle("top", atTop);
-      box.style.setProperty("--bm-mo-lift", atTop ? "0px" : bottomBarHeight(box) + "px");
+      box.style.setProperty("--bm-mo-lift", atTop ? "0px" : lift + "px");
       void box.offsetWidth;
       box.classList.add("show");
       // Matching sound (silent if muted); win also drops a star in the jar

@@ -4,6 +4,7 @@
 <script src="bm-theme.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<script src="bm-fit.js"></script>
 <script src="i18n/hijaiyah.js"></script>
 <script src="bm-i18n.js"></script>
 <meta name="description" content="Jelajahi Pulau Hijaiyah bersama Baby Mo: gali, bangun, dan temukan 28 huruf hijaiyah tersembunyi di pulau voxel yang bisa dijelajahi bebas.">
@@ -113,6 +114,8 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
   z-index:30;transition:.25s;pointer-events:none;text-align:center;max-width:88vw;border:1.5px solid rgba(240,232,216,.14)}
 #toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* bm-fit: on phones the 12 blocks sit in two tidy rows of six instead of running off the screen */
+@media (max-width:640px){#hotbar{flex-wrap:wrap;justify-content:center;width:min(96vw,302px);max-width:none;overflow:visible;gap:4px;bottom:calc(208px + env(safe-area-inset-bottom))}#hotbar .slot{box-sizing:border-box;flex:0 0 auto;width:47px;height:44px;border-radius:12px}}
 </style>
 <style id="bm-bright">
 :root{
