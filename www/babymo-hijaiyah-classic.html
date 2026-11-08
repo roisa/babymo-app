@@ -379,6 +379,60 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .q-sound-hint{font-size:13px!important;padding:8px 14px!important;}
 .i-back,.q-back{min-width:44px!important;min-height:44px!important;display:inline-flex!important;align-items:center;justify-content:center;border-radius:14px!important;}
 .hdr-back,.w-back,.about-back{min-height:44px!important;display:inline-flex!important;align-items:center;border-radius:999px!important;padding:8px 16px!important;}
+
+/* ═══════════ Play more: harakat, tracing, Tangkap Huruf ═══════════ */
+.harakat{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.harakat button{border:none;border-radius:16px;padding:6px 12px 4px;background:var(--card2,#fff);box-shadow:0 0 0 1.5px var(--border),0 6px 12px -10px rgba(0,0,0,.5);cursor:pointer;display:flex;flex-direction:column;align-items:center;min-width:64px;font-family:'Nunito',sans-serif}
+.harakat button b{font-family:'Scheherazade New',serif;font-size:34px;line-height:1.5;color:var(--gold-lt)}
+.harakat button small{font-size:13px;font-weight:900;color:var(--cream-dim);margin-top:-4px}
+.harakat button.on{box-shadow:0 0 0 3px #FFC83D;transform:scale(1.06)}
+.trace-btn{margin:10px auto 0;display:inline-flex;align-items:center;gap:8px;border:none;border-radius:999px;padding:10px 18px;font:900 15px 'Nunito',sans-serif;color:#fff;background:linear-gradient(135deg,#FF8A5B,#F2547D);box-shadow:0 10px 18px -10px rgba(242,84,125,.8);cursor:pointer}
+.trace-btn.done{background:linear-gradient(135deg,#3FD08C,#1FA971)}
+.hp-ov{position:fixed;inset:0;z-index:600;display:none;flex-direction:column;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#FFF6E4,#FFE9F1 60%,#E8F1FF)}
+.hp-ov.on{display:flex}
+html[data-bm-theme="classic"] .hp-ov{background:linear-gradient(180deg,#123222,#0E2A1C)}
+.hp-top{width:100%;max-width:440px;display:flex;align-items:center;gap:10px}
+.hp-x{width:44px;height:44px;border-radius:14px;border:none;background:rgba(255,255,255,.9);font-size:18px;font-weight:900;cursor:pointer;box-shadow:0 6px 14px -10px rgba(0,0,0,.4)}
+.hp-title{flex:1;text-align:center;font-weight:900;font-size:17px;color:var(--cream)}
+.hp-pill{padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.9);font-weight:900;font-size:14px;color:#152230;white-space:nowrap}
+.hp-say{display:flex;align-items:flex-end;gap:8px;width:100%;max-width:440px;margin:8px 0}
+.hp-say img{width:80px;height:86px;object-fit:contain;object-position:bottom;flex:0 0 auto}
+.hp-say .bub{flex:1;background:#fff;border-radius:18px 18px 18px 6px;padding:10px 13px;font-weight:800;font-size:15px;color:#1E2B3A;margin-bottom:12px;box-shadow:0 10px 22px -14px rgba(30,60,110,.45)}
+.tr-wrap{position:relative;width:min(88vw,380px,52vh);aspect-ratio:1;border-radius:28px;background:#fff;box-shadow:0 18px 36px -18px rgba(30,60,110,.45);touch-action:none;overflow:hidden}
+.tr-wrap canvas{position:absolute;inset:0;width:100%;height:100%}
+.tr-bar{width:min(88vw,380px);height:12px;border-radius:99px;background:rgba(0,0,0,.08);margin:12px 0 4px;overflow:hidden}
+.tr-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#FFC83D,#3FD08C);transition:width .15s}
+.tr-row{display:flex;gap:10px;width:min(88vw,380px);margin-top:10px}
+.tr-row button{flex:1;min-height:52px;border-radius:18px;border:none;font:900 16px 'Nunito',sans-serif;cursor:pointer}
+.tr-row .clr{background:rgba(255,255,255,.9);color:#152230;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
+.tr-row .ok{background:linear-gradient(135deg,#3FD08C,#1FA971);color:#fff}
+.tr-wrap.win{animation:trWin .6s cubic-bezier(.3,1.6,.5,1)}
+@keyframes trWin{30%{transform:scale(1.06) rotate(-2deg)}}
+.kotak-g span.traced::after{content:'✍️';position:absolute;font-size:11px;transform:translate(14px,-14px)}
+.kotak-g span{position:relative;cursor:pointer}
+.play-row{width:100%;max-width:480px;padding:10px 16px 0;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.play-row button{border:none;border-radius:20px;padding:12px 10px;font:900 15px 'Nunito',sans-serif;cursor:pointer;display:flex;align-items:center;gap:10px;justify-content:center;color:#fff;box-shadow:0 10px 20px -12px rgba(0,0,0,.5)}
+.play-row button span{font-size:26px}
+.play-row .p1{background:linear-gradient(135deg,#5AC8FA,#3D7BF2)}
+.play-row .p2{background:linear-gradient(135deg,#FF8A5B,#F2547D)}
+.tk-target{display:flex;align-items:center;gap:12px;background:#fff;border-radius:22px;padding:6px 16px;margin:8px 0;box-shadow:0 10px 22px -14px rgba(30,60,110,.45)}
+.tk-target b{font-family:'Scheherazade New',serif;font-size:52px;line-height:1.5;color:#E8590C}
+.tk-target span{font-weight:900;font-size:16px;color:#1E2B3A}
+.tk-field{position:relative;width:100%;max-width:440px;flex:1;min-height:0;border-radius:26px;overflow:hidden;background:linear-gradient(180deg,#BFE7FF,#E8F7FF 60%,#D9F5D0);box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
+.tk-b{position:absolute;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-family:'Scheherazade New',serif;font-size:40px;line-height:1;color:#fff;cursor:pointer;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.6) 0 12%,transparent 13%),var(--c);box-shadow:inset -6px -8px 0 rgba(0,0,0,.12),0 8px 14px -8px rgba(0,0,0,.35);will-change:transform;padding-bottom:10px}
+.tk-b.pop{animation:tkPop .35s ease-out forwards;pointer-events:none}
+@keyframes tkPop{60%{transform:scale(1.4)}100%{transform:scale(1.8);opacity:0}}
+.tk-b.no{animation:tkNo .35s ease}
+@keyframes tkNo{25%{margin-left:-8px}75%{margin-left:8px}}
+.tk-plus{position:absolute;font-weight:900;font-size:22px;color:#12A15A;pointer-events:none;animation:tkUp .8s ease-out forwards}
+@keyframes tkUp{to{transform:translateY(-40px);opacity:0}}
+.tk-end{position:absolute;inset:0;z-index:5;display:none;flex-direction:column;align-items:center;justify-content:center;background:rgba(255,255,255,.88);text-align:center;padding:20px}
+.tk-end.on{display:flex}
+.tk-end img{width:140px;height:150px;object-fit:contain}
+.tk-end h3{font-size:26px;font-weight:900;color:#E8590C;margin:4px 0}
+.tk-end p{font-weight:800;color:#33445A;margin-bottom:14px}
+.tk-end .tr-row{width:100%;max-width:320px}
 </style>
 <script src="bm-icons.js" defer></script>
 </head>
@@ -1212,6 +1266,23 @@ function showToast(e,t){
 </script>
 <script src="/bm-kit.js" defer></script>
 
+
+<!-- ═══ Trace a letter ═══ -->
+<div class="hp-ov" id="trOv">
+  <div class="hp-top"><button class="hp-x" id="trX">✕</button><div class="hp-title" id="trTitle">✍️ Tulis</div><span class="hp-pill" id="trPct">0%</span></div>
+  <div class="hp-say"><img id="trMo" src="baby-mo-poses/baby-mo-pose-15.webp" alt=""><div class="bub" id="trBub"></div></div>
+  <div class="tr-wrap" id="trWrap"><canvas id="trGuide"></canvas><canvas id="trInk"></canvas></div>
+  <div class="tr-bar"><i id="trBar"></i></div>
+  <div class="tr-row"><button class="clr" id="trClr">🔄 Hapus</button><button class="ok" id="trOk">✓ Selesai</button></div>
+</div>
+<!-- ═══ Tangkap Huruf ═══ -->
+<div class="hp-ov" id="tkOv">
+  <div class="hp-top"><button class="hp-x" id="tkX">✕</button><div class="hp-title" id="tkTitle">🎈 Tangkap Huruf</div><span class="hp-pill" id="tkTime">⏱ 40</span></div>
+  <div class="tk-target"><span id="tkLbl">Tangkap</span><b id="tkAr">ب</b><span id="tkName">Ba</span><span class="hp-pill" id="tkScore" style="margin-left:8px">⭐ 0</span></div>
+  <div class="tk-field" id="tkField">
+    <div class="tk-end" id="tkEnd"><img id="tkMo" src="baby-mo-poses/baby-mo-yeyy.webp" alt=""><h3 id="tkEndT"></h3><p id="tkEndP"></p><div class="tr-row"><button class="clr" id="tkHome">🏠 Menu</button><button class="ok" id="tkAgain">🔄 Lagi!</button></div></div>
+  </div>
+</div>
 <script>
 /* ═══════════ Playful layer (Baby Mo poses, picture words, balloons) ═══════════ */
 (function(){
@@ -1328,6 +1399,163 @@ function showToast(e,t){
     document.getElementById('resMo').src=P(pct>=90?'yeyy':pct>=60?'pose-41':'pose-33');
     document.querySelectorAll('#resLetterGrid .rlr-item').forEach(function(it,i){ var lt=lessonLetters[i]; if(lt&&PIC[lt.id]) it.title=PIC[lt.id][1]; });
   };
+})();
+</script>
+<script>
+/* ═══════════ Play more: harakat chips, tracing, Tangkap Huruf ═══════════ */
+(function(){
+  var EN=window.BM_LANG==='en', T=function(a,b){return EN?b:a;};
+  var P=function(n){return 'baby-mo-poses/baby-mo-'+n+'.webp';};
+  var KEY='babymo_hijaiyah_play_v1', ST={traced:{},best:0};
+  try{ ST=Object.assign(ST,JSON.parse(localStorage.getItem(KEY)||'{}')); }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){} }
+  function sayAr(t){ try{ speak(t, arabicVoice?'ar-SA':'id-ID'); }catch(e){} }
+  function base(lt){ return lt.ar.replace(/[ً-ْ]/g,''); }
+  function drill(lt){
+    var b=base(lt); if(lt.id==='alif') return [['أَ','a'],['إِ','i'],['أُ','u']];
+    var c=lt.lat.toLowerCase().replace(/a$/,'').replace("'",''); if(lt.id==='ain') c="'";
+    return [[b+'َ',c+'a'],[b+'ِ',c+'i'],[b+'ُ',c+'u']];
+  }
+
+  /* ── 1. harakat chips + trace button on every letter card ── */
+  var pic=document.getElementById('lcPic');
+  pic.insertAdjacentHTML('afterend','<div class="harakat" id="lcHar"></div><button class="trace-btn" id="lcTrace" type="button">✍️ Ayo Tulis!</button>');
+  var _lc=loadCard;
+  loadCard=function(idx){ _lc(idx); var lt=lessonLetters[idx];
+    document.getElementById('lcHar').innerHTML=drill(lt).map(function(d){ return '<button type="button" data-ar="'+d[0]+'"><b>'+d[0]+'</b><small>'+d[1]+'</small></button>'; }).join('');
+    document.querySelectorAll('#lcHar button').forEach(function(b){ b.onclick=function(){ document.querySelectorAll('#lcHar button').forEach(function(x){x.classList.toggle('on',x===b);}); sayAr(b.dataset.ar);
+      var m=document.getElementById('iMo'); if(m) m.src=P('yes'); var bb=document.getElementById('iBub'); if(bb) bb.innerHTML=T('Dengan baris: <b>'+b.querySelector('small').textContent+'</b>! Fathah = a, kasrah = i, dhammah = u.','With its mark: <b>'+b.querySelector('small').textContent+'</b>! Fathah = a, kasrah = i, dhammah = u.'); }; });
+    var tb=document.getElementById('lcTrace'); tb.classList.toggle('done',!!ST.traced[lt.id]);
+    tb.textContent=ST.traced[lt.id]?T('✅ Sudah ditulis · Tulis lagi','✅ Traced · Trace again'):T('✍️ Ayo Tulis!','✍️ Let\'s Write!');
+  };
+  document.getElementById('lcTrace').onclick=function(){ openTrace(lessonLetters[cardIdx]); };
+
+  /* ── 2. tracing ── */
+  var tr={lt:null,S:0,mask:null,wide:null,drawing:false,last:null,done:false};
+  var ov=document.getElementById('trOv'), guide=document.getElementById('trGuide'), ink=document.getElementById('trInk');
+  function drawLetter(ctx,S,glyph,mode){
+    ctx.save(); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font='700 '+Math.round(S*0.74)+'px "Scheherazade New", serif';
+    var y=S*0.45;
+    if(mode==='guide'){ ctx.fillStyle='#EEF0F6'; ctx.fillText(glyph,S/2,y); ctx.setLineDash([S*0.02,S*0.025]); ctx.lineWidth=S*0.008; ctx.strokeStyle='#B7BDD0'; ctx.strokeText(glyph,S/2,y); }
+    else if(mode==='wide'){ ctx.lineJoin='round'; ctx.lineWidth=S*0.09; ctx.strokeStyle='#000'; ctx.fillStyle='#000'; ctx.strokeText(glyph,S/2,y); ctx.fillText(glyph,S/2,y); }
+    else { ctx.fillStyle='#000'; ctx.fillText(glyph,S/2,y); }
+    ctx.restore();
+  }
+  function setup(){
+    var r=document.getElementById('trWrap').getBoundingClientRect(), dpr=Math.min(2,window.devicePixelRatio||1), S=Math.round(r.width*dpr);
+    tr.S=S; [guide,ink].forEach(function(c){ c.width=c.height=S; });
+    var g=guide.getContext('2d'); g.clearRect(0,0,S,S); drawLetter(g,S,base(tr.lt),'guide');
+    var m=document.createElement('canvas'); m.width=m.height=S; drawLetter(m.getContext('2d'),S,base(tr.lt),'fill'); tr.mask=m.getContext('2d').getImageData(0,0,S,S).data;
+    var w=document.createElement('canvas'); w.width=w.height=S; drawLetter(w.getContext('2d'),S,base(tr.lt),'wide'); tr.wide=w.getContext('2d').getImageData(0,0,S,S).data;
+    ink.getContext('2d').clearRect(0,0,S,S); score(true);
+  }
+  function score(reset){
+    var S=tr.S, d=reset?null:ink.getContext('2d').getImageData(0,0,S,S).data, st=Math.max(3,Math.round(S/120)), tot=0, cov=0, inkN=0, out=0;
+    for(var y=0;y<S;y+=st) for(var x=0;x<S;x+=st){ var i=(y*S+x)*4+3, on=d&&d[i]>0;
+      if(tr.mask[i]>128){ tot++; if(on) cov++; }
+      if(on){ inkN++; if(tr.wide[i]<64) out++; } }
+    var c=tot?cov/tot:0, o=inkN?out/inkN:0, pct=Math.round(Math.min(1,c/0.7)*100*(o>=0.4?0.35:1));
+    document.getElementById('trBar').style.width=pct+'%'; document.getElementById('trPct').textContent=pct+'%';
+    return {c:c,o:o};
+  }
+  function pt(e){ var r=ink.getBoundingClientRect(), k=tr.S/r.width; return [(e.clientX-r.left)*k,(e.clientY-r.top)*k]; }
+  ink.addEventListener('pointerdown',function(e){ if(tr.done) return; tr.drawing=true; tr.last=pt(e); ink.setPointerCapture(e.pointerId); dot(tr.last); });
+  ink.addEventListener('pointermove',function(e){ if(!tr.drawing) return; var p=pt(e), c=ink.getContext('2d');
+    c.lineCap='round'; c.lineJoin='round'; c.lineWidth=tr.S*0.075; c.strokeStyle=tr.lt.color||'#E8590C';
+    c.beginPath(); c.moveTo(tr.last[0],tr.last[1]); c.lineTo(p[0],p[1]); c.stroke(); tr.last=p; });
+  function up(){ if(!tr.drawing) return; tr.drawing=false; var r=score(); if(r.c>=0.7 && r.o<0.4) win(); else if(r.o>=0.4) { document.getElementById('trBub').innerHTML=T('Ups, keluar garis. Ikuti bentuk hurufnya, ya! 🙂','Oops, outside the lines. Follow the letter\'s shape! 🙂'); document.getElementById('trMo').src=P('pose-40'); } }
+  ink.addEventListener('pointerup',up); ink.addEventListener('pointercancel',up);
+  function dot(p){ var c=ink.getContext('2d'); c.fillStyle=tr.lt.color||'#E8590C'; c.beginPath(); c.arc(p[0],p[1],tr.S*0.0375,0,Math.PI*2); c.fill(); }
+  function win(){
+    if(tr.done) return; tr.done=true; var lt=tr.lt;
+    document.getElementById('trWrap').classList.add('win'); setTimeout(function(){ document.getElementById('trWrap').classList.remove('win'); },700);
+    document.getElementById('trBar').style.width='100%'; document.getElementById('trPct').textContent='100%';
+    document.getElementById('trMo').src=P('yeyy');
+    document.getElementById('trBub').innerHTML=T('Masya Allah! Kamu menulis <b>'+lt.name+'</b> dengan bagus! ✨','Masha Allah! You wrote <b>'+lt.name+'</b> beautifully! ✨');
+    try{ playCorrect(); spawnParticles(14); }catch(e){} sayAr(lt.arName||lt.speak);
+    var first=!ST.traced[lt.id]; ST.traced[lt.id]=1; save();
+    if(first && Object.keys(ST.traced).length%4===0){ try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
+    document.getElementById('trOk').textContent=T('Lanjut →','Next →');
+  }
+  window.openTrace=function(lt){
+    tr.lt=lt; tr.done=false; ov.classList.add('on');
+    document.getElementById('trTitle').textContent='✍️ '+T('Tulis huruf ','Write ')+lt.name;
+    document.getElementById('trMo').src=P('pose-15');
+    document.getElementById('trBub').innerHTML=T('Ikuti garis abu-abu dengan jarimu. Pelan-pelan, ya! ✍️','Follow the grey lines with your finger. Nice and slow! ✍️');
+    document.getElementById('trOk').textContent=T('✓ Selesai','✓ Done');
+    var go=function(){ requestAnimationFrame(setup); };
+    if(document.fonts&&document.fonts.load) document.fonts.load('200px "Scheherazade New"').then(go,go); else go();
+  };
+  function closeTrace(){ ov.classList.remove('on'); if(document.getElementById('sIntro').classList.contains('active')) loadCard(cardIdx); updateHomeUI(); }
+  document.getElementById('trX').onclick=closeTrace;
+  document.getElementById('trClr').onclick=function(){ tr.done=false; ink.getContext('2d').clearRect(0,0,tr.S,tr.S); score(true); document.getElementById('trMo').src=P('pose-15'); };
+  document.getElementById('trOk').onclick=function(){ if(tr.done){ closeTrace(); return; } var r=score(); if(r.c>=0.55 && r.o<0.45) win(); else { document.getElementById('trMo').src=P('idea');
+    document.getElementById('trBub').innerHTML=T('Hampir! Tebalkan lagi bagian yang masih abu-abu 💪','Almost! Trace over the grey parts too 💪'); } };
+  window.addEventListener('resize',function(){ if(ov.classList.contains('on')) setup(); });
+
+  /* ── 3. Tangkap Huruf (pop the letter bubbles) ── */
+  var tk={on:false,raf:0,score:0,time:40,target:null,pool:[],bubbles:[],t0:0,spawnAt:0,hits:0};
+  var COLS=['#FF6B6B','#4DABF7','#51CF66','#FCC419','#CC5DE8','#FF922B','#20C997'];
+  function learnedLetters(){ var set={}; userData.completed.forEach(function(id){ var l=LESSONS.find(function(x){return x.id===id;}); if(l) l.letters.forEach(function(x){ set[x]=1; }); });
+    var arr=LETTERS.filter(function(l){ return set[l.id]; }); return arr.length>=4?arr:LETTERS.slice(0,6); }
+  function newTarget(){ var t; do{ t=tk.pool[Math.floor(Math.random()*tk.pool.length)]; }while(tk.target&&t.id===tk.target.id&&tk.pool.length>1); tk.target=t;
+    document.getElementById('tkAr').textContent=base(t); document.getElementById('tkName').textContent=t.name; sayAr(t.arName||t.speak); }
+  function spawn(field){
+    var W=field.clientWidth, H=field.clientHeight, isT=Math.random()<0.42, lt=isT?tk.target:tk.pool[Math.floor(Math.random()*tk.pool.length)];
+    var b=document.createElement('div'); b.className='tk-b'; b.textContent=base(lt); b.style.setProperty('--c',COLS[Math.floor(Math.random()*COLS.length)]);
+    var o={el:b,lt:lt,x:Math.random()*(W-80)+4,y:H+10,v:(55+Math.random()*45)*(1+tk.hits*0.03),w:Math.random()*6.28};
+    b.style.transform='translate('+o.x+'px,'+o.y+'px)'; field.appendChild(b); tk.bubbles.push(o);
+    b.addEventListener('pointerdown',function(e){ e.preventDefault(); if(!tk.on) return;
+      if(o.lt.id===tk.target.id){ tk.score++; tk.hits++; b.classList.add('pop'); try{ playTone(660+tk.hits*20,.12,'triangle',.18); }catch(x){}
+        var pl=document.createElement('div'); pl.className='tk-plus'; pl.textContent='+1'; pl.style.left=(o.x+24)+'px'; pl.style.top=(o.y)+'px'; field.appendChild(pl); setTimeout(function(){pl.remove();},800);
+        document.getElementById('tkScore').textContent='⭐ '+tk.score; o.dead=true; setTimeout(function(){ b.remove(); },350);
+        if(tk.hits%5===0) newTarget();
+      } else { b.classList.remove('no'); void b.offsetWidth; b.classList.add('no'); try{ playWrong(); }catch(x){} }
+    });
+  }
+  function loop(ts){
+    if(!tk.on) return; var field=document.getElementById('tkField');
+    if(!tk.t0){ tk.t0=ts; tk.last=ts; } var dt=Math.min(.05,(ts-tk.last)/1000); tk.last=ts;
+    var left=Math.max(0,tk.time-(ts-tk.t0)/1000); document.getElementById('tkTime').textContent='⏱ '+Math.ceil(left);
+    if(ts>tk.spawnAt){ spawn(field); tk.spawnAt=ts+Math.max(420,900-tk.hits*18); }
+    tk.bubbles=tk.bubbles.filter(function(o){ if(o.dead) return false; o.y-=o.v*dt; o.w+=dt*2; var x=o.x+Math.sin(o.w)*14;
+      o.el.style.transform='translate('+x+'px,'+o.y+'px)'; if(o.y<-90){ o.el.remove(); return false; } return true; });
+    if(left<=0) return endTk();
+    tk.raf=requestAnimationFrame(loop);
+  }
+  function startTk(){
+    var field=document.getElementById('tkField'); field.querySelectorAll('.tk-b,.tk-plus').forEach(function(x){x.remove();});
+    document.getElementById('tkEnd').classList.remove('on');
+    tk.pool=learnedLetters(); tk.score=0; tk.hits=0; tk.bubbles=[]; tk.t0=0; tk.spawnAt=0; tk.target=null; tk.on=true;
+    document.getElementById('tkScore').textContent='⭐ 0'; document.getElementById('tkLbl').textContent=T('Tangkap','Catch');
+    newTarget(); tk.raf=requestAnimationFrame(loop);
+  }
+  function endTk(){
+    tk.on=false; cancelAnimationFrame(tk.raf);
+    tk.bubbles.forEach(function(o){ o.el.classList.add('pop'); }); tk.bubbles=[];
+    var s=tk.score, best=s>ST.best; if(best){ ST.best=s; save(); }
+    document.getElementById('tkMo').src=P(s>=15?'yeyy':s>=8?'pose-41':'pose-33');
+    document.getElementById('tkEndT').textContent=s>=15?T('Masya Allah, jago! 🏆','Masha Allah, a champion! 🏆'):s>=8?T('Hebat! 🌟','Great! 🌟'):T('Bagus, terus latihan! 💪','Good, keep practising! 💪');
+    document.getElementById('tkEndP').textContent=T('Kamu menangkap '+s+' huruf. Rekor: '+ST.best+(best?' — rekor baru! 🎉':''),'You caught '+s+' letters. Best: '+ST.best+(best?' — new record! 🎉':''));
+    document.getElementById('tkEnd').classList.add('on'); try{ if(s>=8){ playLevelUp(); spawnParticles(16); } }catch(e){}
+    if(s>=10 && !tk.starred){ tk.starred=true; try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
+  }
+  function openTk(){ document.getElementById('tkOv').classList.add('on'); document.getElementById('tkTitle').textContent='🎈 '+T('Tangkap Huruf','Letter Catch'); startTk(); }
+  function closeTk(){ tk.on=false; cancelAnimationFrame(tk.raf); document.getElementById('tkOv').classList.remove('on'); updateHomeUI(); }
+  document.getElementById('tkX').onclick=closeTk; document.getElementById('tkHome').onclick=closeTk; document.getElementById('tkAgain').onclick=startTk;
+  document.getElementById('tkHome').textContent=T('🏠 Menu','🏠 Menu'); document.getElementById('tkAgain').textContent=T('🔄 Lagi!','🔄 Again!');
+
+  /* ── home: play buttons, traced marks, tap a letter to hear it ── */
+  document.querySelector('.kotak').insertAdjacentHTML('afterend','<div class="play-row"><button class="p1" id="goTk" type="button"><span>🎈</span><b id="goTkT">Tangkap Huruf</b></button><button class="p2" id="goTr" type="button"><span>✍️</span><b id="goTrT">Latihan Menulis</b></button></div>');
+  document.getElementById('goTk').onclick=openTk;
+  document.getElementById('goTr').onclick=function(){ var pool=learnedLetters(), nx=pool.find(function(l){return !ST.traced[l.id];})||pool[Math.floor(Math.random()*pool.length)]; openTrace(nx); };
+  var _uh=updateHomeUI;
+  updateHomeUI=function(){ _uh();
+    document.getElementById('goTkT').textContent=T('Tangkap Huruf','Letter Catch'); document.getElementById('goTrT').textContent=T('Latihan Menulis','Writing Practice');
+    var spans=document.querySelectorAll('#kotakG span');
+    LETTERS.forEach(function(l,i){ var sp=spans[i]; if(!sp) return; sp.classList.toggle('traced',!!ST.traced[l.id]); sp.onclick=function(){ sayAr(l.arName||l.speak); sp.style.transform='scale(1.2)'; setTimeout(function(){sp.style.transform='';},200); }; });
+  };
+  document.getElementById('trClr').textContent=T('🔄 Hapus','🔄 Clear');
 })();
 </script>
 </body>
