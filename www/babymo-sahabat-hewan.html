@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<script src="bm-theme.js"></script>
+<script src="i18n/hewan.js"></script>
+<script src="bm-i18n.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<script src="bm-fit.js"></script>
+<meta name="theme-color" content="#123322">
+<title>Sahabat Hewan Mo — Game Merawat Hewan untuk Anak | Baby Mo</title>
+<meta name="description" content="Rawat kucing dan hewan ternak bersama Baby Mo: beri makan dengan Bismillah, beri minum, bersihkan, elus dengan lembut, ambil telur dan susu, lalu berbagi. Belajar adab Islam terhadap hewan.">
+<link rel="canonical" href="https://play.babymo.id/babymo-sahabat-hewan.html">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="icon" href="icons/games/sahabat-hewan.svg">
+<style>
+/* ── Classic (dark) look; the bright look is the #bm-bright block below ── */
+:root{
+  --bg:#102A1C;--bg2:#143322;--card:rgba(255,255,255,.07);--card2:rgba(255,255,255,.11);
+  --ink:#F3F8EE;--soft:#B4C9B0;--border:rgba(255,255,255,.12);
+  --green:#2FA35B;--green-lt:#5BD07F;--gold:#FFC83D;--red:#FF6B5A;--sheet:#163A25;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-user-select:none;user-select:none;touch-action:manipulation;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 15% 5%,rgba(91,208,127,.24),transparent 70%),radial-gradient(ellipse 60% 45% at 90% 15%,rgba(255,200,61,.14),transparent 70%),linear-gradient(180deg,#143322 0%,#102A1C 60%,#0B2014 100%);}
+.screen{position:fixed;inset:0;z-index:1;display:none;flex-direction:column;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));overflow-y:auto;}
+.screen.on{display:flex;}
+.wrap{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;}
+.topbar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.w-back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--border);font-family:inherit;cursor:pointer}
+.icon-btn{width:44px;height:44px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--ink);background:var(--card);border:1px solid var(--border);cursor:pointer;flex:0 0 auto}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-weight:800;font-size:14px;white-space:nowrap;color:var(--ink);font-family:inherit}
+button.pill{cursor:pointer}
+.kicker{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--green-lt);padding:5px 12px;border-radius:999px;background:var(--card);border:1px solid var(--border);}
+h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;margin:10px 0 6px;color:var(--gold);text-align:center}
+.sub{color:var(--soft);font-size:15px;line-height:1.45;max-width:30em;text-align:center}
+.btn-pri,.btn-sec{flex:1;min-height:56px;border-radius:18px;font:inherit;font-size:18px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px}
+.btn-pri{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#062814;border:none}
+.btn-sec{background:var(--card);color:var(--ink);border:1px solid var(--border)}
+.btn-pri:active,.btn-sec:active{transform:scale(.96)}
+.row{display:flex;gap:10px;width:100%;margin-top:14px}
+
+/* ── Home ── */
+.hero{position:relative;width:100%;height:190px;margin:2px 0 6px}
+.hero .mo{position:absolute;left:4%;bottom:0;width:46%;filter:drop-shadow(0 12px 16px rgba(0,0,0,.25));animation:bob 3s ease-in-out infinite}
+.hero .pet{position:absolute;right:6%;bottom:6px;width:36%}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.friends{display:flex;justify-content:center;gap:4px;margin:10px 0 2px;flex-wrap:wrap}
+.friends span{font-size:26px;filter:grayscale(1);opacity:.35}
+.friends span.on{filter:none;opacity:1}
+.quote{width:100%;margin-top:12px;border-radius:20px;padding:12px 14px;background:rgba(255,200,61,.10);border:1px dashed rgba(255,200,61,.45);font-size:14px;line-height:1.5;text-align:left}
+.quote b{display:block;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.quote small{display:block;margin-top:4px;color:var(--soft);font-weight:800}
+
+/* ── Farm ── */
+#s-farm{padding-bottom:calc(10px + env(safe-area-inset-bottom));overflow:hidden}
+.hud{width:100%;max-width:440px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.hud .day{flex:1;min-width:0;text-align:center;font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stagewrap{position:relative;width:100%;max-width:440px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;background:#BFE7FF;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
+.stage svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.cloud{animation:drift 30s linear infinite}.cloud.c2{animation-duration:44s;animation-delay:-18s}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(460px)}}
+.spot{position:absolute;transform:translate(-50%,-94%);cursor:pointer;z-index:2}
+.spot .farm-a{width:100%;height:auto;display:block}
+.spot.back{z-index:2}.spot.front{z-index:5}
+.spot .ring{position:absolute;left:8%;right:8%;bottom:-4%;height:16%;border-radius:50%;background:rgba(255,236,120,0);transition:.25s;pointer-events:none}
+.spot.sel .ring{background:rgba(255,236,120,.55);box-shadow:0 0 0 3px #FFE066,0 0 18px 6px rgba(255,224,102,.7)}
+.spot .tag{position:absolute;left:50%;top:-12%;transform:translateX(-50%);font-size:11px;font-weight:900;color:#fff;background:rgba(20,50,30,.62);padding:2px 8px;border-radius:999px;white-space:nowrap;pointer-events:none}
+.spot.locked{display:none}
+.chicks{position:absolute;z-index:5;display:flex;gap:2px;transform:translate(-50%,-94%);pointer-events:none}
+.chicks .farm-a{width:28px}
+.mo{position:absolute;z-index:6;transform:translate(-50%,-90.6%);transition:left .6s cubic-bezier(.45,.05,.45,1),top .6s cubic-bezier(.45,.05,.45,1),width .6s;pointer-events:none}
+.mo img{width:100%;display:block;transform-origin:50% 90%;filter:drop-shadow(0 6px 5px rgba(0,0,0,.18))}
+.mo::after{content:'';position:absolute;left:30%;right:30%;bottom:7%;height:5%;border-radius:50%;background:rgba(0,0,0,.18);z-index:-1}
+.m-breathe{animation:breathe 2.6s ease-in-out infinite}@keyframes breathe{50%{transform:scale(1.02,1.035)}}
+.m-step{animation:step .26s ease-in-out infinite alternate}@keyframes step{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-5%) rotate(2deg)}}
+.m-pour{animation:pour .5s ease-in-out infinite alternate}@keyframes pour{to{transform:rotate(6deg) translateY(2%)}}
+.m-scrub{animation:scrub .22s ease-in-out infinite alternate}@keyframes scrub{from{transform:translateX(-2%) rotate(-3deg)}to{transform:translateX(3%) rotate(3deg)}}
+.m-pat{animation:pat .5s ease-in-out infinite alternate}@keyframes pat{to{transform:translateY(2%) rotate(2deg)}}
+.m-hop{animation:hop .34s cubic-bezier(.3,.7,.4,1) infinite alternate}@keyframes hop{to{transform:translateY(-12%) scale(1.03)}}
+.m-sway{animation:sway 1.4s ease-in-out infinite alternate}@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.prop{position:absolute;z-index:7;transform:translate(-50%,-100%);pointer-events:none;transition:opacity .3s}
+.prop .farm-p{width:100%;height:auto;display:block}
+.prop.brush{animation:brushmv .45s ease-in-out infinite alternate}@keyframes brushmv{from{transform:translate(-80%,-100%) rotate(-8deg)}to{transform:translate(-20%,-100%) rotate(8deg)}}
+.prop.ball{transition:left .7s cubic-bezier(.3,.6,.4,1),top .7s cubic-bezier(.3,-0.6,.4,1)}
+.fly{position:fixed;z-index:50;font-size:30px;pointer-events:none;transition:transform .8s cubic-bezier(.5,-0.3,.7,1),opacity .8s}
+.hint{position:absolute;left:10px;right:10px;top:10px;z-index:9;display:flex;justify-content:center;pointer-events:none}
+.hint span{background:rgba(255,255,255,.95);color:#1C3A26;font-weight:900;font-size:14px;line-height:1.3;padding:8px 14px;border-radius:16px;box-shadow:0 6px 16px -6px rgba(0,0,0,.35);text-align:center;max-width:100%}
+.pop{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.6);z-index:12;opacity:0;pointer-events:none;font-family:'Fredoka','Nunito',sans-serif;font-size:22px;font-weight:700;color:#fff;text-align:center;padding:10px 16px;border-radius:18px;background:rgba(20,50,30,.84);transition:all .25s cubic-bezier(.3,1.5,.5,1);width:max-content;max-width:88%;line-height:1.3}
+.pop.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.pop small{display:block;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;opacity:.92;margin-top:3px}
+.night{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:0;transition:opacity 1s;background:radial-gradient(circle at 80% 12%,rgba(255,244,200,.55) 0 4%,transparent 4.5%),linear-gradient(180deg,rgba(14,22,60,.9),rgba(20,30,70,.72))}
+.night.on{opacity:1}
+.night i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:tw 1.4s ease-in-out infinite alternate}
+@keyframes tw{to{opacity:.2}}
+.tools{width:100%;max-width:440px;display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
+.tool{min-height:68px;border-radius:20px;font:inherit;font-weight:900;font-size:13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card2);color:var(--ink);border:1.5px solid var(--border);position:relative;transition:opacity .2s,transform .1s;padding:4px 2px}
+.tool span{font-size:25px;line-height:1}
+.tool:active{transform:scale(.94)}
+.tool.off{opacity:.38}
+.tool.go{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.25)}
+.tool.go::after{content:'';position:absolute;inset:-3px;border-radius:22px;border:2px solid var(--gold);animation:pulse 1.4s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{opacity:.15}50%{opacity:1}}
+#sleepBtn.go{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.3);animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:scale(1.06)}}
+
+/* ── Modal ── */
+.modal{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;justify-content:center;background:rgba(5,15,8,.55);padding:16px 12px calc(14px + env(safe-area-inset-bottom))}
+.modal.on{display:flex}
+.mcard{width:100%;max-width:440px;max-height:92%;overflow-y:auto;background:var(--sheet);border:1px solid var(--border);border-radius:28px;padding:18px 16px 16px;text-align:center;animation:up .3s cubic-bezier(.3,1.3,.5,1)}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.mcard .mimg{width:140px;height:140px;object-fit:contain;display:block;margin:-6px auto 0}
+.mcard .mart{width:150px;margin:0 auto}
+.mcard .mart .farm-a{width:100%;height:auto}
+.mcard h2{font-family:'Fredoka','Nunito',sans-serif;font-size:24px;line-height:1.15;color:var(--gold);margin:4px 0 6px}
+.mcard p{font-size:16px;line-height:1.5;color:var(--ink)}
+.adab{margin-top:12px;text-align:left;border-radius:18px;padding:12px 14px;background:rgba(91,208,127,.12);border:1px dashed rgba(91,208,127,.55);font-size:15px;line-height:1.5}
+.adab .ft{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--green-lt);margin-bottom:3px}
+.adab small{display:block;margin-top:4px;font-weight:800;color:var(--soft)}
+.fact{margin-top:10px;text-align:left;border-radius:18px;padding:10px 14px;background:rgba(255,200,61,.10);border:1px dashed rgba(255,200,61,.45);font-size:15px;line-height:1.5}
+.fact .ft{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.newtag{display:inline-block;margin-top:8px;padding:6px 12px;border-radius:999px;background:#FFE066;color:#5A3A00;font-weight:900;font-size:14px}
+.blist{display:flex;flex-direction:column;gap:8px;margin-top:10px;text-align:left}
+.bitem{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:18px;background:var(--card2);border:1px solid var(--border)}
+.bitem span{font-size:30px}.bitem b{flex:1;font-size:16px}
+.bitem button{min-height:44px;flex:0 0 auto;font-size:15px;padding:8px 12px;border-radius:14px}
+
+/* ── Book ── */
+.tabs2{display:flex;gap:8px;margin:4px 0 10px}
+.tabs2 button{border:1px solid var(--border);background:var(--card);color:var(--ink);font:inherit;font-weight:900;font-size:15px;padding:9px 16px;border-radius:999px;cursor:pointer}
+.tabs2 button.on{background:var(--green);color:#fff;border-color:transparent}
+.book{width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.bk{border-radius:22px;padding:10px;background:var(--card);border:1.5px solid var(--border);text-align:center}
+.bk .art{height:96px;display:flex;align-items:flex-end;justify-content:center}
+.bk .art .farm-a{max-height:92px;max-width:100%;width:auto}
+.bk b{display:block;font-size:16px;margin-top:4px}
+.bk small{display:block;font-size:12.5px;color:var(--soft);line-height:1.35;margin-top:4px;font-weight:700}
+.bk.lock .art{filter:brightness(0) opacity(.18)}
+.bk.lock b{color:var(--soft)}
+.adabs{width:100%;display:flex;flex-direction:column;gap:8px}
+.ad{border-radius:18px;padding:12px 14px;background:var(--card);border:1.5px solid var(--border);text-align:left;font-size:14.5px;line-height:1.45}
+.ad b{display:block;font-size:15.5px;margin-bottom:2px}
+.ad small{display:block;color:var(--soft);font-weight:800;margin-top:3px}
+.ad.lock{opacity:.45}.ad.lock p,.ad.lock small{display:none}
+.linkbtn{background:none;border:none;color:var(--soft);font:inherit;font-weight:800;font-size:14px;text-decoration:underline;margin-top:16px;cursor:pointer;padding:8px}
+</style>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{--bg:#F2F7EE;--bg2:#FFFFFF;--card:rgba(255,255,255,.92);--card2:#FFFFFF;--ink:#173022;--soft:#5B6E60;--border:rgba(23,48,34,.10);
+  --green:#1E9A4C;--green-lt:#1E9A4C;--gold:#E8590C;--sheet:#FFFFFF}
+.tool,.bitem,.bk,.ad{box-shadow:0 0 0 .5px rgba(23,48,34,.05),0 10px 22px -16px rgba(30,80,50,.45)}
+.quote,.fact{background:#FFF6D6;border-color:#FFC83D}.quote b,.fact .ft{color:#B35C00}
+.adab{background:#E8F7EC;border-color:#7CCB8F}.adab .ft{color:#0E7A3C}
+h1{color:#E8590C}
+.modal{background:rgba(20,40,28,.35)}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+.btn-pri{color:#fff}
+.tool{border-radius:20px!important}
+</style>
+<script src="bm-icons.js" defer></script>
+<script src="farm/farm-kit.js"></script>
+</head>
+<body>
+
+<!-- ═══════════ HOME ═══════════ -->
+<section class="screen on" id="s-home">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="w-back" href="./index.html">← Game Hub</a>
+      <span class="pill" id="homeStars">⭐ 0 / 9</span>
+    </div>
+    <div class="hero" id="hero"><img class="mo" src="baby-mo-poses/baby-mo-pose-35.webp" alt="Baby Mo"></div>
+    <div><span class="kicker">🐾 Baby Mo · Hewan</span></div>
+    <h1>Sahabat Hewan Mo</h1>
+    <p class="sub">Rawat kucing dan hewan di peternakan kecil Baby Mo. Beri makan, beri minum, bersihkan, dan sayangi mereka setiap hari!</p>
+    <div class="friends" id="friends"></div>
+    <div class="row"><button class="btn-pri" id="goFarm">🐾 Mulai Merawat</button></div>
+    <div class="row" style="margin-top:10px"><button class="btn-sec" id="goBook">📖 Buku Sahabat</button></div>
+    <div class="quote">
+      <b>📖 Renungan</b>
+      <span id="quoteTxt">"Tidak ada seekor binatang pun di bumi dan tidak ada burung yang terbang dengan kedua sayapnya, melainkan umat-umat seperti kamu."</span>
+      <small>QS. Al-An'am: 38</small>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FARM ═══════════ -->
+<section class="screen" id="s-farm">
+  <div class="hud">
+    <button class="icon-btn" id="farmX" aria-label="Keluar">✕</button>
+    <div class="day" id="dayLbl">Hari 1</div>
+    <button class="pill" id="basketBtn">🧺 <b id="basketN">0</b></button>
+    <button class="pill" id="sleepBtn">🌙 Tidur</button>
+  </div>
+  <div class="stagewrap">
+    <div class="stage" id="stage">
+      <svg class="bg" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3FF"/><stop offset="1" stop-color="#DDF3FF"/></linearGradient>
+          <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9AD775"/><stop offset="1" stop-color="#62B852"/></linearGradient>
+        </defs>
+        <rect width="400" height="200" fill="url(#sky)"/>
+        <circle cx="336" cy="54" r="22" fill="#FFE47A"/><circle cx="336" cy="54" r="32" fill="#FFE47A" opacity=".25"/>
+        <g fill="#fff" opacity=".92"><g class="cloud"><ellipse cx="40" cy="44" rx="32" ry="12"/><ellipse cx="58" cy="36" rx="18" ry="12"/></g><g class="cloud c2"><ellipse cx="20" cy="88" rx="26" ry="10"/><ellipse cx="34" cy="80" rx="15" ry="10"/></g></g>
+        <path d="M0 160 Q80 112 170 150 Q250 112 330 146 Q370 130 400 140 V220 H0Z" fill="#7CC4A0"/>
+        <path d="M0 176 Q100 150 200 172 Q300 150 400 170 V230 H0Z" fill="#8ED08A"/>
+        <!-- barn -->
+        <g transform="translate(30 92) scale(.62)">
+          <path d="M-0 -100 h180 v100 h-180z" transform="translate(10 160)" fill="#D9534F"/>
+          <path d="M-4 64 l104 -70 l104 70z" fill="#8E3B37"/><path d="M8 60 l92 -60 l92 60" stroke="#FFF7E8" stroke-width="7" fill="none" stroke-linejoin="round"/>
+          <rect x="66" y="86" width="68" height="74" fill="#7A2E2B"/><path d="M66 86 l68 74 M134 86 l-68 74" stroke="#FFF7E8" stroke-width="5"/><rect x="66" y="86" width="68" height="74" fill="none" stroke="#FFF7E8" stroke-width="6"/>
+          <circle cx="100" cy="38" r="12" fill="#FFF7E8"/><rect x="20" y="76" width="26" height="22" fill="#FFE8A3" stroke="#FFF7E8" stroke-width="4"/><rect x="154" y="76" width="26" height="22" fill="#FFE8A3" stroke="#FFF7E8" stroke-width="4"/>
+        </g>
+        <!-- tree -->
+        <g transform="translate(352 120)"><rect x="-6" y="40" width="12" height="60" rx="5" fill="#9A6236"/><circle cx="0" cy="30" r="34" fill="#3FA85B"/><circle cx="-20" cy="44" r="22" fill="#4CB868"/><circle cx="20" cy="46" r="22" fill="#4CB868"/></g>
+        <rect y="206" width="400" height="354" fill="url(#grass)"/>
+        <!-- fence -->
+        <g fill="#FFF7E8" stroke="#E0CBA8" stroke-width="1.5"><rect x="150" y="196" width="250" height="6"/><rect x="150" y="212" width="250" height="6"/>
+          <path d="M160 188h9v36h-9zM200 188h9v36h-9zM240 188h9v36h-9zM280 188h9v36h-9zM320 188h9v36h-9zM360 188h9v36h-9z"/></g>
+        <!-- paths & hay -->
+        <path d="M0 360 Q200 330 400 362 L400 380 Q200 350 0 380Z" fill="#E9D7A8" opacity=".75"/>
+        <g transform="translate(372 340) scale(.5)"><rect x="-46" y="-50" width="92" height="50" rx="10" fill="#EBC860"/><path d="M-46 -34 h92 M-46 -16 h92" stroke="#B5852E" stroke-width="3"/></g>
+        <g fill="#4DA845"><path d="M20 520l4-14 4 14M380 470l4-14 4 14M360 540l4-12 4 12M40 470l4-12 4 12M150 540l4-12 4 12"/></g>
+        <g><circle cx="30" cy="490" r="5" fill="#FF8FB8"/><circle cx="30" cy="490" r="2" fill="#FFE066"/><circle cx="372" cy="512" r="5" fill="#FFE066"/><circle cx="372" cy="512" r="2" fill="#FF9A3C"/><circle cx="210" cy="548" r="4" fill="#fff"/><circle cx="210" cy="548" r="1.6" fill="#FFE066"/></g>
+      </svg>
+      <div id="spots"></div>
+      <div class="mo" id="mo"><img id="moImg" src="baby-mo-poses/baby-mo-pose-04.webp" alt="Baby Mo"></div>
+      <div id="props"></div>
+      <div class="night" id="night"></div>
+      <div class="hint"><span id="hint">Ketuk hewan untuk merawatnya.</span></div>
+      <div class="pop" id="pop"></div>
+    </div>
+  </div>
+  <div class="tools" id="tools">
+    <button class="tool" data-t="feed"><span>🥣</span>Makan</button>
+    <button class="tool" data-t="water"><span>💧</span>Minum</button>
+    <button class="tool" data-t="clean"><span>🧽</span>Bersih</button>
+    <button class="tool" data-t="pet"><span>🤲</span>Elus</button>
+    <button class="tool" data-t="collect"><span>🧺</span>Ambil</button>
+  </div>
+</section>
+
+<!-- ═══════════ BOOK ═══════════ -->
+<section class="screen" id="s-book">
+  <div class="wrap">
+    <div class="topbar">
+      <button class="w-back" id="bookBack">← Kembali</button>
+      <span class="pill" id="bookStars">⭐ 0 / 9</span>
+    </div>
+    <h1 style="margin-top:0">Buku Sahabat</h1>
+    <div class="tabs2"><button class="on" data-b="animals">🐾 Hewan</button><button data-b="adab">🤲 Adab</button></div>
+    <div class="book" id="book"></div>
+    <div class="adabs" id="adabs" style="display:none"></div>
+    <button class="linkbtn" id="resetBtn">Mulai dari awal</button>
+  </div>
+</section>
+
+<div class="modal" id="modal"><div class="mcard" id="mcard"></div></div>
+
+<script>
+(function(){
+"use strict";
+function L(id,en){ return window.BM_LANG==="en" ? en : id; }
+function kit(){ return window.BabyMo || {}; }
+function sfx(n){ try{ kit().sfx && kit().sfx(n); }catch(e){} }
+var $ = function(id){ return document.getElementById(id); };
+var wait = function(ms){ return new Promise(function(r){ setTimeout(r,ms); }); };
+
+/* ═════ Baby Mo poses (existing renders) + a small motion between them ═════ */
+var POSES = {
+  idle:["pose-04","breathe"], wave:["yes","sway"], walk:["run","step"], feed:["pose-15","pour"], water:["pose-15","pour"],
+  clean:["pose-34","scrub"], pet:["pose-13","pat"], play:["pose-08","sway"], collect:["pose-36","pat"], wow:["wow","breathe"],
+  happy:["yeyy","hop"], jump:["pose-02","hop"], worry:["pose-40","breathe"], think:["idea","breathe"], dua:["thank-you","breathe"],
+  yawn:["pose-09","breathe"], sleep:["pose-17","breathe"], share:["pose-33","sway"], cuddle:["pose-35","sway"]
+};
+function poseSrc(n){ return "baby-mo-poses/baby-mo-"+n+".webp"; }
+(function(){ for(var k in POSES){ var i=new Image(); i.src=poseSrc(POSES[k][0]); } })();
+function pose(name){ var p=POSES[name]||POSES.idle; $("moImg").src=poseSrc(p[0]); $("moImg").className="m-"+p[1]; }
+
+/* ═════ animals on the farm ═════ */
+// spot: x,y on the 400×560 stage (feet), w = drawn width, row
+var ANIMALS = {
+  kucing: { x:226, y:430, w:76, row:"front", day:1, e:"🐱", id:"Kucing", en:"Cat", pname:["Mimi","Mimi"], snd:"cat",
+    fact:["Kucing suka dielus pelan-pelan dan tidur di tempat yang hangat.","Cats love gentle strokes and a warm place to nap."] },
+  ayam:   { x:92,  y:428, w:62, row:"front", day:1, e:"🐔", id:"Ayam", en:"Hen", pname:["Ciko","Ciko"], snd:"hen", give:["telur","🥚","Telur","Egg"],
+    fact:["Ayam betina bertelur hampir setiap hari.","A hen lays an egg almost every day."] },
+  kelinci:{ x:334, y:424, w:58, row:"front", day:2, e:"🐰", id:"Kelinci", en:"Rabbit", pname:["Bubu","Bubu"], snd:"rabbit",
+    fact:["Gigi kelinci terus tumbuh, jadi ia suka mengunyah wortel dan rumput.","A rabbit's teeth keep growing, so it loves to chew carrots and grass."] },
+  domba:  { x:206, y:300, w:96, row:"back", day:3, e:"🐑", id:"Domba", en:"Sheep", pname:["Kapas","Fluffy"], snd:"sheep", give:["wol","🧶","Wol","Wool"],
+    fact:["Bulu domba dicukur untuk dijadikan wol yang hangat — dombanya tidak sakit.","Sheep wool is sheared to make warm clothes — it doesn't hurt the sheep."] },
+  kambing:{ x:320, y:306, w:98, row:"back", day:4, e:"🐐", id:"Kambing", en:"Goat", pname:["Embe","Billy"], snd:"goat",
+    fact:["Kambing pandai memanjat dan suka daun-daunan.","Goats are great climbers and love leaves."] },
+  sapi:   { x:92,  y:308, w:132, row:"back", day:5, e:"🐄", id:"Sapi", en:"Cow", pname:["Moli","Molly"], snd:"cow", give:["susu","🥛","Susu","Milk"],
+    fact:["Allah memberi kita susu yang bersih dan segar dari sapi (QS. An-Nahl: 66).","Allah gives us pure, fresh milk from cows (Qur'an 16:66)."] }
+};
+var ORDER = ["kucing","ayam","kelinci","domba","kambing","sapi"];
+function aname(k){ return L(ANIMALS[k].id, ANIMALS[k].en); }
+function pname(k){ return ANIMALS[k].pname[window.BM_LANG==="en"?1:0]; }
+
+/* ═════ adab lessons (words only) ═════ */
+var ADAB = {
+  pahala:  { t:["Setiap kebaikan ada pahalanya","Every kindness is rewarded"], s:["“Pada setiap makhluk yang bernyawa ada pahala.”","“In every living creature there is a reward.”"], r:"HR. Bukhari & Muslim",
+             x:["Memberi makan hewan dengan Bismillah adalah kebaikan yang Allah cintai.","Feeding an animal with Bismillah is a kindness Allah loves."] },
+  minum:   { t:["Air untuk yang kehausan","Water for the thirsty"], s:["Ada seorang lelaki melihat anjing yang sangat haus. Ia turun ke sumur, mengisi sepatunya dengan air, lalu memberi anjing itu minum. Allah pun mengampuninya.","A man saw a very thirsty dog. He climbed down a well, filled his shoe with water and gave the dog a drink — and Allah forgave him."], r:"HR. Bukhari",
+             x:["Jangan biarkan hewan kehausan, ya.","Never leave an animal thirsty."] },
+  lembut:  { t:["Tangan yang lembut","Gentle hands"], s:["“Sesungguhnya Allah Maha Lembut dan mencintai kelembutan dalam segala hal.”","“Allah is Gentle and loves gentleness in all things.”"], r:"HR. Muslim",
+             x:["Elus pelan-pelan. Tidak memukul, tidak mengejar, tidak menarik ekor.","Stroke gently. No hitting, no chasing, no pulling tails."] },
+  bersih:  { t:["Kandang yang bersih","A clean pen"], s:["Islam mengajarkan kita hidup bersih. Hewan yang kita rawat juga perlu tempat yang bersih supaya sehat.","Islam teaches us to keep clean. The animals we look after need a clean place too, so they stay healthy."], r:"",
+             x:["Bersih itu sehat dan disukai Allah.","Clean is healthy, and Allah loves it."] },
+  kucing:  { t:["Sahabat yang sayang kucing","The friend who loved cats"], s:["Seorang sahabat Nabi ﷺ sangat sayang kepada kucing kecil, sampai ia dijuluki Abu Hurairah — “bapak kucing kecil”.","A companion of the Prophet ﷺ loved a little cat so much that he was called Abu Hurairah — “the father of the little cat”."], r:"",
+             x:["Kita juga boleh sayang kucing, asal dirawat dengan baik.","We can love cats too — and look after them well."] },
+  lapar:   { t:["Jangan biarkan kelaparan","Never leave them hungry"], s:["Rasulullah ﷺ mengajarkan agar kita tidak mengurung hewan tanpa memberinya makan dan minum.","The Prophet ﷺ taught us never to keep an animal without giving it food and water."], r:"HR. Bukhari & Muslim",
+             x:["Sebelum tidur, pastikan semua hewan sudah makan dan minum.","Before bed, make sure every animal has eaten and drunk."] },
+  induk:   { t:["Induk dan anaknya","A mother and her babies"], s:["Suatu hari ada burung yang anak-anaknya diambil. Rasulullah ﷺ bersabda: “Kembalikan anak-anaknya kepadanya.”","Once some baby birds were taken from their mother. The Prophet ﷺ said: “Give her babies back to her.”"], r:"HR. Abu Dawud",
+             x:["Anak ayam selalu bersama induknya. Jangan pisahkan mereka.","Chicks stay with their mother. Never separate them."] },
+  susu:    { t:["Nikmat dari Allah","A gift from Allah"], s:["“Kami memberimu minum dari apa yang ada dalam perutnya, susu yang bersih dan mudah ditelan.”","“We give you to drink from what is in their bellies — pure milk, pleasant to drink.”"], r:"QS. An-Nahl: 66",
+             x:["Ucapkan Alhamdulillah untuk telur, susu, dan wol.","Say Alhamdulillah for eggs, milk and wool."] },
+  berbagi: { t:["Berbagi itu indah","Sharing is beautiful"], s:["Hasil peternakan kita bagikan kepada keluarga dan tetangga. Sedekah membuat hati senang.","We share what the farm gives with family and neighbours. Giving makes hearts happy."], r:"",
+             x:["Tetangga yang baik saling memberi.","Good neighbours give to each other."] },
+  umat:    { t:["Umat seperti kita","Communities like us"], s:["“Tidak ada seekor binatang pun di bumi … melainkan umat-umat seperti kamu.”","“There is no creature on earth … but they are communities like you.”"], r:"QS. Al-An'am: 38",
+             x:["Hewan juga makhluk Allah yang punya keluarga dan perasaan.","Animals are Allah's creatures with families and feelings too."] }
+};
+var ADAB_ORDER = ["pahala","minum","lembut","bersih","kucing","lapar","induk","susu","berbagi","umat"];
+
+/* ═════ storage ═════ */
+var KEY = "bm_sahabat_hewan_v1";
+function freshAnimal(){ return { fed:false, water:false, clean:true, pet:false, got:false }; }
+function fresh(){ var d={ day:1, have:["kucing","ayam"], st:{}, basket:{}, adab:{}, stars:{}, seen:{}, chicks:false, shared:0 }; d.st.kucing=freshAnimal(); d.st.ayam=freshAnimal(); d.st.ayam.clean=false; return d; }
+function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"null"); if(!d||!Array.isArray(d.have)) return fresh(); var f=fresh(); for(var k in f) if(d[k]==null) d[k]=f[k]; return d; }catch(e){ return fresh(); } }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(D)); }catch(e){} }
+var D = load();
+var STAR_MAX = 9;
+function starCount(){ return Object.keys(D.stars).length; }
+function giveStar(id){ if(D.stars[id]) return false; D.stars[id]=1; save(); try{ kit().addStars && kit().addStars(1); }catch(e){} return true; }
+function basketTotal(){ var n=0; for(var k in D.basket) n+=D.basket[k]; return n; }
+
+/* ═════ sound & speech ═════ */
+function say(text){
+  try{ if(kit().isMuted && kit().isMuted()) return; var u=new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g,"")); u.lang=(window.BM_LANG==="en")?"en-US":"id-ID"; u.rate=.95; u.pitch=1.3; speechSynthesis.cancel(); speechSynthesis.speak(u); }catch(e){}
+}
+var AC=null;
+function animalSound(type){
+  try{
+    if(kit().isMuted && kit().isMuted()) return;
+    AC=AC||new (window.AudioContext||window.webkitAudioContext)(); if(AC.state==="suspended") AC.resume();
+    var t0=AC.currentTime, out=AC.createGain(); out.gain.value=.9; out.connect(AC.destination);
+    var blip=function(f0,f1,dur,delay,wave,vol,vib){
+      var o=AC.createOscillator(), g=AC.createGain(); o.type=wave||"sine";
+      o.frequency.setValueAtTime(f0,t0+delay); o.frequency.linearRampToValueAtTime(f1,t0+delay+dur);
+      if(vib){ var l=AC.createOscillator(), lg=AC.createGain(); l.frequency.value=vib; lg.gain.value=f0*.06; l.connect(lg); lg.connect(o.frequency); l.start(t0+delay); l.stop(t0+delay+dur); }
+      g.gain.setValueAtTime(0,t0+delay); g.gain.linearRampToValueAtTime(vol||.08,t0+delay+.03); g.gain.linearRampToValueAtTime(0,t0+delay+dur);
+      o.connect(g); g.connect(out); o.start(t0+delay); o.stop(t0+delay+dur+.02);
+    };
+    if(type==="cat") blip(820,560,.45,0,"triangle",.07,6);
+    else if(type==="hen"){ blip(950,780,.07,0,"square",.03); blip(980,800,.07,.1,"square",.03); blip(1100,700,.12,.2,"square",.03); }
+    else if(type==="rabbit"){ blip(1300,1500,.04,0,"sine",.05); blip(1300,1500,.04,.09,"sine",.05); }
+    else if(type==="sheep") blip(420,380,.55,0,"sawtooth",.035,12);
+    else if(type==="goat") blip(560,500,.4,0,"sawtooth",.035,14);
+    else if(type==="cow") blip(180,140,.8,0,"sawtooth",.05,4);
+  }catch(e){}
+}
+
+/* ═════ screens ═════ */
+function show(id){ document.querySelectorAll(".screen").forEach(function(s){ s.classList.toggle("on", s.id===id); }); }
+function renderStars(){ var t="⭐ "+starCount()+" / "+STAR_MAX; $("homeStars").textContent=t; $("bookStars").textContent=t; }
+
+/* ═════ stage building ═════ */
+var spotEls={};
+function pct(v,of){ return (v/of*100)+"%"; }
+function buildSpots(){
+  var h="";
+  ORDER.forEach(function(k){
+    var a=ANIMALS[k];
+    h+='<div class="spot '+a.row+'" data-k="'+k+'" style="left:'+pct(a.x,400)+';top:'+pct(a.y,560)+';width:'+pct(a.w,400)+'"><div class="ring"></div>'+FarmKit.animal(k)+'<div class="tag">'+pname(k)+'</div></div>';
+  });
+  h+='<div class="chicks" id="chicks" style="left:'+pct(140,400)+';top:'+pct(440,560)+'"></div>';
+  $("spots").innerHTML=h;
+  document.querySelectorAll(".spot").forEach(function(el){ spotEls[el.dataset.k]=el; el.addEventListener("click",function(){ selectAnimal(el.dataset.k); }); });
+}
+function moodOf(k){
+  var s=D.st[k]; if(!s) return "idle";
+  if(!s.fed) return "hungry";
+  if(!s.water) return "thirsty";
+  if(!s.clean) return "dirty";
+  return s.pet ? "happy" : "idle";
+}
+function renderAnimal(k, force){
+  var el=spotEls[k]; if(!el) return;
+  var on=D.have.indexOf(k)>=0;
+  el.classList.toggle("locked",!on);
+  if(!on) return;
+  FarmKit.setState(el.querySelector(".farm-a"), force||moodOf(k));
+}
+function renderAll(){
+  ORDER.forEach(function(k){ renderAnimal(k); });
+  $("chicks").innerHTML = D.chicks ? FarmKit.animal("anakAyam")+FarmKit.animal("anakAyam") : "";
+  $("dayLbl").textContent=L("Hari ","Day ")+D.day+" · "+D.have.length+" "+L("sahabat","friends");
+  $("basketN").textContent=basketTotal();
+  renderTools();
+}
+
+/* ═════ Baby Mo position ═════ */
+var MO = { x:200, y:500, w:150 };
+function moPlace(x,y,w,anim){
+  var m=$("mo"); m.style.transitionDuration=anim?"":"0ms";
+  m.style.left=pct(x,400); m.style.top=pct(y,560); m.style.width=pct(w,400);
+  MO={x:x,y:y,w:w};
+}
+function standFor(k){
+  var a=ANIMALS[k], back=a.row==="back";
+  var x=a.x-a.w*0.5-6; if(x<44) x=a.x+a.w*0.5+8;
+  return { x:Math.max(44,Math.min(356,x)), y:a.y+(back?26:34), w:back?132:150 };
+}
+async function walkTo(k){
+  var p=standFor(k); if(Math.abs(p.x-MO.x)<2 && Math.abs(p.y-MO.y)<2) return;
+  pose("walk"); moPlace(p.x,p.y,p.w,true); await wait(650);
+}
+
+/* ═════ props ═════ */
+function addProp(name,x,y,w,cls){
+  var d=document.createElement("div"); d.className="prop"+(cls?" "+cls:""); d.style.left=pct(x,400); d.style.top=pct(y,560); d.style.width=pct(w,400);
+  d.innerHTML=FarmKit.prop(name); $("props").appendChild(d); return d;
+}
+function clearProps(){ $("props").innerHTML=""; }
+
+/* ═════ HUD, hints, tools ═════ */
+var sel=null, busy=false;
+function hint(t){ $("hint").textContent=t; }
+var popT=null;
+function pop(html,ms){ var p=$("pop"); p.innerHTML=html; p.classList.add("on"); clearTimeout(popT); popT=setTimeout(function(){ p.classList.remove("on"); },ms||1600); return wait(ms||1600); }
+function actions(k){
+  var s=D.st[k]||{}; var a=ANIMALS[k];
+  return { feed:!s.fed, water:s.fed&&!s.water, clean:!s.clean, pet:true, collect:!!a.give && !s.got };
+}
+function suggest(k){
+  var s=D.st[k]; if(!s) return null;
+  if(!s.fed) return "feed"; if(!s.water) return "water"; if(!s.clean) return "clean";
+  if(ANIMALS[k].give && !s.got) return "collect"; if(!s.pet) return "pet"; return null;
+}
+function allCared(){ return D.have.every(function(k){ var s=D.st[k]; return s.fed && s.water && s.clean; }); }
+function renderTools(){
+  var a=sel?actions(sel):{}, sg=sel?suggest(sel):null;
+  document.querySelectorAll(".tool").forEach(function(t){ var k=t.dataset.t; t.classList.toggle("off",!a[k]); t.classList.toggle("go",sg===k); });
+  var petBtn=document.querySelector('.tool[data-t="pet"]');
+  petBtn.innerHTML = sel==="kucing" ? '<span>🧶</span>'+L("Main","Play") : '<span>🤲</span>'+L("Elus","Stroke");
+  $("sleepBtn").classList.toggle("go", allCared() && !busy);
+  if(busy) return;
+  if(!sel){ hint(L("Ketuk hewan untuk merawatnya.","Tap an animal to look after it.")); return; }
+  var n=pname(sel)+" ("+aname(sel).toLowerCase()+")";
+  if(sg==="feed") hint(L(n+" lapar. Ketuk Makan.",n+" is hungry. Tap Food."));
+  else if(sg==="water") hint(L(n+" haus. Ketuk Minum.",n+" is thirsty. Tap Water."));
+  else if(sg==="clean") hint(L(n+" kotor. Ketuk Bersih.",n+" is dirty. Tap Clean."));
+  else if(sg==="collect") hint(L(pname(sel)+" punya "+ANIMALS[sel].give[2].toLowerCase()+"! Ketuk Ambil.",pname(sel)+" has "+ANIMALS[sel].give[3].toLowerCase()+" for you! Tap Collect."));
+  else if(sg==="pet") hint(sel==="kucing"?L("Ajak "+n+" bermain!","Play with "+n+"!"):L("Elus "+n+" dengan lembut.","Stroke "+n+" gently."));
+  else if(allCared()) hint(L("Semua sahabat sudah dirawat! Ketuk 🌙 Tidur.","Every friend is cared for! Tap 🌙 Sleep."));
+  else hint(L(n+" senang! Rawat sahabat yang lain.",n+" is happy! Look after the others."));
+}
+
+/* ═════ actions ═════ */
+async function selectAnimal(k){
+  if(busy) return;
+  sel=k; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.toggle("sel",j===k); });
+  sfx("tap"); busy=true; renderTools();
+  await walkTo(k);
+  animalSound(ANIMALS[k].snd);
+  var m=moodOf(k); pose(m==="hungry"||m==="thirsty"||m==="dirty"?"worry":"wave");
+  busy=false; renderTools();
+}
+async function lesson(id, extra){
+  if(D.adab[id]) return;
+  D.adab[id]=1; save();
+  var a=ADAB[id], E=window.BM_LANG==="en"?1:0;
+  await card({ img:extra&&extra.img, art:extra&&extra.art, title:extra&&extra.title||"🤲 "+a.t[E],
+    text:extra&&extra.text||"", adab:'<span class="ft">🤲 '+L("Adab","Good manners")+' · '+a.t[E]+'</span>'+a.s[E]+(a.r?'<small>'+a.r+'</small>':'')+'<small>'+a.x[E]+'</small>',
+    tag:L("📖 Masuk Buku Adab","📖 Added to the Adab book") });
+  await adabComplete();
+}
+async function adabComplete(){
+  if(ADAB_ORDER.every(function(i){ return D.adab[i]; }) && giveStar("adab-all")){ renderStars(); sfx("win"); pose("jump");
+    await pop("📖 "+L("Buku Adab lengkap!","The Adab book is complete!")+"<small>⭐ "+L("Masya Allah, kamu sahabat hewan sejati!","Masha Allah, you're a true friend to animals!")+"</small>",2400); }
+}
+async function doTool(t){
+  if(busy) return;
+  if(!sel){ sfx("wrong"); pop(L("Pilih hewan dulu 👆","Choose an animal first 👆"),1300); return; }
+  var k=sel, s=D.st[k], a=ANIMALS[k], act=actions(k), el=spotEls[k];
+  if(t==="pet" && k==="kucing") t="play";
+  if(t!=="play" && !act[t]){
+    sfx("wrong");
+    var why={ feed:L(pname(k)+" sudah kenyang.",pname(k)+" is full."),
+      water:s.fed?L(pname(k)+" sudah minum.",pname(k)+" has had a drink."):L("Beri makan dulu, baru minum.","Food first, then water."),
+      clean:L(pname(k)+" sudah bersih.",pname(k)+" is already clean."),
+      collect:a.give?L("Sudah diambil hari ini. Besok lagi, ya.","Already collected today. Again tomorrow!"):L(aname(k)+" tidak memberi hasil — cukup disayangi saja.","The "+aname(k).toLowerCase()+" doesn't give anything to collect — just love it.") }[t];
+    pop(why,1600); return;
+  }
+  busy=true; renderTools(); var svg=el.querySelector(".farm-a");
+  if(t==="feed"){
+    say("Bismillah"); hint(L("Bismillah… ","Bismillah… ")+L("beri makan "+pname(k),"feeding "+pname(k)));
+    pose("feed"); var bx=standFor(k).x<a.x ? a.x-a.w*0.32 : a.x+a.w*0.32;
+    var bowl=addProp("mangkuk",bx,a.y+6,a.row==="back"?40:46);
+    await wait(700); FarmKit.setState(svg,"eat"); sfx("tap"); await wait(1500);
+    s.fed=true; save(); bowl.style.opacity="0"; setTimeout(clearProps,300); renderAnimal(k); animalSound(a.snd); sfx("correct");
+    pose("happy"); await pop("🥣 "+L("Kenyang!","Yum!")+"<small>"+L(pname(k)+" makan dengan lahap.",pname(k)+" ate it all up.")+"</small>",1300);
+    await lesson("pahala",{ title:"🥣 "+L("Bismillah!","Bismillah!"), text:L("Mo selalu membaca Bismillah sebelum memberi makan sahabatnya.","Mo always says Bismillah before feeding his friends.") });
+  } else if(t==="water"){
+    pose("water"); var tx=standFor(k).x<a.x ? a.x-a.w*0.3 : a.x+a.w*0.3;
+    var tr=addProp("minum",tx,a.y+6,a.row==="back"?60:70);
+    await wait(600); FarmKit.setState(svg,"eat"); await wait(1400);
+    s.water=true; save(); tr.style.opacity="0"; setTimeout(clearProps,300); renderAnimal(k); sfx("correct");
+    pose("happy"); await pop("💧 "+L("Segar!","Fresh!"),1100);
+    await lesson("minum",{ title:"💧 "+L("Segar sekali!","So fresh!") });
+  } else if(t==="clean"){
+    pose("clean"); var br=addProp("sikat",a.x,a.y-a.w*0.35,a.row==="back"?46:40,"brush");
+    sfx("tap"); await wait(1600);
+    s.clean=true; save(); br.remove(); renderAnimal(k); svg.classList.add("fa-clean"); setTimeout(function(){ svg.classList.remove("fa-clean"); },1500); sfx("star");
+    pose("happy"); await pop("✨ "+L("Bersih!","Clean!"),1100);
+    await lesson("bersih",{ title:"✨ "+L("Bersih dan wangi!","Clean and fresh!") });
+  } else if(t==="pet"){
+    pose("pet"); FarmKit.setState(svg,"happy"); animalSound(a.snd); await wait(1500);
+    s.pet=true; save(); renderAnimal(k); sfx("correct");
+    pose("cuddle"); await pop("💗 "+L(pname(k)+" senang dielus!",pname(k)+" loves that!"),1300);
+    await lesson("lembut",{ title:"💗 "+L("Pelan-pelan, ya","Gently does it") });
+  } else if(t==="play"){
+    pose("play"); var ball=addProp("bola",MO.x+20,MO.y-60,22,"ball");
+    await wait(60); ball.style.left=pct(a.x+40,400); ball.style.top=pct(a.y-6,560);
+    FarmKit.setState(svg,"walk"); sfx("tap"); await wait(800);
+    FarmKit.setState(svg,"happy"); animalSound("cat"); await wait(900);
+    clearProps(); s.pet=true; save(); renderAnimal(k); sfx("correct"); giveStar("friend-kucing"); renderStars();
+    pose("happy"); await pop("🧶 "+L("Mimi senang bermain!","Mimi loves to play!"),1200);
+    await lesson("kucing",{ art:"kucing", title:"🐱 "+L("Mimi sayang Mo","Mimi loves Mo") });
+  } else if(t==="collect"){
+    var g=a.give;
+    if(!(s.fed&&s.water&&s.clean)){ busy=false; renderTools(); sfx("wrong"); pop(L("Rawat "+pname(k)+" dulu sampai senang.","Look after "+pname(k)+" first until it's happy.")+"<small>"+L("Makan, minum, dan bersih.","Food, water and clean.")+"</small>",1900); return; }
+    pose("collect"); var pr=addProp(g[0]==="telur"?"telur":g[0]==="susu"?"susu":"wol",a.x+(standFor(k).x<a.x?-a.w*0.25:a.w*0.25),a.y+4,g[0]==="telur"?20:34);
+    await wait(900); flyTo(pr,g[1]); pr.remove(); sfx("star");
+    D.basket[g[0]]=(D.basket[g[0]]||0)+1; s.got=true; save(); renderAll(); if(k==="ayam"){ giveStar("friend-ayam"); renderStars(); }
+    pose("wow"); say(L("Alhamdulillah","Alhamdulillah"));
+    await pop(g[1]+" "+L("Alhamdulillah! Dapat "+g[2].toLowerCase(),"Alhamdulillah! A "+g[3].toLowerCase()),1500);
+    await lesson("susu",{ title:g[1]+" "+L("Alhamdulillah!","Alhamdulillah!"), text:L("Telur, susu, dan wol adalah nikmat dari Allah lewat hewan-hewan.","Eggs, milk and wool are Allah's gifts through animals.") });
+  }
+  if(D.have.every(function(j){ var x=D.st[j]; return x.fed&&x.water&&x.clean&&x.pet; }) && !D.seen["allhappy"+D.day]){
+    D.seen["allhappy"+D.day]=1; save(); pose("jump"); sfx("win");
+    var st=giveStar("lovely");
+    await pop("🎉 "+L("Semua sahabat senang!","Every friend is happy!")+(st?"<small>⭐ "+L("Lencana Peternak Penyayang","Kind Farmer badge")+"</small>":""),2000);
+  }
+  pose("idle"); busy=false; renderTools();
+}
+function flyTo(fromEl,emoji){
+  var r=fromEl.getBoundingClientRect(), t=$("basketBtn").getBoundingClientRect();
+  var f=document.createElement("div"); f.className="fly"; f.textContent=emoji;
+  f.style.left=(r.left+r.width/2-15)+"px"; f.style.top=(r.top)+"px"; document.body.appendChild(f);
+  setTimeout(function(){ f.style.transform="translate("+(t.left+t.width/2-(r.left+r.width/2))+"px,"+(t.top-r.top)+"px) scale(.5)"; f.style.opacity=".2"; },60);
+  setTimeout(function(){ f.remove(); },1000);
+}
+
+/* ═════ night and the next day ═════ */
+async function sleep(){
+  if(busy) return;
+  var needy=D.have.filter(function(k){ var s=D.st[k]; return !s.fed||!s.water; });
+  if(needy.length){
+    var go=await choose({ img:"pose-40", title:L("Masih ada yang lapar","Someone is still hungry"),
+      text:L(needy.map(pname).join(", ")+" belum makan atau minum.",needy.map(pname).join(", ")+" hasn't had food or water yet."),
+      adab:"lapar", yes:L("🌙 Tidur saja","🌙 Sleep anyway"), no:L("🥣 Rawat dulu","🥣 Care first") });
+    if(!go){ sel=needy[0]; selectAnimal(needy[0]); return; }
+  }
+  busy=true; renderTools(); sel=null; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.remove("sel"); });
+  hint(L("Selamat malam…","Good night…"));
+  pose("yawn"); await wait(900);
+  pose("sleep"); $("night").classList.add("on"); D.have.forEach(function(k){ renderAnimal(k,"sleep"); });
+  say("Bismika Allahumma ahya wa amut");
+  await pop("🌙 Bismika Allahumma ahya wa amut<small>"+L("Dengan nama-Mu ya Allah, aku hidup dan aku mati.","In Your name, O Allah, I live and I die.")+"</small>",2600);
+  // a new day
+  D.day++;
+  D.have.forEach(function(k){ var s=D.st[k]; s.fed=false; s.water=false; s.pet=false; s.got=false; s.clean=Math.random()<.6; });
+  var newcomer=null;
+  ORDER.forEach(function(k){ if(!newcomer && D.have.indexOf(k)<0 && ANIMALS[k].day<=D.day){ newcomer=k; } });
+  if(newcomer){ D.have.push(newcomer); D.st[newcomer]=freshAnimal(); D.st[newcomer].clean=false; }
+  var chicksNow = !D.chicks && D.day>=3;
+  if(chicksNow) D.chicks=true;
+  save();
+  await wait(400);
+  $("night").classList.remove("on"); renderAll();
+  pose("wave"); say(L("Assalamu'alaikum, teman-teman!","Assalamu'alaikum, friends!"));
+  await pop("☀️ "+L("Hari ","Day ")+D.day+"<small>Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur</small>",2300);
+  if(newcomer){
+    var a=ANIMALS[newcomer]; animalSound(a.snd); pose("happy"); sfx("win");
+    var st=giveStar("friend-"+newcomer); renderStars();
+    await card({ art:newcomer, title:L("Sahabat baru: ","New friend: ")+pname(newcomer)+" "+a.e, text:L("Seekor "+a.id.toLowerCase()+" bergabung di peternakan Mo. Ayo sapa dan rawat dia!","A "+a.en.toLowerCase()+" has joined Mo's farm. Say hi and look after it!"),
+      fact:L(a.fact[0],a.fact[1]), tag: st?L("⭐ Sahabat baru!","⭐ New friend!"):"" });
+    if(D.have.length===ORDER.length) await lesson("umat",{ title:"🐾 "+L("Peternakan Mo lengkap!","Mo's farm is complete!") });
+  }
+  if(chicksNow){
+    pose("wow"); await card({ art:"anakAyam", title:"🐣 "+L("Ciko punya anak!","Ciko has chicks!"), text:L("Dua anak ayam lucu menetas. Mereka selalu mengikuti induknya.","Two cute chicks have hatched. They always follow their mother."), adab:"induk" });
+    D.adab.induk=1; save();
+  }
+  pose("idle"); busy=false; renderTools();
+}
+
+/* ═════ basket & sharing ═════ */
+var GIVES={telur:["🥚","Telur","Eggs"],susu:["🥛","Susu","Milk"],wol:["🧶","Wol","Wool"]};
+var FRIENDS=[["Umi","Umi"],["Nenek","Grandma"],["tetangga","the neighbours"],["Bu Siti","Bu Siti"],["Kak Adam","Kak Adam"],["Ais","Ais"]];
+function openBasket(){
+  if(busy) return;
+  var keys=Object.keys(GIVES).filter(function(k){ return D.basket[k]>0; });
+  var h='<img class="mimg" src="'+poseSrc("pose-33")+'" alt=""><h2>'+L("Keranjang Mo","Mo's Basket")+'</h2>';
+  if(!keys.length) h+='<p>'+L("Masih kosong. Rawat ayam, domba, dan sapi sampai senang, lalu ketuk Ambil.","It's empty. Look after the hen, sheep and cow until they're happy, then tap Collect.")+'</p>';
+  else { h+='<p style="font-size:14px;color:var(--soft)">'+L("Berbagi hasil peternakan membuat hati senang.","Sharing what the farm gives makes hearts happy.")+'</p><div class="blist">';
+    keys.forEach(function(k){ h+='<div class="bitem"><span>'+GIVES[k][0]+'</span><b>'+L(GIVES[k][1],GIVES[k][2])+' × '+D.basket[k]+'</b><button class="btn-pri" data-share="'+k+'">🎁 '+L("Bagikan","Share")+'</button></div>'; });
+    h+='</div>'; }
+  h+='<div class="row"><button class="btn-sec" data-close>'+L("Tutup","Close")+'</button></div>';
+  openModal(h);
+  $("mcard").querySelector("[data-close]").onclick=function(){ sfx("tap"); closeModal(); };
+  $("mcard").querySelectorAll("[data-share]").forEach(function(b){ b.onclick=function(){ share(b.dataset.share); }; });
+}
+async function share(k){
+  closeModal(); busy=true; renderTools();
+  var f=FRIENDS[D.shared%FRIENDS.length], E=window.BM_LANG==="en"; D.shared++; D.basket[k]--; save(); renderAll();
+  pose("share"); sfx("correct");
+  var st=giveStar("share"); renderStars();
+  say(L("Mo memberi "+GIVES[k][1].toLowerCase()+" untuk "+f[0],"Mo gives "+GIVES[k][2].toLowerCase()+" to "+f[1]));
+  await card({ img:"pose-33", title:GIVES[k][0]+" "+L("Untuk "+f[0]+"!","For "+f[1]+"!"),
+    text:L("Mo memberi "+GIVES[k][1].toLowerCase()+" untuk "+f[0]+". "+f[0]+" tersenyum: \"Jazakallah khairan, Mo!\"","Mo gives "+GIVES[k][2].toLowerCase()+" to "+f[1]+". \""+"Jazakallah khairan, Mo!\""),
+    adab:D.adab.berbagi?null:"berbagi", tag:st?L("⭐ Lencana Suka Berbagi!","⭐ Sharing badge!"):"" });
+  D.adab.berbagi=1; save();
+  pose("idle"); busy=false; renderTools();
+}
+
+/* ═════ modal helpers ═════ */
+function openModal(h){ $("mcard").innerHTML=h; $("modal").classList.add("on"); }
+function closeModal(){ $("modal").classList.remove("on"); }
+function adabHtml(id){ var a=ADAB[id], E=window.BM_LANG==="en"?1:0; return '<div class="adab"><span class="ft">🤲 '+L("Adab","Good manners")+' · '+a.t[E]+'</span>'+a.s[E]+(a.r?'<small>'+a.r+'</small>':'')+'<small>'+a.x[E]+'</small></div>'; }
+function card(o){
+  return new Promise(function(res){
+    var h=(o.img?'<img class="mimg" src="'+poseSrc(o.img)+'" alt="">':'')+(o.art?'<div class="mart">'+FarmKit.animal(o.art,{state:"happy"})+'</div>':'')+
+      '<h2>'+o.title+'</h2>'+(o.text?'<p>'+o.text+'</p>':'')+(o.tag?'<span class="newtag">'+o.tag+'</span>':'')+
+      (o.fact?'<div class="fact"><span class="ft">💡 '+L("Tahukah kamu?","Did you know?")+'</span>'+o.fact+'</div>':'')+
+      (o.adab?(o.adab.indexOf("<")===0?'<div class="adab">'+o.adab+'</div>':adabHtml(o.adab)):'')+
+      '<div class="row"><button class="btn-pri" data-ok>'+L("Lanjut →","Next →")+'</button></div>';
+    openModal(h);
+    $("mcard").querySelector("[data-ok]").onclick=function(){ sfx("tap"); closeModal(); res(); };
+  });
+}
+function choose(o){
+  return new Promise(function(res){
+    openModal('<img class="mimg" src="'+poseSrc(o.img)+'" alt=""><h2>'+o.title+'</h2><p>'+o.text+'</p>'+(o.adab?adabHtml(o.adab):'')+'<div class="row"><button class="btn-sec" data-v="1">'+o.yes+'</button><button class="btn-pri" data-v="0">'+o.no+'</button></div>');
+    if(o.adab){ D.adab[o.adab]=1; save(); }
+    $("mcard").querySelectorAll("[data-v]").forEach(function(b){ b.onclick=function(){ sfx("tap"); closeModal(); res(b.dataset.v==="1"); }; });
+  });
+}
+
+/* ═════ book ═════ */
+function renderBook(){
+  var E=window.BM_LANG==="en"?1:0, h='';
+  ORDER.forEach(function(k){
+    var a=ANIMALS[k], got=D.have.indexOf(k)>=0;
+    h+='<div class="bk'+(got?'':' lock')+'"><div class="art">'+FarmKit.animal(k,{state:got?"happy":"idle"})+'</div><b>'+(got?pname(k)+' · '+aname(k):'???')+'</b><small>'+(got?a.fact[E]:L("Bergabung di hari ke-"+a.day,"Joins on day "+a.day))+'</small></div>';
+  });
+  $("book").innerHTML=h;
+  var g='';
+  ADAB_ORDER.forEach(function(id,i){ var a=ADAB[id], got=D.adab[id];
+    g+='<div class="ad'+(got?'':' lock')+'"><b>'+(got?'🤲 ':'🔒 ')+(i+1)+'. '+(got?a.t[E]:L("Belum terbuka","Not found yet"))+'</b><p>'+a.s[E]+'</p>'+(a.r?'<small>'+a.r+'</small>':'')+'</div>'; });
+  $("adabs").innerHTML=g;
+  renderStars();
+}
+document.querySelectorAll(".tabs2 button").forEach(function(b){ b.addEventListener("click",function(){
+  document.querySelectorAll(".tabs2 button").forEach(function(x){ x.classList.toggle("on",x===b); });
+  $("book").style.display=b.dataset.b==="animals"?"grid":"none"; $("adabs").style.display=b.dataset.b==="adab"?"flex":"none"; sfx("tap"); }); });
+
+/* ═════ home ═════ */
+function renderHome(){
+  $("friends").innerHTML=ORDER.map(function(k){ return '<span class="'+(D.have.indexOf(k)>=0?'on':'')+'">'+ANIMALS[k].e+'</span>'; }).join('');
+  var started=D.day>1||D.have.some(function(k){ return D.st[k].fed; });
+  $("goFarm").textContent=started?"🐾 "+L("Lanjut · Hari ","Continue · Day ")+D.day:"🐾 "+L("Mulai Merawat","Start Caring");
+  renderStars();
+}
+$("hero").insertAdjacentHTML("beforeend",'<div class="pet">'+FarmKit.animal("kucing",{state:"happy"})+'</div>');
+
+/* ═════ wiring ═════ */
+function enterFarm(){
+  show("s-farm"); renderAll(); moPlace(200,512,150,false); pose("idle");
+  if(!D.seen.intro){ D.seen.intro=1; save(); pose("wave"); say(L("Assalamu'alaikum! Ayo rawat sahabat-sahabat kita!","Assalamu'alaikum! Let's look after our animal friends!"));
+    pop("👋 "+L("Assalamu'alaikum! Ayo rawat sahabat hewan!","Assalamu'alaikum! Let's care for our animal friends!"),2000); }
+}
+buildSpots();
+$("goFarm").addEventListener("click",function(){ sfx("tap"); enterFarm(); });
+$("goBook").addEventListener("click",function(){ sfx("tap"); renderBook(); show("s-book"); });
+$("bookBack").addEventListener("click",function(){ renderHome(); show("s-home"); });
+$("farmX").addEventListener("click",function(){ if(busy) return; renderHome(); show("s-home"); });
+$("sleepBtn").addEventListener("click",function(){ sfx("tap"); sleep(); });
+$("basketBtn").addEventListener("click",function(){ sfx("tap"); openBasket(); });
+document.querySelectorAll(".tool").forEach(function(t){ t.addEventListener("click",function(){ doTool(t.dataset.t); }); });
+$("resetBtn").addEventListener("click",function(){
+  if(!confirm(L("Mulai dari awal? Hewan dan keranjang diulang (bintang tetap).","Start over? Animals and basket reset (stars stay)."))) return;
+  var keep={stars:D.stars,adab:D.adab}; D=fresh(); D.stars=keep.stars; D.adab=keep.adab; save(); buildSpots(); renderBook(); renderHome();
+});
+(function(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*45).toFixed(1)+'%;animation-delay:'+(Math.random()*1.4).toFixed(2)+'s"></i>'; n.innerHTML=h; })();
+if(window.BM_LANG==="en") $("quoteTxt").textContent='"There is no creature on earth, nor bird that flies with its wings, but they are communities like you."';
+renderHome();
+})();
+</script>
+<script src="/bm-kit.js" defer></script>
+</body>
+</html>

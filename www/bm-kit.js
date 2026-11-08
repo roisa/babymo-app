@@ -504,6 +504,7 @@
     "babymo-memory-match":    ["cari-baby-mo", "babymo-look-and-find.html",  "Cari Baby Mo",   "Baby Mo sedang bersembunyi 🔍"],
     "baby-mo-forehand-beat":  ["tenis-adam",   "babymo-tenis-adam.html",     "Tenis Kak Adam", "Belajar tenis bareng Kak Adam 🎾"],
     "babymo-tenis-adam":      ["forehand-beat","baby-mo-forehand-beat.html", "Forehand Beat",  "Main forehand mengikuti irama 🎵"],
+    "babymo-sahabat-hewan":   ["kebun-ais",    "babymo-kebun-ais.html",      "Kebun Kecil Ais","Tanam, siram, lalu panen 🌱"],
     "babymo-kebun-ais":       ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Doa sebelum makan & tidur 🤲"],
     "babymo-puzzle-katabaik": ["kata-islam",   "babymo-arabic-spelling.html","Kata Islam",     "Susun kata Arab pertamamu 🔤"],
     "babymo-wudhu":           ["pray-with-mo", "babymo-pray-with-mo.html",   "Sholat Bareng Mo","Lanjut belajar sholat 🕌"],
