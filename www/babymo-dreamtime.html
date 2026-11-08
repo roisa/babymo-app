@@ -156,7 +156,49 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 @media(min-width:820px){.pjgrid{max-width:680px!important;}}
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
-@media(min-width:760px){.screen{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#0A0820;}}
+@media(min-width:760px){.screen{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}}body{background:#0A0820;}
+
+/* ── Gosok gigi: guided poses ── */
+.bsteps{display:flex;justify-content:center;gap:6px;margin:8px 0 2px;flex-shrink:0}
+.bsteps i{width:24px;height:24px;border-radius:50%;font-style:normal;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,.08);color:var(--cream-dim);transition:.3s}
+.bsteps i.now{background:#3ECFB8;color:#0E1C2E;transform:scale(1.15);box-shadow:0 0 0 4px rgba(62,207,184,.22)}
+.bsteps i.ok{background:rgba(62,207,184,.35);color:#E9FFFB}
+.bstage{position:relative;width:min(62vw,250px);aspect-ratio:1;margin:4px auto 0;flex-shrink:1;min-height:150px}
+.bglow{position:absolute;inset:6% 6% 0;border-radius:50%;background:radial-gradient(circle at 50% 45%,rgba(126,232,220,.55),rgba(140,150,247,.25) 55%,transparent 72%);opacity:.3;transition:opacity .4s}
+.bpose{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;-webkit-mask-image:linear-gradient(180deg,#000 82%,transparent 100%);mask-image:linear-gradient(180deg,#000 82%,transparent 100%);filter:drop-shadow(0 10px 18px rgba(0,0,0,.3))}
+.bpose.pop{animation:bpop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bpop{from{transform:scale(.88);opacity:.4}to{transform:none;opacity:1}}
+.bpose.wl{animation:bwl .22s ease}.bpose.wr{animation:bwr .22s ease}.bpose.wu{animation:bwu .22s ease}.bpose.wd{animation:bwd .22s ease}.bpose.sw{animation:bsw .5s ease}
+@keyframes bwl{50%{transform:translateX(-4%) rotate(-2deg)}}@keyframes bwr{50%{transform:translateX(4%) rotate(2deg)}}
+@keyframes bwu{50%{transform:translateY(-3%)}}@keyframes bwd{50%{transform:translateY(3%)}}
+@keyframes bsw{20%{transform:rotate(-4deg)}40%{transform:rotate(4deg)}60%{transform:rotate(-3deg)}80%{transform:rotate(3deg)}}
+.bfoam span{position:absolute;border-radius:50%;background:rgba(255,255,255,.92);box-shadow:0 0 0 2px rgba(126,232,220,.5);animation:bfo .9s ease-out forwards;pointer-events:none}
+@keyframes bfo{from{transform:scale(.3);opacity:1}to{transform:translateY(-36px) scale(1.2);opacity:0}}
+.bspark span{position:absolute;color:#FFE27A;font-size:22px;animation:bsp 1.4s ease-in-out infinite;pointer-events:none;text-shadow:0 0 10px rgba(255,226,122,.8)}
+@keyframes bsp{0%,100%{transform:scale(.5);opacity:.3}50%{transform:scale(1.2);opacity:1}}
+.blabel b{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:50%;background:#8C96F7;color:#fff;font-size:12px;margin-right:4px}
+.blabel{position:absolute;left:50%;bottom:-2px;transform:translateX(-50%);white-space:nowrap;padding:6px 14px;border-radius:999px;background:rgba(243,241,255,.94);color:#3B3480;font-weight:900;font-size:14px;box-shadow:0 6px 16px -6px rgba(0,0,0,.5)}
+.bplay{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 24px 6px;gap:10px;min-height:0}
+.btools{display:flex;gap:12px;width:100%;max-width:320px;justify-content:center}
+.btool,.bcup,.bhold{flex:1;min-height:84px;border-radius:22px;border:2px solid var(--border);background:rgba(255,255,255,.07);color:var(--cream);font:inherit;font-weight:900;font-size:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;position:relative;overflow:hidden;touch-action:none;-webkit-user-select:none;user-select:none}
+.btool span,.bcup span,.bhold span{font-size:34px;line-height:1}
+.btool.ok,.bcup.ok,.bhold.ok{border-color:#3ECFB8;background:rgba(62,207,184,.18)}
+.btool:not(.ok),.bcup:not(.ok){animation:pu 1.8s infinite}
+.bhold.press{transform:scale(.95);border-color:#7EE8DC}
+.bpaste{display:flex;flex-direction:column;align-items:center;gap:8px;width:100%;max-width:320px}
+.bbrushsvg{width:200px;height:54px}
+.bzone{position:relative;border-radius:22px;background:rgba(255,255,255,.05);border:2px solid var(--border);touch-action:none;cursor:grab;overflow:hidden;width:100%;max-width:320px}
+.bzone.h{height:96px}.bzone.v{height:150px;max-width:180px}
+.bzone.ok{border-color:#3ECFB8}
+.bzone .btrack{position:absolute;background:rgba(255,255,255,.1);border-radius:99px}
+.bzone.h .btrack{top:50%;left:12px;right:12px;height:2px}.bzone.v .btrack{left:50%;top:12px;bottom:12px;width:2px}
+.bbr{position:absolute;left:50%;top:50%;font-size:44px;line-height:1;transform:translate(-50%,-50%);pointer-events:none;filter:drop-shadow(0 3px 12px rgba(62,207,184,.45))}
+.barr{position:absolute;inset:0;pointer-events:none;display:flex;justify-content:space-between;align-items:center;padding:0 14px;font-size:22px;color:rgba(255,255,255,.25);animation:pu 1.8s infinite}
+.bzone.v .barr{flex-direction:column;padding:6px 0}
+.bmeter{width:100%;max-width:320px}
+.bmbar{background:rgba(255,255,255,.07);border-radius:99px;height:8px;overflow:hidden;margin-bottom:5px}
+.bmbar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#3ECFB8,#7EE8DC);transition:width .25s}
+.bmtxt{display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:var(--cream-dim)}.bmtxt b{color:#3ECFB8}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-dreamtime.html">
 <meta name="robots" content="index,follow">
@@ -438,84 +480,154 @@ function runStep(idx){
 }
 
 /* ══════════════════════════════════════════
-   STEP 1 — GOSOK GIGI + BRUSH SOUND
+   STEP 1 — GOSOK GIGI: six guided moves, each with its own Baby Mo pose
+   (siapkan alat → pasta → kiri-kanan → atas-bawah → kumur → bersih!)
 ══════════════════════════════════════════ */
+function bubbleSound(){
+  var ctx=getACtx();if(!ctx)return;
+  try{for(var i=0;i<3;i++){var o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime+i*0.07;
+    o.type='sine';o.frequency.setValueAtTime(500+Math.random()*400,t);o.frequency.exponentialRampToValueAtTime(1100+Math.random()*300,t+0.06);
+    g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.12,t+0.01);g.gain.exponentialRampToValueAtTime(0.0001,t+0.07);
+    o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.08);}}catch(e){}
+}
+function sparkleSound(){
+  var ctx=getACtx();if(!ctx)return;
+  try{[1047,1319,1568,2093].forEach(function(f,i){var o=ctx.createOscillator(),g=ctx.createGain(),t=ctx.currentTime+i*0.09;
+    o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(0.0001,t);g.gain.exponentialRampToValueAtTime(0.1,t+0.02);g.gain.exponentialRampToValueAtTime(0.0001,t+0.3);
+    o.connect(g);g.connect(ctx.destination);o.start(t);o.stop(t+0.32);});}catch(e){}
+}
 function buildBrush(wrap,done){
-  var NEED=7,count=0,bx=50,finished=false,pdown=false,refX=0,lastDir=null,moveX=0;
-  var FACES=['😐','🙂','😊','😄','🤩','✨','😁'];
+  var PH=[
+    {pose:'tools',   t:'Siapkan alatnya',      h:'Ketuk sikat gigi dan pasta gigi',            say:'Siapkan sikat gigi dan pasta gigi, ya.'},
+    {pose:'paste',   t:'Pasta sebesar kacang', h:'Tahan tombol untuk menekan pasta gigi',      say:'Tekan pasta gigi, sebesar biji kacang saja.'},
+    {pose:'brush-lr',t:'Sikat kiri – kanan',   h:'Geser kiri ← → kanan untuk menyikat',        say:'Bismillah. Sikat ke kiri dan ke kanan.'},
+    {pose:'brush-ud',t:'Sikat atas – bawah',   h:'Geser ke atas ↑ ↓ ke bawah',                 say:'Sekarang sikat ke atas dan ke bawah.'},
+    {pose:'rinse',   t:'Kumur-kumur',          h:'Ketuk gelasnya 3 kali untuk berkumur',       say:'Kumur-kumur, lalu buang airnya.'},
+    {pose:'done',    t:'Gigi bersih!',         h:'Alhamdulillah, gigi bersih dan putih',       say:'Alhamdulillah, gigi bersih dan putih!'}
+  ];
+  var cur=-1, finished=false;
+  ['tools','paste','brush-lr','brush-ud','rinse','done'].forEach(function(n){var i=new Image();i.src='mo-brush/'+n+'.webp';});
 
   wrap.innerHTML=
-    '<div class="shead"><div class="snum">Langkah 1 dari 4</div><div class="stitle">🪥 Gosok Gigi</div><div class="shint">Geser kiri ← → kanan untuk menyikat!</div></div>'
-    +'<div style="display:flex;justify-content:center;padding:4px 0 2px;flex-shrink:0;position:relative;">'
-    +'<div style="position:relative;display:inline-block;">'
-    +'<div style="width:150px;height:150px;border-radius:50%;overflow:hidden;position:relative;background:radial-gradient(circle at 50% 42%,rgba(140,150,247,.28),rgba(26,23,64,.3) 60%,transparent 72%);box-shadow:inset 0 0 0 2px rgba(179,188,255,.25);animation:mof 3.6s ease-in-out infinite;"><img src="baby-mo-poses/baby-mo-pose-33.webp" alt="Baby Mo" style="position:absolute;width:281%;height:281%;left:-88%;top:-32.5%;object-fit:cover;"/></div>'
-    +'<div id="brushOverlay" style="position:absolute;bottom:10px;left:44px;font-size:32px;transform:rotate(22deg);transition:transform .2s;filter:drop-shadow(0 2px 8px rgba(62,207,184,.5));">🪥</div>'
-    +'<div id="toothGlow" style="position:absolute;bottom:18px;left:45%;transform:translateX(-50%);width:42px;height:9px;background:rgba(62,207,184,0);border-radius:99px;transition:background .4s;"></div>'
-    +'</div></div>'
-    +'<div style="padding:0 24px;flex-shrink:0;">'
-    +'<div style="background:rgba(255,255,255,.07);border-radius:99px;height:8px;overflow:hidden;margin-bottom:5px;"><div id="bprog" style="height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#3ECFB8,#7EE8DC);transition:width .3s;"></div></div>'
-    +'<div style="display:flex;justify-content:space-between;font-size:11px;font-weight:800;color:var(--cream-dim);"><span>Mulai</span><span id="bcnt" style="color:#3ECFB8;">0/'+NEED+'</span><span>Bersih ✓</span></div>'
-    +'</div>'
-    +'<div style="flex:1;display:flex;align-items:center;justify-content:center;padding:8px 24px;">'
-    +'<div style="width:100%;max-width:320px;">'
-    +'<div id="bzone" style="position:relative;height:88px;border-radius:22px;background:rgba(255,255,255,.05);border:2px solid var(--border);touch-action:none;cursor:grab;overflow:hidden;">'
-    +'<div style="position:absolute;top:50%;left:12px;right:12px;height:2px;background:rgba(255,255,255,.1);border-radius:99px;transform:translateY(-50%);"></div>'
-    +'<div id="bfill" style="position:absolute;top:50%;left:12px;width:0%;height:2px;background:linear-gradient(90deg,#3ECFB8,transparent);transform:translateY(-50%);"></div>'
-    +'<div id="bbrush" style="position:absolute;top:50%;left:50%;font-size:44px;line-height:1;transform:translateX(-50%) translateY(-50%) rotate(22deg);pointer-events:none;filter:drop-shadow(0 3px 12px rgba(62,207,184,.45));">🪥</div>'
-    +'<div id="barrows" style="position:absolute;bottom:7px;left:0;right:0;pointer-events:none;display:flex;justify-content:space-between;padding:0 18px;font-size:22px;color:rgba(255,255,255,.2);animation:pu 1.8s infinite;"><span>←</span><span>→</span></div>'
-    +'</div>'
-    +'<div id="breact" style="text-align:center;margin-top:9px;font-size:24px;min-height:30px;"></div>'
-    +'</div></div>'
-    +'<div id="bdone" style="display:none;" class="donebanner"><div style="font-size:40px;">✨😁✨</div><div style="font-size:22px;font-weight:900;color:#3ECFB8;">Gigi bersih &amp; putih!</div></div>';
+    '<div class="shead"><div class="snum">Langkah 1 dari 4</div><div class="stitle">🪥 Gosok Gigi</div><div class="shint" id="bhint"></div></div>'
+    +'<div class="bsteps" id="bsteps">'+PH.map(function(p,i){return '<i data-i="'+i+'">'+(i+1)+'</i>';}).join('')+'</div>'
+    +'<div class="bstage"><div class="bglow" id="bglow"></div>'
+    +'<img id="bpose" class="bpose" src="mo-brush/tools.webp" alt="Baby Mo">'
+    +'<div class="bfoam" id="bfoam"></div><div class="bspark" id="bspark"></div>'
+    +'<div class="blabel" id="blabel"></div></div>'
+    +'<div class="bplay" id="bplay"></div>'
+    +'<div id="bdone" style="display:none;" class="donebanner"><div style="font-size:22px;font-weight:900;color:#3ECFB8;">Gigi bersih &amp; putih! ✨</div></div>';
 
-  function refreshGlow(){
-    var p=count/NEED;
-    var glow=document.getElementById('toothGlow');
-    if(glow)glow.style.background='rgba(62,207,184,'+(p*0.5)+')';
+  var pose=document.getElementById('bpose'), play=document.getElementById('bplay');
+  function setPose(n){
+    pose.classList.remove('pop'); void pose.offsetWidth;
+    pose.src='mo-brush/'+n+'.webp'; pose.classList.add('pop');
+  }
+  function nudge(cls){ pose.classList.remove('wl','wr','wu','wd','sw'); void pose.offsetWidth; pose.classList.add(cls); }
+  function foam(){
+    var f=document.getElementById('bfoam'); if(!f)return;
+    var b=document.createElement('span'); b.style.left=(38+Math.random()*24)+'%'; b.style.top=(44+Math.random()*12)+'%';
+    var s=8+Math.random()*12; b.style.width=b.style.height=s+'px'; f.appendChild(b); setTimeout(function(){b.remove();},900);
+  }
+  function meter(label){
+    return '<div class="bmeter"><div class="bmbar"><i id="bmfill"></i></div><div class="bmtxt"><span>'+label+'</span><b id="bmcnt"></b></div></div>';
+  }
+  function setMeter(v,txt){ var f=document.getElementById('bmfill'),c=document.getElementById('bmcnt'); if(f)f.style.width=(v*100)+'%'; if(c)c.textContent=txt||''; }
+  function next(){
+    cur++;
+    var dots=document.querySelectorAll('#bsteps i');
+    dots.forEach(function(d,i){ d.className = i<cur?'ok':i===cur?'now':''; });
+    var p=PH[cur];
+    setPose(p.pose);
+    document.getElementById('bhint').textContent=p.h;
+    document.getElementById('blabel').innerHTML='<b>'+(cur+1)+'</b> <span>'+p.t+'</span>';
+    speakMom(p.say);
+    [phTools,phPaste,phLR,phUD,phRinse,phDone][cur]();
   }
 
-  function addStroke(dir){
-    if(dir===lastDir||finished)return;
-    lastDir=dir;count=Math.min(count+1,NEED);
-    vib(32);
-    playBrushSound();
-    document.getElementById('bcnt').textContent=count+'/'+NEED;
-    document.getElementById('bprog').style.width=(count/NEED*100)+'%';
-    document.getElementById('breact').textContent=FACES[Math.min(count,6)];
-    refreshGlow();
-    if(count>=NEED&&!finished){
-      finished=true;vib(100);
-      var a=document.getElementById('barrows');if(a)a.style.display='none';
-      document.getElementById('breact').textContent='😁 Bersih!';
-      document.getElementById('bdone').style.display='block';
-      setTimeout(done,1100);
+  /* 1 — tap the brush and the toothpaste */
+  function phTools(){
+    var got={b:0,p:0};
+    play.innerHTML='<div class="btools"><button class="btool" data-k="b"><span>🪥</span>Sikat gigi</button><button class="btool" data-k="p"><span>🧴</span>Pasta gigi</button></div>';
+    play.querySelectorAll('.btool').forEach(function(btn){
+      btn.addEventListener('click',function(e){
+        if(got[btn.dataset.k])return; got[btn.dataset.k]=1; btn.classList.add('ok'); vib(30); bubbleSound(); addRipple(btn,e,'rgba(62,207,184,.3)');
+        nudge(btn.dataset.k==='b'?'wl':'wr');
+        if(got.b&&got.p) setTimeout(next,650);
+      });
+    });
+  }
+  /* 2 — press and hold to squeeze */
+  function phPaste(){
+    var v=0, holding=false, raf=null, last=0;
+    play.innerHTML='<div class="bpaste"><svg viewBox="0 0 220 60" class="bbrushsvg"><rect x="8" y="34" width="150" height="12" rx="6" fill="#3B82F6"/><rect x="120" y="24" width="56" height="12" rx="3" fill="#E8F4FF"/><g fill="#BFD8F5"><rect x="122" y="18" width="4" height="8"/><rect x="130" y="18" width="4" height="8"/><rect x="138" y="18" width="4" height="8"/><rect x="146" y="18" width="4" height="8"/><rect x="154" y="18" width="4" height="8"/><rect x="162" y="18" width="4" height="8"/><rect x="170" y="18" width="4" height="8"/></g><rect id="pstripe" x="122" y="8" width="0" height="11" rx="5.5" fill="#fff" stroke="#7EE8DC" stroke-width="2"/></svg>'
+      +'<button class="bhold" id="bhold"><span>🧴</span>Tahan untuk menekan</button></div>'+meter('Pasta gigi');
+    var hold=document.getElementById('bhold'), stripe=document.getElementById('pstripe');
+    function tick(ts){
+      if(!holding)return; if(!last)last=ts; var dt=(ts-last)/1000; last=ts;
+      v=Math.min(1,v+dt/1.3); stripe.setAttribute('width',(v*48).toFixed(1)); setMeter(v, Math.round(v*100)+'%');
+      if(v>=1){ holding=false; hold.classList.add('ok'); hold.innerHTML='<span>✅</span>Pas, sebesar kacang!'; vib(60); sparkleSound(); setTimeout(next,800); return; }
+      raf=requestAnimationFrame(tick);
     }
+    function down(e){ if(v>=1)return; e.preventDefault(); holding=true; last=0; hold.classList.add('press'); nudge('wd'); raf=requestAnimationFrame(tick); }
+    function up(){ holding=false; hold.classList.remove('press'); cancelAnimationFrame(raf); }
+    hold.addEventListener('pointerdown',down); hold.addEventListener('pointerup',up); hold.addEventListener('pointerleave',up); hold.addEventListener('pointercancel',up);
+    setMeter(0,'0%');
   }
-
-  function updateBrush(){
-    var el=document.getElementById('bbrush');var fill=document.getElementById('bfill');
-    var bo=document.getElementById('brushOverlay');
-    if(!el)return;
-    el.style.left=bx+'%';
-    var rot=bx>50?-26:26;
-    el.style.transform='translateX(-50%) translateY(-50%) rotate('+rot+'deg)';
-    if(bo) bo.style.transform='rotate('+(rot+22)+'deg) scale('+(finished?0.8:1)+')';
-    if(fill)fill.style.width=Math.max(0,bx-12)/76*100+'%';
+  /* 3 & 4 — swipe strokes (horizontal, then vertical) */
+  function swipePhase(axis){
+    var NEED=6, count=0, pdown=false, ref=0, lastDir=null, pos=50;
+    var vert=axis==='y';
+    play.innerHTML='<div class="bzone '+(vert?'v':'h')+'" id="bzone"><div class="btrack"></div><div class="bbr" id="bbr">🪥</div>'
+      +'<div class="barr">'+(vert?'<span>↑</span><span>↓</span>':'<span>←</span><span>→</span>')+'</div></div>'+meter(vert?'Atas – bawah':'Kiri – kanan');
+    setMeter(0,'0/'+NEED);
+    var zone=document.getElementById('bzone'), br=document.getElementById('bbr');
+    function place(){ if(vert){ br.style.top=pos+'%'; br.style.transform='translate(-50%,-50%) rotate('+(pos>50?110:70)+'deg)'; } else { br.style.left=pos+'%'; br.style.transform='translate(-50%,-50%) rotate('+(pos>50?-26:26)+'deg)'; } }
+    function stroke(dir){
+      if(dir===lastDir||count>=NEED)return; lastDir=dir; count++;
+      vib(28); playBrushSound(); foam(); foam();
+      nudge(vert?(dir==='A'?'wu':'wd'):(dir==='A'?'wl':'wr'));
+      setMeter(count/NEED, count+'/'+NEED);
+      document.getElementById('bglow').style.opacity=(0.25+0.5*count/NEED);
+      if(count>=NEED){ vib(80); sparkleSound(); zone.classList.add('ok'); setTimeout(next,700); }
+    }
+    zone.addEventListener('pointerdown',function(e){ pdown=true; ref=vert?e.clientY:e.clientX; zone.setPointerCapture(e.pointerId); });
+    zone.addEventListener('pointermove',function(e){
+      if(!pdown)return; var c=vert?e.clientY:e.clientX, size=vert?zone.clientHeight:zone.clientWidth;
+      var r=zone.getBoundingClientRect(); pos=Math.max(12,Math.min(88, ((c-(vert?r.top:r.left))/size)*100 )); place();
+      var tot=c-ref, th=vert?26:38;
+      if(tot>th){ stroke('B'); ref=c; } else if(tot<-th){ stroke('A'); ref=c; }
+    });
+    function end(){ pdown=false; if(count<NEED){ pos=50; place(); } }
+    zone.addEventListener('pointerup',end); zone.addEventListener('pointercancel',end);
+    place();
   }
-
-  var zone=document.getElementById('bzone');
-  zone.addEventListener('pointerdown',function(e){pdown=true;refX=e.clientX;moveX=e.clientX;lastDir=null;zone.setPointerCapture(e.pointerId);});
-  zone.addEventListener('pointermove',function(e){
-    if(!pdown)return;
-    var dx=e.clientX-moveX;moveX=e.clientX;
-    bx=Math.max(10,Math.min(90,bx+(dx/zone.clientWidth)*115));
-    updateBrush();
-    var total=e.clientX-refX;
-    if(total>38&&lastDir!=='R'){addStroke('R');lastDir='R';refX=e.clientX;}
-    else if(total<-38&&lastDir!=='L'){addStroke('L');lastDir='L';refX=e.clientX;}
-  });
-  zone.addEventListener('pointerup',function(){pdown=false;if(!finished){bx=50;updateBrush();}});
-  zone.addEventListener('pointercancel',function(){pdown=false;if(!finished){bx=50;updateBrush();}});
+  function phLR(){ swipePhase('x'); }
+  function phUD(){ swipePhase('y'); }
+  /* 5 — swish: tap the cup three times */
+  function phRinse(){
+    var n=0;
+    play.innerHTML='<div class="btools"><button class="bcup" id="bcup"><span>🥤</span>Kumur!</button></div>'+meter('Kumur-kumur');
+    setMeter(0,'0/3');
+    var cup=document.getElementById('bcup');
+    cup.addEventListener('click',function(e){
+      if(n>=3)return; n++; vib(30); bubbleSound(); addRipple(cup,e,'rgba(126,232,220,.3)'); nudge('sw');
+      setMeter(n/3, n+'/3');
+      if(n>=3){ cup.classList.add('ok'); cup.innerHTML='<span>💦</span>Buang airnya'; setTimeout(next,850); }
+    });
+  }
+  /* 6 — clean and done */
+  function phDone(){
+    play.innerHTML='';
+    var s=document.getElementById('bspark');
+    for(var i=0;i<10;i++){ var k=document.createElement('span'); k.textContent=i%2?'✦':'✨'; k.style.left=(10+Math.random()*80)+'%'; k.style.top=(8+Math.random()*60)+'%'; k.style.animationDelay=(i*0.08)+'s'; s.appendChild(k); }
+    sparkleSound(); vib([40,40,80]);
+    document.querySelectorAll('#bsteps i').forEach(function(d){ d.className='ok'; });
+    document.getElementById('bdone').style.display='block';
+    finished=true;
+    setTimeout(done,2000);
+  }
+  next();
 }
 
 /* ══════════════════════════════════════════
