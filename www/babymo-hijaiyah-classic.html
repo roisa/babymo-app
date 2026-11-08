@@ -283,6 +283,59 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
 @media(min-width:760px){.screen{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}body{background:#06100A;}}
+
+/* ═══════════ Playful layer: Baby Mo, picture words, balloons, stepping stones ═══════════ */
+.mo-say{display:flex;align-items:flex-end;gap:8px;width:100%;max-width:440px;margin:0 0 10px;flex-shrink:0}
+.mo-say img{width:86px;height:92px;object-fit:contain;object-position:bottom;flex:0 0 auto;filter:drop-shadow(0 8px 10px rgba(30,60,110,.25));transition:transform .2s}
+.mo-say img.bounce{animation:moBounce .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes moBounce{0%{transform:scale(.85) translateY(6px)}100%{transform:none}}
+.mo-say .bub{position:relative;flex:1;background:#fff;color:#1E2B3A;border-radius:18px 18px 18px 6px;padding:10px 13px;font-weight:800;font-size:15px;line-height:1.35;margin-bottom:14px;box-shadow:0 0 0 .5px rgba(21,34,48,.08),0 12px 24px -14px rgba(30,60,110,.45)}
+.mo-say .bub::before{content:'';position:absolute;left:-7px;bottom:10px;border:7px solid transparent;border-right-color:#fff}
+.mo-say .bub b{color:#E8590C}
+.w-mo{width:170px!important;height:180px!important;object-fit:contain;object-position:bottom}
+.w-float{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+.w-float span{position:absolute;font-family:'Scheherazade New',serif;font-weight:700;opacity:.18;animation:wfl 9s ease-in-out infinite}
+@keyframes wfl{50%{transform:translateY(-26px) rotate(8deg)}}
+#sWelcome>*{position:relative;z-index:1}
+.w-strip-letter{cursor:pointer;transition:transform .15s}.w-strip-letter:active{transform:scale(.9)}
+.lc-arabic{cursor:pointer}
+.lc-arabic.tap{animation:tapLetter .55s cubic-bezier(.3,1.6,.5,1)!important}
+@keyframes tapLetter{0%{transform:scale(1)}30%{transform:scale(1.25) rotate(-6deg)}60%{transform:scale(.95) rotate(4deg)}100%{transform:none}}
+.lc-tap{font-size:12px;font-weight:800;color:var(--cream-dim);margin:-6px 0 8px}
+.lc-pic{display:flex;align-items:center;gap:12px;justify-content:center;margin:10px auto 0;padding:10px 14px;border-radius:16px;background:rgba(255,200,61,.10);border:1px dashed rgba(255,200,61,.5);max-width:300px;cursor:pointer}
+.lc-pic .em{font-size:44px;line-height:1}
+.lc-pic .w{text-align:left}
+.lc-pic .w b{display:block;font-family:'Scheherazade New',serif;font-size:30px;line-height:1.3;color:var(--gold-lt)}
+.lc-pic .w small{display:block;font-size:13px;font-weight:800;color:var(--cream-dim)}
+.q-mo-wrap{display:block!important;width:74px!important;height:80px;object-fit:contain;object-position:bottom;right:8px!important;bottom:6px!important;opacity:1!important}
+.q-pic{font-size:72px;line-height:1.1;display:block;margin:4px 0 2px}
+.q-pic-word{font-size:15px;font-weight:800;color:var(--cream-dim);margin-bottom:6px}
+.choices-grid.balloon-field{grid-template-columns:repeat(4,1fr);gap:6px;min-height:190px;align-items:end}
+.balloon-field .choice-btn{position:relative;height:118px;border-radius:50% 50% 46% 46%/55% 55% 45% 45%;border:none!important;color:#fff!important;font-size:42px;
+  background:radial-gradient(circle at 32% 28%,rgba(255,255,255,.55) 0 10%,transparent 11%),var(--bc)!important;box-shadow:inset -8px -10px 0 rgba(0,0,0,.12);animation:bfloat 2.6s ease-in-out infinite alternate;padding:0}
+.balloon-field .choice-btn::after{content:'';position:absolute;left:50%;top:100%;width:2px;height:46px;background:rgba(120,120,140,.55);transform:translateX(-50%)}
+.balloon-field .choice-btn::before{content:'';position:absolute;left:50%;top:98%;border:6px solid transparent;border-bottom-color:var(--bc);transform:translateX(-50%) rotate(180deg)}
+.balloon-field .choice-btn:nth-child(2){animation-delay:-.7s}.balloon-field .choice-btn:nth-child(3){animation-delay:-1.3s}.balloon-field .choice-btn:nth-child(4){animation-delay:-1.9s}
+@keyframes bfloat{from{transform:translateY(6px) rotate(-3deg)}to{transform:translateY(-10px) rotate(3deg)}}
+.balloon-field .choice-btn.correct{animation:bpop .45s ease-out forwards!important}
+@keyframes bpop{40%{transform:scale(1.3)}100%{transform:scale(1.6);opacity:0}}
+.balloon-field .choice-btn.wrong{animation:shake .4s ease!important}
+.home-hello{width:100%;max-width:480px;padding:12px 16px 0}
+.kotak{width:100%;max-width:480px;padding:10px 16px 0}
+.kotak-t{font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--cream-dim);margin-bottom:6px;display:flex;justify-content:space-between}
+.kotak-g{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;direction:rtl}
+.kotak-g span{aspect-ratio:1;border-radius:10px;display:grid;place-items:center;font-family:'Scheherazade New',serif;font-size:21px;background:var(--card);border:1px solid var(--border);color:var(--cream-dim);opacity:.4}
+.kotak-g span.on{opacity:1;color:#fff;background:var(--lc);border-color:transparent;box-shadow:0 6px 12px -8px rgba(0,0,0,.5)}
+.lesson-path{gap:12px!important}
+.lesson-row{border-radius:999px!important;max-width:86%;position:relative}
+.lesson-row.zr{align-self:flex-end}
+.lesson-row.zl{align-self:flex-start}
+.lesson-row .lesson-icon{width:52px!important;height:52px!important;border-radius:50%!important;font-size:24px!important;flex:0 0 auto}
+.lesson-row.here{border-color:#FFC83D!important;box-shadow:0 0 0 3px rgba(255,200,61,.25)}
+.lesson-row .here-mo{position:absolute;top:-34px;width:62px;height:66px;object-fit:contain;object-position:bottom;pointer-events:none;animation:moHop 1.2s ease-in-out infinite alternate;filter:drop-shadow(0 6px 6px rgba(0,0,0,.2))}
+.lesson-row.zl .here-mo{right:-58px}.lesson-row.zr .here-mo{left:-58px}
+@keyframes moHop{to{transform:translateY(-6px)}}
+.res-mascot{width:150px!important;height:160px!important;object-fit:contain;object-position:bottom;animation:moHop .7s ease-in-out infinite alternate!important}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-hijaiyah-classic.html">
 <meta name="robots" content="index,follow">
@@ -336,7 +389,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 <!-- ════ WELCOME ════ -->
 <div class="screen active" id="sWelcome">
-  <img class="w-mo" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" style="object-fit:contain;"/>
+  <div class="w-float" id="wFloat"></div>
+  <img class="w-mo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="Baby Mo" draggable="false"/>
   <div class="w-badge">🌙 BabyMo · Huruf Arab</div>
   <div class="w-title">Huruf Hijaiyah 🌟</div>
   <div class="w-arabic-title">اَلْحُرُوفُ الْهِجَائِيَّة</div>
@@ -361,6 +415,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       <div class="xp-bar"><div class="xp-fill" id="hXPBar" style="width:0%"></div></div>
     </div>
   </div>
+  <div class="home-hello"><div class="mo-say" style="margin:0"><img id="hMo" src="baby-mo-poses/baby-mo-pose-33.webp" alt="Baby Mo"><div class="bub" id="hBub"></div></div></div>
+  <div class="kotak"><div class="kotak-t"><span id="kotakT">📦 Kotak Huruf</span><span id="kotakN">0 / 28</span></div><div class="kotak-g" id="kotakG"></div></div>
   <div class="lesson-path" id="lessonPath"></div>
 </div>
 
@@ -371,16 +427,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <span class="i-counter" id="iCounter">Huruf 1 / 4</span>
   </div>
   <div class="dot-prog" id="dotProg"></div>
+  <div class="mo-say"><img id="iMo" src="baby-mo-poses/baby-mo-pose-15.webp" alt="Baby Mo"><div class="bub" id="iBub"></div></div>
 
   <div class="letter-card" id="letterCard">
     <div class="lc-badge"><span class="lc-badge-dot"></span><span id="lcLessonTitle">Pelajaran 1</span></div>
     <div class="lc-arabic" id="lcArabic" style="color:var(--gold-lt)">بَ</div>
+    <div class="lc-tap" id="lcTap">👆 Ketuk hurufnya!</div>
     <div class="lc-name" id="lcName">Ba</div>
     <div class="lc-lat" id="lcLat">BA</div>
     <div class="lc-hint-row">
       <span class="lc-dots-icon" id="lcDotsIcon">•</span>
       <span class="lc-dots-text" id="lcDotsText">1 titik bawah</span>
     </div>
+    <div class="lc-pic" id="lcPic"><span class="em" id="lcPicEm"></span><div class="w"><b id="lcPicWord"></b><small id="lcPicMean"></small></div></div>
   </div>
 
   <button class="sound-btn" id="intrSoundBtn" onclick="speakCurrentLetter()">
@@ -414,7 +473,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="q-arabic-big" id="qArabicBig" style="display:block"></div>
     <div class="q-name-big" id="qNameBig" style="display:none"></div>
     <button class="q-sound-hint btn-sec" id="qSoundHint" onclick="speakQuizHint()">🔊 Dengar</button>
-    <img class="q-mo-wrap" id="qMoWrap" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" style="display:none;object-fit:contain;"/>
+    <img class="q-mo-wrap" id="qMoWrap" src="baby-mo-poses/baby-mo-idea.webp" alt="Baby Mo" draggable="false"/>
   </div>
 
   <div class="choices-grid name-grid" id="choicesGrid"></div>
@@ -428,7 +487,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 
 <!-- ════ RESULT ════ -->
 <div class="screen" id="sResult">
-  <img class="res-mascot" src="Baby_Mo_Menyapa.png" alt="Baby Mo" draggable="false" style="object-fit:contain;"/>
+  <img class="res-mascot" id="resMo" src="baby-mo-poses/baby-mo-yeyy.webp" alt="Baby Mo" draggable="false"/>
   <div class="res-card">
     <div class="res-title" id="resTitle">Masya Allah! 🌟</div>
     <div class="res-sub" id="resSub">Pelajaran selesai!</div>
@@ -1152,5 +1211,124 @@ function showToast(e,t){
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
+
+<script>
+/* ═══════════ Playful layer (Baby Mo poses, picture words, balloons) ═══════════ */
+(function(){
+  var EN=window.BM_LANG==='en', T=function(a,b){return EN?b:a;};
+  var P=function(n){return 'baby-mo-poses/baby-mo-'+n+'.webp';};
+  var PIC={alif:['🦁','أَسَد','Singa','Lion'],ba:['🦆','بَطَّة','Bebek','Duck'],ta:['🍎','تُفَّاح','Apel','Apple'],tsa:['🦊','ثَعْلَب','Rubah','Fox'],
+    jim:['🐪','جَمَل','Unta','Camel'],ha:['🐴','حِصَان','Kuda','Horse'],kha:['🍞','خُبْز','Roti','Bread'],dal:['🐻','دُبّ','Beruang','Bear'],
+    dzal:['🌽','ذُرَة','Jagung','Corn'],ra:['🪶','رِيشَة','Bulu','Feather'],zai:['🦒','زَرَافَة','Jerapah','Giraffe'],sin:['🐟','سَمَك','Ikan','Fish'],
+    syin:['☀️','شَمْس','Matahari','Sun'],shad:['🦅','صَقْر','Elang','Falcon'],dhad:['🐸','ضِفْدَع','Katak','Frog'],tha:['✈️','طَائِرَة','Pesawat','Plane'],
+    zha:['✉️','ظَرْف','Amplop','Envelope'],ain:['🍇','عِنَب','Anggur','Grapes'],ghain:['☁️','غَيْمَة','Awan','Cloud'],fa:['🐘','فِيل','Gajah','Elephant'],
+    qaf:['🌙','قَمَر','Bulan','Moon'],kaf:['📖','كِتَاب','Buku','Book'],lam:['🍋','لَيْمُون','Lemon','Lemon'],mim:['🍌','مَوْز','Pisang','Banana'],
+    nun:['🐝','نَحْلَة','Lebah','Bee'],waw:['🌹','وَرْدَة','Mawar','Rose'],ha2:['🌒','هِلَال','Bulan sabit','Crescent'],ya:['✋','يَد','Tangan','Hand']};
+  var PRESENT=['pose-15','pose-33','idea','pose-08','yes','pose-41'], YAY=['yeyy','yes','pose-02','wow','pose-41'], OOPS=['pose-40','pose-10','pose-36'];
+  var pick=function(a){return a[Math.floor(Math.random()*a.length)];};
+  var BCOL=['#FF6B6B','#4DABF7','#51CF66','#FCC419','#CC5DE8','#FF922B'];
+  function setMo(id,pose){ var m=document.getElementById(id); if(!m) return; m.src=P(pose); m.classList.remove('bounce'); void m.offsetWidth; m.classList.add('bounce'); }
+  function sayAr(text){ try{ speak(arabicVoice?text:text, arabicVoice?'ar-SA':'id-ID'); }catch(e){} }
+
+  /* welcome: floating letters + tap the strip letters to hear them */
+  var _iw=initWelcome;
+  initWelcome=function(){ _iw();
+    var f=document.getElementById('wFloat'), h='';
+    for(var i=0;i<16;i++){ var lt=LETTERS[(i*5)%LETTERS.length]; h+='<span style="left:'+(5+Math.random()*88)+'%;top:'+(4+Math.random()*88)+'%;font-size:'+(28+Math.random()*34)+'px;color:'+lt.color+';animation-delay:-'+(Math.random()*9).toFixed(1)+'s">'+lt.ar+'</span>'; }
+    f.innerHTML=h;
+    document.querySelectorAll('.w-strip-letter').forEach(function(el,i){ el.onclick=function(){ var lt=LETTERS[i]; el.style.transform='scale(1.25)'; setTimeout(function(){el.style.transform='';},250); sayAr(lt.arName||lt.speak); }; });
+  };
+
+  /* home: hello bubble, letter box, stepping-stone path with Mo on the current lesson */
+  function learned(){ var set={}; userData.completed.forEach(function(id){ var l=LESSONS.find(function(x){return x.id===id;}); if(l) l.letters.forEach(function(x){ set[x]=1; }); }); return set; }
+  var _uh=updateHomeUI;
+  updateHomeUI=function(){ _uh();
+    var got=learned(), n=Object.keys(got).length;
+    document.getElementById('kotakN').textContent=n+' / 28';
+    document.getElementById('kotakT').textContent='📦 '+T('Kotak Huruf','Letter Box');
+    document.getElementById('kotakG').innerHTML=LETTERS.map(function(l){ return '<span class="'+(got[l.id]?'on':'')+'" style="--lc:'+l.color+'">'+l.ar+'</span>'; }).join('');
+    var name=''; try{ name=(localStorage.getItem('mo_child_name')||'').trim(); }catch(e){}
+    var done=userData.completed.length;
+    document.getElementById('hBub').innerHTML = done===0 ? T('Assalamu\'alaikum'+(name?', <b>'+name+'</b>':'')+'! Yuk mulai dari huruf pertama 👇','Assalamu\'alaikum'+(name?', <b>'+name+'</b>':'')+'! Let\'s start with the first letters 👇')
+      : n>=28 ? T('Masya Allah! Kamu sudah kenal <b>semua 28 huruf</b>! 🏆','Masha Allah! You know <b>all 28 letters</b>! 🏆')
+      : T('Hebat! Kamu sudah kenal <b>'+n+' huruf</b>. Ayo lanjut! 🚀','Great! You know <b>'+n+' letters</b>. Keep going! 🚀');
+    setMo('hMo', done===0?'pose-33':n>=28?'yeyy':'yes');
+  };
+  var _bp=buildLessonPath;
+  buildLessonPath=function(){ _bp();
+    var rows=document.querySelectorAll('#lessonPath .lesson-row'), first=null;
+    rows.forEach(function(r,i){ r.classList.add(i%2?'zr':'zl'); if(!first && !r.classList.contains('done') && !r.classList.contains('locked')) first=r; });
+    if(first){ first.classList.add('here'); var im=document.createElement('img'); im.className='here-mo'; im.src=P('pose-08'); im.alt=''; first.appendChild(im); }
+  };
+
+  /* letter cards: Mo presents, picture word, tap the letter */
+  var _lc=loadCard;
+  loadCard=function(idx){ _lc(idx);
+    var lt=lessonLetters[idx], p=PIC[lt.id];
+    setMo('iMo', PRESENT[idx%PRESENT.length]);
+    document.getElementById('iBub').innerHTML = T('Ini huruf <b>'+lt.name+'</b>! '+lt.name+' seperti '+p[1]+' — '+p[2].toLowerCase()+' '+p[0],'This is <b>'+lt.name+'</b>! '+lt.name+' as in '+p[1]+' — '+p[3].toLowerCase()+' '+p[0]);
+    document.getElementById('lcPicEm').textContent=p[0];
+    document.getElementById('lcPicWord').textContent=p[1];
+    document.getElementById('lcPicMean').textContent=T(p[2],p[3]);
+    document.getElementById('lcTap').textContent=T('👆 Ketuk hurufnya!','👆 Tap the letter!');
+  };
+  document.getElementById('lcArabic').addEventListener('click',function(){
+    var lt=lessonLetters[cardIdx], el=this; if(!lt) return;
+    el.classList.remove('tap'); void el.offsetWidth; el.classList.add('tap');
+    sayAr(lt.arName||lt.speak); setMo('iMo','yes');
+    document.getElementById('iBub').innerHTML=T('Ayo ucapkan bersama: <b>'+lt.name+'</b>! 🗣️','Say it together: <b>'+lt.name+'</b>! 🗣️');
+    try{ playTone(660,.12,'triangle',.15); }catch(e){}
+  });
+  document.getElementById('lcPic').addEventListener('click',function(){
+    var lt=lessonLetters[cardIdx], p=PIC[lt.id]; sayAr(p[1]); setMo('iMo','wow');
+    document.getElementById('iBub').innerHTML=T(p[1]+' artinya <b>'+p[2].toLowerCase()+'</b> '+p[0]+'. Dimulai dengan huruf '+lt.name+'!',p[1]+' means <b>'+p[3].toLowerCase()+'</b> '+p[0]+'. It starts with '+lt.name+'!');
+  });
+
+  /* quiz: add balloon-pop and picture questions */
+  var _mq=makeQuestions;
+  makeQuestions=function(ids){
+    var qs=_mq(ids), pool=ids.map(function(id){return LETTERS.find(function(l){return l.id===id;});});
+    var extra=[];
+    pool.forEach(function(lt){
+      var wr=shuffle(LETTERS.filter(function(l){return l.id!==lt.id;})).slice(0,3);
+      extra.push({type:'letter', balloon:true, arabic:'', nameDisplay:lt.name, correct:lt.ar, choices:shuffle([lt.ar].concat(wr.map(function(l){return l.ar;}))), lt:lt, speakText:lt.arName||lt.speak});
+      var wr2=shuffle(LETTERS.filter(function(l){return l.id!==lt.id;})).slice(0,3);
+      extra.push({type:'letter', pic:true, arabic:'', nameDisplay:lt.name, correct:lt.ar, choices:shuffle([lt.ar].concat(wr2.map(function(l){return l.ar;}))), lt:lt, speakText:PIC[lt.id][1]});
+    });
+    var mix=shuffle(qs.slice(0,6).concat(shuffle(extra).slice(0,6)));
+    return mix.slice(0,Math.min(10,mix.length));
+  };
+  var _lq=loadQuestion;
+  loadQuestion=function(qi){ _lq(qi);
+    var q=questions[qi], grid=document.getElementById('choicesGrid'), nm=document.getElementById('qNameBig'), lab=document.getElementById('qLabel'), hint=document.getElementById('qSoundHint');
+    setMo('qMoWrap', q.type==='name'?'idea':'pose-15');
+    if(q.balloon){
+      lab.textContent=T('🎈 Pecahkan balon huruf '+q.lt.name+'!','🎈 Pop the balloon with '+q.lt.name+'!');
+      grid.className='choices-grid balloon-field';
+      grid.querySelectorAll('.choice-btn').forEach(function(b,i){ b.style.setProperty('--bc',BCOL[(i+qi)%BCOL.length]); b.style.color=''; });
+    } else if(q.pic){
+      var p=PIC[q.lt.id];
+      lab.textContent=T('Gambar ini dimulai dengan huruf apa?','Which letter does this start with?');
+      nm.innerHTML='<span class="q-pic">'+p[0]+'</span><div class="q-pic-word">'+p[1]+' · '+T(p[2],p[3])+'</div>';
+      hint.textContent=T('🔊 Dengar kata','🔊 Hear the word');
+    }
+  };
+  var _ha=handleAnswer;
+  handleAnswer=function(btn,choice,q){
+    var was=answered; _ha(btn,choice,q); if(was) return;
+    setMo('qMoWrap', choice===q.correct?pick(YAY):pick(OOPS));
+  };
+  setMoExpr=function(){};
+  initWelcome();
+
+  /* result: Mo celebrates (or cheers you on) */
+  var _fl=finishLesson;
+  finishLesson=function(){ _fl();
+    var lit=document.querySelectorAll('.res-star').length, pct=parseInt(document.getElementById('resScore').textContent)||0;
+    document.getElementById('resMo').src=P(pct>=90?'yeyy':pct>=60?'pose-41':'pose-33');
+    document.querySelectorAll('#resLetterGrid .rlr-item').forEach(function(it,i){ var lt=lessonLetters[i]; if(lt&&PIC[lt.id]) it.title=PIC[lt.id][1]; });
+  };
+})();
+</script>
 </body>
 </html>
