@@ -25,7 +25,8 @@
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
 html,body{height:100%;overflow:hidden;font-family:var(--ui);color:var(--cream);
   overscroll-behavior:none;touch-action:none;user-select:none;-webkit-user-select:none}
-body{background:linear-gradient(180deg,#8FD3EC 0%,#BEE6E0 55%,#DDF1E6 100%);transition:background 6s ease}
+body{background:#0A2118}
+#hud .card,#hud .abtn,#hud .slot,#hud button{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
 canvas{display:block;position:fixed;inset:0;z-index:0}
 
 #hud{position:fixed;inset:0;z-index:10;pointer-events:none;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
@@ -116,6 +117,31 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 /* bm-fit: on phones the 12 blocks sit in two tidy rows of six instead of running off the screen */
 @media (max-width:640px){#hotbar{flex-wrap:wrap;justify-content:center;width:min(96vw,302px);max-width:none;overflow:visible;gap:4px;bottom:calc(208px + env(safe-area-inset-bottom))}#hotbar .slot{box-sizing:border-box;flex:0 0 auto;width:47px;height:44px;border-radius:12px}}
+
+/* ═══ Treasure hunt: reward card, milestones, compass ═══ */
+#huntCard{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;background:rgba(10,20,40,.45);padding:20px}
+#huntCard.on{display:flex}
+.hc{width:100%;max-width:340px;background:#fff;border-radius:30px;padding:16px 16px 14px;text-align:center;color:#152230;position:relative;animation:hcIn .5s cubic-bezier(.3,1.5,.5,1)}
+@keyframes hcIn{from{transform:scale(.4) rotate(-8deg);opacity:0}}
+.hc .rays{position:absolute;left:50%;top:70px;width:260px;height:260px;margin-left:-130px;margin-top:-130px;background:repeating-conic-gradient(rgba(255,200,61,.28) 0 12deg,transparent 12deg 24deg);border-radius:50%;animation:hcSpin 8s linear infinite;pointer-events:none;-webkit-mask-image:radial-gradient(circle,#000 30%,transparent 70%);mask-image:radial-gradient(circle,#000 30%,transparent 70%)}
+@keyframes hcSpin{to{transform:rotate(360deg)}}
+.hc .where{position:relative;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#E8590C}
+.hc .tile{position:relative;width:132px;height:132px;margin:8px auto 4px;border-radius:28px;background:linear-gradient(160deg,#FFF6D8,#FFE08A);border:4px solid #E0B84D;display:grid;place-items:center;font-family:'Scheherazade New','Amiri',serif;font-size:86px;line-height:1;color:#12261F;box-shadow:0 14px 24px -12px rgba(160,110,0,.6);animation:hcFlip .7s .1s cubic-bezier(.3,1.4,.5,1) both;cursor:pointer;padding-bottom:16px}
+@keyframes hcFlip{from{transform:rotateY(180deg) scale(.6)}}
+.hc h3{position:relative;font-size:26px;font-weight:900;margin:2px 0 0}
+.hc .pic{position:relative;display:inline-flex;align-items:center;gap:8px;margin:6px 0 8px;padding:6px 14px;border-radius:999px;background:#F2F7FF;font-weight:800;font-size:14px}
+.hc .pic b{font-family:'Scheherazade New',serif;font-size:22px;font-weight:700}
+.hc .pic span{font-size:24px}
+.hc .bar{position:relative;height:12px;border-radius:99px;background:#EEF1F6;overflow:hidden;margin:6px 0 4px}
+.hc .bar i{display:block;height:100%;background:linear-gradient(90deg,#FFC83D,#3FD08C);border-radius:99px;transition:width .8s .4s ease}
+.hc .next{position:relative;font-size:13.5px;font-weight:800;color:#5A6878}
+.hc .unlock{position:relative;margin:8px 0 2px;padding:10px;border-radius:18px;background:linear-gradient(135deg,#FFF1C9,#FFE0EC);font-weight:900;font-size:15px;animation:hcPulse 1s ease-in-out 3}
+@keyframes hcPulse{50%{transform:scale(1.05)}}
+.hc .unlock small{display:block;font-weight:800;font-size:12.5px;color:#7A5A30;margin-top:2px}
+.hc button{position:relative;margin-top:10px;width:100%;min-height:52px;border:none;border-radius:18px;font:900 17px 'Nunito',sans-serif;color:#fff;background:linear-gradient(120deg,#10A765,#0A7FB0);pointer-events:auto;cursor:pointer}
+#compass{position:absolute;top:66px;left:50%;margin-left:-28px;width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.92);display:none;align-items:center;justify-content:center;box-shadow:0 8px 18px -8px rgba(0,0,0,.4);font-size:12px;font-weight:900}
+#compass.on{display:flex}
+#compass i{font-style:normal;font-size:28px;line-height:1;display:block;transition:transform .15s;color:#E8590C}
 </style>
 <style id="bm-bright">
 :root{
@@ -179,6 +205,7 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
     <button class="abtn" id="btnPlace">🧱<span>BANGUN</span></button>
   </div>
   <div id="crosshair"></div>
+  <div id="compass"><i>⬆</i></div>
   <div id="desktopHint">Klik kiri: gali &nbsp;·&nbsp; Klik kanan: bangun &nbsp;·&nbsp; WASD jalan &nbsp;·&nbsp; Spasi lompat</div>
 </div>
 
@@ -227,6 +254,7 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
   <button class="btn ghost" id="btnReset">Ulangi dari Awal (hapus progres)</button>
 </div></div>
 
+<div id="huntCard"><div class="hc" id="hcBox"></div></div>
 <div id="toast"></div>
 
 <script>
@@ -910,6 +938,23 @@ function buildSky(){
   moonSprite.position.set(-46,34,18);
   scene.add(moonSprite);
 }
+
+/* Sky gradient drawn inside WebGL (no see-through canvas, no jumping page background) */
+const SKY_TOPS=[[0,0x8FD3EC,0xDDF1E6],[0.42,0x8FD3EC,0xDDF1E6],[0.52,0xFF9D6C,0xF6C177],[0.62,0x1B2452,0x3B4C82],[0.86,0x1B2452,0x3B4C82],[0.96,0xFFC98A,0xDDF1E6],[1,0x8FD3EC,0xDDF1E6]];
+let skyTex=null, skyCv=null, skyLast='', skyAcc=1;
+function skyPaint(dayT, dt){
+  skyAcc+=dt||0; if(skyAcc<0.25 && skyTex) return; skyAcc=0;
+  let a=SKY_TOPS[0], b=SKY_TOPS[1];
+  for(let i=0;i<SKY_TOPS.length-1;i++){ if(dayT>=SKY_TOPS[i][0] && dayT<=SKY_TOPS[i+1][0]){ a=SKY_TOPS[i]; b=SKY_TOPS[i+1]; break; } }
+  const k=b[0]>a[0]?(dayT-a[0])/(b[0]-a[0]):0;
+  const top=lerpHex(a[1],b[1],k), bot=lerpHex(a[2],b[2],k), sig=top+'|'+bot;
+  if(sig===skyLast) return; skyLast=sig;
+  if(!skyCv){ skyCv=document.createElement('canvas'); skyCv.width=2; skyCv.height=128; }
+  const x=skyCv.getContext('2d'), g=x.createLinearGradient(0,0,0,128);
+  g.addColorStop(0,'#'+top.toString(16).padStart(6,'0')); g.addColorStop(1,'#'+bot.toString(16).padStart(6,'0'));
+  x.fillStyle=g; x.fillRect(0,0,2,128);
+  if(!skyTex){ skyTex=new THREE.CanvasTexture(skyCv); scene.background=skyTex; } else skyTex.needsUpdate=true;
+}
 function updateSky(dt,t){
   const dayT = (t % DAY_CYCLE) / DAY_CYCLE;
   const sky = skyAt(dayT);
@@ -919,7 +964,7 @@ function updateSky(dt,t){
   hemiLight.color.setHex(sky.hemiSky);
   hemiLight.groundColor.setHex(sky.hemiGround);
   if(scene.fog) scene.fog.color.setHex(sky.fog);
-  if(sky.bg !== lastSkyBg){ lastSkyBg = sky.bg; document.body.style.background = sky.bg; }
+  skyPaint(dayT, dt);
   starGroup.children.forEach(s=>{ s.material.opacity += (sky.star - s.material.opacity)*k; });
   moonSprite.material.opacity += (sky.star - moonSprite.material.opacity)*k;
   Music.setMood(dayT);
@@ -929,7 +974,8 @@ function initThree(){
   scene = new THREE.Scene();
   scene.fog = new THREE.Fog(0xDDF1E6, 30, 66);
   cam = new THREE.PerspectiveCamera(66, innerWidth/innerHeight, 0.1, 200);
-  renderer = new THREE.WebGLRenderer({antialias:true, alpha:true, preserveDrawingBuffer:true});
+  renderer = new THREE.WebGLRenderer({antialias:true, alpha:false, preserveDrawingBuffer:true});
+  renderer.setClearColor(0xBFE6F2, 1);
   renderer.setPixelRatio(Math.min(devicePixelRatio,2));
   renderer.setSize(innerWidth, innerHeight);
   document.body.appendChild(renderer.domElement);
@@ -1392,7 +1438,7 @@ const collected = new Set();
 function proximity(t){
   if(!running) return;
   for(const b of letterBlocks){
-    if(b.taken) continue;
+    if(b.taken || !b.mesh.visible) continue;
     const d = Math.hypot(b.mesh.position.x-P.x, b.mesh.position.z-P.z);
     const dy = Math.abs(b.base-(P.y+0.9));
     if(d<1.5 && dy<2.2) collectLetter(b);
@@ -2654,6 +2700,176 @@ function tick(){
 initThree();
 Speech.init(syncVoiceUI);
 tick();
+</script>
+<script>
+/* ═══════════ Treasure hunt: letters hide in chests, caves, trees, balloons, the village ═══════════ */
+(function(){
+  const EN = window.BM_LANG==='en', TT=(a,b)=>EN?b:a;
+  const PIC=[['🦁','أَسَد','Singa','Lion'],['🦆','بَطَّة','Bebek','Duck'],['🍎','تُفَّاح','Apel','Apple'],['🦊','ثَعْلَب','Rubah','Fox'],['🐪','جَمَل','Unta','Camel'],['🐴','حِصَان','Kuda','Horse'],
+    ['🍞','خُبْز','Roti','Bread'],['🐻','دُبّ','Beruang','Bear'],['🌽','ذُرَة','Jagung','Corn'],['🪶','رِيشَة','Bulu','Feather'],['🦒','زَرَافَة','Jerapah','Giraffe'],['🐟','سَمَك','Ikan','Fish'],
+    ['☀️','شَمْس','Matahari','Sun'],['🦅','صَقْر','Elang','Falcon'],['🐸','ضِفْدَع','Katak','Frog'],['✈️','طَائِرَة','Pesawat','Plane'],['✉️','ظَرْف','Amplop','Envelope'],['🍇','عِنَب','Anggur','Grapes'],
+    ['☁️','غَيْمَة','Awan','Cloud'],['🐘','فِيل','Gajah','Elephant'],['🌙','قَمَر','Bulan','Moon'],['📖','كِتَاب','Buku','Book'],['🍋','لَيْمُون','Lemon','Lemon'],['🍌','مَوْز','Pisang','Banana'],
+    ['🐝','نَحْلَة','Lebah','Bee'],['🌹','وَرْدَة','Mawar','Rose'],['🌒','هِلَال','Bulan sabit','Crescent'],['✋','يَد','Tangan','Hand']];
+  const WHERE={chest:['🪙 Peti harta','🪙 Treasure chest'],cave:['🕯️ Gua rahasia','🕯️ Secret cave'],tree:['🌳 Di atas pohon','🌳 Up a tree'],balloon:['🎈 Balon terbang','🎈 Flying balloon'],
+    peak:['⛰️ Puncak gunung','⛰️ Mountain top'],well:['🪣 Di dalam sumur','🪣 In the well'],stall:['🍉 Di warung buah','🍉 At the fruit stall'],hay:['🐑 Di tumpukan jerami','🐑 In the hay'],crystal:['💎 Batu kristal','💎 Crystal stone']};
+  const MILES=[[4,'🏅',['Lencana Penjelajah','Explorer badge'],['Kamu penjelajah sejati!','You are a true explorer!']],
+    [8,'🌈',['Jejak Pelangi','Rainbow footsteps'],['Langkahmu meninggalkan jejak pelangi.','Your steps leave a rainbow trail.']],
+    [12,'🦸',['Jubah Pahlawan','Hero cape'],['Ibra memakai jubah merah!','Ibra wears a red cape!']],
+    [16,'🎈',['Balon Sahabat','Balloon buddy'],['Balon kuning ikut ke mana pun kamu pergi.','A yellow balloon follows you everywhere.']],
+    [20,'🧲',['Magnet Huruf','Letter magnet'],['Huruf di dekatmu terbang menghampirimu!','Nearby letters fly to you!']],
+    [24,'🧭',['Kompas Ajaib','Magic compass'],['Kompas menunjuk huruf terdekat.','The compass points to the nearest letter.']],
+    [28,'👑',['Mahkota Hijaiyah','Hijaiyah crown'],['Semua 28 huruf! Masya Allah!','All 28 letters! Masha Allah!']]];
+  const n=()=>collected.size;
+  const M=(c,o)=>new THREE.MeshLambertMaterial(Object.assign({color:c},o||{}));
+  const box=(w,h,d,mat,x,y,z,parent)=>{ const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat); m.position.set(x,y,z); (parent||scene).add(m); return m; };
+
+  /* — find hideouts — */
+  const trees=[]; const seen={};
+  blockIndex.forEach((rec,k)=>{ if(rec.type!=='wood') return; const [x,y,z]=k.split(',').map(Number); const id=x+','+z; if(!seen[id]||y>seen[id].y) seen[id]={x,z,y}; });
+  Object.values(seen).forEach(t=>{ let top=t.y; while(solidAt(t.x,top+1,t.z)) top++; trees.push({x:t.x,z:t.z,top}); });
+  trees.sort((a,b)=>Math.hypot(a.x,a.z)-Math.hypot(b.x,b.z));
+  const pickTrees=trees.filter((t,i)=>i%2===0 && Math.abs(t.x)<HALF-4 && Math.abs(t.z)<HALF-4).slice(0,4);
+  const cv=caveInfo, ex=CAVE_HILL.x-5, ez=CAVE_HILL.z;
+  const well=VILLAGE.build.find(b=>b.t==='well'), stall=VILLAGE.build.find(b=>b.t==='stall'), pen=VILLAGE.pen;
+  const plan=[]; // [type, x, y(base), z]
+  plan.push(['cave',ex+3.5,cv.baseY+0.55,ez+0.5],['cave',cv.chamber.x+0.5,cv.baseY+0.55,ez-1+0.5],['cave',cv.chamber.x+0.5,cv.baseY+0.55,ez+1+0.5]);
+  plan.push(['peak',PEAK.x-0.5,heightAt(PEAK.x-1,PEAK.z)+1.2,PEAK.z+0.5]);
+  pickTrees.forEach(t=>plan.push(['tree',t.x+0.5,t.top+1.0,t.z+0.5]));
+  plan.push(['well',well.x+1,gTop(well.x+1,well.z+1)+0.9,well.z+1]);
+  plan.push(['stall',stall.x+1.5,gTop(stall.x+1,stall.z)+1.45,stall.z+1.2]);
+  plan.push(['hay',pen.x0+0.6,gTop(pen.x0,pen.z1)+0.9,pen.z1+0.4]);
+  const rest=['chest','balloon','chest','crystal','chest','balloon','chest','crystal','chest','balloon','chest','crystal','chest','balloon','chest','crystal','chest'];
+  const freeIdx=[]; letterBlocks.forEach((b,i)=>freeIdx.push(i));
+  // spread special hideouts over the alphabet: every 3rd letter gets the next special place
+  const order=[]; for(let i=0;i<28;i++) order.push(i);
+  const specials=order.filter(i=>i%2===1).slice(0,plan.length);
+  const T={};
+  specials.forEach((li,k)=>T[li]=plan[k]);
+  let ri=0;
+  letterBlocks.forEach(b=>{
+    const sp=T[b.i];
+    b.kind = sp ? sp[0] : rest[ri++%rest.length];
+    if(sp){ b.mesh.position.set(sp[1],sp[2],sp[3]); b.base=sp[2]; }
+    const gy=heightAt(Math.floor(b.mesh.position.x),Math.floor(b.mesh.position.z))+1;
+    if(sp){}
+    else if(b.kind==='balloon'){ b.base=gy+4.6; b.home=gy+0.9; }
+    else if(b.kind==='chest'){ b.base=gy+0.35; }
+    else b.base=gy+1.1;
+    b.mesh.position.y=b.base;
+    b.glow.position.set(b.mesh.position.x,b.base-0.5,b.mesh.position.z);
+    decorate(b, gy);
+    if(b.taken) hideDeco(b);
+  });
+  function decorate(b, gy){
+    const x=b.mesh.position.x, z=b.mesh.position.z, g=new THREE.Group(); scene.add(g); b.deco=g;
+    if(b.kind==='cave'||b.kind==='tree'||b.kind==='well'||b.kind==='hay') b.mesh.scale.setScalar(0.72);
+    if(b.kind==='chest'){
+      const wood=M(0x9A5A2E), gold=M(0xE0B84D);
+      box(0.9,0.5,0.62,wood,x,gy+0.25,z,g); box(0.94,0.08,0.66,gold,x,gy+0.48,z,g); box(0.12,0.5,0.66,gold,x,gy+0.25,z,g);
+      const lid=new THREE.Group(); lid.position.set(x,gy+0.52,z+0.31); g.add(lid);
+      const top=new THREE.Mesh(new THREE.BoxGeometry(0.92,0.22,0.64),wood); top.position.set(0,0.11,-0.31); lid.add(top);
+      const band=new THREE.Mesh(new THREE.BoxGeometry(0.94,0.06,0.66),gold); band.position.set(0,0.2,-0.31); lid.add(band);
+      const lock=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.16,0.04),gold); lock.position.set(0,0.0,-0.64); lid.add(lock);
+      b.lid=lid; b.mesh.visible=false; b.glow.visible=false; b.closed=true; b.open=0; b.gy0=b.base;
+      b.glow.position.y=gy+0.9;
+    } else if(b.kind==='balloon'){
+      const cols=[0xFF6B6B,0x4DABF7,0x51CF66,0xCC5DE8];
+      const bal=new THREE.Mesh(new THREE.SphereGeometry(0.55,16,12),M(cols[b.i%4],{emissive:cols[b.i%4],emissiveIntensity:0.15})); bal.scale.set(1,1.18,1); g.add(bal); b.bal=bal;
+      const str=new THREE.Mesh(new THREE.CylinderGeometry(0.012,0.012,1.1,4),M(0xEEEEEE)); g.add(str); b.str=str;
+    } else if(b.kind==='crystal'||b.kind==='peak'){
+      const st=M(0xB8C2CF); box(0.7,0.35,0.7,st,x,gy+0.17,z,g); box(0.5,0.18,0.5,M(0xD7DEE8),x,gy+0.43,z,g);
+      for(let k=0;k<3;k++){ const c=new THREE.Mesh(new THREE.OctahedronGeometry(0.16),M(0x9EE7FF,{emissive:0x4FB3FF,emissiveIntensity:0.5})); c.position.set(x+Math.cos(k*2.1)*0.42,gy+0.42,z+Math.sin(k*2.1)*0.42); c.scale.y=1.7; g.add(c); }
+    } else if(b.kind==='tree'){
+      const nest=new THREE.Mesh(new THREE.TorusGeometry(0.34,0.12,8,14),M(0x8A6424)); nest.rotation.x=Math.PI/2; nest.position.set(x,b.base-0.45,z); g.add(nest);
+      b.fall=0;
+    } else if(b.kind==='cave'){
+      const lamp=new THREE.PointLight(0xFFC98A,0.6,4); lamp.position.set(x,b.base+0.6,z); g.add(lamp);
+    }
+  }
+  function hideDeco(b){ if(b.deco){ if(b.kind==='chest'){ b.lid&&(b.lid.rotation.x=-1.9); } else scene.remove(b.deco); } }
+
+  /* — animate hideouts — */
+  const clock2={t:performance.now()};
+  function huntTick(){
+    requestAnimationFrame(huntTick);
+    const now=performance.now(), dt=Math.min(.05,(now-clock2.t)/1000); clock2.t=now; const t=now/1000;
+    letterBlocks.forEach(b=>{
+      if(b.taken) return;
+      const dx=b.mesh.position.x-P.x, dz=b.mesh.position.z-P.z, d=Math.hypot(dx,dz);
+      if(b.kind==='chest'){
+        if(b.closed && d<2.6 && running){ b.closed=false; SFX.place(); setTimeout(()=>SFX.weaponUp(),250); toastFor(b); }
+        if(!b.closed){ b.open=Math.min(1,b.open+dt*2.2); b.lid.rotation.x=-1.9*b.open; if(b.open>0.4){ b.mesh.visible=true; b.glow.visible=true; } b.base=b.gy0+0.8*b.open; }
+      }
+      if(b.kind==='balloon'){
+        if(d<3.2 && running && b.base>b.home+0.01){ b.base=Math.max(b.home,b.base-dt*3); if(!b.dipped){ b.dipped=true; SFX.critterPop(); toastFor(b); } }
+        const y=b.mesh.position.y; b.bal.position.set(b.mesh.position.x+Math.sin(t+b.i)*0.08,y+1.45,b.mesh.position.z); b.str.position.set(b.mesh.position.x,y+0.75,b.mesh.position.z);
+      }
+      if(b.kind==='tree' && !b.dropped && d<2.2 && running){
+        b.dropped=true; toastFor(b); SFX.jump(); const g0=heightAt(Math.floor(b.mesh.position.x),Math.floor(b.mesh.position.z))+1; b.drop={from:b.base,to:g0+0.9,t:0}; }
+      if(b.drop){ b.drop.t=Math.min(1,b.drop.t+dt*1.4); const k=b.drop.t, bounce=Math.abs(Math.sin(k*Math.PI*2.5))*(1-k)*0.8; b.base=b.drop.from+(b.drop.to-b.drop.from)*Math.min(1,k*k*1.6)+bounce; if(k>=1){ b.base=b.drop.to; b.drop=null; } }
+      if(n()>=20 && running && d<3.6 && d>0.6 && Math.abs(b.base-(P.y+0.9))<3 && !(b.kind==='chest'&&b.closed)){
+        b.mesh.position.x-=dx*dt*1.6; b.mesh.position.z-=dz*dt*1.6; b.glow.position.x=b.mesh.position.x; b.glow.position.z=b.mesh.position.z; b.base+=((P.y+0.9)-b.base)*dt*1.6; }
+      b.glow.position.y=b.base-0.5;
+    });
+    rewardsTick(dt,t);
+  }
+  const shown={};
+  function toastFor(b){ if(shown[b.i]) return; shown[b.i]=1; const w=WHERE[b.kind]; const msg={chest:TT('Peti harta terbuka! Ada huruf di dalamnya ✨','A treasure chest opened! There\'s a letter inside ✨'),balloon:TT('Balonnya turun! Ambil hurufnya 🎈','The balloon came down! Grab the letter 🎈'),tree:TT('Ada huruf jatuh dari pohon! 🌳','A letter fell out of the tree! 🌳')}[b.kind]; if(msg) toast(msg,2400); }
+
+  /* — rewards worn by Ibra — */
+  let cape=null, crown=null, buddy=null, trail=0;
+  function applyRewards(){
+    if(n()>=12 && !cape){ cape=new THREE.Mesh(new THREE.BoxGeometry(0.52,0.78,0.04),M(0xE5484D)); cape.geometry.translate(0,-0.39,0); cape.position.set(0,1.18,0.36); playerGroup.add(cape); }
+    if(n()>=28 && !crown){ crown=new THREE.Group(); const gold=M(0xFFC83D,{emissive:0x664400,emissiveIntensity:0.3}); box(0.5,0.12,0.5,gold,0,0,0,crown);
+      [[-0.2,-0.2],[0.2,-0.2],[-0.2,0.2],[0.2,0.2],[0,-0.22]].forEach(([x,z])=>box(0.1,0.16,0.1,gold,x,0.13,z,crown)); crown.position.set(0,1.86,0); playerGroup.add(crown); }
+    if(n()>=16 && !buddy){ buddy=new THREE.Group(); const bb=new THREE.Mesh(new THREE.SphereGeometry(0.32,14,10),M(0xFFD43B,{emissive:0x664400,emissiveIntensity:0.2})); bb.scale.y=1.15; buddy.add(bb);
+      const face=new THREE.Mesh(new THREE.BoxGeometry(0.06,0.06,0.02),M(0x2B1A10)); face.position.set(-0.08,0.04,-0.31); buddy.add(face); const f2=face.clone(); f2.position.x=0.08; buddy.add(f2);
+      const s2=new THREE.Mesh(new THREE.CylinderGeometry(0.01,0.01,1.2,4),M(0xEEEEEE)); s2.position.y=-0.85; buddy.add(s2); buddy.position.set(P.x,P.y+2.6,P.z); scene.add(buddy); }
+    document.getElementById('compass').classList.toggle('on', n()>=24 && n()<28);
+  }
+  function rewardsTick(dt,t){
+    if(cape) cape.rotation.x=0.18+Math.min(0.7,lastSpeed*0.5)+Math.sin(t*6)*0.05*lastSpeed;
+    if(buddy){ const tx=P.x+Math.sin(P.yaw+0.9)*0.9, tz=P.z+Math.cos(P.yaw+0.9)*0.9; buddy.position.x+=(tx-buddy.position.x)*Math.min(1,dt*3); buddy.position.z+=(tz-buddy.position.z)*Math.min(1,dt*3); buddy.position.y=visY+2.5+Math.sin(t*2)*0.1; buddy.rotation.y=P.yaw; }
+    if(n()>=24 && n()<28){ const nl=nearestLetter(); if(nl){ const vx=nl.b.mesh.position.x-P.x, vz=nl.b.mesh.position.z-P.z, fwd=-(vx*Math.sin(P.yaw)+vz*Math.cos(P.yaw)), rgt=vx*Math.cos(P.yaw)-vz*Math.sin(P.yaw);
+      document.querySelector('#compass i').style.transform='rotate('+(Math.atan2(rgt,fwd)*180/Math.PI)+'deg)'; } }
+  }
+  const _dust=spawnDust;
+  spawnDust=function(x,y,z,color){ if(color===0xC9B486 && n()>=8){ trail=(trail+1)%6; color=[0xFF6B6B,0xFF922B,0xFCC419,0x51CF66,0x4DABF7,0xCC5DE8][trail]; } _dust(x,y,z,color); };
+
+  /* — the reward card — */
+  const card=document.getElementById('huntCard'), hcBox=document.getElementById('hcBox');
+  let wasRunning=false;
+  function showCard(b){
+    const L0=b.letter, p=PIC[b.i]||PIC[0], c=n(), nx=MILES.find(m=>m[0]>c), hit=MILES.find(m=>m[0]===c), w=WHERE[b.kind]||WHERE.crystal;
+    hcBox.innerHTML='<div class="rays"></div><div class="where">'+TT(w[0],w[1])+'</div><div class="tile" id="hcTile">'+L0.g+'</div><h3>'+L0.name+' · '+L0.ar+'</h3>'+
+      '<div class="pic"><span>'+p[0]+'</span><b>'+p[1]+'</b> '+TT(p[2],p[3])+'</div>'+
+      '<div class="bar"><i id="hcBar" style="width:'+((c-1)/28*100)+'%"></i></div><div class="next">📖 '+c+' / 28'+(nx&&!hit?' · '+TT('lagi '+(nx[0]-c)+' → ','' + (nx[0]-c)+' more → ')+nx[1]+' '+TT(nx[2][0],nx[2][1]):'')+'</div>'+
+      (hit?'<div class="unlock">'+hit[1]+' '+TT('Hadiah baru: ','New reward: ')+TT(hit[2][0],hit[2][1])+'<small>'+TT(hit[3][0],hit[3][1])+'</small></div>':'')+
+      '<button id="hcGo">'+(c>=28?TT('🏆 Masya Allah!','🏆 Masha Allah!'):TT('🔍 Cari lagi!','🔍 Find more!'))+'</button>';
+    wasRunning=running; running=false; card.classList.add('on');
+    requestAnimationFrame(()=>{ const bar=document.getElementById('hcBar'); if(bar) bar.style.width=(c/28*100)+'%'; });
+    document.getElementById('hcTile').onclick=()=>Speech.say([{ar:L0.ar,lat:L0.name},{ar:p[1],lat:TT(p[2],p[3])}]);
+    document.getElementById('hcGo').onclick=closeCard;
+    if(hit){ setTimeout(()=>{ SFX.weaponUp(); haptic([12,40,18]); },700); try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
+  }
+  function closeCard(){ card.classList.remove('on'); running=true; applyRewards(); }
+  card.addEventListener('click',e=>{ if(e.target===card) closeCard(); });
+
+  collectLetter=function(b){
+    b.taken=true; b.mesh.visible=false; b.glow.visible=false; hideDeco(b);
+    collected.add(b.i); updateJournalBadge(); updateWeapon(true);
+    SFX.letterFound(); haptic(15);
+    spawnBurst(b.mesh.position.x,b.base,b.mesh.position.z,0xFFD874); fireworksAt(b.mesh.position.x,b.base+1.5,b.mesh.position.z);
+    celebrating=true; celebrateUntil=performance.now()/1000+2.2;
+    Speech.say([{ar:b.letter.ar,lat:b.letter.name}]);
+    saveWorld();
+    setTimeout(()=>showCard(b),650);
+    if(collected.size===L.length){ setTimeout(()=>{ SFX.finale(); haptic([15,60,15,60,15,80,30]); celebrating=true; celebrateUntil=performance.now()/1000+6;
+      fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),900); },900); }
+  };
+  applyRewards();
+  huntTick();
+})();
 </script>
 </body>
 </html>
