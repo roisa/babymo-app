@@ -336,6 +336,12 @@ html[data-lang="en"] .meaning-en{display:none;}
 /* contrast fixes after the bright theme */
 .q-title{color:#D9480F;}
 
+
+</style>
+<style id="bm-layout">
+#welcomeScreen.dh-night .w-title{color:#FFD874!important;text-shadow:0 2px 14px rgba(0,0,0,.3)!important}
+#welcomeScreen.dh-night .w-arabic{color:#E9E3FF!important}
+
 /* ═════ Baby Mo's day (home) ═════ */
 #welcomeScreen{padding:calc(12px + env(safe-area-inset-top)) 16px 28px!important}
 .day-sky{position:fixed;inset:0;z-index:0;pointer-events:none;transition:background .6s}
@@ -365,11 +371,11 @@ html[data-lang="en"] .meaning-en{display:none;}
 .dh-all{margin-top:12px;border:none;border-radius:18px;padding:13px 18px;width:100%;max-width:440px;font:900 15px 'Nunito',sans-serif;background:rgba(255,255,255,.88);color:#152230;cursor:pointer}
 .w-start{margin:6px 0 10px!important}
 /* ═════ learn: act it out, read along, stickers ═════ */
-.act-btn{position:absolute;left:12px;top:50%;transform:translateY(-50%);z-index:4;display:flex;align-items:center;gap:8px;border:none;border-radius:18px;padding:9px 12px;
-  background:rgba(255,255,255,.95);color:#152230;font:900 13.5px/1.25 'Nunito',sans-serif;max-width:56%;text-align:left;cursor:pointer;box-shadow:0 10px 22px -10px rgba(0,0,0,.45);animation:actPulse 1.6s ease-in-out infinite}
-.act-btn .act-em{font-size:30px;line-height:1}
+.act-btn{position:absolute;left:10px;bottom:10px;z-index:4;display:flex;align-items:center;gap:6px;border:none;border-radius:16px;padding:7px 11px;
+  background:rgba(255,255,255,.95);color:#152230;font:900 13.5px/1.25 'Nunito',sans-serif;max-width:58%;text-align:left;cursor:pointer;font-size:12.5px!important;box-shadow:0 10px 22px -10px rgba(0,0,0,.45);animation:actPulse 1.6s ease-in-out infinite}
+.act-btn .act-em{font-size:22px;line-height:1}
 .act-btn.done{display:none}
-@keyframes actPulse{50%{transform:translateY(-50%) scale(1.05)}}
+@keyframes actPulse{50%{transform:scale(1.06)}}
 .sticker-pop{position:absolute;left:50%;top:50%;z-index:5;transform:translate(-50%,-50%) scale(0);font-size:58px;transition:transform .45s cubic-bezier(.3,1.6,.5,1);pointer-events:none;filter:drop-shadow(0 8px 12px rgba(0,0,0,.3))}
 .sticker-pop.on{transform:translate(-50%,-50%) scale(1)}
 .arabic-text .w{display:inline-block;padding:0 .08em;border-radius:10px;cursor:pointer;transition:background .2s,transform .2s,color .2s}
@@ -531,7 +537,7 @@ const DUAS = [
     arabic:'بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ', latin:"Bismillāhi tawakkaltu 'alallāh, lā ḥaula wa lā quwwata illā billāh",
     meaningId:'Dengan nama Allah, aku berserah diri kepada Allah. Tiada daya dan kekuatan kecuali dengan pertolongan Allah.', meaningEn:'In the name of Allah, I put my trust in Allah. There is no power and no strength except with Allah.',
     quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🎒', quizLabel:'Keluar Rumah', act:['Pakai tas, lalu buka pintu 🎒','Put on your bag and open the door 🎒'], short:['Berangkat','Going out'] },
-  { id:'vehicle', waktu:'siang', timeCode:'day', time:'Siang ☀️', icon:'🚗', prop:'🛣️', bg:'linear-gradient(160deg,#9FD8FF 0%,#3A7BD5 100%)', pose:'yes',
+  { id:'vehicle', waktu:'siang', timeCode:'day', time:'Siang ☀️', icon:'🚗', prop:'🚗', bg:'linear-gradient(160deg,#9FD8FF 0%,#3A7BD5 100%)', pose:'yes',
     title:'Doa Naik Kendaraan', desc:'Naik mobil, motor, atau bus? Baca doa ini supaya selamat!',
     arabic:'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ', latin:"Subḥānal-ladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn, wa innā ilā rabbinā lamunqalibūn",
     meaningId:'Mahasuci Allah yang menundukkan kendaraan ini untuk kami, padahal kami tidak mampu menguasainya, dan sungguh kami akan kembali kepada Tuhan kami.', meaningEn:'Glory be to Allah who made this ride easy for us, which we could not have done ourselves, and to our Lord we will surely return.',
@@ -1041,6 +1047,7 @@ function showToast(e, t){
   function renderHome(){
     var now=nowWaktu(), w=W(now), name=''; try{ name=(localStorage.getItem('mo_child_name')||'').trim(); }catch(e){}
     document.getElementById('daySky').style.background=w.sky;
+    document.getElementById('welcomeScreen').classList.toggle('dh-night',now==='malam');
     document.getElementById('dhMo').src='baby-mo-poses/baby-mo-'+w.mo+'.webp';
     document.getElementById('dhHello').textContent=L(w.hi[0],w.hi[1]).replace('!',name?', '+name+'!':'!');
     document.getElementById('dhSub').textContent=L(w.sub[0],w.sub[1]);
