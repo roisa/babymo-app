@@ -10,7 +10,7 @@
      - same-origin static → cache-first (fast), refreshed in background.
      - cross-origin (fonts) → opportunistic cache.
    ============================================================ */
-const CACHE = "babymo-games-v38";
+const CACHE = "babymo-games-v39";
 
 const SHELL = [
   "/",
@@ -57,6 +57,33 @@ const SHELL = [
   "/babymo-tenis-adam.html",
   "/i18n/tenis.js",
   "/icons/games/tenis-adam.svg",
+  "/babymo-kebun-ais.html",
+  "/i18n/kebun.js",
+  "/icons/games/kebun-ais.svg",
+  "/ais-garden/arms-wide-joy.webp",
+  "/ais-garden/cheer-fist.webp",
+  "/ais-garden/dreamy-delight.webp",
+  "/ais-garden/dua-hands-closed.webp",
+  "/ais-garden/eat-watermelon.webp",
+  "/ais-garden/gardener-sapling.webp",
+  "/ais-garden/gift-box.webp",
+  "/ais-garden/giggle.webp",
+  "/ais-garden/heart-hands-smile.webp",
+  "/ais-garden/hug-earth-smile.webp",
+  "/ais-garden/jump-joy.webp",
+  "/ais-garden/magnifier-leaf.webp",
+  "/ais-garden/plant-trowel.webp",
+  "/ais-garden/rain-umbrella.webp",
+  "/ais-garden/run.webp",
+  "/ais-garden/sad-tears.webp",
+  "/ais-garden/sit-wave.webp",
+  "/ais-garden/sleep-pillow.webp",
+  "/ais-garden/surprised.webp",
+  "/ais-garden/think-question.webp",
+  "/ais-garden/thumbs-up-walk.webp",
+  "/ais-garden/wake-stretch.webp",
+  "/ais-garden/watering-can.webp",
+  "/ais-garden/wave-hello.webp",
   "/adam-tennis/backhand-1.webp",
   "/adam-tennis/backhand-2.webp",
   "/adam-tennis/backhand-3.webp",
