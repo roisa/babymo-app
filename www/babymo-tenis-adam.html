@@ -88,7 +88,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .dots i.now{transform:scale(1.25);border-color:var(--gold)}
 .stagewrap{position:relative;width:100%;max-width:440px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 .stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;
-  background:linear-gradient(180deg,#9ED8FF 0%,#C9ECFF 22%,#2F9E62 22.2%,#2A8F58 100%);box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
+  background:#2E8A57;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.court{position:absolute;inset:0;width:100%;height:100%}
 .adam{position:absolute;width:38%;aspect-ratio:1;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
 .adam img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
@@ -208,25 +208,79 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
     <div class="stage" id="stage">
       <svg class="court" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
         <defs>
-          <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4C8EDB"/><stop offset="1" stop-color="#3A78C8"/></linearGradient>
-          <pattern id="mesh" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 0L6 6M6 0L0 6" stroke="#fff" stroke-opacity=".35" stroke-width=".8"/></pattern>
+          <linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FBFF2"/><stop offset=".65" stop-color="#BFE6FF"/><stop offset="1" stop-color="#FFF0D2"/></linearGradient>
+          <linearGradient id="seag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5DC0E0"/><stop offset="1" stop-color="#2E92C4"/></linearGradient>
+          <linearGradient id="apron" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FAF74"/><stop offset="1" stop-color="#2E8A57"/></linearGradient>
+          <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6AA3E8"/><stop offset=".5" stop-color="#4A88D8"/><stop offset="1" stop-color="#3A74C4"/></linearGradient>
+          <radialGradient id="sunglow"><stop offset="0" stop-color="#FFF6CF" stop-opacity=".95"/><stop offset="1" stop-color="#FFF6CF" stop-opacity="0"/></radialGradient>
+          <pattern id="mesh" width="5" height="5" patternUnits="userSpaceOnUse"><path d="M0 0L5 5M5 0L0 5" stroke="#fff" stroke-opacity=".5" stroke-width=".6"/></pattern>
+          <pattern id="netmesh" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0H4M0 0V4" stroke="#1B2433" stroke-opacity=".55" stroke-width=".7"/></pattern>
         </defs>
-        <!-- fence + trees in the distance -->
-        <rect x="0" y="0" width="400" height="124" fill="url(#mesh)" opacity=".5"/>
-        <ellipse cx="40" cy="120" rx="70" ry="30" fill="#3BAA66"/><ellipse cx="360" cy="118" rx="80" ry="34" fill="#3BAA66"/><ellipse cx="200" cy="122" rx="60" ry="22" fill="#45B56F"/>
-        <!-- court (far baseline y=150, net y=330, near baseline y=556) -->
-        <polygon points="104,150 296,150 386,556 14,556" fill="url(#cg)"/>
-        <g stroke="#fff" stroke-width="3" fill="none" stroke-linejoin="round">
-          <polygon points="104,150 296,150 386,556 14,556"/>
-          <path d="M126 150 L54 556 M274 150 L346 556"/>
-          <path d="M137 242 L263 242 M88 436 L312 436 M200 242 L200 436"/>
-          <path d="M200 150 v6 M200 556 v-8"/>
+        <!-- sky and the view -->
+        <rect width="400" height="130" fill="url(#skyg)"/>
+        <circle cx="318" cy="40" r="40" fill="url(#sunglow)"/><circle cx="318" cy="40" r="13" fill="#FFF3B8"/>
+        <g fill="#fff" opacity=".85"><ellipse cx="70" cy="34" rx="30" ry="8"/><ellipse cx="88" cy="28" rx="16" ry="8"/><ellipse cx="220" cy="22" rx="24" ry="6"/></g>
+        <path d="M0 92 L38 72 L66 84 L112 56 L150 80 L188 68 L226 86 L270 54 L306 76 L346 62 L400 82 V114 H0Z" fill="#A9C0E8"/>
+        <path d="M112 56 L102 62 L108 63 L114 60 L120 63 L123 62Z M270 54 L259 61 L266 61 L272 58 L278 62 L282 61Z M346 62 L338 67 L344 67 L350 65Z" fill="#fff"/>
+        <path d="M0 102 L46 88 L92 98 L140 84 L196 100 L248 88 L300 98 L352 86 L400 96 V116 H0Z" fill="#88A8D8"/>
+        <rect y="104" width="400" height="22" fill="url(#seag)"/>
+        <g stroke="#fff" stroke-linecap="round" opacity=".7"><path d="M40 110h10M150 113h14M236 109h8M300 116h12M110 120h8M352 111h9" stroke-width="1.4"/></g>
+        <g transform="translate(176 104)"><path d="M0 8 L14 8 L12 11 L2 11Z" fill="#fff"/><path d="M7 7 V-6 L13 6Z" fill="#fff"/><path d="M6 7 V-3 L1 6Z" fill="#FFD9A0"/></g>
+        <!-- hills and trees behind the court -->
+        <path d="M0 122 Q36 110 78 118 Q118 108 160 120 L160 134 H0Z" fill="#5FB373"/>
+        <path d="M240 120 Q290 106 330 116 Q368 108 400 116 V134 H240Z" fill="#5FB373"/>
+        <g fill="#2F8A4E">
+          <circle cx="14" cy="122" r="12"/><circle cx="34" cy="118" r="14"/><circle cx="58" cy="124" r="11"/>
+          <circle cx="344" cy="120" r="13"/><circle cx="366" cy="116" r="14"/><circle cx="390" cy="122" r="12"/>
+          <circle cx="132" cy="126" r="9"/><circle cx="268" cy="125" r="10"/>
         </g>
-        <!-- net -->
-        <rect x="60" y="300" width="280" height="34" fill="url(#mesh)"/>
-        <rect x="60" y="300" width="280" height="34" fill="#16223A" opacity=".28"/>
-        <rect x="56" y="296" width="288" height="6" rx="2" fill="#fff"/>
-        <rect x="56" y="296" width="5" height="40" fill="#E8EEF5"/><rect x="339" y="296" width="5" height="40" fill="#E8EEF5"/>
+        <g fill="#3FA05C">
+          <circle cx="24" cy="128" r="10"/><circle cx="48" cy="130" r="9"/><circle cx="356" cy="128" r="10"/><circle cx="380" cy="130" r="9"/>
+          <circle cx="150" cy="130" r="8"/><circle cx="252" cy="130" r="8"/>
+        </g>
+        <!-- cypress trees -->
+        <g fill="#256F40"><ellipse cx="84" cy="114" rx="5" ry="20"/><ellipse cx="96" cy="118" rx="4.5" ry="16"/><ellipse cx="304" cy="114" rx="5" ry="20"/><ellipse cx="316" cy="118" rx="4.5" ry="16"/></g>
+        <!-- palm trees at the edges -->
+        <g>
+          <path d="M14 168 Q10 120 22 84" stroke="#A97A4C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <g fill="#3BA55C"><path d="M22 84 Q4 76 -6 88 Q8 80 22 86Z"/><path d="M22 84 Q36 70 50 78 Q36 76 22 86Z"/><path d="M22 84 Q16 64 2 62 Q16 70 21 86Z"/><path d="M22 84 Q34 92 44 104 Q30 92 21 87Z"/><path d="M22 84 Q8 94 4 106 Q12 92 21 87Z"/></g>
+          <path d="M388 168 Q392 122 380 88" stroke="#A97A4C" stroke-width="5" fill="none" stroke-linecap="round"/>
+          <g fill="#3BA55C"><path d="M380 88 Q398 80 408 92 Q394 84 380 90Z"/><path d="M380 88 Q366 74 352 82 Q366 80 380 90Z"/><path d="M380 88 Q386 68 400 66 Q386 74 381 90Z"/><path d="M380 88 Q368 96 358 108 Q372 96 381 91Z"/><path d="M380 88 Q394 98 398 110 Q390 96 381 91Z"/></g>
+        </g>
+        <!-- apron and a low see-through fence so the view stays open -->
+        <rect y="134" width="400" height="426" fill="url(#apron)"/>
+        <rect y="122" width="400" height="16" fill="url(#mesh)" opacity=".75"/>
+        <rect y="134" width="400" height="5" fill="#1E6A43"/>
+        <g fill="#E8EEF5"><rect x="0" y="120" width="400" height="2"/><rect x="48" y="120" width="2.5" height="19"/><rect x="148" y="120" width="2.5" height="19"/><rect x="250" y="120" width="2.5" height="19"/><rect x="350" y="120" width="2.5" height="19"/></g>
+        <!-- court (far baseline y=150, net y=288, near baseline y=556; true perspective) -->
+        <polygon points="96,145 304,145 394,560 6,560" fill="#2E8A57" opacity=".35"/>
+        <polygon points="104,150 296,150 386,556 14,556" fill="url(#cg)"/>
+        <g stroke="#fff" stroke-width="2.6" fill="none" stroke-linejoin="round" stroke-linecap="round">
+          <polygon points="104,150 296,150 386,556 14,556"/>
+          <path d="M128 150 L60.5 556 M272 150 L339.5 556"/>
+          <path d="M118.9 204.4 H281.1 M85.3 406.8 H314.7 M200 204.4 V406.8"/>
+          <path d="M200 150 v5 M200 556 v-9"/>
+        </g>
+        <!-- net shadow, posts and net (1.07 m posts, 0.91 m at the centre strap) -->
+        <polygon points="62,290 338,290 344,298 56,298" fill="#16223A" opacity=".18"/>
+        <path d="M62 263 Q200 270 338 263 L338 288 L62 288Z" fill="url(#netmesh)"/>
+        <path d="M62 263 Q200 270 338 263 L338 288 L62 288Z" fill="#16223A" opacity=".12"/>
+        <path d="M62 263 Q200 270 338 263" stroke="#fff" stroke-width="3.2" fill="none"/>
+        <rect x="198.6" y="266.5" width="2.8" height="21.5" fill="#fff"/>
+        <rect x="58.5" y="260" width="5" height="30" rx="1.5" fill="#E8EEF5"/><rect x="336.5" y="260" width="5" height="30" rx="1.5" fill="#E8EEF5"/>
+        <!-- umpire chair and players' bench -->
+        <g transform="translate(352 228)">
+          <path d="M4 66 L10 20 M26 66 L20 20 M7 44 H23" stroke="#F5F1E8" stroke-width="2.6" stroke-linecap="round"/>
+          <rect x="6" y="12" width="18" height="10" rx="2" fill="#1F6FB8"/><rect x="6" y="2" width="18" height="12" rx="2" fill="#2A84D2"/>
+        </g>
+        <g transform="translate(10 300)">
+          <rect x="0" y="0" width="38" height="7" rx="2" fill="#2A84D2"/><rect x="0" y="-9" width="38" height="6" rx="2" fill="#2A84D2"/>
+          <path d="M4 7 v10 M34 7 v10" stroke="#E8EEF5" stroke-width="2.4"/>
+          <circle cx="44" cy="12" r="5" fill="#C9E84A"/><circle cx="50" cy="15" r="4" fill="#D9F05A"/>
+        </g>
+        <!-- flowers at the near corners -->
+        <g><ellipse cx="0" cy="560" rx="34" ry="22" fill="#2B7F4C"/><circle cx="8" cy="548" r="4" fill="#FF8FB8"/><circle cx="20" cy="554" r="3.5" fill="#FFE066"/><circle cx="4" cy="538" r="3" fill="#fff"/>
+           <ellipse cx="400" cy="560" rx="34" ry="22" fill="#2B7F4C"/><circle cx="390" cy="548" r="4" fill="#FFE066"/><circle cx="378" cy="555" r="3.5" fill="#FF8FB8"/><circle cx="396" cy="538" r="3" fill="#fff"/></g>
       </svg>
       <div class="score" id="score"><div>Kak Adam<b id="scA">0</b></div><div>Raka<b id="scR">0</b></div></div>
       <div class="meter" id="meter"><div class="zone"></div><div class="lvl" id="meterLvl"></div></div>
@@ -404,14 +458,15 @@ function lerp(a,b,t){ return a+(b-a)*t; }
 var PB=.7; // bounce point along the flight
 /* incoming flight: from us (near) to beside Adam (far). p 0..1 (+ overshoot) */
 function incoming(p,hitX){
-  var gx=lerp(200,hitX,Math.min(p,1.25)), gy=lerp(540,196,Math.min(p,1.25)), s=lerp(1,.45,Math.min(p,1.2)), h;
+  var pp=Math.min(p,1.25), f=pp<1?1-Math.pow(1-pp,1.6):1+(pp-1)*.6; /* perspective: fast near us, slow far away; bounces in Adam's service box */
+  var gx=lerp(200,hitX,f), gy=lerp(540,196,f), s=lerp(1,.45,f), h;
   if(p<PB){ var q=p/PB; h=lerp(26,0,q)+4*150*q*(1-q); }
   else { var r=(p-PB)/(1-PB); h=46*r*(2-r); }
   return {gx:gx,gy:gy,h:Math.max(0,h),s:s};
 }
 /* outgoing flight after a hit: from Adam back to our side */
 function outgoing(p,fromX,toX,good){
-  var gy=lerp(196, good?470:332, p), gx=lerp(fromX,toX,p), s=lerp(.45,good?.95:.7,p);
+  var f=good?Math.pow(p,1.5):p, gy=lerp(196, good?470:286, f), gx=lerp(fromX,toX,f), s=lerp(.45,good?.95:.62,f);
   var h=good ? lerp(46,0,p)+4*120*p*(1-p) : lerp(46,0,p)+4*30*p*(1-p);
   return {gx:gx,gy:gy,h:h,s:s};
 }
@@ -586,7 +641,7 @@ function serveHit(){
     animate(.75,function(p){ var q=Math.min(p,1), gy=lerp(150,400,q), gx=lerp(212,tx,q), s=lerp(.5,.85,q), h=lerp(130,0,q)+4*40*q*(1-q); place(gx,gy,h,s); if(p>=1.15){ hideBall(); return false; } });
     setTimeout(function(){ serveResult(true,"Masuk! Servis roket!"); },700);
   } else {
-    animate(.55,function(p){ var q=Math.min(p,1), gy=lerp(150,330,q), gx=lerp(212,tx,q), s=lerp(.5,.7,q), h=lerp(130,34,q)*(1-q*.4); place(gx,gy,h,s); if(p>=1.1){ hideBall(); return false; } });
+    animate(.55,function(p){ var q=Math.min(p,1), gy=lerp(150,286,q), gx=lerp(212,tx,q), s=lerp(.5,.62,q), h=lerp(130,34,q)*(1-q*.4); place(gx,gy,h,s); if(p>=1.1){ hideBall(); return false; } });
     setTimeout(function(){ serveResult(false, top>.5 ? "Kena net! Tunggu sampai paling tinggi." : "Terlalu cepat — tunggu bolanya naik!"); },560);
   }
 }
