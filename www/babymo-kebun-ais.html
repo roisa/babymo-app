@@ -91,8 +91,9 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .drops{position:absolute;inset:0;pointer-events:none;overflow:visible}
 .drops i{position:absolute;top:44%;width:7px;height:11px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#4FB3FF;opacity:0;animation:drop .7s ease-in forwards}
 @keyframes drop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:1}100%{opacity:0;transform:translateY(40px)}}
-.ais{position:absolute;bottom:-5%;width:50%;aspect-ratio:1;left:50%;transform:translateX(-50%);z-index:4;transition:left .6s cubic-bezier(.45,.05,.45,1);cursor:pointer}
-.ais::after{content:'';position:absolute;left:28%;right:28%;bottom:9%;height:6%;border-radius:50%;background:rgba(0,0,0,.2);z-index:-1}
+.ais{position:absolute;top:43.5%;width:44%;aspect-ratio:1;left:41%;transform:translateX(-50%);z-index:4;transition:left .6s cubic-bezier(.45,.05,.45,1);pointer-events:none}
+.ais-hit{position:absolute;left:32%;right:32%;top:22%;bottom:8%;pointer-events:auto;cursor:pointer}
+.ais::after{content:'';position:absolute;left:27%;right:27%;bottom:4%;height:6%;border-radius:50%;background:rgba(0,0,0,.2);z-index:-1}
 .ais .face{width:100%;height:100%;transition:transform .15s}
 .ais .face.flip{transform:scaleX(-1)}
 .ais img{width:100%;height:100%;object-fit:contain;transform-origin:50% 90%;filter:drop-shadow(0 6px 5px rgba(0,0,0,.18))}
@@ -200,6 +201,8 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 <style id="bm-fixes">
 .btn-pri{color:#fff}
 .tool{border-radius:20px!important}
+/* status badge sits on the side away from Ais */
+.bed[data-i="1"] .badge,.bed[data-i="2"] .badge{left:auto;right:4%}
 </style>
 <script src="bm-icons.js" defer></script>
 </head>
@@ -296,7 +299,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
       <div class="bed" data-i="0"><svg viewBox="0 0 120 168"></svg><div class="drops"></div><div class="badge"></div></div>
       <div class="bed" data-i="1"><svg viewBox="0 0 120 168"></svg><div class="drops"></div><div class="badge"></div></div>
       <div class="bed" data-i="2"><svg viewBox="0 0 120 168"></svg><div class="drops"></div><div class="badge"></div></div>
-      <div class="ais" id="ais"><div class="face" id="aisFace"><img id="aisImg" src="ais-garden/wave-hello.webp" alt="Baby Ais"></div></div>
+      <div class="ais" id="ais"><div class="face" id="aisFace"><img id="aisImg" src="ais-garden/idle-blink-1.webp" alt="Baby Ais"></div><div class="ais-hit" id="aisHit"></div></div>
       <div class="rain" id="rain"></div>
       <div class="night" id="night"></div>
       <div class="hint"><span id="hint">Ketuk petak tanah untuk memilih.</span></div>
@@ -426,12 +429,12 @@ function show(id){ document.querySelectorAll(".screen").forEach(function(s){ s.c
 function renderStars(){ var t="⭐ "+starCount()+" / 8"; $("homeStars").textContent=t; $("bookStars").textContent=t; }
 
 /* ═════════ Baby Ais sprite ═════════ */
-var aisEl=$("ais"), aisFace=$("aisFace"), aisImg=$("aisImg"), aisT=null, aisAt=1, aisDir="left";
+var aisEl=$("ais"), aisFace=$("aisFace"), aisImg=$("aisImg"), aisT=null, aisAt=1, aisDir="right";
 function pose(name, loop){
   var p=POSES[name]||POSES.idle, fr=p.frames, i=0;
   clearTimeout(aisT);
   aisImg.className = p.motion ? "m-"+p.motion : "";
-  aisFace.classList.toggle("flip", !!p.faces && p.faces!==aisDir);
+  aisFace.classList.toggle("flip", (p.faces||"right")!==aisDir);
   var total=0;
   for(var j=0;j<fr.length;j++) total += p.ms ? p.ms[j%p.ms.length] : 1000/(p.fps||9);
   (function next(){
@@ -443,7 +446,9 @@ function pose(name, loop){
   })();
   return total;
 }
-var BEDX=[18,50,82], carrying=false;
+/* Ais stands just in front of the bed she works on, facing the plant:
+   left of beds 2 and 3 (facing right), right of bed 1 (facing left). */
+var BEDX=[29,41,73], FACE=["left","right","right"], carrying=false;
 async function walkTo(i){
   if(aisAt===i) return;
   var dist=Math.abs(i-aisAt);
@@ -454,6 +459,7 @@ async function walkTo(i){
   aisEl.style.left=BEDX[i]+"%";
   aisAt=i;
   await wait(ms);
+  aisDir=FACE[i];
   carrying=false;
 }
 
@@ -820,7 +826,7 @@ $("sleepBtn").addEventListener("click",function(){ sfx("tap"); sleep(); });
 $("basketBtn").addEventListener("click",function(){ sfx("tap"); openBasket(); });
 document.querySelectorAll(".tool").forEach(function(t){ t.addEventListener("click",function(){ doTool(t.dataset.t); }); });
 beds.forEach(function(el,i){ el.addEventListener("click",function(e){ if(e.target.closest && e.target.closest(".cat")) rescueCat(i); else selectBed(i); }); });
-aisEl.addEventListener("click",async function(){ if(busy) return; busy=true; pose("splash",true); sfx("tap"); say(L("Hihi!","Hehe!")); await wait(900); pose("idle",true); busy=false; });
+$("aisHit").addEventListener("click",async function(e){ e.stopPropagation(); if(busy) return; busy=true; pose("splash",true); sfx("tap"); say(L("Hihi!","Hehe!")); await wait(900); pose("idle",true); busy=false; });
 $("modal").addEventListener("click",function(e){ if(e.target.id==="modal" && $("mcard").querySelector("[data-close]")) closeModal(); });
 (function stars(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*45).toFixed(1)+'%;animation-delay:'+(Math.random()*1.4).toFixed(2)+'s"></i>'; n.innerHTML=h; })();
 if(window.BM_LANG==="en") $("quoteTxt").textContent='"Then let people look at their food: how We pour down water from the sky, then split the earth open, and make grain grow in it…"';
