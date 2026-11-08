@@ -1682,7 +1682,7 @@ function loadRealPrayerTimes(){
   if(!loc||typeof loc.lat!=='number')return;
   var d=new Date();
   var ds=String(d.getDate()).padStart(2,'0')+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+d.getFullYear();
-  fetch('https://api.aladhan.com/v1/timings/'+ds+'?latitude='+loc.lat+'&longitude='+loc.lng+'&method=20')
+  fetch('https://api.aladhan.com/v1/timings/'+ds+'?latitude='+(+loc.lat).toFixed(2)+'&longitude='+(+loc.lng).toFixed(2)+'&method=20')
     .then(function(r){return r.json();})
     .then(function(data){
       var t=data&&data.data&&data.data.timings;if(!t)return;

@@ -9,8 +9,6 @@
 <meta name="description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
 <title>Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
-<!-- ResponsiveVoice: Google-quality TTS, far better than Web Speech API for Arabic -->
-<script src="https://code.responsivevoice.org/responsivevoice.js?key=FREE"></script>
 <style>
 :root{
   /* Fresh iOS-style palette — brighter emerald→teal, soft glass surfaces */
@@ -565,14 +563,13 @@ const DUAS = [
 const QUIZ_Q = [0, 3, 4, 5];
 
 // ═══════════════════════════════════════
-// SPEECH & AUDIO — ResponsiveVoice (Google TTS) first, Web Speech API fallback
+// SPEECH & AUDIO — the device's own speech engine (no data leaves the phone)
 // ═══════════════════════════════════════
-// ResponsiveVoice uses Google's TTS under the hood — sounds natural on all devices.
-// Web Speech API is kept as silent fallback only (most Arabic voices on it sound poor).
+// Uses the built-in Arabic voice of the phone or browser.
 let isSpeaking = false, currentSpeed = 'normal', audioCtx = null;
 let currentQuizDuaIdx = 0;
 
-// Web Speech API fallback vars (only used if ResponsiveVoice not available)
+// Web Speech API vars
 let wsVoices = [], wsArabicVoice = null;
 
 function initVoices(){
@@ -589,26 +586,13 @@ function initVoices(){
 }
 
 function speakDua(text, rate){
-  if(window.responsiveVoice){
-    // ResponsiveVoice: Google-quality Arabic — clear, natural, works on all devices
-    responsiveVoice.cancel();
-    isSpeaking = true; setSoundState('playing'); setQuizPlayState('playing');
-    responsiveVoice.speak(text, 'Arabic Male', {
-      rate:   rate !== undefined ? rate : (currentSpeed === 'slow' ? 0.75 : 0.9),
-      pitch:  1,
-      volume: 1,
-      onstart: () => { isSpeaking = true;  setSoundState('playing'); setQuizPlayState('playing'); },
-      onend:   () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); },
-      onerror: () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); speakDuaFallback(text, rate); }
-    });
-  } else {
-    speakDuaFallback(text, rate);
-  }
+  // On-device speech only (no third-party voice service): the phone's own Arabic voice.
+  speakDuaFallback(text, rate);
 }
 
 function speakDuaFallback(text, rate){
-  // Web Speech API fallback — only when ResponsiveVoice is unavailable
-  if(!window.speechSynthesis || !wsArabicVoice){
+  // Web Speech API — the device's built-in Arabic voice
+  if(!window.speechSynthesis){
     const note = document.getElementById('audioNote');
     if(note) note.textContent = '🔇 Suara Arab belum tersedia. Baca teks di atas ya!';
     return;
@@ -619,7 +603,7 @@ function speakDuaFallback(text, rate){
   utt.rate   = rate !== undefined ? rate : (currentSpeed === 'slow' ? 0.40 : 0.60);
   utt.pitch  = 1.0;   // never modify pitch on Arabic TTS
   utt.volume = 1.0;
-  utt.voice  = wsArabicVoice;
+  if(wsArabicVoice) utt.voice = wsArabicVoice; // else the system picks its ar-SA voice
   utt.onstart = () => { isSpeaking = true;  setSoundState('playing'); setQuizPlayState('playing'); };
   utt.onend   = () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); };
   utt.onerror = () => { isSpeaking = false; setSoundState('idle');    setQuizPlayState('idle'); };
@@ -627,7 +611,6 @@ function speakDuaFallback(text, rate){
 }
 
 function stopSpeech(){
-  if(window.responsiveVoice) responsiveVoice.cancel();
   if(window.speechSynthesis) speechSynthesis.cancel();
   isSpeaking = false; setSoundState('idle'); setQuizPlayState('idle');
 }
@@ -674,10 +657,10 @@ function repeatMode(){
   document.getElementById('speedNormal').classList.remove('active');
   document.getElementById('speedSlow').classList.remove('active');
   // First pass normal, second pass slow for memorisation
-  speakDua(DUAS[currentDuaIdx].arabic, window.responsiveVoice ? 0.9 : 0.60);
+  speakDua(DUAS[currentDuaIdx].arabic, 0.60);
   clearTimeout(repeatTimer);
   repeatTimer = setTimeout(() => {
-    speakDua(DUAS[currentDuaIdx].arabic, window.responsiveVoice ? 0.7 : 0.40);
+    speakDua(DUAS[currentDuaIdx].arabic, 0.40);
   }, 5500);
 }
 
