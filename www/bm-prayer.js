@@ -104,7 +104,7 @@
     var d = new Date(), key = dkey(d), cache = get("mo_prayer_cache_v1", {});
     if (cache.days && cache.days[key]) apply(cache.days[key]);
     var ds = String(d.getDate()).padStart(2, "0") + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + d.getFullYear();
-    fetch("https://api.aladhan.com/v1/timings/" + ds + "?latitude=" + loc.lat + "&longitude=" + loc.lng + "&method=20")
+    fetch("https://api.aladhan.com/v1/timings/" + ds + "?latitude=" + (+loc.lat).toFixed(2) + "&longitude=" + (+loc.lng).toFixed(2) + "&method=20")
       .then(function (r) { if (!r.ok) throw 0; return r.json(); })
       .then(function (j) {
         var tm = j.data.timings; cache.days = cache.days || {}; cache.days[key] = tm; cache.loc = loc;
@@ -118,7 +118,7 @@
   }
   function reverseCity() {
     if (!loc) return;
-    fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + loc.lat + "&longitude=" + loc.lng + "&localityLanguage=id")
+    fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + (+loc.lat).toFixed(2) + "&longitude=" + (+loc.lng).toFixed(2) + "&localityLanguage=id")
       .then(function (r) { return r.json(); })
       .then(function (d) { var n = d.city || d.locality || d.principalSubdivision; if (n) { put("mo_reverse_city", { n: n, lat: loc.lat, lng: loc.lng, at: Date.now() }); render(); } })
       .catch(function () {});
