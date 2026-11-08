@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<script src="bm-theme.js"></script>
+<script src="i18n/kebun.js"></script>
+<script src="bm-i18n.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0E2A1A">
+<title>Kebun Kecil Ais — Game Berkebun untuk Anak | Baby Mo</title>
+<meta name="description" content="Berkebun bersama Baby Ais: tanam benih, siram, cabut rumput liar, tunggu tumbuh, lalu panen dan berbagi. Game berkebun ramah anak dari Baby Mo.">
+<link rel="canonical" href="https://play.babymo.id/babymo-kebun-ais.html">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="icon" href="icons/games/kebun-ais.svg">
+<style>
+/* ── Classic (dark garden) look; the bright look is the #bm-bright block below ── */
+:root{
+  --bg:#0E2A1A;--bg2:#12331F;--card:rgba(255,255,255,.07);--card2:rgba(255,255,255,.11);
+  --ink:#F3F8EE;--soft:#B4C9B0;--border:rgba(255,255,255,.12);
+  --green:#2FA35B;--green-lt:#5BD07F;--gold:#FFC83D;--orange:#FF9A3C;--red:#FF6B5A;--pink:#FF7EB6;
+  --sheet:#163A25;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-user-select:none;user-select:none;touch-action:manipulation;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 15% 5%,rgba(91,208,127,.26),transparent 70%),
+  radial-gradient(ellipse 60% 45% at 90% 15%,rgba(255,200,61,.14),transparent 70%),
+  linear-gradient(180deg,#12331F 0%,#0E2A1A 60%,#0A2013 100%);}
+.screen{position:fixed;inset:0;z-index:1;display:none;flex-direction:column;align-items:center;
+  padding:calc(14px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));overflow-y:auto;}
+.screen.on{display:flex;}
+.wrap{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;}
+.topbar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.w-back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--border);font-family:inherit;cursor:pointer}
+.icon-btn{width:44px;height:44px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--ink);background:var(--card);border:1px solid var(--border);cursor:pointer;flex:0 0 auto}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-weight:800;font-size:14px;white-space:nowrap;color:var(--ink);font-family:inherit}
+button.pill{cursor:pointer}
+.kicker{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--green-lt);padding:5px 12px;border-radius:999px;background:var(--card);border:1px solid var(--border);}
+h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;margin:10px 0 6px;color:var(--gold);}
+.sub{color:var(--soft);font-size:15px;line-height:1.45;max-width:30em;}
+.btn-pri,.btn-sec{flex:1;min-height:56px;border-radius:18px;font:inherit;font-size:18px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px}
+.btn-pri{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#062814;border:none}
+.btn-sec{background:var(--card);color:var(--ink);border:1px solid var(--border)}
+.btn-pri:active,.btn-sec:active{transform:scale(.96)}
+.row{display:flex;gap:10px;width:100%;margin-top:14px}
+
+/* ── Home ── */
+.hero{text-align:center;margin:0 0 12px;}
+.hero img{width:170px;height:170px;object-fit:contain;filter:drop-shadow(0 12px 18px rgba(0,0,0,.25));animation:bob 3s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.steps{width:100%;display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin:6px 0 4px}
+.steps div{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:8px 2px;text-align:center;font-size:11.5px;font-weight:800;line-height:1.2;color:var(--soft)}
+.steps div span{display:block;font-size:24px;margin-bottom:3px}
+.quote{width:100%;margin-top:12px;border-radius:20px;padding:12px 14px;background:rgba(255,200,61,.10);border:1px dashed rgba(255,200,61,.45);font-size:14px;line-height:1.5;text-align:left}
+.quote b{display:block;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.quote small{display:block;margin-top:4px;color:var(--soft);font-weight:800}
+
+/* ── Garden ── */
+#s-garden{padding-bottom:calc(10px + env(safe-area-inset-bottom));overflow:hidden}
+.hud{width:100%;max-width:440px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.hud .day{flex:1;min-width:0;text-align:center;font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stagewrap{position:relative;width:100%;max-width:440px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;background:#BFE7FF;box-shadow:0 20px 40px -24px rgba(0,0,0,.6);container-type:inline-size}
+.stage svg.bg{position:absolute;inset:0;width:100%;height:100%}
+.sun{transform-origin:330px 62px;animation:spin 30s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.cloud{animation:drift 26s linear infinite}
+.cloud.c2{animation-duration:38s;animation-delay:-14s}
+@keyframes drift{from{transform:translateX(-120px)}to{transform:translateX(460px)}}
+.stage.hot .sky{fill:url(#skyHot)}
+.stage.rainy .sky{fill:url(#skyRain)}
+.stage.rainy .sunG{opacity:0}
+.bed{position:absolute;top:36%;width:30%;height:30%;cursor:pointer;z-index:2}
+.bed[data-i="0"]{left:3%}.bed[data-i="1"]{left:35%}.bed[data-i="2"]{left:67%}
+.bed svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.bed::before{content:'';position:absolute;left:-2%;right:-2%;bottom:-3%;height:34%;border-radius:22px;background:rgba(255,236,120,.0);transition:background .25s,box-shadow .25s}
+.bed.sel::before{background:rgba(255,236,120,.38);box-shadow:0 0 0 3px #FFE066,0 0 18px 4px rgba(255,224,102,.7)}
+.bed .pl{transform-origin:60px 126px;transition:transform .5s}
+.bed .pl.thirsty{transform:skewX(8deg) scaleY(.92);filter:saturate(.45) brightness(1.05)}
+.bed .pl.pop{animation:grow .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes grow{0%{transform:scale(.6,.4)}100%{transform:none}}
+.bed .weed{transform-origin:22px 130px;animation:sway 1.6s ease-in-out infinite alternate}
+@keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.bed .cat{cursor:pointer;animation:inch 1.2s ease-in-out infinite alternate}
+@keyframes inch{to{transform:translateX(-4px)}}
+.badge{position:absolute;left:4%;bottom:-4%;min-width:34px;height:34px;padding:0 8px;border-radius:17px;display:none;align-items:center;justify-content:center;font-size:18px;background:#fff;box-shadow:0 4px 10px rgba(0,0,0,.2);animation:float 1.6s ease-in-out infinite;z-index:3;pointer-events:none}
+.badge.on{display:flex}
+@keyframes float{50%{transform:translateY(-4px)}}
+.drops{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.drops i{position:absolute;top:44%;width:7px;height:11px;border-radius:50% 50% 50% 50%/60% 60% 40% 40%;background:#4FB3FF;opacity:0;animation:drop .7s ease-in forwards}
+@keyframes drop{0%{opacity:0;transform:translateY(-20px)}15%{opacity:1}100%{opacity:0;transform:translateY(40px)}}
+.ais{position:absolute;bottom:-5%;width:50%;aspect-ratio:1;left:50%;transform:translateX(-50%);z-index:4;transition:left .6s cubic-bezier(.45,.05,.45,1);cursor:pointer}
+.ais::after{content:'';position:absolute;left:28%;right:28%;bottom:9%;height:6%;border-radius:50%;background:rgba(0,0,0,.2);z-index:-1}
+.ais .face{width:100%;height:100%;transition:transform .15s}
+.ais .face.flip{transform:scaleX(-1)}
+.ais img{width:100%;height:100%;object-fit:contain;transform-origin:50% 90%;filter:drop-shadow(0 6px 5px rgba(0,0,0,.18))}
+/* stand-in motion between poses (until the frame sequences exist) */
+.m-breathe{animation:breathe 2.6s ease-in-out infinite}
+@keyframes breathe{50%{transform:scale(1.02,1.035)}}
+.m-step{animation:step .28s ease-in-out infinite alternate}
+@keyframes step{from{transform:translateY(0) rotate(-2deg)}to{transform:translateY(-5%) rotate(2deg)}}
+.m-dig{animation:dig .32s ease-in-out infinite alternate}
+@keyframes dig{from{transform:rotate(-4deg)}to{transform:rotate(5deg) translateY(2%)}}
+.m-pat{animation:pat .26s ease-in-out infinite alternate}
+@keyframes pat{to{transform:translateY(3%) scale(1.02,.97)}}
+.m-pour{animation:pour .9s ease-in-out infinite alternate}
+@keyframes pour{from{transform:rotate(0)}to{transform:rotate(7deg)}}
+.m-tug{animation:tug .3s ease-in-out infinite alternate}
+@keyframes tug{to{transform:translateX(-5%) rotate(-7deg)}}
+.m-hop{animation:hop .36s cubic-bezier(.3,.7,.4,1) infinite alternate}
+@keyframes hop{to{transform:translateY(-12%) scale(1.03)}}
+.m-lean{animation:lean 1.1s ease-in-out infinite alternate}
+@keyframes lean{to{transform:rotate(5deg) translateY(2%)}}
+.m-wiggle{animation:wiggle .18s ease-in-out infinite alternate}
+@keyframes wiggle{from{transform:rotate(-5deg)}to{transform:rotate(5deg)}}
+.m-sway{animation:sway2 1.4s ease-in-out infinite alternate}
+@keyframes sway2{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
+.m-sleep{animation:breathe 3.4s ease-in-out infinite}
+.hint{position:absolute;left:10px;right:10px;top:10px;z-index:6;display:flex;justify-content:center;pointer-events:none}
+.hint span{background:rgba(255,255,255,.94);color:#1C3A26;font-weight:900;font-size:14px;line-height:1.3;padding:8px 14px;border-radius:16px;box-shadow:0 6px 16px -6px rgba(0,0,0,.35);text-align:center;max-width:100%}
+.pop{position:absolute;left:50%;top:48%;transform:translate(-50%,-50%) scale(.6);z-index:9;opacity:0;pointer-events:none;
+  font-family:'Fredoka','Nunito',sans-serif;font-size:22px;font-weight:700;color:#fff;text-align:center;
+  padding:10px 16px;border-radius:18px;background:rgba(20,50,30,.82);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .25s cubic-bezier(.3,1.5,.5,1);width:max-content;max-width:88%;line-height:1.3}
+.pop.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.pop small{display:block;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;opacity:.9;margin-top:3px}
+.night{position:absolute;inset:0;z-index:7;pointer-events:none;opacity:0;transition:opacity 1s;
+  background:radial-gradient(circle at 80% 14%,rgba(255,244,200,.55) 0 4%,transparent 4.5%),linear-gradient(180deg,rgba(14,22,60,.92),rgba(20,30,70,.78))}
+.night.on{opacity:1}
+.night i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:tw 1.4s ease-in-out infinite alternate}
+@keyframes tw{to{opacity:.2}}
+.rain{position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;transition:opacity .6s;
+  background:repeating-linear-gradient(105deg,transparent 0 14px,rgba(255,255,255,.55) 14px 15.5px,transparent 15.5px 30px);background-size:60px 60px;animation:rain .35s linear infinite}
+.rain.on{opacity:.8}
+@keyframes rain{to{background-position:-16px 60px}}
+.fly{position:fixed;z-index:50;font-size:30px;pointer-events:none;transition:transform .8s cubic-bezier(.5,-0.3,.7,1),opacity .8s;will-change:transform}
+.tools{width:100%;max-width:440px;display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.tool{min-height:70px;border-radius:20px;font:inherit;font-weight:900;font-size:14px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card2);color:var(--ink);border:1.5px solid var(--border);position:relative;transition:opacity .2s,transform .1s}
+.tool span{font-size:26px;line-height:1}
+.tool:active{transform:scale(.94)}
+.tool.off{opacity:.38}
+.tool.go{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.25)}
+.tool.go::after{content:'';position:absolute;inset:-3px;border-radius:22px;border:2px solid var(--gold);animation:pulse 1.4s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{opacity:.15}50%{opacity:1}}
+#sleepBtn.go{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.3);animation:nudge 1.4s ease-in-out infinite}
+@keyframes nudge{50%{transform:scale(1.06)}}
+
+/* ── Modal sheet ── */
+.modal{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;justify-content:center;background:rgba(5,15,8,.55);padding:16px 12px calc(14px + env(safe-area-inset-bottom))}
+.modal.on{display:flex}
+.mcard{width:100%;max-width:440px;max-height:92%;overflow-y:auto;background:var(--sheet);border:1px solid var(--border);border-radius:28px;padding:18px 16px 16px;text-align:center;animation:up .3s cubic-bezier(.3,1.3,.5,1)}
+@keyframes up{from{transform:translateY(40px);opacity:0}}
+.mcard .mimg{width:150px;height:150px;object-fit:contain;display:block;margin:-6px auto 0}
+.mcard .memo{font-size:64px;line-height:1.1;margin:2px 0}
+.mcard h2{font-family:'Fredoka','Nunito',sans-serif;font-size:25px;line-height:1.15;color:var(--gold);margin:4px 0 6px}
+.mcard p{font-size:16px;line-height:1.5;color:var(--ink)}
+.fact{margin-top:12px;text-align:left;border-radius:18px;padding:12px 14px;background:rgba(255,200,61,.10);border:1px dashed rgba(255,200,61,.45);font-size:15px;line-height:1.5}
+.fact .ft{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.newtag{display:inline-block;margin-top:8px;padding:6px 12px;border-radius:999px;background:#FFE066;color:#5A3A00;font-weight:900;font-size:14px}
+.seeds{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:10px}
+.seed{border-radius:20px;padding:10px 4px;background:var(--card2);border:1.5px solid var(--border);font:inherit;color:var(--ink);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.seed span{font-size:36px;line-height:1.1}
+.seed b{font-size:14px;font-weight:900;line-height:1.15}
+.seed small{font-size:12px;color:var(--soft);font-weight:800}
+.seed:active{transform:scale(.95)}
+.blist{display:flex;flex-direction:column;gap:8px;margin-top:10px;text-align:left}
+.bitem{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:18px;background:var(--card2);border:1px solid var(--border)}
+.bitem span{font-size:30px}
+.bitem b{flex:1;font-size:16px}
+.bitem button{min-height:44px;flex:0 0 auto;font-size:15px;padding:8px 12px;border-radius:14px}
+
+/* ── Book ── */
+.book{width:100%;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:6px}
+.bk{border-radius:22px;padding:12px;background:var(--card);border:1.5px solid var(--border);text-align:center}
+.bk .e{font-size:44px;line-height:1.1}
+.bk b{display:block;font-size:16px;margin-top:2px}
+.bk small{display:block;font-size:12.5px;color:var(--soft);line-height:1.35;margin-top:4px;font-weight:700}
+.bk.lock .e{filter:grayscale(1) brightness(.4);opacity:.45}
+.bk.lock b{color:var(--soft)}
+.badges{width:100%;display:flex;gap:10px;margin-top:10px}
+.badges div{flex:1;border-radius:20px;padding:10px;background:var(--card);border:1.5px solid var(--border);text-align:center;font-size:13px;font-weight:800;line-height:1.3}
+.badges div span{display:block;font-size:30px}
+.badges div.lock span{filter:grayscale(1);opacity:.35}
+.master{width:100%;margin-top:10px;border-radius:22px;padding:12px 14px;background:linear-gradient(135deg,#FFF6D6,#FFE1EA);color:#3A2A10;border:3px solid #FFC83D;font-weight:900;text-align:center;display:none}
+.master.on{display:block}
+.linkbtn{background:none;border:none;color:var(--soft);font:inherit;font-weight:800;font-size:14px;text-decoration:underline;margin-top:16px;cursor:pointer;padding:8px}
+</style>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{--bg:#F2F7EE;--bg2:#FFFFFF;--card:rgba(255,255,255,.92);--card2:#FFFFFF;--ink:#173022;--soft:#5B6E60;--border:rgba(23,48,34,.10);
+  --green:#1E9A4C;--green-lt:#1E9A4C;--gold:#E8590C;--sheet:#FFFFFF}
+.tool,.seed,.bitem,.bk,.badges div,.steps div{box-shadow:0 0 0 .5px rgba(23,48,34,.05),0 10px 22px -16px rgba(30,80,50,.45)}
+.quote,.fact{background:#FFF6D6;border-color:#FFC83D}
+.quote b,.fact .ft{color:#B35C00}
+.hero h1,h1{color:#E8590C}
+.modal{background:rgba(20,40,28,.35)}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+.btn-pri{color:#fff}
+.tool{border-radius:20px!important}
+</style>
+<script src="bm-icons.js" defer></script>
+</head>
+<body>
+
+<!-- ═══════════ HOME ═══════════ -->
+<section class="screen on" id="s-home">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="w-back" href="./index.html">← Game Hub</a>
+      <span class="pill" id="homeStars">⭐ 0 / 8</span>
+    </div>
+    <div class="hero">
+      <img src="ais-garden/gardener-sapling.webp" alt="">
+      <div><span class="kicker">🌱 Baby Mo · Berkebun</span></div>
+      <h1>Kebun Kecil Ais</h1>
+      <p class="sub">Tanam benih, siram setiap hari, cabut rumput liar, lalu panen dan bagikan hasilnya bersama Baby Ais!</p>
+    </div>
+    <div class="steps">
+      <div><span>🌱</span>Tanam</div>
+      <div><span>💧</span>Siram</div>
+      <div><span>🌿</span>Cabut rumput</div>
+      <div><span>🌙</span>Tidur</div>
+      <div><span>🧺</span>Panen</div>
+    </div>
+    <div class="row">
+      <button class="btn-pri" id="goGarden">🌱 Mulai Berkebun</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="btn-sec" id="goBook">📖 Buku Kebun</button>
+    </div>
+    <div class="quote">
+      <b>📖 Renungan</b>
+      <span id="quoteTxt">"Maka hendaklah manusia memperhatikan makanannya. Kamilah yang mencurahkan air dari langit, lalu Kami belah bumi, lalu Kami tumbuhkan biji-bijian di sana…"</span>
+      <small>QS. 'Abasa: 24–27</small>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ GARDEN ═══════════ -->
+<section class="screen" id="s-garden">
+  <div class="hud">
+    <button class="icon-btn" id="gardenX" aria-label="Keluar">✕</button>
+    <div class="day" id="dayLbl">Hari 1 ☀️</div>
+    <button class="pill" id="basketBtn">🧺 <b id="basketN">0</b></button>
+    <button class="pill" id="sleepBtn">🌙 Tidur</button>
+  </div>
+  <div class="stagewrap">
+    <div class="stage" id="stage">
+      <svg class="bg" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3FF"/><stop offset="1" stop-color="#D8F1FF"/></linearGradient>
+          <linearGradient id="skyHot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC27A"/><stop offset="1" stop-color="#FFEBC2"/></linearGradient>
+          <linearGradient id="skyRain" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FA5B8"/><stop offset="1" stop-color="#C9D6E0"/></linearGradient>
+          <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8CD06A"/><stop offset="1" stop-color="#5DB34E"/></linearGradient>
+        </defs>
+        <rect class="sky" x="0" y="0" width="400" height="200" fill="url(#sky)"/>
+        <g class="sunG">
+          <g class="sun"><g stroke="#FFC83D" stroke-width="5" stroke-linecap="round">
+            <path d="M330 22v-10M330 102v10M290 62h-10M370 62h10M302 34l-7-7M358 90l7 7M358 34l7-7M302 90l-7 7"/></g></g>
+          <circle cx="330" cy="62" r="26" fill="#FFD84D"/><circle cx="330" cy="62" r="20" fill="#FFE47A"/>
+        </g>
+        <g fill="#fff" opacity=".9">
+          <g class="cloud"><ellipse cx="40" cy="50" rx="34" ry="13"/><ellipse cx="58" cy="42" rx="20" ry="13"/></g>
+          <g class="cloud c2"><ellipse cx="20" cy="96" rx="28" ry="10"/><ellipse cx="34" cy="89" rx="16" ry="11"/></g>
+        </g>
+        <path d="M0 168 Q70 120 150 158 Q230 118 310 150 Q360 132 400 146 V210 H0Z" fill="#7CC4A0"/>
+        <!-- Umi's house -->
+        <g transform="translate(18 108)">
+          <rect x="0" y="34" width="70" height="52" rx="4" fill="#FFF3DD"/>
+          <path d="M-8 38 L35 4 L78 38Z" fill="#E86B5A"/>
+          <rect x="26" y="56" width="18" height="30" rx="3" fill="#B97A4A"/>
+          <rect x="6" y="48" width="14" height="14" rx="2" fill="#9ED8FF"/><rect x="50" y="48" width="14" height="14" rx="2" fill="#9ED8FF"/>
+        </g>
+        <!-- tree (the caterpillar's new home) -->
+        <g transform="translate(352 96)">
+          <rect x="-6" y="40" width="12" height="60" rx="5" fill="#9A6236"/>
+          <circle cx="0" cy="30" r="34" fill="#3FA85B"/><circle cx="-20" cy="44" r="22" fill="#4CB868"/><circle cx="20" cy="46" r="22" fill="#4CB868"/>
+        </g>
+        <rect x="0" y="182" width="400" height="378" fill="url(#grass)"/>
+        <!-- fence -->
+        <g fill="#FFF7E8" stroke="#E0CBA8" stroke-width="1.5">
+          <rect x="0" y="176" width="400" height="6"/><rect x="0" y="194" width="400" height="6"/>
+          <path d="M8 170h10v36H8zM48 170h10v36H48zM88 170h10v36H88zM128 170h10v36h-10zM168 170h10v36h-10zM208 170h10v36h-10zM248 170h10v36h-10zM288 170h10v36h-10zM328 170h10v36h-10zM368 170h10v36h-10z"/>
+        </g>
+        <!-- path stones -->
+        <g fill="#E8DCC4" opacity=".9">
+          <ellipse cx="70" cy="404" rx="26" ry="9"/><ellipse cx="140" cy="410" rx="22" ry="8"/><ellipse cx="205" cy="406" rx="26" ry="9"/>
+          <ellipse cx="270" cy="411" rx="22" ry="8"/><ellipse cx="335" cy="405" rx="26" ry="9"/>
+        </g>
+        <g fill="#4DA845"><path d="M20 520l4-14 4 14M380 470l4-14 4 14M360 540l4-12 4 12M40 450l4-12 4 12"/></g>
+        <g><circle cx="30" cy="470" r="5" fill="#FF8FB8"/><circle cx="30" cy="470" r="2" fill="#FFE066"/><circle cx="372" cy="512" r="5" fill="#FFE066"/><circle cx="372" cy="512" r="2" fill="#FF9A3C"/></g>
+      </svg>
+      <div class="bed" data-i="0"><svg viewBox="0 0 120 168"></svg><div class="drops"></div><div class="badge"></div></div>
+      <div class="bed" data-i="1"><svg viewBox="0 0 120 168"></svg><div class="drops"></div><div class="badge"></div></div>
+      <div class="bed" data-i="2"><svg viewBox="0 0 120 168"></svg><div class="drops"></div><div class="badge"></div></div>
+      <div class="ais" id="ais"><div class="face" id="aisFace"><img id="aisImg" src="ais-garden/wave-hello.webp" alt="Baby Ais"></div></div>
+      <div class="rain" id="rain"></div>
+      <div class="night" id="night"></div>
+      <div class="hint"><span id="hint">Ketuk petak tanah untuk memilih.</span></div>
+      <div class="pop" id="pop"></div>
+    </div>
+  </div>
+  <div class="tools" id="tools">
+    <button class="tool" data-t="plant"><span>🌱</span>Tanam</button>
+    <button class="tool" data-t="water"><span>💧</span>Siram</button>
+    <button class="tool" data-t="weed"><span>🌿</span>Cabut</button>
+    <button class="tool" data-t="harvest"><span>🧺</span>Panen</button>
+  </div>
+</section>
+
+<!-- ═══════════ BOOK ═══════════ -->
+<section class="screen" id="s-book">
+  <div class="wrap">
+    <div class="topbar">
+      <button class="w-back" id="bookBack">← Kembali</button>
+      <span class="pill" id="bookStars">⭐ 0 / 8</span>
+    </div>
+    <h1 style="margin-top:0">Buku Kebun</h1>
+    <p class="sub" style="text-align:center;margin-bottom:10px">Panen setiap tanaman sekali untuk mengisi bukumu.</p>
+    <div class="master" id="master">🏅 Petani Cilik! Semua tanaman sudah kamu panen. Masya Allah!</div>
+    <div class="book" id="book"></div>
+    <div class="badges">
+      <div id="bdKind"><span>🐛</span>Sayang makhluk Allah</div>
+      <div id="bdShare"><span>🎁</span>Suka berbagi</div>
+    </div>
+    <button class="linkbtn" id="resetBtn">Mulai kebun baru</button>
+  </div>
+</section>
+
+<!-- ═══════════ MODAL ═══════════ -->
+<div class="modal" id="modal"><div class="mcard" id="mcard"></div></div>
+
+<script>
+(function(){
+"use strict";
+function L(id,en){ return window.BM_LANG==="en" ? en : id; }
+function T(s){ return (window.BM_T ? window.BM_T(s) : s); }
+function kit(){ return window.BabyMo || {}; }
+function sfx(n){ try{ kit().sfx && kit().sfx(n); }catch(e){} }
+var $ = function(id){ return document.getElementById(id); };
+var wait = function(ms){ return new Promise(function(r){ setTimeout(r,ms); }); };
+
+/* ═════════════════════════════════════════════════════════════
+   POSES — every moment Baby Ais acts out.
+   `frames` play in order at `fps` (or per-frame `ms`); a single frame
+   gets a small CSS motion (`motion`) so she never looks frozen.
+   When the new frame sequences from docs/ais-poses-wishlist.md are
+   ready, convert them to 300px webp in ais-garden/ (e.g.
+   baby-ais-garden-water-1.png → ais-garden/garden-water-1.webp) and
+   swap the list here — the comment on each line names the new frames.
+   `faces`: which way the art faces, so walking can mirror her.
+   ═════════════════════════════════════════════════════════════ */
+var POSES = {
+  idle:     { frames:["wave-hello"],                motion:"breathe" },          // new: idle-blink-1, idle-blink-2 with ms:[2600,140]
+  ready:    { frames:["thumbs-up-walk"],            motion:"breathe" },          // new: idle-blink-1…2
+  walk:     { frames:["run"], fps:9, faces:"left",  motion:"step" },             // new: garden-walk-1…6 (faces:"right", drop motion)
+  dig:      { frames:["plant-trowel"],              motion:"dig" },              // new: garden-dig-1…4
+  seed:     { frames:["gardener-sapling"],          motion:"pat" },              // new: garden-seed-1…3
+  water:    { frames:["watering-can"],              motion:"pour" },             // new: garden-water-1…4
+  weed:     { frames:["plant-trowel","cheer-fist"], ms:[900,800], motion:"tug" },// new: garden-weed-1…3
+  pick:     { frames:["surprised","jump-joy"],      ms:[500,900], motion:"hop" },// new: garden-pick-1…3
+  basket:   { frames:["arms-wide-joy"],             motion:"hop" },              // new: garden-basket-hold
+  look:     { frames:["magnifier-leaf"],            motion:"lean" },             // new: garden-look-sprout
+  smell:    { frames:["dreamy-delight"],            motion:"sway" },             // new: garden-smell-flower
+  kind:     { frames:["heart-hands-smile"],         motion:"sway" },             // new: garden-caterpillar
+  hot:      { frames:["eat-watermelon"],            motion:"breathe" },          // new: garden-wipe-sweat
+  splash:   { frames:["giggle"],                    motion:"wiggle" },           // new: garden-splash-giggle
+  worry:    { frames:["sad-tears"],                 motion:"breathe" },          // new: garden-wilt-worry
+  give:     { frames:["gift-box"],                  motion:"sway" },             // new: garden-give-veg
+  celebrate:{ frames:["jump-joy","arms-wide-joy"],  ms:[450,450], motion:"hop" },// new: celebrate-jump-1…4
+  think:    { frames:["think-question"],            motion:"breathe" },
+  sleep:    { frames:["sleep-pillow"],              motion:"sleep" },
+  wake:     { frames:["wake-stretch"],              motion:"breathe" },          // new: yawn-stretch-1…2 before sleeping
+  rain:     { frames:["rain-umbrella"],             motion:"sway" },
+  pray:     { frames:["dua-hands-closed"],          motion:"breathe" },
+  hug:      { frames:["hug-earth-smile"],           motion:"sway" }
+};
+function poseSrc(n){ return "ais-garden/"+n+".webp"; }
+(function preload(){ var seen={}; for(var k in POSES) POSES[k].frames.forEach(function(f){ if(!seen[f]){ seen[f]=1; var i=new Image(); i.src=poseSrc(f); } }); })();
+
+/* ───────── crops ───────── */
+var CROPS = {
+  tomat:    { e:"🍅", id:"Tomat", en:"Tomato", yield:3,
+              fid:"Tomat sebenarnya buah, karena di dalamnya ada biji!", fen:"A tomato is really a fruit, because it has seeds inside!" },
+  wortel:   { e:"🥕", id:"Wortel", en:"Carrot", yield:3,
+              fid:"Wortel adalah akar. Bagian oranye yang kita makan tumbuh di dalam tanah.", fen:"A carrot is a root. The orange part we eat grows under the ground." },
+  stroberi: { e:"🍓", id:"Stroberi", en:"Strawberry", yield:4,
+              fid:"Stroberi membawa bijinya di luar — satu buah punya sekitar 200 biji kecil!", fen:"A strawberry wears its seeds on the outside — about 200 tiny seeds!" },
+  jagung:   { e:"🌽", id:"Jagung", en:"Corn", yield:2,
+              fid:"Setiap helai rambut jagung tersambung ke satu biji jagung.", fen:"Every silk thread on a corn cob is joined to one kernel." },
+  matahari: { e:"🌻", id:"Bunga Matahari", en:"Sunflower", yield:1,
+              fid:"Bunga matahari muda menoleh mengikuti matahari dari pagi sampai sore.", fen:"Young sunflowers turn to follow the sun from morning to evening." },
+  semangka: { e:"🍉", id:"Semangka", en:"Watermelon", yield:1,
+              fid:"Semangka hampir semuanya air — sekitar 92 persen! Segar sekali saat cuaca panas.", fen:"A watermelon is about 92% water — so refreshing on a hot day!" }
+};
+var ORDER = ["tomat","wortel","stroberi","jagung","matahari","semangka"];
+function cname(k){ return L(CROPS[k].id, CROPS[k].en); }
+var FRIENDS = [["Umi","Umi"],["Abi","Abi"],["Mo","Mo"],["Kak Adam","Kak Adam"],["Nenek","Grandma"],["tetangga","the neighbours"]];
+
+/* ───────── storage ───────── */
+var KEY = "bm_kebun_ais_v1";
+function fresh(){ return { day:1, weather:"cerah", beds:[{},{},{}], basket:{}, book:{}, shared:0, kind:0, stars:{}, seen:{} }; }
+function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"null"); if(!d||!Array.isArray(d.beds)) return fresh(); var f=fresh(); for(var k in f) if(d[k]==null) d[k]=f[k]; return d; }catch(e){ return fresh(); } }
+function save(){ try{ localStorage.setItem(KEY,JSON.stringify(D)); }catch(e){} }
+var D = load();
+function starCount(){ return Object.keys(D.stars).length; }
+function giveStar(id){ if(D.stars[id]) return false; D.stars[id]=1; save(); try{ kit().addStars && kit().addStars(1); }catch(e){} return true; }
+function basketTotal(){ var n=0; for(var k in D.basket) n+=D.basket[k]; return n; }
+
+/* ───────── speech ───────── */
+function say(text){
+  try{
+    if(kit().isMuted && kit().isMuted()) return;
+    var u=new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g,""));
+    u.lang=(window.BM_LANG==="en")?"en-US":"id-ID"; u.rate=.95;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ───────── screens ───────── */
+function show(id){ document.querySelectorAll(".screen").forEach(function(s){ s.classList.toggle("on", s.id===id); }); }
+function renderStars(){ var t="⭐ "+starCount()+" / 8"; $("homeStars").textContent=t; $("bookStars").textContent=t; }
+
+/* ═════════ Baby Ais sprite ═════════ */
+var aisEl=$("ais"), aisFace=$("aisFace"), aisImg=$("aisImg"), aisT=null, aisAt=1, aisDir="left";
+function pose(name, loop){
+  var p=POSES[name]||POSES.idle, fr=p.frames, i=0;
+  clearTimeout(aisT);
+  aisImg.className = p.motion ? "m-"+p.motion : "";
+  aisFace.classList.toggle("flip", !!p.faces && p.faces!==aisDir);
+  var total=0;
+  for(var j=0;j<fr.length;j++) total += p.ms ? p.ms[j%p.ms.length] : 1000/(p.fps||9);
+  (function next(){
+    aisImg.src=poseSrc(fr[i]);
+    var d = p.ms ? p.ms[i%p.ms.length] : 1000/(p.fps||9);
+    i++;
+    if(i>=fr.length){ if(!loop) return; i=0; }
+    if(fr.length>1) aisT=setTimeout(next,d);
+  })();
+  return total;
+}
+var BEDX=[18,50,82];
+async function walkTo(i){
+  if(aisAt===i) return;
+  var dist=Math.abs(i-aisAt);
+  aisDir = i>aisAt ? "right" : "left";
+  pose("walk",true);
+  var ms=dist===1?600:950;
+  aisEl.style.transitionDuration=ms+"ms";
+  aisEl.style.left=BEDX[i]+"%";
+  aisAt=i;
+  await wait(ms);
+}
+
+/* ═════════ plants (drawn in a 120×168 box, ground at y=126) ═════════ */
+var G1="#4CAF50",G2="#2E8B3E",G3="#7CCB6B";
+function leaf(ax,ay,ang,len,w,c){
+  var r=ang*Math.PI/180, cx=(ax+Math.cos(r)*len).toFixed(1), cy=(ay+Math.sin(r)*len).toFixed(1);
+  return '<ellipse cx="'+cx+'" cy="'+cy+'" rx="'+len+'" ry="'+w+'" fill="'+(c||G1)+'" transform="rotate('+ang+' '+cx+' '+cy+')"/>';
+}
+function stem(h,w,c){ return '<path d="M60 128 Q'+(58)+' '+(128-h/2)+' 60 '+(128-h)+'" stroke="'+(c||G2)+'" stroke-width="'+(w||4)+'" fill="none" stroke-linecap="round"/>'; }
+function flower(x,y,c,r){ r=r||4; var s=''; for(var k=0;k<5;k++){ var a=k*72*Math.PI/180; s+='<circle cx="'+(x+Math.cos(a)*r).toFixed(1)+'" cy="'+(y+Math.sin(a)*r).toFixed(1)+'" r="'+(r*.75)+'" fill="'+c+'"/>'; } return s+'<circle cx="'+x+'" cy="'+y+'" r="'+(r*.6)+'" fill="#FFB020"/>'; }
+function tomato(x,y){ return '<circle cx="'+x+'" cy="'+y+'" r="8" fill="#F0453A"/><circle cx="'+(x-3)+'" cy="'+(y-3)+'" r="2.4" fill="#fff" opacity=".55"/><path d="M'+(x-4)+' '+(y-7)+' l4 2 l4 -2 l-2 3 h-4z" fill="'+G2+'"/>'; }
+function berry(x,y){ return '<path d="M'+x+' '+(y+9)+' C'+(x-9)+' '+(y+2)+' '+(x-7)+' '+(y-5)+' '+x+' '+(y-4)+' C'+(x+7)+' '+(y-5)+' '+(x+9)+' '+(y+2)+' '+x+' '+(y+9)+'Z" fill="#E8344E"/><g fill="#FFE59A"><circle cx="'+(x-2)+'" cy="'+y+'" r=".9"/><circle cx="'+(x+2)+'" cy="'+(y+2)+'" r=".9"/><circle cx="'+x+'" cy="'+(y+5)+'" r=".9"/></g><path d="M'+(x-5)+' '+(y-4)+' l5 -3 l5 3z" fill="'+G2+'"/>'; }
+function cob(x,y,rot){ return '<g transform="rotate('+rot+' '+x+' '+y+')"><ellipse cx="'+x+'" cy="'+y+'" rx="6" ry="14" fill="#FFD23F"/><g stroke="#E8B10F" stroke-width=".8"><path d="M'+(x-5)+' '+(y-6)+'h10M'+(x-6)+' '+y+'h12M'+(x-5)+' '+(y+6)+'h10"/></g>'+leaf(x,y+10,-110,10,4,G1)+leaf(x,y+10,-70,10,4,G3)+'<path d="M'+x+' '+(y-14)+' q-3 -6 -6 -7 M'+x+' '+(y-14)+' q2 -7 5 -8" stroke="#C98A3A" stroke-width="1.2" fill="none"/></g>'; }
+function plant(k,st){
+  if(!k||!st) return '';
+  if(st===1) return '<path d="M42 124 Q60 108 78 124Z" fill="#6B4226"/><ellipse cx="60" cy="116" rx="4" ry="2.8" fill="#F3DFA2"/><path d="M60 100 v6 M51 104 l3 3 M69 104 l-3 3" stroke="#fff" stroke-width="2" stroke-linecap="round"/>';
+  if(st===2) return stem(16,3,G1)+leaf(60,112,-150,9,5,G3)+leaf(60,112,-30,9,5,G3);
+  var s='';
+  if(k==="tomat"){
+    var h=st===3?42:72; s+=(st>3?'<path d="M76 128 V52" stroke="#C9A06A" stroke-width="3"/><path d="M60 100 L76 96 M60 76 L76 72" stroke="#C9A06A" stroke-width="1.5"/>':'')+stem(h,4);
+    [112,98,86,74,62].forEach(function(y,j){ if(128-y<h){ s+=leaf(60,y,-160+j*4,12,6,j%2?G1:G3)+leaf(60,y-4,-20-j*4,12,6,j%2?G3:G1); } });
+    if(st===4) s+=flower(46,92,"#FFE066",3)+flower(74,80,"#FFE066",3);
+    if(st===5) s+=tomato(46,98)+tomato(74,86)+tomato(52,70);
+  } else if(k==="wortel"){
+    var L1=st===3?14:st===4?24:28;
+    [-150,-125,-100,-80,-55,-30].forEach(function(a,j){ s+='<path d="M60 126 L'+(60+Math.cos(a*Math.PI/180)*L1*1.8).toFixed(1)+' '+(126+Math.sin(a*Math.PI/180)*L1*1.8).toFixed(1)+'" stroke="'+G2+'" stroke-width="2"/>'+leaf(60+Math.cos(a*Math.PI/180)*L1*1.2,126+Math.sin(a*Math.PI/180)*L1*1.2,a,L1*.55,3.4,j%2?G1:G3); });
+    if(st===5) s='<path d="M48 118 Q60 110 72 118 L66 132 L54 132Z" fill="#FF8A1F"/><path d="M52 122h6M58 127h6" stroke="#D96B0A" stroke-width="1.5"/>'+s;
+  } else if(k==="stroberi"){
+    var n=st===3?3:5, ln=st===3?11:15;
+    for(var j=0;j<n;j++){ var a=-160+j*(140/(n-1)); s+='<path d="M60 126 L'+(60+Math.cos(a*Math.PI/180)*ln).toFixed(1)+' '+(126+Math.sin(a*Math.PI/180)*ln).toFixed(1)+'" stroke="'+G2+'" stroke-width="2"/>'+leaf(60+Math.cos(a*Math.PI/180)*ln,126+Math.sin(a*Math.PI/180)*ln,a,ln*.7,ln*.45,j%2?G1:G3); }
+    if(st===4) s+=flower(38,108,"#FFFFFF",3.4)+flower(82,104,"#FFFFFF",3.4);
+    if(st===5) s+=berry(38,114)+berry(82,112)+berry(60,104);
+  } else if(k==="jagung"){
+    var hh=st===3?46:100; s+=stem(hh,5,"#5FA83A");
+    [116,102,88,74,60,46].forEach(function(y,j){ if(128-y<hh-6) s+=leaf(60,y,j%2?-25:-155,st===3?16:22,3.6,j%2?G1:G3); });
+    if(st>=4) s+='<path d="M60 28 l-8 -12 M60 28 l0 -14 M60 28 l8 -12 M60 28 l-12 -6 M60 28 l12 -6" stroke="#D9A441" stroke-width="2" stroke-linecap="round"/>';
+    if(st===5) s+=cob(48,80,-20)+cob(72,66,20);
+  } else if(k==="matahari"){
+    var sh=st===3?48:92; s+=stem(sh,5);
+    [110,88,66].forEach(function(y,j){ if(128-y<sh-8){ s+=leaf(60,y,-150,14,7,G1)+leaf(60,y-8,-30,14,7,G3); } });
+    if(st===4) s+='<circle cx="60" cy="36" r="9" fill="#5FA83A"/>'+leaf(60,40,-140,6,3,G2)+leaf(60,40,-40,6,3,G2);
+    if(st===5){ for(var p=0;p<14;p++){ var pa=p*360/14; s+=leaf(60,34,pa,11,4.6,p%2?"#FFC83D":"#FFD84D"); } s+='<circle cx="60" cy="34" r="12" fill="#7A4A1E"/><g fill="#A8692C"><circle cx="56" cy="31" r="1.6"/><circle cx="63" cy="33" r="1.6"/><circle cx="59" cy="38" r="1.6"/><circle cx="64" cy="28" r="1.4"/></g>'; }
+  } else if(k==="semangka"){
+    var vw=st===3?28:48;
+    s+='<path d="M60 126 Q'+(60-vw/2)+' 112 '+(60-vw)+' 122 M60 126 Q'+(60+vw/2)+' 112 '+(60+vw)+' 120" stroke="'+G2+'" stroke-width="2.5" fill="none"/>';
+    [[-1,.5],[-1,1],[1,.5],[1,1]].forEach(function(v,j){ s+=leaf(60+v[0]*vw*v[1],114+(j%2)*4,v[0]<0?-120:-60,9,7,j%2?G1:G3); });
+    if(st===4) s+=flower(30,112,"#FFE066",3)+flower(92,110,"#FFE066",3);
+    if(st===5) s='<path d="M60 126 Q'+(60-vw/2)+' 112 '+(60-vw)+' 122 M60 126 Q'+(60+vw/2)+' 112 '+(60+vw)+' 120" stroke="'+G2+'" stroke-width="2.5" fill="none"/>'+s.slice(s.indexOf('/>')+2)+'<ellipse cx="60" cy="112" rx="30" ry="17" fill="#2F9E44"/><g stroke="#1E6E2E" stroke-width="3" fill="none"><path d="M42 100 Q38 112 42 124M54 96 Q50 112 54 128M66 96 Q70 112 66 128M78 100 Q82 112 78 124"/></g><ellipse cx="48" cy="104" rx="8" ry="3" fill="#fff" opacity=".35"/>';
+  }
+  return s;
+}
+function weedSVG(){ return '<g class="weed"><path d="M14 132 L18 112 L21 130 L25 108 L27 130 L32 114 L31 132Z" fill="#4F7F2A"/><path d="M18 112 l-2 -4 M25 108 l0 -5" stroke="#4F7F2A" stroke-width="2"/><circle cx="25" cy="104" r="2.6" fill="#B78AE0"/></g>'; }
+function catSVG(){ var s='<g class="cat">'; for(var k=0;k<5;k++) s+='<circle cx="'+(76+k*6)+'" cy="'+(100+(k%2)*2)+'" r="4.4" fill="'+(k%2?"#8DDB4A":"#6FC43A")+'"/>'; return s+'<circle cx="74" cy="98" r="5" fill="#9BE35A"/><circle cx="72.5" cy="97" r="1.2" fill="#222"/><path d="M72 93 l-2 -4 M75 93 l1 -4" stroke="#444" stroke-width="1"/><rect x="66" y="88" width="46" height="22" fill="transparent"/></g>'; }
+
+var beds=[].slice.call(document.querySelectorAll(".bed"));
+function renderBed(i,anim){
+  var b=D.beds[i], el=beds[i];
+  var soil = b.watered ? "#5A3820" : "#8A5A34";
+  var s='<ellipse cx="60" cy="125" rx="56" ry="13" fill="'+soil+'"/>';
+  if(b.crop) s+='<g><rect x="104" y="104" width="4" height="24" rx="1" fill="#B07A47"/><rect x="95" y="94" width="22" height="17" rx="5" fill="#FFF3D6" stroke="#B07A47" stroke-width="1.5"/><text x="106" y="103" font-size="11" text-anchor="middle" dominant-baseline="central">'+CROPS[b.crop].e+'</text></g>';
+  s+='<g transform="translate(60 126) scale(1.45) translate(-60 -126)"><g class="pl'+(b.thirsty?' thirsty':'')+(anim?' pop':'')+'">'+plant(b.crop,b.stage||0)+'</g>'+(b.cat?catSVG():'')+'</g>';
+  s+='<rect x="4" y="128" width="112" height="34" rx="8" fill="#A9693A"/><rect x="4" y="128" width="112" height="8" rx="4" fill="#C58550"/><path d="M40 136v24M80 136v24" stroke="#8C5530" stroke-width="2"/>';
+  if(b.weed) s+='<g transform="translate(22 132) scale(1.35) translate(-22 -132)">'+weedSVG()+'</g>';
+  el.querySelector("svg").innerHTML=s;
+  var bd=el.querySelector(".badge"), ico="";
+  if(b.cat) ico="🐛"; else if(b.weed) ico="🌿"; else if(b.stage===5) ico="✨"; else if(b.crop && !b.watered) ico="💧";
+  bd.textContent=ico; bd.classList.toggle("on",!!ico);
+}
+function renderAll(){ for(var i=0;i<3;i++) renderBed(i); renderHud(); }
+
+/* ═════════ HUD, hint and tools ═════════ */
+var WEATHER = { cerah:["☀️","Cerah","Sunny"], panas:["🔆","Panas","Hot"], hujan:["🌧️","Hujan","Rainy"] };
+function renderHud(){
+  var w=WEATHER[D.weather]||WEATHER.cerah;
+  $("dayLbl").textContent=L("Hari ","Day ")+D.day+" · "+w[0]+" "+L(w[1],w[2]);
+  $("basketN").textContent=basketTotal();
+  $("stage").classList.toggle("hot",D.weather==="panas");
+  $("stage").classList.toggle("rainy",D.weather==="hujan");
+  renderTools();
+}
+var sel=-1, busy=false;
+function hint(t){ $("hint").textContent=t; }
+var popT=null;
+function pop(html,ms){ var p=$("pop"); p.innerHTML=html; p.classList.add("on"); clearTimeout(popT); popT=setTimeout(function(){ p.classList.remove("on"); },ms||1700); return wait(ms||1700); }
+function actions(b){
+  return { plant:!b.crop, water:!!b.crop, weed:!!b.weed, harvest:b.stage===5 };
+}
+function suggest(b){
+  if(b.cat) return null;
+  if(b.weed) return "weed";
+  if(b.stage===5) return "harvest";
+  if(!b.crop) return "plant";
+  if(!b.watered) return "water";
+  return null;
+}
+function renderTools(){
+  var b=sel>=0?D.beds[sel]:null, a=b?actions(b):{}, sg=b?suggest(b):null;
+  document.querySelectorAll(".tool").forEach(function(t){
+    var k=t.dataset.t; t.classList.toggle("off",!a[k]); t.classList.toggle("go",sg===k);
+  });
+  var allDone = D.beds.every(function(x){ return !x.crop || ((x.watered||x.stage===5) && !x.weed); }) && D.beds.some(function(x){ return x.crop; });
+  $("sleepBtn").classList.toggle("go", allDone && !busy);
+  if(busy) return;
+  if(sel<0){ hint(L("Ketuk petak tanah untuk memilih.","Tap a garden bed to choose it.")); return; }
+  if(allDone && (!b.crop || b.watered || b.stage===5) && !b.weed && !b.cat && b.stage!==5){ hint(L("Semua sudah beres! Ketuk 🌙 Tidur supaya tanaman tumbuh.","All done! Tap 🌙 Sleep so the plants can grow.")); return; }
+  if(b.cat) hint(L("Ada ulat! Ketuk ulatnya untuk memindahkannya.","A caterpillar! Tap it to move it somewhere safe."));
+  else if(sg==="weed") hint(L("Rumput liar! Ketuk Cabut.","A weed! Tap Pull."));
+  else if(sg==="harvest") hint(L("Sudah matang! Ketuk Panen.","It's ripe! Tap Harvest."));
+  else if(sg==="plant") hint(L("Tanah kosong. Ketuk Tanam.","Empty soil. Tap Plant."));
+  else if(sg==="water") hint(L("Tanaman haus. Ketuk Siram.","The plant is thirsty. Tap Water."));
+  else hint(L("Sudah disiram. Pilih petak lain atau Tidur.","Watered! Choose another bed or Sleep."));
+}
+
+/* ═════════ actions ═════════ */
+async function selectBed(i){
+  if(busy) return;
+  sel=i; beds.forEach(function(b,j){ b.classList.toggle("sel",j===i); });
+  sfx("tap"); busy=true; renderTools();
+  await walkTo(i);
+  var b=D.beds[i];
+  if(b.thirsty && !b.watered){ pose("worry"); hint(L("Tanamannya layu, belum disiram kemarin. Ayo siram!","This plant is droopy — it wasn't watered yesterday. Let's water it!")); busy=false; renderTools(); hint(L("Tanamannya layu, belum disiram kemarin. Ayo siram!","This plant is droopy — it wasn't watered yesterday. Let's water it!")); return; }
+  if(b.stage===2 && !D.seen["sprout"+i+"-"+D.day]){ D.seen["sprout"+i+"-"+D.day]=1; pose("look"); }
+  else if(b.crop==="matahari" && b.stage===5) pose("smell");
+  else pose(b.stage===5?"basket":"ready");
+  busy=false; renderTools();
+}
+function seedPicker(){
+  return new Promise(function(res){
+    var h='<h2>'+L("Mau tanam apa?","What shall we plant?")+'</h2><p style="font-size:14px;color:var(--soft)">'+L("Pilih satu benih.","Pick one seed.")+'</p><div class="seeds">';
+    ORDER.forEach(function(k){ h+='<button class="seed" data-k="'+k+'"><span>'+CROPS[k].e+'</span><b>'+cname(k)+'</b><small>'+(D.book[k]?"✓ ":"")+L("4 hari","4 days")+'</small></button>'; });
+    h+='</div><div class="row"><button class="btn-sec" data-k="">'+L("Batal","Cancel")+'</button></div>';
+    openModal(h);
+    $("mcard").querySelectorAll("[data-k]").forEach(function(b){ b.onclick=function(){ sfx("tap"); closeModal(); res(b.dataset.k||null); }; });
+  });
+}
+function dropsOn(i,n){
+  var d=beds[i].querySelector(".drops"); d.innerHTML="";
+  for(var k=0;k<(n||10);k++){ var e=document.createElement("i"); e.style.left=(30+Math.random()*40)+"%"; e.style.animationDelay=(k*90)+"ms"; d.appendChild(e); }
+  setTimeout(function(){ d.innerHTML=""; },(n||10)*90+800);
+}
+function flyTo(fromEl,emoji,count){
+  var r=fromEl.getBoundingClientRect(), t=$("basketBtn").getBoundingClientRect();
+  for(var k=0;k<count;k++)(function(k){
+    var f=document.createElement("div"); f.className="fly"; f.textContent=emoji;
+    f.style.left=(r.left+r.width/2-15+(k-count/2)*14)+"px"; f.style.top=(r.top+r.height*.35)+"px";
+    document.body.appendChild(f);
+    setTimeout(function(){ f.style.transform="translate("+(t.left+t.width/2-(r.left+r.width/2)-(k-count/2)*14)+"px,"+(t.top-r.top-r.height*.35)+"px) scale(.5)"; f.style.opacity=".2"; },60+k*160);
+    setTimeout(function(){ f.remove(); },1000+k*160);
+  })(k);
+}
+async function doTool(t){
+  if(busy) return;
+  if(sel<0){ sfx("wrong"); pop(L("Pilih petak tanah dulu 👆","Choose a garden bed first 👆"),1300); return; }
+  var b=D.beds[sel], a=actions(b), i=sel;
+  if(!a[t]){
+    sfx("wrong");
+    var why={ plant:L("Petak ini sudah ditanami.","This bed is already planted."), water:L("Tanam benih dulu, baru disiram.","Plant a seed first, then water it."),
+              weed:L("Tidak ada rumput liar di sini.","There are no weeds here."), harvest:L("Belum matang. Siram dan tunggu beberapa hari.","Not ripe yet. Water it and wait a few days.") }[t];
+    pop(why,1500); return;
+  }
+  busy=true; renderTools();
+  if(t==="plant"){
+    var k=await seedPicker(); if(!k){ busy=false; renderTools(); return; }
+    hint(L("Bismillah… gali tanahnya.","Bismillah… dig the soil."));
+    say(L("Bismillah","Bismillah"));
+    pose("dig",true); await wait(1300);
+    pose("seed",true); hint(L("Masukkan benih, lalu tutup dengan tanah.","Drop in the seed and cover it with soil."));
+    await wait(1100);
+    b.crop=k; b.stage=1; b.watered=false; b.thirsty=false; save(); renderBed(i,true); sfx("correct");
+    pose("ready"); await pop(CROPS[k].e+" "+L("Benih "+CROPS[k].id+" ditanam!",CROPS[k].en+" seed planted!")+"<small>"+L("Sekarang siram, ya.","Now give it some water.")+"</small>",1700);
+  } else if(t==="water"){
+    if(b.watered && b.stage<5){
+      pose("water",true); dropsOn(i,6); await wait(700);
+      pose("splash",true); sfx("tap"); say(L("Ups! Sudah basah!","Oops! It's already wet!"));
+      await pop("💦 "+L("Ups! Sudah basah!","Oops! Already wet!")+"<small>"+L("Air secukupnya saja, jangan berlebihan.","Just enough water — not too much.")+"</small>",2000);
+    } else {
+      hint(L("Siram pelan-pelan…","Water it gently…"));
+      pose("water",true); dropsOn(i,12); await wait(1300);
+      b.watered=true; b.thirsty=false; save(); renderBed(i); sfx("correct");
+      pose("ready");
+      if(!D.seen.water){ D.seen.water=1; save(); await pop("💧 "+L("Segar!","Fresh!")+"<small>"+L("Tanaman minum air lewat akarnya.","Plants drink water through their roots.")+"</small>",2200); }
+      else await pop("💧 "+L("Segar!","Fresh!"),1000);
+    }
+  } else if(t==="weed"){
+    hint(L("Tarik yang kuat!","Pull hard!"));
+    pose("weed"); await wait(900);
+    b.weed=false; save(); renderBed(i); sfx("correct");
+    await wait(800);
+    if(!D.seen.weed){ D.seen.weed=1; save(); await pop("🌿 "+L("Tercabut!","Pulled out!")+"<small>"+L("Rumput liar merebut air dan makanan tanaman kita.","Weeds steal water and food from our plants.")+"</small>",2300); }
+    else await pop("🌿 "+L("Tercabut!","Pulled out!"),1000);
+    pose("ready");
+  } else if(t==="harvest"){
+    var crop=b.crop, n=CROPS[crop].yield;
+    pose("pick"); await wait(1400);
+    flyTo(beds[i],CROPS[crop].e,n); sfx("star");
+    D.basket[crop]=(D.basket[crop]||0)+n;
+    var isNew=!D.book[crop]; D.book[crop]=(D.book[crop]||0)+n;
+    D.beds[i]={}; save(); renderBed(i); renderHud();
+    pose("celebrate",true);
+    var star=isNew && giveStar("crop-"+crop); renderStars();
+    say(L("Alhamdulillah! Panen "+CROPS[crop].id,"Alhamdulillah! We picked "+CROPS[crop].en));
+    try{ kit().react && kit().react("win",{star:false}); }catch(e){}
+    await wait(1100);
+    await infoCard({ emoji:CROPS[crop].e.repeat(Math.min(n,3)), title:L("Alhamdulillah! Panen "+n+" "+CROPS[crop].id,"Alhamdulillah! You picked "+n+" × "+CROPS[crop].en),
+      text:L("Semuanya masuk ke keranjang.","They all went into the basket."), fact:L(CROPS[crop].fid,CROPS[crop].fen),
+      tag: star ? L("⭐ Baru di Buku Kebun!","⭐ New in the Garden Book!") : "" });
+    if(Object.keys(D.book).length===ORDER.length && !D.seen.master){ D.seen.master=1; save(); pose("celebrate",true); sfx("win");
+      await infoCard({ img:"jump-joy", title:L("Petani Cilik! 🏅","Little Farmer! 🏅"), text:L("Kamu sudah memanen semua tanaman. Masya Allah, hebat sekali!","You've harvested every plant. Masha Allah, amazing!") }); }
+    pose("ready");
+  }
+  busy=false; renderTools();
+}
+async function rescueCat(i){
+  if(busy) return;
+  busy=true; sel=i; beds.forEach(function(b,j){ b.classList.toggle("sel",j===i); });
+  await walkTo(i);
+  pose("kind",true); hint(L("Pelan-pelan… pindahkan ke pohon.","Gently… move it to the tree."));
+  var c=beds[i].querySelector(".cat"); if(c){ c.style.transition="opacity .6s"; c.style.opacity="0"; }
+  await wait(900);
+  D.beds[i].cat=false; D.kind++; save(); renderBed(i); sfx("correct");
+  var star=giveStar("kind"); renderStars();
+  say(L("Ulat juga makhluk Allah. Kita pindahkan ke pohon, ya.","Caterpillars are Allah's creatures too. Let's move it to the tree."));
+  await pop("🐛➜🌳 "+L("Ulat pindah ke pohon!","The caterpillar has a new home!")+"<small>"+L("Ulat juga makhluk Allah — kita sayangi, tidak disakiti.","Caterpillars are Allah's creatures too — we're gentle with them.")+(star?" ⭐":"")+"</small>",2600);
+  pose("ready"); busy=false; renderTools();
+}
+
+/* ═════════ night and morning ═════════ */
+function rand(p){ return Math.random()<p; }
+async function sleep(){
+  if(busy) return;
+  var dry=D.beds.filter(function(b){ return b.crop && !b.watered && b.stage<5; }).length;
+  if(dry){
+    var go=await choose({ img:"think-question", title:L("Belum semua disiram","Not everything is watered"),
+      text:L(dry+" tanaman masih haus. Tanaman yang tidak disiram tidak tumbuh malam ini.",dry+" plant"+(dry>1?"s are":" is")+" still thirsty. Plants that aren't watered won't grow tonight."),
+      yes:L("🌙 Tidur saja","🌙 Sleep anyway"), no:L("💧 Siram dulu","💧 Water first") });
+    if(!go) return;
+  }
+  busy=true; renderTools(); sel=-1; beds.forEach(function(b){ b.classList.remove("sel"); });
+  hint(L("Selamat malam…","Good night…"));
+  pose("sleep",true); $("night").classList.add("on"); $("rain").classList.remove("on");
+  say(L("Bismika Allahumma ahya wa amut","Bismika Allahumma ahya wa amut"));
+  await pop("🌙 "+L("Bismika Allahumma ahya wa amut","Bismika Allahumma ahya wa amut")+"<small>"+L("Dengan nama-Mu ya Allah, aku hidup dan aku mati.","In Your name, O Allah, I live and I die.")+"</small>",2600);
+  // grow overnight
+  var grew=[], ready=[], blocked=[];
+  D.beds.forEach(function(b,i){
+    if(!b.crop || b.stage>=5) return;
+    if(b.watered && !b.weed && !b.cat){ b.stage++; b.thirsty=false; grew.push(i); if(b.stage===5) ready.push(i); }
+    else if(!b.watered){ b.thirsty=true; }
+    else blocked.push(i);
+    b.watered=false;
+  });
+  D.beds.forEach(function(b){ if(b.stage===5) b.watered=false; });
+  D.day++;
+  var r=Math.random(); D.weather = r<.25?"hujan":r<.45?"panas":"cerah";
+  D.beds.forEach(function(b){
+    if(b.crop && b.stage>=1 && b.stage<5 && !b.weed && rand(.28)) b.weed=true;
+    else if(b.crop && (b.stage===3||b.stage===4) && !b.cat && rand(.2)) b.cat=true;
+  });
+  save();
+  for(var i=0;i<3;i++) renderBed(i, grew.indexOf(i)>=0);
+  renderHud();
+  await wait(500);
+  $("night").classList.remove("on");
+  pose("wake"); sfx("tap");
+  hint(L("Hari ","Day ")+D.day+"!");
+  await pop("☀️ "+L("Hari ","Day ")+D.day+"<small>"+L("Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur","Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur")+"</small>",2400);
+  if(D.weather==="hujan"){
+    $("rain").classList.add("on"); pose("rain");
+    D.beds.forEach(function(b){ if(b.crop && b.stage<5){ b.watered=true; b.thirsty=false; } });
+    save(); for(var j=0;j<3;j++) renderBed(j);
+    await pop("🌧️ "+L("Hujan turun!","It's raining!")+"<small>"+L("Allah menurunkan hujan — semua tanaman sudah tersiram.","Allah sends the rain — every plant is watered today.")+"</small>",2600);
+  } else if(D.weather==="panas"){
+    pose("hot");
+    await pop("🔆 "+L("Hari ini panas!","It's a hot day!")+"<small>"+L("Jangan lupa siram tanaman, dan kamu juga minum air, ya.","Don't forget to water the plants — and drink some water too.")+"</small>",2400);
+  }
+  if(ready.length){ pose("celebrate",true); sfx("star"); await pop("✨ "+L("Ada yang siap dipanen!","Something is ready to harvest!"),1800); }
+  else if(grew.length){ pose("look",true); await pop("🌱 "+L("Tanamannya tumbuh!","The plants have grown!"),1500); }
+  if(blocked.length){ pose("think"); await pop(L("Rumput liar dan ulat membuat tanaman tidak tumbuh.","Weeds and caterpillars stopped a plant from growing."),2000); }
+  pose("idle",true);
+  busy=false; renderTools();
+}
+
+/* ═════════ basket and sharing ═════════ */
+function openBasket(){
+  if(busy) return;
+  var keys=ORDER.filter(function(k){ return D.basket[k]>0; });
+  var h='<img class="mimg" src="'+poseSrc("arms-wide-joy")+'" alt=""><h2>'+L("Keranjang Ais","Ais's Basket")+'</h2>';
+  if(!keys.length) h+='<p>'+L("Keranjang masih kosong. Tanam, siram, lalu panen!","The basket is empty. Plant, water, then harvest!")+'</p>';
+  else {
+    h+='<p style="font-size:14px;color:var(--soft)">'+L("Berbagi hasil kebun membuat hati senang.","Sharing what we grow makes hearts happy.")+'</p><div class="blist">';
+    keys.forEach(function(k){ h+='<div class="bitem"><span>'+CROPS[k].e+'</span><b>'+cname(k)+' × '+D.basket[k]+'</b><button class="btn-pri" data-share="'+k+'">🎁 '+L("Bagikan","Share")+'</button></div>'; });
+    h+='</div>';
+  }
+  h+='<div class="row"><button class="btn-sec" data-close>'+L("Tutup","Close")+'</button></div>';
+  openModal(h);
+  $("mcard").querySelector("[data-close]").onclick=function(){ sfx("tap"); closeModal(); };
+  $("mcard").querySelectorAll("[data-share]").forEach(function(b){ b.onclick=function(){ share(b.dataset.share); }; });
+}
+async function share(k){
+  closeModal(); busy=true; renderTools();
+  var f=FRIENDS[D.shared%FRIENDS.length]; D.shared++; D.basket[k]--; save(); renderHud();
+  pose("give",true); sfx("correct");
+  var star=giveStar("share"); renderStars();
+  say(L("Ais memberi "+CROPS[k].id+" untuk "+f[0],"Ais gives a "+CROPS[k].en+" to "+f[1]));
+  await infoCard({ img:"gift-box", title:CROPS[k].e+" "+L("Untuk "+f[0]+"!","For "+f[1]+"!"),
+    text:L("Ais memberi "+CROPS[k].id.toLowerCase()+" untuk "+f[0]+". "+f[0]+" tersenyum: \"Jazakillah khairan, Ais!\"","Ais gives a "+CROPS[k].en.toLowerCase()+" to "+f[1]+". "+f[1]+" smiles: \"Jazakillah khairan, Ais!\""),
+    fact:L("Berbagi makanan dengan keluarga dan tetangga adalah akhlak yang baik.","Sharing food with family and neighbours is good manners in Islam."),
+    tag: star ? L("⭐ Lencana Suka Berbagi!","⭐ Sharing badge!") : "" });
+  pose("ready"); busy=false; renderTools();
+}
+
+/* ═════════ modal helpers ═════════ */
+function openModal(h){ $("mcard").innerHTML=h; $("modal").classList.add("on"); }
+function closeModal(){ $("modal").classList.remove("on"); }
+function infoCard(o){
+  return new Promise(function(res){
+    var h=(o.img?'<img class="mimg" src="'+poseSrc(o.img)+'" alt="">':'')+(o.emoji?'<div class="memo">'+o.emoji+'</div>':'')+'<h2>'+o.title+'</h2><p>'+o.text+'</p>'+(o.tag?'<span class="newtag">'+o.tag+'</span>':'')+
+      (o.fact?'<div class="fact"><span class="ft">💡 '+L("Tahukah kamu?","Did you know?")+'</span>'+o.fact+'</div>':'')+
+      '<div class="row"><button class="btn-pri" data-ok>'+L("Lanjut →","Next →")+'</button></div>';
+    openModal(h);
+    $("mcard").querySelector("[data-ok]").onclick=function(){ sfx("tap"); closeModal(); res(); };
+  });
+}
+function choose(o){
+  return new Promise(function(res){
+    openModal('<img class="mimg" src="'+poseSrc(o.img)+'" alt=""><h2>'+o.title+'</h2><p>'+o.text+'</p><div class="row"><button class="btn-sec" data-v="1">'+o.yes+'</button><button class="btn-pri" data-v="0">'+o.no+'</button></div>');
+    $("mcard").querySelectorAll("[data-v]").forEach(function(b){ b.onclick=function(){ sfx("tap"); closeModal(); res(b.dataset.v==="1"); }; });
+  });
+}
+
+/* ═════════ book ═════════ */
+function renderBook(){
+  var h='';
+  ORDER.forEach(function(k){
+    var got=D.book[k];
+    h+='<div class="bk'+(got?'':' lock')+'"><div class="e">'+CROPS[k].e+'</div><b>'+(got?cname(k):'???')+'</b><small>'+(got? L("Dipanen: ","Harvested: ")+got+"<br>"+L(CROPS[k].fid,CROPS[k].fen) : L("Belum dipanen","Not harvested yet"))+'</small></div>';
+  });
+  $("book").innerHTML=h;
+  $("bdKind").classList.toggle("lock",!D.stars.kind);
+  $("bdShare").classList.toggle("lock",!D.stars.share);
+  $("master").classList.toggle("on",Object.keys(D.book).length===ORDER.length);
+  renderStars();
+}
+
+/* ═════════ wiring ═════════ */
+function enterGarden(){
+  show("s-garden"); renderAll();
+  aisEl.style.transitionDuration="0ms"; aisEl.style.left=BEDX[aisAt]+"%";
+  pose("idle",true);
+  if(!D.seen.intro){ D.seen.intro=1; save(); pop("👋 "+L("Assalamu'alaikum! Ayo berkebun!","Assalamu'alaikum! Let's garden!"),1800); say(L("Assalamu'alaikum! Ayo berkebun bersama Ais!","Assalamu'alaikum! Let's do some gardening with Ais!")); }
+}
+function homeLabel(){ var started=D.day>1||D.beds.some(function(b){ return b.crop; }); $("goGarden").textContent=started? "🌱 "+L("Lanjut Berkebun · Hari ","Keep Gardening · Day ")+D.day : "🌱 "+L("Mulai Berkebun","Start Gardening"); }
+$("goGarden").addEventListener("click",function(){ sfx("tap"); enterGarden(); });
+$("goBook").addEventListener("click",function(){ sfx("tap"); renderBook(); show("s-book"); });
+$("bookBack").addEventListener("click",function(){ homeLabel(); renderStars(); show("s-home"); });
+$("gardenX").addEventListener("click",function(){ if(busy) return; homeLabel(); renderStars(); show("s-home"); });
+$("resetBtn").addEventListener("click",function(){
+  if(!confirm(L("Mulai kebun baru? Tanaman dan keranjang dikosongkan (bintang dan Buku Kebun tetap).","Start a new garden? The beds and basket are cleared (stars and the Garden Book stay)."))) return;
+  var keep={book:D.book,stars:D.stars,seen:D.seen,kind:D.kind,shared:D.shared}; D=fresh(); for(var k in keep) D[k]=keep[k]; save(); renderBook(); homeLabel();
+});
+$("sleepBtn").addEventListener("click",function(){ sfx("tap"); sleep(); });
+$("basketBtn").addEventListener("click",function(){ sfx("tap"); openBasket(); });
+document.querySelectorAll(".tool").forEach(function(t){ t.addEventListener("click",function(){ doTool(t.dataset.t); }); });
+beds.forEach(function(el,i){ el.addEventListener("click",function(e){ if(e.target.closest && e.target.closest(".cat")) rescueCat(i); else selectBed(i); }); });
+aisEl.addEventListener("click",async function(){ if(busy) return; busy=true; pose("splash",true); sfx("tap"); say(L("Hihi!","Hehe!")); await wait(900); pose("idle",true); busy=false; });
+$("modal").addEventListener("click",function(e){ if(e.target.id==="modal" && $("mcard").querySelector("[data-close]")) closeModal(); });
+(function stars(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*45).toFixed(1)+'%;animation-delay:'+(Math.random()*1.4).toFixed(2)+'s"></i>'; n.innerHTML=h; })();
+if(window.BM_LANG==="en") $("quoteTxt").textContent='"Then let people look at their food: how We pour down water from the sky, then split the earth open, and make grain grow in it…"';
+homeLabel(); renderStars();
+})();
+</script>
+<script src="/bm-kit.js" defer></script>
+</body>
+</html>
