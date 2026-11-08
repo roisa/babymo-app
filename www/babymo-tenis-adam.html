@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<script src="bm-theme.js"></script>
+<script src="i18n/tenis.js"></script>
+<script src="bm-i18n.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#0A2118">
+<title>Akademi Tenis Kak Adam — Belajar Tenis untuk Anak | Baby Mo</title>
+<meta name="description" content="Belajar tenis bersama Kak Adam: tunggu pantulan, forehand & backhand, langkah kaki, servis, dan skor love-15-30-40. Game tenis ramah anak dari Baby Mo.">
+<link rel="canonical" href="https://play.babymo.id/babymo-tenis-adam.html">
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="icon" href="icons/games/tenis-adam.svg">
+<style>
+/* ── Classic (dark green) look; the bright look is the #bm-bright block below ── */
+:root{
+  --bg:#0A2118;--bg2:#0C2A20;--card:rgba(255,255,255,.07);--card2:rgba(255,255,255,.11);
+  --ink:#F2F7F2;--soft:#A9C2B4;--border:rgba(255,255,255,.12);
+  --green:#1FA971;--green-lt:#3FD08C;--gold:#FFC83D;--orange:#FF9A3C;--red:#FF6B5A;
+  --court:#3E7FD0;--court2:#4F90E0;--court-out:#2F9E62;--line:#FFFFFF;
+  --sheet:rgba(14,40,30,.92);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--ink);-webkit-user-select:none;user-select:none;touch-action:manipulation;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 50% at 15% 5%,rgba(31,169,113,.30),transparent 70%),
+  radial-gradient(ellipse 60% 45% at 90% 15%,rgba(91,198,232,.16),transparent 70%),
+  linear-gradient(180deg,#0C2A20 0%,#0A2118 60%,#081B14 100%);}
+.screen{position:fixed;inset:0;z-index:1;display:none;flex-direction:column;align-items:center;
+  padding:calc(14px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));overflow-y:auto;}
+.screen.on{display:flex;}
+.wrap{width:100%;max-width:440px;display:flex;flex-direction:column;align-items:center;}
+.topbar{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px;}
+.w-back{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--border);}
+.icon-btn{width:44px;height:44px;border-radius:14px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:var(--ink);background:var(--card);border:1px solid var(--border);cursor:pointer;}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--card);border:1px solid var(--border);font-weight:800;font-size:14px;}
+
+/* ── Map ── */
+.hero{text-align:center;margin:4px 0 14px;}
+.hero img{width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 12px 18px rgba(0,0,0,.25));animation:bob 3s ease-in-out infinite;}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.kicker{display:inline-flex;gap:6px;align-items:center;font-size:12px;font-weight:900;letter-spacing:.14em;text-transform:uppercase;color:var(--green-lt);padding:5px 12px;border-radius:999px;background:var(--card);border:1px solid var(--border);}
+h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;margin:10px 0 6px;color:var(--gold);}
+.sub{color:var(--soft);font-size:15px;line-height:1.45;max-width:30em;}
+.balls{display:flex;justify-content:center;gap:8px;margin:12px 0 4px;flex-wrap:wrap}
+.bchip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:800;padding:5px 10px;border-radius:999px;background:var(--card);border:1px solid var(--border);}
+.bchip i{width:12px;height:12px;border-radius:50%;display:inline-block}
+.path{width:100%;display:flex;flex-direction:column;gap:12px;margin-top:10px;}
+.node{display:flex;align-items:center;gap:14px;width:100%;padding:14px;border-radius:22px;background:var(--card);border:1.5px solid var(--border);cursor:pointer;text-align:left;color:var(--ink);font:inherit;position:relative;}
+.node .num{flex:0 0 auto;width:54px;height:54px;border-radius:18px;display:grid;place-items:center;font-size:26px;position:relative;}
+.node .num b{position:absolute;right:-6px;bottom:-6px;width:24px;height:24px;border-radius:50%;background:var(--bg2);border:2px solid var(--border);font-size:12px;display:grid;place-items:center;color:var(--ink)}
+.node .t{flex:1;min-width:0}
+.node .t b{display:block;font-size:17px;font-weight:900;line-height:1.2}
+.node .t small{display:block;font-size:13px;color:var(--soft);margin-top:2px;line-height:1.3}
+.node .st{font-size:15px;letter-spacing:1px;white-space:nowrap}
+.node.locked{opacity:.5;cursor:default}
+.node.next{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.18);}
+.node.next::after{content:'';position:absolute;inset:-2px;border-radius:24px;border:2px solid var(--gold);animation:pulse 1.8s ease-in-out infinite;pointer-events:none}
+@keyframes pulse{0%,100%{opacity:.2}50%{opacity:.9}}
+.cert-link{margin-top:14px;width:100%}
+
+/* ── Intro card ── */
+.card{width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:26px;padding:18px 18px 16px;text-align:center;}
+.card .pose{width:170px;height:170px;object-fit:contain;margin:-6px auto 2px;display:block;filter:drop-shadow(0 10px 14px rgba(0,0,0,.22));}
+.card h2{font-family:'Fredoka','Nunito',sans-serif;font-size:26px;line-height:1.15;color:var(--gold);margin:4px 0 8px;}
+.bubble{position:relative;background:var(--card2);border:1px solid var(--border);border-radius:18px;padding:12px 14px;font-size:16px;line-height:1.5;text-align:left;margin-top:6px}
+.bubble b{color:var(--green-lt)}
+.fact{margin-top:12px;text-align:left;border-radius:18px;padding:12px 14px;background:rgba(255,200,61,.10);border:1px dashed rgba(255,200,61,.45);font-size:15px;line-height:1.5}
+.fact .ft{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:3px}
+.howto{display:flex;align-items:center;gap:10px;margin-top:12px;text-align:left;font-size:15px;line-height:1.4;font-weight:700}
+.howto span{font-size:26px}
+.row{display:flex;gap:10px;width:100%;margin-top:14px}
+.btn-pri,.btn-sec{flex:1;min-height:56px;border-radius:18px;font:inherit;font-size:18px;font-weight:900;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 14px}
+.btn-pri{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;border:none}
+.btn-sec{background:var(--card);color:var(--ink);border:1px solid var(--border)}
+.btn-pri:active,.btn-sec:active{transform:scale(.96)}
+
+/* ── Play ── */
+#s-play{padding-bottom:calc(10px + env(safe-area-inset-bottom));overflow:hidden}
+.hud{width:100%;max-width:440px;display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.hud .title{flex:1;min-width:0;text-align:center;font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dots{display:flex;gap:5px;justify-content:center;margin-bottom:6px;min-height:12px}
+.dots i{width:11px;height:11px;border-radius:50%;background:var(--card2);border:1px solid var(--border)}
+.dots i.ok{background:var(--green-lt);border-color:var(--green-lt)}
+.dots i.no{background:var(--red);border-color:var(--red)}
+.dots i.now{transform:scale(1.25);border-color:var(--gold)}
+.stagewrap{position:relative;width:100%;max-width:440px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
+.stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;
+  background:linear-gradient(180deg,#9ED8FF 0%,#C9ECFF 22%,#2F9E62 22.2%,#2A8F58 100%);box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
+.stage svg.court{position:absolute;inset:0;width:100%;height:100%}
+.adam{position:absolute;width:38%;aspect-ratio:1;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
+.adam img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
+.adam::after{content:'';position:absolute;left:25%;right:25%;bottom:4%;height:7%;border-radius:50%;background:rgba(0,0,0,.22);z-index:-1}
+.ball,.bshadow{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;will-change:transform}
+.ball{z-index:5;background:radial-gradient(circle at 35% 30%,#fff7 0 18%,transparent 19%),var(--ballc,#E8F548);box-shadow:inset -3px -4px 0 rgba(0,0,0,.15)}
+.bshadow{z-index:2;background:rgba(0,0,0,.25)}
+.marker{position:absolute;z-index:2;border:3px dashed rgba(255,255,255,.85);border-radius:50%;pointer-events:none;opacity:0;transition:opacity .2s}
+.marker.on{opacity:1;animation:mk .6s ease-in-out infinite alternate}
+@keyframes mk{to{transform:scale(1.15)}}
+.pop{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.6);z-index:8;opacity:0;pointer-events:none;
+  font-family:'Fredoka','Nunito',sans-serif;font-size:28px;font-weight:700;color:#fff;text-align:center;white-space:nowrap;
+  padding:8px 16px;border-radius:18px;background:rgba(0,0,0,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .25s cubic-bezier(.3,1.5,.5,1)}
+.pop.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+.pop.good{background:rgba(18,161,90,.85)}.pop.bad{background:rgba(226,80,60,.85)}.pop.tip{background:rgba(30,60,110,.8);font-size:19px;white-space:normal;width:86%}
+.score{position:absolute;left:8px;right:8px;top:8px;z-index:7;display:none;justify-content:space-between;gap:6px}
+.score.on{display:flex}
+.score div{flex:1;background:rgba(10,30,60,.72);color:#fff;border-radius:14px;padding:6px 10px;text-align:center;font-weight:900;font-size:13px;line-height:1.2}
+.score div b{display:block;font-family:'Fredoka','Nunito',sans-serif;font-size:22px;color:#FFE066}
+.meter{position:absolute;right:10px;top:14%;bottom:40%;width:18px;border-radius:12px;background:rgba(0,0,0,.28);z-index:7;display:none;overflow:hidden;border:2px solid rgba(255,255,255,.7)}
+.meter.on{display:block}
+.meter .zone{position:absolute;left:0;right:0;top:0;height:20%;background:rgba(63,208,140,.75)}
+.meter .lvl{position:absolute;left:2px;right:2px;bottom:0;height:0;border-radius:8px;background:#FFE066}
+.controls{width:100%;max-width:440px;display:flex;gap:10px;margin-top:10px}
+.controls button{flex:1;min-height:64px;font-size:19px}
+.controls .side small{display:block;font-size:12px;font-weight:800;opacity:.85;line-height:1}
+.controls .side{flex-direction:column;gap:2px}
+.controls .side .lb{display:inline-flex;align-items:center;gap:6px}
+.lane-tip{position:absolute;bottom:8px;left:0;right:0;text-align:center;z-index:6;font-weight:900;color:#fff;font-size:14px;text-shadow:0 1px 2px rgba(0,0,0,.5);pointer-events:none}
+
+/* ── Result & certificate ── */
+.stars{display:flex;justify-content:center;gap:10px;margin:8px 0 6px;font-size:52px;line-height:1}
+.stars span{filter:grayscale(1);opacity:.3;transform:scale(.7);transition:all .4s cubic-bezier(.3,1.6,.5,1)}
+.stars span.on{filter:none;opacity:1;transform:scale(1)}
+.cert{width:100%;border-radius:28px;padding:22px 18px;text-align:center;background:linear-gradient(160deg,#FFF6D6,#FFE1EA 55%,#DDF0FF);color:#152230;border:4px solid #FFC83D;position:relative}
+.cert h2{font-family:'Fredoka','Nunito',sans-serif;font-size:28px;color:#D9480F;margin:6px 0}
+.cert .who{font-family:'Fredoka','Nunito',sans-serif;font-size:30px;color:#12A15A;margin:6px 0}
+.cert p{font-size:15px;line-height:1.5;color:#3A4756}
+.cert img{width:150px;height:150px;object-fit:contain}
+.cert .seal{display:flex;justify-content:center;gap:8px;margin-top:10px}
+.cert .seal i{width:22px;height:22px;border-radius:50%;display:inline-block;box-shadow:inset -2px -3px 0 rgba(0,0,0,.15)}
+</style>
+<link rel="stylesheet" href="bm-bright.css">
+<style id="bm-bright">
+:root{--bg:#F2F6FC;--bg2:#FFFFFF;--card:rgba(255,255,255,.9);--card2:#FFFFFF;--ink:#152230;--soft:#5A6878;--border:rgba(21,34,48,.10);
+  --green:#12A15A;--green-lt:#12A15A;--gold:#E8590C;--sheet:rgba(255,255,255,.95)}
+.node{box-shadow:0 0 0 .5px rgba(21,34,48,.05),0 10px 22px -16px rgba(30,60,110,.45)}
+.node .num b{background:#fff}
+.fact{background:#FFF6D6;border-color:#FFC83D}
+.fact .ft{color:#B35C00}
+.hero h1,h1{color:#E8590C}
+.dots i{background:rgba(21,34,48,.10)}
+</style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+.btn-pri{color:#fff}
+.controls button{border-radius:20px!important}
+</style>
+<script src="bm-icons.js" defer></script>
+</head>
+<body>
+
+<!-- ═══════════ MAP ═══════════ -->
+<section class="screen on" id="s-map">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="w-back" href="./index.html">← Game Hub</a>
+      <span class="pill" id="mapStars">⭐ 0 / 15</span>
+    </div>
+    <div class="hero">
+      <img src="adam-tennis/wave-1.webp" alt="">
+      <div><span class="kicker">🎾 Baby Mo · Tenis</span></div>
+      <h1>Akademi Tenis Kak Adam</h1>
+      <p class="sub">Belajar tenis langkah demi langkah bersama Kak Adam — dari bola merah sampai pertandingan pertamamu!</p>
+      <div class="balls">
+        <span class="bchip"><i style="background:#FF5A4A"></i>Bola merah</span>
+        <span class="bchip"><i style="background:#FF9A3C"></i>Bola oranye</span>
+        <span class="bchip"><i style="background:#C8E83A"></i>Bola hijau</span>
+      </div>
+    </div>
+    <div class="path" id="path"></div>
+    <button class="btn-pri cert-link" id="certBtn" style="display:none">🏅 Lihat Sertifikatku</button>
+  </div>
+</section>
+
+<!-- ═══════════ INTRO ═══════════ -->
+<section class="screen" id="s-intro">
+  <div class="wrap">
+    <div class="topbar">
+      <button class="w-back" id="introBack">← Peta</button>
+      <span class="pill" id="introBall">🎾</span>
+    </div>
+    <div class="card">
+      <img class="pose" id="introPose" src="adam-tennis/hold-ball.webp" alt="">
+      <span class="kicker" id="introKicker">Latihan 1</span>
+      <h2 id="introTitle"></h2>
+      <div class="bubble" id="introTip"></div>
+      <div class="howto"><span id="howIcon">👆</span><div id="introHow"></div></div>
+      <div class="fact"><span class="ft">💡 Tahukah kamu?</span><span id="introFact"></span></div>
+    </div>
+    <div class="row">
+      <button class="btn-sec" id="introSay">🔊 Dengar</button>
+      <button class="btn-pri" id="introGo">🎾 Ayo Main!</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PLAY ═══════════ -->
+<section class="screen" id="s-play">
+  <div class="hud">
+    <button class="icon-btn" id="playX" aria-label="Keluar">✕</button>
+    <div class="title" id="playTitle"></div>
+    <span class="pill" id="playCount">0</span>
+  </div>
+  <div class="dots" id="dots"></div>
+  <div class="stagewrap">
+    <div class="stage" id="stage">
+      <svg class="court" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4C8EDB"/><stop offset="1" stop-color="#3A78C8"/></linearGradient>
+          <pattern id="mesh" width="6" height="6" patternUnits="userSpaceOnUse"><path d="M0 0L6 6M6 0L0 6" stroke="#fff" stroke-opacity=".35" stroke-width=".8"/></pattern>
+        </defs>
+        <!-- fence + trees in the distance -->
+        <rect x="0" y="0" width="400" height="124" fill="url(#mesh)" opacity=".5"/>
+        <ellipse cx="40" cy="120" rx="70" ry="30" fill="#3BAA66"/><ellipse cx="360" cy="118" rx="80" ry="34" fill="#3BAA66"/><ellipse cx="200" cy="122" rx="60" ry="22" fill="#45B56F"/>
+        <!-- court (far baseline y=150, net y=330, near baseline y=556) -->
+        <polygon points="104,150 296,150 386,556 14,556" fill="url(#cg)"/>
+        <g stroke="#fff" stroke-width="3" fill="none" stroke-linejoin="round">
+          <polygon points="104,150 296,150 386,556 14,556"/>
+          <path d="M126 150 L54 556 M274 150 L346 556"/>
+          <path d="M137 242 L263 242 M88 436 L312 436 M200 242 L200 436"/>
+          <path d="M200 150 v6 M200 556 v-8"/>
+        </g>
+        <!-- net -->
+        <rect x="60" y="300" width="280" height="34" fill="url(#mesh)"/>
+        <rect x="60" y="300" width="280" height="34" fill="#16223A" opacity=".28"/>
+        <rect x="56" y="296" width="288" height="6" rx="2" fill="#fff"/>
+        <rect x="56" y="296" width="5" height="40" fill="#E8EEF5"/><rect x="339" y="296" width="5" height="40" fill="#E8EEF5"/>
+      </svg>
+      <div class="score" id="score"><div>Kak Adam<b id="scA">0</b></div><div>Raka<b id="scR">0</b></div></div>
+      <div class="meter" id="meter"><div class="zone"></div><div class="lvl" id="meterLvl"></div></div>
+      <div class="marker" id="marker"></div>
+      <div class="adam" id="adam"><img id="adamImg" src="adam-tennis/ready-wide.webp" alt=""></div>
+      <div class="bshadow" id="bshadow"></div>
+      <div class="ball" id="ball"></div>
+      <div class="pop" id="pop"></div>
+      <div class="lane-tip" id="laneTip"></div>
+    </div>
+  </div>
+  <div class="controls" id="controls"></div>
+</section>
+
+<!-- ═══════════ RESULT ═══════════ -->
+<section class="screen" id="s-result">
+  <div class="wrap">
+    <div class="card" style="margin-top:10px">
+      <img class="pose" id="resPose" src="adam-tennis/win-fist.webp" alt="">
+      <h2 id="resTitle">Hebat!</h2>
+      <div class="stars" id="resStars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
+      <p class="sub" id="resLine" style="margin:0 auto"></p>
+      <div class="fact"><span class="ft">🎾 Yang kamu pelajari</span><span id="resLearn"></span></div>
+    </div>
+    <div class="row">
+      <button class="btn-sec" id="resRetry">🔄 Ulangi</button>
+      <button class="btn-pri" id="resNext">Lanjut →</button>
+    </div>
+    <button class="btn-sec" id="resMap" style="margin-top:10px;width:100%;min-height:48px;flex:none">🗺 Peta Latihan</button>
+  </div>
+</section>
+
+<!-- ═══════════ CERTIFICATE ═══════════ -->
+<section class="screen" id="s-cert">
+  <div class="wrap">
+    <div class="topbar"><button class="w-back" id="certBack">← Peta</button><span></span></div>
+    <div class="cert" id="certCard">
+      <img src="adam-tennis/celebrate-3.webp" alt="">
+      <div class="kicker" style="background:#fff;color:#12A15A;border-color:#BFE8CF">🎾 Akademi Tenis Kak Adam</div>
+      <h2>Sertifikat Pemain Tenis Cilik</h2>
+      <p>Diberikan kepada</p>
+      <div class="who" id="certName">Pemain Hebat</div>
+      <p>sudah menyelesaikan latihan bola merah, oranye, dan hijau, lalu bertanding dengan sportif. Masya Allah!</p>
+      <div class="seal"><i style="background:#FF5A4A"></i><i style="background:#FF9A3C"></i><i style="background:#C8E83A"></i></div>
+    </div>
+    <div class="row">
+      <button class="btn-sec" id="certShare">📤 Bagikan</button>
+      <button class="btn-pri" id="certMap">🗺 Peta Latihan</button>
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+"use strict";
+/* ───────── content ───────── */
+var BALL = { red:"#FF5A4A", orange:"#FF9A3C", green:"#D4F046" };
+var STATIONS = [
+  { key:"pantul", tipEn:"The red ball is big and slow. Wait for it to <b>bounce once</b> in front of me, then <b>hit!</b>", icon:"🔴", ball:"red", title:"Tunggu Pantulannya!", short:"Pukul setelah bola memantul",
+    tip:"Bola merah itu besar dan pelan. Tunggu bola <b>memantul sekali</b> di depan Kakak, baru <b>pukul!</b>",
+    how:"Ketuk tombol PUKUL saat bola sudah memantul dan sampai di dekat Kak Adam.", howIcon:"👆",
+    fact:"Bola merah dipakai anak-anak yang baru belajar. Bolanya lebih besar, lebih pelan, dan memantul lebih rendah — jadi lebih mudah dipukul!",
+    learn:"Dalam tenis, bola boleh memantul satu kali sebelum dipukul. Sabar menunggu pantulan membuat pukulan lebih tepat." },
+  { key:"sisi", tipEn:"If the ball comes to my <b>racket-hand side</b>, use a <b>forehand</b>. If it comes to the other side, use a <b>backhand</b> — two hands are fine!", icon:"↔️", ball:"red", title:"Forehand & Backhand", short:"Pilih pukulan yang tepat",
+    tip:"Kalau bola datang ke <b>sisi tangan raket</b>, pakai <b>forehand</b>. Kalau ke sisi satunya, pakai <b>backhand</b> — boleh dengan dua tangan!",
+    how:"Kak Adam menghadap kamu. Bola ke kiri layar? Forehand. Ke kanan layar? Backhand.", howIcon:"↔️",
+    fact:"Hampir semua pukulan tenis adalah forehand atau backhand. Banyak pemain hebat memukul backhand dengan dua tangan supaya lebih kuat.",
+    learn:"Forehand dipukul dari sisi tangan yang memegang raket, backhand dari sisi lainnya." },
+  { key:"kaki", tipEn:"The orange ball is faster! Look for the <b>circle</b> where the ball will land, then <b>move your feet</b> there before it arrives.", icon:"👟", ball:"orange", title:"Kaki Lincah", short:"Bergerak dulu, baru memukul",
+    tip:"Bola oranye lebih cepat! Lihat <b>tanda lingkaran</b> tempat bola akan mendarat, lalu <b>geser kakimu</b> ke sana sebelum bola sampai.",
+    how:"Ketuk Kiri, Tengah, atau Kanan untuk menggeser Kak Adam ke arah bola.", howIcon:"👟",
+    fact:"Pemain tenis berlari dengan langkah-langkah kecil ke samping (shuffle) supaya selalu siap memukul.",
+    learn:"Kaki yang lincah adalah rahasia pukulan bagus: bergerak dulu, baru memukul." },
+  { key:"servis", tipEn:"Every point starts with a <b>serve</b>. Toss the ball up, then hit it at the <b>very highest point</b>!", icon:"🚀", ball:"orange", title:"Servis Roket", short:"Pukul bola di titik tertinggi",
+    tip:"Setiap poin dimulai dengan <b>servis</b>. Lempar bola ke atas, lalu pukul saat bola di <b>titik paling tinggi</b>!",
+    how:"Ketuk SERVIS saat bola ada di zona hijau, paling atas.", howIcon:"🚀",
+    fact:"Servis punya dua kesempatan. Kalau gagal sekali namanya 'fault'. Kalau gagal dua kali namanya 'double fault' — poin untuk lawan.",
+    learn:"Servis dipukul di titik tertinggi lemparan dan harus masuk ke kotak servis lawan." },
+  { key:"tanding", tipEn:"Time for a match against <b>Raka</b>! You're watching from Raka's side. Return every ball with a forehand or backhand.", icon:"🏆", ball:"green", title:"Pertandingan Pertama", short:"Main satu game melawan Raka",
+    tip:"Waktunya bertanding melawan <b>Raka</b>! Kamu melihat dari sisi Raka. Kembalikan setiap bola dengan forehand atau backhand.",
+    how:"Menangkan satu game. Skor tenis: Love (0), 15, 30, 40, lalu Game!", howIcon:"🎾",
+    fact:"Dalam tenis, nol disebut 'love'. Kalau skor 40-40 namanya 'deuce' — pemain harus menang dua poin berturut-turut.",
+    learn:"Skor tenis: love, 15, 30, 40, game. Menang atau kalah, pertandingan selalu ditutup dengan salaman di net." }
+];
+var SPEED = { red:2.3, orange:1.75, green:1.45 };   // seconds per incoming ball
+var BALLS_PER = 8;
+
+/* ───────── storage ───────── */
+var KEY = "bm_tenis_adam_v1";
+function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0]; return d; }catch(e){ return {stars:[0,0,0,0,0]}; } }
+function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){} }
+var DATA = load();
+function T(s){ return (window.BM_T ? window.BM_T(s) : s); }
+function kit(){ return window.BabyMo || {}; }
+function sfx(n){ try{ kit().sfx && kit().sfx(n); }catch(e){} }
+
+/* ───────── screens ───────── */
+function show(id){ document.querySelectorAll(".screen").forEach(function(s){ s.classList.toggle("on", s.id===id); }); }
+var $ = function(id){ return document.getElementById(id); };
+
+/* ───────── map ───────── */
+function unlocked(i){ return i===0 || DATA.stars[i-1] > 0; }
+function renderMap(){
+  var p=$("path"); p.innerHTML="";
+  var total=0, nextSet=false;
+  STATIONS.forEach(function(st,i){
+    total+=DATA.stars[i];
+    var open=unlocked(i), b=document.createElement("button");
+    b.className="node"+(open?"":" locked");
+    if(open && !DATA.stars[i] && !nextSet){ b.classList.add("next"); nextSet=true; }
+    var col=BALL[st.ball];
+    b.innerHTML='<span class="num" style="background:'+col+'33">'+(open?st.icon:"🔒")+'<b>'+(i+1)+'</b></span>'+
+      '<span class="t"><b>'+st.title+'</b><small>'+st.short+'</small></span>'+
+      '<span class="st">'+("⭐".repeat(DATA.stars[i])+"☆".repeat(3-DATA.stars[i]))+'</span>';
+    if(open) b.addEventListener("click",function(){ sfx("tap"); openIntro(i); });
+    p.appendChild(b);
+  });
+  $("mapStars").textContent="⭐ "+total+" / 15";
+  $("certBtn").style.display = DATA.stars.every(function(s){return s>0;}) ? "" : "none";
+}
+
+/* ───────── intro ───────── */
+var CUR=0;
+var INTRO_POSE=["hold-ball","ready-wide","shuffle-3","serve-1","wave-3"];
+function openIntro(i){
+  CUR=i; var st=STATIONS[i];
+  $("introKicker").textContent="Latihan "+(i+1);
+  $("introTitle").textContent=st.title;
+  $("introTip").innerHTML=(window.BM_LANG==="en"?st.tipEn:st.tip);
+  $("introHow").textContent=st.how;
+  $("howIcon").textContent=st.howIcon;
+  $("introFact").textContent=st.fact;
+  $("introPose").src="adam-tennis/"+INTRO_POSE[i]+".webp";
+  $("introBall").textContent={red:"🔴 Bola merah",orange:"🟠 Bola oranye",green:"🟢 Bola hijau"}[st.ball];
+  show("s-intro");
+}
+function say(text){
+  try{
+    if(kit().isMuted && kit().isMuted()) return;
+    var u=new SpeechSynthesisUtterance(text.replace(/<[^>]+>/g,""));
+    u.lang=(localStorage.getItem("bm_lang")==="en")?"en-US":"id-ID"; u.rate=.95;
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+
+/* ───────── Adam sprite ───────── */
+var FR={}; ["ready-wide","win-fist","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
+  [1,2,3,4,5,6].map(function(n){return "fh-"+n;}),[1,2,3,4,5,6].map(function(n){return "backhand-"+n;}),
+  [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-"+n;})
+).forEach(function(n){ var im=new Image(); im.src="adam-tennis/"+n+".webp"; FR[n]=im; });
+var animTimer=null;
+function pose(n){ clearInterval(animTimer); $("adamImg").src="adam-tennis/"+n+".webp"; }
+function play(seq,ms,then){
+  clearInterval(animTimer); var k=0;
+  $("adamImg").src="adam-tennis/"+seq[0]+".webp";
+  animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis/"+seq[k]+".webp"; }, ms);
+}
+function swing(side,then){ var b=side==="bh"?"backhand-":"fh-"; play([b+3,b+4,b+5,b+6],80,then); }
+var ADAMX={L:30,C:50,R:70};
+function adamTo(lane){ $("adam").style.left=ADAMX[lane]+"%"; }
+
+/* ───────── stage geometry (viewBox 400×560) ───────── */
+var stage=$("stage"), ballEl=$("ball"), shEl=$("bshadow");
+function sc(){ return stage.clientWidth/400; }
+function place(gx,gy,h,s){
+  var k=sc(), d=24*s*k, ds=d*1.1;
+  ballEl.style.width=ballEl.style.height=d+"px";
+  ballEl.style.transform="translate("+(gx*k-d/2)+"px,"+((gy-h*s)*k-d/2)+"px)";
+  shEl.style.width=ds+"px"; shEl.style.height=(ds*.35)+"px";
+  shEl.style.transform="translate("+(gx*k-ds/2)+"px,"+(gy*k-ds*.17)+"px)";
+  ballEl.style.opacity=shEl.style.opacity=1;
+}
+function hideBall(){ ballEl.style.opacity=shEl.style.opacity=0; }
+function lerp(a,b,t){ return a+(b-a)*t; }
+var PB=.7; // bounce point along the flight
+/* incoming flight: from us (near) to beside Adam (far). p 0..1 (+ overshoot) */
+function incoming(p,hitX){
+  var gx=lerp(200,hitX,Math.min(p,1.25)), gy=lerp(540,196,Math.min(p,1.25)), s=lerp(1,.45,Math.min(p,1.2)), h;
+  if(p<PB){ var q=p/PB; h=lerp(26,0,q)+4*150*q*(1-q); }
+  else { var r=(p-PB)/(1-PB); h=46*r*(2-r); }
+  return {gx:gx,gy:gy,h:Math.max(0,h),s:s};
+}
+/* outgoing flight after a hit: from Adam back to our side */
+function outgoing(p,fromX,toX,good){
+  var gy=lerp(196, good?470:332, p), gx=lerp(fromX,toX,p), s=lerp(.45,good?.95:.7,p);
+  var h=good ? lerp(46,0,p)+4*120*p*(1-p) : lerp(46,0,p)+4*30*p*(1-p);
+  return {gx:gx,gy:gy,h:h,s:s};
+}
+function animate(dur,step,done){
+  var t0=performance.now(), id=null, stopped=false;
+  function f(now){ if(stopped) return; var p=(now-t0)/1000/dur; if(step(p)===false){ return; } id=requestAnimationFrame(f); }
+  id=requestAnimationFrame(f);
+  return { stop:function(){ stopped=true; cancelAnimationFrame(id); if(done) done(); } };
+}
+
+/* ───────── feedback ───────── */
+var popT=null;
+function pop(text,kind,ms){ var e=$("pop"); e.textContent=T(text); e.className="pop on "+(kind||""); clearTimeout(popT); popT=setTimeout(function(){ e.className="pop"; }, ms||900); }
+function dots(n){ var d=$("dots"); d.innerHTML=""; for(var i=0;i<n;i++){ d.appendChild(document.createElement("i")); } }
+function dot(i,cls){ var d=$("dots").children; for(var k=0;k<d.length;k++) d[k].classList.remove("now"); if(d[i]){ d[i].classList.add(cls); } if(d[i+1]) d[i+1].classList.add("now"); }
+function controls(html){ $("controls").innerHTML=html; }
+
+/* ───────── round engine ───────── */
+var G=null; // current game state
+function startStation(i){
+  CUR=i; var st=STATIONS[i];
+  G={ i:i, n:0, hits:0, busy:false, flight:null, ball:BALL[st.ball], speed:SPEED[st.ball], lane:"C" };
+  ballEl.style.setProperty("--ballc",G.ball);
+  $("playTitle").textContent=st.title;
+  $("score").classList.remove("on"); $("meter").classList.remove("on"); $("marker").classList.remove("on"); $("laneTip").textContent="";
+  adamTo("C"); pose("ready-wide"); hideBall();
+  show("s-play");
+  ({pantul:setupPantul,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
+}
+function count(){ $("playCount").textContent=G.hits+" / "+G.total; }
+function finishAfter(ms){ setTimeout(function(){ if(G) finish(); }, ms); }
+function nextBall(fn,ms){ setTimeout(function(){ if(G && !G.over) fn(); }, ms||700); }
+
+/* ── 1. Wait for the bounce ── */
+function setupPantul(){
+  G.total=BALLS_PER; dots(G.total); dot(-1,""); $("dots").children[0].classList.add("now"); count();
+  controls('<button class="btn-pri" id="hitBtn">🎾 PUKUL!</button>');
+  $("hitBtn").addEventListener("click",function(){ tapHit("fh"); });
+  stage.onclick=function(){ tapHit("fh"); };
+  pop("Siap?","tip",900); nextBall(feed,1100);
+}
+function feed(side){
+  if(!G||G.over) return;
+  G.side=side||"fh"; G.hitX = G.side==="bh" ? 255 : 145; G.tapped=false; G.p=0;
+  pose("ready-wide"); sfx("tap");
+  G.flight=animate(G.speed*1.25,function(p){
+    G.p=p; var b=incoming(p,G.hitX); place(b.gx,b.gy,b.h,b.s);
+    if(p>1.18){ miss(G.tapped?null:"Terlalu lambat!"); return false; }
+  });
+}
+function tapHit(side){
+  if(!G||G.over||!G.flight||G.tapped) return;
+  var p=G.p;
+  if(p<.12) return; // ignore taps right as the ball is fed
+  G.tapped=true;
+  if(G.flight) G.flight.stop(); G.flight=null;
+  var key=STATIONS[G.i].key;
+  if(p<PB && key==="pantul"){ swing(side); missFly("Tunggu pantulannya dulu!"); return; }
+  if(p<.8){ swing(side); missFly("Terlalu cepat!"); return; }
+  if((key==="sisi"||key==="tanding") && side!==G.side){ swing(side); missFly(G.side==="fh"?"Bola di kiri — pakai forehand!":"Bola di kanan — pakai backhand!"); return; }
+  hit(side);
+}
+function hit(side){
+  G.hits++; sfx("correct");
+  swing(side,function(){ pose("win-fist"); });
+  var from=G.hitX, to=lerp(120,280,Math.random());
+  pop(["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
+  animate(.85,function(p){ var b=outgoing(Math.min(p,1),from,to,true); place(b.gx,b.gy,b.h,b.s); if(p>=1.1){ hideBall(); return false; } });
+  done(true);
+}
+function missFly(msg){
+  sfx("wrong"); pop(msg,"bad",1200);
+  var from=G.hitX;
+  setTimeout(function(){ pose("oops-1"); },320);
+  animate(.6,function(p){ var b=outgoing(Math.min(p,1),from,from,false); place(b.gx,b.gy,b.h,b.s); if(p>=1.15){ hideBall(); return false; } });
+  done(false);
+}
+function miss(msg){
+  if(G.flight){ G.flight=null; }
+  hideBall(); sfx("wrong"); if(msg) pop(msg,"bad",1200); pose("sad-miss");
+  done(false);
+}
+function done(ok){
+  if(G.onPoint){ G.onPoint(ok); return; }
+  dot(G.n, ok?"ok":"no"); G.n++; count();
+  if(G.n>=G.total){ G.over=true; finishAfter(1300); return; }
+  nextBall(function(){ feed(G.mode==="sides" ? (Math.random()<.5?"fh":"bh") : "fh"); }, 1300);
+}
+
+/* ── 2. Forehand & backhand ── */
+function setupSisi(){
+  G.mode="sides"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>bola di kanan</small></button>');
+  $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
+  $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
+  stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
+  pop("Siap?","tip",900); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1100);
+}
+
+/* ── 3. Footwork ── */
+var LANEX={L:120,C:200,R:280};
+function setupKaki(){
+  G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
+  controls('<button class="btn-sec" data-l="L">← Kiri</button><button class="btn-sec" data-l="C">Tengah</button><button class="btn-sec" data-l="R">Kanan →</button>');
+  $("controls").querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){ move(b.getAttribute("data-l")); }); });
+  stage.onclick=function(e){ var r=stage.getBoundingClientRect(), x=(e.clientX-r.left)/r.width; move(x<.36?"L":x>.64?"R":"C"); };
+  pop("Siap?","tip",900); nextBall(feedLane,1100);
+}
+function move(l){
+  if(!G||G.over||l===G.lane) return;
+  G.lane=l; sfx("tap"); adamTo(l);
+  play(["shuffle-2","shuffle-3","shuffle-4","shuffle-5"],70,function(){ pose("ready-wide"); });
+}
+function feedLane(){
+  if(!G||G.over) return;
+  var lanes=["L","C","R"].filter(function(x){ return x!==G.lane; });
+  G.target=lanes[Math.floor(Math.random()*lanes.length)];
+  var tx=LANEX[G.target], k=sc(), m=$("marker"), d=46;
+  m.style.width=m.style.height=d*k+"px"; m.style.left=(tx*k-d*k/2)+"px"; m.style.top=(196*k-d*k/2)+"px"; m.classList.add("on");
+  $("laneTip").textContent=T("Geser ke lingkaran!");
+  var hitX=tx+(G.target==="R"?-0:0); G.p=0; sfx("tap");
+  G.flight=animate(G.speed*1.25,function(p){
+    var b=incoming(p,hitX); place(b.gx,b.gy,b.h,b.s);
+    if(p>=.86 && !G.resolved){
+      G.resolved=true; m.classList.remove("on"); $("laneTip").textContent="";
+      if(G.lane===G.target){ G.hitX=hitX; G.flight=null; hit("fh"); return false; }
+    }
+    if(p>1.18){ G.flight=null; miss("Gerakkan kakimu lebih cepat!"); return false; }
+  });
+  G.resolved=false;
+}
+var _done=done;
+done=function(ok){
+  if(STATIONS[G.i].key==="kaki" && !G.onPoint){
+    dot(G.n, ok?"ok":"no"); G.n++; count();
+    if(G.n>=G.total){ G.over=true; finishAfter(1300); return; }
+    nextBall(feedLane,1300); return;
+  }
+  _done(ok);
+};
+
+/* ── 4. Serve ── */
+function setupServis(){
+  G.total=6; G.chance=1; dots(G.total); $("dots").children[0].classList.add("now"); count();
+  $("meter").classList.add("on");
+  controls('<button class="btn-pri" id="srvBtn">🚀 SERVIS!</button>');
+  $("srvBtn").addEventListener("click",serveHit);
+  stage.onclick=serveHit;
+  pop("Siap?","tip",900); nextBall(toss,1100);
+}
+function toss(){
+  if(!G||G.over) return;
+  G.tossing=true; G.tp=0; pose("serve-2");
+  $("laneTip").textContent=T(G.chance===1?"Kesempatan pertama":"Kesempatan kedua");
+  var x=212, base=150, peak=118, dur=1.5;
+  G.flight=animate(dur,function(p){
+    G.tp=p; var h=peak*Math.sin(Math.PI*Math.min(p,1));
+    place(x,base,h,.5); $("meterLvl").style.height=(h/peak*100)+"%";
+    if(p>.35 && $("adamImg").src.indexOf("serve-3")<0) pose("serve-3");
+    if(p>=1.02){ G.tossing=false; G.flight=null; serveResult(false,"Bolanya jatuh — pukul saat paling tinggi!"); return false; }
+  });
+}
+function serveHit(){
+  if(!G||!G.tossing) return;
+  G.tossing=false; if(G.flight) G.flight.stop(); G.flight=null;
+  var top=Math.sin(Math.PI*G.tp); // 0..1 height
+  var good=top>=.82;
+  play(["serve-4","serve-5","serve-6"],90);
+  var tx=lerp(150,250,Math.random());
+  if(good){
+    sfx("correct");
+    animate(.75,function(p){ var q=Math.min(p,1), gy=lerp(150,400,q), gx=lerp(212,tx,q), s=lerp(.5,.85,q), h=lerp(130,0,q)+4*40*q*(1-q); place(gx,gy,h,s); if(p>=1.15){ hideBall(); return false; } });
+    setTimeout(function(){ serveResult(true,"Masuk! Servis roket!"); },700);
+  } else {
+    animate(.55,function(p){ var q=Math.min(p,1), gy=lerp(150,330,q), gx=lerp(212,tx,q), s=lerp(.5,.7,q), h=lerp(130,34,q)*(1-q*.4); place(gx,gy,h,s); if(p>=1.1){ hideBall(); return false; } });
+    setTimeout(function(){ serveResult(false, top>.5 ? "Kena net! Tunggu sampai paling tinggi." : "Terlalu cepat — tunggu bolanya naik!"); },560);
+  }
+}
+function serveResult(ok,msg){
+  $("meterLvl").style.height="0%";
+  if(ok){ G.hits++; pop(msg,"good",1000); setTimeout(function(){ pose("win-fist"); },300); dot(G.n,"ok"); G.n++; G.chance=1; }
+  else if(G.chance===1){ sfx("wrong"); pop("Fault! "+T(msg),"bad",1500); pose("oops-1"); G.chance=2; nextBall(toss,1700); return; }
+  else { sfx("wrong"); pop("Double fault!","bad",1300); pose("sad-miss"); dot(G.n,"no"); G.n++; G.chance=1; }
+  count();
+  if(G.n>=G.total){ G.over=true; finishAfter(1400); return; }
+  nextBall(toss,1500);
+}
+
+/* ── 5. Match vs Raka ── */
+var CALL=["Love","15","30","40"];
+function setupTanding(){
+  G.mode="sides"; G.a=0; G.r=0; G.total=0; G.rally=0; $("dots").innerHTML=""; $("score").classList.add("on"); showScore();
+  $("playCount").textContent="🎾";
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>bola di kanan</small></button>');
+  $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
+  $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
+  stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
+  G.onPoint=rallyShot; G.taught={};
+  pop("Raka servis!","tip",1100); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1300);
+}
+function label(a,r){
+  if(a>=3&&r>=3){ if(a===r) return ["Deuce","Deuce"]; return a>r?["Adv","—"]:["—","Adv"]; }
+  return [CALL[Math.min(a,3)],CALL[Math.min(r,3)]];
+}
+function showScore(){ var l=label(G.a,G.r); $("scA").textContent=T(l[0]); $("scR").textContent=T(l[1]); }
+function teach(){
+  var l=label(G.a,G.r), key=l.join("-"), msg=null;
+  if((G.a===0||G.r===0)&&(G.a+G.r)===1&&!G.taught.love){ G.taught.love=1; msg="Love artinya nol!"; }
+  else if(l[0]==="Deuce"&&!G.taught.deuce){ G.taught.deuce=1; msg="Deuce! 40-40 — harus menang 2 poin beruntun."; }
+  else if((l[0]==="Adv"||l[1]==="Adv")&&!G.taught.adv){ G.taught.adv=1; msg="Advantage: satu poin lagi menang game!"; }
+  return msg;
+}
+function rallyShot(ok){
+  if(ok){
+    G.rally++;
+    var rakaMiss = Math.random() < [0,.45,.6,.8][Math.min(G.rally,3)];
+    if(rakaMiss){ setTimeout(function(){ point("a"); },900); }
+    else { setTimeout(function(){ pop("Raka mengembalikan!","tip",800); },850); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1500); }
+  } else { setTimeout(function(){ point("r"); },700); }
+}
+function point(who){
+  G.rally=0; if(who==="a") G.a++; else G.r++;
+  showScore(); sfx(who==="a"?"star":"wrong");
+  var won=(G.a>=4&&G.a-G.r>=2), lost=(G.r>=4&&G.r-G.a>=2);
+  if(won||lost){ G.over=true; G.won=won; pop(won?"Game! Kak Adam menang!":"Game untuk Raka!",won?"good":"bad",1600); pose(won?"celebrate-3":"sad-miss"); setTimeout(function(){ pop("Salaman di net 🤝","tip",1400); pose("wave-3"); },1700); finishAfter(3300); return; }
+  var t=teach(); pop(t||(who==="a"?"Poin untuk Kak Adam!":"Poin untuk Raka"), t?"tip":(who==="a"?"good":"bad"), t?1800:1000);
+  nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); }, t?2100:1500);
+}
+
+/* ───────── results ───────── */
+function starsFor(){
+  var key=STATIONS[G.i].key;
+  if(key==="tanding"){ if(!G.won) return 0; return G.r<=1?3:G.r<=2?2:1; }
+  var r=G.hits/G.total; return r>=.85?3:r>=.6?2:r>=.35?1:0;
+}
+function finish(){
+  var s=starsFor(), st=STATIONS[G.i], prev=DATA.stars[G.i];
+  if(s>prev){ DATA.stars[G.i]=s; save(DATA); try{ kit().addStars && kit().addStars(s-prev); }catch(e){} }
+  stage.onclick=null;
+  $("resTitle").textContent = s===3?"Masya Allah, sempurna!":s>=1?"Hebat, kamu berhasil!":"Ayo coba lagi!";
+  $("resPose").src="adam-tennis/"+(s>=2?"celebrate-3":s===1?"win-fist":"oops-1")+".webp";
+  var spans=$("resStars").children; for(var k=0;k<3;k++){ spans[k].classList.remove("on"); }
+  for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
+  if(st.key==="tanding") $("resLine").textContent = G.won ? T("Kak Adam menang game!")+" "+label(G.a,G.r).join("–") : T("Raka menang kali ini. Pemain hebat tidak menyerah!");
+  else $("resLine").textContent = T("Pukulan bagus")+": "+G.hits+" / "+G.total;
+  $("resLearn").textContent=st.learn;
+  var nextOpen = G.i<STATIONS.length-1 && (s>0||DATA.stars[G.i]>0);
+  $("resNext").style.display = (nextOpen || (G.i===STATIONS.length-1 && DATA.stars.every(function(x){return x>0;}))) ? "" : "none";
+  $("resNext").textContent = G.i===STATIONS.length-1 ? T("🏅 Sertifikat") : T("Lanjut →");
+  if(s>0){ try{ kit().react && kit().react("win",{star:false}); }catch(e){} } else { try{ kit().react && kit().react("wrong"); }catch(e){} }
+  var last=G.i; G=null;
+  $("resRetry").onclick=function(){ sfx("tap"); startStation(last); };
+  $("resNext").onclick=function(){ sfx("tap"); if(last===STATIONS.length-1) openCert(); else openIntro(last+1); };
+  show("s-result");
+}
+
+/* ───────── certificate ───────── */
+function openCert(){
+  var n=""; try{ n=(localStorage.getItem("mo_child_name")||"").trim(); }catch(e){}
+  $("certName").textContent = n || T("Pemain Hebat");
+  show("s-cert");
+}
+$("certBtn").addEventListener("click",function(){ sfx("tap"); openCert(); });
+$("certBack").addEventListener("click",function(){ renderMap(); show("s-map"); });
+$("certMap").addEventListener("click",function(){ renderMap(); show("s-map"); });
+$("certShare").addEventListener("click",function(){ try{ kit().shareScore ? kit().shareScore(15,3,T("Aku lulus Akademi Tenis Kak Adam! 🎾")) : kit().share && kit().share({}); }catch(e){} });
+
+/* ───────── wiring ───────── */
+$("introBack").addEventListener("click",function(){ renderMap(); show("s-map"); });
+$("introSay").addEventListener("click",function(){ var st=STATIONS[CUR]; say(T(st.title)+". "+(window.BM_LANG==="en"?st.tipEn:st.tip).replace(/<[^>]+>/g,"")+" "+T(st.how)); });
+$("introGo").addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(e){} startStation(CUR); });
+$("playX").addEventListener("click",function(){ if(G){ G.over=true; if(G.flight) G.flight.stop(); } G=null; stage.onclick=null; hideBall(); renderMap(); show("s-map"); });
+$("resMap").addEventListener("click",function(){ renderMap(); show("s-map"); });
+window.addEventListener("resize",function(){ if(!G) hideBall(); });
+renderMap();
+})();
+</script>
+<script src="/bm-kit.js" defer></script>
+</body>
+</html>
