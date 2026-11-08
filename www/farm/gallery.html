@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Farm Kit — Baby Mo</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+:root{--ink:#1E2B22;--soft:#5B6E60}
+*{box-sizing:border-box;margin:0}
+body{font-family:'Nunito',system-ui,sans-serif;background:linear-gradient(180deg,#BFE7FF 0%,#E6F6FF 30%,#DFF3D8 30%,#CDEBC0 100%);background-attachment:fixed;color:var(--ink);padding:18px 14px 40px}
+h1{font-family:'Fredoka','Nunito',sans-serif;font-size:28px;text-align:center}
+.sub{text-align:center;color:var(--soft);font-weight:700;margin:4px 0 14px}
+.states{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:16px;position:sticky;top:6px;z-index:5}
+.states button{border:none;border-radius:999px;padding:9px 14px;font:800 14px 'Nunito',sans-serif;background:#fff;color:var(--ink);box-shadow:0 6px 14px -8px rgba(0,0,0,.35);cursor:pointer}
+.states button.on{background:#12A15A;color:#fff}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;max-width:1100px;margin:0 auto}
+.card{background:rgba(255,255,255,.88);border-radius:24px;padding:12px;text-align:center;box-shadow:0 12px 26px -18px rgba(30,60,110,.5)}
+.stage{height:170px;display:flex;align-items:flex-end;justify-content:center;padding-top:30px}
+.stage .farm-a{max-height:150px;max-width:100%;width:auto}
+.card b{display:block;font-size:17px;margin-top:6px}
+.card small{display:block;color:var(--soft);font-weight:700;font-size:12.5px;line-height:1.35;margin-top:3px}
+h2{font-family:'Fredoka','Nunito',sans-serif;font-size:22px;text-align:center;margin:26px 0 12px}
+.props .stage{height:120px}.props .farm-p{max-height:100px;max-width:100%;width:auto;height:100px}
+</style>
+</head>
+<body>
+<h1>🐄 Farm Kit</h1>
+<p class="sub">Elemen hewan untuk "Sahabat Hewan Mo" — ketuk suasana hati di bawah</p>
+<div class="states" id="states"></div>
+<div class="grid" id="animals"></div>
+<h2>Benda di peternakan</h2>
+<div class="grid props" id="props"></div>
+<script src="farm-kit.js"></script>
+<script>
+var st=document.getElementById('states'), an=document.getElementById('animals'), pr=document.getElementById('props');
+var LBL={idle:'😊 Biasa',happy:'💗 Senang',eat:'😋 Makan',hungry:'🥕 Lapar',thirsty:'💧 Haus',dirty:'🧽 Kotor',sleep:'💤 Tidur',sad:'🤒 Sakit',walk:'🚶 Jalan'};
+FarmKit.STATES.forEach(function(s,i){var b=document.createElement('button');b.textContent=LBL[s];b.className=i?'':'on';b.onclick=function(){st.querySelectorAll('button').forEach(function(x){x.classList.remove('on')});b.classList.add('on');document.querySelectorAll('.farm-a').forEach(function(svg){FarmKit.setState(svg,s)})};st.appendChild(b);});
+FarmKit.ANIMALS.forEach(function(a){an.insertAdjacentHTML('beforeend','<div class="card"><div class="stage">'+FarmKit.animal(a[0])+'</div><b>'+a[1]+' · '+a[2]+'</b><small>'+a[3]+'</small></div>');});
+FarmKit.PROPS.forEach(function(p){pr.insertAdjacentHTML('beforeend','<div class="card"><div class="stage">'+FarmKit.prop(p[0])+'</div><b>'+p[1]+'</b><small>'+p[2]+'</small></div>');});
+</script>
+</body>
+</html>
