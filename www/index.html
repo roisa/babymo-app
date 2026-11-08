@@ -344,6 +344,7 @@ body::before{
 .ai-square.g-beat      {background:linear-gradient(160deg,#FFD460,#D89020);}
 .ai-square.g-tenis     {background:linear-gradient(160deg,#60A5FA,#1D4ED8);}
 .ai-square.g-kebun     {background:linear-gradient(160deg,#86EFAC,#16A34A);}
+.ai-square.g-hewan     {background:linear-gradient(160deg,#FDBA74,#EA580C);}
 .ai-square .ar{font-family:var(--font-ar); font-size:38px; color:#fff; line-height:1;}
 .ai-label{
   font-size:11.5px; font-weight:700; color:var(--cream);
@@ -1139,6 +1140,11 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
           <div class="ai-label">Memory Match</div>
           <div class="ai-sub" data-i18n="g_mem_sub">Kartu</div>
         </a>
+        <a class="app-icon" href="./babymo-sahabat-hewan.html">
+          <div class="ai-square has-art g-hewan"><img class="ai-art" src="./icons/games/sahabat-hewan.svg" alt="" draggable="false"><div class="ai-badge">✨</div></div>
+          <div class="ai-label" data-i18n="g_hewan">Sahabat Hewan</div>
+          <div class="ai-sub" data-i18n="g_hewan_sub">Hewan</div>
+        </a>
         <a class="app-icon" href="./babymo-kebun-ais.html">
           <div class="ai-square has-art g-kebun"><img class="ai-art" src="./icons/games/kebun-ais.svg" alt="" draggable="false"></div>
           <div class="ai-label" data-i18n="g_kebun">Kebun Ais</div>
@@ -1334,7 +1340,7 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
 
       <!-- Quick stats -->
       <div class="quick-row" style="margin-top:14px">
-        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">14</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
+        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">15</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
         <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">6</div><div class="qs-lbl" data-i18n="qs_doa">Doa</div></div>
         <div class="qs"><div class="qs-icon">ك</div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
       </div>
@@ -1380,6 +1386,14 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
             <div class="lrow-body">
               <div class="lrow-title" data-i18n="cat_kata_t">Kata Islam</div>
               <div class="lrow-sub" data-i18n="cat_kata_s">Susun kata Arab</div>
+            </div>
+            <div class="lrow-chev">›</div>
+          </a>
+          <a class="lrow" href="./babymo-sahabat-hewan.html">
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/sahabat-hewan.svg" alt="" draggable="false"></div>
+            <div class="lrow-body">
+              <div class="lrow-title" data-i18n="cat_hewan_t">Sahabat Hewan Mo</div>
+              <div class="lrow-sub" data-i18n="cat_hewan_s">Rawat hewan & belajar adab terhadap hewan</div>
             </div>
             <div class="lrow-chev">›</div>
           </a>
@@ -1458,7 +1472,7 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
           <div class="lrow-icon">🎮</div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="about_total">Total Game</div>
-            <div class="lrow-sub" data-i18n="about_total_s">14 game siap dimainkan</div>
+            <div class="lrow-sub" data-i18n="about_total_s">15 game siap dimainkan</div>
           </div>
         </div>
       </div>
@@ -1526,6 +1540,7 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
 <script>
 /* ===== i18n TRANSLATION SYSTEM ===== */
 const I18N={
+  g_hewan:{id:'Sahabat Hewan',en:'Animal Friends'},g_hewan_sub:{id:'Hewan',en:'Animals'},cat_hewan_t:{id:'Sahabat Hewan Mo',en:"Mo's Animal Friends"},cat_hewan_s:{id:'Rawat hewan & belajar adab terhadap hewan',en:'Care for animals & learn Islamic manners towards them'},
   cont_kicker:{id:'Lanjut main',en:'Keep playing'},sec_allgames:{id:'Semua Game',en:'All Games'},
   g_wudhu:{id:'Wudhu',en:'Wudu'},g_wudhu_sub:{id:'Baru ✨',en:'New ✨'},comp_wudhu_t:{id:'Wudhu Bareng Mo',en:'Wudu with Mo'},comp_wudhu_s:{id:'Langkah wudhu + game urutkan · Baru',en:'Wudu steps + ordering game · New'},
   name_chip:{id:'Siapa nama si kecil?',en:"What's your little one's name?"},name_group:{id:'Si Kecil',en:'Your Child'},name_row:{id:'Nama si kecil',en:"Child's name"},
@@ -1554,10 +1569,10 @@ const I18N={
   cat_comp_t:{id:'Sholat Bareng Mo',en:'Pray with Mo'},cat_comp_s:{id:'Panduan sholat interaktif',en:'Interactive prayer guide'},
   foot_home:{id:'Islamic Early Learning untuk Si Kecil',en:'Islamic Early Learning for Little Ones'},
   game_title:{id:'Game <em>Baby Mo</em>',en:'<em>Baby Mo</em> Games'},
-  game_sub:{id:'14 game seru untuk si kecil',en:'14 fun games for kids'},
+  game_sub:{id:'15 game seru untuk si kecil',en:'15 fun games for kids'},
   feat_start:{id:'✨ Mulai di sini',en:'✨ Start here'},feat_kenalan:{id:'Kenalan Baby Mo',en:'Meet Baby Mo'},
   feat_kenalan_sub:{id:'Puzzle interaktif · Perkenalan',en:'Interactive puzzle · Introduction'},
-  sec_semua:{id:'Semua Game',en:'All Games'},sec_count:{id:'14 game',en:'14 games'},
+  sec_semua:{id:'Semua Game',en:'All Games'},sec_count:{id:'15 game',en:'15 games'},
   g_doa:{id:'Doa Harian',en:'Daily Dua'},g_dua_sub:{id:'Memori',en:'Memory'},
   g_kata:{id:'Kata Islam',en:'Islamic Words'},g_kata_sub:{id:'Susun',en:'Spelling'},
   g_dream_sub:{id:'Tidur',en:'Sleep'},g_hij_sub:{id:'Jelajah',en:'Explore'},
@@ -1580,7 +1595,7 @@ const I18N={
   foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
   about_title:{id:'Orang Tua',en:'Parents'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
   about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
-  about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'14 game siap dimainkan',en:'14 games ready to play'},
+  about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'15 game siap dimainkan',en:'15 games ready to play'},
   cat_tenis_t:{id:'Akademi Tenis Kak Adam',en:"Kak Adam's Tennis Academy"},cat_tenis_s:{id:'Belajar tenis dari bola merah sampai bertanding',en:'Learn tennis from the red ball to your first match'},
   g_tenis:{id:'Tenis Adam',en:'Adam Tennis'},g_tenis_sub:{id:'Olahraga',en:'Sport'},
   cat_kebun_t:{id:'Kebun Kecil Ais',en:"Ais's Little Garden"},cat_kebun_s:{id:'Tanam, siram, panen, lalu berbagi',en:'Plant, water, harvest and share'},
