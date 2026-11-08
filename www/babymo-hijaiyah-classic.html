@@ -119,12 +119,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   font-family:'Scheherazade New',serif;
   font-size:clamp(88px,24vw,120px);
   font-weight:700;
-  line-height:1.4;
-  margin-top:4px;
-  margin-bottom:18px;
+  /* room for tall marks above and tails below (خ ج ح ع غ ي): Safari clips
+     any glyph ink outside the box, so the box is generous and the glow is
+     a text-shadow, not a filter (filters are clipped to the box in WebKit) */
+  line-height:1.75;
+  padding:.04em .2em .18em;
+  margin-top:0;
+  margin-bottom:10px;
   display:block;
+  overflow:visible;
   animation:letterIn .4s cubic-bezier(.34,1.56,.64,1);
-  filter:drop-shadow(0 4px 16px rgba(200,144,64,.3));
+  text-shadow:0 4px 16px rgba(200,144,64,.3);
 }
 @keyframes letterIn{from{opacity:0;transform:scale(.7) rotate(-5deg)}to{opacity:1;transform:scale(1) rotate(0)}}
 .lc-name{font-size:28px;font-weight:900;color:var(--cream);margin-bottom:6px;}
@@ -179,7 +184,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
 .q-label{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--cream-dim);margin-bottom:10px;}
 /* Big Arabic for "which letter?" type */
-.q-arabic-big{font-family:'Scheherazade New',serif;font-size:clamp(80px,22vw,110px);font-weight:700;color:var(--gold-lt);line-height:1.4;margin-bottom:10px;animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
+.q-arabic-big{font-family:'Scheherazade New',serif;font-size:clamp(80px,22vw,110px);font-weight:700;color:var(--gold-lt);line-height:1.75;padding:0 .2em .12em;margin-bottom:10px;animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
 /* Name display for "which name?" type */
 .q-name-big{font-size:clamp(28px,8vw,38px);font-weight:900;color:var(--cream);animation:letterIn .35s cubic-bezier(.34,1.56,.64,1);}
 /* Baby Mo tiny reaction */
