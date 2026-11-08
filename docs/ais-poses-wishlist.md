@@ -1,5 +1,10 @@
 # Baby Ais — new poses wishlist (Kebun Kecil Ais and beyond)
 
+> **Status:** all P1 and P2 frames are delivered and live in the game
+> (`www/ais-garden/`, 360 px webp, feet on one baseline). Still open: the
+> optional companions (`umi-receive-veg`, `mo-garden-run`) and full-body
+> `yawn-stretch` frames (the current ones stop at the hips).
+
 Baby Ais has 116 poses today, but every one is a **single still frame**. Kak Adam's
 tennis moves come as 6-frame sequences (`adam-tennis-fh-1…6`), which is why his
 swings look smooth. Ais can only *jump* from one pose to the next. The list below

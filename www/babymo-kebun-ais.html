@@ -347,36 +347,37 @@ var wait = function(ms){ return new Promise(function(r){ setTimeout(r,ms); }); }
    POSES — every moment Baby Ais acts out.
    `frames` play in order at `fps` (or per-frame `ms`); a single frame
    gets a small CSS motion (`motion`) so she never looks frozen.
-   When the new frame sequences from docs/ais-poses-wishlist.md are
-   ready, convert them to 300px webp in ais-garden/ (e.g.
-   baby-ais-garden-water-1.png → ais-garden/garden-water-1.webp) and
-   swap the list here — the comment on each line names the new frames.
+   Frame sequences come from docs/ais-poses-wishlist.md (360px webp in
+   ais-garden/, feet on the same baseline in every frame).
    `faces`: which way the art faces, so walking can mirror her.
    ═════════════════════════════════════════════════════════════ */
+var BLINK = { frames:["idle-blink-1","idle-blink-2"], ms:[2600,150] };
 var POSES = {
-  idle:     { frames:["wave-hello"],                motion:"breathe" },          // new: idle-blink-1, idle-blink-2 with ms:[2600,140]
-  ready:    { frames:["thumbs-up-walk"],            motion:"breathe" },          // new: idle-blink-1…2
-  walk:     { frames:["run"], fps:9, faces:"left",  motion:"step" },             // new: garden-walk-1…6 (faces:"right", drop motion)
-  dig:      { frames:["plant-trowel"],              motion:"dig" },              // new: garden-dig-1…4
-  seed:     { frames:["gardener-sapling"],          motion:"pat" },              // new: garden-seed-1…3
-  water:    { frames:["watering-can"],              motion:"pour" },             // new: garden-water-1…4
-  weed:     { frames:["plant-trowel","cheer-fist"], ms:[900,800], motion:"tug" },// new: garden-weed-1…3
-  pick:     { frames:["surprised","jump-joy"],      ms:[500,900], motion:"hop" },// new: garden-pick-1…3
-  basket:   { frames:["arms-wide-joy"],             motion:"hop" },              // new: garden-basket-hold
-  look:     { frames:["magnifier-leaf"],            motion:"lean" },             // new: garden-look-sprout
-  smell:    { frames:["dreamy-delight"],            motion:"sway" },             // new: garden-smell-flower
-  kind:     { frames:["heart-hands-smile"],         motion:"sway" },             // new: garden-caterpillar
-  hot:      { frames:["eat-watermelon"],            motion:"breathe" },          // new: garden-wipe-sweat
-  splash:   { frames:["giggle"],                    motion:"wiggle" },           // new: garden-splash-giggle
-  worry:    { frames:["sad-tears"],                 motion:"breathe" },          // new: garden-wilt-worry
-  give:     { frames:["gift-box"],                  motion:"sway" },             // new: garden-give-veg
-  celebrate:{ frames:["jump-joy","arms-wide-joy"],  ms:[450,450], motion:"hop" },// new: celebrate-jump-1…4
-  think:    { frames:["think-question"],            motion:"breathe" },
-  sleep:    { frames:["sleep-pillow"],              motion:"sleep" },
-  wake:     { frames:["wake-stretch"],              motion:"breathe" },          // new: yawn-stretch-1…2 before sleeping
-  rain:     { frames:["rain-umbrella"],             motion:"sway" },
-  pray:     { frames:["dua-hands-closed"],          motion:"breathe" },
-  hug:      { frames:["hug-earth-smile"],           motion:"sway" }
+  idle:     { frames:BLINK.frames, ms:BLINK.ms, motion:"breathe", loop:true },
+  ready:    { frames:BLINK.frames, ms:BLINK.ms, motion:"breathe", loop:true },
+  walk:     { frames:["garden-walk-1","garden-walk-2","garden-walk-3","garden-walk-4","garden-walk-5","garden-walk-6"], fps:10, faces:"right" },
+  basketwalk:{ frames:["garden-basket-walk-1","garden-basket-walk-2","garden-basket-walk-3","garden-basket-walk-4"], fps:8, faces:"right" },
+  dig:      { frames:["garden-dig-1","garden-dig-2","garden-dig-3","garden-dig-4"], ms:[320,280,320,480] },
+  seed:     { frames:["garden-seed-1","garden-seed-2","garden-seed-3"], ms:[520,520,700] },
+  water:    { frames:["garden-water-1","garden-water-2","garden-water-3","garden-water-4"], ms:[260,300,1000,600] },
+  weed:     { frames:["garden-weed-1","garden-weed-2","garden-weed-3"], ms:[450,800,1000] },
+  pick:     { frames:["garden-pick-1","garden-pick-2","garden-pick-3"], ms:[420,420,900] },
+  basket:   { frames:["garden-basket-hold"], motion:"breathe" },
+  look:     { frames:["garden-look-sprout"], motion:"lean" },
+  smell:    { frames:["garden-smell-flower"], motion:"sway" },
+  kind:     { frames:["garden-caterpillar"], motion:"sway" },
+  hot:      { frames:["garden-wipe-sweat"], motion:"breathe" },
+  splash:   { frames:["garden-splash-giggle"], motion:"wiggle" },
+  worry:    { frames:["garden-wilt-worry"], motion:"breathe" },
+  give:     { frames:["garden-give-veg"], motion:"sway" },
+  celebrate:{ frames:["celebrate-jump-1","celebrate-jump-2","celebrate-jump-3","celebrate-jump-4"], ms:[200,180,320,380] },
+  think:    { frames:["think-question"], motion:"breathe" },
+  yawn:     { frames:["yawn-stretch-1"], motion:"breathe" },
+  sleep:    { frames:["sleep-pillow"], motion:"sleep" },
+  wake:     { frames:["yawn-stretch-2"], motion:"breathe" },
+  rain:     { frames:["rain-umbrella"], motion:"sway" },
+  pray:     { frames:["dua-hands-closed"], motion:"breathe" },
+  hug:      { frames:["hug-earth-smile"], motion:"sway" }
 };
 function poseSrc(n){ return "ais-garden/"+n+".webp"; }
 (function preload(){ var seen={}; for(var k in POSES) POSES[k].frames.forEach(function(f){ if(!seen[f]){ seen[f]=1; var i=new Image(); i.src=poseSrc(f); } }); })();
@@ -437,22 +438,23 @@ function pose(name, loop){
     aisImg.src=poseSrc(fr[i]);
     var d = p.ms ? p.ms[i%p.ms.length] : 1000/(p.fps||9);
     i++;
-    if(i>=fr.length){ if(!loop) return; i=0; }
+    if(i>=fr.length){ if(!(loop||p.loop)) return; i=0; }
     if(fr.length>1) aisT=setTimeout(next,d);
   })();
   return total;
 }
-var BEDX=[18,50,82];
+var BEDX=[18,50,82], carrying=false;
 async function walkTo(i){
   if(aisAt===i) return;
   var dist=Math.abs(i-aisAt);
   aisDir = i>aisAt ? "right" : "left";
-  pose("walk",true);
+  pose(carrying?"basketwalk":"walk",true);
   var ms=dist===1?600:950;
   aisEl.style.transitionDuration=ms+"ms";
   aisEl.style.left=BEDX[i]+"%";
   aisAt=i;
   await wait(ms);
+  carrying=false;
 }
 
 /* ═════════ plants (drawn in a 120×168 box, ground at y=126) ═════════ */
@@ -618,19 +620,19 @@ async function doTool(t){
     var k=await seedPicker(); if(!k){ busy=false; renderTools(); return; }
     hint(L("Bismillah… gali tanahnya.","Bismillah… dig the soil."));
     say(L("Bismillah","Bismillah"));
-    pose("dig",true); await wait(1300);
-    pose("seed",true); hint(L("Masukkan benih, lalu tutup dengan tanah.","Drop in the seed and cover it with soil."));
-    await wait(1100);
+    await wait(pose("dig")+150);
+    hint(L("Masukkan benih, lalu tutup dengan tanah.","Drop in the seed and cover it with soil."));
+    await wait(pose("seed")+100);
     b.crop=k; b.stage=1; b.watered=false; b.thirsty=false; save(); renderBed(i,true); sfx("correct");
     pose("ready"); await pop(CROPS[k].e+" "+L("Benih "+CROPS[k].id+" ditanam!",CROPS[k].en+" seed planted!")+"<small>"+L("Sekarang siram, ya.","Now give it some water.")+"</small>",1700);
   } else if(t==="water"){
     if(b.watered && b.stage<5){
-      pose("water",true); dropsOn(i,6); await wait(700);
+      dropsOn(i,6); await wait(Math.min(1500,pose("water")));
       pose("splash",true); sfx("tap"); say(L("Ups! Sudah basah!","Oops! It's already wet!"));
       await pop("💦 "+L("Ups! Sudah basah!","Oops! Already wet!")+"<small>"+L("Air secukupnya saja, jangan berlebihan.","Just enough water — not too much.")+"</small>",2000);
     } else {
       hint(L("Siram pelan-pelan…","Water it gently…"));
-      pose("water",true); dropsOn(i,12); await wait(1300);
+      var wt=pose("water"); setTimeout(function(){ dropsOn(i,12); },560); await wait(wt);
       b.watered=true; b.thirsty=false; save(); renderBed(i); sfx("correct");
       pose("ready");
       if(!D.seen.water){ D.seen.water=1; save(); await pop("💧 "+L("Segar!","Fresh!")+"<small>"+L("Tanaman minum air lewat akarnya.","Plants drink water through their roots.")+"</small>",2200); }
@@ -638,20 +640,20 @@ async function doTool(t){
     }
   } else if(t==="weed"){
     hint(L("Tarik yang kuat!","Pull hard!"));
-    pose("weed"); await wait(900);
+    var wd=pose("weed"); await wait(1250);
     b.weed=false; save(); renderBed(i); sfx("correct");
-    await wait(800);
+    await wait(wd-1250+300);
     if(!D.seen.weed){ D.seen.weed=1; save(); await pop("🌿 "+L("Tercabut!","Pulled out!")+"<small>"+L("Rumput liar merebut air dan makanan tanaman kita.","Weeds steal water and food from our plants.")+"</small>",2300); }
     else await pop("🌿 "+L("Tercabut!","Pulled out!"),1000);
     pose("ready");
   } else if(t==="harvest"){
     var crop=b.crop, n=CROPS[crop].yield;
-    pose("pick"); await wait(1400);
+    await wait(pose("pick"));
     flyTo(beds[i],CROPS[crop].e,n); sfx("star");
     D.basket[crop]=(D.basket[crop]||0)+n;
     var isNew=!D.book[crop]; D.book[crop]=(D.book[crop]||0)+n;
     D.beds[i]={}; save(); renderBed(i); renderHud();
-    pose("celebrate",true);
+    pose("celebrate",true); carrying=true;
     var star=isNew && giveStar("crop-"+crop); renderStars();
     say(L("Alhamdulillah! Panen "+CROPS[crop].id,"Alhamdulillah! We picked "+CROPS[crop].en));
     try{ kit().react && kit().react("win",{star:false}); }catch(e){}
@@ -692,6 +694,7 @@ async function sleep(){
   }
   busy=true; renderTools(); sel=-1; beds.forEach(function(b){ b.classList.remove("sel"); });
   hint(L("Selamat malam…","Good night…"));
+  pose("yawn"); await wait(1100);
   pose("sleep",true); $("night").classList.add("on"); $("rain").classList.remove("on");
   say(L("Bismika Allahumma ahya wa amut","Bismika Allahumma ahya wa amut"));
   await pop("🌙 "+L("Bismika Allahumma ahya wa amut","Bismika Allahumma ahya wa amut")+"<small>"+L("Dengan nama-Mu ya Allah, aku hidup dan aku mati.","In Your name, O Allah, I live and I die.")+"</small>",2600);
