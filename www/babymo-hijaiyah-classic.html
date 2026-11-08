@@ -309,7 +309,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sound-btn.speaking{background:linear-gradient(135deg,#D3F4E2,#BFEBD5);}
 .lesson-icon.exam-icon{background:linear-gradient(135deg,#FFC83D,#F08C00);}
 .w-start,.nav-pri{color:#fff!important;}
+.xp-bar,.q-prog-wrap{background:rgba(21,34,48,.10);}
+.dot-prog>*:not(.active):not(.done){background:rgba(21,34,48,.16)!important;}
 </style>
+<link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-fixes">
+/* readable text: nothing under ~11.5px; comfy tap targets (like the other games) */
+.jilid-label,.lc-badge,.rss-l,.rlr-title,.w-badge{font-size:11.5px!important;letter-spacing:1.5px!important;}
+.hst-pct,.lesson-meta,.lesson-xp,.i-counter,.fb-sub{font-size:12.5px!important;}
+.q-sound-hint{font-size:13px!important;padding:8px 14px!important;}
+.i-back,.q-back{min-width:44px!important;min-height:44px!important;display:inline-flex!important;align-items:center;justify-content:center;border-radius:14px!important;}
+.hdr-back,.w-back,.about-back{min-height:44px!important;display:inline-flex!important;align-items:center;border-radius:999px!important;padding:8px 16px!important;}
+</style>
+<script src="bm-icons.js" defer></script>
 </head>
 <body>
 
@@ -349,7 +361,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <!-- ════ INTRO (Letter Cards) ════ -->
 <div class="screen" id="sIntro">
   <div class="intro-topbar">
-    <button class="i-back" id="iBackBtn" onclick="leaveLesson()">✕</button>
+    <button class="i-back btn-sec" id="iBackBtn" onclick="leaveLesson()">✕</button>
     <span class="i-counter" id="iCounter">Huruf 1 / 4</span>
   </div>
   <div class="dot-prog" id="dotProg"></div>
@@ -378,8 +390,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   </button>
 
   <div class="nav-row">
-    <button class="nav-sec" id="intrPrevBtn" onclick="prevCard()">← Sebelumnya</button>
-    <button class="nav-pri" id="intrNextBtn" onclick="nextCard()">Berikutnya →</button>
+    <button class="nav-sec btn-sec" id="intrPrevBtn" onclick="prevCard()">← Sebelumnya</button>
+    <button class="nav-pri btn-pri" id="intrNextBtn" onclick="nextCard()">Berikutnya →</button>
   </div>
 </div>
 
@@ -395,7 +407,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="q-label" id="qLabel">Huruf ini namanya?</div>
     <div class="q-arabic-big" id="qArabicBig" style="display:block"></div>
     <div class="q-name-big" id="qNameBig" style="display:none"></div>
-    <button class="q-sound-hint" id="qSoundHint" onclick="speakQuizHint()">🔊 Dengar</button>
+    <button class="q-sound-hint btn-sec" id="qSoundHint" onclick="speakQuizHint()">🔊 Dengar</button>
     <img class="q-mo-wrap" id="qMoWrap" src="Logo_Baby_Mo_Transparant.png" alt="Baby Mo" draggable="false" style="display:none;object-fit:contain;"/>
   </div>
 
@@ -404,7 +416,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div class="fb-icon" id="fbIcon">✅</div>
     <div class="fb-title" id="fbTitle">Betul!</div>
     <div class="fb-sub" id="fbSub"></div>
-    <button class="fb-next" onclick="nextQuestion()">Lanjut →</button>
+    <button class="fb-next btn-pri" onclick="nextQuestion()">Lanjut →</button>
   </div>
 </div>
 
@@ -430,17 +442,17 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     </div>
   </div>
   <div class="res-btns">
-    <button class="res-btn-sec" onclick="goHome()">🏠 Menu</button>
-    <button class="res-btn-pri" id="resNextBtn" onclick="goNextLesson()">Pelajaran Berikutnya →</button>
+    <button class="res-btn-sec btn-sec" onclick="goHome()">🏠 Menu</button>
+    <button class="res-btn-pri btn-pri" id="resNextBtn" onclick="goNextLesson()">Pelajaran Berikutnya →</button>
   </div>
   <div class="res-btns" style="margin-top:10px;">
-    <button class="res-btn-sec" style="flex:1;" onclick="window.BabyMo&&BabyMo.share({title:'Huruf Hijaiyah — Baby Mo',message:'Aku belajar huruf hijaiyah bareng Baby Mo! Yuk coba juga 🌙'})">📤 Bagikan</button>
+    <button class="res-btn-sec btn-sec" style="flex:1;" onclick="window.BabyMo&&BabyMo.share({title:'Huruf Hijaiyah — Baby Mo',message:'Aku belajar huruf hijaiyah bareng Baby Mo! Yuk coba juga 🌙'})">📤 Bagikan</button>
   </div>
 </div>
 
 <!-- ════ ABOUT ════ -->
 <div class="screen" id="sAbout">
-  <button class="about-back" onclick="showScreen('sHome')">← Kembali</button>
+  <button class="about-back btn-sec" onclick="showScreen('sHome')">← Kembali</button>
   <div class="about-title">Tentang Huruf Hijaiyah 🌙</div>
   <div class="about-item">
     <span class="about-icon">🌙</span>
