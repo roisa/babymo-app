@@ -336,6 +336,7 @@ body::before{
 .ai-square.g-kata      {background:linear-gradient(160deg,#4FC0A5,#1F7A60);}
 .ai-square.g-dream     {background:linear-gradient(160deg,#3A5BA8,#1A2456);}
 .ai-square.g-hijaiyah  {background:linear-gradient(160deg,#D8A85C,#9B6818);}
+.ai-square.g-huruf     {background:linear-gradient(160deg,#34D399,#065F46);}
 .ai-square.g-kbaik     {background:linear-gradient(160deg,#F08AAE,#C0356E);}
 .ai-square.g-find      {background:linear-gradient(160deg,#62B894,#2E6E50);}
 .ai-square.g-memory    {background:linear-gradient(160deg,#E89878,#A8543A);}
@@ -1043,7 +1044,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
 
       <!-- Quick stats -->
       <div class="quick-row">
-        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">11</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
+        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">12</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
         <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">6</div><div class="qs-lbl" data-i18n="qs_doa">Doa</div></div>
         <div class="qs"><div class="qs-icon">ك</div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
       </div>
@@ -1110,6 +1111,14 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
             </div>
             <div class="lrow-chev">›</div>
           </a>
+          <a class="lrow" href="./babymo-hijaiyah-classic.html">
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/huruf-hijaiyah.svg" alt="" draggable="false"></div>
+            <div class="lrow-body">
+              <div class="lrow-title" data-i18n="cat_huruf_t">Huruf Hijaiyah</div>
+              <div class="lrow-sub" data-i18n="cat_huruf_s">28 huruf Arab, suara & kuis</div>
+            </div>
+            <div class="lrow-chev">›</div>
+          </a>
           <a class="lrow" href="./babymo-arabic-spelling.html">
             <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/kata-islam.svg" alt="" draggable="false"></div>
             <div class="lrow-body">
@@ -1149,7 +1158,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
     <section class="tab-pane" id="pane-games" data-title="Game">
       <div class="large-title-wrap">
         <div class="large-title" data-i18n-html="game_title">Game <em>Baby Mo</em></div>
-        <div class="large-subtitle" data-i18n="game_sub">11 game islami untuk si kecil</div>
+        <div class="large-subtitle" data-i18n="game_sub">12 game islami untuk si kecil</div>
       </div>
 
       <!-- Featured: Kenalan Baby Mo -->
@@ -1165,7 +1174,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
 
       <div class="sec-head" style="margin-top:4px;">
         <div class="sec-title" data-i18n="sec_semua">Semua Game</div>
-        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;" data-i18n="sec_count">11 game</span>
+        <span class="sec-link" style="cursor:default; color:var(--cream-dim); font-weight:700;" data-i18n="sec_count">12 game</span>
       </div>
 
       <div class="icon-grid">
@@ -1193,6 +1202,11 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
           <div class="ai-square has-art g-hijaiyah"><img class="ai-art" src="./icons/games/hijaiyah.svg" alt="" draggable="false"></div>
           <div class="ai-label">Pulau Hijaiyah</div>
           <div class="ai-sub" data-i18n="g_hij_sub">Jelajah</div>
+        </a>
+        <a class="app-icon" href="./babymo-hijaiyah-classic.html">
+          <div class="ai-square has-art g-huruf"><img class="ai-art" src="./icons/games/huruf-hijaiyah.svg" alt="" draggable="false"></div>
+          <div class="ai-label" data-i18n="g_huruf">Huruf Hijaiyah</div>
+          <div class="ai-sub" data-i18n="g_huruf_sub">Huruf Arab</div>
         </a>
         <a class="app-icon" href="./babymo-puzzle-katabaik.html">
           <div class="ai-square has-art g-kbaik"><img class="ai-art" src="./icons/games/kata-baik.svg" alt="" draggable="false"></div>
@@ -1425,7 +1439,7 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
           <div class="lrow-icon">🎮</div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="about_total">Total Game</div>
-            <div class="lrow-sub" data-i18n="about_total_s">11 game siap dimainkan</div>
+            <div class="lrow-sub" data-i18n="about_total_s">12 game siap dimainkan</div>
           </div>
         </div>
       </div>
@@ -1527,10 +1541,10 @@ const I18N={
   cat_comp_t:{id:'Sholat Bareng Mo',en:'Pray with Mo'},cat_comp_s:{id:'Panduan sholat interaktif',en:'Interactive prayer guide'},
   foot_home:{id:'Islamic Early Learning untuk Si Kecil',en:'Islamic Early Learning for Little Ones'},
   game_title:{id:'Game <em>Baby Mo</em>',en:'<em>Baby Mo</em> Games'},
-  game_sub:{id:'11 game islami untuk si kecil',en:'11 Islamic games for kids'},
+  game_sub:{id:'12 game islami untuk si kecil',en:'12 Islamic games for kids'},
   feat_start:{id:'✨ Mulai di sini',en:'✨ Start here'},feat_kenalan:{id:'Kenalan Baby Mo',en:'Meet Baby Mo'},
   feat_kenalan_sub:{id:'Puzzle interaktif · Perkenalan',en:'Interactive puzzle · Introduction'},
-  sec_semua:{id:'Semua Game',en:'All Games'},sec_count:{id:'11 game',en:'11 games'},
+  sec_semua:{id:'Semua Game',en:'All Games'},sec_count:{id:'12 game',en:'12 games'},
   g_doa:{id:'Doa Harian',en:'Daily Dua'},g_dua_sub:{id:'Memori',en:'Memory'},
   g_kata:{id:'Kata Islam',en:'Islamic Words'},g_kata_sub:{id:'Susun',en:'Spelling'},
   g_dream_sub:{id:'Tidur',en:'Sleep'},g_hij_sub:{id:'Jelajah',en:'Explore'},
@@ -1553,7 +1567,9 @@ const I18N={
   foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
   about_title:{id:'Tentang',en:'About'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
   about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
-  about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'11 game siap dimainkan',en:'11 games ready to play'},
+  about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'12 game siap dimainkan',en:'12 games ready to play'},
+  cat_huruf_t:{id:'Huruf Hijaiyah',en:'Hijaiyah Letters'},cat_huruf_s:{id:'28 huruf Arab, suara & kuis',en:'28 Arabic letters, sound & quizzes'},
+  g_huruf:{id:'Huruf Hijaiyah',en:'Hijaiyah Letters'},g_huruf_sub:{id:'Huruf Arab',en:'Arabic letters'},
   about_brand:{id:'Brand',en:'Brand'},about_mission:{id:'Misi',en:'Mission'},
   about_mission_s:{id:'Belajar Islam sambil bermain',en:'Learn Islam through play'},
   comp_title:{id:'Sholat <em>Bareng Mo</em>',en:'Pray <em>with Mo</em>'},
