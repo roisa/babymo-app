@@ -1,6 +1,15 @@
 /* Doa Harian — English */
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
-  "Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo": "Daily Du'a for Kids — 6 Everyday Du'as + Arabic Audio | Baby Mo",
+  "Doa Naik Kendaraan": "Du'a for Riding", "Doa Sesudah Makan": "Du'a After Eating", "Doa Ketika Hujan": "Du'a When It Rains", "Doa Masuk Rumah": "Du'a for Coming Home", "Doa untuk Orang Tua": "Du'a for Parents",
+  "Baby Mo mau berangkat. Baca doa dulu sebelum keluar rumah!": "Baby Mo is heading out. Read the du'a before leaving home!",
+  "Naik mobil, motor, atau bus? Baca doa ini supaya selamat!": "Riding a car, motorbike or bus? Read this du'a for a safe trip!",
+  "Alhamdulillah, perut kenyang! Bersyukur kepada Allah.": "Alhamdulillah, a full tummy! Let's thank Allah.",
+  "Hujan turun! Hujan adalah rahmat dari Allah.": "It's raining! Rain is a mercy from Allah.",
+  "Mo pulang! Baca doa, lalu ucapkan salam.": "Mo is home! Read the du'a, then say salam.",
+  "Mo sayang Abi dan Umi. Doakan mereka setiap hari!": "Mo loves Abi and Umi. Pray for them every day!",
+  "Naik Kendaraan": "Riding", "Selesai Makan": "After Eating", "Turun Hujan": "When It Rains", "Pulang ke Rumah": "Coming Home", "Abi & Umi": "Abi & Umi",
+  "Doa ini dibaca untuk...?": "This du'a is for...?", "Baca Bersama Mo": "Read Along with Mo",
+  "Doa Harian Anak — 12 Doa Sehari-hari + Audio Arab | Baby Mo": "Daily Du'a for Kids — 12 Everyday Du'as + Arabic Audio | Baby Mo",
   "Baby Mo — Doa Harian": "Baby Mo — Daily Du'a", "🌙 Baby Mo Game · Doa": "🌙 Baby Mo Game · Du'a", "Doa Harian 🌟": "Daily Du'a 🌟",
   "Belajar doa sehari-hari bersama Baby Mo!": "Learn everyday du'as with Baby Mo!", "Learn daily duas with Baby Mo! 🐻": "From morning to night, one du'a at a time 🐻",
   "🔊 Mulai Belajar — Bismillah!": "🔊 Start Learning — Bismillah!", "← Kembali ke Game Hub": "← Back to Game Hub", "← Hub": "← Hub", "🏠 Hub": "🏠 Hub",
@@ -30,11 +39,11 @@
   "Betul!": "Correct!", "Betul! Alhamdulillah! ✨": "Correct! Alhamdulillah! ✨", "Bagus!": "Nice!", "Luar biasa! ⭐": "Amazing! ⭐", "Subhanallah! Hebat! 💚": "Subhanallah! Great! 💚",
   "Alhamdulillah! ✨": "Alhamdulillah! ✨", "Hampir betul! Coba lagi nanti!": "Almost! Try again later!",
   "Sempurna! 🏆": "Perfect! 🏆", "Masya Allah! 🌟": "Masha Allah! 🌟", "Terus Berlatih! 🌱": "Keep Practicing! 🌱",
-  "Sempurna! Kamu hafal semua doa harian! 🏆": "Perfect! You know all the daily du'as! 🏆", "Kamu sudah hafal 6 doa harian!": "You've memorized 6 daily du'as!",
+  "Sempurna! Kamu hafal semua doa harian! 🏆": "Perfect! You know all the daily du'as! 🏆", "Kamu sudah hafal 12 doa harian!": "You've memorized 12 daily du'as!",
   "Bagus sekali! Terus belajar ya! ": "Great job! Keep learning!", "Bagus sekali! Terus belajar ya!": "Great job! Keep learning!", "Latihan lagi ya, pasti bisa!": "Practice again — you can do it!",
   "Doa": "Du'as", "Bintang": "Stars", "✅ Doa yang kamu pelajari hari ini": "✅ Du'as you learned today",
   "🏠 Hub": "🏠 Hub", "🔄 Main Lagi!": "🔄 Play Again!", "📤 Bagikan Hasil!": "📤 Share Result!", "Disalin!": "Copied!",
-  "Aku belajar 6 doa harian bersama Baby Mo! Yuk coba juga 🌙": "I learned 6 daily du'as with Baby Mo! Come try it too 🌙"
+  "Aku belajar doa harian bersama Baby Mo! Yuk coba juga 🌙": "I learned daily du'as with Baby Mo! Come try it too 🌙"
 }, [
   [/^Doa (\d+) \/ (\d+)$/, "Du'a $1 / $2"],
   [/^Doa "(.+)" — (.+)$/, "Du'a \"{1}\" — {2}"],

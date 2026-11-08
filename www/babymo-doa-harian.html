@@ -7,8 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/doa.js"></script>
 <script src="bm-i18n.js"></script>
-<meta name="description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
-<title>Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo</title>
+<meta name="description" content="Belajar 12 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<title>Doa Harian Anak — 12 Doa Sehari-hari + Audio Arab | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
 :root{
@@ -293,15 +293,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Baby Mo">
 <meta property="og:locale" content="id_ID">
-<meta property="og:title" content="Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo">
-<meta property="og:description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<meta property="og:title" content="Doa Harian Anak — 12 Doa Sehari-hari + Audio Arab | Baby Mo">
+<meta property="og:description" content="Belajar 12 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
 <meta property="og:url" content="https://play.babymo.id/babymo-doa-harian.html">
 <meta property="og:image" content="https://play.babymo.id/og/babymo-doa-harian.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Doa Harian Anak — 6 Doa Sehari-hari + Audio Arab | Baby Mo">
-<meta name="twitter:description" content="Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
+<meta name="twitter:title" content="Doa Harian Anak — 12 Doa Sehari-hari + Audio Arab | Baby Mo">
+<meta name="twitter:description" content="Belajar 12 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
 <meta name="twitter:image" content="https://play.babymo.id/og/babymo-doa-harian.jpg">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Doa Harian Anak — Baby Mo","url":"https://play.babymo.id/babymo-doa-harian.html","description":"Belajar 6 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-doa-harian.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Doa Harian Anak","item":"https://play.babymo.id/babymo-doa-harian.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Doa Harian Anak — Baby Mo","url":"https://play.babymo.id/babymo-doa-harian.html","description":"Belajar 12 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-doa-harian.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Doa Harian Anak","item":"https://play.babymo.id/babymo-doa-harian.html"}]}]}</script>
 <link rel="stylesheet" href="bm-bright.css">
 <style id="bm-bright">
 :root{
@@ -335,6 +335,46 @@ html[data-lang="en"] .meaning-en{display:none;}
 <style id="bm-bright-fixes">
 /* contrast fixes after the bright theme */
 .q-title{color:#D9480F;}
+
+/* ═════ Baby Mo's day (home) ═════ */
+#welcomeScreen{padding:calc(12px + env(safe-area-inset-top)) 16px 28px!important}
+.day-sky{position:fixed;inset:0;z-index:0;pointer-events:none;transition:background .6s}
+#welcomeScreen>*:not(.day-sky){position:relative;z-index:1}
+.dh-top{width:100%;max-width:440px;display:flex;justify-content:space-between;align-items:center;margin-bottom:6px}
+.dh-hub,.dh-count{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-weight:800;font-size:14px;text-decoration:none;color:#152230;background:rgba(255,255,255,.88);box-shadow:0 6px 14px -10px rgba(0,0,0,.4)}
+.dh-hello{display:flex;align-items:flex-end;gap:8px;width:100%;max-width:440px;margin:2px 0 6px}
+.dh-hello img{width:118px;height:126px;object-fit:contain;object-position:bottom;flex:0 0 auto;filter:drop-shadow(0 10px 12px rgba(30,40,80,.3));animation:dhBob 3s ease-in-out infinite}
+@keyframes dhBob{50%{transform:translateY(-5px)}}
+.dh-bub{position:relative;flex:1;text-align:left;background:#fff;color:#1E2B3A;border-radius:20px 20px 20px 6px;padding:11px 14px;margin-bottom:18px;box-shadow:0 14px 26px -16px rgba(30,40,80,.5)}
+.dh-bub::before{content:'';position:absolute;left:-8px;bottom:12px;border:8px solid transparent;border-right-color:#fff}
+.dh-bub b{display:block;font-size:18px;font-weight:900;line-height:1.2}
+.dh-bub span{display:block;font-size:14px;font-weight:700;color:#5A6878;margin-top:3px;line-height:1.35}
+.dh-day{width:100%;max-width:440px;display:flex;flex-direction:column;gap:10px;margin-top:4px}
+.dh-g{border-radius:22px;padding:10px 12px 12px;background:rgba(255,255,255,.82);box-shadow:0 10px 22px -16px rgba(30,40,80,.5);text-align:left;border:2px solid transparent}
+.dh-g.now{border-color:#FFC83D;background:#fff}
+.dh-gh{display:flex;align-items:center;gap:8px;font-weight:900;font-size:16px;color:#152230;margin-bottom:8px}
+.dh-gh .chip{margin-left:auto;font-size:11px;font-weight:900;letter-spacing:.06em;padding:4px 10px;border-radius:999px;background:#FFE066;color:#6A4200}
+.dh-gh .go{margin-left:auto;border:none;border-radius:999px;padding:6px 12px;font:900 12.5px 'Nunito',sans-serif;background:#E8F7EC;color:#0E7A3C;cursor:pointer}
+.dh-g.now .go{margin-left:6px}
+.dh-row{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+.dh-s{position:relative;border:none;border-radius:16px;padding:8px 2px 7px;background:var(--sbg,#F3F6FB);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;font-family:'Nunito',sans-serif}
+.dh-s .e{font-size:28px;line-height:1}
+.dh-s .t{font-size:11.5px;font-weight:800;color:#2A3646;line-height:1.15;text-align:center}
+.dh-s.got::after{content:'✓';position:absolute;top:-5px;right:-4px;width:20px;height:20px;border-radius:50%;background:#22C06E;color:#fff;font-size:12px;font-weight:900;display:grid;place-items:center;box-shadow:0 2px 6px rgba(0,0,0,.25)}
+.dh-s:active{transform:scale(.94)}
+.dh-all{margin-top:12px;border:none;border-radius:18px;padding:13px 18px;width:100%;max-width:440px;font:900 15px 'Nunito',sans-serif;background:rgba(255,255,255,.88);color:#152230;cursor:pointer}
+.w-start{margin:6px 0 10px!important}
+/* ═════ learn: act it out, read along, stickers ═════ */
+.act-btn{position:absolute;left:12px;top:50%;transform:translateY(-50%);z-index:4;display:flex;align-items:center;gap:8px;border:none;border-radius:18px;padding:9px 12px;
+  background:rgba(255,255,255,.95);color:#152230;font:900 13.5px/1.25 'Nunito',sans-serif;max-width:56%;text-align:left;cursor:pointer;box-shadow:0 10px 22px -10px rgba(0,0,0,.45);animation:actPulse 1.6s ease-in-out infinite}
+.act-btn .act-em{font-size:30px;line-height:1}
+.act-btn.done{display:none}
+@keyframes actPulse{50%{transform:translateY(-50%) scale(1.05)}}
+.sticker-pop{position:absolute;left:50%;top:50%;z-index:5;transform:translate(-50%,-50%) scale(0);font-size:58px;transition:transform .45s cubic-bezier(.3,1.6,.5,1);pointer-events:none;filter:drop-shadow(0 8px 12px rgba(0,0,0,.3))}
+.sticker-pop.on{transform:translate(-50%,-50%) scale(1)}
+.arabic-text .w{display:inline-block;padding:0 .08em;border-radius:10px;cursor:pointer;transition:background .2s,transform .2s,color .2s}
+.arabic-text .w.on{background:#FFE066;color:#5A3A00;transform:scale(1.12)}
+.arabic-text .w.said{color:#12A15A}
 </style>
 <script src="bm-icons.js" defer></script>
 <script src="doa-scenes.js"></script>
@@ -344,29 +384,17 @@ html[data-lang="en"] .meaning-en{display:none;}
 <div class="stars" id="starsBg"></div>
 <div class="toast" id="toast"><div class="toast-e" id="toastE">✨</div><div class="toast-t" id="toastT">Bagus!</div></div>
 
-<!-- ════ WELCOME ════ -->
+<!-- ════ WELCOME = Baby Mo's day ════ -->
 <div class="screen active" id="welcomeScreen">
-  <div class="w-mo-wrap">
-    <img class="w-mo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
-  </div>
-  <div class="w-mo-shadow"></div>
-  <div class="w-badge">🌙 Baby Mo Game · Doa</div>
+  <div class="day-sky" id="daySky"></div>
+  <div class="dh-top"><a href="./index.html" class="dh-hub">← Game Hub</a><span class="dh-count" id="dhCount">🏅 0 / 12</span></div>
+  <div class="dh-hello"><img id="dhMo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="Baby Mo"><div class="dh-bub"><b id="dhHello">Assalamu'alaikum!</b><span id="dhSub"></span></div></div>
   <div class="w-title">Doa Harian 🌟</div>
   <div class="w-arabic">تَعَلَّمِ الدُّعَاءَ مَعَ بَيبِي مُو</div>
-  <div class="w-sub">Belajar doa sehari-hari bersama Baby Mo!<br>Learn daily duas with Baby Mo! 🐻</div>
-  <div class="w-preview">
-    <div class="wp-item"><div class="wp-icon">🌅</div><div class="wp-label">Bangun Tidur</div><div class="wp-time">Pagi</div></div>
-    <div class="wp-item"><div class="wp-icon">🚿</div><div class="wp-label">Kamar Mandi</div><div class="wp-time">Pagi</div></div>
-    <div class="wp-item"><div class="wp-icon">🍽️</div><div class="wp-label">Makan</div><div class="wp-time">Siang</div></div>
-    <div class="wp-item"><div class="wp-icon">📚</div><div class="wp-label">Belajar</div><div class="wp-time">Siang</div></div>
-    <div class="wp-item"><div class="wp-icon">🚪</div><div class="wp-label">Keluar Rumah</div><div class="wp-time">Siang</div></div>
-    <div class="wp-item"><div class="wp-icon">🌙</div><div class="wp-label">Tidur</div><div class="wp-time">Malam</div></div>
-  </div>
-  <button class="w-start" onclick="startLearning()">🔊 Mulai Belajar — Bismillah!</button>
-  <a href="././index.html" class="w-back">← Kembali ke Game Hub</a>
+  <button class="w-start" id="dhNow" onclick="startGroup(nowWaktu())">🔊 Mulai</button>
+  <div class="dh-day" id="dhDay"></div>
+  <button class="dh-all" onclick="startAll()">📿 <span id="dhAllTxt">Belajar semua doa</span></button>
 </div>
-
-
 <!-- ════ LEARN SCREEN ════ -->
 <div class="screen" id="learnScreen">
   <div class="l-topbar">
@@ -383,6 +411,8 @@ html[data-lang="en"] .meaning-en{display:none;}
       <span class="se-prop" id="seProp">🛏️</span>
     </div>
     <div class="scene-time" id="sceneTime">Pagi 🌅</div>
+    <button class="act-btn" id="actBtn" type="button"><span class="act-em" id="actEm">🛏️</span><span id="actTxt"></span></button>
+    <div class="sticker-pop" id="stickerPop"></div>
     <div class="scene-mo-wrap">
       <img id="sceneMo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
     </div>
@@ -400,7 +430,7 @@ html[data-lang="en"] .meaning-en{display:none;}
   <div class="sound-section">
     <button class="sound-btn" id="soundBtn" onclick="handleSoundClick()">
       <span class="sound-btn-icon" id="soundBtnIcon">🔊</span>
-      <span id="soundBtnText">Dengar Doa</span>
+      <span id="soundBtnText">Baca Bersama Mo</span>
     </button>
     <div class="speed-row">
       <button class="speed-btn active" id="speedNormal" onclick="setSpeed('normal')">🐇 Normal</button>
@@ -455,7 +485,7 @@ html[data-lang="en"] .meaning-en{display:none;}
   </div>
   <div class="c-card">
     <div class="c-title" id="cTitle">Masya Allah! 🌟</div>
-    <div class="c-sub" id="cSub">Kamu sudah hafal 6 doa harian!</div>
+    <div class="c-sub" id="cSub">Kamu sudah hafal 12 doa harian!</div>
     <div class="c-stars-row">
       <span class="c-star" id="cs1">⭐</span>
       <span class="c-star" id="cs2">⭐</span>
@@ -481,87 +511,68 @@ html[data-lang="en"] .meaning-en{display:none;}
 // DATA
 // ═══════════════════════════════════════
 const DUAS = [
-  {
-    id:'wakeup', timeCode:'morning', time:'Pagi 🌅',
-    icon:'🌅', prop:'🛏️',
-    bg:'linear-gradient(160deg,#FFD080 0%,#E06820 100%)',
-    title:'Doa Bangun Tidur',
-    desc:'Baby Mo baru bangun tidur di pagi hari!',
-    arabic:'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ',
-    latin:"Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr",
-    meaningId:'Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami.',
-    meaningEn:'All praise to Allah who revived us after death.',
-    quizPrompt:'Doa ini dibaca saat...?',
-    quizEmoji:'🌅', quizLabel:'Bangun Tidur'
-  },
-  {
-    id:'bathroom_in', timeCode:'morning', time:'Pagi 🌅',
-    icon:'🚿', prop:'💧',
-    bg:'linear-gradient(160deg,#A0D8F0 0%,#2878B0 100%)',
-    title:'Masuk Kamar Mandi',
-    desc:'Sebelum Baby Mo masuk kamar mandi, baca doa ini!',
-    arabic:'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ',
-    latin:"Allāhumma innī a'ūdhu bika minal-khubthi wal-khabā'ith",
-    meaningId:'Ya Allah, aku berlindung kepada-Mu dari gangguan setan.',
-    meaningEn:"O Allah, I seek Your protection from evil jinns.",
-    quizPrompt:'Doa ini dibaca saat...?',
-    quizEmoji:'🚿', quizLabel:'Masuk Kamar Mandi'
-  },
-  {
-    id:'bathroom_out', timeCode:'morning', time:'Pagi 🌅',
-    icon:'🚪', prop:'✨',
-    bg:'linear-gradient(160deg,#80C8E8 0%,#1E68A8 100%)',
-    title:'Keluar Kamar Mandi',
-    desc:'Setelah keluar dari kamar mandi, ucapkan ini!',
-    arabic:'غُفْرَانَكَ',
-    latin:'Ghufranaka',
-    meaningId:'Ya Allah, ampunilah aku.',
-    meaningEn:'I seek Your forgiveness, O Allah.',
-    quizPrompt:'Doa ini dibaca saat...?',
-    quizEmoji:'🚪', quizLabel:'Keluar Kamar Mandi'
-  },
-  {
-    id:'eating', timeCode:'day', time:'Siang 🌤️',
-    icon:'🍽️', prop:'🥄',
-    bg:'linear-gradient(160deg,#FFD060 0%,#C86020 100%)',
-    title:'Sebelum Makan',
-    desc:'Selalu baca Bismillah sebelum makan ya!',
-    arabic:'بِسْمِ اللَّهِ',
-    latin:'Bismillāh',
-    meaningId:'Dengan nama Allah.',
-    meaningEn:'In the name of Allah.',
-    quizPrompt:'Doa ini dibaca saat...?',
-    quizEmoji:'🍽️', quizLabel:'Mau Makan'
-  },
-  {
-    id:'study', timeCode:'day', time:'Siang 🌤️',
-    icon:'📚', prop:'✏️',
-    bg:'linear-gradient(160deg,#80D8A0 0%,#227848 100%)',
-    title:'Doa Belajar',
-    desc:'Minta kepada Allah agar ilmu kita bertambah!',
-    arabic:'رَبِّ زِدْنِي عِلْمًا',
-    latin:"Rabb zidnī 'ilmā",
-    meaningId:'Ya Rabb-ku, tambahkanlah ilmu kepadaku.',
-    meaningEn:'My Lord, increase me in knowledge.',
-    quizPrompt:'Doa ini dibaca saat...?',
-    quizEmoji:'📚', quizLabel:'Mau Belajar'
-  },
-  {
-    id:'sleep', timeCode:'night', time:'Malam 🌙',
-    icon:'🌙', prop:'⭐',
-    bg:'linear-gradient(160deg,#5060A0 0%,#0E1828 100%)',
-    title:'Doa Sebelum Tidur',
-    desc:'Baby Mo mau tidur. Baca doa ini dulu ya!',
-    arabic:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ',
-    latin:"Bismika Allāhumma aḥyā wa bismika amūtu",
-    meaningId:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati.',
-    meaningEn:'With Your name, O Allah, I live and with Your name I die.',
-    quizPrompt:'Doa ini dibaca saat...?',
-    quizEmoji:'🌙', quizLabel:'Mau Tidur'
-  }
+  { id:'wakeup', waktu:'pagi', timeCode:'morning', time:'Pagi 🌅', icon:'🌅', prop:'🛏️', bg:'linear-gradient(160deg,#FFD080 0%,#E06820 100%)',
+    title:'Doa Bangun Tidur', desc:'Baby Mo baru bangun tidur di pagi hari!',
+    arabic:'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ', latin:"Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr",
+    meaningId:'Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami.', meaningEn:'All praise to Allah who revived us after death.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🌅', quizLabel:'Bangun Tidur', act:['Ketuk untuk membangunkan Mo! ⏰','Tap to wake Mo up! ⏰'], short:['Bangun','Wake up'] },
+  { id:'bathroom_in', waktu:'pagi', timeCode:'morning', time:'Pagi 🌅', icon:'🚿', prop:'💧', bg:'linear-gradient(160deg,#A0D8F0 0%,#2878B0 100%)',
+    title:'Masuk Kamar Mandi', desc:'Sebelum Baby Mo masuk kamar mandi, baca doa ini!',
+    arabic:'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ', latin:"Allāhumma innī a'ūdhu bika minal-khubthi wal-khabā'ith",
+    meaningId:'Ya Allah, aku berlindung kepada-Mu dari gangguan setan.', meaningEn:'O Allah, I seek Your protection from evil jinns.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🚿', quizLabel:'Masuk Kamar Mandi', act:['Masuk dengan kaki kiri 🦶','In with the left foot 🦶'], short:['K. mandi','Bathroom'] },
+  { id:'bathroom_out', waktu:'pagi', timeCode:'morning', time:'Pagi 🌅', icon:'✨', prop:'🚪', bg:'linear-gradient(160deg,#80C8E8 0%,#1E68A8 100%)',
+    title:'Keluar Kamar Mandi', desc:'Setelah keluar dari kamar mandi, ucapkan ini!',
+    arabic:'غُفْرَانَكَ', latin:'Ghufrānaka',
+    meaningId:'Ya Allah, ampunilah aku.', meaningEn:'I seek Your forgiveness, O Allah.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🚪', quizLabel:'Keluar Kamar Mandi', act:['Keluar dengan kaki kanan 🦶','Out with the right foot 🦶'], short:['Selesai mandi','Done'] },
+  { id:'leave_home', waktu:'pagi', timeCode:'morning', time:'Pagi 🌅', icon:'🎒', prop:'🏡', bg:'linear-gradient(160deg,#B6E3A8 0%,#3E9B5A 100%)', pose:'run',
+    title:'Doa Keluar Rumah', desc:'Baby Mo mau berangkat. Baca doa dulu sebelum keluar rumah!',
+    arabic:'بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ', latin:"Bismillāhi tawakkaltu 'alallāh, lā ḥaula wa lā quwwata illā billāh",
+    meaningId:'Dengan nama Allah, aku berserah diri kepada Allah. Tiada daya dan kekuatan kecuali dengan pertolongan Allah.', meaningEn:'In the name of Allah, I put my trust in Allah. There is no power and no strength except with Allah.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🎒', quizLabel:'Keluar Rumah', act:['Pakai tas, lalu buka pintu 🎒','Put on your bag and open the door 🎒'], short:['Berangkat','Going out'] },
+  { id:'vehicle', waktu:'siang', timeCode:'day', time:'Siang ☀️', icon:'🚗', prop:'🛣️', bg:'linear-gradient(160deg,#9FD8FF 0%,#3A7BD5 100%)', pose:'yes',
+    title:'Doa Naik Kendaraan', desc:'Naik mobil, motor, atau bus? Baca doa ini supaya selamat!',
+    arabic:'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ', latin:"Subḥānal-ladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn, wa innā ilā rabbinā lamunqalibūn",
+    meaningId:'Mahasuci Allah yang menundukkan kendaraan ini untuk kami, padahal kami tidak mampu menguasainya, dan sungguh kami akan kembali kepada Tuhan kami.', meaningEn:'Glory be to Allah who made this ride easy for us, which we could not have done ourselves, and to our Lord we will surely return.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🚗', quizLabel:'Naik Kendaraan', act:['Pasang sabuk pengaman! 🚗','Buckle up! 🚗'], short:['Kendaraan','Riding'] },
+  { id:'study', waktu:'siang', timeCode:'day', time:'Siang ☀️', icon:'📚', prop:'✏️', bg:'linear-gradient(160deg,#80D8A0 0%,#227848 100%)',
+    title:'Doa Belajar', desc:'Minta kepada Allah agar ilmu kita bertambah!',
+    arabic:'رَبِّ زِدْنِي عِلْمًا', latin:"Rabbi zidnī 'ilmā",
+    meaningId:'Ya Rabb-ku, tambahkanlah ilmu kepadaku.', meaningEn:'My Lord, increase me in knowledge.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'📚', quizLabel:'Mau Belajar', act:['Buka bukunya! 📖','Open the book! 📖'], short:['Belajar','Study'] },
+  { id:'eating', waktu:'siang', timeCode:'day', time:'Siang ☀️', icon:'🍽️', prop:'🥄', bg:'linear-gradient(160deg,#FFD060 0%,#C86020 100%)',
+    title:'Sebelum Makan', desc:'Selalu baca Bismillah sebelum makan ya!',
+    arabic:'بِسْمِ اللَّهِ', latin:'Bismillāh',
+    meaningId:'Dengan nama Allah.', meaningEn:'In the name of Allah.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🍽️', quizLabel:'Mau Makan', act:['Ambil sendok dengan tangan kanan 🥄','Pick up the spoon with your right hand 🥄'], short:['Makan','Eat'] },
+  { id:'after_eat', waktu:'siang', timeCode:'day', time:'Siang ☀️', icon:'😋', prop:'🥛', bg:'linear-gradient(160deg,#FFE29A 0%,#E08A2C 100%)', pose:'thank-you',
+    title:'Doa Sesudah Makan', desc:'Alhamdulillah, perut kenyang! Bersyukur kepada Allah.',
+    arabic:'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ', latin:"Alhamdulillāhil-ladhī aṭ'amanā wa saqānā wa ja'alanā muslimīn",
+    meaningId:'Segala puji bagi Allah yang memberi kami makan dan minum, dan menjadikan kami muslim.', meaningEn:'All praise to Allah who gave us food and drink and made us Muslims.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'😋', quizLabel:'Selesai Makan', act:['Habiskan makanannya! 😋','Finish your food! 😋'], short:['Kenyang','Full'] },
+  { id:'rain', waktu:'sore', timeCode:'day', time:'Sore 🌇', icon:'🌧️', prop:'☂️', bg:'linear-gradient(160deg,#A9B8D0 0%,#4E6A9A 100%)', pose:'wow',
+    title:'Doa Ketika Hujan', desc:'Hujan turun! Hujan adalah rahmat dari Allah.',
+    arabic:'اللَّهُمَّ صَيِّبًا نَافِعًا', latin:"Allāhumma ṣayyiban nāfi'ā",
+    meaningId:'Ya Allah, jadikanlah hujan ini hujan yang bermanfaat.', meaningEn:'O Allah, make it a beneficial rain.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🌧️', quizLabel:'Turun Hujan', act:['Buka payungnya! ☂️','Open the umbrella! ☂️'], short:['Hujan','Rain'] },
+  { id:'enter_home', waktu:'sore', timeCode:'day', time:'Sore 🌇', icon:'🏠', prop:'👋', bg:'linear-gradient(160deg,#FFC59A 0%,#D9644A 100%)', pose:'yes',
+    title:'Doa Masuk Rumah', desc:'Mo pulang! Baca doa, lalu ucapkan salam.',
+    arabic:'بِسْمِ اللَّهِ وَلَجْنَا وَبِسْمِ اللَّهِ خَرَجْنَا وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا', latin:"Bismillāhi walajnā, wa bismillāhi kharajnā, wa 'alallāhi rabbinā tawakkalnā",
+    meaningId:'Dengan nama Allah kami masuk, dengan nama Allah kami keluar, dan kepada Allah Tuhan kami, kami berserah diri.', meaningEn:'In the name of Allah we enter, in the name of Allah we leave, and in Allah our Lord we put our trust.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🏠', quizLabel:'Pulang ke Rumah', act:['Ketuk pintu, ucapkan salam! 🚪','Knock and say salam! 🚪'], short:['Pulang','Home'] },
+  { id:'parents', waktu:'malam', timeCode:'night', time:'Malam 🌙', icon:'👪', prop:'💗', bg:'linear-gradient(160deg,#C9B6F2 0%,#6E54C8 100%)', pose:'pose-05',
+    title:'Doa untuk Orang Tua', desc:'Mo sayang Abi dan Umi. Doakan mereka setiap hari!',
+    arabic:'رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا', latin:"Rabbighfir lī wa liwālidayya warḥamhumā kamā rabbayānī ṣaghīrā",
+    meaningId:'Ya Allah, ampunilah aku dan kedua orang tuaku, dan sayangilah mereka sebagaimana mereka menyayangiku di waktu kecil.', meaningEn:'My Lord, forgive me and my parents, and have mercy on them as they cared for me when I was little.',
+    quizPrompt:'Doa ini dibaca untuk...?', quizEmoji:'👪', quizLabel:'Abi & Umi', act:['Peluk Abi dan Umi! 🤗','Hug Abi and Umi! 🤗'], short:['Orang tua','Parents'] },
+  { id:'sleep', waktu:'malam', timeCode:'night', time:'Malam 🌙', icon:'🌙', prop:'⭐', bg:'linear-gradient(160deg,#5060A0 0%,#0E1828 100%)',
+    title:'Doa Sebelum Tidur', desc:'Baby Mo mau tidur. Baca doa ini dulu ya!',
+    arabic:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', latin:"Bismika Allāhumma aḥyā wa bismika amūtu",
+    meaningId:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati.', meaningEn:'With Your name, O Allah, I live and with Your name I die.',
+    quizPrompt:'Doa ini dibaca saat...?', quizEmoji:'🌙', quizLabel:'Mau Tidur', act:['Matikan lampunya! 💡','Turn off the light! 💡'], short:['Tidur','Sleep'] }
 ];
-
-const QUIZ_Q = [0, 3, 4, 5];
+let QUIZ_Q = [0, 6, 5, 11];
 
 // ═══════════════════════════════════════
 // SPEECH & AUDIO — the device's own speech engine (no data leaves the phone)
@@ -622,7 +633,7 @@ function setSoundState(state){
   const txt  = document.getElementById('soundBtnText');
   if(!btn) return;
   if(state === 'playing'){ btn.classList.add('speaking'); icon.textContent = '⏸'; txt.textContent = 'Sedang dibaca...'; }
-  else { btn.classList.remove('speaking'); icon.textContent = '🔊'; txt.textContent = 'Dengar Doa'; }
+  else { btn.classList.remove('speaking'); icon.textContent = '🔊'; txt.textContent = (window.BM_LANG==='en'?'Read Along with Mo':'Baca Bersama Mo'); }
 }
 
 function setQuizPlayState(state){
@@ -958,7 +969,7 @@ function restartGame(){
 function shareResult(){
   const stars = document.getElementById('cStarsDisp').textContent;
   const score = document.getElementById('cQuizScore').textContent;
-  if(window.BabyMo && BabyMo.shareScore){ BabyMo.shareScore(score, stars, 'Aku belajar 6 doa harian bersama Baby Mo! Yuk coba juga 🌙'); return; }
+  if(window.BabyMo && BabyMo.shareScore){ BabyMo.shareScore(score, stars, 'Aku belajar doa harian bersama Baby Mo! Yuk coba juga 🌙'); return; }
   const text  = `🌙 Doa Harian — Baby Mo\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama Baby Mo!\nhttps://play.babymo.id/babymo-doa-harian.html\n#BabyMo #DoaHarian`;
   if(navigator.share){ navigator.share({title:'Baby Mo — Doa Harian', text, url:'https://play.babymo.id/babymo-doa-harian.html'}).catch(()=>{}); }
   else{ navigator.clipboard?.writeText(text).then(() => showToast('📤','Disalin!')); }
@@ -1003,6 +1014,173 @@ function showToast(e, t){
     bg.appendChild(s);
   }
   initVoices();
+})();
+</script>
+<script>
+/* ═════ Doa Harian: Baby Mo's day, act-it-out, read-along, stickers ═════ */
+(function(){
+  var EN=window.BM_LANG==='en', L=function(a,b){return EN?b:a;};
+  var WAKTU=[
+    {k:'pagi', id:'Pagi', en:'Morning', e:'🌅', sky:'linear-gradient(180deg,#FFE3A3 0%,#FFD0B5 45%,#FFF2E2 100%)', mo:'pose-41',
+      hi:['Selamat pagi! ☀️','Good morning! ☀️'], sub:['Mulai hari dengan doa pagi bersama Mo.','Start the day with Mo\'s morning du\'as.']},
+    {k:'siang', id:'Siang', en:'Daytime', e:'☀️', sky:'linear-gradient(180deg,#8FD3FF 0%,#C9ECFF 50%,#F2FAFF 100%)', mo:'yes',
+      hi:['Selamat siang! 🌤️','Good afternoon! 🌤️'], sub:['Waktunya pergi, belajar, dan makan — jangan lupa doanya!','Time to go out, study and eat — don\'t forget the du\'as!']},
+    {k:'sore', id:'Sore', en:'Evening', e:'🌇', sky:'linear-gradient(180deg,#FFB38A 0%,#FFD6B0 45%,#F3E8FF 100%)', mo:'pose-33',
+      hi:['Selamat sore! 🌇','Good evening! 🌇'], sub:['Mo pulang ke rumah. Ada doa untuk hujan juga!','Mo is coming home. There\'s a du\'a for rain too!']},
+    {k:'malam', id:'Malam', en:'Night', e:'🌙', sky:'linear-gradient(180deg,#2B3470 0%,#4C4A9C 55%,#7C6CC4 100%)', mo:'thank-you',
+      hi:['Selamat malam! 🌙','Good night! 🌙'], sub:['Doakan Abi dan Umi, lalu baca doa sebelum tidur.','Pray for Abi and Umi, then read the bedtime du\'a.']}
+  ];
+  window.nowWaktu=function(){ var h=new Date().getHours(); return (h>=4&&h<10)?'pagi':(h>=10&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam'; };
+  function W(k){ return WAKTU.find(function(w){return w.k===k;}); }
+  var KEY='bm_doa_harian_v2', ST={learned:{}};
+  try{ ST=JSON.parse(localStorage.getItem(KEY)||'{"learned":{}}'); if(!ST.learned) ST.learned={}; }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){} }
+  function nLearned(){ return DUAS.filter(function(d){ return ST.learned[d.id]; }).length; }
+
+  /* ─── home ─── */
+  function renderHome(){
+    var now=nowWaktu(), w=W(now), name=''; try{ name=(localStorage.getItem('mo_child_name')||'').trim(); }catch(e){}
+    document.getElementById('daySky').style.background=w.sky;
+    document.getElementById('dhMo').src='baby-mo-poses/baby-mo-'+w.mo+'.webp';
+    document.getElementById('dhHello').textContent=L(w.hi[0],w.hi[1]).replace('!',name?', '+name+'!':'!');
+    document.getElementById('dhSub').textContent=L(w.sub[0],w.sub[1]);
+    document.getElementById('dhCount').textContent='🏅 '+nLearned()+' / '+DUAS.length;
+    document.getElementById('dhNow').textContent='🔊 '+L('Mulai Doa '+w.id,'Start the '+w.en+' Du\'as');
+    document.getElementById('dhAllTxt').textContent=L('Belajar semua '+DUAS.length+' doa','Learn all '+DUAS.length+' du\'as');
+    var order=WAKTU.map(function(x){return x.k;}), h='';
+    order.forEach(function(k){
+      var g=W(k), list=DUAS.filter(function(d){return d.waktu===k;});
+      h+='<div class="dh-g'+(k===now?' now':'')+'" id="g-'+k+'"><div class="dh-gh">'+g.e+' '+L(g.id,g.en)+(k===now?'<span class="chip">⏰ '+L('SEKARANG','NOW')+'</span>':'')+'<button class="go" data-g="'+k+'">▶ '+L('Mulai','Start')+'</button></div><div class="dh-row">';
+      list.forEach(function(d){ h+='<button class="dh-s'+(ST.learned[d.id]?' got':'')+'" data-id="'+d.id+'"><span class="e">'+d.icon+'</span><span class="t">'+L(d.short[0],d.short[1])+'</span></button>'; });
+      h+='</div></div>';
+    });
+    var day=document.getElementById('dhDay'); day.innerHTML=h;
+    day.querySelectorAll('.dh-s').forEach(function(b){ b.onclick=function(){ startOne(b.dataset.id); }; });
+    day.querySelectorAll('.go').forEach(function(b){ b.onclick=function(){ startGroup(b.dataset.g); }; });
+  }
+  window.goHome=function(){ renderHome(); showScreen('welcomeScreen'); };
+
+  /* ─── playlists ─── */
+  var PLAY=[], pos=0, groupKey=null;
+  function idxOf(id){ return DUAS.findIndex(function(d){return d.id===id;}); }
+  window.startGroup=function(k){ groupKey=k; PLAY=DUAS.map(function(d,i){return d.waktu===k?i:-1;}).filter(function(i){return i>=0;}); begin(); };
+  window.startAll=function(){ groupKey=null; PLAY=DUAS.map(function(d,i){return i;}); begin(); };
+  function startOne(id){ groupKey='one'; PLAY=[idxOf(id)]; begin(); }
+  window.startLearning=window.startAll;
+  function begin(){ pos=0; buildTimeline(); loadDua(PLAY[0]); showScreen('learnScreen'); }
+
+  window.buildTimeline=function(){
+    var row=document.getElementById('tlRow'); row.innerHTML='';
+    var groups=[]; PLAY.forEach(function(i){ var k=DUAS[i].waktu, g=groups[groups.length-1]; if(!g||g.k!==k){ g={k:k,idx:[]}; groups.push(g);} g.idx.push(i); });
+    groups.forEach(function(g,gi){
+      if(gi){ var dv=document.createElement('div'); dv.className='tl-divider'; row.appendChild(dv); }
+      var seg=document.createElement('div'); seg.className='tl-seg';
+      var lb=document.createElement('span'); lb.className='tl-label'; lb.textContent=W(g.k).e+' '+L(W(g.k).id,W(g.k).en); seg.appendChild(lb);
+      g.idx.forEach(function(i){ var d=document.createElement('div'); d.className='tl-dot'; d.id='tldot'+i; seg.appendChild(d); });
+      row.appendChild(seg);
+    });
+    updateTimeline();
+  };
+  window.updateTimeline=function(){ PLAY.forEach(function(i,p){ var d=document.getElementById('tldot'+i); if(d) d.className='tl-dot'+(p<pos?' done':p===pos?' active':''); }); };
+
+  /* ─── a simple scene for du'as without a hand-drawn one ─── */
+  var SKY={pagi:['#FFE3A3','#FFF4E2'],siang:['#9FDBFF','#E9F7FF'],sore:['#FFB38A','#FFE6CC'],malam:['#2E3A78','#5B5AA8']};
+  function genericScene(d){
+    var c=SKY[d.waktu]||SKY.siang, night=d.waktu==='malam', g='<defs><linearGradient id="gsk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs>';
+    g+='<rect width="400" height="180" fill="url(#gsk)"/>';
+    g+=night?'<circle class="glow" cx="60" cy="40" r="16" fill="#FFE29A"/><circle cx="67" cy="35" r="14" fill="'+c[0]+'"/>':'<circle class="glow" cx="60" cy="42" r="18" fill="#FFE47A"/>';
+    if(night) for(var k=0;k<7;k++) g+='<circle class="twinkle" cx="'+(110+k*37)%380+'" cy="'+(18+(k*23)%60)+'" r="1.8" fill="#fff"/>';
+    else g+='<g class="drift slow" fill="#fff" opacity=".9"><ellipse cx="150" cy="34" rx="28" ry="10"/><ellipse cx="166" cy="27" rx="16" ry="10"/></g>';
+    if(d.id==='rain') for(var r=0;r<26;r++) g+='<path class="float2" d="M'+(20+r*15)+' '+(10+(r*37)%70)+' l-4 10" stroke="#E6F2FF" stroke-width="2" stroke-linecap="round"/>';
+    g+='<path d="M0 132 Q100 112 200 128 Q300 112 400 130 V180 H0Z" fill="'+(night?'#3E3F86':'#8ED08A')+'"/><rect y="150" width="400" height="30" fill="'+(night?'#35377A':'#7CC67A')+'"/>';
+    g+='<text class="float" x="120" y="112" font-size="62" text-anchor="middle">'+d.icon+'</text><text class="float2" x="196" y="146" font-size="40" text-anchor="middle">'+d.prop+'</text>';
+    return g;
+  }
+  function showScene(d){
+    var card=document.getElementById('sceneCard'), ok=window.renderDoaScene&&renderDoaScene(d.id);
+    if(!ok && window.renderDoaScene){ renderDoaScene('wakeup'); document.getElementById('sceneBg').innerHTML='<svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+genericScene(d)+'</svg>'; card.classList.toggle('night',d.waktu==='malam'); }
+    if(d.pose) document.getElementById('sceneMo').src='baby-mo-poses/baby-mo-'+d.pose+'.webp';
+  }
+
+  /* ─── read along: word by word ─── */
+  var readSeq=0;
+  function wordsOf(t){ return t.split(/\s+/).filter(Boolean); }
+  function renderArabic(d){
+    var el=document.getElementById('arabicText');
+    el.innerHTML=wordsOf(d.arabic).map(function(w,i){ return '<span class="w" data-i="'+i+'">'+w+'</span>'; }).join(' ');
+    el.querySelectorAll('.w').forEach(function(sp){ sp.onclick=function(e){ e.stopPropagation(); readSeq++; highlight(+sp.dataset.i); speakWord(sp.textContent,function(){ sp.classList.remove('on'); }); }; });
+  }
+  function highlight(i){ document.querySelectorAll('#arabicText .w').forEach(function(sp,j){ sp.classList.toggle('on',j===i); if(j<i) sp.classList.add('said'); }); }
+  function speakWord(text,done){
+    try{ if(!window.speechSynthesis){ setTimeout(done,500); return; }
+      var u=new SpeechSynthesisUtterance(text); u.lang='ar-SA'; u.rate=currentSpeed==='slow'?0.5:0.7; if(wsArabicVoice) u.voice=wsArabicVoice;
+      var t=setTimeout(function(){ done&&done(); done=null; },2600); u.onend=u.onerror=function(){ clearTimeout(t); if(done){ var f=done; done=null; setTimeout(f,120);} };
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    }catch(e){ setTimeout(done,500); }
+  }
+  function readAlong(onDone){
+    var my=++readSeq, spans=document.querySelectorAll('#arabicText .w'), i=0;
+    spans.forEach(function(sp){ sp.classList.remove('said','on'); });
+    setSoundState('playing'); isSpeaking=true;
+    (function next(){
+      if(my!==readSeq) return;
+      if(i>=spans.length){ highlight(-1); spans.forEach(function(sp){ sp.classList.add('said'); }); isSpeaking=false; setSoundState('idle'); onDone&&onDone(); return; }
+      highlight(i); speakWord(spans[i].textContent,function(){ i++; next(); });
+    })();
+  }
+  window.handleSoundClick=function(){ if(isSpeaking){ readSeq++; stopSpeech(); highlight(-1); return; } playTone(523,0.06); readAlong(function(){ earn(DUAS[currentDuaIdx]); }); };
+  var _stop=stopSpeech; window.stopSpeech=function(){ readSeq++; _stop(); };
+
+  function earn(d){
+    setSceneMoExpression('celebrate');
+    if(ST.learned[d.id]) return;
+    ST.learned[d.id]=1; save();
+    var sp=document.getElementById('stickerPop'); sp.textContent=d.icon; sp.classList.add('on'); setTimeout(function(){ sp.classList.remove('on'); },1300);
+    spawnParticles(10); playCorrect();
+    showToast('🏅',L('Stiker baru: '+d.title+'!','New sticker!'));
+    try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){}
+  }
+
+  /* ─── one du'a ─── */
+  var _load=loadDua;
+  window.loadDua=function(idx){
+    pos=Math.max(0,PLAY.indexOf(idx)); readSeq++;
+    _load(idx);
+    var d=DUAS[idx];
+    showScene(d); renderArabic(d);
+    document.getElementById('lCounter').textContent=L('Doa ','Du\'a ')+(pos+1)+' / '+PLAY.length;
+    document.getElementById('sceneTime').textContent=W(d.waktu).e+' '+L(W(d.waktu).id,W(d.waktu).en);
+    document.getElementById('lLives').textContent=ST.learned[d.id]?'🏅':'';
+    var a=document.getElementById('actBtn'); a.classList.remove('done');
+    document.getElementById('actEm').textContent=d.prop; document.getElementById('actTxt').textContent=L(d.act[0],d.act[1]);
+    a.onclick=function(){ a.classList.add('done'); playTone(784,.12,'triangle',.2); spawnParticles(6); setSceneMoExpression('celebrate'); setTimeout(function(){ readAlong(function(){ earn(d); }); },350); };
+    var last=pos===PLAY.length-1;
+    document.getElementById('navPrev').textContent=pos===0?L('🏠 Menu','🏠 Menu'):L('← Kembali','← Back');
+    document.getElementById('navNext').textContent=last?(PLAY.length>1?L('Mulai Quiz 🎯','Start Quiz 🎯'):L('Selesai ✓','Done ✓')):L('Lanjut →','Next →');
+  };
+  // the old version read the du'a by itself after 0.7s — now the child acts first
+  var _sd=speakDua; window.speakDua=function(text,rate){ if(document.getElementById('learnScreen').classList.contains('active') && rate===undefined && !isSpeaking && document.getElementById('actBtn') && !document.getElementById('actBtn').classList.contains('done')) return; _sd(text,rate); };
+  window.prevDua=function(){ if(pos===0){ goHome(); return; } loadDua(PLAY[pos-1]); };
+  window.nextDua=function(){ if(pos>=PLAY.length-1){ if(PLAY.length>1) startQuiz(); else { earn(DUAS[PLAY[0]]); goHome(); } } else loadDua(PLAY[pos+1]); };
+
+  /* ─── quiz from the playlist ─── */
+  var _sq=startQuiz;
+  window.startQuiz=function(){ var q=PLAY.slice().sort(function(){return Math.random()-.5;}); QUIZ_Q=q.slice(0,Math.min(4,q.length)); _sq(); };
+  var _sc=showComplete;
+  window.showComplete=function(){ _sc();
+    document.getElementById('cDoa').textContent=PLAY.length;
+    document.getElementById('cSub').textContent=L('Kamu sudah belajar '+PLAY.length+' doa bersama Mo! 🏅 '+nLearned()+' / '+DUAS.length+' stiker','You learned '+PLAY.length+' du\'as with Mo! 🏅 '+nLearned()+' / '+DUAS.length+' stickers');
+    var recap=document.getElementById('cRecap'); recap.innerHTML='<div class="cr-head">✅ '+L('Doa yang kamu pelajari','Du\'as you learned')+'</div>';
+    PLAY.forEach(function(i){ var d=DUAS[i]; recap.innerHTML+='<div class="cr-item"><div class="cr-top"><span class="cr-icon">'+d.icon+'</span><span class="cr-title-small">'+d.title+'</span></div><div class="cr-arabic">'+d.arabic+'</div><div class="cr-meaning">'+(EN?d.meaningEn:d.meaningId)+'</div></div>'; });
+    var m=document.querySelector('.c-mascot'); if(m) m.src='baby-mo-poses/baby-mo-yeyy.webp';
+  };
+  window.restartGame=function(){ ['cs1','cs2','cs3'].forEach(function(id){ document.getElementById(id).classList.remove('lit'); }); begin(); };
+  var mq=document.getElementById('moQuizImg'); if(mq) mq.src='baby-mo-poses/baby-mo-idea.webp';
+
+  /* ─── deep links from the Game Hub: ?doa=parents · ?waktu=malam ─── */
+  renderHome();
+  var q=new URLSearchParams(location.search), did=q.get('doa'), wk=q.get('waktu');
+  if(did && idxOf(did)>=0) startOne(did); else if(wk && W(wk)) startGroup(wk);
 })();
 </script>
 <script src="/bm-kit.js" defer></script>

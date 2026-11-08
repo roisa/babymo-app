@@ -1000,6 +1000,14 @@ html[data-theme="dark"] .continue-card{background:linear-gradient(120deg,#16322A
 html[data-theme="dark"] .set-menu{background:#1A2236}
 @media (min-width:820px){.mo-pic{width:150px;height:160px}.mo-greet{padding:10px 32px 4px}.mo-hello{font-size:26px}.mo-sub{font-size:16px}.continue-card{margin:14px 32px 2px}}
 @media (min-width:600px) and (max-width:819px){.home-grid{grid-template-columns:repeat(4,1fr)}}
+
+/* ── Doa tab: follows the time of day ── */
+.doa-hero{transition:background .5s}
+.doa-now-ar{font-family:'Scheherazade New','Amiri',serif;font-size:24px;line-height:1.5;direction:rtl;text-align:left;color:#0B6B3A;margin:4px 0 2px}
+.doa-g-title{display:flex;align-items:center;gap:8px}
+.doa-g-title .now{font-size:10.5px;font-weight:900;letter-spacing:.06em;padding:3px 9px;border-radius:999px;background:#FFE066;color:#6A4200}
+.lrow.doa-now-row{background:linear-gradient(90deg,rgba(255,224,102,.22),transparent)}
+html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
 </style>
 <script>
 (function(){
@@ -1223,78 +1231,27 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
     <section class="tab-pane" id="pane-doa" data-title="Doa">
       <div class="large-title-wrap">
         <div class="large-title" data-i18n-html="doa_title">Doa <em>Harian</em></div>
-        <div class="large-subtitle" data-i18n="doa_sub">6 doa untuk hari-hari Baby Mo</div>
+        <div class="large-subtitle" data-i18n="doa_sub">12 doa dari pagi sampai malam</div>
       </div>
 
-      <div class="hero" style="background:linear-gradient(135deg,#DDF3FF 0%,#D6E4FF 50%,#EDE3FF 100%);">
+      <div class="hero doa-hero" id="doaHero">
         <div class="hero-row">
           <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#0A84FF;box-shadow:0 0 8px #0A84FF;"></span> <span data-i18n="doa_eyebrow">Pilihan Hari Ini</span></div>
-            <div class="hero-greet" data-i18n="doa_greet">Belajar Doa bersama Baby Mo</div>
-            <div class="hero-msg" data-i18n="doa_msg">Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.</div>
+            <div class="hero-eyebrow"><span class="dot" style="background:#0A84FF;box-shadow:0 0 8px #0A84FF;"></span> <span id="doaNowLbl">Sekarang</span></div>
+            <div class="hero-greet" id="doaNowGreet">Doa Pagi</div>
+            <div class="doa-now-ar" id="doaNowAr"></div>
+            <div class="hero-msg" id="doaNowMsg"></div>
           </div>
           <div class="hero-img-wrap">
             <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(255,255,255,.95),transparent 65%);"></div>
-            <img class="hero-img" data-mo src="baby-mo-poses/baby-mo-run.webp" alt="Baby Mo" draggable="false" loading="lazy">
+            <img class="hero-img" id="doaNowMo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="Baby Mo" draggable="false">
           </div>
         </div>
         <div class="hero-cta">
-          <a class="hero-btn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5AC8FA,#0A84FF);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 22px -10px rgba(10,132,255,.7);" data-i18n="doa_btn">🌙 Mulai Belajar Doa</a>
+          <a class="hero-btn" id="doaNowBtn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5AC8FA,#0A84FF);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 22px -10px rgba(10,132,255,.7);">🔊 Mulai</a>
         </div>
       </div>
-
-      <div class="list-group-title" data-i18n="doa_group">6 Doa Sehari-hari</div>
-      <div class="list-group">
-        <a class="lrow" href="./babymo-doa-harian.html">
-          <div class="lrow-icon gold">🌅</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="doa_1">Doa Bangun Tidur</div>
-            <div class="lrow-sub"><span class="ar">الْحَمْدُ لِلَّهِ</span> Alhamdulillah…</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-        <a class="lrow" href="./babymo-doa-harian.html">
-          <div class="lrow-icon blue">🍽️</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="doa_2">Doa Sebelum Makan</div>
-            <div class="lrow-sub"><span class="ar">بِسْمِ اللَّهِ</span> Bismillah…</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-        <a class="lrow" href="./babymo-doa-harian.html">
-          <div class="lrow-icon">🚿</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="doa_3">Doa Masuk Kamar Mandi</div>
-            <div class="lrow-sub"><span class="ar">اللَّهُمَّ</span> Allahumma…</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-        <a class="lrow" href="./babymo-doa-harian.html">
-          <div class="lrow-icon purple">📖</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="doa_4">Doa Belajar</div>
-            <div class="lrow-sub"><span class="ar">رَبِّ زِدْنِي عِلْمًا</span> Rabbi zidni 'ilman…</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-        <a class="lrow" href="./babymo-doa-harian.html">
-          <div class="lrow-icon">👪</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="doa_5">Doa untuk Orang Tua</div>
-            <div class="lrow-sub"><span class="ar">رَبِّ ارْحَمْهُمَا</span> Rabbirhamhuma…</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-        <a class="lrow" href="./babymo-doa-harian.html">
-          <div class="lrow-icon blue">🌙</div>
-          <div class="lrow-body">
-            <div class="lrow-title" data-i18n="doa_6">Doa Sebelum Tidur</div>
-            <div class="lrow-sub"><span class="ar">بِاسْمِكَ اللَّهُمَّ</span> Bismika Allahumma…</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
-      </div>
-
+      <div id="doaGroups"></div>
       <div class="list-group-title" data-i18n="doa_other">Lainnya</div>
       <div class="list-group">
         <a class="lrow" href="./babymo-dua-game.html">
@@ -1361,7 +1318,7 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
             <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/doa-harian.svg" alt="" draggable="false"></div>
             <div class="lrow-body">
               <div class="lrow-title" data-i18n="cat_doa_t">Doa Harian</div>
-              <div class="lrow-sub" data-i18n="cat_doa_s">6 doa dari bangun hingga tidur</div>
+              <div class="lrow-sub" data-i18n="cat_doa_s">12 doa dari bangun hingga tidur</div>
             </div>
             <div class="lrow-chev">›</div>
           </a>
@@ -1550,19 +1507,19 @@ const I18N={
   trust_safe:{id:'✓ Aman untuk Anak',en:'✓ Kid-Safe'},
   home_title:{id:'Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙',en:'Hello, <em>Baby Mo</em><br>Your Little Friend! 🌙'},
   hero_eyebrow:{id:'Featured Hari Ini',en:'Featured Today'},
-  hero_msg:{id:'Ayo belajar 6 doa harian dengan suara Arab asli bersama Baby Mo.',en:'Learn 6 daily duas with authentic Arabic voice with Baby Mo.'},
+  hero_msg:{id:'Ayo belajar 12 doa harian dengan suara Arab asli bersama Baby Mo.',en:'Learn 12 daily duas with authentic Arabic voice with Baby Mo.'},
   hero_btn_doa:{id:'🔊 Mulai Doa Harian',en:'🔊 Start Daily Dua'},
   hero_btn_all:{id:'🎮 Lihat Semua',en:'🎮 See All'},
   qs_game:{id:'Game',en:'Games'},qs_doa:{id:'Doa',en:'Duas'},
   sec_featured:{id:'Game Pilihan',en:'Featured Games'},sec_see_all:{id:'Lihat semua',en:'See all'},
   hc_doa_tag:{id:'🔊 Audio Arab',en:'🔊 Arabic Audio'},hc_doa_title:{id:'Doa Harian',en:'Daily Dua'},
-  hc_doa_sub:{id:'6 doa · 3–7 tahun',en:'6 duas · Ages 3–7'},
+  hc_doa_sub:{id:'12 doa · 3–7 tahun',en:'12 duas · Ages 3–7'},
   hc_puzzle_tag:{id:'✨ Populer',en:'✨ Popular'},hc_puzzle_title:{id:'Kenalan dengan Baby Mo',en:'Meet Baby Mo'},
   hc_puzzle_sub:{id:'Puzzle interaktif · 2–6 tahun',en:'Interactive puzzle · Ages 2–6'},
   hc_dream_tag:{id:'🌙 Malam',en:'🌙 Nighttime'},hc_dream_sub:{id:'Bedtime routine · 2–5 tahun',en:'Bedtime routine · Ages 2–5'},
   hc_dua_tag:{id:'⭐ Memori',en:'⭐ Memory'},hc_dua_sub:{id:'3 level · 3–6 tahun',en:'3 levels · Ages 3–6'},
   sec_kategori:{id:'Kategori',en:'Categories'},
-  cat_doa_t:{id:'Doa Harian',en:'Daily Duas'},cat_doa_s:{id:'6 doa dari bangun hingga tidur',en:'6 duas from waking to sleeping'},
+  cat_doa_t:{id:'Doa Harian',en:'Daily Duas'},cat_doa_s:{id:'12 doa dari bangun hingga tidur',en:'12 duas from waking to sleeping'},
   cat_hij_t:{id:'Pulau Hijaiyah',en:'Hijaiyah Island'},cat_hij_s:{id:'Jelajah, gali & bangun bareng Baby Mo',en:'Explore, dig & build with Baby Mo'},
   cat_kata_t:{id:'Kata Islam',en:'Islamic Words'},cat_kata_s:{id:'Susun kata Arab',en:'Arrange Arabic words'},
   cat_beat_s:{id:'Game ritme seru',en:'Fun rhythm game'},
@@ -1580,12 +1537,12 @@ const I18N={
   g_find:{id:'Cari Baby Mo',en:'Find Baby Mo'},g_mem_sub:{id:'Kartu',en:'Cards'},g_beat_sub:{id:'Ritme',en:'Rhythm'},
   foot_game:{id:'Ya Allah, manfaatkanlah ilmu yang telah Engkau ajarkan kepada kami',en:'O Allah, benefit us with the knowledge You have taught us'},
   doa_title:{id:'Doa <em>Harian</em>',en:'Daily <em>Duas</em>'},
-  doa_sub:{id:'6 doa untuk hari-hari Baby Mo',en:"6 duas for Baby Mo's days"},
+  doa_sub:{id:'12 doa dari pagi sampai malam',en:'12 duas from morning to night'},
   doa_eyebrow:{id:'Pilihan Hari Ini',en:"Today's Pick"},
   doa_greet:{id:'Belajar Doa bersama Baby Mo',en:'Learn Duas with Baby Mo'},
   doa_msg:{id:'Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.',en:'Authentic Arabic voice, animated scenes, and fun quizzes — from morning to night.'},
   doa_btn:{id:'🌙 Mulai Belajar Doa',en:'🌙 Start Learning Duas'},
-  doa_group:{id:'6 Doa Sehari-hari',en:'6 Daily Duas'},
+  doa_group:{id:'12 Doa Sehari-hari',en:'12 Daily Duas'},
   doa_1:{id:'Doa Bangun Tidur',en:'Dua for Waking Up'},doa_2:{id:'Doa Sebelum Makan',en:'Dua Before Eating'},
   doa_3:{id:'Doa Masuk Kamar Mandi',en:'Dua for Entering Bathroom'},doa_4:{id:'Doa Belajar',en:'Dua for Studying'},
   doa_5:{id:'Doa untuk Orang Tua',en:'Dua for Parents'},doa_6:{id:'Doa Sebelum Tidur',en:'Dua Before Sleeping'},
@@ -1932,6 +1889,56 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     try{ BabyMo.sfx('tap'); if(!BabyMo.isMuted()&&window.speechSynthesis){ var u=new SpeechSynthesisUtterance(h+'. '+s2); u.lang=en()?'en-US':'id-ID'; u.pitch=1.4; speechSynthesis.cancel(); speechSynthesis.speak(u);} }catch(e){}
     var im=mp.querySelector('img'); im.style.animation='none'; void im.offsetWidth; im.style.animation='';
   });
+})();
+</script>
+<script>
+/* Doa tab: du'as grouped by time of day, the current time first */
+(function(){
+  var DOAS=[
+    ['wakeup','pagi','🌅','Doa Bangun Tidur',"Du'a for Waking Up",'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا','Alhamdulillāhil-ladhī ahyānā…'],
+    ['bathroom_in','pagi','🚿','Doa Masuk Kamar Mandi',"Du'a for Entering the Bathroom",'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ','Allāhumma innī a\'ūdhu bika…'],
+    ['bathroom_out','pagi','✨','Doa Keluar Kamar Mandi',"Du'a for Leaving the Bathroom",'غُفْرَانَكَ','Ghufrānaka'],
+    ['leave_home','pagi','🎒','Doa Keluar Rumah',"Du'a for Leaving Home",'بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ','Bismillāhi tawakkaltu…'],
+    ['vehicle','siang','🚗','Doa Naik Kendaraan',"Du'a for Riding",'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا','Subḥānal-ladhī sakhkhara lanā…'],
+    ['study','siang','📚','Doa Belajar',"Du'a for Studying",'رَبِّ زِدْنِي عِلْمًا',"Rabbi zidnī 'ilmā"],
+    ['eating','siang','🍽️','Doa Sebelum Makan',"Du'a Before Eating",'بِسْمِ اللَّهِ','Bismillāh'],
+    ['after_eat','siang','😋','Doa Sesudah Makan',"Du'a After Eating",'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا','Alhamdulillāhil-ladhī aṭ\'amanā…'],
+    ['rain','sore','🌧️','Doa Ketika Hujan',"Du'a When It Rains",'اللَّهُمَّ صَيِّبًا نَافِعًا',"Allāhumma ṣayyiban nāfi'ā"],
+    ['enter_home','sore','🏠','Doa Masuk Rumah',"Du'a for Coming Home",'بِسْمِ اللَّهِ وَلَجْنَا','Bismillāhi walajnā…'],
+    ['parents','malam','👪','Doa untuk Orang Tua',"Du'a for Parents",'رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ','Rabbighfir lī wa liwālidayya…'],
+    ['sleep','malam','🌙','Doa Sebelum Tidur',"Du'a Before Sleeping",'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَأَمُوتُ','Bismika Allāhumma aḥyā…']
+  ];
+  var W={pagi:['🌅','Pagi','Morning','pose-41','linear-gradient(135deg,#FFF1C9 0%,#FFE0CC 55%,#FFEFE2 100%)','Selamat pagi! Mulai hari dengan doa.','Good morning! Start the day with du\'a.'],
+    siang:['☀️','Siang','Daytime','yes','linear-gradient(135deg,#DDF3FF 0%,#D6E4FF 50%,#EAF7FF 100%)','Pergi, belajar, dan makan — dengan doa.','Going out, studying and eating — with du\'a.'],
+    sore:['🌇','Sore','Evening','pose-33','linear-gradient(135deg,#FFE0CC 0%,#FFD6E4 55%,#EDE3FF 100%)','Pulang ke rumah, dan doa ketika hujan.','Coming home, and a du\'a for the rain.'],
+    malam:['🌙','Malam','Night','thank-you','linear-gradient(135deg,#D8DCFF 0%,#E3D8FF 55%,#F0E8FF 100%)','Doakan Abi & Umi, lalu tidur dengan doa.','Pray for Abi & Umi, then sleep with du\'a.']};
+  var cls={pagi:'gold',siang:'blue',sore:'',malam:'purple'};
+  function now(){ var h=new Date().getHours(); return (h>=4&&h<10)?'pagi':(h>=10&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam'; }
+  function render(){
+    var en=(localStorage.getItem('bm_lang')||'id')==='en', k=now(), w=W[k];
+    var first=DOAS.filter(function(d){return d[1]===k;})[0];
+    var hero=document.getElementById('doaHero'); if(!hero) return;
+    hero.style.background=w[4];
+    document.getElementById('doaNowLbl').textContent=(en?'Now · ':'Sekarang · ')+w[0]+' '+(en?w[2]:w[1]);
+    document.getElementById('doaNowGreet').textContent=en?w[2]+" du'as with Mo":'Doa '+w[1]+' bersama Mo';
+    document.getElementById('doaNowAr').textContent=first[5];
+    document.getElementById('doaNowMsg').textContent=en?w[6]:w[5];
+    document.getElementById('doaNowMo').src='baby-mo-poses/baby-mo-'+w[3]+'.webp';
+    var b=document.getElementById('doaNowBtn'); b.href='./babymo-doa-harian.html?waktu='+k; b.textContent='🔊 '+(en?'Start the '+w[2]+" du'as":'Mulai Doa '+w[1]);
+    var order=[k].concat(['pagi','siang','sore','malam'].filter(function(x){return x!==k;})), h='';
+    order.forEach(function(g){
+      var ww=W[g];
+      h+='<div class="list-group-title doa-g-title">'+ww[0]+' '+(en?ww[2]:ww[1])+(g===k?' <span class="now">⏰ '+(en?'NOW':'SEKARANG')+'</span>':'')+'</div><div class="list-group">';
+      DOAS.filter(function(d){return d[1]===g;}).forEach(function(d){
+        h+='<a class="lrow'+(g===k?' doa-now-row':'')+'" href="./babymo-doa-harian.html?doa='+d[0]+'"><div class="lrow-icon '+cls[g]+'">'+d[2]+'</div><div class="lrow-body"><div class="lrow-title">'+(en?d[4]:d[3])+'</div><div class="lrow-sub"><span class="ar">'+d[5]+'</span> '+d[6]+'</div></div><div class="lrow-chev">›</div></a>';
+      });
+      h+='</div>';
+    });
+    document.getElementById('doaGroups').innerHTML=h;
+  }
+  render();
+  document.addEventListener('visibilitychange',function(){ if(!document.hidden) render(); });
+  document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('#langBtn,.lang-opt')) setTimeout(render,40); });
 })();
 </script>
 </body>

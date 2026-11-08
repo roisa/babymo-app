@@ -575,7 +575,7 @@
   function maybeGreet() {
     try {
       var p = location.pathname;
-      if (p === "/" || /\/index\.html$/.test(p) || /companion|pray-with-mo/.test(p)) return;
+      if (p === "/" || /\/index\.html$/.test(p) || /companion|pray-with-mo|doa-harian|hijaiyah-classic/.test(p)) return;
       var last = parseInt(sessionStorage.getItem("bm_greet_t") || "0", 10);
       if (Date.now() - last < 45000) return;
       sessionStorage.setItem("bm_greet_t", String(Date.now()));
