@@ -65,6 +65,22 @@
     "@keyframes dsWobble{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}",
     ".ds .door{animation:dsDoor 4s ease-in-out infinite;transform-origin:left center}",
     "@keyframes dsDoor{0%,20%{transform:scaleX(1)}45%,75%{transform:scaleX(.55)}100%{transform:scaleX(1)}}",
+    ".ds .wheel{animation:dsSpin .7s linear infinite}",
+    ".ds .dash{animation:dsDash .9s linear infinite}",
+    "@keyframes dsDash{to{transform:translateX(-48px)}}",
+    ".ds .pass{animation:dsPass 6s linear infinite}",
+    ".ds .pass.p2{animation-delay:-3s}",
+    "@keyframes dsPass{from{transform:translateX(120px)}to{transform:translateX(-320px)}}",
+    ".ds .bump{animation:dsBump .45s ease-in-out infinite alternate}",
+    "@keyframes dsBump{to{transform:translateY(-1.6px)}}",
+    ".ds .drop{animation:dsDrop 1s linear infinite;opacity:.85}",
+    ".ds .drop.r2{animation-delay:-.33s}.ds .drop.r3{animation-delay:-.66s}",
+    "@keyframes dsDrop{from{transform:translate(6px,-40px)}to{transform:translate(-6px,150px)}}",
+    ".ds .ripple{animation:dsRipple 1.6s ease-out infinite;opacity:0}",
+    ".ds .ripple.q2{animation-delay:.55s}.ds .ripple.q3{animation-delay:1.1s}",
+    "@keyframes dsRipple{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(1.4)}}",
+    ".ds .beat{animation:dsBeat 1.4s ease-in-out infinite}",
+    "@keyframes dsBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}",
     "@media (prefers-reduced-motion:reduce){.ds *{animation:none!important}.ds .steam,.ds .bubble,.ds .step,.ds .letter,.ds .zz{opacity:.8}}"
   ].join("\n");
 
@@ -231,7 +247,142 @@
         '<text class="zz" x="262" y="92" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="18" fill="#C7D2FE">Z</text>' +
         '<text class="zz z2" x="276" y="78" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="14" fill="#C7D2FE">z</text>' +
         '<text class="zz z3" x="288" y="66" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="11" fill="#C7D2FE">z</text>'
+    },
+    /* 7 · Keluar rumah — morning front yard, the door swinging open */
+    leave_home: {
+      pose: "baby-mo-run",
+      svg: '<defs><linearGradient id="dsSkyM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FD8FF"/><stop offset="1" stop-color="#E9F7FF"/></linearGradient></defs>' +
+        '<rect width="400" height="180" fill="url(#dsSkyM)"/><circle class="glow" cx="250" cy="34" r="16" fill="#FFE47A"/>' +
+        cloud(150, 30, .7) + cloud(330, 22, .5, "#fff", "drift d2") +
+        '<path d="M0 124 Q90 100 190 118 Q300 100 400 120 V180 H0Z" fill="#A6DB8E"/>' +
+        '<rect x="0" y="140" width="400" height="40" fill="#8ED07A"/>' +
+        /* house */
+        '<rect x="22" y="58" width="132" height="90" rx="4" fill="#FFF3DE"/><path d="M10 64 L88 18 L166 64Z" fill="#E86B5A"/><path d="M22 64 L88 26 L154 64" stroke="#FFF7E8" stroke-width="5" fill="none" stroke-linejoin="round"/>' +
+        '<rect x="34" y="78" width="28" height="26" rx="4" fill="#9ED8FF" stroke="#fff" stroke-width="4"/><path d="M48 78v26M34 91h28" stroke="#fff" stroke-width="3"/>' +
+        '<rect x="74" y="88" width="34" height="60" rx="4" fill="#5B3A22"/><rect class="door" x="74" y="88" width="34" height="60" rx="4" fill="#B87A4C"/><circle cx="102" cy="120" r="2.6" fill="#FFD25A"/>' +
+        '<rect x="70" y="146" width="42" height="6" rx="3" fill="#E3B47E"/>' +
+        '<path d="M150 152 h44 M206 150 h40 M258 152 h40" stroke="#E9D7A8" stroke-width="12" stroke-linecap="round"/>' +
+        /* little shoes and a bush */
+        '<path d="M122 146 q6 -6 14 0 v4 h-14z M136 146 q6 -6 14 0 v4 h-14z" fill="#3D7EE3"/>' +
+        '<circle cx="170" cy="134" r="14" fill="#5DBB6B"/><circle cx="186" cy="138" r="11" fill="#4CAF5E"/><circle cx="168" cy="128" r="3" fill="#FF8FB8"/><circle cx="182" cy="132" r="3" fill="#FFE066"/>' +
+        '<g class="bird"><g transform="translate(200 50)"><path class="flap" d="M-7 0q3.5-5 7 0q3.5-5 7 0" fill="none" stroke="#5A6A7A" stroke-width="2" stroke-linecap="round"/></g></g>'
+    },
+
+    /* 8 · Naik kendaraan — a family car driving along a sunny road */
+    vehicle: {
+      pose: "baby-mo-yes",
+      svg: '<defs><linearGradient id="dsSkyV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD0FF"/><stop offset="1" stop-color="#DDF2FF"/></linearGradient>' +
+        '<linearGradient id="dsCar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF7A6B"/><stop offset="1" stop-color="#E5484D"/></linearGradient></defs>' +
+        '<rect width="400" height="180" fill="url(#dsSkyV)"/><circle class="glow" cx="40" cy="34" r="17" fill="#FFE47A"/>' +
+        cloud(140, 26, .65) + cloud(250, 40, .5, "#fff", "drift d2") +
+        '<path d="M0 104 Q70 76 150 98 Q240 70 330 96 Q370 86 400 92 V130 H0Z" fill="#9FD3A0"/>' +
+        /* trees and poles passing by */
+        '<g class="pass"><g transform="translate(300 0)"><rect x="-3" y="88" width="6" height="30" fill="#9A6236"/><circle cx="0" cy="84" r="14" fill="#4CB868"/><circle cx="-8" cy="92" r="9" fill="#5DC377"/></g></g>' +
+        '<g class="pass p2"><g transform="translate(300 0)"><rect x="-3" y="92" width="6" height="26" fill="#9A6236"/><circle cx="0" cy="88" r="12" fill="#3FA85B"/></g></g>' +
+        '<rect x="0" y="116" width="400" height="10" fill="#7CC67A"/>' +
+        /* road */
+        '<rect x="0" y="124" width="400" height="44" fill="#5E6672"/><rect x="0" y="124" width="400" height="4" fill="#C9CED6"/><rect x="0" y="164" width="400" height="4" fill="#C9CED6"/>' +
+        '<g class="dash">' + [0,48,96,144,192,240,288,336,384,432].map(function (x) { return '<rect x="' + x + '" y="144" width="26" height="4" rx="2" fill="#FFE066"/>'; }).join('') + '</g>' +
+        '<rect x="0" y="168" width="400" height="12" fill="#8ED07A"/>' +
+        /* car */
+        '<g transform="translate(88 104)"><g class="bump">' +
+        '<ellipse cx="62" cy="54" rx="58" ry="5" fill="#000" opacity=".18"/>' +
+        '<path d="M8 40 q0 -14 14 -16 l18 -2 l16 -18 q4 -4 10 -4 h34 q6 0 10 5 l14 17 h10 q14 2 14 18 v10 h-140z" fill="url(#dsCar)"/>' +
+        '<path d="M44 22 l14 -15 h16 v15z" fill="#BFE7FF"/><path d="M80 22 v-15 h12 q4 0 6 3 l10 12z" fill="#BFE7FF"/>' +
+        '<rect x="76" y="7" width="4" height="15" fill="#E5484D"/><rect x="112" y="28" width="12" height="4" rx="2" fill="#B8323A"/>' +
+        '<circle cx="132" cy="34" r="4" fill="#FFF3B0"/><rect x="6" y="34" width="6" height="6" rx="2" fill="#FF9A3C"/>' +
+        '<g transform="translate(36 50)"><g class="wheel"><circle r="12" fill="#2B2F3A"/><circle r="5.5" fill="#C9CED6"/><rect x="-1.2" y="-10" width="2.4" height="20" fill="#C9CED6"/></g></g>' +
+        '<g transform="translate(110 50)"><g class="wheel"><circle r="12" fill="#2B2F3A"/><circle r="5.5" fill="#C9CED6"/><rect x="-1.2" y="-10" width="2.4" height="20" fill="#C9CED6"/></g></g>' +
+        '</g></g>' +
+        sparkle(232, 70, .7, "twinkle", "#fff")
+    },
+
+    /* 9 · Sesudah makan — a clean plate and a happy tummy */
+    after_eat: {
+      pose: "baby-mo-thank-you",
+      svg: '<rect width="400" height="180" fill="#FFF3E0"/><circle cx="330" cy="30" r="120" fill="#FFE6C4" opacity=".6"/>' +
+        '<rect x="30" y="18" width="110" height="76" rx="10" fill="#BFE7FF" stroke="#fff" stroke-width="7"/><path d="M85 18v76M30 56h110" stroke="#fff" stroke-width="4"/>' +
+        cloud(70, 40, .5) + '<circle cx="118" cy="34" r="9" fill="#FFE47A"/>' +
+        '<path d="M22 14h24c-4 30-2 64 6 90H22z M148 14h-24c4 30 2 64-6 90h30z" fill="#FFB38A"/>' +
+        /* table */
+        '<rect x="0" y="118" width="400" height="62" fill="#C98A5B"/><rect x="0" y="112" width="400" height="12" rx="3" fill="#E0A574"/>' +
+        '<path d="M0 124 h400" stroke="#B5794C" stroke-width="2"/>' +
+        /* plate */
+        '<ellipse cx="120" cy="114" rx="52" ry="12" fill="#000" opacity=".1"/><ellipse cx="120" cy="110" rx="50" ry="13" fill="#fff"/><ellipse cx="120" cy="109" rx="34" ry="8" fill="#F3F6FA"/>' +
+        '<circle cx="110" cy="108" r="1.6" fill="#E8C27A"/><circle cx="128" cy="110" r="1.4" fill="#E8C27A"/><circle cx="120" cy="106" r="1.2" fill="#E8C27A"/>' +
+        '<path d="M178 96 l4 20" stroke="#C9CED6" stroke-width="4" stroke-linecap="round"/><ellipse cx="177" cy="94" rx="4" ry="6" fill="#C9CED6"/>' +
+        /* glass of milk */
+        '<path d="M206 76 h26 l-3 40 h-20z" fill="#EAF6FF" stroke="#C9E4F5" stroke-width="2"/><path d="M208 96 h22 l-1.6 20 h-18.8z" fill="#fff"/>' +
+        '<path d="M60 96 q6 -10 16 -4" stroke="#fff" stroke-width="0"/>' +
+        '<path class="steam" d="M120 92 q-6 -10 0 -18 q6 -8 0 -16" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>' +
+        '<g class="beat"><path d="M256 60 c-6 -8 -18 -4 -16 4 c1 6 16 16 16 16 s15 -10 16 -16 c2 -8 -10 -12 -16 -4z" fill="#FF7A9A"/></g>' +
+        sparkle(150, 70, .8, "twinkle", "#FFC94A") + sparkle(90, 80, .6, "twinkle t2", "#FFC94A")
+    },
+
+    /* 10 · Ketika hujan — gentle rain, puddles and happy plants */
+    rain: {
+      pose: "baby-mo-wow",
+      svg: '<defs><linearGradient id="dsSkyR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FA7C8"/><stop offset="1" stop-color="#D8E4F2"/></linearGradient></defs>' +
+        '<rect width="400" height="180" fill="url(#dsSkyR)"/>' +
+        cloud(70, 26, 1.1, "#EEF3FA") + cloud(190, 18, .95, "#E4EBF5", "drift d2") + cloud(310, 30, .8, "#EEF3FA", "drift slow") +
+        '<path d="M0 122 Q100 104 200 118 Q300 102 400 120 V180 H0Z" fill="#7EC48A"/><rect y="146" width="400" height="34" fill="#6DB879"/>' +
+        /* rain */
+        (function () { var r = ''; for (var i = 0; i < 26; i++) { var x = (i * 37) % 400, y = (i * 23) % 60, c = ["", "r2", "r3"][i % 3];
+          r += '<path class="drop ' + c + '" d="M' + x + ' ' + y + ' l-3 9" stroke="#F2F8FF" stroke-width="2.4" stroke-linecap="round"/>'; } return r; })() +
+        /* puddles with ripples */
+        '<ellipse cx="80" cy="160" rx="34" ry="7" fill="#9CC7EA"/><ellipse class="ripple" cx="76" cy="160" rx="14" ry="3" fill="none" stroke="#fff" stroke-width="1.6"/><ellipse class="ripple q2" cx="90" cy="160" rx="10" ry="2.4" fill="none" stroke="#fff" stroke-width="1.4"/>' +
+        '<ellipse cx="200" cy="166" rx="26" ry="5" fill="#9CC7EA"/><ellipse class="ripple q3" cx="200" cy="166" rx="10" ry="2.4" fill="none" stroke="#fff" stroke-width="1.4"/>' +
+        /* happy sprouting plants */
+        '<g class="sway"><path d="M140 146 v-22" stroke="#3E8E4A" stroke-width="3"/><ellipse cx="132" cy="126" rx="9" ry="5" fill="#5DBB6B" transform="rotate(-25 132 126)"/><ellipse cx="148" cy="122" rx="9" ry="5" fill="#5DBB6B" transform="rotate(25 148 122)"/></g>' +
+        '<g class="sway"><path d="M250 148 v-16" stroke="#3E8E4A" stroke-width="3"/><ellipse cx="243" cy="133" rx="7" ry="4" fill="#5DBB6B" transform="rotate(-25 243 133)"/><ellipse cx="257" cy="130" rx="7" ry="4" fill="#5DBB6B" transform="rotate(25 257 130)"/></g>' +
+        /* umbrella */
+        '<g class="wobble"><g transform="translate(36 70)"><path d="M0 34 Q30 -6 60 34 q-7.5 -6 -15 0 q-7.5 -6 -15 0 q-7.5 -6 -15 0 q-7.5 -6 -15 0z" fill="#FF8FB8"/>' +
+        '<path d="M15 34 q15 -36 15 -40 q0 4 15 40" fill="#FFC1D6"/><path d="M30 -6 v58 q0 6 -6 6" stroke="#7A5A48" stroke-width="3" fill="none" stroke-linecap="round"/></g></g>'
+    },
+
+    /* 11 · Masuk rumah — evening, the porch light is on */
+    enter_home: {
+      pose: "baby-mo-yes",
+      svg: '<defs><linearGradient id="dsSkyE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9F7A"/><stop offset=".6" stop-color="#FFC9A0"/><stop offset="1" stop-color="#FFE6CC"/></linearGradient>' +
+        '<radialGradient id="dsLamp"><stop offset="0" stop-color="#FFF3B0" stop-opacity=".95"/><stop offset="1" stop-color="#FFF3B0" stop-opacity="0"/></radialGradient></defs>' +
+        '<rect width="400" height="180" fill="url(#dsSkyE)"/><circle cx="250" cy="96" r="26" fill="#FFD86B" opacity=".9"/>' +
+        cloud(310, 30, .6, "#FFE3D4") + cloud(200, 22, .5, "#FFE3D4", "drift d2") +
+        '<path d="M0 122 Q90 100 190 116 Q300 98 400 118 V180 H0Z" fill="#9CCB86"/><rect y="144" width="400" height="36" fill="#86BD72"/>' +
+        /* house front */
+        '<rect x="18" y="52" width="170" height="96" rx="4" fill="#FFF3DE"/><path d="M6 58 L103 10 L200 58Z" fill="#C9564A"/><path d="M18 58 L103 18 L188 58" stroke="#FFF7E8" stroke-width="5" fill="none" stroke-linejoin="round"/>' +
+        '<rect x="30" y="72" width="34" height="30" rx="4" fill="#FFE29A" stroke="#fff" stroke-width="4"/><path d="M47 72v30M30 87h34" stroke="#fff" stroke-width="3"/>' +
+        '<rect x="142" y="72" width="34" height="30" rx="4" fill="#FFE29A" stroke="#fff" stroke-width="4"/><path d="M159 72v30M142 87h34" stroke="#fff" stroke-width="3"/>' +
+        '<rect x="84" y="80" width="40" height="68" rx="5" fill="#8A5634"/><rect x="88" y="84" width="32" height="28" rx="4" fill="#9E6640"/><rect x="88" y="116" width="32" height="28" rx="4" fill="#9E6640"/><circle cx="114" cy="116" r="3" fill="#FFD25A"/>' +
+        '<circle class="glow" cx="134" cy="76" r="22" fill="url(#dsLamp)"/><rect x="130" y="66" width="8" height="12" rx="3" fill="#FFE07A" stroke="#7A5232" stroke-width="2"/>' +
+        /* welcome mat */
+        '<rect x="74" y="148" width="60" height="10" rx="4" fill="#E3B47E"/><path d="M80 153 h48" stroke="#C98A5B" stroke-width="2" stroke-dasharray="4 3"/>' +
+        '<g class="float2"><text x="103" y="46" text-anchor="middle" font-size="16">👋</text></g>' +
+        '<circle cx="200" cy="140" r="10" fill="#5DBB6B"/><circle cx="196" cy="134" r="2.6" fill="#FF8FB8"/>'
+    },
+
+    /* 12 · Doa untuk orang tua — a warm family evening at home */
+    parents: {
+      pose: "baby-mo-pose-05",
+      svg: '<defs><radialGradient id="dsWarm"><stop offset="0" stop-color="#FFF1C9"/><stop offset="1" stop-color="#F3E3FF"/></radialGradient>' +
+        '<linearGradient id="dsNightP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3470"/><stop offset="1" stop-color="#5B5AA8"/></linearGradient></defs>' +
+        '<rect width="400" height="180" fill="url(#dsWarm)"/>' +
+        '<rect x="34" y="20" width="96" height="70" rx="10" fill="url(#dsNightP)" stroke="#fff" stroke-width="7"/><path d="M82 20v70M34 55h96" stroke="#fff" stroke-width="4"/>' +
+        '<circle cx="108" cy="38" r="9" fill="#FFE29A"/><circle cx="113" cy="35" r="8" fill="#2E3A78"/>' + star(52, 34, 3, "twinkle", "#fff") + star(64, 72, 2.4, "twinkle t2", "#fff") +
+        /* family photo frame: three hearts, big-big-small */
+        '<g class="swing"><rect x="168" y="22" width="78" height="56" rx="6" fill="#C98A5B"/><rect x="174" y="28" width="66" height="44" rx="4" fill="#FFF6E8"/>' +
+        '<path d="M190 52 c-4 -6 -12 -3 -11 3 c1 4 11 11 11 11 s10 -7 11 -11 c1 -6 -7 -9 -11 -3z" fill="#5A80E8"/>' +
+        '<path d="M222 52 c-4 -6 -12 -3 -11 3 c1 4 11 11 11 11 s10 -7 11 -11 c1 -6 -7 -9 -11 -3z" fill="#E86FA0"/>' +
+        '<path d="M206 62 c-2.6 -4 -8 -2 -7 2 c.6 2.6 7 7 7 7 s6.4 -4.4 7 -7 c1 -4 -4.4 -6 -7 -2z" fill="#3FB67A"/></g>' +
+        /* sofa and lamp */
+        floor("#E8D2B8", "#D9BE9E") +
+        '<rect x="20" y="104" width="190" height="44" rx="16" fill="#8C7AE6"/><rect x="28" y="92" width="174" height="30" rx="14" fill="#A594F0"/>' +
+        '<rect x="44" y="98" width="40" height="22" rx="10" fill="#FFD6E4"/><rect x="146" y="98" width="40" height="22" rx="10" fill="#FFE8A3"/>' +
+        '<rect x="14" y="114" width="22" height="36" rx="10" fill="#7C6AD6"/><rect x="194" y="114" width="22" height="36" rx="10" fill="#7C6AD6"/>' +
+        '<circle class="glow" cx="246" cy="98" r="26" fill="#FFF3B0" opacity=".55"/><path d="M234 86 h24 l-5 -20 h-14z" fill="#FFD25A"/><rect x="244" y="86" width="4" height="56" fill="#B09080"/><rect x="236" y="140" width="20" height="6" rx="3" fill="#B09080"/>' +
+        '<g class="beat"><path d="M116 76 c-5 -7 -15 -3 -13 4 c1 5 13 13 13 13 s12 -8 13 -13 c2 -7 -8 -11 -13 -4z" fill="#FF7A9A"/></g>' +
+        sparkle(148, 44, .6, "twinkle t3", "#FFC94A")
     }
+
   };
 
   function ensureCss() {
@@ -245,7 +396,7 @@
     var s = SCENES[id]; var card = document.getElementById("sceneCard"); if (!s || !card) return false;
     ensureCss();
     card.classList.add("has-scene", "ds");
-    card.classList.toggle("night", id === "sleep");
+    card.classList.toggle("night", id === "sleep" || id === "parents");
     var bg = document.getElementById("sceneBg");
     bg.innerHTML = '<svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' + s.svg + "</svg>";
     var mo = document.getElementById("sceneMo");
