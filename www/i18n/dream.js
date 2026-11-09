@@ -1,5 +1,6 @@
 /* Baby Mo Dreamtime — English */
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
+  "Cerita malam ini": "Tonight's story",
   "Siapkan alatnya": "Get your things ready", "Ketuk sikat gigi dan pasta gigi": "Tap the toothbrush and the toothpaste",
   "Siapkan sikat gigi dan pasta gigi, ya.": "Get your toothbrush and toothpaste ready.",
   "Pasta sebesar kacang": "A pea-sized blob", "Tahan tombol untuk menekan pasta gigi": "Hold the button to squeeze the toothpaste",
