@@ -430,16 +430,21 @@ function renderAll(){
 }
 
 /* ═════ Baby Mo position ═════ */
-var MO = { x:200, y:500, w:150 };
+var MO = { x:200, y:396, w:142 };   /* idle: between the back row and the front row */
 function moPlace(x,y,w,anim){
   var m=$("mo"); m.style.transitionDuration=anim?"":"0ms";
   m.style.left=pct(x,400); m.style.top=pct(y,560); m.style.width=pct(w,400);
+  /* painter's order by depth: Baby Mo stands BEHIND the pet he looks after (front-row feet ≈ y430, back-row ≈ y305) */
+  m.style.zIndex = y < 310 ? 1 : (y < 432 ? 4 : 6);
   MO={x:x,y:y,w:w};
 }
 function standFor(k){
   var a=ANIMALS[k], back=a.row==="back";
-  var x=a.x-a.w*0.5-6; if(x<44) x=a.x+a.w*0.5+8;
-  return { x:Math.max(44,Math.min(356,x)), y:a.y+(back?26:34), w:back?132:150 };
+  /* stand just behind the animal, peeking out to one side so the player still sees Baby Mo */
+  var side, x;
+  if(back){ side=a.w*0.42+20; x = a.x<200 ? a.x-side : a.x+side; }   /* back row is crowded: peek out toward the screen edge */
+  else { side=a.w*0.34+22; x=a.x+side; if(x>352) x=a.x-side; }
+  return { x:Math.max(48,Math.min(352,x)), y:a.y-(back?12:16), w:back?130:140 };
 }
 async function walkTo(k){
   var p=standFor(k); if(Math.abs(p.x-MO.x)<2 && Math.abs(p.y-MO.y)<2) return;
@@ -706,7 +711,7 @@ $("hero").insertAdjacentHTML("beforeend",'<div class="pet">'+FarmKit.animal("kuc
 
 /* ═════ wiring ═════ */
 function enterFarm(){
-  show("s-farm"); renderAll(); moPlace(200,512,150,false); pose("idle");
+  show("s-farm"); renderAll(); moPlace(200,396,142,false); pose("idle");
   if(!D.seen.intro){ D.seen.intro=1; save(); pose("wave"); say(L("Assalamu'alaikum! Ayo rawat sahabat-sahabat kita!","Assalamu'alaikum! Let's look after our animal friends!"));
     pop("👋 "+L("Assalamu'alaikum! Ayo rawat sahabat hewan!","Assalamu'alaikum! Let's care for our animal friends!"),2000); }
 }
