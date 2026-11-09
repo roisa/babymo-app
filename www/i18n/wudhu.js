@@ -38,7 +38,7 @@
   "MasyaAllah, selesai! 🎉": "MashaAllah, all done! 🎉", "Coba lagi biar tanpa salah, ya!": "Try again for a perfect round!",
   "🌟 Coba Level Hebat": "🌟 Try Amazing Level", "🌱 Level Mudah": "🌱 Easy Level", "🔄 Main Lagi": "🔄 Play Again", "💧 Panduan": "💧 Guide", "🏠 Game Hub": "🏠 Game Hub",
   "MasyaAllah, wudhumu selesai! Sekarang siap sholat.": "MashaAllah, your wudu is done! Now you're ready to pray.",
-  "Lanjut belajar sholat 🕌": "Keep learning to pray 🕌", "Wudhu dulu sebelum sholat 💧": "Wudu first, before prayer 💧"
+  "Lanjut belajar sholat 🕌": "Keep learning to pray 🕌", "⚡ Tantangan Kilat": "⚡ Lightning Challenge", "Tantangan Kilat": "Lightning Challenge", "Wudhu dulu sebelum sholat 💧": "Wudu first, before prayer 💧"
 }, [
   [/^Langkah (\d+) \/ (\d+)$/, "Step $1 / $2"],
   [/^Hampir! Setelah "(.+)", apa ya\? 🤔$/, "Almost! What comes after \"{1}\"? 🤔"],
