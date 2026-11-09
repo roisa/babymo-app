@@ -140,7 +140,9 @@ body::before{
 }
 .scroller::-webkit-scrollbar{display:none;}
 
-.tab-pane{display:none; animation:fadeUp .35s cubic-bezier(.2,.7,.2,1) both;}
+/* fill-mode backwards (not both): once the fade ends no transform is left on the pane,
+   so WebKit re-rasterises its icons at full device resolution */
+.tab-pane{display:none; animation:fadeUp .35s cubic-bezier(.2,.7,.2,1) backwards;}
 .tab-pane.active{display:block;}
 @keyframes fadeUp{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
 
@@ -761,6 +763,9 @@ body::before{
 .lrow-icon.has-art{background:none; padding:0; overflow:hidden;}
 .h-card-em.has-art{opacity:1; width:46px; height:46px; font-size:0;}
 .h-art{width:100%; height:100%; display:block; border-radius:24%; box-shadow:0 6px 14px -6px rgba(0,0,0,.55);}
+/* UI icons (icons/ui/*.svg, same generator) in the quick-stats tiles */
+.quick-row .qs .qs-icon.has-art{background:none; border-radius:23%; box-shadow:0 6px 12px -7px rgba(30,60,110,.55); padding:0; overflow:hidden; filter:none;}
+.qs-icon.has-art img{width:100%; height:100%; display:block;}
 </style>
 <link rel="canonical" href="https://play.babymo.id/">
 <meta name="robots" content="index,follow">
@@ -1288,7 +1293,7 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
           <div class="lrow-chev">›</div>
         </a>
         <a class="lrow" href="./babymo-pray-with-mo.html?view=dzikir">
-          <div class="lrow-icon gold">🤲</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/sholat-dzikir.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="comp_f2_t">Doa Setelah Sholat</div>
             <div class="lrow-sub" data-i18n="comp_f2_s">Dzikir & doa pendek setelah sholat</div>
@@ -1374,9 +1379,9 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
 
       <!-- Quick stats -->
       <div class="quick-row" style="margin-top:14px">
-        <div class="qs"><div class="qs-icon">🎮</div><div class="qs-num">15</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
-        <div class="qs"><div class="qs-icon">🌙</div><div class="qs-num">14</div><div class="qs-lbl" data-i18n="qs_doa">Doa</div></div>
-        <div class="qs"><div class="qs-icon">ك</div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
+        <div class="qs"><div class="qs-icon has-art"><img src="./icons/ui/games.svg" alt="" draggable="false"></div><div class="qs-num">15</div><div class="qs-lbl" data-i18n="qs_game">Game</div></div>
+        <div class="qs"><div class="qs-icon has-art"><img src="./icons/ui/doa.svg" alt="" draggable="false"></div><div class="qs-num">14</div><div class="qs-lbl" data-i18n="qs_doa">Doa</div></div>
+        <div class="qs"><div class="qs-icon has-art"><img src="./icons/games/huruf-hijaiyah.svg" alt="" draggable="false"></div><div class="qs-num">28</div><div class="qs-lbl">Hijaiyah</div></div>
       </div>
 
       <!-- Parent-trust signals -->
@@ -1488,7 +1493,7 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
       <div class="list-group-title" data-i18n="disp_group">Tampilan &amp; Suara</div>
       <div class="list-group">
         <div class="lrow" style="flex-wrap:wrap;gap:10px">
-          <div class="lrow-icon blue">🌗</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/theme.svg" alt="" draggable="false"></div>
           <div class="lrow-body"><div class="lrow-title" data-i18n="theme_row">Tema</div></div>
           <div class="lang-toggle" id="themeToggle">
             <button class="lang-opt" data-mode="auto" onclick="bmSetTheme('auto')" data-i18n="theme_auto">Otomatis</button>
@@ -1497,7 +1502,7 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
           </div>
         </div>
         <div class="lrow" style="gap:10px">
-          <div class="lrow-icon gold">🔊</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/sound.svg" alt="" draggable="false"></div>
           <div class="lrow-body"><div class="lrow-title" data-i18n="sound_row">Suara &amp; musik</div><div class="lrow-sub" data-i18n="sound_sub">Efek suara dan bacaan</div></div>
           <div class="lang-toggle" id="soundToggle">
             <button class="lang-opt" data-snd="on" onclick="bmSetSound(true)" data-i18n="sound_on">Nyala</button>
@@ -1509,7 +1514,7 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
       <div class="list-group-title" data-i18n="name_group">Si Kecil</div>
       <div class="list-group">
         <a class="lrow" href="#" onclick="event.preventDefault();openNameSheet()">
-          <div class="lrow-icon blue">👧</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/child.svg" alt="" draggable="false"></div>
           <div class="lrow-text"><div class="lrow-title" data-i18n="name_row">Nama si kecil</div><div class="lrow-sub" id="nameRowSub">—</div></div>
           <div class="lrow-chev">›</div>
         </a>
@@ -1518,14 +1523,14 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
       <div class="list-group-title" data-i18n="about_app">Aplikasi</div>
       <div class="list-group">
         <div class="lrow">
-          <div class="lrow-icon gold">📱</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/version.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="about_ver">Versi</div>
             <div class="lrow-sub">1.0.0 · iOS Edition</div>
           </div>
         </div>
         <div class="lrow">
-          <div class="lrow-icon">🎮</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/games.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="about_total">Total Game</div>
             <div class="lrow-sub" data-i18n="about_total_s">15 game siap dimainkan</div>
@@ -1543,7 +1548,7 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
           </div>
         </div>
         <div class="lrow">
-          <div class="lrow-icon purple">💚</div>
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/mission.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
             <div class="lrow-title" data-i18n="about_mission">Misi</div>
             <div class="lrow-sub" data-i18n="about_mission_s">Belajar Islam sambil bermain</div>

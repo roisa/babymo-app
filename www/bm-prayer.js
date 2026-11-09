@@ -184,7 +184,8 @@
     '.ph-empty .pri{color:#fff;background:linear-gradient(120deg,#10A765,#0A9488 52%,#0A7FB0)}.ph-empty .sec{background:rgba(255,255,255,.8);color:#152230}' +
     '.ph-tools{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 16px 4px}' +
     '.ph-tool{border:none;cursor:pointer;border-radius:22px;padding:14px 6px 12px;text-align:center;font-family:inherit;color:var(--cream);background:var(--bg-elev);box-shadow:var(--card-shadow)}' +
-    '.ph-tool .ic{width:46px;height:46px;margin:0 auto 6px;border-radius:15px;display:grid;place-items:center;font-size:24px;box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}' +
+    '.ph-tool .ic{width:46px;height:46px;margin:0 auto 6px;border-radius:23%;display:grid;place-items:center;overflow:hidden;box-shadow:0 6px 12px -7px rgba(30,60,110,.55)}' +
+    '.ph-tool .ic img{width:100%;height:100%;display:block}' +
     '.ph-tool b{display:block;font-size:14px;font-weight:900}.ph-tool span{display:block;font-size:11.5px;font-weight:700;color:var(--cream-dim);margin-top:2px}' +
     '.ph-tool:active{transform:scale(.95)}' +
     /* bottom sheet */
@@ -401,9 +402,9 @@
   function renderTools() {
     if (!tools) return;
     tools.innerHTML =
-      '<button class="ph-tool" data-act="qibla"><div class="ic" style="background:linear-gradient(160deg,#9FD8FF,#0A84FF)">🧭</div><b>' + T("Kiblat", "Qibla") + "</b><span>" + T("Arah Ka'bah", "Ka'bah direction") + "</span></button>" +
-      '<button class="ph-tool" data-act="quote"><div class="ic" style="background:linear-gradient(160deg,#B9F6CA,#10A765)">💎</div><b>' + T("Mutiara", "Pearls") + "</b><span>" + T("Ayat & hadis", "Verses & hadith") + "</span></button>" +
-      '<button class="ph-tool" data-act="cal"><div class="ic" style="background:linear-gradient(160deg,#D8C8FF,#7C5CE0)">📅</div><b>' + T("Kalender", "Calendar") + "</b><span>" + T("Hari besar Islam", "Islamic holidays") + "</span></button>";
+      '<button class="ph-tool" data-act="qibla"><div class="ic"><img src="icons/ui/qibla.svg" alt="" draggable="false"></div><b>' + T("Kiblat", "Qibla") + "</b><span>" + T("Arah Ka'bah", "Ka'bah direction") + "</span></button>" +
+      '<button class="ph-tool" data-act="quote"><div class="ic"><img src="icons/ui/pearl.svg" alt="" draggable="false"></div><b>' + T("Mutiara", "Pearls") + "</b><span>" + T("Ayat & hadis", "Verses & hadith") + "</span></button>" +
+      '<button class="ph-tool" data-act="cal"><div class="ic"><img src="icons/ui/calendar.svg" alt="" draggable="false"></div><b>' + T("Kalender", "Calendar") + "</b><span>" + T("Hari besar Islam", "Islamic holidays") + "</span></button>";
   }
   function onClick(e) {
     var b = e.target.closest("[data-act]"); if (!b) return;
