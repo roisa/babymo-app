@@ -2947,6 +2947,7 @@ tick();
     }catch(e){} };
     (document.fonts&&document.fonts.load ? document.fonts.load('86px "Scheherazade New"', g).then(draw,draw) : Promise.resolve().then(draw));
   }
+  window.__centerGlyph=centerGlyph;
   function showCard(b){
     const L0=b.letter, p=PIC[b.i]||PIC[0], c=n(), nx=MILES.find(m=>m[0]>c), hit=MILES.find(m=>m[0]===c), w=WHERE[b.kind]||WHERE.crystal;
     hcBox.innerHTML='<div class="rays"></div><div class="where">'+TT(w[0],w[1])+'</div><div class="tile" id="hcTile">'+L0.g+'</div><h3>'+L0.name+' · '+L0.ar+'</h3>'+
@@ -3349,6 +3350,7 @@ tick();
       '<button id="hcGo">'+(goal?TT('🎉 Hore!','🎉 Hooray!'):TT('🔍 Cari lagi!','🔍 Find more!'))+'</button>';
     running=false; card.classList.add('on');
     requestAnimationFrame(()=>{ const bar=document.getElementById('hcBar'); if(bar) bar.style.width=(Math.min(GOAL,c)/GOAL*100)+'%'; });
+    if(window.__centerGlyph){ const t=document.getElementById('hcTile'); window.__centerGlyph(t, t.textContent); }
     document.getElementById('hcTile').onclick=()=>Speech.say([{ar:withMark(b.li,r),lat:sound(b.li,r)},{ar:L[b.li].ar,lat:L[b.li].name},{ar:H.ar,lat:H.name[0]}]);
     document.getElementById('hcGo').onclick=API.closeCard;
     window.__hcAfter = goal ? ()=>roundComplete(r) : null;
@@ -3897,6 +3899,7 @@ tick();
       '<button id="hcGo">'+(finished?TT('🎉 Hore!','🎉 Hooray!'):TT('🔍 Cari lagi!','🔍 Find more!'))+'</button>';
     running=false; card.classList.add('on');
     requestAnimationFrame(()=>{ const bar=document.getElementById('hcBar'); if(bar) bar.style.width=(n/3*100)+'%'; });
+    if(window.__centerGlyph){ const t=document.getElementById('hcTile'); window.__centerGlyph(t, t.textContent); }
     document.getElementById('hcTile').onclick=()=>Speech.say([spoken(it)]);
     document.getElementById('hcGo').onclick=window.HuntAPI.closeCard;
     window.__hcAfter = finished ? ()=>{ SFX.finale(); fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),800); celebrating=true; celebrateUntil=performance.now()/1000+4; } : null;
