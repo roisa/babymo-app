@@ -995,6 +995,47 @@ body{
 /* bm-fit: keep the whole card on screen on short screens (iPhone SE, iPad landscape) */
 .puzzle-frame{width:min(100%,max(240px,calc(100dvh - 360px)));margin-left:auto;margin-right:auto;}
 </style>
+<style id="bm-kb-loop">
+/* Kalimat Hari Ini + Praktik di rumah — base look (dark) */
+.actions .btn-today{position:relative}
+.actions .btn-today .dot{position:absolute;top:-5px;right:-5px;width:14px;height:14px;border-radius:50%;background:#FF5A4A;border:2px solid var(--bg);display:none}
+.actions .btn-today.todo .dot{display:block}
+.eyebrow.today{color:var(--gold-2)}
+.practice{width:100%;max-width:420px;margin-top:14px;border-radius:20px;padding:14px 14px 12px;text-align:center;
+  background:linear-gradient(135deg,rgba(255,184,48,.16),rgba(46,217,110,.12));border:1.5px dashed rgba(255,203,92,.6);
+  opacity:0;animation:textIn .55s ease-out .7s forwards}
+.practice[hidden]{display:none}
+.practice .pr-k{font-size:12px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:var(--gold-2)}
+.practice .pr-q{font-family:'Fraunces',serif;font-weight:900;font-size:19px;line-height:1.25;margin:6px 0 4px;color:#fff}
+.practice .pr-h{font-size:12.5px;font-weight:700;color:rgba(255,247,230,.7);line-height:1.35}
+.practice .pr-btn{margin-top:10px;width:100%;min-height:54px;font-size:17px}
+.practice .pr-done{margin-top:10px;font-weight:900;font-size:16px;color:#6FE89B}
+.pr-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;margin:10px auto 0;max-width:280px}
+.pr-cal i{height:32px;border-radius:9px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-style:normal;
+  font-size:10px;font-weight:800;line-height:1.1;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);color:rgba(255,247,230,.6)}
+.pr-cal i.ok{background:linear-gradient(180deg,var(--green-soft),var(--green));border-color:transparent;color:#fff}
+.pr-cal i.today{box-shadow:0 0 0 2px var(--gold)}
+.pr-streak{margin-top:8px;font-size:13px;font-weight:800;color:rgba(255,247,230,.8)}
+.td-card{display:flex;gap:12px;align-items:center;border-radius:18px;padding:10px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+.td-img{flex:0 0 96px;height:96px;border-radius:14px;background:#fff center/cover no-repeat}
+.td-t{flex:1;min-width:0;text-align:left}
+.td-t b{display:block;font-family:'Fraunces',serif;font-size:20px;line-height:1.15}
+.td-ar{font-size:22px;color:#6FE89B;direction:rtl;text-align:left;margin:4px 0 2px;font-family:'Amiri','Scheherazade New',serif}
+.td-t small{display:block;font-size:12.5px;font-weight:700;color:rgba(255,247,230,.7);line-height:1.3}
+.td-actions{display:flex;gap:8px;margin-top:10px}
+.td-actions .btn{flex:1;min-height:50px}
+#todayModal .practice{opacity:1;animation:none;max-width:none}
+</style>
+<style id="bm-bright-kb-loop">
+.eyebrow.today{color:#D9480F}
+.actions .btn-today .dot{border-color:#F2F6FC}
+.practice{background:linear-gradient(135deg,#FFF6D6,#E6FAEA);border-color:#FFC24D}
+.practice .pr-k{color:#B35C00}.practice .pr-q{color:#152230}.practice .pr-h,.pr-streak{color:#5A6878}
+.practice .pr-done{color:#0B8A4A}
+.pr-cal i{background:#fff;border-color:rgba(21,34,48,.12);color:#5A6878}
+.td-card{background:#fff;border-color:rgba(21,34,48,.08)}
+.td-ar{color:#0B8A4A}.td-t small{color:#5A6878}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -1041,6 +1082,7 @@ body{
 
   <!-- Single bottom action: Koleksi -->
   <div class="actions">
+    <button class="btn btn-gold btn-today" id="todayBtn">🌞 Hari Ini<span class="dot"></span></button>
     <button class="btn btn-secondary" id="collectionBtn">📚 Koleksi <span id="seenCount" class="seen-badge">0</span>/10</button>
   </div>
 
@@ -1077,11 +1119,27 @@ body{
     </div>
   </div>
 
+  <div class="practice" id="celebPractice" hidden></div>
+
   <div class="celebration-actions">
     <button class="btn btn-secondary" id="replayBtn">🔊 Dengar</button>
     <button class="btn btn-secondary" onclick="window.BabyMo&&BabyMo.share({title:'Kata Baik — Baby Mo',message:'Aku belajar kata-kata baik & akhlak mulia bareng Baby Mo! 💖'})">📤 Bagikan</button>
     <button class="btn btn-secondary" id="celebCollBtn">📚 Koleksi</button>
     <button class="btn btn-gold" id="celebNewBtn">🎮 Lagi!</button>
+  </div>
+</div>
+
+<!-- Kalimat Hari Ini Modal -->
+<div class="modal" id="todayModal">
+  <div class="modal-card">
+    <div class="modal-head">
+      <div class="modal-title">
+        <small id="todayDate">Hari ini</small>
+        <span id="todayHead">Kalimat Hari Ini</span>
+      </div>
+      <button class="modal-close" id="todayCloseBtn" aria-label="Tutup">✕</button>
+    </div>
+    <div class="modal-body" id="todayBody"></div>
   </div>
 </div>
 
@@ -1419,8 +1477,10 @@ function pickPhrase(){
 }
 
 /* === RENDER PUZZLE === */
-function buildPuzzle(phrase){
+function buildPuzzle(phrase, isToday){
+  if (isToday === undefined) isToday = phrase.id === todayPhrase().id && !kbLoad().learned[kbToday()];
   state.current = phrase;
+  state.isToday = !!isToday;
   state.tilesOpened = 0;
   state.done = false;
   // reset progress UI
@@ -1429,7 +1489,9 @@ function buildPuzzle(phrase){
   document.getElementById('coachMark').style.display = 'flex';
 
   // Apply per-phrase contextual prompt
-  document.getElementById('promptEyebrow').textContent = phrase.promptEyebrow || 'Kalimat Thayyibah';
+  const eb = document.getElementById('promptEyebrow');
+  eb.textContent = state.isToday ? '⭐ ' + KL('Kalimat Hari Ini', 'Phrase of the Day') : (phrase.promptEyebrow || 'Kalimat Thayyibah');
+  eb.classList.toggle('today', state.isToday);
   document.getElementById('promptTitle').innerHTML =
     (phrase.promptTitle || 'Siapa <span class="accent">aku</span>?') + ' <span class="emoji">🌟</span>';
   document.getElementById('promptSub').textContent = phrase.promptSub || 'Ketuk petak untuk membuka rahasia!';
@@ -1623,6 +1685,10 @@ function showCelebration(){
   document.getElementById('celebArabic').textContent = p.arabic;
   document.getElementById('celebIndo').textContent = p.indo;
 
+  // Kalimat Hari Ini: remember today's phrase was learned, then offer the home practice
+  if (p.id === todayPhrase().id) { const kd = kbLoad(); if (!kd.learned[kbToday()]) { kd.learned[kbToday()] = p.id; kbSave(kd); } }
+  renderCelebPractice(p); updateTodayBtn();
+
   document.getElementById('celebration').classList.add('show');
   audio.playFanfare();
   spawnConfetti(40);
@@ -1694,6 +1760,134 @@ function closeCollection(){
   document.getElementById('collectionModal').classList.remove('show');
 }
 
+/* === KALIMAT HARI INI + PRAKTIK DI RUMAH ===
+ * One phrase of the day (BabyMo.daily.pick). After the puzzle of today's phrase is
+ * solved, a parent ticks "Sudah dipraktikkan hari ini?" → +1 ⭐ once a day, and a
+ * little 14-day practice calendar with a streak.
+ * Storage: bm_kbaik_daily_v1 = {v:1, learned:{date:id}, practiced:{date:id}, best:n} */
+const KB_EN = window.BM_LANG === 'en';
+const KL = (id, en) => KB_EN ? en : id;
+const KB_KEY = 'bm_kbaik_daily_v1';
+const PRACTICE_Q = {
+  assalamualaikum: ['Sudah mengucapkan salam saat bertemu keluarga hari ini?', 'Did you say salam when you met your family today?'],
+  alhamdulillah:   ['Sudah bilang Alhamdulillah setelah makan hari ini?', 'Did you say Alhamdulillah after eating today?'],
+  astagfirullah:   ['Sudah bilang Astagfirullah lalu minta maaf saat berbuat salah?', 'Did you say Astaghfirullah and say sorry after a mistake?'],
+  masyaallah:      ['Sudah bilang MasyaAllah saat melihat sesuatu yang indah hari ini?', 'Did you say MasyaAllah when you saw something lovely today?'],
+  lailahaillallah: ['Sudah mengucapkan Lailahaillallah bersama Ayah atau Bunda hari ini?', 'Did you say Lailahaillallah with Mum or Dad today?'],
+  subhanallah:     ['Sudah bilang SubhanAllah saat melihat langit, bunga, atau hewan hari ini?', 'Did you say SubhanAllah when you saw the sky, a flower or an animal today?'],
+  jazakallah:      ['Sudah bilang JazakAllah Khairan saat ada yang menolongmu hari ini?', 'Did you say JazakAllah Khairan when someone helped you today?'],
+  insyaallah:      ['Sudah bilang InsyaAllah saat berjanji hari ini?', 'Did you say InsyaAllah when you made a promise today?'],
+  innalillahi:     ['Sudah belajar bersama Ayah atau Bunda kapan kita mengucapkan Inna lillahi?', 'Did you learn with Mum or Dad when we say Inna lillahi?'],
+  barakallahufiik: ['Sudah mendoakan teman dengan Barakallahu fiik hari ini?', 'Did you pray for a friend with Barakallahu fiik today?']
+};
+function kbDaily(){ return (window.BabyMo && BabyMo.daily) ? BabyMo.daily : null; }
+function kbFmt(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function kbToday(){ try{ const k=kbDaily(); if(k) return k.today(); }catch(e){} return kbFmt(new Date()); }
+function kbShift(ds, n){
+  try{ const k=kbDaily(); if(k) return k.shift(ds, n); }catch(e){}
+  const a = ds.split('-').map(Number); return kbFmt(new Date(a[0], a[1]-1, a[2]+n, 12));
+}
+// Phrase of the day: a date-seeded shuffle bag (BabyMo.daily.seed), so every phrase
+// comes once per 10 days and the same phrase never shows two days in a row.
+function kbRng(str){
+  try{ const k=kbDaily(); if(k) return k.seed(str); }catch(e){}
+  let h = 2166136261; for (let i=0;i<str.length;i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  let a = h >>> 0;
+  return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+function kbBag(cycle){
+  const r = kbRng('kbaik-phrase|' + cycle), o = PHRASES.map((_, i) => i);
+  for (let i = o.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [o[i], o[j]] = [o[j], o[i]]; }
+  return o;
+}
+function todayPhrase(dateStr){
+  const a = (dateStr || kbToday()).split('-').map(Number);
+  const day = Math.round(Date.UTC(a[0], a[1]-1, a[2]) / 864e5), n = PHRASES.length;
+  const cycle = Math.floor(day / n), pos = day - cycle * n, bag = kbBag(cycle);
+  const prevLast = kbBag(cycle - 1)[n - 1];
+  if (bag[0] === prevLast) { const t = bag[0]; bag[0] = bag[1]; bag[1] = t; }  // no repeat across bags
+  return PHRASES[bag[pos]];
+}
+function kbLoad(){
+  try{ const d = JSON.parse(localStorage.getItem(KB_KEY) || '{}'); if (d && d.learned && d.practiced) return d; }catch(e){}
+  return { v:1, learned:{}, practiced:{}, best:0 };
+}
+function kbSave(d){
+  ['learned','practiced'].forEach(k => { const ks = Object.keys(d[k]).sort(); while (ks.length > 60) delete d[k][ks.shift()]; });
+  try{ localStorage.setItem(KB_KEY, JSON.stringify(d)); }catch(e){}
+}
+function kbStreak(d){
+  let n = 0, day = kbToday();
+  if (!d.practiced[day]) day = kbShift(day, -1);
+  while (d.practiced[day]) { n++; day = kbShift(day, -1); }
+  return n;
+}
+function kbT(t){ return (KB_EN && window.BM_T) ? window.BM_T(t) : t; }
+function practiceHtml(p){
+  const d = kbLoad(), t = kbToday(), done = !!d.practiced[t], st = kbStreak(d);
+  const q = PRACTICE_Q[p.id] || ['Sudah dipraktikkan hari ini?', 'Practised it today?'];
+  let cal = '';
+  for (let i = 13; i >= 0; i--) {
+    const ds = kbShift(t, -i), dd = +ds.slice(8);
+    cal += `<i class="${d.practiced[ds] ? 'ok' : ''}${i === 0 ? ' today' : ''}">${d.practiced[ds] ? '✓' : ''}<span>${dd}</span></i>`;
+  }
+  return `<div class="pr-k">🏠 ${KL('Praktik di rumah', 'Practise at home')}</div>
+    <div class="pr-q">${KB_EN ? q[1] : q[0]}</div>
+    ${done ? `<div class="pr-done">✅ ${KL('Sudah dipraktikkan hari ini! Masya Allah', 'Practised today! Masha Allah')} 🌟</div>`
+           : `<div class="pr-h">${KL('Untuk Ayah/Bunda: centang kalau si kecil sudah mempraktikkannya hari ini.', 'For parents: tick when your little one has practised it today.')}</div>
+              <button class="btn btn-primary pr-btn" data-practice="${p.id}">✅ ${KL('Sudah!', 'Yes, done!')} <span>+1 ⭐</span></button>`}
+    <div class="pr-cal">${cal}</div>
+    <div class="pr-streak">🔥 ${st ? st + ' ' + KL('hari berturut-turut', st === 1 ? 'day in a row' : 'days in a row') : KL('Mulai rentetan praktik hari ini!', 'Start a practice streak today!')}${d.best > 1 ? ' · ' + KL('Rekor', 'Best') + ' ' + d.best : ''}</div>`;
+}
+function wirePractice(root, p, after){
+  const b = root.querySelector('[data-practice]'); if (!b) return;
+  b.addEventListener('click', () => {
+    const d = kbLoad(), t = kbToday();
+    if (!d.practiced[t]) {
+      d.practiced[t] = p.id; d.best = Math.max(d.best || 0, kbStreak(d)); kbSave(d);
+      try{ const k=kbDaily(); if(k) k.reward('puzzle-katabaik', 'practice', 1); else if (window.BabyMo && BabyMo.addStars) BabyMo.addStars(1); }catch(e){}
+      try{ window.BabyMo && BabyMo.daily && BabyMo.daily.mark('puzzle-katabaik', 'practice'); }catch(e){}
+      audio.playFanfare(); spawnConfetti(24); if (navigator.vibrate) navigator.vibrate([30,30,60]);
+    }
+    after();
+  });
+}
+function renderCelebPractice(p){
+  const box = document.getElementById('celebPractice');
+  if (!p || p.id !== todayPhrase().id) { box.hidden = true; box.innerHTML = ''; return; }
+  box.hidden = false; box.innerHTML = practiceHtml(p);
+  wirePractice(box, p, () => { renderCelebPractice(p); updateTodayBtn(); });
+}
+function updateTodayBtn(){
+  const d = kbLoad(), t = kbToday();
+  document.getElementById('todayBtn').classList.toggle('todo', !d.learned[t] || !d.practiced[t]);
+}
+function openToday(){
+  const p = todayPhrase(), d = kbLoad(), t = kbToday(), learned = !!d.learned[t];
+  let dateTxt = t;
+  try { const a = t.split('-').map(Number); dateTxt = new Date(a[0], a[1]-1, a[2], 12).toLocaleDateString(KB_EN ? 'en-GB' : 'id-ID', { weekday:'long', day:'numeric', month:'long' }); } catch(e) {}
+  document.getElementById('todayDate').textContent = '🌞 ' + dateTxt;
+  document.getElementById('todayHead').textContent = KL('Kalimat Hari Ini', 'Phrase of the Day');
+  const body = document.getElementById('todayBody');
+  body.innerHTML = `<div class="td-card">
+      <div class="td-img" style="background-image:url('${learned ? p.image : ''}')">${learned ? '' : '<div style="height:100%;display:grid;place-items:center;font-size:40px;background:linear-gradient(135deg,#3A5840,#2A4030);border-radius:14px">🎁</div>'}</div>
+      <div class="td-t">${learned
+        ? `<b>${p.title}</b><div class="td-ar">${p.arabic}</div><small>${kbT(p.indo)}</small>`
+        : `<b>${KL('Kalimat rahasia hari ini', "Today's secret phrase")}</b><small>${KL('Buka puzzlenya untuk mengetahui kalimat baik hari ini!', "Open the puzzle to find out today's kind words!")}</small>`}</div>
+    </div>
+    <div class="td-actions">
+      ${learned ? `<button class="btn btn-secondary" id="tdListen">🔊 ${KL('Dengar', 'Listen')}</button>` : ''}
+      <button class="btn btn-gold" id="tdPlay">🧩 ${learned ? KL('Main lagi', 'Play again') : KL('Buka puzzle', 'Open the puzzle')}</button>
+    </div>
+    <div class="practice" id="tdPractice">${learned ? practiceHtml(p) : `<div class="pr-k">🏠 ${KL('Praktik di rumah', 'Practise at home')}</div><div class="pr-h" style="margin-top:6px">${KL('Selesaikan puzzle hari ini dulu, lalu praktikkan kalimatnya di rumah.', "Finish today's puzzle first, then practise the phrase at home.")}</div>` + practiceHtml(p).replace(/^[\s\S]*?(<div class="pr-cal">)/, '$1')}</div>`;
+  const pl = document.getElementById('tdPlay');
+  pl.addEventListener('click', () => { closeToday(); hideCelebration(); closeCollection(); setTimeout(() => buildPuzzle(p, true), 260); });
+  const li = document.getElementById('tdListen'); if (li) li.addEventListener('click', () => audio.playPhrase(p));
+  if (learned) wirePractice(document.getElementById('tdPractice'), p, () => { openToday(); updateTodayBtn(); });
+  document.getElementById('todayModal').classList.add('show');
+}
+function closeToday(){ document.getElementById('todayModal').classList.remove('show'); }
+
 /* === EVENT WIRING === */
 function startNew(){
   hideCelebration();
@@ -1713,6 +1907,11 @@ document.getElementById('celebCollBtn').addEventListener('click', () => {
   setTimeout(openCollection, 280);
 });
 document.getElementById('collectionBtn').addEventListener('click', openCollection);
+document.getElementById('todayBtn').addEventListener('click', openToday);
+document.getElementById('todayCloseBtn').addEventListener('click', closeToday);
+document.getElementById('todayModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('todayModal')) closeToday();
+});
 document.getElementById('modalCloseBtn').addEventListener('click', closeCollection);
 document.getElementById('collectionModal').addEventListener('click', (e) => {
   if (e.target === document.getElementById('collectionModal')) closeCollection();
@@ -1745,10 +1944,14 @@ function init(){
   document.getElementById('seenCount').textContent = state.seen.size;
   setMuted(state.muted);
   spawnBgDecorations();
-  const p = pickPhrase();
+  // Start with the Kalimat Hari Ini until it has been opened today
+  const kd = kbLoad(), tp = todayPhrase();
+  const p = kd.learned[kbToday()] ? pickPhrase() : tp;
   buildPuzzle(p);
+  updateTodayBtn();
 }
-init();
+// bm-kit.js loads deferred: wait for it so the phrase of the day comes from BabyMo.daily.pick
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 
 // Unlock audio on first user gesture (iOS Safari requirement)
 document.addEventListener('click', () => audio.ensureCtx(), { once: true });

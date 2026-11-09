@@ -3,7 +3,7 @@
   "Puzzle Kalimat Thayyibah — Belajar Kata Baik untuk Anak | Baby Mo": "Kind Words Puzzle — Learn Kalimat Thayyibah for Kids | Baby Mo",
   "Kalimat Thayyibah": "Kalimat Thayyibah", "Siapa": "Who", "aku": "am I", "Ketuk petak untuk membuka rahasia!": "Tap the tiles to reveal the secret!",
   "Kembali ke Game Hub": "Back to Game Hub", "Kartu Baru": "New Card", "Progress puzzle": "Puzzle progress", "Suara": "Sound", "Tutup": "Close",
-  "📚 Koleksi": "📚 Collection", "Koleksi": "Collection", "Ketuk!": "Tap!", "🌙 Mulai yuk!": "🌙 Let's start!",
+  "📚 Koleksi": "📚 Collection", "🌞 Hari Ini": "🌞 Today", "Hari Ini": "Today", "Kalimat Hari Ini": "Phrase of the Day", "Hari ini": "Today", "Koleksi": "Collection", "Ketuk!": "Tap!", "🌙 Mulai yuk!": "🌙 Let's start!",
   "Salam Hangat": "Warm Greeting", "Bersyukur": "Being Thankful", "Mohon Ampun": "Asking Forgiveness", "Takjub": "Amazed", "Tauhid": "Oneness of Allah",
   "Maha Suci": "Glory to Allah", "Terima Kasih": "Thank You", "Berjanji": "Making a Promise", "Bersabar": "Being Patient", "Mendoakan": "Praying for Others",
   "Kalimat saat berjumpa teman": "What we say when we meet a friend", "Kalimat syukur kepada Allah": "Words of thanks to Allah",
