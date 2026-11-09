@@ -1070,13 +1070,124 @@ html[data-theme="dark"] .set-menu{background:#1A2236}
 @media (min-width:820px){.mo-pic{width:150px;height:160px}.mo-greet{padding:10px 32px 4px}.mo-hello{font-size:26px}.mo-sub{font-size:16px}.continue-card{margin:14px 32px 2px}}
 @media (min-width:600px) and (max-width:819px){.home-grid{grid-template-columns:repeat(4,1fr)}}
 
-/* ── Doa tab: follows the time of day ── */
-.doa-hero{transition:background .5s}
-.doa-now-ar{font-family:'Scheherazade New','Amiri',serif;font-size:24px;line-height:1.5;direction:rtl;text-align:left;color:#0B6B3A;margin:4px 0 2px}
-.doa-g-title{display:flex;align-items:center;gap:8px}
-.doa-g-title .now{font-size:10.5px;font-weight:900;letter-spacing:.06em;padding:3px 9px;border-radius:999px;background:#FFE066;color:#6A4200}
-.lrow.doa-now-row{background:linear-gradient(90deg,rgba(255,224,102,.22),transparent)}
-html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
+/* ── Pojok Doa (Doa tab): Sekarang card, du'a of the day + progress, three doors ── */
+.pd{padding:0 16px 6px}
+.pd a{text-decoration:none;color:inherit;-webkit-tap-highlight-color:transparent}
+.pd-top{display:grid;gap:14px;margin-bottom:16px}
+.pd-chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;padding:4px 10px;border-radius:999px;background:rgba(255,255,255,.75);color:#7A3A00}
+.pd-chip.gold{background:#FFE58A;color:#7A4A00}
+/* the du'a icon: rounded-square gradient tile + gloss, white glyph (same set as Doa Harian) */
+.pdi{--c1:#FFD25A;--c2:#FF7E3B;--k:#B4410E;position:relative;display:inline-grid;place-items:center;width:var(--s,56px);height:var(--s,56px);border-radius:calc(var(--s,56px)*.28);flex:0 0 auto;
+  background:linear-gradient(180deg,var(--c1) 0%,var(--c2) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 5px rgba(0,0,0,.10),0 8px 16px -9px var(--c2),0 2px 4px -2px rgba(20,30,60,.25);overflow:hidden;isolation:isolate}
+.pdi::before{content:'';position:absolute;left:-10%;right:-10%;top:-38%;height:78%;border-radius:50%;background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.42),rgba(255,255,255,.08) 60%,transparent 72%);z-index:0;pointer-events:none}
+.pdi svg{position:relative;z-index:1;width:62%;height:62%;overflow:visible}
+.pdi .w{fill:#fff}.pdi .ws{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.pdi .k{fill:var(--k)}.pdi .ks{fill:none;stroke:var(--k);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.pdi .y{fill:#FFF1A8}
+.pdi-pagi{--c1:#FFD25A;--c2:#FF7E3B;--k:#B4410E}
+.pdi-siang{--c1:#5FDBF2;--c2:#2A86E0;--k:#1A5A9E}
+.pdi-sore{--c1:#FF9C86;--c2:#B05FE0;--k:#8A2F9E}
+.pdi-malam{--c1:#8E95FF;--c2:#4436C4;--k:#352A9E}
+.pdi-read{--c1:#6FE8B0;--c2:#10A35E;--k:#0B6B3A}
+.pdi-game{--c1:#8CCBFF;--c2:#2C68E0;--k:#1D4ED8}
+.pdi.off{filter:grayscale(1);opacity:.4}
+/* big play button */
+.pd-play{flex:0 0 auto;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#3EDB84,#12A15A);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.5),inset 0 -3px 6px rgba(0,0,0,.12),0 12px 22px -10px rgba(18,161,90,.9);transition:transform .15s}
+.pd-play svg{width:34px;height:34px;fill:#fff;margin-left:4px}
+.pd-play.sm{width:54px;height:54px}.pd-play.sm svg{width:24px;height:24px;margin-left:3px}
+.pd-play.done{background:linear-gradient(180deg,#FFD84D,#FFA500);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),0 10px 18px -8px rgba(220,140,0,.85)}
+.pd-play.done svg{margin-left:0}
+/* 1 · Sekarang */
+.pd-now{display:block;position:relative;overflow:hidden;border-radius:28px;padding:16px 16px 16px 18px;
+  box-shadow:0 18px 34px -22px rgba(40,60,120,.6),inset 0 1px 0 rgba(255,255,255,.8);transition:transform .15s}
+.pd-now.t-pagi{background:linear-gradient(140deg,#FFF1C2 0%,#FFD9BF 55%,#FFE9DC 100%)}
+.pd-now.t-siang{background:linear-gradient(140deg,#D6F1FF 0%,#C7DCFF 55%,#E6F5FF 100%)}
+.pd-now.t-sore{background:linear-gradient(140deg,#FFD9C4 0%,#FFCFE0 55%,#E8DCFF 100%)}
+.pd-now.t-malam{background:linear-gradient(140deg,#D2D7FF 0%,#DCCFFF 55%,#EEE5FF 100%)}
+.pd-now-head{display:flex;align-items:flex-start;gap:8px}
+.pd-now-tx{flex:1;min-width:0;padding-top:2px}
+.pd-now-t{font-size:27px;font-weight:900;letter-spacing:-.02em;line-height:1.1;color:var(--cream);margin-top:8px}
+.pd-mo{width:104px;height:104px;object-fit:contain;margin:-8px -6px -14px 0;flex:0 0 auto;filter:drop-shadow(0 8px 12px rgba(40,40,90,.25));animation:bob 3s ease-in-out infinite;-webkit-user-drag:none}
+.pd-now-foot{display:flex;align-items:flex-end;gap:10px;margin-top:6px}
+.pd-now-icons{flex:1;min-width:0;display:flex;gap:6px}
+.pd-ni{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:50px;max-width:66px}
+.pd-ni .pdi{--s:50px}
+.pd-ni b{font-size:11px;font-weight:800;color:var(--cream-dim);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+/* 2 · du'a of the day + progress */
+.pd-dod{display:block;border-radius:26px;padding:14px;background:var(--bg-elev);border:.5px solid var(--hairline);box-shadow:var(--card-shadow);transition:transform .15s}
+.pd-dod-row{display:flex;align-items:center;gap:12px}
+.pd-dod-row .pdi{--s:66px}
+.pd-dod-tx{flex:1;min-width:0}
+.pd-dod-t{font-size:17px;font-weight:900;line-height:1.2;margin-top:5px;color:var(--cream)}
+.pd-dod-s{font-size:12.5px;font-weight:800;color:var(--cream-dim);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pd-pips{display:inline-flex;gap:2px}.pd-pips svg{width:16px;height:16px;fill:#D9DEE6}.pd-pips svg.on{fill:#FFC107}
+.pd-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.pd-stat{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;min-height:64px;border-radius:18px;background:#F4F7FC;padding:6px 4px}
+.pd-stat .pd-si{font-size:20px;line-height:1}
+.pd-stat b{font-size:17px;font-weight:900;color:var(--cream);line-height:1.15}
+.pd-sl{font-size:11px;font-weight:800;color:var(--cream-dim);text-transform:lowercase}
+.pd-stat.off .pd-si{filter:grayscale(.8);opacity:.55}
+.pd-stat.lit{background:linear-gradient(180deg,#FFF1D6,#FFE0B8)}
+.pd-stat.lit b{color:#B4410E}
+/* 3 · the three doors */
+.pd-doors{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:14px}
+.pd-door{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:9px;min-height:136px;padding:16px 6px 12px;border-radius:26px;text-align:center;
+  border:.5px solid var(--hairline);box-shadow:var(--card-shadow);transition:transform .15s}
+.pd-door .pdi{--s:76px}
+.pd-door.d-read{background:linear-gradient(180deg,#E6FAF0,#FFFFFF 70%)}
+.pd-door.d-game{background:linear-gradient(180deg,#E3F0FF,#FFFFFF 70%)}
+.pd-door.d-tasbih{background:linear-gradient(180deg,#ECE8FF,#FFFFFF 70%)}
+.pd-dl{font-size:15px;font-weight:900;line-height:1.15;color:var(--cream);letter-spacing:-.01em}
+/* 4 · sticker book */
+.pd-book{display:flex;align-items:center;gap:14px;min-height:76px;padding:12px 16px;border-radius:24px;margin-bottom:22px;
+  background:linear-gradient(100deg,#FFF6D6,#FFE9C2);border:.5px solid rgba(232,150,0,.2);box-shadow:0 12px 24px -18px rgba(200,120,0,.7),inset 0 1px 0 #fff;transition:transform .15s}
+.pd-book-st{display:flex;flex:0 0 auto}
+.pd-book-st .pdi{--s:44px;outline:2.5px solid #fff;margin-left:-14px}
+.pd-book-st .pdi:first-child{margin-left:0;transform:rotate(-8deg)}
+.pd-book-st .pdi:nth-child(2){transform:rotate(4deg)}
+.pd-book-st .pdi:nth-child(3){transform:rotate(-3deg)}
+.pd-book-tx{flex:1;min-width:0;display:flex;flex-direction:column}
+.pd-book-tx b{font-size:17px;font-weight:900;color:#7A4A00}
+.pd-book-tx span{font-size:13px;font-weight:800;color:#9A6A20}
+.pd-book-go{font-size:30px;font-weight:700;color:#C98A1E;line-height:1}
+.pd-now:active,.pd-dod:active,.pd-door:active,.pd-book:active{transform:scale(.97)}
+@media (prefers-reduced-motion:reduce){.pd-mo{animation:none}}
+/* wider screens: Sekarang + Doa Hari Ini side by side */
+@media (min-width:700px){
+  .pd{padding:0 20px 6px}
+  .pd-top{grid-template-columns:1.15fr 1fr}
+  .pd-now,.pd-dod{min-height:100%}
+  .pd-dod{display:flex;flex-direction:column;justify-content:space-between}
+  .pd-doors{gap:16px}
+  .pd-door{min-height:170px;padding-top:22px}
+  .pd-door .pdi{--s:92px}
+  .pd-dl{font-size:17px}
+}
+/* dark */
+html[data-theme="dark"] .pd-chip{background:rgba(255,255,255,.12);color:#FFD9A8}
+html[data-theme="dark"] .pd-chip.gold{background:rgba(255,216,116,.18);color:#FFE08A}
+html[data-theme="dark"] .pd-now{box-shadow:0 18px 34px -20px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.07)}
+html[data-theme="dark"] .pd-now.t-pagi{background:linear-gradient(140deg,#4A3352 0%,#5A3A4C 55%,#2A2040 100%)}
+html[data-theme="dark"] .pd-now.t-siang{background:linear-gradient(140deg,#123A5E 0%,#1A4A78 55%,#14284A 100%)}
+html[data-theme="dark"] .pd-now.t-sore{background:linear-gradient(140deg,#4A2340 0%,#5C2C48 55%,#2E1D46 100%)}
+html[data-theme="dark"] .pd-now.t-malam{background:linear-gradient(140deg,#1C2350 0%,#2E2E6E 55%,#1E1B48 100%)}
+html[data-theme="dark"] .pd-mo{filter:drop-shadow(0 10px 16px rgba(0,0,0,.55))}
+html[data-theme="dark"] .pd-stat{background:rgba(255,255,255,.06)}
+html[data-theme="dark"] .pd-stat.lit{background:rgba(255,160,60,.16)}
+html[data-theme="dark"] .pd-stat.lit b{color:#FDBA74}
+html[data-theme="dark"] .pd-pips svg{fill:#3A4358}
+html[data-theme="dark"] .pd-pips svg.on{fill:#FFC107}
+html[data-theme="dark"] .pd-door{border-color:rgba(255,255,255,.07)}
+html[data-theme="dark"] .pd-door.d-read{background:linear-gradient(180deg,#12382C,#161C2F 75%)}
+html[data-theme="dark"] .pd-door.d-game{background:linear-gradient(180deg,#14305A,#161C2F 75%)}
+html[data-theme="dark"] .pd-door.d-tasbih{background:linear-gradient(180deg,#2A2560,#161C2F 75%)}
+html[data-theme="dark"] .pd-book{background:linear-gradient(100deg,#3A2E12,#2E2410);border-color:rgba(255,200,90,.18);box-shadow:0 12px 24px -16px rgba(0,0,0,.8)}
+html[data-theme="dark"] .pd-book-st .pdi{outline-color:rgba(255,255,255,.85)}
+html[data-theme="dark"] .pd-book-tx b{color:#FFE08A}
+html[data-theme="dark"] .pd-book-tx span{color:#E8C27A}
+html[data-theme="dark"] .pd-book-go{color:#E8B04A}
 </style>
 <script>
 (function(){
@@ -1313,37 +1424,59 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
     <section class="tab-pane" id="pane-doa" data-title="Doa">
       <div class="large-title-wrap">
         <div class="large-title" data-i18n-html="doa_title">Doa <em>Harian</em></div>
-        <div class="large-subtitle" data-i18n="doa_sub">14 doa dari pagi sampai malam</div>
+        <div class="large-subtitle" data-i18n="doa_sub">Pojok Doa bersama Baby Mo 🤲</div>
       </div>
 
-      <div class="hero doa-hero" id="doaHero">
-        <div class="hero-row">
-          <div class="hero-text">
-            <div class="hero-eyebrow"><span class="dot" style="background:#0A84FF;box-shadow:0 0 8px #0A84FF;"></span> <span id="doaNowLbl">Sekarang</span></div>
-            <div class="hero-greet" id="doaNowGreet">Doa Pagi</div>
-            <div class="doa-now-ar" id="doaNowAr"></div>
-            <div class="hero-msg" id="doaNowMsg"></div>
-          </div>
-          <div class="hero-img-wrap">
-            <div class="hero-img-glow" style="background:radial-gradient(circle,rgba(255,255,255,.95),transparent 65%);"></div>
-            <img class="hero-img" id="doaNowMo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="Baby Mo" draggable="false">
-          </div>
+      <!-- Pojok Doa: what to read now, today's du'a + progress, three big doors -->
+      <div class="pd">
+        <div class="pd-top">
+          <a class="pd-now t-pagi" id="pdNow" href="./babymo-doa-harian.html?waktu=pagi">
+            <div class="pd-now-head">
+              <div class="pd-now-tx">
+                <span class="pd-chip" id="pdNowChip">⏰ Sekarang</span>
+                <div class="pd-now-t" id="pdNowT">Doa Pagi</div>
+              </div>
+              <img class="pd-mo" id="pdNowMo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="" draggable="false">
+            </div>
+            <div class="pd-now-foot">
+              <div class="pd-now-icons" id="pdNowIcons"></div>
+              <span class="pd-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7.5 4.6v14.8L19.6 12z"/></svg></span>
+            </div>
+          </a>
+
+          <a class="pd-dod" id="pdDod" href="./babymo-doa-harian.html">
+            <div class="pd-dod-row">
+              <span id="pdDodIcon"></span>
+              <div class="pd-dod-tx">
+                <span class="pd-chip gold" data-i18n="pd_dod">Doa Hari Ini</span>
+                <div class="pd-dod-t" id="pdDodT"></div>
+                <div class="pd-dod-s" id="pdDodS"></div>
+              </div>
+              <span class="pd-play sm" id="pdDodPlay" aria-hidden="true"></span>
+            </div>
+            <div class="pd-stats">
+              <div class="pd-stat"><span class="pd-si">🏅</span><b id="pdLearned">0/14</b><span class="pd-sl" data-i18n="pd_stickers">stiker</span></div>
+              <div class="pd-stat"><span class="pd-si">⭐</span><b id="pdStars">0/42</b><span class="pd-sl" data-i18n="pd_stars">bintang</span></div>
+              <div class="pd-stat" id="pdStreakBox"><span class="pd-si">🔥</span><b id="pdStreak">0</b><span class="pd-sl" data-i18n="pd_days">hari</span></div>
+            </div>
+          </a>
         </div>
-        <div class="hero-cta">
-          <a class="hero-btn" id="doaNowBtn" href="./babymo-doa-harian.html" style="background:linear-gradient(180deg,#5AC8FA,#0A84FF);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 22px -10px rgba(10,132,255,.7);">🔊 Mulai</a>
+
+        <div class="pd-doors">
+          <a class="pd-door d-read" href="./babymo-doa-harian.html"><span id="pdIcRead"></span><span class="pd-dl" data-i18n="pd_read">Baca Doa</span></a>
+          <a class="pd-door d-game" href="./babymo-dua-game.html"><span id="pdIcGame"></span><span class="pd-dl" data-i18n="pd_game">Main Tebak Doa</span></a>
+          <a class="pd-door d-tasbih" href="./babymo-doa-harian.html?doa=bedtime_tasbih"><span id="pdIcTasbih"></span><span class="pd-dl" data-i18n="pd_tasbih">Dzikir &amp; Tasbih</span></a>
         </div>
+
+        <a class="pd-book" href="./babymo-doa-harian.html?buku=1">
+          <span class="pd-book-st" id="pdBookSt" aria-hidden="true"></span>
+          <span class="pd-book-tx"><b data-i18n="pd_book">Buku Stiker</b><span id="pdBookN">0 / 14</span></span>
+          <span class="pd-book-go" aria-hidden="true">›</span>
+        </a>
       </div>
-      <div id="doaGroups"></div>
+
       <div class="list-group-title" data-i18n="doa_other">Lainnya</div>
       <div class="list-group">
-        <a class="lrow" href="./babymo-dua-game.html">
-          <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/dua-journey.svg" alt="" draggable="false"></div>
-          <div class="lrow-body">
-            <div class="lrow-title">Dua Journey</div>
-            <div class="lrow-sub" data-i18n="doa_dua_s">Cocokkan doa dengan artinya</div>
-          </div>
-          <div class="lrow-chev">›</div>
-        </a>
         <a class="lrow" href="./babymo-dreamtime.html">
           <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/dreamtime.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
@@ -1641,7 +1774,9 @@ const I18N={
   g_find:{id:'Cari Baby Mo',en:'Find Baby Mo'},g_mem_sub:{id:'Kartu',en:'Cards'},g_beat_sub:{id:'Ritme',en:'Rhythm'},
   foot_game:{id:'Ya Allah, manfaatkanlah ilmu yang telah Engkau ajarkan kepada kami',en:'O Allah, benefit us with the knowledge You have taught us'},
   doa_title:{id:'Doa <em>Harian</em>',en:'Daily <em>Duas</em>'},
-  doa_sub:{id:'14 doa dari pagi sampai malam',en:'14 duas from morning to night'},
+  doa_sub:{id:'Pojok Doa bersama Baby Mo 🤲',en:"Baby Mo's Du'a Corner 🤲"},
+  pd_dod:{id:'Doa Hari Ini',en:"Du'a of the Day"},pd_stickers:{id:'stiker',en:'stickers'},pd_stars:{id:'bintang',en:'stars'},pd_days:{id:'hari',en:'days'},
+  pd_read:{id:'Baca Doa',en:"Read Du'as"},pd_game:{id:'Main Tebak Doa',en:"Du'a Quiz Game"},pd_tasbih:{id:'Dzikir & Tasbih',en:'Dhikr & Tasbih'},pd_book:{id:'Buku Stiker',en:'Sticker Book'},
   doa_eyebrow:{id:'Pilihan Hari Ini',en:"Today's Pick"},
   doa_greet:{id:'Belajar Doa bersama Baby Mo',en:'Learn Duas with Baby Mo'},
   doa_msg:{id:'Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.',en:'Authentic Arabic voice, animated scenes, and fun quizzes — from morning to night.'},
@@ -1738,6 +1873,7 @@ function applyLang(lang){
   if(gs)gs.textContent=GREETINGS[gk][lang];
   try{renderName()}catch(e){}
   try{window.bmPrayerRender&&bmPrayerRender()}catch(e){}
+  try{window.pdRender&&pdRender()}catch(e){}
   const lb=document.getElementById('langBtn'); if(lb){ lb.textContent=lang==='en'?'EN':'ID'; }
   document.querySelectorAll('#langToggle .lang-opt').forEach(b=>{
     b.classList.toggle('active',b.dataset.lang===lang);
@@ -2076,55 +2212,131 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
 })();
 </script>
 <script>
-/* Doa tab: du'as grouped by time of day, the current time first */
+/* Pojok Doa (Doa tab). Mirrors Doa Harian's data so both screens agree:
+   same 14 du'as in the same order (du'a of the day = DUAS[(day*5) % 14]),
+   same time-of-day buckets and the same save (bm_doa_harian_v2). */
 (function(){
+  /* du'a glyphs — copied from babymo-doa-harian.html (keep in sync) */
+  function spark(x,y,r,c){ return '<path class="'+(c||'w')+'" d="M'+x+' '+(y-r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y+r)+'Q'+x+' '+y+' '+(x-r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y-r)+'z"/>'; }
+  function drop(x,y,s,c){ return '<path class="'+(c||'w')+'" transform="translate('+x+' '+y+') scale('+s+')" d="M0-6C0-6-4.2-1.4-4.2 1.4a4.2 4.2 0 0 0 8.4 0C4.2-1.4 0-6 0-6z"/>'; }
+  var heart=function(x,y,s,c){ return '<path class="'+(c||'k')+'" transform="translate('+x+' '+y+') scale('+s+')" d="M0 5.2S-6 1.6-6-2.4a3.1 3.1 0 0 1 6-1.4 3.1 3.1 0 0 1 6 1.4C6 1.6 0 5.2 0 5.2z"/>'; };
+  var G={
+    /* sun rising over a pillow */
+    wakeup:'<g class="ws"><path d="M24 9v4M11.5 14.5l2.8 2.8M36.5 14.5l-2.8 2.8M6 25.5h4M38 25.5h4"/></g><path class="y" d="M14 30a10 10 0 0 1 20 0z"/><path class="w" d="M7 33.5c0-2.6 2.1-4.5 4.7-4.5h24.6c2.6 0 4.7 1.9 4.7 4.5v3.2c0 1.6-1.2 2.8-2.8 2.8H9.8C8.2 39.5 7 38.3 7 36.7z"/><path class="ks" stroke-width="2" d="M13 34.5h22" opacity=".35"/>',
+    /* a big water drop (before the bathroom) */
+    bathroom_in:'<path class="w" d="M24 6S11 20.2 11 29a13 13 0 0 0 26 0C37 20.2 24 6 24 6z"/><path class="ks" d="M17.6 30.5a6.6 6.6 0 0 0 5.4 6.2"/>'+drop(37,12,.8),
+    /* sparkly clean (after the bathroom) */
+    bathroom_out:spark(20,25,14)+spark(36,11,6.5)+spark(37,36,4.5)+'<circle class="ws" stroke-width="2.4" cx="9" cy="10" r="3"/>',
+    /* open door + footsteps (leaving home) */
+    leave_home:'<path class="ws" d="M8 41h33"/><path class="ws" d="M10 40V9.5A1.5 1.5 0 0 1 11.5 8h15A1.5 1.5 0 0 1 28 9.5V40"/><path class="w" d="M11 8.6 21.5 12v29L11 39.6z"/><circle class="k" cx="18.5" cy="27" r="1.7"/><ellipse class="w" cx="34" cy="35" rx="2.6" ry="3.8" transform="rotate(-14 34 35)"/><ellipse class="w" cx="39.5" cy="25" rx="2.6" ry="3.8" transform="rotate(14 39.5 25)"/>',
+    /* a little car (riding) */
+    vehicle:'<path class="w" d="M5 31v-5c0-1.8 1.4-3.2 3.2-3.2h2.6l5-7.4c.7-1 1.8-1.6 3-1.6h11.2c1.2 0 2.3.6 3 1.6l5 7.4h1.8c1.8 0 3.2 1.4 3.2 3.2v5c0 1.2-1 2.2-2.2 2.2H7.2C6 33.2 5 32.2 5 31z"/><path class="k" d="M17.3 22.6l3.3-5c.3-.4.7-.6 1.2-.6h3.4v5.6zM28.6 22.6V17h3.2c.5 0 .9.2 1.2.6l3.3 5z"/><circle class="k" cx="14.5" cy="33.5" r="5.2"/><circle class="w" cx="14.5" cy="33.5" r="2.2"/><circle class="k" cx="33.5" cy="33.5" r="5.2"/><circle class="w" cx="33.5" cy="33.5" r="2.2"/>',
+    /* open book (study) */
+    study:'<path class="w" d="M23 13.5C19 10.6 13 9.6 6 10.4v24.4c7-.8 13 .2 17 3.1z"/><path class="w" opacity=".88" d="M25 13.5c4-2.9 10-3.9 17-3.1v24.4c-7-.8-13 .2-17 3.1z"/><g class="ks" stroke-width="2" opacity=".55"><path d="M10.5 17.2c3.2-.2 6.2.3 8.6 1.4M10.5 22.4c3.2-.2 6.2.3 8.6 1.4M10.5 27.6c3.2-.2 6.2.3 8.6 1.4M29 18.6c2.4-1.1 5.4-1.6 8.6-1.4M29 23.8c2.4-1.1 5.4-1.6 8.6-1.4"/></g>'+spark(38,6,4,'y'),
+    /* bowl & spoon (eat) */
+    eating:'<g class="ws" stroke-width="2.6"><path d="M17 17c-2-2 2-3.5 0-6M24 16c-2-2 2-3.5 0-6"/></g><path class="w" d="M38.5 7.5c1.6 1.2 1.6 4-.2 6.3-1.3 1.6-3 2.3-4.3 2l-3.4 6.4h-2.8l4.2-7.8c-.6-1.2-.3-3 .9-4.6 1.8-2.4 4.1-3.4 5.6-2.3z"/><path class="w" d="M6 23h36c0 9.4-8 17-18 17S6 32.4 6 23z"/><path class="ks" stroke-width="2.2" d="M12 28.5c2.4 3.8 6.6 6 12 6" opacity=".45"/>',
+    /* happy plate (full tummy) */
+    after_eat:'<circle class="w" cx="24" cy="25" r="16"/><circle class="ks" stroke-width="2" cx="24" cy="25" r="11" opacity=".28"/><circle class="k" cx="19.4" cy="21.6" r="2"/><circle class="k" cx="28.6" cy="21.6" r="2"/><path class="ks" d="M18.4 27.2c2.6 4 8.6 4 11.2 0"/>'+heart(38.5,8.5,.85,'w'),
+    /* cloud with drops (rain) */
+    rain:'<path class="w" d="M14 29a7.5 7.5 0 0 1-.6-15A10.5 10.5 0 0 1 33.6 13a8 8 0 0 1 .4 16z"/>'+drop(16,37,.95)+drop(24.5,40,.95)+drop(33,37,.95),
+    /* house with a heart door (coming home) */
+    enter_home:'<path class="w" d="M11.5 21.2 24 10.6l12.5 10.6V38a2 2 0 0 1-2 2h-21a2 2 0 0 1-2-2z"/><path class="ws" d="M6.5 22.5 24 8l17.5 14.5"/>'+heart(24,30,1,'k'),
+    /* two grown-ups with a heart (parents) */
+    parents:'<circle class="w" cx="15.5" cy="15" r="5.6"/><path class="w" d="M5.5 38.5c0-6.6 4.5-12 10-12s10 5.4 10 12z"/><circle class="w" opacity=".86" cx="32.5" cy="15" r="5.6"/><path class="w" opacity=".86" d="M22.5 38.5c0-6.6 4.5-12 10-12s10 5.4 10 12z"/>'+heart(24,30.5,.95,'k'),
+    /* moon & stars (sleep) */
+    sleep:'<path class="w" d="M27 7.5A16 16 0 1 0 40.6 31 13 13 0 0 1 27 7.5z"/>'+spark(36,12,4.6,'y')+spark(42,21,2.8)+spark(14,9,2.4),
+    /* the sun going down + the first star (evening dhikr) */
+    evening_dhikr:'<path class="y" d="M13 31a11 11 0 0 1 22 0z"/><path class="ws" d="M5 31h38"/><path class="ws" stroke-width="2.6" d="M13 36.5h22M18 41.5h12" opacity=".85"/><path class="ws" stroke-width="2.8" d="M24 5.5v10M19.6 11.4 24 15.8l4.4-4.4"/>'+spark(38.5,11,5.4,'y')+spark(9.5,14,2.8),
+    /* a loop of prayer beads with a tassel (bedtime tasbih) */
+    bedtime_tasbih:(function(){ var h='<circle class="ws" stroke-width="1.6" cx="24" cy="19" r="12.5" opacity=".55"/>';
+      for(var i=1;i<12;i++){ var a=Math.PI/2+i*Math.PI*2/12; h+='<circle class="'+(i===6?'y':'w')+'" cx="'+(24+12.5*Math.cos(a)).toFixed(1)+'" cy="'+(19+12.5*Math.sin(a)).toFixed(1)+'" r="3.1"/>'; }
+      return h+'<circle class="w" cx="24" cy="34.2" r="3.9"/><path class="w" d="M24 37.4l-4.6 7.6h9.2z"/><path class="ks" stroke-width="1.6" d="M24 39.5v4.6" opacity=".45"/>'; })()
+  };
+  /* door glyphs */
+  var DOOR={
+    read:G.study,
+    game:'<rect class="w" opacity=".55" x="6" y="9" width="20" height="27" rx="4" transform="rotate(-12 16 22.5)"/><rect class="w" x="18" y="10" width="21" height="28" rx="4.4" transform="rotate(8 28.5 24)"/>'
+      +'<path class="ks" stroke-width="3" d="M24.6 19.4a4.2 4.2 0 1 1 5.6 4c-1.3.5-2 1.4-2 2.7v.9"/><circle class="k" cx="27.9" cy="31.2" r="1.9"/>'
+      +'<circle class="y" cx="38.5" cy="38.5" r="6.6"/><path d="M35.5 38.6l2.1 2.1 3.9-4" fill="none" stroke="#B4410E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>',
+    tasbih:G.bedtime_tasbih
+  };
+  function svg(inner){ return '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">'+inner+'</svg>'; }
+  function icon(cls,inner){ return '<span class="pdi '+cls+'">'+svg(inner)+'</span>'; }
+  function doaIcon(d,off){ return icon('pdi-'+d[1]+(off?' off':''),G[d[0]]); }
+  var STAR='<path d="M12 2.6l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/>';
+  function pips(n){ var h='<span class="pd-pips">'; for(var i=0;i<3;i++) h+='<svg viewBox="0 0 24 24" class="'+(i<n?'on':'')+'" aria-hidden="true">'+STAR+'</svg>'; return h+'</span>'; }
+
+  /* [id, waktu, title ID, title EN, short ID, short EN] — order matches Doa Harian's DUAS */
   var DOAS=[
-    ['wakeup','pagi','🌅','Doa Bangun Tidur',"Du'a for Waking Up",'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا','Alhamdulillāhil-ladhī ahyānā…'],
-    ['bathroom_in','pagi','🚿','Doa Masuk Kamar Mandi',"Du'a for Entering the Bathroom",'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ','Allāhumma innī a\'ūdhu bika…'],
-    ['bathroom_out','pagi','✨','Doa Keluar Kamar Mandi',"Du'a for Leaving the Bathroom",'غُفْرَانَكَ','Ghufrānaka'],
-    ['leave_home','pagi','🎒','Doa Keluar Rumah',"Du'a for Leaving Home",'بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ','Bismillāhi tawakkaltu…'],
-    ['vehicle','siang','🚗','Doa Naik Kendaraan',"Du'a for Riding",'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا','Subḥānal-ladhī sakhkhara lanā…'],
-    ['study','siang','📚','Doa Belajar',"Du'a for Studying",'رَبِّ زِدْنِي عِلْمًا',"Rabbi zidnī 'ilmā"],
-    ['eating','siang','🍽️','Doa Sebelum Makan',"Du'a Before Eating",'بِسْمِ اللَّهِ','Bismillāh'],
-    ['after_eat','siang','😋','Doa Sesudah Makan',"Du'a After Eating",'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا','Alhamdulillāhil-ladhī aṭ\'amanā…'],
-    ['rain','sore','🌧️','Doa Ketika Hujan',"Du'a When It Rains",'اللَّهُمَّ صَيِّبًا نَافِعًا',"Allāhumma ṣayyiban nāfi'ā"],
-    ['enter_home','sore','🏠','Doa Masuk Rumah',"Du'a for Coming Home",'بِسْمِ اللَّهِ وَلَجْنَا','Bismillāhi walajnā…'],
-    ['evening_dhikr','sore','🌇','Dzikir Sore',"Evening Dhikr",'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ','Amsainā wa amsal-mulku lillāh…'],
-    ['parents','malam','👪','Doa untuk Orang Tua',"Du'a for Parents",'رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ','Rabbighfir lī wa liwālidayya…'],
-    ['bedtime_tasbih','malam','📿','Tasbih Sebelum Tidur',"Tasbih Before Sleeping",'سُبْحَانَ اللَّهِ','Subḥānallāh 33× · Alḥamdulillāh 33× · Allāhu akbar 34×'],
-    ['sleep','malam','🌙','Doa Sebelum Tidur',"Du'a Before Sleeping",'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَأَمُوتُ','Bismika Allāhumma aḥyā…']
+    ['wakeup','pagi','Doa Bangun Tidur',"Du'a for Waking Up",'Bangun','Wake up'],
+    ['bathroom_in','pagi','Doa Masuk Kamar Mandi',"Du'a for Entering the Bathroom",'K. mandi','Bathroom'],
+    ['bathroom_out','pagi','Doa Keluar Kamar Mandi',"Du'a for Leaving the Bathroom",'Selesai','Done'],
+    ['leave_home','pagi','Doa Keluar Rumah',"Du'a for Leaving Home",'Berangkat','Going out'],
+    ['vehicle','siang','Doa Naik Kendaraan',"Du'a for Riding",'Kendaraan','Riding'],
+    ['study','siang','Doa Belajar',"Du'a for Studying",'Belajar','Study'],
+    ['eating','siang','Doa Sebelum Makan',"Du'a Before Eating",'Makan','Eat'],
+    ['after_eat','siang','Doa Sesudah Makan',"Du'a After Eating",'Kenyang','Full'],
+    ['rain','sore','Doa Ketika Hujan',"Du'a When It Rains",'Hujan','Rain'],
+    ['enter_home','sore','Doa Masuk Rumah',"Du'a for Coming Home",'Pulang','Home'],
+    ['evening_dhikr','sore','Dzikir Sore','Evening Dhikr','Dzikir','Evening'],
+    ['parents','malam','Doa untuk Orang Tua',"Du'a for Parents",'Orang tua','Parents'],
+    ['bedtime_tasbih','malam','Tasbih Sebelum Tidur','Tasbih Before Sleeping','Tasbih','Tasbih'],
+    ['sleep','malam','Doa Sebelum Tidur',"Du'a Before Sleeping",'Tidur','Sleep']
   ];
-  var W={pagi:['🌅','Pagi','Morning','pose-41','linear-gradient(135deg,#FFF1C9 0%,#FFE0CC 55%,#FFEFE2 100%)','Selamat pagi! Mulai hari dengan doa.','Good morning! Start the day with du\'a.'],
-    siang:['☀️','Siang','Daytime','yes','linear-gradient(135deg,#DDF3FF 0%,#D6E4FF 50%,#EAF7FF 100%)','Pergi, belajar, dan makan — dengan doa.','Going out, studying and eating — with du\'a.'],
-    sore:['🌇','Sore','Evening','pose-33','linear-gradient(135deg,#FFE0CC 0%,#FFD6E4 55%,#EDE3FF 100%)','Pulang ke rumah, dzikir sore, dan doa ketika hujan.','Coming home, the evening dhikr, and a du\'a for the rain.'],
-    malam:['🌙','Malam','Night','thank-you','linear-gradient(135deg,#D8DCFF 0%,#E3D8FF 55%,#F0E8FF 100%)','Doakan Abi & Umi, bertasbih, lalu tidur dengan doa.','Pray for Abi & Umi, say the tasbih, then sleep with du\'a.']};
-  var cls={pagi:'gold',siang:'blue',sore:'',malam:'purple'};
-  function now(){ var h=new Date().getHours(); return (h>=4&&h<10)?'pagi':(h>=10&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam'; }
+  var W={pagi:['🌅','Pagi','Morning','pose-41'], siang:['☀️','Siang','Daytime','yes'],
+         sore:['🌇','Sore','Evening','pose-33'], malam:['🌙','Malam','Night','thank-you']};
+  function nowWaktu(){ var h=new Date().getHours(); return (h>=4&&h<10)?'pagi':(h>=10&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam'; }
+  function dayKey(off){ var t=new Date(); t.setDate(t.getDate()+(off||0)); return t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate(); }
+  function dodDua(){ var t=new Date(), n=Math.floor(new Date(t.getFullYear(),t.getMonth(),t.getDate()).getTime()/864e5); return DOAS[((n*5)%DOAS.length+DOAS.length)%DOAS.length]; }
+  function load(){
+    var st={}; try{ st=JSON.parse(localStorage.getItem('bm_doa_harian_v2')||'{}')||{}; }catch(e){}
+    var learned=st.learned||{}, reads=st.reads||{}, s=st.streak||{};
+    /* same rules as Doa Harian: an old "learned" counts as one read; streak lives while read today or yesterday */
+    function r(id){ return reads[id]||(learned[id]?1:0); }
+    return { learned:DOAS.filter(function(d){ return learned[d[0]]; }).length,
+      stars:function(id){ return Math.min(3,r(id)); },
+      total:DOAS.reduce(function(a,d){ return a+Math.min(3,r(d[0])); },0),
+      has:function(id){ return !!learned[id]; },
+      streak:(s.last===dayKey(0)||s.last===dayKey(-1))?(s.n||0):0,
+      dodDone:st.dodDay===dayKey(0) };
+  }
+  var PLAY='<svg viewBox="0 0 24 24"><path d="M7.5 4.6v14.8L19.6 12z"/></svg>', TICK='<svg viewBox="0 0 24 24"><path d="M9.5 16.6 5.4 12.5l-1.6 1.6 5.7 5.7L20.6 8.7 19 7.1z" fill="#fff"/></svg>';
+  function $(id){ return document.getElementById(id); }
   function render(){
-    var en=(localStorage.getItem('bm_lang')||'id')==='en', k=now(), w=W[k];
-    var first=DOAS.filter(function(d){return d[1]===k;})[0];
-    var hero=document.getElementById('doaHero'); if(!hero) return;
-    hero.style.background=w[4];
-    document.getElementById('doaNowLbl').textContent=(en?'Now · ':'Sekarang · ')+w[0]+' '+(en?w[2]:w[1]);
-    document.getElementById('doaNowGreet').textContent=en?w[2]+" du'as with Mo":'Doa '+w[1]+' bersama Mo';
-    document.getElementById('doaNowAr').textContent=first[5];
-    document.getElementById('doaNowMsg').textContent=en?w[6]:w[5];
-    document.getElementById('doaNowMo').src='baby-mo-poses/baby-mo-'+w[3]+'.webp';
-    var b=document.getElementById('doaNowBtn'); b.href='./babymo-doa-harian.html?waktu='+k; b.textContent='🔊 '+(en?'Start the '+w[2]+" du'as":'Mulai Doa '+w[1]);
-    var order=[k].concat(['pagi','siang','sore','malam'].filter(function(x){return x!==k;})), h='';
-    order.forEach(function(g){
-      var ww=W[g];
-      h+='<div class="list-group-title doa-g-title">'+ww[0]+' '+(en?ww[2]:ww[1])+(g===k?' <span class="now">⏰ '+(en?'NOW':'SEKARANG')+'</span>':'')+'</div><div class="list-group">';
-      DOAS.filter(function(d){return d[1]===g;}).forEach(function(d){
-        h+='<a class="lrow'+(g===k?' doa-now-row':'')+'" href="./babymo-doa-harian.html?doa='+d[0]+'"><div class="lrow-icon '+cls[g]+'">'+d[2]+'</div><div class="lrow-body"><div class="lrow-title">'+(en?d[4]:d[3])+'</div><div class="lrow-sub"><span class="ar">'+d[5]+'</span> '+d[6]+'</div></div><div class="lrow-chev">›</div></a>';
-      });
-      h+='</div>';
-    });
-    document.getElementById('doaGroups').innerHTML=h;
+    if(!$('pdNow')) return;
+    var en=(localStorage.getItem('bm_lang')||'id')==='en', k=nowWaktu(), w=W[k], P=load();
+    /* 1 · Sekarang */
+    var now=$('pdNow'); now.className='pd-now t-'+k; now.href='./babymo-doa-harian.html?waktu='+k;
+    now.setAttribute('aria-label',(en?'Start the '+w[2]+" du'as":'Mulai Doa '+w[1]));
+    $('pdNowChip').textContent='⏰ '+(en?'Now':'Sekarang')+' · '+w[0];
+    $('pdNowT').textContent=en?w[2]+" Du'as":'Doa '+w[1];
+    $('pdNowMo').src='baby-mo-poses/baby-mo-'+w[3]+'.webp';
+    $('pdNowIcons').innerHTML=DOAS.filter(function(d){ return d[1]===k; }).map(function(d){ return '<span class="pd-ni">'+doaIcon(d)+'<b>'+(en?d[5]:d[4])+'</b></span>'; }).join('');
+    /* 2 · Doa Hari Ini + progress */
+    var d=dodDua(), dod=$('pdDod');
+    dod.href='./babymo-doa-harian.html?doa='+d[0];
+    dod.setAttribute('aria-label',(en?"Du'a of the Day: ":'Doa Hari Ini: ')+(en?d[3]:d[2]));
+    $('pdDodIcon').innerHTML=doaIcon(d);
+    $('pdDodT').textContent=en?d[3]:d[2];
+    $('pdDodS').innerHTML=pips(P.stars(d[0]))+'<span>'+(P.dodDone?(en?'Read today ✓':'Sudah dibaca hari ini ✓'):(en?"Read one du'a every day!":'Baca satu doa setiap hari!'))+'</span>';
+    var pl=$('pdDodPlay'); pl.className='pd-play sm'+(P.dodDone?' done':''); pl.innerHTML=P.dodDone?TICK:PLAY;
+    $('pdLearned').textContent=P.learned+'/'+DOAS.length;
+    $('pdStars').textContent=P.total+'/'+(DOAS.length*3);
+    $('pdStreak').textContent=P.streak;
+    $('pdStreakBox').className='pd-stat '+(P.streak?'lit':'off');
+    /* 3 · doors */
+    $('pdIcRead').innerHTML=icon('pdi-read',DOOR.read);
+    $('pdIcGame').innerHTML=icon('pdi-game',DOOR.game);
+    $('pdIcTasbih').innerHTML=icon('pdi-malam',DOOR.tasbih);
+    /* 4 · sticker book: the last stickers earned, or greyed ones for a fresh start */
+    var got=DOAS.filter(function(x){ return P.has(x[0]); }), show=got.length?got.slice(-3):DOAS.slice(0,3);
+    $('pdBookSt').innerHTML=show.map(function(x){ return doaIcon(x,!got.length); }).join('');
+    $('pdBookN').textContent=P.learned+' / '+DOAS.length+(en?' stickers':' stiker')+' · ⭐ '+P.total;
   }
   render();
   document.addEventListener('visibilitychange',function(){ if(!document.hidden) render(); });
-  document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('#langBtn,.lang-opt')) setTimeout(render,40); });
+  window.addEventListener('pageshow',function(e){ if(e.persisted) render(); });
+  window.pdRender=render;
 })();
 </script>
 </body>

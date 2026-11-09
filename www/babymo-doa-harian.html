@@ -1653,10 +1653,10 @@ function showToast(e, t){
   window.restartGame=function(){ ['cs1','cs2','cs3'].forEach(function(id){ document.getElementById(id).classList.remove('lit'); }); begin(); };
   var mq=document.getElementById('moQuizImg'); if(mq) mq.src='baby-mo-poses/baby-mo-idea.webp';
 
-  /* ─── deep links from the Game Hub: ?doa=parents · ?waktu=malam ─── */
+  /* ─── deep links from the Game Hub: ?doa=parents · ?waktu=malam · ?buku=1 (sticker book) ─── */
   renderHome();
   var q=new URLSearchParams(location.search), did=q.get('doa'), wk=q.get('waktu');
-  if(did && idxOf(did)>=0) startOne(did); else if(wk && W(wk)) startGroup(wk);
+  if(did && idxOf(did)>=0) startOne(did); else if(wk && W(wk)) startGroup(wk); else if(q.has('buku')) document.addEventListener('DOMContentLoaded',openBook);
 })();
 </script>
 <div id="cele" role="dialog" aria-modal="true"><div class="ce-card" id="ceCard"></div></div>
