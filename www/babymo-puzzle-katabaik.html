@@ -1579,8 +1579,12 @@ function spawnSparkles(tile, count){
 /* === CELEBRATION === */
 function showCelebration(){
   const p = state.current;
+  const isNewPhrase = !state.seen.has(p.id);
   // Mark seen + increment play count
   state.seen.add(p.id);
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('puzzle-katabaik','phrase'); }catch(e){}
+  // Star jar: +1 for a phrase never collected before, else at most one a day
+  try{ if(window.BabyMo){ if(isNewPhrase && BabyMo.addStars) BabyMo.addStars(1); else if(BabyMo.daily) BabyMo.daily.reward('puzzle-katabaik','phrase',1); } }catch(e){}
   saveSeen();
   state.plays[p.id] = (state.plays[p.id] || 0) + 1;
   localStorage.setItem(STORE.PLAYS, JSON.stringify(state.plays));

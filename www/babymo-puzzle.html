@@ -643,6 +643,8 @@ function updateCounter(){
 // ═══════════════════════════════════════════
 function onComplete(){
   vib([80,40,120,40,160]);
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('puzzle','finish'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('puzzle','finish',1); }catch(e){}
   // Grid gets gold border
   document.getElementById('grid').classList.add('complete');
   document.getElementById('puzzleGlow').style.opacity = '1';

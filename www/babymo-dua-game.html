@@ -736,6 +736,8 @@ function showComplete(){
   document.getElementById('cStars').textContent    = '⭐'.repeat(stars);
 
   showScreen('completeScreen');
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('dua-game','level'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('dua-game','level-'+level,1); }catch(e){}
 
   ['s1','s2','s3'].forEach((id,i)=>{
     document.getElementById(id).classList.remove('lit');

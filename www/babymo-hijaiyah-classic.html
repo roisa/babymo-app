@@ -1170,6 +1170,7 @@ function finishLesson(){
   userData.xp=(userData.xp||0)+earnedXP;
   userData.completed=newCompleted;
   saveUserData();
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('hijaiyah-classic','lesson'); }catch(e){}
 
   // Result screen
   const titles={1:'Terus Berlatih! 🌱',2:'Alhamdulillah! ✨',3:'Masya Allah! 🌟'};
@@ -1474,6 +1475,7 @@ function showToast(e,t){
     document.getElementById('trBub').innerHTML=T('Masya Allah! Kamu menulis <b>'+lt.name+'</b> dengan bagus! ✨','Masha Allah! You wrote <b>'+lt.name+'</b> beautifully! ✨');
     try{ playCorrect(); spawnParticles(14); }catch(e){} sayAr(lt.arName||lt.speak);
     var first=!ST.traced[lt.id]; ST.traced[lt.id]=1; save();
+    try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('hijaiyah-classic','trace'); }catch(e){}
     if(first && Object.keys(ST.traced).length%4===0){ try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
     document.getElementById('trOk').textContent=T('Lanjut →','Next →');
   }
@@ -1534,6 +1536,7 @@ function showToast(e,t){
     tk.on=false; cancelAnimationFrame(tk.raf);
     tk.bubbles.forEach(function(o){ o.el.classList.add('pop'); }); tk.bubbles=[];
     var s=tk.score, best=s>ST.best; if(best){ ST.best=s; save(); }
+    if(s>=3){ try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('hijaiyah-classic','catch'); }catch(e){} }
     document.getElementById('tkMo').src=P(s>=15?'yeyy':s>=8?'pose-41':'pose-33');
     document.getElementById('tkEndT').textContent=s>=15?T('Masya Allah, jago! 🏆','Masha Allah, a champion! 🏆'):s>=8?T('Hebat! 🌟','Great! 🌟'):T('Bagus, terus latihan! 💪','Good, keep practising! 💪');
     document.getElementById('tkEndP').textContent=T('Kamu menangkap '+s+' huruf. Rekor: '+ST.best+(best?' — rekor baru! 🎉':''),'You caught '+s+' letters. Best: '+ST.best+(best?' — new record! 🎉':''));

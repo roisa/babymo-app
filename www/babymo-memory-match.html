@@ -1015,6 +1015,8 @@ function showWin() {
 
   // Record the game first, then check badges
   Store.recordGame(G.mode, G.moves);
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('memory-match','win'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('memory-match','win-'+G.mode,1); }catch(e){}
   const newlyEarned = Store.checkBadges(G.mode, G.moves);
 
   // Determine featured badge to show

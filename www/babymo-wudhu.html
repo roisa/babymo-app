@@ -362,6 +362,8 @@ function sayArabic(s){
 function next(){
   if(cur < STEPS.length - 1){ go(cur + 1); return; }
   try{ BabyMo.track && BabyMo.track('wudhu_guide_done'); localStorage.setItem('bm_wudhu_done', '1'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('wudhu','guide'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('wudhu','guide',1); }catch(e){}
   show('completeScreen');
   setTimeout(function(){ speak('MasyaAllah, wudhumu selesai! Sekarang siap sholat.'); }, 300);
 }
@@ -407,6 +409,8 @@ function orderDone(){
   document.getElementById('oDoneSub').textContent = mistakes === 0 ? 'Kamu hafal urutan wudhu!' : 'Coba lagi biar tanpa salah, ya!';
   var nb = document.getElementById('oNextBtn'); nb.textContent = level === 5 ? '🌟 Coba Level Hebat' : '🌱 Level Mudah';
   try{ BabyMo.track && BabyMo.track('wudhu_order_done', {level:level, mistakes:mistakes}); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('wudhu','order'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('wudhu','order-'+level,1); }catch(e){}
   show('s-complete');
 }
 

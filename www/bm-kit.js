@@ -9,6 +9,9 @@
         ...which attaches a generated branded result IMAGE so the share
         carries a rich card on WhatsApp / Instagram, not just text.
      4. A tiny toast fallback                → BabyMo.toast(msg)
+     5. Shared star jar                      → BabyMo.getStars() / addStars(n)
+     6. Daily missions + app-wide streak     → BabyMo.daily.*  (see the
+        "Daily system" block below and /docs/daily-api.md)
 
    Everything is wrapped in try/catch so a kit failure can never
    break a game.
@@ -645,6 +648,370 @@
     return total;
   }
 
+  /* ---- Daily system: missions, app-wide streak, seeded "of the day" -----
+     BabyMo.daily — shared retention layer (docs: /docs/daily-api.md).
+     Everything is LOCAL-date based ('YYYY-MM-DD' in the device's time zone),
+     works offline, and survives missing / corrupt / blocked localStorage
+     (falls back to an in-memory copy for the session).
+
+       daily.today()                 → 'YYYY-MM-DD' (local)
+       daily.mark(gameId, taskId)    → true if this activity is NEW today.
+                                       Also completes any of today's missions
+                                       it matches (+1 ⭐, +2 ⭐ bonus for 3/3,
+                                       banner "Misi selesai! 2/3").
+       daily.did(gameId, taskId?)    → done today? (taskId omitted = any task)
+       daily.log(dateStr?)           → [{gameId, taskId, count}] for that day
+       daily.missions(dateStr?)      → today's 3 missions [{id, gameId, url,
+                                       icon, art, cat, text:{id,en},
+                                       game:{id,en}, done}]
+       daily.progress()              → {done, total, allDone}
+       daily.streak()                → {count, best, todayDone}
+       daily.reward(gameId, key, n)  → add n ⭐ at most once per key per day
+                                       (anti-farming helper for games)
+       daily.seed(str?)              → seeded RNG fn() → [0,1); default seed
+                                       is today's date ("X of the day")
+       daily.pick(arr, salt, date?)  → deterministic item of the day
+       daily.registry()              → copy of the mission registry
+       daily.rewards                 → {mission:1, bonus:2} star amounts
+     Fires window event "bm-daily" {detail:{type, ...}} on every change.
+     Storage: localStorage "bm_daily_v1" (see docs for the shape). */
+  var DAILY_KEY = "bm_daily_v1";
+  var DAILY_KEEP_DAYS = 60;
+  var MISSION_STAR = 1, MISSION_BONUS = 2;
+  // Mission registry. `task` may be a string, an array of taskIds, or "*"
+  // (any task of that game). Only list missions whose mark() calls exist.
+  // cat: "ibadah" (worship & du'a), "learn", "play" — one of each per day.
+  var MISSIONS = [
+    { id: "doa-read", cat: "ibadah", gameId: "doa-harian", task: "read", url: "babymo-doa-harian.html", icon: "🤲", art: "doa-harian",
+      text: { id: "Baca 1 doa harian", en: "Read 1 daily du'a" }, game: { id: "Doa Harian", en: "Daily Du'a" } },
+    { id: "pray-practice", cat: "ibadah", gameId: "pray-with-mo", task: "practice", url: "babymo-pray-with-mo.html", icon: "🕌", art: "pray-with-mo",
+      text: { id: "Latihan gerakan sholat", en: "Practise the prayer moves" }, game: { id: "Sholat Bareng Mo", en: "Pray with Mo" } },
+    { id: "pray-dzikir", cat: "ibadah", gameId: "pray-with-mo", task: "dzikir", url: "babymo-pray-with-mo.html?view=dzikir", icon: "📿", art: "pray-with-mo",
+      text: { id: "Selesaikan 1 dzikir", en: "Finish 1 dhikr" }, game: { id: "Dzikir & Doa", en: "Dhikr & Du'a" } },
+    { id: "wudhu", cat: "ibadah", gameId: "wudhu", task: ["guide", "order"], url: "babymo-wudhu.html", icon: "💧", art: "wudhu",
+      text: { id: "Belajar wudhu bareng Mo", en: "Learn wudu with Mo" }, game: { id: "Wudhu", en: "Wudu" } },
+    { id: "dua-match", cat: "ibadah", gameId: "dua-game", task: "level", url: "babymo-dua-game.html", icon: "🃏", art: "dua-journey",
+      text: { id: "Cocokkan kartu doa", en: "Match the du'a cards" }, game: { id: "Dua Journey", en: "Dua Journey" } },
+    { id: "dream-sleep", cat: "ibadah", gameId: "dreamtime", task: "sleep", url: "babymo-dreamtime.html", icon: "🌙", art: "dreamtime",
+      text: { id: "Rutinitas tidur bareng Mo", en: "Bedtime routine with Mo" }, game: { id: "Dreamtime", en: "Dreamtime" } },
+    { id: "kata-word", cat: "learn", gameId: "arabic-spelling", task: ["word", "section"], url: "babymo-arabic-spelling.html", icon: "🔤", art: "kata-islam",
+      text: { id: "Susun 1 kata Arab", en: "Spell 1 Arabic word" }, game: { id: "Kata Islam", en: "Islamic Words" } },
+    { id: "huruf", cat: "learn", gameId: "hijaiyah-classic", task: ["lesson", "trace", "catch"], url: "babymo-hijaiyah-classic.html", icon: "✍️", art: "huruf-hijaiyah",
+      text: { id: "Belajar huruf hijaiyah", en: "Learn a Hijaiyah letter" }, game: { id: "Huruf Hijaiyah", en: "Hijaiyah Letters" } },
+    { id: "kata-baik", cat: "learn", gameId: "puzzle-katabaik", task: "phrase", url: "babymo-puzzle-katabaik.html", icon: "💖", art: "kata-baik",
+      text: { id: "Temukan 1 kata baik", en: "Discover 1 good word" }, game: { id: "Kata Baik", en: "Good Words" } },
+    { id: "memory", cat: "play", gameId: "memory-match", task: "win", url: "babymo-memory-match.html", icon: "🧠", art: "memory-match",
+      text: { id: "Menangkan Memory Match", en: "Win a Memory Match game" }, game: { id: "Memory Match", en: "Memory Match" } },
+    { id: "find-mo", cat: "play", gameId: "look-and-find", task: "room", url: "babymo-look-and-find.html", icon: "🔍", art: "cari-baby-mo",
+      text: { id: "Cari Baby Mo di 1 ruangan", en: "Find Baby Mo in 1 room" }, game: { id: "Cari Baby Mo", en: "Find Baby Mo" } },
+    { id: "puzzle", cat: "play", gameId: "puzzle", task: "finish", url: "babymo-puzzle.html", icon: "🧩", art: "puzzle",
+      text: { id: "Buka puzzle Baby Mo", en: "Solve the Baby Mo puzzle" }, game: { id: "Kenalan Baby Mo", en: "Meet Baby Mo" } },
+    { id: "hewan-care", cat: "play", gameId: "sahabat-hewan", task: "care", url: "babymo-sahabat-hewan.html", icon: "🐑", art: "sahabat-hewan",
+      text: { id: "Rawat 1 sahabat hewan", en: "Look after an animal friend" }, game: { id: "Sahabat Hewan", en: "Animal Friends" } },
+    { id: "kebun-water", cat: "play", gameId: "kebun-ais", task: ["water", "harvest"], url: "babymo-kebun-ais.html", icon: "🌱", art: "kebun-ais",
+      text: { id: "Siram tanaman di kebun", en: "Water a plant in the garden" }, game: { id: "Kebun Ais", en: "Ais Garden" } },
+    { id: "beat-run", cat: "play", gameId: "forehand-beat", task: "run", url: "baby-mo-forehand-beat.html", icon: "🎾", art: "forehand-beat",
+      text: { id: "Main 1 ronde Forehand Beat", en: "Play 1 round of Forehand Beat" }, game: { id: "Forehand Beat", en: "Forehand Beat" } }
+  ];
+  var MISSION_CATS = ["ibadah", "learn", "play"];
+
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+  function dateStr(d) { return d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate()); }
+  function today() { return dateStr(new Date()); }
+  // Shift a 'YYYY-MM-DD' by n local days (DST-safe: built from y/m/d at noon).
+  function shiftDay(ds, n) {
+    var p = String(ds).split("-");
+    var d = new Date(+p[0], (+p[1] || 1) - 1, (+p[2] || 1) + n, 12);
+    return dateStr(d);
+  }
+  function validDay(ds) { return typeof ds === "string" && /^\d{4}-\d{2}-\d{2}$/.test(ds); }
+
+  // Seeded RNG (FNV-1a hash → mulberry32). Same string → same sequence.
+  function hashStr(s) {
+    s = String(s);
+    var h = 2166136261 >>> 0;
+    for (var i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619) >>> 0; }
+    return h;
+  }
+  function seed(str) {
+    var a = hashStr(str == null ? today() : str);
+    return function () {
+      a = (a + 0x6D2B79F5) >>> 0;
+      var t = a;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  function pickOfDay(arr, salt, ds) {
+    if (!arr || !arr.length) return undefined;
+    var r = seed((ds || today()) + "|" + (salt || ""));
+    return arr[Math.floor(r() * arr.length)];
+  }
+
+  var _dailyMem = null; // in-memory fallback when storage is unavailable
+  function freshDaily() { return { v: 1, days: {}, streak: { count: 0, best: 0, last: "" } }; }
+  function loadDaily() {
+    var s = null;
+    try { s = JSON.parse(localStorage.getItem(DAILY_KEY) || "null"); } catch (e) { s = null; }
+    if (!s && _dailyMem) s = _dailyMem;
+    if (!s || typeof s !== "object" || Array.isArray(s)) s = freshDaily();
+    if (!s.days || typeof s.days !== "object" || Array.isArray(s.days)) s.days = {};
+    var st = s.streak;
+    if (!st || typeof st !== "object") st = s.streak = { count: 0, best: 0, last: "" };
+    st.count = Math.max(0, parseInt(st.count, 10) || 0);
+    st.best = Math.max(st.count, parseInt(st.best, 10) || 0);
+    if (!validDay(st.last)) st.last = "";
+    s.v = 1;
+    return s;
+  }
+  function saveDaily(s) {
+    // prune old days so storage stays tiny
+    try {
+      var ks = Object.keys(s.days).filter(validDay).sort();
+      for (var i = 0; i < ks.length - DAILY_KEEP_DAYS; i++) delete s.days[ks[i]];
+      Object.keys(s.days).forEach(function (k) { if (!validDay(k)) delete s.days[k]; });
+    } catch (e) {}
+    _dailyMem = s;
+    try { localStorage.setItem(DAILY_KEY, JSON.stringify(s)); } catch (e) {}
+  }
+  function dayRec(s, ds) {
+    var d = s.days[ds];
+    if (!d || typeof d !== "object" || Array.isArray(d)) d = s.days[ds] = {};
+    if (!d.acts || typeof d.acts !== "object" || Array.isArray(d.acts)) d.acts = {};
+    if (!Array.isArray(d.done)) d.done = [];
+    if (!d.rw || typeof d.rw !== "object" || Array.isArray(d.rw)) d.rw = {};
+    return d;
+  }
+  function emitDaily(detail) {
+    try { window.dispatchEvent(new CustomEvent("bm-daily", { detail: detail })); } catch (e) {}
+  }
+  function actKey(g, t) { return String(g) + ":" + String(t == null ? "" : t); }
+  function missionById(id) {
+    for (var i = 0; i < MISSIONS.length; i++) if (MISSIONS[i].id === id) return MISSIONS[i];
+    return null;
+  }
+  function missionTasks(m) { return Array.isArray(m.task) ? m.task : [m.task]; }
+  function missionMatches(m, g, t) {
+    if (m.gameId !== g) return false;
+    var ts = missionTasks(m);
+    return ts.indexOf("*") >= 0 || ts.indexOf(t) >= 0;
+  }
+  function missionMetBy(m, acts) {
+    var ts = missionTasks(m);
+    for (var k in acts) {
+      var i = k.indexOf(":");
+      if (k.slice(0, i) === m.gameId && (ts.indexOf("*") >= 0 || ts.indexOf(k.slice(i + 1)) >= 0)) return true;
+    }
+    return false;
+  }
+  // Pure, deterministic choice: one mission per category. Each category is a
+  // seeded "shuffle bag": over a cycle of N days (N = missions in that
+  // category) every mission shows up once, in a date-seeded order, and the
+  // same mission never appears two days in a row (also across cycles).
+  function dayNum(ds) {
+    var p = String(ds).split("-");
+    return Math.floor(Date.UTC(+p[0], (+p[1] || 1) - 1, +p[2] || 1) / 864e5);
+  }
+  function bag(cat, len, cycle) {
+    var idx = [], r = seed("missions|" + cat + "|" + cycle), i, j, t;
+    for (i = 0; i < len; i++) idx.push(i);
+    for (i = len - 1; i > 0; i--) { j = Math.floor(r() * (i + 1)); t = idx[i]; idx[i] = idx[j]; idx[j] = t; }
+    return idx;
+  }
+  function bagAt(cat, len, cycle) {
+    var b = bag(cat, len, cycle);
+    if (len >= 3) {
+      var prev = bag(cat, len, cycle - 1); // raw previous bag: its last item is never swapped
+      if (b[0] === prev[len - 1]) { var t = b[0]; b[0] = b[1]; b[1] = t; }
+    }
+    return b;
+  }
+  function choose(ds) {
+    var n = dayNum(ds), out = [];
+    MISSION_CATS.forEach(function (c) {
+      var list = MISSIONS.filter(function (m) { return m.cat === c; });
+      var len = list.length;
+      if (!len) return;
+      var cycle = Math.floor(n / len), pos = n - cycle * len;
+      var k = len === 2 ? (n % 2 + hashStr(c) % 2) % 2 : bagAt(c, len, cycle)[pos];
+      out.push(list[k].id);
+    });
+    return out;
+  }
+  // Today's ids are stored on first use, so a registry change in an update
+  // never swaps a mission mid-day.
+  function todaysIds(s, ds) {
+    var d = dayRec(s, ds);
+    var ok = Array.isArray(d.ms) && d.ms.length === 3 && d.ms.every(function (id) { return !!missionById(id); });
+    if (!ok) d.ms = choose(ds);
+    return d.ms;
+  }
+  function bumpStreak(s, ds) {
+    var st = s.streak;
+    if (st.last === ds) return;
+    st.count = st.last === shiftDay(ds, -1) ? st.count + 1 : 1;
+    st.last = ds;
+    if (st.count > st.best) st.best = st.count;
+  }
+  // Award any of today's missions met by today's activity. Returns the list
+  // of newly completed missions (and whether the 3/3 bonus fired).
+  function settle(s, ds) {
+    var d = dayRec(s, ds), ids = todaysIds(s, ds), fresh = [], bonus = false;
+    ids.forEach(function (id) {
+      var m = missionById(id);
+      if (m && d.done.indexOf(id) < 0 && missionMetBy(m, d.acts)) { d.done.push(id); fresh.push(m); }
+    });
+    if (fresh.length) {
+      bumpStreak(s, ds);
+      addStars(MISSION_STAR * fresh.length);
+      var all = ids.every(function (id) { return d.done.indexOf(id) >= 0; });
+      if (all && !d.bonus) { d.bonus = 1; bonus = true; addStars(MISSION_BONUS); }
+    }
+    return { fresh: fresh, bonus: bonus, done: ids.filter(function (id) { return d.done.indexOf(id) >= 0; }).length };
+  }
+
+  function ensureDailyStyle() {
+    if (document.getElementById("bm-daily-style")) return;
+    var st = document.createElement("style");
+    st.id = "bm-daily-style";
+    st.textContent =
+      "#bm-daily-toast{position:fixed;left:50%;top:calc(10px + env(safe-area-inset-top));z-index:99999;display:flex;align-items:center;gap:10px;" +
+      "width:max-content;max-width:calc(100vw - 24px);box-sizing:border-box;padding:9px 16px 9px 9px;border-radius:999px;background:#fff;color:#152230;" +
+      "font:900 15px/1.2 'Nunito',system-ui,sans-serif;box-shadow:0 0 0 .5px rgba(21,34,48,.1),0 14px 30px -12px rgba(30,60,110,.55);" +
+      "transform:translate(-50%,-140%);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.25,1.25),opacity .25s;pointer-events:none}" +
+      "#bm-daily-toast.show{transform:translate(-50%,0);opacity:1}" +
+      "#bm-daily-toast .i{flex:0 0 36px;height:36px;border-radius:50%;display:grid;place-items:center;font-size:19px;" +
+      "background:linear-gradient(135deg,#22C06E,#0A9488);color:#fff}" +
+      "#bm-daily-toast.all .i{background:linear-gradient(135deg,#FFD24A,#FF8A00)}" +
+      "#bm-daily-toast small{display:block;font-size:12.5px;font-weight:800;color:#5A6878}" +
+      "html[data-bm-theme=classic] #bm-daily-toast,html[data-theme=dark] #bm-daily-toast{background:#1C2338;color:#F2F5FA}" +
+      "html[data-bm-theme=classic] #bm-daily-toast small,html[data-theme=dark] #bm-daily-toast small{color:#AEB8C7}";
+    document.head.appendChild(st);
+  }
+  var _dtTimer = null;
+  function dailyToast(title, sub, all) {
+    try {
+      if (!document.body) return;
+      ensureDailyStyle();
+      var el = document.getElementById("bm-daily-toast");
+      if (!el) {
+        el = document.createElement("div");
+        el.id = "bm-daily-toast";
+        el.setAttribute("role", "status");
+        el.innerHTML = '<span class="i"></span><span class="t"><b></b><small></small></span>';
+        document.body.appendChild(el);
+      }
+      el.classList.toggle("all", !!all);
+      el.querySelector(".i").textContent = all ? "🏆" : "✓";
+      el.querySelector("b").textContent = title;
+      el.querySelector("small").textContent = sub || "";
+      el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
+      clearTimeout(_dtTimer);
+      _dtTimer = setTimeout(function () { el.classList.remove("show"); }, all ? 3400 : 2600);
+    } catch (e) {}
+  }
+  function announce(res) {
+    var en = moLang() === "en";
+    var m = res.fresh[res.fresh.length - 1];
+    setTimeout(function () {
+      if (res.bonus) {
+        dailyToast(en ? "All missions done! 🎉" : "Semua misi selesai! 🎉",
+          "3/3 · +" + MISSION_BONUS + " ⭐ bonus · " + (en ? "see you tomorrow 🌙" : "sampai besok 🌙"), true);
+        setTimeout(function () { react("win", { star: false, sound: false, top: true,
+          message: en ? "Masha Allah, all 3 missions done! 🏆" : "Masya Allah, 3 misi selesai! 🏆" }); }, 900);
+      } else {
+        dailyToast((en ? "Mission done! " : "Misi selesai! ") + res.done + "/3",
+          m.icon + " " + m.text[en ? "en" : "id"] + " · +" + MISSION_STAR + " ⭐");
+      }
+    }, 650);
+  }
+
+  var daily = {
+    today: today,
+    seed: seed,
+    pick: pickOfDay,
+    shift: shiftDay,
+    mark: function (gameId, taskId) {
+      try {
+        if (!gameId) return false;
+        var s = loadDaily(), ds = today(), d = dayRec(s, ds), k = actKey(gameId, taskId);
+        var isNew = !d.acts[k];
+        d.acts[k] = (parseInt(d.acts[k], 10) || 0) + 1;
+        var res = settle(s, ds);
+        saveDaily(s);
+        emitDaily({ type: "mark", gameId: gameId, taskId: taskId, isNew: isNew, missions: res.fresh.map(function (m) { return m.id; }), done: res.done, bonus: res.bonus });
+        if (res.fresh.length) { track("daily_mission", { id: res.fresh[0].id, done: res.done }); announce(res); }
+        return isNew;
+      } catch (e) { return false; }
+    },
+    did: function (gameId, taskId) {
+      try {
+        var acts = dayRec(loadDaily(), today()).acts;
+        if (taskId != null) return !!acts[actKey(gameId, taskId)];
+        for (var k in acts) if (k.indexOf(String(gameId) + ":") === 0) return true;
+        return false;
+      } catch (e) { return false; }
+    },
+    log: function (ds) {
+      try {
+        var s = loadDaily(), d = s.days[ds || today()], out = [];
+        if (!d || !d.acts) return out;
+        for (var k in d.acts) {
+          var i = k.indexOf(":");
+          out.push({ gameId: k.slice(0, i), taskId: k.slice(i + 1), count: parseInt(d.acts[k], 10) || 1 });
+        }
+        return out;
+      } catch (e) { return []; }
+    },
+    missions: function (ds) {
+      try {
+        var s = loadDaily(), t = today(), day = ds || t, ids, d;
+        if (day === t) {
+          var before = JSON.stringify(s.days[t] || null);
+          settle(s, t); // silent catch-up (e.g. registry grew mid-day)
+          ids = todaysIds(s, t); d = dayRec(s, t);
+          if (JSON.stringify(s.days[t]) !== before) saveDaily(s);
+        } else {
+          d = s.days[day] && typeof s.days[day] === "object" ? s.days[day] : { acts: {}, done: [] };
+          ids = Array.isArray(d.ms) && d.ms.length === 3 && d.ms.every(missionById) ? d.ms : choose(day);
+        }
+        var done = Array.isArray(d.done) ? d.done : [];
+        return ids.map(function (id) {
+          var m = missionById(id);
+          return { id: m.id, cat: m.cat, gameId: m.gameId, taskId: missionTasks(m)[0], tasks: missionTasks(m).slice(),
+            url: m.url, icon: m.icon, art: "/icons/games/" + m.art + ".svg",
+            text: { id: m.text.id, en: m.text.en }, game: { id: m.game.id, en: m.game.en },
+            done: done.indexOf(id) >= 0 };
+        });
+      } catch (e) { return []; }
+    },
+    progress: function () {
+      var ms = daily.missions(), n = ms.filter(function (m) { return m.done; }).length;
+      return { done: n, total: ms.length, allDone: ms.length > 0 && n === ms.length };
+    },
+    streak: function () {
+      try {
+        var st = loadDaily().streak, t = today();
+        var alive = st.last === t || st.last === shiftDay(t, -1);
+        return { count: alive ? st.count : 0, best: st.best, todayDone: st.last === t };
+      } catch (e) { return { count: 0, best: 0, todayDone: false }; }
+    },
+    reward: function (gameId, key, n) {
+      try {
+        var s = loadDaily(), d = dayRec(s, today()), k = actKey(gameId, key);
+        if (d.rw[k]) return false;
+        d.rw[k] = 1; saveDaily(s);
+        addStars(n || 1);
+        return true;
+      } catch (e) { return false; }
+    },
+    rewards: { mission: MISSION_STAR, bonus: MISSION_BONUS },
+    registry: function () {
+      return MISSIONS.map(function (m) { return JSON.parse(JSON.stringify(m)); });
+    }
+  };
+
 
   // ---- First-time "how to play" card --------------------------
   // BabyMo.coach({key, title, steps:[{icon, text}], button, pose}, done)
@@ -715,6 +1082,7 @@
   window.BabyMo.setMuted = setMuted;
   window.BabyMo.getStars = getStars;
   window.BabyMo.addStars = addStars;
+  window.BabyMo.daily = daily;
   // Exposed for the verification harness / previews.
   window.BabyMo._resultDataURL = buildResultDataURL;
 
