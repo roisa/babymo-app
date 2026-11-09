@@ -435,7 +435,7 @@ function renderMap(){
 /* ───────── intro ───────── */
 var CUR=0;
 var READY="fh-two-1"; /* ready position: knees bent, racket in front, both hands on the grip */
-var INTRO_POSE=["hold-ball","backhand-3",READY,"shuffle-3","serve-blue-1","wave-3"];
+var INTRO_POSE=["hold-ball","backhand-two-3",READY,"shuffle-3","serve-blue-1","wave-3"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
   $("introKicker").textContent="Latihan "+(i+1);
@@ -476,7 +476,7 @@ function say(text){
 
 /* ───────── Adam sprite ───────── */
 var FR={}; [READY,"ready-wide","win-fist","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
-  [1,2,3,4,5,6].map(function(n){return "fh-"+n;}),[1,2,3,4,5,6].map(function(n){return "backhand-"+n;}),
+  [1,2,3,4,5,6].map(function(n){return "fh-"+n;}),[3,4,5,6].map(function(n){return "backhand-two-"+n;}),
   [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
 ).forEach(function(n){ var im=new Image(); im.src="adam-tennis-v2/"+n+".webp"; FR[n]=im; });
 var animTimer=null;
@@ -487,7 +487,7 @@ function play(seq,ms,then){
   animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis-v2/"+seq[k]+".webp"; }, ms);
 }
 function swing(side,then){
-  if(side==="bh"){ play(["backhand-3","backhand-4","backhand-5","fh-two-6"],80,then); return; } /* two-handed finish over the shoulder, smiling */
+  if(side==="bh"){ play(["backhand-two-3","backhand-two-3","backhand-two-4","backhand-two-5","backhand-two-6"],75,then); return; } /* two-handed backhand, finishing over his shoulder, smiling */
   var st=(G&&G.fh)||"one", b=FH_SET[st];
   if(st!=="two"){ play([b+3,b+4,b+5,"fh-one-6"],80,then); return; } /* one-handed forehands finish on the smiling follow-through */
   play([b+3,b+4,b+5,b+6],80,then); }
@@ -599,7 +599,7 @@ function setupPantul(){
 function feed(side){
   if(!G||G.over) return;
   G.side=side||"fh"; G.tapped=false; G.p=0;
-  if(G.side==="fh"){ G.fh=pickFh(); G.hitX = G.fh==="two" ? 186 : 145; } else G.hitX=255; /* two hands meet the ball closer to the body */
+  if(G.side==="fh"){ G.fh=pickFh(); G.hitX = G.fh==="two" ? 186 : 145; } else G.hitX=224; /* two hands meet the ball closer to the body, in front of him */
   pose(READY); TS.feed(); lastH=null;
   G.flight=animate(G.speed*1.25,function(p){
     G.p=p; var b=incoming(p,G.hitX); place(b.gx,b.gy,b.h,b.s);
