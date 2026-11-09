@@ -144,6 +144,70 @@ html[data-bm-theme="classic"] .dots i{background:rgba(255,255,255,.18)}
 html[data-bm-theme="classic"] .counter i{background:rgba(125,211,252,.14)}
 html[data-bm-theme="classic"] .title-block h1 em{background:linear-gradient(95deg,#7DD3FC,#6EE7B7 50%,#C4B5FD);-webkit-background-clip:text;background-clip:text}
 </style>
+<style id="bm-loops">
+/* Replay loops: daily check-in, records, Tantangan Kilat. Not a bm-bright
+   block, so it applies in both themes (dark overrides below). */
+.ci{margin-top:16px;background:#fff;border-radius:24px;padding:14px 14px 12px;box-shadow:0 0 0 .5px var(--hair),0 14px 28px -20px rgba(3,105,161,.55)}
+.ci-top{display:flex;align-items:center;gap:8px}
+.ci-top h2{flex:1;min-width:0;font-size:18px;line-height:1.2}
+.ci-streak{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;padding:6px 11px;border-radius:999px;background:#FFF1DC;color:#9A4A00;font-weight:900;font-size:14px}
+.ci-streak.off{background:rgba(21,34,48,.06);color:var(--ink-3)}
+.ci-sub{color:var(--ink-2);font-weight:700;font-size:13.5px;margin:4px 0 10px;line-height:1.35}
+.ci-row{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}
+.ci-p{position:relative;border:none;cursor:pointer;min-height:76px;border-radius:18px;background:var(--water-l);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:6px 2px;font-family:'Nunito',sans-serif;transition:transform .2s cubic-bezier(.34,1.56,.64,1)}
+.ci-p:active{transform:scale(.93)}
+.ci-p .i{font-size:22px;line-height:1}
+.ci-p .n{font-size:12.5px;font-weight:900;line-height:1.1}
+.ci-p .t{font-size:11.5px;font-weight:800;color:var(--ink-3)}
+.ci-p.now{box-shadow:0 0 0 3px #38BDF8;background:#fff}
+.ci-p.now::before{content:attr(data-now);position:absolute;top:-9px;left:50%;transform:translateX(-50%);white-space:nowrap;background:#0EA5E9;color:#fff;font-size:11px;font-weight:900;padding:1px 7px;border-radius:999px}
+.ci-p.on{background:linear-gradient(160deg,#7DD3FC,#0EA5E9);color:#fff}
+.ci-p.on .t{color:rgba(255,255,255,.9)}
+.ci-p.on::after{content:'✓';position:absolute;right:4px;top:4px;width:20px;height:20px;border-radius:50%;background:#10A765;color:#fff;font:900 12px/20px 'Nunito',sans-serif;text-align:center}
+.ci-p.pop{animation:ciPop .45s cubic-bezier(.34,1.56,.64,1)}
+@keyframes ciPop{40%{transform:scale(1.15)}}
+.ci-btn{margin-top:10px;width:100%;min-height:56px;border-radius:20px;border:none;cursor:pointer;font:900 17px/1.1 'Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px}
+.ci-btn[disabled]{opacity:.55}
+.ci-note{text-align:center;color:var(--ink-3);font-weight:700;font-size:12.5px;margin-top:8px}
+.ci-week{display:flex;justify-content:center;gap:5px;margin-top:8px}
+.ci-week i{width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:11px;font-weight:900;background:rgba(21,34,48,.06);color:var(--ink-3)}
+.ci-week i.on{background:#0EA5E9;color:#fff}
+.ci-week i.today{box-shadow:0 0 0 2px #38BDF8}
+.home-actions .sub{font-size:13px;font-weight:800;opacity:.85}
+.lv-st{display:block;font-size:11.5px;letter-spacing:1px;margin-top:3px;color:#F5A000}
+.levels button{min-height:48px;line-height:1.1}
+.levels button.on .lv-st{color:#FFE58A}
+.ostat{display:flex;justify-content:center;gap:10px;margin:-2px 0 10px;flex-wrap:wrap}
+.ostat span{padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.85);box-shadow:0 0 0 .5px var(--hair);font-weight:900;font-size:14px;color:var(--ink)}
+.ostat .big{font-size:20px;padding:6px 16px;color:var(--water-d)}
+.ostat .pen{color:#C2410C}
+.rec-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:8px}
+.rec-row span{padding:6px 12px;border-radius:999px;font-weight:900;font-size:14px;background:rgba(14,165,233,.12);color:var(--water-d)}
+.rec-row span.new{background:linear-gradient(120deg,#FFE58A,#FFC21A);color:#5A3A00;animation:ciPop .5s .3s both}
+.done-card .why-st{font-size:13.5px;color:var(--ink-3)}
+html[data-bm-theme="classic"] .ci{background:#163A2C;box-shadow:0 0 0 .5px rgba(255,255,255,.1),0 14px 28px -20px rgba(0,0,0,.8)}
+html[data-bm-theme="classic"] .ci-p{background:rgba(125,211,252,.12)}
+html[data-bm-theme="classic"] .ci-p.now{background:rgba(125,211,252,.22)}
+html[data-bm-theme="classic"] .ci-p.on{background:linear-gradient(160deg,#38BDF8,#0369A1)}
+html[data-bm-theme="classic"] .ci-streak{background:rgba(253,186,116,.16);color:#FDE3B5}
+html[data-bm-theme="classic"] .ci-streak.off,html[data-bm-theme="classic"] .ci-week i{background:rgba(255,255,255,.08)}
+html[data-bm-theme="classic"] .ostat span{background:rgba(255,255,255,.08)}
+html[data-bm-theme="classic"] .ostat .pen{color:#FDBA74}
+html[data-bm-theme="classic"] .rec-row span{background:rgba(125,211,252,.14)}
+.cards.kilat{grid-template-columns:repeat(3,1fr);gap:8px}
+.cards.kilat .ocard{padding:6px 6px 8px;border-radius:18px}
+.cards.kilat .ocard b{font-size:12.5px}
+#checkin .ci-btn.ok{background:#E3F7EC!important;color:#0B6B3A!important;box-shadow:none!important;opacity:1!important}
+html[data-bm-theme="classic"] #checkin .ci-btn.ok{background:rgba(110,231,183,.14)!important;color:#A7F3D0!important}
+@media (orientation:landscape) and (max-height:520px){
+  .app{max-width:760px}
+  .cards{grid-template-columns:repeat(5,1fr)!important;gap:8px}
+  .ocard b{font-size:12.5px}
+  .done-card img{width:min(34%,170px)}
+  .hero img{max-height:240px}
+}
+@media (min-width:760px){.cards.kilat{grid-template-columns:repeat(4,1fr)}}
+</style>
 <link rel="stylesheet" href="bm-buttons.css">
 <script src="bm-icons.js" defer></script>
 </head>
@@ -169,7 +233,9 @@ html[data-bm-theme="classic"] .title-block h1 em{background:linear-gradient(95de
     <div class="home-actions">
       <button class="btn-primary" onclick="startGuide()">💧 Belajar Wudhu</button>
       <button class="btn-sec" onclick="startOrder()">🧩 Urutkan Wudhu</button>
+      <button class="btn-sec kilat-btn" onclick="startKilat()"><span>⚡ Tantangan Kilat</span><span class="sub" id="kilatBest"></span></button>
     </div>
+    <div class="ci" id="checkin"></div>
     <div class="why"><b>Kenapa wudhu?</b> Wudhu membersihkan badan sebelum sholat. Allah menyukai orang-orang yang menyucikan diri 💚</div>
   </section>
 
@@ -205,17 +271,18 @@ html[data-bm-theme="classic"] .title-block h1 em{background:linear-gradient(95de
   <section class="screen" id="s-order">
     <div class="topbar">
       <button class="back-btn btn-sec" onclick="show('s-home')">← Menu</button>
-      <div class="grow">🧩 Urutkan Wudhu</div>
+      <div class="grow" id="oTitle">🧩 Urutkan Wudhu</div>
       <span style="width:72px"></span>
     </div>
     <div class="order-head">
-      <h2>Mana yang duluan?</h2>
-      <p>Ketuk langkah wudhu sesuai urutannya!</p>
+      <h2 id="oH">Mana yang duluan?</h2>
+      <p id="oP">Ketuk langkah wudhu sesuai urutannya!</p>
     </div>
     <div class="levels">
-      <button id="lvEasy" class="on" onclick="startOrder(5)">🌱 Mudah · 5</button>
-      <button id="lvHard" onclick="startOrder(10)">🌟 Hebat · 10</button>
+      <button id="lvEasy" class="on" onclick="startOrder(5)">🌱 Mudah · 5<span class="lv-st" id="lvEasySt"></span></button>
+      <button id="lvHard" onclick="startOrder(10)">🌟 Hebat · 10<span class="lv-st" id="lvHardSt"></span></button>
     </div>
+    <div class="ostat"><span class="big" id="oTime">⏱ 0:00</span><span id="oBest" hidden></span><span class="pen" id="oPen" hidden></span></div>
     <div class="track" id="oTrack"></div>
     <div class="hint" id="oHint"></div>
     <div class="cards" id="oCards"></div>
@@ -246,10 +313,12 @@ html[data-bm-theme="classic"] .title-block h1 em{background:linear-gradient(95de
       <h2 id="oDoneTitle">Hebat! Urutannya benar semua! 🎉</h2>
       <p id="oDoneSub">Kamu hafal urutan wudhu!</p>
       <div class="stars" id="oStars">⭐⭐⭐</div>
+      <div class="why-st" id="oWhy"></div>
+      <div class="rec-row" id="oRec"></div>
       <div class="done-actions">
-        <button class="btn-primary" onclick="startOrder(level===5?10:5)" id="oNextBtn">🌟 Coba Level Hebat</button>
+        <button class="btn-primary" id="oNextBtn">🌟 Coba Level Hebat</button>
         <div class="row">
-          <button class="btn-sec" onclick="startOrder(level)">🔄 Main Lagi</button>
+          <button class="btn-sec" id="oAgainBtn">🔄 Main Lagi</button>
           <button class="btn-sec" onclick="startGuide()">💧 Panduan</button>
         </div>
         <a class="btn-sec" href="./index.html">🏠 Game Hub</a>
@@ -286,6 +355,8 @@ var IMG = function(n){ return 'wudhu-assets/' + n + '.webp'; };
 STEPS.forEach(function(s){ [s.img, s.alt].forEach(function(n){ if(n){ var i=new Image(); i.src=IMG(n); } }); });
 
 function show(id){
+  if(id !== 's-order' && typeof setTimer === 'function') setTimer(false);
+  if(id === 's-home'){ try{ renderCheckin(); renderRecords(); }catch(e){} }
   document.querySelectorAll('.screen').forEach(function(s){ s.classList.toggle('active', s.id===id); });
   window.scrollTo({top:0, behavior:'instant'});
 }
@@ -369,9 +440,27 @@ function next(){
 }
 
 /* ── ORDER GAME ── */
-var level = 5, order = [], want = 0, mistakes = 0;
-function startOrder(n){
+var level = 5, order = [], want = 0, mistakes = 0, mode = 'order', t0 = 0, tick = null;
+function setTimer(on){
+  clearInterval(tick); tick = null;
+  if(!on) return;
+  t0 = Date.now();
+  var upd = function(){ var ms = Date.now() - t0 + (mode === 'kilat' ? mistakes * 2000 : 0); document.getElementById('oTime').textContent = '⏱ ' + (mode === 'kilat' ? fmt1(ms) : fmt(ms)); };
+  upd(); tick = setInterval(upd, 100);
+}
+function startKilat(){ mode = 'kilat'; startOrder(10, true); }
+function startOrder(n, kilat){
+  if(!kilat) mode = 'order';
   level = n || level || 5; want = 0; mistakes = 0;
+  var r = wLoad(), K = mode === 'kilat';
+  document.querySelector('#s-order .levels').style.display = K ? 'none' : '';
+  document.getElementById('oTitle').textContent = K ? '⚡ ' + L('Tantangan Kilat', 'Lightning Challenge') : '🧩 ' + L('Urutkan Wudhu', 'Put Wudu in Order');
+  document.getElementById('oH').textContent = K ? L('Secepat kilat! ⚡', 'Fast as lightning! ⚡') : L('Mana yang duluan?', 'Which comes first?');
+  document.getElementById('oP').textContent = K ? L('Urutkan 10 langkah secepatnya. Salah = +2 detik.', 'Order all 10 steps fast. A miss adds 2 seconds.') : L('Ketuk langkah wudhu sesuai urutannya!', 'Tap the wudu steps in the right order!');
+  var best = K ? r.kilat.best : (r.order[level] && r.order[level].best), ob = document.getElementById('oBest');
+  ob.hidden = !best; ob.textContent = best ? '🏆 ' + (K ? fmt1(best) : fmt(best)) : '';
+  document.getElementById('oPen').hidden = true;
+  renderRecords();
   document.getElementById('lvEasy').classList.toggle('on', level === 5);
   document.getElementById('lvHard').classList.toggle('on', level === 10);
   var pool = STEPS.slice(0, level).map(function(s, i){ return {s:s, i:i}; });
@@ -380,6 +469,7 @@ function startOrder(n){
   var tr = document.getElementById('oTrack'); tr.innerHTML = '';
   for(var k2 = 0; k2 < level; k2++){ var sp = document.createElement('span'); sp.textContent = k2 + 1; tr.appendChild(sp); }
   var cards = document.getElementById('oCards'); cards.innerHTML = '';
+  cards.classList.toggle('kilat', mode === 'kilat');
   pool.forEach(function(p){
     var b = document.createElement('button'); b.className = 'ocard'; b.dataset.i = p.i;
     b.innerHTML = '<img src="' + IMG(p.s.img) + '" alt=""><b>' + p.s.short + '</b>';
@@ -388,6 +478,7 @@ function startOrder(n){
   });
   document.getElementById('oHint').textContent = '';
   show('s-order');
+  setTimer(true);
 }
 function pick(el, i){
   if(i === want){
@@ -397,22 +488,140 @@ function pick(el, i){
     speak(STEPS[i].short);
     if(want >= level) setTimeout(orderDone, 500);
   } else {
-    mistakes++; el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); sfx('wrong');
+    mistakes++; if(mode === 'kilat'){ var pe = document.getElementById('oPen'); pe.hidden = false; pe.textContent = '+' + (mistakes*2) + L(' dtk',' s'); }
+    el.classList.remove('shake'); void el.offsetWidth; el.classList.add('shake'); sfx('wrong');
     var h = document.getElementById('oHint');
     h.textContent = want === 0 ? 'Hmm, wudhu dimulai dari niat dulu ya 🤲' : 'Hampir! Setelah "' + STEPS[want-1].short + '", apa ya? 🤔';
   }
 }
 function orderDone(){
-  var stars = mistakes === 0 ? 3 : mistakes <= 2 ? 2 : 1;
+  var ms = Date.now() - t0; setTimer(false);
+  if(mode === 'kilat') return kilatDone(ms + mistakes * 2000);
+  /* Stars: generous for small kids. 3★ = no mistakes and not too slow
+     (≤ 6 s per card), 2★ = up to 2 mistakes (or a slow perfect round), else 1★ */
+  var slow = ms > level * 6000;
+  var stars = mistakes === 0 && !slow ? 3 : mistakes <= 2 ? 2 : 1;
+  var r = wLoad(), prev = r.order[level];
+  var newBest = !prev || ms < prev.best;
+  r.order[level] = {stars: Math.max(stars, prev ? prev.stars : 0), best: prev ? Math.min(prev.best, ms) : ms,
+    fewest: prev ? Math.min(prev.fewest, mistakes) : mistakes, plays: (prev ? prev.plays : 0) + 1};
+  wSave(r); renderRecords();
+  document.getElementById('oWhy').textContent = mistakes === 0 && slow ? L('Tanpa salah! Lebih cepat lagi untuk ⭐⭐⭐', 'No mistakes! A bit faster for ⭐⭐⭐')
+    : mistakes ? L(mistakes + ' kali salah · ⏱ ' + fmt(ms), mistakes + ' mistake' + (mistakes > 1 ? 's' : '') + ' · ⏱ ' + fmt(ms)) : L('Tanpa salah & cepat!', 'No mistakes & quick!');
+  document.getElementById('oRec').innerHTML = '<span>⏱ ' + fmt(ms) + '</span>' + (newBest && prev ? '<span class="new">🎉 ' + L('Rekor baru!', 'New record!') + '</span>' : prev ? '<span>🏆 ' + fmt(r.order[level].best) + '</span>' : '');
+  document.getElementById('oAgainBtn').onclick = function(){ startOrder(level); };
+  document.getElementById('oNextBtn').onclick = function(){ startOrder(level === 5 ? 10 : 5); };
   document.getElementById('oStars').textContent = '⭐'.repeat(stars) + '☆'.repeat(3 - stars);
   document.getElementById('oDoneTitle').textContent = mistakes === 0 ? 'Hebat! Urutannya benar semua! 🎉' : 'MasyaAllah, selesai! 🎉';
   document.getElementById('oDoneSub').textContent = mistakes === 0 ? 'Kamu hafal urutan wudhu!' : 'Coba lagi biar tanpa salah, ya!';
   var nb = document.getElementById('oNextBtn'); nb.textContent = level === 5 ? '🌟 Coba Level Hebat' : '🌱 Level Mudah';
+  document.getElementById('oAgainBtn').textContent = '🔄 Main Lagi';
   try{ BabyMo.track && BabyMo.track('wudhu_order_done', {level:level, mistakes:mistakes}); }catch(e){}
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('wudhu','order'); }catch(e){}
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('wudhu','order-'+level,1); }catch(e){}
   show('s-complete');
 }
+function kilatDone(ms){
+  var r = wLoad(), prev = r.kilat.best, isNew = !prev || ms < prev;
+  r.kilat = {best: prev ? Math.min(prev, ms) : ms, plays: (r.kilat.plays || 0) + 1, last: ms};
+  wSave(r); renderRecords();
+  document.getElementById('oStars').textContent = '⚡ ' + fmt1(ms);
+  document.getElementById('oDoneTitle').textContent = isNew ? L('Rekor baru! Secepat kilat! ⚡', 'New record! Lightning fast! ⚡') : L('MasyaAllah, cepat sekali! ⚡', 'MashaAllah, so fast! ⚡');
+  document.getElementById('oDoneSub').textContent = L('Kamu mengurutkan 10 langkah wudhu.', 'You put all 10 wudu steps in order.');
+  document.getElementById('oWhy').textContent = mistakes ? L(mistakes + ' kali salah (+' + mistakes*2 + ' dtk)', mistakes + ' miss' + (mistakes > 1 ? 'es' : '') + ' (+' + mistakes*2 + ' s)') : L('Tanpa salah!', 'No misses!');
+  document.getElementById('oRec').innerHTML = isNew && prev ? '<span class="new">🎉 ' + L('Rekor baru!', 'New record!') + '</span>' : '<span>🏆 ' + fmt1(r.kilat.best) + '</span>';
+  var nb = document.getElementById('oNextBtn'); nb.textContent = '⚡ ' + L('Coba lagi', 'Try again'); nb.onclick = startKilat;
+  document.getElementById('oAgainBtn').onclick = function(){ startOrder(5); };
+  document.getElementById('oAgainBtn').textContent = '🧩 ' + L('Urutkan', 'Order Game');
+  try{ BabyMo.track && BabyMo.track('wudhu_kilat_done', {ms: ms, mistakes: mistakes}); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('wudhu','order'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('wudhu','kilat',1); }catch(e){}
+  show('s-complete');
+}
+
+
+/* ── LOOPS: saved records, Tantangan Kilat, daily check-in ── */
+var EN = window.BM_LANG === 'en';
+function L(id, en){ return EN ? en : id; }
+var WKEY = 'bm_wudhu_v1';
+function wLoad(){ try{ var r = JSON.parse(localStorage.getItem(WKEY)); if(r && typeof r === 'object') { r.order = r.order || {}; r.kilat = r.kilat || {}; r.ci = r.ci || {}; return r; } }catch(e){} return {v:1, order:{}, kilat:{}, ci:{}}; }
+function wSave(r){ try{ localStorage.setItem(WKEY, JSON.stringify(r)); }catch(e){} }
+function fmt(ms){ var t = Math.round(ms/1000); return Math.floor(t/60) + ':' + String(t%60).padStart(2,'0'); }
+function fmt1(ms){ return (ms/1000).toFixed(1) + L(' dtk',' s'); }
+function dkey(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+function todayKey(){ try{ if(window.BabyMo && BabyMo.daily) return BabyMo.daily.today(); }catch(e){} return dkey(new Date()); }
+function shiftKey(k, n){ try{ if(window.BabyMo && BabyMo.daily) return BabyMo.daily.shift(k, n); }catch(e){} var p = k.split('-'); return dkey(new Date(+p[0], p[1]-1, +p[2] + n)); }
+function starsHtml(n){ return '★'.repeat(n) + '☆'.repeat(3-n); }
+function renderRecords(){
+  var r = wLoad();
+  [[5,'lvEasySt'],[10,'lvHardSt']].forEach(function(x){ var o = r.order[x[0]], el = document.getElementById(x[1]); if(el) el.textContent = o ? starsHtml(o.stars) + ' · ' + fmt(o.best) : ''; });
+  var kb = document.getElementById('kilatBest'); if(kb) kb.textContent = r.kilat.best ? '🏆 ' + fmt1(r.kilat.best) : '';
+}
+
+/* Prayer slots: today's times from Sholat (mo_prayer_cache_v1) when the
+   child set a location there, else the same default times as Sholat Bareng Mo. */
+var PR = [{k:'Fajr', n:['Subuh','Fajr'], i:'🌅', d:'04:35'}, {k:'Dhuhr', n:['Dzuhur','Dhuhr'], i:'☀️', d:'12:00'}, {k:'Asr', n:['Ashar','Asr'], i:'🌤️', d:'15:15'},
+          {k:'Maghrib', n:['Maghrib','Maghrib'], i:'🌇', d:'17:55'}, {k:'Isha', n:['Isya','Isha'], i:'🌙', d:'19:10'}];
+function prayerTimes(){
+  var out = PR.map(function(p){ return p.d; });
+  try{
+    var c = JSON.parse(localStorage.getItem('mo_prayer_cache_v1') || 'null');
+    if(c && c.days){ var t = c.days[todayKey()]; if(!t){ var ks = Object.keys(c.days).sort(); if(ks.length) t = c.days[ks.pop()]; }
+      if(t) out = PR.map(function(p, i){ var v = t[p.k]; return (typeof v === 'string' && /^\d{1,2}:\d{2}/.test(v)) ? v.slice(0,5) : out[i]; }); }
+  }catch(e){}
+  return out;
+}
+function curSlot(times){
+  var n = new Date(), nm = n.getHours()*60 + n.getMinutes(), cur = -1;
+  times.forEach(function(t, i){ var p = t.split(':'); if(+p[0]*60 + +p[1] <= nm) cur = i; });
+  return cur < 0 ? {i:0, next:true} : {i:cur, next:false};
+}
+function ciStreak(r){
+  var t = todayKey(), k = r.ci[t] && r.ci[t].length ? t : shiftKey(t, -1), n = 0;
+  while(r.ci[k] && r.ci[k].length){ n++; k = shiftKey(k, -1); }
+  return n;
+}
+function renderCheckin(){
+  var box = document.getElementById('checkin'); if(!box) return;
+  var r = wLoad(), t = todayKey(), done = r.ci[t] || [], times = prayerTimes(), cs = curSlot(times), st = ciStreak(r);
+  var best = Math.max(r.ciBest || 0, st);
+  var h = '<div class="ci-top"><h2>💧 ' + L('Wudhu sebelum sholat','Wudu before prayer') + '</h2>'
+    + '<span class="ci-streak' + (st ? '' : ' off') + '">🔥 ' + st + ' ' + L('hari','day' + (st === 1 ? '' : 's')) + '</span></div>'
+    + '<div class="ci-sub">' + (done.length ? L('Hari ini kamu sudah wudhu ' + done.length + '× — MasyaAllah! 💙', 'You did wudu ' + done.length + '× today — MashaAllah! 💙')
+        : L('Sudah wudhu? Ketuk waktunya ya. Lupa juga tidak apa-apa 😊', 'Did wudu? Tap the prayer time. Forgot? That\'s okay 😊')) + '</div><div class="ci-row">';
+  PR.forEach(function(p, i){
+    var on = done.indexOf(i) >= 0, now = i === cs.i;
+    h += '<button class="ci-p' + (on ? ' on' : '') + (now ? ' now' : '') + '" data-i="' + i + '" data-now="' + (cs.next ? L('Nanti','Next') : L('Sekarang','Now')) + '" aria-pressed="' + on + '">'
+      + '<span class="i">' + p.i + '</span><span class="n">' + p.n[EN ? 1 : 0] + '</span><span class="t">' + times[i] + '</span></button>';
+  });
+  var curOn = done.indexOf(cs.i) >= 0;
+  h += '</div><button class="ci-btn btn-primary' + (curOn ? ' ok' : '') + '" id="ciBtn">'
+    + (curOn ? '✓ ' + L('Sudah wudhu untuk ' + PR[cs.i].n[0], 'Wudu done for ' + PR[cs.i].n[1]) : '💧 ' + L('Aku sudah wudhu!', 'I did wudu!') + ' · ' + PR[cs.i].n[EN ? 1 : 0]) + '</button>';
+  h += '<div class="ci-week" aria-hidden="true">';
+  for(var d = 6; d >= 0; d--){ var k = shiftKey(t, -d), p2 = k.split('-'), dt = new Date(+p2[0], p2[1]-1, +p2[2]);
+    var lbl = (EN ? ['S','M','T','W','T','F','S'] : ['M','S','S','R','K','J','S'])[dt.getDay()];
+    h += '<i class="' + ((r.ci[k] || []).length ? 'on' : '') + (d === 0 ? ' today' : '') + '">' + ((r.ci[k] || []).length ? '💧' : lbl) + '</i>'; }
+  h += '</div>' + (best > 1 ? '<div class="ci-note">' + L('Rekor: ' + best + ' hari berturut-turut', 'Best: ' + best + ' days in a row') + '</div>' : '');
+  box.innerHTML = h;
+  box.querySelectorAll('.ci-p').forEach(function(b){ b.onclick = function(){ checkIn(+b.dataset.i, true); }; });
+  document.getElementById('ciBtn').onclick = function(){ checkIn(cs.i, false); };
+}
+function checkIn(i, toggle){
+  var r = wLoad(), t = todayKey(), d = r.ci[t] = r.ci[t] || [], at = d.indexOf(i);
+  if(at >= 0){ if(!toggle) return; d.splice(at, 1); }       // a parent can undo a mis-tap
+  else {
+    d.push(i); d.sort();
+    sfx('correct'); speak(L('MasyaAllah, sudah wudhu!', 'MashaAllah, wudu done!'), EN ? 'en-US' : 'id-ID');
+    try{ window.BabyMo && BabyMo.daily && BabyMo.daily.reward('wudhu', 'checkin', 1); }catch(e){}
+  }
+  if(!d.length) delete r.ci[t];
+  var ks = Object.keys(r.ci).sort(); while(ks.length > 60) delete r.ci[ks.shift()];
+  r.ciBest = Math.max(r.ciBest || 0, ciStreak(r));
+  wSave(r); renderCheckin();
+  var el = document.querySelector('.ci-p[data-i="' + i + '"]'); if(el && at < 0){ el.classList.add('pop'); }
+}
+document.addEventListener('DOMContentLoaded', function(){ renderCheckin(); renderRecords(); });
+document.addEventListener('visibilitychange', function(){ if(!document.hidden) renderCheckin(); });
 
 function share(){
   try{ if(window.BabyMo && BabyMo.share) BabyMo.share({title:'Wudhu Bareng Mo', message:'Aku sudah belajar wudhu bareng Baby Mo! 💧 Yuk coba juga'}); }catch(e){}

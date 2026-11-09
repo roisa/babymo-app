@@ -376,6 +376,42 @@ html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
 .lvl-desc{color:#5A6878;}
 .lvl-badge{background:rgba(18,161,90,.12);color:#0B6B3A;}
 </style>
+<style id="bm-loops">
+/* Replay loops: records per level, Tanpa Salah badge, Doa Hari Ini.
+   Both themes (not a bm-bright block): colours come from the theme vars. */
+.lvl-rec{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;font-size:12px;font-weight:800;color:var(--cream-dim);}
+.lvl-rec .lr-st{letter-spacing:1px;color:var(--star);font-size:13px;}
+.lvl-rec .lr-st i{font-style:normal;opacity:.28;}
+.lvl-rec .lr-st i.on{opacity:1;}
+.lvl-rec .lr-pf{background:rgba(255,216,116,.18);color:var(--gold-lt);border-radius:999px;padding:2px 8px;font-size:11.5px;}
+.dod-card{width:100%;max-width:420px;display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border-radius:20px;
+  background:var(--bg2);border:1.5px solid rgba(255,216,116,.35);box-shadow:0 10px 24px -16px rgba(0,0,0,.5);text-align:left;}
+.dod-ic{flex:0 0 54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:30px;background:rgba(255,216,116,.16);}
+.dod-tx{flex:1;min-width:0;}
+.dod-k{display:inline-block;font-size:11.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#7A4A00;background:#FFE58A;padding:2px 9px;border-radius:999px;}
+.dod-t{font-size:16px;font-weight:900;color:var(--cream);margin-top:4px;line-height:1.2;}
+.dod-p{font-size:12.5px;font-weight:700;color:var(--cream-dim);margin-top:3px;line-height:1.3;}
+.dod-p b{color:var(--gold-lt);}
+.dod-go{flex:0 0 auto;min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border-radius:16px;text-decoration:none;
+  font-size:13px;font-weight:900;color:#06231A;background:linear-gradient(135deg,var(--green-lt),var(--green));text-align:center;line-height:1.15;max-width:112px;}
+.dod-go:active{transform:scale(.96);}
+.card.today .cf-front{box-shadow:0 0 0 3px #FFD874,0 8px 18px -8px rgba(255,184,0,.7)!important;}
+.card.today.flipped::after,.card.today.matched::after{content:'⭐';position:absolute;top:-8px;right:-6px;font-size:18px;z-index:5;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));pointer-events:none;}
+.card{position:relative;}
+.comp-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:-4px 0 14px;}
+.comp-badges:empty{display:none;}
+.cb-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:900;
+  background:rgba(255,216,116,.18);color:var(--gold-lt);border:1.5px solid rgba(255,216,116,.45);animation:starPop .45s cubic-bezier(.34,1.56,.64,1) both;}
+.cb-badge.pf{background:linear-gradient(135deg,#FFE58A,#FFC21A);color:#5A3A00;border-color:#fff;}
+.cb-badge.bonus{background:rgba(123,232,176,.18);color:var(--green-glow);border-color:rgba(123,232,176,.45);}
+.comp-best{font-size:12.5px;font-weight:800;color:var(--cream-dim);margin:-6px 0 14px;}
+html[data-bm-theme="bright"] .dod-card{border-color:#FFD15C;box-shadow:0 12px 26px -18px rgba(30,60,110,.5);}
+html[data-bm-theme="bright"] .dod-ic{background:#FFF4D1;}
+html[data-bm-theme="bright"] .cb-badge{background:#FFF4D1;color:#9A5B00;border-color:#FFD15C;}
+html[data-bm-theme="bright"] .cb-badge.bonus{background:#E3F7EC;color:#0B6B3A;border-color:#9BE0B9;}
+html[data-bm-theme="bright"] .lvl-rec .lr-pf{background:#FFF4D1;color:#9A5B00;}
+html[data-bm-theme="bright"] .dod-p b{color:#B45309;}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -399,6 +435,8 @@ html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
     <div class="game-sub">Cocokkan doa bersama Baby Mo! 🐻 · Belajar · Main · Berkembang</div>
   </div>
 
+  <div class="dod-card" id="dodCard" hidden></div>
+
   <div class="level-wrap">
     <div class="level-title">— Pilih tingkat kesulitan —</div>
     <div class="level-list">
@@ -407,6 +445,7 @@ html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
         <div class="lvl-info">
           <div class="lvl-name">Mudah — Easy</div>
           <div class="lvl-desc">3 doa · Cocok untuk pemula</div>
+          <div class="lvl-rec" data-rec></div>
         </div>
         <span class="lvl-badge">6 kartu</span>
       </button>
@@ -415,6 +454,7 @@ html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
         <div class="lvl-info">
           <div class="lvl-name">Sedang — Medium</div>
           <div class="lvl-desc">5 doa · Semakin mahir</div>
+          <div class="lvl-rec" data-rec></div>
         </div>
         <span class="lvl-badge">10 kartu</span>
       </button>
@@ -423,6 +463,7 @@ html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
         <div class="lvl-info">
           <div class="lvl-name">Hebat — Amazing!</div>
           <div class="lvl-desc">6 doa · Juara doa 🏆</div>
+          <div class="lvl-rec" data-rec></div>
         </div>
         <span class="lvl-badge">12 kartu</span>
       </button>
@@ -483,12 +524,14 @@ html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
       <div class="star-big" id="s3">⭐</div>
     </div>
 
+    <div class="comp-badges" id="compBadges"></div>
     <div class="comp-stats">
       <div class="cst"><div class="cst-n" id="cMoves">-</div><div class="cst-l">Langkah</div></div>
       <div class="cst"><div class="cst-n" id="cTime">-</div><div class="cst-l">Waktu</div></div>
       <div class="cst"><div class="cst-n" id="cStars">⭐⭐⭐</div><div class="cst-l">Bintang</div></div>
     </div>
 
+    <div class="comp-best" id="compBest"></div>
     <div class="dua-recap">
       <div class="dr-title">✅ Doa yang kamu pelajari hari ini</div>
       <div id="duaList"></div>
@@ -559,7 +602,51 @@ const MATCH_MSGS = [
 // ════════════ STATE ════════════
 let level=1, flipped=[], matched=0, moves=0;
 let canFlip=true, secs=0, ticker=null, msgIdx=0;
-let activeDuas=[];
+let activeDuas=[], misses=0, todayId=0, bonusShown=false;
+
+// ════════════ LOOPS: records + Doa Hari Ini ════════════
+const EN = window.BM_LANG==='en';
+const L = (id,en)=>EN?en:id;
+const REC_KEY='bm_dua_game_v1';
+function recLoad(){ try{ const r=JSON.parse(localStorage.getItem(REC_KEY)); if(r&&typeof r==='object'&&r.levels) return r; }catch(e){} return {v:1,levels:{}}; }
+function recSave(r){ try{ localStorage.setItem(REC_KEY,JSON.stringify(r)); }catch(e){} }
+const fmtT = t=>Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
+function renderRecords(){
+  const r=recLoad();
+  document.querySelectorAll('.lvl-btn').forEach((b,i)=>{
+    const box=b.querySelector('[data-rec]'); if(!box) return;
+    const x=r.levels[i+1];
+    if(!x){ box.innerHTML=''; return; }
+    box.innerHTML='<span class="lr-st">'+[1,2,3].map(k=>'<i class="'+(k<=x.stars?'on':'')+'">★</i>').join('')+'</span>'
+      +'<span>👣 '+x.bestMoves+' · ⏱ '+fmtT(x.bestTime)+'</span>'
+      +(x.perfect?'<span class="lr-pf">🏅 '+L('Tanpa Salah','No Misses')+'</span>':'');
+  });
+}
+// Doa Harian's du'a of the day: same list order and the same formula as
+// babymo-doa-harian.html dodDua(), so both games show the same du'a.
+const DH=[['wakeup','🌅','Doa Bangun Tidur',"Du'a for Waking Up"],['bathroom_in','🚿','Masuk Kamar Mandi','Entering the Bathroom'],
+  ['bathroom_out','✨','Keluar Kamar Mandi','Leaving the Bathroom'],['leave_home','🎒','Doa Keluar Rumah',"Du'a for Leaving Home"],
+  ['vehicle','🚗','Doa Naik Kendaraan',"Du'a for Riding"],['study','📚','Doa Belajar',"Du'a for Studying"],
+  ['eating','🍽️','Sebelum Makan','Before Eating'],['after_eat','😋','Doa Sesudah Makan',"Du'a After Eating"],
+  ['rain','🌧️','Doa Ketika Hujan',"Du'a When It Rains"],['enter_home','🏠','Doa Masuk Rumah',"Du'a for Coming Home"],
+  ['parents','👪','Doa untuk Orang Tua',"Du'a for Parents"],['sleep','🌙','Doa Sebelum Tidur',"Du'a Before Sleeping"]];
+function dhOfDay(){ const t=new Date(), n=Math.floor(new Date(t.getFullYear(),t.getMonth(),t.getDate()).getTime()/864e5); return DH[((n*5)%DH.length+DH.length)%DH.length]; }
+function phraseOfDay(){
+  if(dhOfDay()[0]==='eating') return 0;            // Bismillah — the same du'a as Doa Harian today
+  try{ if(window.BabyMo&&BabyMo.daily) return BabyMo.daily.pick(DUAS,'dua-game-phrase').id-1; }catch(e){}
+  const t=new Date(); return (t.getFullYear()*372+t.getMonth()*31+t.getDate())%DUAS.length;
+}
+function renderDod(){
+  const el=document.getElementById('dodCard'); if(!el) return;
+  const d=dhOfDay(), p=DUAS[todayId=phraseOfDay()];
+  el.innerHTML='<div class="dod-ic">'+d[1]+'</div><div class="dod-tx"><span class="dod-k">📖 '+L('Doa Hari Ini',"Du'a of the Day")+'</span>'
+    +'<div class="dod-t">'+(EN?d[3]:d[2])+'</div>'
+    +'<div class="dod-p">'+L('Kartu bintang hari ini: ','Star card today: ')+'<b>'+p.emoji+' '+p.trans+'</b>'+L(' — cocokkan untuk ⭐ bonus!',' — match it for a bonus ⭐!')+'</div></div>'
+    +'<a class="dod-go" href="babymo-doa-harian.html?doa='+d[0]+'">'+L('Baca di Doa Harian','Read in Daily Du\'a')+' →</a>';
+  el.hidden=false;
+}
+document.addEventListener('DOMContentLoaded',()=>{ renderDod(); renderRecords(); });
+
 
 // ════════════ INIT ════════════
 (function initStars(){
@@ -583,8 +670,11 @@ function selectLevel(l){
 // ════════════ START ════════════
 function startGame(){
   const cfg = LEVELS[level];
-  activeDuas = cfg.ids.map(i => DUAS[i]);
-  flipped=[]; matched=0; moves=0; secs=0; canFlip=true; msgIdx=0;
+  const ids = cfg.ids.slice();
+  todayId = phraseOfDay();
+  if(ids.indexOf(todayId)<0) ids[ids.length-1]=todayId;   // today's star card is in every level
+  activeDuas = ids.map(i => DUAS[i]);
+  flipped=[]; matched=0; moves=0; secs=0; canFlip=true; msgIdx=0; misses=0; bonusShown=false;
 
   document.getElementById('moveCount').textContent  = '0';
   document.getElementById('timerDisp').textContent  = '0:00';
@@ -623,7 +713,7 @@ function buildGrid(cfg){
 
   cards.forEach(c=>{
     const el = document.createElement('div');
-    el.className = 'card';
+    el.className = 'card'+(c.dua.id===todayId+1?' today':'');
     el.dataset.id   = c.dua.id;
     el.dataset.type = c.type;
 
@@ -689,12 +779,16 @@ function checkMatch(){
       a.classList.add('matched','disabled');
       b.classList.add('matched','disabled');
       const msg=MATCH_MSGS[msgIdx%MATCH_MSGS.length]; msgIdx++;
-      showToast(msg[0],msg[1]);
+      let gotBonus=false;
+      if(+a.dataset.id===todayId+1){ try{ gotBonus=!!(window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('dua-game','star-card',1)); }catch(e){} }
+      if(gotBonus){ bonusShown=true; showToast('⭐',L('Bonus bintang hari ini!',"Today's bonus star!")); }
+      else showToast(msg[0],msg[1]);
       flipped=[]; canFlip=true;
       if(matched===activeDuas.length) setTimeout(showComplete,900);
     },250);
 
   } else {
+    misses++;
     a.classList.add('wrong');
     b.classList.add('wrong');
     if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
@@ -734,6 +828,23 @@ function showComplete(){
   document.getElementById('cMoves').textContent    = moves;
   document.getElementById('cTime').textContent     = ts;
   document.getElementById('cStars').textContent    = '⭐'.repeat(stars);
+
+  // records (kept per level: best stars, fewest moves, fastest time, no-miss badge)
+  const perfect = misses===0;
+  const R=recLoad(), prev=R.levels[level]||null;
+  const cur={stars:Math.max(stars,prev?prev.stars:0),
+    bestMoves:prev?Math.min(prev.bestMoves,moves):moves, bestTime:prev?Math.min(prev.bestTime,secs):secs,
+    perfect:!!(perfect||(prev&&prev.perfect)), plays:(prev&&prev.plays||0)+1};
+  R.levels[level]=cur; recSave(R);
+  const badges=[];
+  if(perfect) badges.push('<span class="cb-badge pf">🏅 '+L('Tanpa Salah!','No Misses!')+'</span>');
+  if(prev&&(moves<prev.bestMoves||secs<prev.bestTime)) badges.push('<span class="cb-badge">🎉 '+L('Rekor baru!','New record!')+'</span>');
+  if(bonusShown) badges.push('<span class="cb-badge bonus">⭐ '+L('Bonus kartu hari ini','Star card bonus')+'</span>');
+  document.getElementById('compBadges').innerHTML=badges.join('');
+  document.getElementById('compBest').textContent = prev
+    ? L('Rekormu: ','Your best: ')+'👣 '+cur.bestMoves+' · ⏱ '+fmtT(cur.bestTime)
+    : L('Rekor pertamamu tersimpan! ✨','Your first record is saved! ✨');
+  renderRecords();
 
   showScreen('completeScreen');
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('dua-game','level'); }catch(e){}
