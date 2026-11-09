@@ -1,5 +1,6 @@
 /* Akademi Tenis Kak Adam — English */
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
+  "Hari ini": "Today",
   "Alhamdulillah! Masya Allah!": "Alhamdulillah! Masha Allah!", "Alhamdulillah. Ayo coba lagi!": "Alhamdulillah. Let's try again!", "Bismillah 🤲": "Bismillah 🤲",
   "Akademi Tenis Kak Adam — Belajar Tenis untuk Anak | Baby Mo": "Kak Adam's Tennis Academy — Tennis for Kids | Baby Mo",
   "Akademi Tenis Kak Adam": "Kak Adam's Tennis Academy", "Baby Mo · Tenis": "Baby Mo · Tennis",
