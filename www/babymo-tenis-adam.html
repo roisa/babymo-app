@@ -302,7 +302,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
       <div class="score" id="score"><div>Kak Adam<b id="scA">0</b></div><div>Raka<b id="scR">0</b></div></div>
       <div class="meter" id="meter"><div class="zone"></div><div class="lvl" id="meterLvl"></div></div>
       <div class="marker" id="marker"></div>
-      <div class="adam" id="adam"><img id="adamImg" src="adam-tennis/ready-wide.webp" alt=""></div>
+      <div class="adam" id="adam"><img id="adamImg" src="adam-tennis/fh-two-1.webp" alt=""></div>
       <div class="bshadow" id="bshadow"></div>
       <div class="ball" id="ball"></div>
       <div class="pop" id="pop"></div>
@@ -361,16 +361,11 @@ var STATIONS = [
     how:"Ketuk tombol PUKUL saat bola sudah memantul dan sampai di dekat Kak Adam.", howIcon:"👆",
     fact:"Bola merah dipakai anak-anak yang baru belajar. Bolanya lebih besar, lebih pelan, dan memantul lebih rendah — jadi lebih mudah dipukul!",
     learn:"Dalam tenis, bola boleh memantul satu kali sebelum dipukul. Sabar menunggu pantulan membuat pukulan lebih tepat." },
-  { key:"sisi", tipEn:"If the ball comes to my <b>racket-hand side</b>, use a <b>forehand</b>. If it comes to the other side, use a <b>backhand</b> — two hands are fine!", icon:"↔️", ball:"red", title:"Forehand & Backhand", short:"Pilih pukulan yang tepat",
-    tip:"Kalau bola datang ke <b>sisi tangan raket</b>, pakai <b>forehand</b>. Kalau ke sisi satunya, pakai <b>backhand</b> — boleh dengan dua tangan!",
+  { key:"sisi", tipEn:"If the ball comes to my <b>racket-hand side</b>, use a <b>forehand</b>. If it comes to the other side, use a <b>two-handed backhand</b> — both hands on the racket for power!", icon:"↔️", ball:"red", title:"Forehand & Backhand", short:"Pilih pukulan yang tepat",
+    tip:"Kalau bola datang ke <b>sisi tangan raket</b>, pakai <b>forehand</b>. Kalau ke sisi satunya, pakai <b>backhand dua tangan</b> — kedua tangan memegang raket supaya kuat!",
     how:"Kak Adam menghadap kamu. Bola ke kiri layar? Forehand. Ke kanan layar? Backhand.", howIcon:"↔️",
     fact:"Hampir semua pukulan tenis adalah forehand atau backhand. Banyak pemain hebat memukul backhand dengan dua tangan supaya lebih kuat.",
-    learn:"Forehand dipukul dari sisi tangan yang memegang raket, backhand dari sisi lainnya." },
-  { key:"bh12", tipEn:"A backhand can be hit with <b>one hand</b> or <b>two hands</b>. Ball <b>far away</b>? Stretch with one hand. Ball <b>close</b>? Two hands for power!", icon:"🙌", ball:"red", title:"Backhand Satu & Dua Tangan", short:"Pilih satu atau dua tangan",
-    tip:"Backhand bisa dipukul dengan <b>satu tangan</b> atau <b>dua tangan</b>. Bola <b>jauh</b>? Jangkau dengan satu tangan. Bola <b>dekat</b>? Dua tangan supaya kuat!",
-    how:"Semua bola datang ke sisi backhand. Bola jauh di kanan? Satu tangan. Bola dekat badan? Dua tangan.", howIcon:"🙌",
-    fact:"Backhand dua tangan lebih kuat dan stabil, cocok untuk anak-anak. Backhand satu tangan bisa menjangkau lebih jauh — banyak juara memakai keduanya!",
-    learn:"Dua tangan untuk bola dekat (kuat dan terkontrol), satu tangan untuk bola jauh (jangkauan lebih panjang)." },
+    learn:"Forehand dipukul dari sisi tangan yang memegang raket, backhand dari sisi lainnya. Backhand dua tangan lebih kuat dan stabil untuk anak-anak." },
   { key:"kaki", tipEn:"The orange ball is faster! Look for the <b>circle</b> where the ball will land, then <b>move your feet</b> there before it arrives.", icon:"👟", ball:"orange", title:"Kaki Lincah", short:"Bergerak dulu, baru memukul",
     tip:"Bola oranye lebih cepat! Lihat <b>tanda lingkaran</b> tempat bola akan mendarat, lalu <b>geser kakimu</b> ke sana sebelum bola sampai.",
     how:"Ketuk Kiri, Tengah, atau Kanan untuk menggeser Kak Adam ke arah bola.", howIcon:"👟",
@@ -392,7 +387,7 @@ var BALLS_PER = 8;
 
 /* ───────── storage ───────── */
 var KEY = "bm_tenis_adam_v1";
-function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0,0]; if(d.stars.length===5) d.stars.splice(2,0,0); return d; }catch(e){ return {stars:[0,0,0,0,0,0]}; } }
+function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0]; if(d.stars.length===6) d.stars.splice(2,1); return d; }catch(e){ return {stars:[0,0,0,0,0]}; } }
 function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){} }
 var DATA = load();
 function T(s){ return (window.BM_T ? window.BM_T(s) : s); }
@@ -426,7 +421,8 @@ function renderMap(){
 
 /* ───────── intro ───────── */
 var CUR=0;
-var INTRO_POSE=["hold-ball","ready-wide","bh1-reach","shuffle-3","serve-blue-1","wave-3"];
+var READY="fh-two-1"; /* ready position: knees bent, racket in front, both hands on the grip */
+var INTRO_POSE=["hold-ball",READY,"shuffle-3","serve-blue-1","wave-3"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
   $("introKicker").textContent="Latihan "+(i+1);
@@ -450,9 +446,9 @@ function say(text){
 }
 
 /* ───────── Adam sprite ───────── */
-var FR={}; ["ready-wide","win-fist","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
+var FR={}; [READY,"ready-wide","win-fist","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
   [1,2,3,4,5,6].map(function(n){return "fh-"+n;}),[1,2,3,4,5,6].map(function(n){return "backhand-"+n;}),
-  [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),["bh1-lunge","bh1-reach"],[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
+  [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
 ).forEach(function(n){ var im=new Image(); im.src="adam-tennis/"+n+".webp"; FR[n]=im; });
 var animTimer=null;
 function pose(n){ clearInterval(animTimer); $("adamImg").src="adam-tennis/"+n+".webp"; }
@@ -462,8 +458,7 @@ function play(seq,ms,then){
   animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis/"+seq[k]+".webp"; }, ms);
 }
 function swing(side,then){
-  if(side==="bh1"){ play(["backhand-2","bh1-lunge","bh1-reach","bh1-reach"],95,then); return; } /* one-handed: reach out, free arm back */
-  var b=(side==="bh"||side==="bh2")?"backhand-":FH_SET[(G&&G.fh)||"one"]; play([b+3,b+4,b+5,b+6],80,then); }
+  var b=side==="bh"?"backhand-":FH_SET[(G&&G.fh)||"one"]; play([b+3,b+4,b+5,b+6],80,then); }
 /* forehand styles: two one-handed swings (classic + new) and a two-handed one */
 var FH_SET={ one:"fh-", one2:"fh-one-", two:"fh-two-" }, FH_KEY="bm_tenis_fh_style";
 function fhChoice(){ try{ return localStorage.getItem(FH_KEY)||"mix"; }catch(e){ return "mix"; } }
@@ -552,10 +547,10 @@ function startStation(i){
   ballEl.style.setProperty("--ballc",G.ball);
   $("playTitle").textContent=st.title;
   $("score").classList.remove("on"); $("meter").classList.remove("on"); $("marker").classList.remove("on"); $("laneTip").textContent="";
-  adamTo("C"); pose("ready-wide"); hideBall();
+  adamTo("C"); pose(READY); hideBall();
   show("s-play");
   say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
-  ({pantul:setupPantul,sisi:setupSisi,bh12:setupBh12,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
+  ({pantul:setupPantul,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
 }
 function count(){ $("playCount").textContent=G.hits+" / "+G.total; }
 function finishAfter(ms){ setTimeout(function(){ if(G) finish(); }, ms); }
@@ -573,7 +568,7 @@ function feed(side){
   if(!G||G.over) return;
   G.side=side||"fh"; G.tapped=false; G.p=0;
   if(G.side==="fh"){ G.fh=pickFh(); G.hitX = G.fh==="two" ? 186 : 145; } else G.hitX=255; /* two hands meet the ball closer to the body */
-  pose("ready-wide"); TS.feed(); lastH=null;
+  pose(READY); TS.feed(); lastH=null;
   G.flight=animate(G.speed*1.25,function(p){
     G.p=p; var b=incoming(p,G.hitX); place(b.gx,b.gy,b.h,b.s);
     if(p>1.18){ miss(G.tapped?null:"Terlalu lambat!"); return false; }
@@ -588,8 +583,7 @@ function tapHit(side){
   var key=STATIONS[G.i].key;
   if(p<PB && key==="pantul"){ swing(side); missFly("Tunggu pantulannya dulu!"); return; }
   if(p<.8){ swing(side); missFly("Terlalu cepat!"); return; }
-  if((key==="sisi"||key==="tanding") && side!==G.side){ swing(side); missFly(G.side==="fh"?"Bola di kiri — pakai forehand!":"Bola di kanan — pakai backhand!"); return; }
-  if(key==="bh12" && side!==G.side){ swing(side); missFly(G.side==="bh1"?"Bola jauh — jangkau dengan satu tangan!":"Bola dekat — pakai dua tangan supaya kuat!"); return; }
+  if((key==="sisi"||key==="tanding") && side!==G.side){ swing(side); missFly(G.side==="fh"?"Bola di kiri — pakai forehand!":"Bola di kanan — backhand dua tangan!"); return; }
   hit(side);
 }
 function hit(side){
@@ -616,34 +610,17 @@ function done(ok){
   if(G.onPoint){ G.onPoint(ok); return; }
   dot(G.n, ok?"ok":"no"); G.n++; count();
   if(G.n>=G.total){ G.over=true; finishAfter(1300); return; }
-  nextBall(function(){ if(G.mode==="grip") feedGrip(); else feed(G.mode==="sides" ? (Math.random()<.5?"fh":"bh") : "fh"); }, 1300);
+  nextBall(function(){ feed(G.mode==="sides" ? (Math.random()<.5?"fh":"bh") : "fh"); }, 1300);
 }
 
 /* ── 2. Forehand & backhand ── */
 function setupSisi(){
   G.mode="sides"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
-  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>bola di kanan</small></button>');
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>🙌 dua tangan</small></button>');
   $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
   $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
   stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
   pop("Siap?","tip",900); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1100);
-}
-
-/* ── 2b. One- or two-handed backhand ── */
-function setupBh12(){
-  G.mode="grip"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
-  controls('<button class="btn-pri side" id="bh2Btn"><span class="lb">🙌 Dua tangan</span><small>bola dekat</small></button><button class="btn-pri side" id="bh1Btn"><span class="lb">✋ Satu tangan</span><small>bola jauh</small></button>');
-  $("bh2Btn").addEventListener("click",function(){ tapHit("bh2"); });
-  $("bh1Btn").addEventListener("click",function(){ tapHit("bh1"); });
-  stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit((e.clientX-r.left)/r.width>.7?"bh1":"bh2"); };
-  pop("Siap?","tip",900); nextBall(feedGrip,1100);
-}
-function feedGrip(){
-  if(!G||G.over) return;
-  var g=Math.random()<.5?"bh1":"bh2";
-  feed("bh"); G.side=g; G.hitX = g==="bh1" ? 312 : 240;
-  if(G.n<2) $("laneTip").textContent=T(g==="bh1"?"Bola jauh…":"Bola dekat…");
-  else $("laneTip").textContent="";
 }
 
 /* ── 3. Footwork ── */
@@ -658,7 +635,7 @@ function setupKaki(){
 function move(l){
   if(!G||G.over||l===G.lane) return;
   G.lane=l; sfx("tap"); adamTo(l);
-  play(["shuffle-2","shuffle-3","shuffle-4","shuffle-5"],70,function(){ pose("ready-wide"); });
+  play(["shuffle-2","shuffle-3","shuffle-4","shuffle-5"],70,function(){ pose(READY); });
 }
 function feedLane(){
   if(!G||G.over) return;
@@ -742,7 +719,7 @@ var CALL=["Love","15","30","40"];
 function setupTanding(){
   G.mode="sides"; G.a=0; G.r=0; G.total=0; G.rally=0; $("dots").innerHTML=""; $("score").classList.add("on"); showScore();
   $("playCount").textContent="🎾";
-  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>bola di kanan</small></button>');
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>🙌 dua tangan</small></button>');
   $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
   $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
   stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
@@ -823,7 +800,7 @@ $("introSay").addEventListener("click",function(){ var st=STATIONS[CUR]; say(T(s
 function markFh(){ var c=fhChoice(); $("fhPick").querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-fh")===c); }); }
 $("fhPick").querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){
   var c=b.getAttribute("data-fh"); try{ localStorage.setItem(FH_KEY,c); }catch(e){} sfx("tap"); markFh();
-  $("introPose").src="adam-tennis/"+(c==="two"?"fh-two-3":c==="one"?"fh-one-3":"ready-wide")+".webp";
+  $("introPose").src="adam-tennis/"+(c==="two"?"fh-two-3":c==="one"?"fh-one-3":READY)+".webp";
   say(T(c==="two"?"Forehand dua tangan: lebih kuat dan stabil!":c==="one"?"Forehand satu tangan: jangkauan lebih panjang!":"Acak: gaya forehand Kak Adam ganti-ganti!"));
 }); });
 $("introGo").addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(e){} startStation(CUR); });
