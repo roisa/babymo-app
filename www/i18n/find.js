@@ -32,7 +32,8 @@
   "Selamat malam Ramadan! 🌙": "Happy Ramadan night! 🌙", "MasyaAllah, masjid yang cantik! 🕌": "MashaAllah, what a beautiful mosque! 🕌", "Dapur jadi bersih! 🍽️": "The kitchen is clean! 🍽️",
   "Panen di kebun! 🌾": "Harvest time in the garden! 🌾", "Seru main di pantai! 🌊": "Fun at the beach! 🌊", "Pintar belajar! 📚": "Smart learner! 📚",
   "Seru di kebun binatang! 🦁": "Fun at the zoo! 🦁", "Indahnya bawah laut! 🌊": "Beautiful under the sea! 🌊", "Asyik bermain! 🎉": "Playtime fun! 🎉",
-  "MasyaAllah! 🌙 Semua sudah ditemukan!": "MashaAllah! 🌙 Everything's been found!"
+  "MasyaAllah! 🌙 Semua sudah ditemukan!": "MashaAllah! 🌙 Everything's been found!",
+  "Kura-kura": "Turtle", "Rumah Baby Mo": "Baby Mo's Home", "Garis Finis": "Finish Line", "Hebat! Semua selesai!": "Amazing! All done!"
 }, [
   [/^(.+) JADI RAPI! ✨$/i, "{1} IS TIDY! ✨"]
 ]]);
