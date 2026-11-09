@@ -91,8 +91,8 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;
   background:#2E8A57;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.court{position:absolute;inset:0;width:100%;height:100%}
-.adam{position:absolute;width:38%;aspect-ratio:1;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
-.adam img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
+.adam{position:absolute;width:38%;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
+.adam img{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
 .adam::after{content:'';position:absolute;left:25%;right:25%;bottom:4%;height:7%;border-radius:50%;background:rgba(0,0,0,.22);z-index:-1}
 .ball,.bshadow{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;will-change:transform}
 .ball{z-index:5;background:radial-gradient(circle at 35% 30%,#fff7 0 18%,transparent 19%),var(--ballc,#E8F548);box-shadow:inset -3px -4px 0 rgba(0,0,0,.15)}
@@ -446,7 +446,32 @@ function adamTo(lane){ $("adam").style.left=ADAMX[lane]+"%"; }
 /* ───────── stage geometry (viewBox 400×560) ───────── */
 var stage=$("stage"), ballEl=$("ball"), shEl=$("bshadow");
 function sc(){ return stage.clientWidth/400; }
+
+/* ───────── tennis sounds: ball bounce + racket hit (synthesized, silent when muted) ───────── */
+var TS=(function(){
+  var ac=null, nb=null;
+  function ctx(){ try{ if(kit().isMuted && kit().isMuted()) return null; if(!ac) ac=new (window.AudioContext||window.webkitAudioContext)(); if(ac.state==="suspended") ac.resume(); return ac; }catch(e){ return null; } }
+  function noise(c){ if(nb) return nb; var n=c.sampleRate, b=c.createBuffer(1,n,c.sampleRate), d=b.getChannelData(0); for(var i=0;i<n;i++) d[i]=Math.random()*2-1; return nb=b; }
+  function burst(c,t,dur,type,freq,q,vol){ var s=c.createBufferSource(), f=c.createBiquadFilter(), g=c.createGain(); s.buffer=noise(c); f.type=type; f.frequency.value=freq; f.Q.value=q;
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+dur); s.connect(f); f.connect(g); g.connect(c.destination); s.start(t,Math.random()*.5); s.stop(t+dur+.02); }
+  function thump(c,t,f0,f1,dur,vol){ var o=c.createOscillator(), g=c.createGain(); o.type="sine"; o.frequency.setValueAtTime(f0,t); o.frequency.exponentialRampToValueAtTime(f1,t+dur);
+    g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+dur); o.connect(g); g.connect(c.destination); o.start(t); o.stop(t+dur+.02); }
+  return {
+    /* the deep "pok" of a ball on hard court; quieter when far away */
+    bounce:function(v){ var c=ctx(); if(!c) return; var t=c.currentTime, k=Math.max(.35,Math.min(1,v||1));
+      thump(c,t,210,95,.09,.35*k); burst(c,t,.05,"lowpass",900,.7,.18*k); },
+    /* the crisp "thwock" of strings meeting the ball */
+    hit:function(power){ var c=ctx(); if(!c) return; var t=c.currentTime, k=power||1;
+      burst(c,t,.045,"bandpass",1700,1.1,.55*k); burst(c,t,.12,"bandpass",420,.9,.25*k);
+      thump(c,t,320,140,.06,.4*k); thump(c,t+.002,1250,980,.035,.08*k); },
+    /* a softer feed from the coach on the far side */
+    feed:function(){ this.hit(.45); }
+  };
+})();
+var lastH=null, lastBounceAt=0;
 function place(gx,gy,h,s){
+  if(lastH!==null && h<1.2 && lastH>h && lastH>=1.2 && performance.now()-lastBounceAt>180){ lastBounceAt=performance.now(); TS.bounce(s); }
+  lastH=h;
   var k=sc(), d=24*s*k, ds=d*1.1;
   ballEl.style.width=ballEl.style.height=d+"px";
   ballEl.style.transform="translate("+(gx*k-d/2)+"px,"+((gy-h*s)*k-d/2)+"px)";
@@ -454,7 +479,7 @@ function place(gx,gy,h,s){
   shEl.style.transform="translate("+(gx*k-ds/2)+"px,"+(gy*k-ds*.17)+"px)";
   ballEl.style.opacity=shEl.style.opacity=1;
 }
-function hideBall(){ ballEl.style.opacity=shEl.style.opacity=0; }
+function hideBall(){ lastH=null; ballEl.style.opacity=shEl.style.opacity=0; }
 function lerp(a,b,t){ return a+(b-a)*t; }
 var PB=.7; // bounce point along the flight
 /* incoming flight: from us (near) to beside Adam (far). p 0..1 (+ overshoot) */
@@ -495,6 +520,7 @@ function startStation(i){
   $("score").classList.remove("on"); $("meter").classList.remove("on"); $("marker").classList.remove("on"); $("laneTip").textContent="";
   adamTo("C"); pose("ready-wide"); hideBall();
   show("s-play");
+  say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
   ({pantul:setupPantul,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
 }
 function count(){ $("playCount").textContent=G.hits+" / "+G.total; }
@@ -512,7 +538,7 @@ function setupPantul(){
 function feed(side){
   if(!G||G.over) return;
   G.side=side||"fh"; G.hitX = G.side==="bh" ? 255 : 145; G.tapped=false; G.p=0;
-  pose("ready-wide"); sfx("tap");
+  pose("ready-wide"); TS.feed(); lastH=null;
   G.flight=animate(G.speed*1.25,function(p){
     G.p=p; var b=incoming(p,G.hitX); place(b.gx,b.gy,b.h,b.s);
     if(p>1.18){ miss(G.tapped?null:"Terlalu lambat!"); return false; }
@@ -531,7 +557,7 @@ function tapHit(side){
   hit(side);
 }
 function hit(side){
-  G.hits++; sfx("correct");
+  G.hits++; TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
   swing(side,function(){ pose("win-fist"); });
   var from=G.hitX, to=lerp(120,280,Math.random());
   pop(["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
@@ -539,7 +565,7 @@ function hit(side){
   done(true);
 }
 function missFly(msg){
-  sfx("wrong"); pop(msg,"bad",1200);
+  TS.hit(.7); setTimeout(function(){ sfx("wrong"); },150); pop(msg,"bad",1200);
   var from=G.hitX;
   setTimeout(function(){ pose("oops-1"); },320);
   animate(.6,function(p){ var b=outgoing(Math.min(p,1),from,from,false); place(b.gx,b.gy,b.h,b.s); if(p>=1.15){ hideBall(); return false; } });
@@ -637,8 +663,9 @@ function serveHit(){
   var good=top>=.82;
   play(["serve-4","serve-5","serve-6"],90);
   var tx=lerp(150,250,Math.random());
+  TS.hit(good?1.1:.8);
   if(good){
-    sfx("correct");
+    setTimeout(function(){ sfx("correct"); },180);
     animate(.75,function(p){ var q=Math.min(p,1), gy=lerp(150,400,q), gx=lerp(212,tx,q), s=lerp(.5,.85,q), h=lerp(130,0,q)+4*40*q*(1-q); place(gx,gy,h,s); if(p>=1.15){ hideBall(); return false; } });
     setTimeout(function(){ serveResult(true,"Masuk! Servis roket!"); },700);
   } else {
@@ -685,7 +712,7 @@ function rallyShot(ok){
     G.rally++;
     var rakaMiss = Math.random() < [0,.45,.6,.8][Math.min(G.rally,3)];
     if(rakaMiss){ setTimeout(function(){ point("a"); },900); }
-    else { setTimeout(function(){ pop("Raka mengembalikan!","tip",800); },850); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1500); }
+    else { setTimeout(function(){ TS.hit(.6); pop("Raka mengembalikan!","tip",800); },850); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1500); }
   } else { setTimeout(function(){ point("r"); },700); }
 }
 function point(who){
@@ -705,6 +732,7 @@ function starsFor(){
 }
 function finish(){
   var s=starsFor(), st=STATIONS[G.i], prev=DATA.stars[G.i];
+  say(T(s>=1?(s===3?"Alhamdulillah! Masya Allah!":"Alhamdulillah!"):"Alhamdulillah. Ayo coba lagi!"));
   if(s>prev){ DATA.stars[G.i]=s; save(DATA); try{ kit().addStars && kit().addStars(s-prev); }catch(e){} }
   stage.onclick=null;
   $("resTitle").textContent = s===3?"Masya Allah, sempurna!":s>=1?"Hebat, kamu berhasil!":"Ayo coba lagi!";
