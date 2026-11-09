@@ -435,19 +435,25 @@ function moPlace(x,y,w,anim){
   var m=$("mo"); m.style.transitionDuration=anim?"":"0ms";
   m.style.left=pct(x,400); m.style.top=pct(y,560); m.style.width=pct(w,400);
   /* painter's order by depth: Baby Mo stands BEHIND the pet he looks after (front-row feet ≈ y430, back-row ≈ y305) */
-  m.style.zIndex = y < 310 ? 1 : (y < 432 ? 4 : 6);
+  m.style.zIndex = y < 310 ? 3 : (y < 432 ? 4 : 6);   /* back-row visit: above the other back animals (2), below the one he cares for (4) */
   MO={x:x,y:y,w:w};
 }
 function standFor(k){
   var a=ANIMALS[k], back=a.row==="back";
   /* stand just behind the animal, peeking out to one side so the player still sees Baby Mo */
   var side, x;
-  if(back){ side=a.w*0.42+20; x = a.x<200 ? a.x-side : a.x+side; }   /* back row is crowded: peek out toward the screen edge */
-  else { side=a.w*0.34+22; x=a.x+side; if(x>352) x=a.x-side; }
-  return { x:Math.max(48,Math.min(352,x)), y:a.y-(back?12:16), w:back?130:140 };
+  if(back){
+    /* big animals (cow, sheep, goat): full-size Baby Mo standing at the side, only ~20% of him behind the animal */
+    side=a.w*0.5+18; x = a.x<120 ? a.x+side : a.x-side; if(x<48 || x>352) x = a.x+side>352 ? a.x-side : a.x+side;
+  } else { side=a.w*0.34+22; x=a.x+side; if(x>352) x=a.x-side; }
+  return { x:Math.max(48,Math.min(352,x)), y:a.y-(back?8:16), w:140, k:k };
+}
+/* only the animal Baby Mo is caring for stands in front of him; neighbours don't hide him */
+function frontOf(k){
+  for(var key in spotEls){ var el=spotEls[key]; if(el) el.style.zIndex = (key===k && ANIMALS[key].row==="back") ? 4 : ""; }
 }
 async function walkTo(k){
-  var p=standFor(k); if(Math.abs(p.x-MO.x)<2 && Math.abs(p.y-MO.y)<2) return;
+  var p=standFor(k); frontOf(k); if(Math.abs(p.x-MO.x)<2 && Math.abs(p.y-MO.y)<2) return;
   pose("walk"); moPlace(p.x,p.y,p.w,true); await wait(650);
 }
 
