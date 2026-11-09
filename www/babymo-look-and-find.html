@@ -34,73 +34,133 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:opacity .4s ease,transform .4s ease;z-index:10;}
 .screen.off{opacity:0;pointer-events:none;transform:scale(0.95);}
 
-/* ===== ADVENTURE MAP (HOME + LEVEL SELECT) ===== */
-#s-home{
-  background:
-    radial-gradient(ellipse 80% 50% at 50% 6%, rgba(63,208,140,.30), transparent 60%),
-    radial-gradient(ellipse 70% 45% at 85% 22%, rgba(91,198,232,.14), transparent 60%),
-    radial-gradient(ellipse at 50% 18%, #156A40 0%, #0C2418 72%);
-  padding:0;justify-content:flex-start;overflow:hidden;
-}
+/* ===== ADVENTURE MAP (HOME + LEVEL SELECT) =====
+   An illustrated journey: a winding road through a colourful land, one big
+   round "place" per room. The world is drawn at 375 units wide and scaled
+   to the screen by layoutMap(); the background art extends far to the
+   sides so landscape phones / iPad see more land instead of empty bars. */
+#s-home{background:#8fd16b;padding:0;justify-content:flex-start;overflow:hidden;max-width:none!important;}
 .map-header{
-  width:100%;display:flex;align-items:center;justify-content:center;
-  padding:calc(env(safe-area-inset-top) + 14px) 20px 8px;flex-shrink:0;
-  z-index:5;
+  position:absolute;left:0;right:0;top:0;z-index:6;pointer-events:none;
+  display:flex;align-items:center;justify-content:space-between;gap:8px;
+  padding:calc(env(safe-area-inset-top) + 10px) max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));
 }
-.map-title{font-family:'Fredoka One',cursive;font-size:24px;color:#FFD23F;text-align:center;text-shadow:0 2px 14px rgba(255,210,63,.35);}
-.map-scroll{flex:1;width:100%;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:12px 20px 16px;}
+.map-title{
+  font-family:'Fredoka One',cursive;font-size:22px;line-height:1;color:#FFD23F;
+  background:rgba(12,40,26,.82);border:2px solid rgba(255,255,255,.18);border-radius:40px;
+  padding:9px 16px 10px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5);white-space:nowrap;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.map-stars{
+  font-family:'Fredoka One',cursive;font-size:18px;line-height:1;color:#fff;white-space:nowrap;
+  background:rgba(12,40,26,.82);border:2px solid rgba(255,210,63,.55);border-radius:40px;
+  padding:9px 14px 10px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5);display:flex;align-items:center;gap:6px;
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+}
+.map-stars .ms-star{color:#FFD23F;font-size:20px;}
+.map-stars .ms-of{opacity:.75;font-size:14px;}
+.map-scroll{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;
+  background:linear-gradient(180deg,#9fdcff 0,#bfe8ff 60px,#8fd16b 140px,#8fd16b 100%);}
+.map-wrap{position:relative;width:100%;overflow:hidden;}
+.map-world{position:absolute;top:0;left:0;width:375px;transform-origin:0 0;}
+.mp-bg{position:absolute;top:0;left:-600px;width:1575px;pointer-events:none;display:block;}
 .map-footer{
-  width:100%;flex-shrink:0;display:flex;justify-content:center;
+  position:absolute;left:0;right:0;bottom:0;z-index:6;display:flex;justify-content:center;pointer-events:none;
   padding:10px 20px calc(12px + env(safe-area-inset-bottom));
-  background:linear-gradient(0deg,rgba(13,32,24,.85) 0%,transparent 100%);
-  z-index:5;
 }
 .map-hub-btn{
-  font-family:'Fredoka One',cursive;font-size:15px;color:#fff;text-decoration:none;
-  background:rgba(255,255,255,.1);border:1.5px solid rgba(255,255,255,.18);
-  border-radius:40px;padding:12px 32px;
-  transition:all .15s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  pointer-events:auto;font-family:'Fredoka One',cursive;font-size:15px;color:#fff;text-decoration:none;
+  background:rgba(12,40,26,.82);border:1.5px solid rgba(255,255,255,.22);
+  border-radius:40px;padding:12px 30px;box-shadow:0 8px 20px -10px rgba(0,0,0,.6);
+  transition:transform .15s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
 }
-.map-hub-btn:active{transform:scale(.95);background:rgba(255,255,255,.15);}
-.map-path{display:flex;flex-direction:column;align-items:center;position:relative;}
-.map-node{
-  display:flex;align-items:center;gap:14px;width:100%;max-width:360px;
-  padding:16px 18px;background:rgba(255,255,255,.06);
-  border:2px solid rgba(60,181,74,.2);border-radius:22px;
-  cursor:pointer;transition:all .18s;position:relative;z-index:2;
+.map-hub-btn:active{transform:scale(.95);}
+
+/* a place on the map */
+.map-node{position:absolute;width:92px;height:92px;margin:-46px 0 0 -46px;cursor:pointer;z-index:2;
+  -webkit-tap-highlight-color:transparent;transition:transform .15s;}
+.mp-disc{position:absolute;inset:0;border-radius:50%;background:#fff;padding:5px;
+  box-shadow:0 0 0 3px rgba(40,90,50,.25),0 10px 0 -2px rgba(30,70,40,.28),0 14px 22px -8px rgba(0,0,0,.45);}
+.mp-thumb{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;pointer-events:none;background:#e9f6ec;}
+.mp-num{position:absolute;left:-6px;top:-4px;min-width:30px;height:30px;padding:0 6px;border-radius:15px;
+  background:#2f7de1;color:#fff;font-family:'Fredoka One',cursive;font-size:16px;line-height:30px;text-align:center;
+  border:2.5px solid #fff;box-shadow:0 3px 6px rgba(0,0,0,.25);}
+.mp-ok{position:absolute;right:-6px;top:-4px;width:32px;height:32px;border-radius:50%;
+  background:#21b35f;color:#fff;font:900 19px/28px 'Nunito',sans-serif;text-align:center;
+  border:2.5px solid #fff;box-shadow:0 3px 6px rgba(0,0,0,.25);}
+.mp-lock{position:absolute;left:50%;top:50%;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;
+  background:rgba(255,255,255,.94);font-size:23px;line-height:44px;text-align:center;box-shadow:0 4px 10px rgba(0,0,0,.3);}
+.mp-stars{position:absolute;left:50%;top:80px;transform:translateX(-50%);display:flex;gap:1px;
+  background:#fff;border-radius:14px;padding:1px 7px 2px;box-shadow:0 3px 8px -2px rgba(0,0,0,.3);white-space:nowrap;}
+.mp-stars i{font-style:normal;font-size:15px;line-height:19px;color:#d5dde4;}
+.mp-stars i.on{color:#FFB81C;text-shadow:0 0 1px #E09400;}
+.mp-label{position:absolute;left:50%;top:104px;transform:translateX(-50%);white-space:nowrap;
+  font-family:'Fredoka One',cursive;font-size:15px;line-height:1.15;color:#17321f;
+  background:#FFF8E6;border:2.5px solid #E7C98A;border-radius:12px;padding:4px 11px 5px;
+  box-shadow:0 4px 0 -1px rgba(120,80,20,.28),0 6px 12px -6px rgba(0,0,0,.4);}
+.map-node.is-locked .mp-disc{background:#e4e9e6;}
+.map-node.is-locked .mp-thumb{filter:grayscale(.6) brightness(.97) blur(.4px);opacity:.8;}
+.map-node.is-locked .mp-num{background:#8a978f;}
+.map-node.is-locked .mp-label{background:#EEF1EF;border-color:#c9d1cc;color:#3e4d44;}
+.map-node.is-done .mp-disc{background:#E9FFF1;box-shadow:0 0 0 3px #21b35f,0 10px 0 -2px rgba(30,70,40,.28),0 14px 22px -8px rgba(0,0,0,.45);}
+.map-node.is-cur{z-index:4;}
+.map-node.is-cur .mp-disc{background:#FFE58A;box-shadow:0 0 0 4px #FFB81C,0 10px 0 -2px rgba(150,90,0,.3),0 14px 24px -8px rgba(0,0,0,.45);}
+.map-node.is-cur .mp-num{background:#F08A00;}
+.map-node.is-cur .mp-label{background:#FFD23F;border-color:#E09400;color:#3a2600;}
+.mp-ring{position:absolute;inset:-4px;border-radius:50%;border:4px solid #FFD23F;pointer-events:none;animation:mpRing 2s ease-out infinite;}
+.mp-ring.r2{animation-delay:1s;}
+@keyframes mpRing{0%{transform:scale(1);opacity:.9}100%{transform:scale(1.45);opacity:0}}
+.mp-mo{position:absolute;left:50%;bottom:80px;width:84px;height:84px;margin-left:-42px;pointer-events:none;
+  filter:drop-shadow(0 6px 6px rgba(0,0,0,.3));animation:mpBob 1.6s ease-in-out infinite;transform-origin:50% 92%;}
+@keyframes mpBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-9px) rotate(2deg)}}
+.mp-shadow{position:absolute;left:50%;top:-12px;width:46px;height:10px;margin-left:-23px;border-radius:50%;background:rgba(0,0,0,.18);
+  animation:mpShadow 1.6s ease-in-out infinite;pointer-events:none;}
+@keyframes mpShadow{0%,100%{transform:scale(1)}50%{transform:scale(.75);opacity:.6}}
+.mp-play{position:absolute;top:30px;white-space:nowrap;font-family:'Fredoka One',cursive;font-size:15px;color:#3a2600;
+  background:linear-gradient(180deg,#FFE070,#FFC21A);border:2.5px solid #fff;border-radius:20px;padding:6px 12px;
+  box-shadow:0 4px 0 #D99400,0 8px 16px -6px rgba(0,0,0,.4);animation:mpPlay 1.2s ease-in-out infinite;}
+.mp-play.r{left:100px;}
+.mp-play.l{right:100px;}
+@keyframes mpPlay{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.map-node.shake .mp-disc{animation:mpShake .4s ease;}
+@keyframes mpShake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+/* start (Baby Mo's house) and finish (trophy) */
+.mp-sign{position:absolute;transform:translateX(-50%);white-space:nowrap;font-family:'Fredoka One',cursive;font-size:14px;color:#fff;
+  background:#E8590C;border:2.5px solid #fff;border-radius:12px;padding:3px 10px 4px;box-shadow:0 4px 10px -4px rgba(0,0,0,.45);pointer-events:none;}
+.mp-finish{position:absolute;width:110px;height:110px;margin:-55px 0 0 -55px;border-radius:50%;
+  background:radial-gradient(circle at 50% 40%,#FFF6C8,#FFD23F 70%,#F0A500);border:5px solid #fff;
+  box-shadow:0 10px 0 -2px rgba(150,90,0,.3),0 14px 26px -8px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;font-size:56px;pointer-events:none;}
+.mp-finish.dim{filter:grayscale(.75);opacity:.75;}
+.mp-finish.won{animation:mpWin 2.4s ease-in-out infinite;}
+@keyframes mpWin{0%,100%{transform:rotate(-4deg) scale(1)}50%{transform:rotate(4deg) scale(1.06)}}
+.mp-finish .mp-mo{bottom:84px;}
+/* ambient life on the map */
+.mp-bg .mc{animation:mpCloud var(--d,40s) ease-in-out infinite alternate var(--dl,0s);}
+@keyframes mpCloud{from{transform:translateX(-30px)}to{transform:translateX(40px)}}
+.mp-bg .mb{animation:mpCritter var(--d,3s) ease-in-out infinite var(--dl,0s);}
+@keyframes mpCritter{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+.mp-bg .mw{animation:mpWave var(--d,3s) ease-in-out infinite alternate var(--dl,0s);}
+@keyframes mpWave{from{transform:translateX(-6px)}to{transform:translateX(6px)}}
+.mp-bg .mt{animation:mpTw var(--d,2.6s) ease-in-out infinite var(--dl,0s);}
+@keyframes mpTw{0%,100%{opacity:1}50%{opacity:.25}}
+.mp-bg .mfl{animation:mpFly var(--d,6s) ease-in-out infinite var(--dl,0s);}
+@keyframes mpFly{0%,100%{transform:translate(0,0)}25%{transform:translate(10px,-8px)}50%{transform:translate(18px,2px)}75%{transform:translate(6px,8px)}}
+.mp-bg .mtr{animation:mpTrain 14s ease-in-out infinite alternate;}
+@keyframes mpTrain{from{transform:translateX(-90px)}to{transform:translateX(60px)}}
+/* dark (classic) theme: the same land at dusk */
+html[data-bm-theme="classic"] #s-home{background:#2a4a33;}
+html[data-bm-theme="classic"] .map-scroll{background:linear-gradient(180deg,#24305e 0,#35457a 60px,#3d6a45 140px,#3d6a45 100%);}
+html[data-bm-theme="classic"] .mp-bg{filter:brightness(.66) saturate(.9) hue-rotate(-6deg);}
+html[data-bm-theme="classic"] .map-node.is-locked .mp-disc{background:#b9c2bd;}
+@media (orientation:landscape) and (max-height:520px){
+  .map-title{font-size:18px;padding:7px 13px 8px;}
+  .map-stars{font-size:15px;padding:7px 12px 8px;}
+  .map-hub-btn{padding:9px 22px;}
+  .map-footer{left:auto;right:0;padding-right:max(14px,env(safe-area-inset-right));}
 }
-.map-node:active{transform:scale(.96);}
-.map-node.locked{opacity:.3;cursor:not-allowed;border-color:rgba(255,255,255,.08);}
-.map-node.locked:active{transform:none;}
-.map-node.current{
-  border-color:#FFD23F;background:rgba(255,215,63,.08);
-  box-shadow:0 0 24px rgba(255,215,63,.18),0 4px 16px rgba(0,0,0,.2);
-  animation:nodePulse 2.5s ease-in-out infinite;
+@media (prefers-reduced-motion:reduce){
+  .mp-bg *,.mp-ring,.mp-mo,.mp-shadow,.mp-play,.mp-finish{animation:none!important;}
 }
-@keyframes nodePulse{0%,100%{box-shadow:0 0 20px rgba(255,215,63,.15),0 4px 16px rgba(0,0,0,.2)}50%{box-shadow:0 0 32px rgba(255,215,63,.35),0 0 0 6px rgba(255,215,63,.06),0 4px 16px rgba(0,0,0,.2)}}
-.map-node.done{border-color:rgba(60,181,74,.4);background:rgba(60,181,74,.06);}
-.node-icon{
-  width:60px;height:60px;border-radius:16px;
-  background:linear-gradient(135deg,rgba(60,181,74,.22),rgba(60,181,74,.08));
-  display:flex;align-items:center;justify-content:center;font-size:30px;flex-shrink:0;
-}
-.map-node.current .node-icon{background:linear-gradient(135deg,rgba(255,215,63,.2),rgba(255,215,63,.08));}
-.node-info{flex:1;min-width:0;}
-.node-name{font-family:'Fredoka One',cursive;font-size:16px;color:#fff;margin-bottom:2px;}
-.node-desc{font-size:10.5px;color:rgba(255,255,255,.45);font-weight:700;margin-bottom:4px;}
-.node-stars span{font-size:15px;}
-.sf{color:var(--yellow)}.se{color:rgba(255,255,255,.15)}
-.node-badge{font-family:'Fredoka One',cursive;font-size:12px;flex-shrink:0;border-radius:20px;padding:5px 12px;}
-.node-badge.play{color:#0d2018;background:linear-gradient(135deg,#FFD23F,#f5b800);box-shadow:0 3px 0 #c49500,0 4px 12px rgba(255,210,63,.35);animation:badgeGlow 2s ease-in-out infinite;}
-@keyframes badgeGlow{0%,100%{box-shadow:0 3px 0 #c49500,0 4px 12px rgba(255,210,63,.3)}50%{box-shadow:0 3px 0 #c49500,0 4px 18px rgba(255,210,63,.55)}}
-.node-badge.done-chk{color:rgba(60,181,74,.8);font-size:20px;}
-.map-conn{width:3px;height:24px;position:relative;z-index:1;margin:0 auto;}
-.map-conn-line{width:3px;height:100%;margin:0 auto;background:repeating-linear-gradient(to bottom,rgba(60,181,74,.35) 0px,rgba(60,181,74,.35) 5px,transparent 5px,transparent 10px);}
-.map-node.locked+.map-conn .map-conn-line,.map-conn:has(+.map-node.locked) .map-conn-line{background:repeating-linear-gradient(to bottom,rgba(255,255,255,.08) 0px,rgba(255,255,255,.08) 5px,transparent 5px,transparent 10px);}
-.map-dstar{position:absolute;pointer-events:none;color:#FFD23F;text-shadow:0 0 8px #FFD23F;animation:dstarA var(--d) ease-in-out infinite var(--dl);}
-@keyframes dstarA{0%,100%{opacity:.15;transform:scale(.7)}50%{opacity:.85;transform:scale(1.2)}}
-.map-moon{position:absolute;top:8%;right:8%;font-size:36px;animation:moonF 7s ease-in-out infinite;opacity:.35;pointer-events:none;z-index:1;}
-@keyframes moonF{0%,100%{transform:translateY(0) rotate(-8deg)}50%{transform:translateY(-14px) rotate(8deg)}}
 
 /* ===== GAME SCREEN ===== */
 #s-game{background:var(--dark);justify-content:flex-start;padding:0;}
@@ -212,6 +272,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   background:radial-gradient(ellipse at 50% 25%,#1e5a2e 0%,#0d2018 65%);
   gap:13px;
   padding-bottom:env(safe-area-inset-bottom);
+  overflow:hidden;
 }
 .comp-baby{width:160px;animation:cbA 1.1s ease-in-out infinite;filter:drop-shadow(0 10px 28px rgba(0,0,0,.5));}
 @keyframes cbA{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-18px) rotate(3deg)}}
@@ -231,8 +292,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .abtn-sec{background:rgba(255,255,255,.12);color:var(--cream);border:2px solid rgba(255,255,255,.2);}
 .abtn-sec:active{transform:scale(.95);}
 
-/* tablet/iPad — widen the play area */
-@media(min-width:820px){.map-node{max-width:680px!important;}}
 
 /* bm-letterbox: comfortable centered column on tablet/desktop */
 @media(min-width:760px){.screen{max-width:560px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}body{background:#06100A;}}
@@ -267,12 +326,6 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   100%{transform:translateX(-50%) translateY(14px) scale(.9);opacity:0}}
 
 
-/* room list: a mini picture of each room + its emoji badge */
-.node-icon{width:72px;height:72px;position:relative;padding:0;border-radius:16px;}
-.node-thumb{width:100%;height:100%;object-fit:cover;border-radius:16px;display:block;box-shadow:0 0 0 2px rgba(255,255,255,.22),0 6px 14px -6px rgba(0,0,0,.45);pointer-events:none;}
-.node-emo{position:absolute;right:-7px;bottom:-7px;width:30px;height:30px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;font-size:17px;line-height:1;box-shadow:0 2px 6px rgba(0,0,0,.28);}
-.map-node.locked .node-thumb{filter:grayscale(.75) blur(1.2px);}
-.map-node.current .node-thumb{box-shadow:0 0 0 2.5px #FFD23F,0 6px 14px -6px rgba(0,0,0,.45);}
 /* gentle ambient motion inside the room pictures */
 .scene-svg .amb-tw{animation:ambTw var(--d,3s) ease-in-out infinite var(--dl,0s);}
 @keyframes ambTw{0%,100%{opacity:1}50%{opacity:.2}}
@@ -297,6 +350,16 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 @keyframes ambFfly{0%,100%{transform:translate(0,0);opacity:.3}25%{transform:translate(5px,-7px);opacity:1}50%{transform:translate(-3px,-12px);opacity:.5}75%{transform:translate(-6px,-4px);opacity:1}}
 .scene-svg .amb-shoot{animation:ambShoot 7s ease-in infinite 2s;opacity:0;}
 @keyframes ambShoot{0%,82%{transform:translate(0,0);opacity:0}86%{opacity:1}100%{transform:translate(-110px,56px);opacity:0}}
+.scene-svg .amb-swb{transform-box:fill-box;transform-origin:50% 100%;animation:ambSw var(--d,4s) ease-in-out infinite var(--dl,0s);}
+.scene-svg .amb-rot{transform-box:fill-box;transform-origin:center;animation:ambSpin var(--d,20s) linear infinite;}
+.scene-svg .amb-bub{animation:ambBub var(--d,5s) linear infinite var(--dl,0s);opacity:0;}
+@keyframes ambBub{0%{transform:translate(0,0);opacity:0}15%{opacity:.85}100%{transform:translate(6px,-150px);opacity:0}}
+.scene-svg .amb-glow{animation:ambGlow var(--d,3s) ease-in-out infinite var(--dl,0s);}
+@keyframes ambGlow{0%,100%{opacity:.55}50%{opacity:1}}
+.scene-svg .amb-swim{animation:ambSwim var(--d,9s) ease-in-out infinite alternate var(--dl,0s);}
+@keyframes ambSwim{from{transform:translateX(-28px)}to{transform:translateX(28px)}}
+.scene-svg .amb-wave{animation:ambWave var(--d,4s) ease-in-out infinite alternate var(--dl,0s);}
+@keyframes ambWave{from{transform:translateX(-10px)}to{transform:translateX(10px)}}
 @media (prefers-reduced-motion:reduce){.scene-svg *{animation:none!important;}}
 /* tray item images (hidden Baby Mo) */
 .ti-img{width:30px;height:30px;object-fit:contain;}
@@ -318,23 +381,14 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Cari Baby Mo — Baby Mo","url":"https://play.babymo.id/babymo-look-and-find.html","description":"Temukan Baby Mo yang tersembunyi di setiap scene — melatih observasi.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-look-and-find.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":7},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Cari Baby Mo","item":"https://play.babymo.id/babymo-look-and-find.html"}]}]}</script>
 <link rel="stylesheet" href="bm-bright.css">
 <style id="bm-bright">
-#s-home,#s-complete{background:
+#s-complete{background:
   radial-gradient(ellipse 70% 45% at 0% 0%,rgba(120,200,255,.45),transparent 70%),
   radial-gradient(ellipse 60% 40% at 100% 8%,rgba(255,180,210,.40),transparent 70%),
   radial-gradient(ellipse 70% 45% at 0% 100%,rgba(130,230,180,.38),transparent 70%),#F2F6FC;}
-.map-title{color:#E8590C;text-shadow:none;}
-.map-footer{background:linear-gradient(0deg,rgba(242,246,252,.95) 0%,transparent 100%);}
-.map-hub-btn{color:#152230;background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.1);box-shadow:0 10px 22px -16px rgba(30,60,110,.5);}
-.map-node{background:rgba(255,255,255,.9);border-color:rgba(48,180,110,.25);box-shadow:0 12px 24px -18px rgba(30,60,110,.5);}
-.map-node.locked{opacity:.55;border-color:rgba(21,34,48,.08);}
-.map-node.current{background:linear-gradient(135deg,#FFFBEA,#FFF1C7);border-color:#F5B800;}
-.map-node.done{background:linear-gradient(135deg,#F0FBF4,#DFF6E8);}
-.node-icon{background:linear-gradient(135deg,#E3F7EA,#C9EFD7);}
-.node-name{color:#152230;}
-.node-desc{color:#5A6878;}
-.se{color:rgba(21,34,48,.15);}
-.node-badge.done-chk{color:#12A15A;}
-.map-moon{opacity:.6;}
+.map-title{color:#D9480F;background:rgba(255,255,255,.94);border-color:rgba(255,255,255,1);text-shadow:none;}
+.map-stars{color:#152230;background:rgba(255,255,255,.94);border-color:#FFC21A;}
+.map-stars .ms-star{color:#F5A000;}
+.map-hub-btn{color:#152230;background:rgba(255,255,255,.92);border-color:rgba(21,34,48,.1);box-shadow:0 10px 22px -12px rgba(30,60,110,.55);}
 .comp-baby{filter:drop-shadow(0 10px 22px rgba(80,50,140,.25));}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
@@ -374,18 +428,12 @@ html[data-bm-theme="bright"] #s-game{background:radial-gradient(ellipse 80% 40% 
 
 <!-- ======= ADVENTURE MAP ======= -->
 <div class="screen" id="s-home">
-  <div class="map-moon">🌙</div>
-  <span class="map-dstar" style="top:14%;left:8%;font-size:12px;--d:3.2s;--dl:0s">✦</span>
-  <span class="map-dstar" style="top:8%;left:82%;font-size:10px;--d:4.6s;--dl:.8s">✦</span>
-  <span class="map-dstar" style="top:38%;left:5%;font-size:8px;--d:5.1s;--dl:.3s">⋆</span>
-  <span class="map-dstar" style="top:58%;left:92%;font-size:11px;--d:3.6s;--dl:1.9s">✦</span>
-  <span class="map-dstar" style="top:80%;left:7%;font-size:7px;--d:4.2s;--dl:1.4s">⋆</span>
-  <span class="map-dstar" style="top:48%;left:90%;font-size:9px;--d:3.8s;--dl:.6s">✦</span>
+  <div class="map-scroll" id="map-scroll">
+    <div class="map-wrap" id="map-wrap"><div class="map-world" id="map-world"></div></div>
+  </div>
   <div class="map-header">
     <div class="map-title">🔍 Cari Baby Mo</div>
-  </div>
-  <div class="map-scroll">
-    <div class="map-path" id="map-path"></div>
+    <div class="map-stars"><span class="ms-star">★</span><span id="map-star-n">0</span><span class="ms-of" id="map-star-of">/54</span></div>
   </div>
   <div class="map-footer">
     <a href="index.html" class="map-hub-btn">🏠 Game Hub</a>
@@ -875,42 +923,178 @@ function nextLevel(){
   if(n<LEVELS.length)startLevel(n);else showScreen('home');
 }
 
+// =============================================
+// ADVENTURE MAP
+// =============================================
+// Each place sits on a winding road. World is 375 units wide; layoutMap()
+// scales it to the screen. X positions zig-zag so the road winds.
+const MAP_X=[118,256,124,250,118,256,130,250,114,252,120,258,124,250,118,256,128,246];
+const MAP_TOP=275,MAP_GAP=165;
+const MAP_H=MAP_TOP+(LEVELS.length-1)*MAP_GAP+390;
+const MAP_START={x:187,y:156},MAP_END={x:187,y:MAP_TOP+(LEVELS.length-1)*MAP_GAP+205};
+function mapPts(){return LEVELS.map((lv,i)=>({x:MAP_X[i%MAP_X.length],y:MAP_TOP+i*MAP_GAP}));}
+// smooth road through a list of points (vertical tangents at each stop)
+function mapRoad(ps){
+  let d=`M${ps[0].x} ${ps[0].y}`;
+  for(let i=1;i<ps.length;i++){const a=ps[i-1],b=ps[i],k=(b.y-a.y)*.55;d+=` C${a.x} ${a.y+k} ${b.x} ${b.y-k} ${b.x} ${b.y}`;}
+  return d;
+}
+function mapStarTotal(){return LEVELS.reduce((s,lv)=>s+Math.min(3,prog[lv.id]||0),0);}
+
+// ---- background art helpers (world units) ----
+function _tree(x,y,s,c){c=c||['#4fa35a','#62b866','#7acb72'];return`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="22" ry="6" fill="#000" opacity=".12"/><rect x="-4" y="-26" width="8" height="28" rx="3" fill="#9a6a3c"/><circle cx="0" cy="-42" r="20" fill="${c[0]}"/><circle cx="-13" cy="-32" r="14" fill="${c[1]}"/><circle cx="13" cy="-32" r="14" fill="${c[1]}"/><circle cx="-4" cy="-48" r="10" fill="${c[2]}"/><circle cx="-8" cy="-50" r="3.5" fill="#fff" opacity=".25"/></g>`;}
+function _pine(x,y,s){return`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="16" ry="5" fill="#000" opacity=".12"/><rect x="-3" y="-12" width="6" height="14" fill="#7a4f2c"/><path d="M0 -62 L18 -30 H8 L22 -10 H-22 L-8 -30 H-18 Z" fill="#2f8a52"/><path d="M0 -62 L18 -30 H8 L22 -10 H0 Z" fill="#26774a"/></g>`;}
+function _bush(x,y,s){return`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="2" rx="22" ry="5" fill="#000" opacity=".1"/><circle cx="-12" cy="-8" r="11" fill="#5aae5c"/><circle cx="10" cy="-8" r="12" fill="#5aae5c"/><circle cx="0" cy="-14" r="12" fill="#6cc06a"/><circle cx="-4" cy="-18" r="3" fill="#fff" opacity=".22"/></g>`;}
+function _flowers(x,y,c){return[[0,0],[10,4],[-9,5]].map((o,i)=>`<g transform="translate(${x+o[0]} ${y+o[1]})"><line x1="0" y1="0" x2="0" y2="8" stroke="#3f8a40" stroke-width="1.6"/><g fill="${c[i%c.length]}"><circle cx="-3" cy="0" r="2.8"/><circle cx="3" cy="0" r="2.8"/><circle cx="0" cy="-3" r="2.8"/><circle cx="0" cy="3" r="2.8"/></g><circle r="1.8" fill="#fff6c8"/></g>`).join('');}
+function _house(x,y,wall,roof,s){s=s||1;return`<g transform="translate(${x} ${y}) scale(${s})"><ellipse cx="0" cy="3" rx="40" ry="7" fill="#000" opacity=".12"/><rect x="-30" y="-40" width="60" height="42" rx="3" fill="${wall}"/><path d="M-38 -38 L0 -68 L38 -38 Z" fill="${roof}"/><rect x="-36" y="-41" width="72" height="5" rx="2" fill="#000" opacity=".12"/><rect x="-8" y="-22" width="16" height="24" rx="7" fill="#8a5a33"/><rect x="-24" y="-30" width="12" height="11" rx="2" fill="#bfe6ff"/><rect x="12" y="-30" width="12" height="11" rx="2" fill="#bfe6ff"/></g>`;}
+function _cloud(x,y,s,d,dl){return`<g class="mc" style="--d:${d}s;--dl:${dl}s"><g transform="translate(${x} ${y}) scale(${s})" fill="#fff"><ellipse cx="0" cy="0" rx="30" ry="12"/><ellipse cx="-12" cy="-8" rx="15" ry="12"/><ellipse cx="10" cy="-11" rx="17" ry="14"/></g></g>`;}
+function _emo(x,y,e,sz,cls,d,dl){return`<text x="${x}" y="${y}" font-size="${sz}" text-anchor="middle"${cls?` class="${cls}" style="--d:${d||3}s;--dl:${dl||0}s"`:''}>${e}</text>`;}
+function _bfly(x,y,c){return`<ellipse cx="${x-4.5}" cy="${y-3}" rx="5" ry="4" fill="${c}"/><ellipse cx="${x+4.5}" cy="${y-3}" rx="5" ry="4" fill="${c}"/><ellipse cx="${x-3.5}" cy="${y+3}" rx="3.4" ry="2.8" fill="${c}"/><ellipse cx="${x+3.5}" cy="${y+3}" rx="3.4" ry="2.8" fill="${c}"/><rect x="${x-1}" y="${y-5}" width="2" height="10" rx="1" fill="#4a3a4a"/>`;}
+function _fence(x,y,n){return`<g fill="#fff4dc" stroke="#d8c49a" stroke-width="1">${_rep(n,i=>`<path d="M${x+i*12} ${y} v-16 l4 -5 l4 5 v16 Z"/>`)}<rect x="${x-2}" y="${y-12}" width="${n*12+2}" height="3.5"/><rect x="${x-2}" y="${y-6}" width="${n*12+2}" height="3.5"/></g>`;}
+
+function mapBgSVG(ps){
+  const r=_rng(4242),W0=-600,W1=975,H=MAP_H,last=ps[ps.length-1];
+  const y=i=>ps[i].y;
+  let o='';
+  // grass base + soft meadow patches + tufts
+  o+=`<defs><linearGradient id="mpSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fd3ff"/><stop offset="1" stop-color="#d6f1ff"/></linearGradient>
+<linearGradient id="mpSea" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#5fc8ea"/><stop offset=".35" stop-color="#3aa6dc"/><stop offset="1" stop-color="#2a86c8"/></linearGradient>
+<linearGradient id="mpRiver" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fd0e6"/><stop offset="1" stop-color="#3aa6c8"/></linearGradient></defs>`;
+  o+=`<rect x="${W0}" y="0" width="${W1-W0}" height="${H}" fill="#8fd16b"/>`;
+  o+=_rep(70,i=>`<ellipse cx="${(W0+r()*(W1-W0)).toFixed(0)}" cy="${(160+r()*(H-160)).toFixed(0)}" rx="${(40+r()*90).toFixed(0)}" ry="${(18+r()*30).toFixed(0)}" fill="${r()<.5?'#a3dc7c':'#82c660'}" opacity=".55"/>`);
+  o+=`<g stroke="#6cb04e" stroke-width="1.6" fill="none" stroke-linecap="round">`+_rep(160,i=>{const x=(W0+r()*(W1-W0)).toFixed(0),yy=(170+r()*(H-180)).toFixed(0);return`<path d="M${x} ${yy} l-3 -6 M${x} ${yy} l0 -7 M${x} ${yy} l3 -6"/>`;})+`</g>`;
+  // ---- sky, sun & hills at the very top (start) ----
+  o+=`<rect x="${W0}" y="0" width="${W1-W0}" height="194" fill="url(#mpSky)"/><g transform="translate(0 44)">`;
+  o+=`<circle cx="320" cy="62" r="40" fill="#fff3b0" opacity=".45"/><circle cx="320" cy="62" r="24" fill="#FFE066"/>`;
+  o+=_cloud(70,56,1,38,0)+_cloud(250,40,.8,46,3)+_cloud(-200,60,1.1,40,1)+_cloud(560,50,1,50,2)+_cloud(-420,40,.9,44,4)+_cloud(780,70,.9,42,5);
+  o+=`<path d="M${W0} 140 Q-420 80 -240 128 Q-80 70 60 120 Q170 76 290 118 Q420 70 560 122 Q720 84 ${W1} 126 V170 H${W0} Z" fill="#7cc96a"/>`;
+  o+=`<path d="M${W0} 160 Q-300 120 -100 150 Q80 118 260 148 Q480 116 ${W1} 150 V180 H${W0} Z" fill="#8fd16b"/>`;
+  // Baby Mo's house = start
+  o+=_house(187,128,'#FFF1D6','#E8590C',1.15)+_flowers(130,132,['#ff7a9a','#ffd166'])+_flowers(244,134,['#b197fc','#ff7a9a'])+_tree(-30,170,1,null)+_tree(420,175,1.1,null)+'</g>';
+  // ---- zone 1–3: home & dream garden ----
+  o+=_tree(318,y(0)-10,1.1)+_bush(350,y(0)+40,1)+_fence(282,y(0)+70,7)+_flowers(300,y(0)+92,['#ff7a9a','#ffd166','#b197fc']);
+  o+=_tree(40,y(1)-20,1)+_house(42,y(1)+70,'#DDF1FF','#3d8adf',.9)+_bush(-10,y(1)+90,1.1)+_tree(-90,y(1)+30,1.2);
+  // dream garden: flower arch + butterflies
+  o+=`<g transform="translate(305 ${y(2)+10})"><path d="M-34 30 V-6 A34 34 0 0 1 34 -6 V30" fill="none" stroke="#c98ad8" stroke-width="7"/>${_rep(9,i=>{const a=Math.PI*(i/8);return`<circle cx="${(-34*Math.cos(a)).toFixed(1)}" cy="${(-6-34*Math.sin(a)).toFixed(1)}" r="6" fill="${['#ff8fb3','#ffd166','#fff'][i%3]}"/>`;})}</g>`;
+  o+=_flowers(285,y(2)+52,['#ff7a9a','#ffd166'])+_flowers(330,y(2)+56,['#b197fc','#7cc8e0'])+_emo(250,y(2)-40,'🦋',20,'mfl',7,0)+_emo(345,y(2)-60,'🦋',16,'mfl',6,1.5);
+  // ---- zone 4: Ramadan market (left) ----
+  o+=`<g transform="translate(18 ${y(3)-30})"><path d="M-20 -46 Q40 -30 110 -48" stroke="#5a3a2a" stroke-width="1.5" fill="none"/>${[[5,-40,'#ff6b5c'],[30,-36,'#ffd166'],[55,-36,'#4ec5b0'],[80,-40,'#ff8fb3']].map(l=>`<g class="mt" style="--d:${2+l[0]%3}s"><rect x="${l[0]-5}" y="${l[1]}" width="10" height="13" rx="4" fill="${l[2]}"/><rect x="${l[0]-3}" y="${l[1]-2}" width="6" height="3" fill="#5a3a2a"/></g>`).join('')}
+  ${[[-10,'#ff6b5c'],[52,'#2fa37a']].map(s=>`<g transform="translate(${s[0]} 0)"><ellipse cx="25" cy="44" rx="34" ry="6" fill="#000" opacity=".12"/><rect x="0" y="10" width="50" height="34" fill="#c98a52"/><rect x="0" y="10" width="50" height="8" fill="#a8703f"/><path d="M-6 -6 H56 V10 H-6 Z" fill="#fff"/>${_rep(4,i=>`<rect x="${-6+i*15.5}" y="-6" width="8" height="16" fill="${s[1]}"/>`)}<path d="M-6 10 ${_rep(4,i=>`q${7.75/2} 6 7.75 0 q${7.75/2} 6 7.75 0 `)}" fill="${s[1]}"/><circle cx="14" cy="8" r="5" fill="#ffd166"/><circle cx="28" cy="7" r="5" fill="#ff9a3c"/></g>`).join('')}</g>`;
+  o+=_tree(-60,y(3)+40,1.1)+_bush(70,y(3)+70,.9);
+  // ---- zone 5: mosque (right) ----
+  o+=`<g transform="translate(318 ${y(4)+20})"><ellipse cx="0" cy="40" rx="60" ry="9" fill="#000" opacity=".12"/><rect x="-36" y="-6" width="72" height="46" fill="#fff6e0"/><path d="M-26 -6 Q-26 -44 0 -50 Q26 -44 26 -6 Z" fill="#2fbf8f"/><rect x="-2" y="-62" width="4" height="12" fill="#e0a800"/><path d="M0 -70 a5 5 0 1 0 4 8 a4 4 0 1 1 -4 -8" fill="#e0a800"/><rect x="-10" y="14" width="20" height="26" rx="10" fill="#2a8a68"/><rect x="40" y="-48" width="12" height="88" fill="#fff6e0"/><path d="M38 -48 L46 -66 L54 -48 Z" fill="#2fbf8f"/><rect x="38" y="-20" width="16" height="4" fill="#e0c890"/><rect x="-30" y="6" width="10" height="12" rx="5" fill="#bfe6ff"/><rect x="20" y="6" width="10" height="12" rx="5" fill="#bfe6ff"/></g>`;
+  o+=_tree(400,y(4)+30,1.2)+_flowers(290,y(4)+80,['#ffd166','#ff7a9a'])+_tree(-40,y(4)-30,1)+_bush(30,y(4)+56,1);
+  // ---- zone 6: kitchen cottage with smoke (left) ----
+  o+=_house(40,y(5)+30,'#FFE3C2','#c4553d',1)+`<rect x="54" y="${y(5)-30}" width="9" height="18" fill="#8a4f2c"/>`+_rep(3,i=>`<circle class="mb" style="--d:${3+i}s;--dl:${i*.6}s" cx="${58+i*6}" cy="${y(5)-40-i*12}" r="${5+i*2}" fill="#fff" opacity=".7"/>`)+_tree(-60,y(5)+50,1.1)+_bush(94,y(5)+56,.8);
+  // ---- zone 7: school (right) ----
+  o+=`<g transform="translate(318 ${y(6)+24})"><ellipse cx="0" cy="34" rx="62" ry="9" fill="#000" opacity=".12"/><rect x="-46" y="-20" width="92" height="54" fill="#ffd9a0"/><path d="M-54 -18 L0 -50 L54 -18 Z" fill="#e85d4f"/><circle cx="0" cy="-28" r="8" fill="#fff"/><path d="M0 -28 v-5 M0 -28 h4" stroke="#333" stroke-width="1.5"/>${_rep(3,i=>`<rect x="${-38+i*28}" y="-8" width="18" height="14" rx="2" fill="#bfe6ff"/>`)}<rect x="-9" y="12" width="18" height="22" rx="3" fill="#8a5a33"/></g>`;
+  o+=_emo(260,y(6)-40,'✏️',18,'mb',3.4,0)+_tree(-30,y(6)-10,1)+_bush(40,y(6)+70,1);
+  // ---- sea on the right (beach → under the sea) ----
+  const y7=y(7),y11=y(11);
+  const sea=`M${W1} ${y7-140} L450 ${y7-130} Q330 ${y7-110} 320 ${y7-40} Q312 ${y7+60} 332 ${y7+120} Q352 ${(y7+y11)/2} 334 ${y11-150} Q320 ${y11-80} 204 ${y11-40} Q170 ${y11+10} 206 ${y11+60} Q250 ${y11+110} 380 ${y11+130} L${W1} ${y11+140} Z`;
+  o+=`<path d="${sea}" fill="#f6dc9a" stroke="#f6dc9a" stroke-width="56" stroke-linejoin="round"/>`;
+  o+=`<path d="${sea}" fill="url(#mpSea)" stroke="#fff" stroke-width="5" stroke-linejoin="round" stroke-dasharray="14 10" opacity=".98"/>`;
+  o+=`<g stroke="#e8f8ff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".8">`+_rep(26,i=>{const yy=y7-90+r()*(y11-y7+180),xx=360+r()*560;return`<path class="mw" style="--d:${(2.4+r()*2).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" d="M${xx.toFixed(0)} ${yy.toFixed(0)} q8 -5 16 0 q8 5 16 0"/>`;})+`</g>`;
+  o+=_emo(430,y7+20,'⛵',30,'mb',3.6,0)+_emo(520,(y7+y11)/2,'🐳',36,'mb',4,1)+_emo(352,y7+170,'🐠',20,'mw',2.6,0)+_emo(420,y11-100,'🐬',28,'mb',3.2,.5)+_emo(150,y11+28,'🐟',18,'mw',2.4,.3)+_emo(700,y7+60,'⛵',26,'mb',4,1)+_emo(620,y11-20,'🐠',22,'mw',3,0);
+  // beach bits: umbrella + palm on the sand
+  o+=`<g transform="translate(318 ${y7-74})"><line x1="0" y1="0" x2="0" y2="40" stroke="#8a5a33" stroke-width="3"/><path d="M-30 4 Q0 -26 30 4 Z" fill="#ff6b5c"/><path d="M-10 4 Q0 -26 10 4 Z" fill="#fff"/></g>`;
+  o+=`<g transform="translate(40 ${y7+10})"><path d="M0 40 Q6 0 14 -40" stroke="#9a6a3a" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#3aa860"><path d="M14 -42 Q-14 -60 -34 -44 Q-10 -46 14 -42 Z"/><path d="M14 -42 Q40 -64 62 -48 Q38 -48 14 -42 Z"/><path d="M14 -42 Q6 -72 -14 -76 Q2 -60 14 -42 Z"/><path d="M14 -42 Q26 -72 46 -74 Q30 -60 14 -42 Z"/></g><circle cx="12" cy="-38" r="4" fill="#8a5a33"/><circle cx="18" cy="-37" r="4" fill="#8a5a33"/></g>`;
+  // ---- zone 9: zoo pen (right of node, before the sea) / zone 10 playground / zone 11 farm ----
+  o+=`<g transform="translate(0 ${y(8)})"><rect x="200" y="-20" width="96" height="58" rx="10" fill="#a3dc7c" stroke="#c49a52" stroke-width="3" stroke-dasharray="6 4"/>${_emo(228,22,'🦒',30,'mb',3.4,0)}${_emo(270,28,'🐘',28,'mb',3.8,.8)}</g>`+_tree(-20,y(8)-20,1.1)+_emo(-80,y(8)+40,'🦓',26,'mb',3,.4);
+  o+=`<g transform="translate(40 ${y(9)+10})"><line x1="-22" y1="30" x2="-14" y2="-20" stroke="#3a7bd5" stroke-width="4"/><line x1="22" y1="30" x2="14" y2="-20" stroke="#3a7bd5" stroke-width="4"/><line x1="-16" y1="-18" x2="16" y2="-18" stroke="#3a7bd5" stroke-width="4"/><line x1="-6" y1="-18" x2="-6" y2="12" stroke="#888" stroke-width="1.5"/><line x1="6" y1="-18" x2="6" y2="12" stroke="#888" stroke-width="1.5"/><rect x="-9" y="12" width="18" height="4" rx="2" fill="#ff6b5c"/></g>`+_emo(100,y(9)-50,'🎈',22,'mb',2.8,0)+_emo(-60,y(9)+20,'🪁',26,'mfl',7,0);
+  o+=`<g transform="translate(300 ${y(10)+10})"><ellipse cx="0" cy="30" rx="44" ry="8" fill="#000" opacity=".12"/><rect x="-30" y="-14" width="60" height="44" fill="#d64545"/><path d="M-36 -12 L0 -40 L36 -12 Z" fill="#a83232"/><rect x="-12" y="4" width="24" height="26" fill="#fff"/><path d="M-12 4 L12 30 M12 4 L-12 30" stroke="#d64545" stroke-width="3"/></g>`+_emo(240,y(10)+56,'🐄',24,'mb',3.6,0)+_emo(355,y(10)+60,'🐔',18,'mb',2.6,.4)+_fence(200,y(10)+86,9);
+  // ---- zone 13: library (right) / 14: railway across / 15: forest camp ----
+  o+=`<g transform="translate(305 ${y(12)+16})"><ellipse cx="0" cy="34" rx="56" ry="8" fill="#000" opacity=".12"/><rect x="-42" y="-18" width="84" height="52" fill="#f2e2c4"/><path d="M-50 -16 L0 -44 L50 -16 Z" fill="#7c5cff"/>${_rep(4,i=>`<rect x="${-34+i*20}" y="-10" width="8" height="44" fill="#fff"/>`)}<rect x="-8" y="12" width="16" height="22" rx="3" fill="#8a5a33"/><text x="0" y="-22" font-size="14" text-anchor="middle">📖</text></g>`+_tree(-30,y(12)-30,1)+_bush(40,y(12)+70,1);
+  const ty=y(13)+64;
+  o+=`<g><rect x="${W0}" y="${ty-7}" width="${W1-W0}" height="14" fill="#c9a87a" opacity=".6"/>${_rep(130,i=>`<rect x="${W0+i*12.2}" y="${ty-9}" width="5" height="18" fill="#8a5a33"/>`)}<rect x="${W0}" y="${ty-7}" width="${W1-W0}" height="3" fill="#7a7a8a"/><rect x="${W0}" y="${ty+4}" width="${W1-W0}" height="3" fill="#7a7a8a"/></g>`;
+  o+=`<g class="mtr"><g transform="translate(20 ${ty-6})"><rect x="0" y="-30" width="44" height="26" rx="5" fill="#2fa37a"/><rect x="34" y="-44" width="10" height="16" fill="#2fa37a"/><rect x="6" y="-24" width="12" height="10" rx="2" fill="#bfe6ff"/><rect x="-40" y="-26" width="36" height="22" rx="4" fill="#ffb347"/><rect x="-34" y="-21" width="10" height="8" rx="2" fill="#bfe6ff"/><rect x="-20" y="-21" width="10" height="8" rx="2" fill="#bfe6ff"/><circle cx="10" cy="-3" r="5" fill="#333"/><circle cx="32" cy="-3" r="5" fill="#333"/><circle cx="-30" cy="-3" r="4" fill="#333"/><circle cx="-14" cy="-3" r="4" fill="#333"/>${_rep(3,i=>`<circle class="mb" style="--d:${2+i*.5}s" cx="${40+i*6}" cy="${-52-i*10}" r="${4+i*2}" fill="#fff" opacity=".75"/>`)}</g></g>`;
+  o+=_pine(300,y(14)-30,1.2)+_pine(340,y(14)+10,1)+_pine(270,y(14)+50,.9)+_pine(420,y(14)-10,1.3)+_pine(-40,y(14)+30,1.2)+_pine(10,y(14)-40,1);
+  o+=`<g transform="translate(330 ${y(14)+86})"><path d="M-26 0 L0 -40 L26 0 Z" fill="#ff8c42"/><path d="M0 -40 L-8 0 H8 Z" fill="#ffd166"/></g>`+_emo(240,y(14)+100,'🔥',18,'mt',1.2,0);
+  // ---- zone 16: bakery (left) / 17: rainbow pond ----
+  o+=`<g transform="translate(46 ${y(15)+20})"><ellipse cx="0" cy="34" rx="52" ry="8" fill="#000" opacity=".12"/><rect x="-40" y="-16" width="80" height="50" fill="#fff0f4"/><path d="M-46 -16 H46 V-2 H-46 Z" fill="#ff8fb3"/>${_rep(6,i=>`<rect x="${-46+i*16}" y="-16" width="8" height="14" fill="#fff"/>`)}<rect x="-30" y="4" width="26" height="18" rx="3" fill="#bfe6ff"/><rect x="8" y="2" width="20" height="32" rx="3" fill="#8a5a33"/><text x="-17" y="18" font-size="12" text-anchor="middle">🧁</text></g>`+_tree(-50,y(15)-30,1)+_bush(110,y(15)+70,.8);
+  o+=`<g fill="none" stroke-width="7" opacity=".7">${['#ff6b6b','#ffa94d','#ffe066','#69db7c','#4dabf7','#b197fc'].map((c,i)=>`<path d="M${200+i*7} ${y(16)+40} A${100-i*7} ${90-i*7} 0 0 1 ${400-i*7} ${y(16)+40}" stroke="${c}"/>`).join('')}</g>`;
+  o+=`<ellipse cx="300" cy="${y(16)+40}" rx="58" ry="16" fill="#7ab8dc"/><ellipse cx="300" cy="${y(16)+38}" rx="46" ry="10" fill="#9fd4f0"/>`+_emo(286,y(16)+44,'🦆',18,'mw',3,0)+_emo(0,y(16)-30,'🐸',20,'mb',2.4,0)+_tree(-60,y(16)+30,1.1);
+  // ---- zone 18: river with floating market, then finish ----
+  const ry=y(17);
+  o+=`<path d="M${W0} ${ry-46} Q-200 ${ry-80} 0 ${ry-40} Q180 ${ry-10} 375 ${ry-54} Q600 ${ry-90} ${W1} ${ry-50} V${ry+56} Q600 ${ry+20} 375 ${ry+50} Q180 ${ry+80} 0 ${ry+44} Q-200 ${ry+10} ${W0} ${ry+40} Z" fill="url(#mpRiver)" stroke="#e9f7c8" stroke-width="8"/>`;
+  o+=`<g stroke="#e8f8ff" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".8">`+_rep(14,i=>`<path class="mw" style="--d:${(2.4+r()*2).toFixed(1)}s" d="M${(W0+40+i*112).toFixed(0)} ${(ry-16+r()*30).toFixed(0)} q8 -5 16 0 q8 5 16 0"/>`)+`</g>`;
+  o+=_emo(40,ry+10,'🛶',28,'mb',3.2,0)+_emo(-140,ry+6,'🛶',26,'mb',3.6,.6)+_emo(560,ry,'🛶',26,'mb',3.4,1)+_emo(340,ry+20,'🪷',16,'mb',2.8,.3);
+  o+=_tree(330,y(17)+110,1)+_tree(40,y(17)+120,1.1)+_flowers(110,MAP_END.y+40,['#ff7a9a','#ffd166'])+_flowers(266,MAP_END.y+44,['#b197fc','#ff7a9a']);
+  // scattered trees on the far sides (landscape / iPad)
+  for(let yy=260;yy<H-80;yy+=150){
+    const lx=-120-r()*400,rx=480+r()*400;
+    if(!(yy>y7-120&&yy<y11+130))o+=_tree(rx,yy,1+r()*.4);
+    o+=(r()<.5?_tree(lx,yy,1+r()*.4):_pine(lx,yy,1+r()*.3));
+  }
+  o+=_cloud(-300,y(5),1.2,50,0)+_cloud(700,y(9),1.1,46,2)+_cloud(-380,y(13),1,44,1)+_cloud(640,y(15),1.2,52,3);
+  // the road: edge, sand, centre dots
+  const all=[MAP_START,...ps,MAP_END],d=mapRoad(all);
+  o+=`<path d="${d}" fill="none" stroke="#000" stroke-opacity=".12" stroke-width="40" stroke-linecap="round" transform="translate(0 5)"/>`;
+  o+=`<path d="${d}" fill="none" stroke="#d9b56e" stroke-width="38" stroke-linecap="round"/>`;
+  o+=`<path d="${d}" fill="none" stroke="#f7e2ae" stroke-width="30" stroke-linecap="round"/>`;
+  o+=`<path d="${d}" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-dasharray="0 15" opacity=".9"/>`;
+  return o;
+}
+
 function buildMap(){
-  const container=document.getElementById('map-path');
-  let html='';
+  const world=document.getElementById('map-world');
+  const ps=mapPts();
+  let curIdx=LEVELS.length; // "all done" → finish
+  let html=`<svg class="mp-bg" xmlns="http://www.w3.org/2000/svg" viewBox="-600 0 1575 ${MAP_H}" width="1575" height="${MAP_H}" aria-hidden="true">${mapBgSVG(ps)}<path id="mp-prog" fill="none" stroke="#FFB81C" stroke-width="8" stroke-linecap="round" stroke-dasharray="0 15"/></svg>`;
+  html+=`<span class="mp-sign" style="left:${MAP_START.x-96}px;top:${MAP_START.y-42}px">Rumah Baby Mo</span>`;
   LEVELS.forEach((lv,i)=>{
-    const stars=prog[lv.id]||0;
+    const stars=Math.min(3,prog[lv.id]||0);
     const unlocked=i===0||prog[LEVELS[i-1].id]>0;
     const completed=stars>0;
-    const isNext=unlocked&&!completed;
-    const starHtml=[1,2,3].map(s=>`<span class="${s<=stars?'sf':'se'}">★</span>`).join('');
-    let badge='';
-    if(!unlocked) badge='<span style="font-size:22px;opacity:.5">🔒</span>';
-    else if(isNext) badge='<span class="node-badge play">MAIN ▶</span>';
-    else badge='<span class="node-badge done-chk">✅</span>';
-    let cls='map-node';
-    if(!unlocked) cls+=' locked';
-    else if(isNext) cls+=' current';
-    else if(completed) cls+=' done';
-    html+=`<div class="${cls}" data-idx="${i}">
-      <div class="node-icon"><img class="node-thumb" src="${sceneThumb(lv.id)}" alt="" draggable="false"><span class="node-emo">${lv.emoji}</span></div>
-      <div class="node-info">
-        <div class="node-name">${lv.name}</div>
-        <div class="node-desc">${lv.desc}</div>
-        <div class="node-stars">${starHtml}</div>
-      </div>
-      ${badge}
+    const isCur=unlocked&&!completed&&curIdx===LEVELS.length;
+    if(isCur)curIdx=i;
+    const p=ps[i];
+    const cls='map-node '+(!unlocked?'is-locked':isCur?'is-cur':completed?'is-done':'is-open');
+    const starHtml=unlocked?`<div class="mp-stars">${[1,2,3].map(s=>`<i class="${s<=stars?'on':''}">★</i>`).join('')}</div>`:'';
+    html+=`<div class="${cls}" data-idx="${i}" style="left:${p.x}px;top:${p.y}px" aria-label="${lv.name}">
+      ${isCur?'<span class="mp-ring"></span><span class="mp-ring r2"></span>':''}
+      <div class="mp-disc"><img class="mp-thumb" src="${sceneThumb(lv.id)}" alt="" draggable="false"></div>
+      <span class="mp-num">${i+1}</span>
+      ${completed?'<span class="mp-ok">✓</span>':''}${!unlocked?'<span class="mp-lock">🔒</span>':''}
+      ${starHtml}<div class="mp-label">${lv.name}</div>
+      ${isCur?`<img class="mp-mo" src="baby-mo-poses/baby-mo-pose-24.webp" alt=""><span class="mp-play ${p.x<187?'r':'l'}">MAIN ▶</span>`:''}
     </div>`;
-    if(i<LEVELS.length-1) html+='<div class="map-conn"><div class="map-conn-line"></div></div>';
   });
-  container.innerHTML=html;
-  container.querySelectorAll('.map-node:not(.locked)').forEach(node=>{
-    const doStart=()=>startLevel(parseInt(node.dataset.idx));
-    node.addEventListener('touchstart',e=>{e.preventDefault();doStart();},{passive:false});
-    node.addEventListener('click',doStart);
+  const won=curIdx===LEVELS.length;
+  html+=`<div class="mp-finish ${won?'won':'dim'}" style="left:${MAP_END.x}px;top:${MAP_END.y}px">🏆${won?'<img class="mp-mo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="">':''}</div>`;
+  html+=`<span class="mp-sign" style="left:${MAP_END.x}px;top:${MAP_END.y+68}px;background:#2f7de1">${won?'Hebat! Semua selesai!':'Garis Finis'}</span>`;
+  world.innerHTML=html;
+  // progress dots along the road up to where Baby Mo is now
+  const done=[MAP_START,...ps.slice(0,curIdx+1)];if(won)done.push(MAP_END);
+  if(done.length>1)world.querySelector('#mp-prog').setAttribute('d',mapRoad(done));
+  document.getElementById('map-star-n').textContent=mapStarTotal();
+  document.getElementById('map-star-of').textContent='/'+(LEVELS.length*3);
+  world.querySelectorAll('.map-node').forEach(node=>{
+    node.addEventListener('click',()=>{
+      if(node.classList.contains('is-locked')){
+        sfx(260,0.05,0.12);node.classList.remove('shake');void node.offsetWidth;node.classList.add('shake');return;
+      }
+      startLevel(parseInt(node.dataset.idx));
+    });
   });
-  const cur=container.querySelector('.map-node.current');
-  if(cur) setTimeout(()=>cur.scrollIntoView({behavior:'smooth',block:'center'}),200);
+  layoutMap();
+  // auto-scroll so the current place (or the trophy) sits in the middle
+  const sc=document.getElementById('map-scroll');
+  const k=mapK(),ty=(won?MAP_END.y:ps[curIdx].y)*k;
+  sc.scrollTop=Math.max(0,ty-sc.clientHeight*.5);
+}
+function mapK(){
+  const sc=document.getElementById('map-scroll');
+  const W=sc.clientWidth||innerWidth,Hh=sc.clientHeight||innerHeight;
+  return W<=Hh?Math.min(W/375,1.1):Math.max(.88,Math.min(1.3,Hh/520));
+}
+function layoutMap(){
+  const sc=document.getElementById('map-scroll'),wrap=document.getElementById('map-wrap'),world=document.getElementById('map-world');
+  if(!sc||!world)return;
+  const k=mapK(),W=sc.clientWidth||innerWidth;
+  wrap.style.height=Math.ceil(MAP_H*k)+'px';
+  world.style.height=MAP_H+'px';
+  world.style.transform=`translateX(${((W-375*k)/2).toFixed(1)}px) scale(${k.toFixed(4)})`;
 }
 
 // =============================================
@@ -948,7 +1132,8 @@ function bedroomSVG(){return`<defs>
 </defs>
 <rect width="375" height="420" fill="url(#bdWall)"/>
 <rect width="375" height="420" fill="url(#bdWarm)"/>
-<g fill="#ffffff" opacity=".05"><circle cx="40" cy="60" r="2.4"/><circle cx="120" cy="40" r="2"/><circle cx="205" cy="64" r="2.2"/><circle cx="92" cy="158" r="2"/><circle cx="165" cy="120" r="2.2"/><circle cx="300" cy="172" r="2"/></g>
+<g fill="#ffffff" opacity=".08">${_rep(24,i=>{const x=18+(i%6)*68+((i/6|0)%2)*34,y=30+(i/6|0)*72;return i%3?`<path d="M${x} ${y-5} L${x+1.5} ${y-1.5} L${x+5} ${y} L${x+1.5} ${y+1.5} L${x} ${y+5} L${x-1.5} ${y+1.5} L${x-5} ${y} L${x-1.5} ${y-1.5} Z"/>`:`<path d="M${x} ${y-6} a6 6 0 1 0 4 10 a4.6 4.6 0 1 1 -4 -10 Z"/>`;})}</g>
+<rect x="0" y="236" width="375" height="90" fill="#3f4a86" opacity=".25"/><rect x="0" y="234" width="375" height="4" fill="#fff" opacity=".12"/>
 <!-- floor -->
 <rect x="0" y="332" width="375" height="88" fill="url(#bdFloor)"/>
 <rect x="0" y="326" width="375" height="9" fill="#8a5a30"/><rect x="0" y="324" width="375" height="3" fill="#caa06a" opacity=".6"/>
@@ -958,8 +1143,9 @@ function bedroomSVG(){return`<defs>
 <rect x="238" y="32" width="116" height="116" rx="15" fill="url(#bdSky)"/>
 <circle cx="284" cy="74" r="40" fill="#ffe6a2" opacity=".14"/>
 <circle cx="284" cy="74" r="26" fill="url(#bdMoon)"/><circle cx="276" cy="68" r="5" fill="#f0c25e" opacity=".5"/><circle cx="293" cy="83" r="3.5" fill="#f0c25e" opacity=".45"/>
-<g fill="#fff7da"><circle cx="322" cy="50" r="1.6"/><circle cx="312" cy="120" r="1.4"/><circle cx="340" cy="100" r="1.5"/><circle cx="258" cy="122" r="1.3"/></g>
-<text x="318" y="58" font-size="10" fill="#fff7da" opacity=".8">✦</text>
+<g fill="#fff7da"><circle class="amb-tw" style="--d:2.4s" cx="322" cy="50" r="1.6"/><circle class="amb-tw" style="--d:3.2s;--dl:.8s" cx="312" cy="120" r="1.4"/><circle class="amb-tw" style="--d:2.8s;--dl:1.4s" cx="340" cy="100" r="1.5"/><circle class="amb-tw" style="--d:3.6s;--dl:.4s" cx="258" cy="122" r="1.3"/><circle class="amb-tw" style="--d:2.2s;--dl:1s" cx="334" cy="74" r="1.2"/></g>
+<text class="amb-tw" style="--d:3s" x="318" y="58" font-size="10" fill="#fff7da" opacity=".8">✦</text>
+<g class="amb-dr" style="--d:28s"><ellipse cx="270" cy="128" rx="16" ry="5" fill="#8a9ad0" opacity=".5"/></g>
 <rect x="294" y="32" width="4" height="116" fill="#3a4f86"/><rect x="238" y="86" width="116" height="4" fill="#3a4f86"/>
 <rect x="232" y="26" width="128" height="128" rx="20" fill="none" stroke="#eef2ff" stroke-width="5"/>
 <rect x="226" y="150" width="140" height="9" rx="4" fill="#eef2ff"/>
@@ -975,7 +1161,7 @@ function bedroomSVG(){return`<defs>
 <rect x="143" y="0" width="14" height="6" rx="3" fill="#34477a"/>
 <line x1="150" y1="3" x2="150" y2="52" stroke="#3a4f86" stroke-width="3"/>
 <circle cx="150" cy="52" r="3.5" fill="#34477a"/>
-<ellipse cx="150" cy="98" rx="62" ry="44" fill="url(#bdLampGlow)"/>
+<ellipse class="amb-glow" style="--d:4s" cx="150" cy="98" rx="62" ry="44" fill="url(#bdLampGlow)"/>
 <path d="M126 64 Q150 40 174 64 Z" fill="#ffd166"/><ellipse cx="150" cy="64" rx="24" ry="6.5" fill="#f5b942"/><circle cx="150" cy="70" r="5.5" fill="#fff3c4"/>
 <!-- framed Baby Mo photo on the wall -->
 <rect x="60" y="74" width="20" height="9" rx="2" fill="#c9b27a"/>
@@ -993,13 +1179,17 @@ function bedroomSVG(){return`<defs>
 <rect x="332" y="240" width="22" height="26" rx="4" fill="#7c5cff" opacity=".85"/><circle cx="343" cy="250" r="3" fill="#fff3c4"/>
 <rect x="258" y="280" width="42" height="40" rx="6" fill="#8a5a30" opacity=".45"/><circle cx="279" cy="301" r="13" fill="#ffd166"/><path d="M273 301 a6 6 0 0 1 12 0" fill="#f5b942"/>
 <rect x="312" y="286" width="40" height="34" rx="6" fill="#8a5a30" opacity=".45"/>
+<!-- soft floor shadows -->
+<ellipse cx="100" cy="342" rx="100" ry="9" fill="#000" opacity=".16"/><ellipse cx="304" cy="332" rx="64" ry="7" fill="#000" opacity=".16"/>
 <!-- bed -->
 <rect x="6" y="246" width="36" height="92" rx="10" fill="#b06a3e"/><rect x="11" y="251" width="26" height="62" rx="7" fill="#c8814f"/>
 <circle cx="24" cy="263" r="8" fill="#ffe6a2"/><path d="M19 263 a5 5 0 0 1 10 0" fill="#f3c869"/>
 <rect x="34" y="300" width="148" height="40" rx="10" fill="#f3e3c8"/>
 <path d="M34 314 H182 V330 Q182 340 172 340 H44 Q34 340 34 330 Z" fill="#4ec5b0"/>
 <path d="M34 300 H182 V316 H34 Z" fill="#38a896" opacity=".92"/>
-<rect x="40" y="288" width="46" height="26" rx="9" fill="#fff6e6"/><circle cx="150" cy="326" r="6" fill="#fff3c4" opacity=".5"/>
+<rect x="40" y="288" width="46" height="26" rx="9" fill="#fff6e6"/><path d="M48 296 h30" stroke="#f0d8b8" stroke-width="2" stroke-linecap="round"/>
+<g fill="#fff3c4" opacity=".75">${[[104,324],[130,332],[156,322],[170,334],[118,336]].map(p=>`<path d="M${p[0]} ${p[1]-4} L${p[0]+1.2} ${p[1]-1.2} L${p[0]+4} ${p[1]} L${p[0]+1.2} ${p[1]+1.2} L${p[0]} ${p[1]+4} L${p[0]-1.2} ${p[1]+1.2} L${p[0]-4} ${p[1]} L${p[0]-1.2} ${p[1]-1.2} Z"/>`).join('')}</g>
+<path d="M34 316 H182" stroke="#fff" stroke-width="2" opacity=".35"/>
 <!-- plant: pot drawn first, then the stem rises out of the soil (connected) -->
 <path d="M192 316 H228 L222 340 H198 Z" fill="#e07a52"/>
 <rect x="186" y="308" width="48" height="11" rx="4" fill="#f0916a"/>
@@ -1010,16 +1200,27 @@ function bedroomSVG(){return`<defs>
 <ellipse cx="208" cy="274" rx="10.5" ry="8" fill="#7ace66"/>
 <!-- rug -->
 <ellipse cx="150" cy="374" rx="92" ry="22" fill="#e6b85c"/><ellipse cx="150" cy="374" rx="74" ry="16" fill="#f3d488"/><ellipse cx="150" cy="374" rx="50" ry="10" fill="#e6b85c" opacity=".55"/>
-<g fill="#fff7da" opacity=".5"><text x="150" y="205" font-size="10">✦</text><text x="120" y="252" font-size="8">⋆</text><text x="222" y="150" font-size="9">✦</text></g>`;}
+<g fill="#fff7da" opacity=".5"><text x="150" y="205" font-size="10">✦</text><text x="120" y="252" font-size="8">⋆</text><text x="222" y="150" font-size="9">✦</text></g>
+<!-- toys on the floor: blocks + ball -->
+<g transform="translate(300 374)"><ellipse cx="6" cy="16" rx="30" ry="5" fill="#000" opacity=".15"/><rect x="-18" y="-2" width="18" height="18" rx="3" fill="#ff6b5c"/><rect x="2" y="-2" width="18" height="18" rx="3" fill="#4ec5b0"/><rect x="-8" y="-20" width="18" height="18" rx="3" fill="#ffd166"/><text x="1" y="-6" font-size="11" text-anchor="middle" fill="#fff" font-family="'Fredoka One',cursive">A</text><text x="-9" y="12" font-size="11" text-anchor="middle" fill="#fff" font-family="'Fredoka One',cursive">B</text><text x="11" y="12" font-size="11" text-anchor="middle" fill="#fff" font-family="'Fredoka One',cursive">C</text></g>
+<g transform="translate(236 396)"><ellipse cx="0" cy="10" rx="14" ry="3.5" fill="#000" opacity=".15"/><circle r="11" fill="#5aa9e0"/><path d="M-11 0 a11 11 0 0 0 22 0" fill="#ffd166"/><path d="M-11 0 h22" stroke="#fff" stroke-width="2"/></g>
+<!-- night light by the bed -->
+<circle class="amb-glow" style="--d:3s" cx="24" cy="263" r="18" fill="url(#bdLampGlow)"/>
+<!-- drifting dream sparkles -->
+<g fill="#fff3c4">${[[110,200,4],[200,250,5],[60,170,3.6],[226,330,4.4]].map((p,i)=>`<circle class="amb-ffly" style="--d:${p[2]}s;--dl:${i*.7}s" cx="${p[0]}" cy="${p[1]}" r="2"/>`).join('')}</g>`;}
 
 function livingRoomSVG(){return`<defs>
 <linearGradient id="lrWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4f8a86"/><stop offset="55%" stop-color="#61a09a"/><stop offset="100%" stop-color="#77b4ab"/></linearGradient>
 <linearGradient id="lrFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98a52"/><stop offset="100%" stop-color="#a06a39"/></linearGradient>
 <linearGradient id="lrSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#16224a"/><stop offset="100%" stop-color="#2f3f72"/></linearGradient>
 <radialGradient id="lrMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="70%" stop-color="#ffe6a2"/><stop offset="100%" stop-color="#f3c869"/></radialGradient>
+<radialGradient id="lrLamp" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffe6a2" stop-opacity=".55"/><stop offset="100%" stop-color="#ffe6a2" stop-opacity="0"/></radialGradient>
 <radialGradient id="lrWarm" cx="50%" cy="0%" r="95%"><stop offset="0%" stop-color="rgba(255,221,160,.16)"/><stop offset="60%" stop-color="rgba(255,221,160,0)"/></radialGradient>
 </defs>
-<rect width="375" height="420" fill="url(#lrWall)"/><rect width="375" height="420" fill="url(#lrWarm)"/>
+<rect width="375" height="420" fill="url(#lrWall)"/>
+<g fill="none" stroke="#fff" stroke-width="1.2" opacity=".09">${_rep(30,i=>{const x=20+(i%6)*68+((i/6|0)%2)*34,y=24+(i/6|0)*62;return`<rect x="${x-7}" y="${y-7}" width="14" height="14"/><rect x="${x-7}" y="${y-7}" width="14" height="14" transform="rotate(45 ${x} ${y})"/>`;})}</g>
+<rect x="0" y="240" width="375" height="84" fill="#3f7a74" opacity=".3"/><rect x="0" y="238" width="375" height="4" fill="#fff" opacity=".14"/>
+<rect width="375" height="420" fill="url(#lrWarm)"/>
 <rect x="0" y="330" width="375" height="90" fill="url(#lrFloor)"/>
 <rect x="0" y="324" width="375" height="9" fill="#8a5a30"/><rect x="0" y="322" width="375" height="3" fill="#caa06a" opacity=".6"/>
 <g stroke="#875a2f" stroke-width="2" opacity=".4"><line x1="70" y1="333" x2="48" y2="420"/><line x1="180" y1="333" x2="172" y2="420"/><line x1="290" y1="333" x2="304" y2="420"/></g>
@@ -1027,7 +1228,7 @@ function livingRoomSVG(){return`<defs>
 <rect x="244" y="24" width="116" height="120" rx="18" fill="#3a4f86"/>
 <rect x="250" y="30" width="104" height="108" rx="13" fill="url(#lrSky)"/>
 <circle cx="300" cy="66" r="22" fill="url(#lrMoon)"/><circle cx="293" cy="60" r="4" fill="#f0c25e" opacity=".5"/>
-<g fill="#fff7da"><circle cx="268" cy="56" r="1.4"/><circle cx="332" cy="104" r="1.5"/><circle cx="320" cy="46" r="1.3"/></g>
+<g fill="#fff7da"><circle class="amb-tw" style="--d:2.6s" cx="268" cy="56" r="1.4"/><circle class="amb-tw" style="--d:3.4s;--dl:.6s" cx="332" cy="104" r="1.5"/><circle class="amb-tw" style="--d:2.2s;--dl:1.2s" cx="320" cy="46" r="1.3"/><circle class="amb-tw" style="--d:3s;--dl:.3s" cx="340" cy="70" r="1.2"/></g>
 <rect x="300" y="30" width="4" height="108" fill="#3a4f86"/><rect x="250" y="80" width="104" height="4" fill="#3a4f86"/>
 <rect x="244" y="24" width="116" height="120" rx="18" fill="none" stroke="#eef2ff" stroke-width="5"/>
 <rect x="238" y="140" width="128" height="9" rx="4" fill="#eef2ff"/>
@@ -1050,262 +1251,479 @@ function livingRoomSVG(){return`<defs>
 <ellipse cx="59" cy="327" rx="16" ry="3" fill="#6b4327"/>
 <path d="M59 327 q-10 -22 -3 -42" stroke="#4ea84e" stroke-width="5" fill="none" stroke-linecap="round"/>
 <ellipse cx="46" cy="298" rx="12" ry="7.5" fill="#6bbf59" transform="rotate(-32 46 298)"/><ellipse cx="73" cy="302" rx="12" ry="7.5" fill="#5bb85a" transform="rotate(28 73 302)"/><ellipse cx="58" cy="285" rx="11" ry="8" fill="#7ace66"/>
+<!-- wall shelf with books (left) and a dates bowl (centre) -->
+<rect x="14" y="246" width="74" height="7" rx="3" fill="#a8703f"/><g>${_rep(5,i=>`<rect x="${20+i*9}" y="${222+(i%2)*3}" width="7" height="${24-(i%2)*3}" rx="1.5" fill="${['#ff6b5c','#ffd166','#5aa9e0','#b48be8','#ff8c66'][i]}"/>`)}</g><rect x="66" y="232" width="16" height="14" rx="3" fill="#fff6e6"/>
+<rect x="150" y="226" width="76" height="7" rx="3" fill="#a8703f"/><path d="M168 226 Q188 242 208 226 Z" fill="#e6b85c"/>
+<rect x="238" y="200" width="66" height="7" rx="3" fill="#a8703f"/><rect x="290" y="184" width="10" height="16" rx="2" fill="#ff8fb3"/>
+<!-- floor lamp (right) -->
+<ellipse cx="344" cy="330" rx="22" ry="4" fill="#000" opacity=".15"/><rect x="341" y="196" width="5" height="132" fill="#3a4f5e"/><rect x="330" y="324" width="28" height="6" rx="3" fill="#3a4f5e"/>
+<ellipse class="amb-glow" style="--d:4.4s" cx="344" cy="206" rx="46" ry="40" fill="url(#lrLamp)"/><path d="M326 200 L332 176 H356 L362 200 Z" fill="#ffe6a2"/><path d="M326 200 H362" stroke="#f3c869" stroke-width="3"/>
+<ellipse cx="190" cy="360" rx="124" ry="9" fill="#000" opacity=".16"/>
 <!-- sofa -->
 <rect x="92" y="282" width="204" height="44" rx="14" fill="#ff9e7a"/>
 <rect x="86" y="300" width="216" height="56" rx="16" fill="#ff8c66"/>
 <rect x="82" y="296" width="22" height="62" rx="9" fill="#f3784f"/><rect x="284" y="296" width="22" height="62" rx="9" fill="#f3784f"/>
 <rect x="114" y="300" width="76" height="32" rx="9" fill="#ffd166"/><rect x="198" y="300" width="76" height="32" rx="9" fill="#6cc0e8"/>
+<g fill="#fff" opacity=".45"><circle cx="134" cy="310" r="2.4"/><circle cx="152" cy="318" r="2.4"/><circle cx="170" cy="310" r="2.4"/></g><path d="M212 316 h48" stroke="#fff" stroke-width="2.4" opacity=".45" stroke-dasharray="4 5"/>
+<path d="M92 296 H296" stroke="#fff" stroke-width="2" opacity=".25"/>
 <!-- rug -->
 <ellipse cx="190" cy="378" rx="122" ry="22" fill="#e6b85c"/><ellipse cx="190" cy="378" rx="98" ry="16" fill="#f3d488"/>
-<g fill="#fff7da" opacity=".45"><text x="100" y="180" font-size="9">✦</text><text x="208" y="150" font-size="8">⋆</text></g>`;}
+<g fill="#fff7da" opacity=".45"><text x="100" y="180" font-size="9">✦</text><text x="208" y="150" font-size="8">⋆</text></g>
+<ellipse cx="190" cy="378" rx="74" ry="11" fill="none" stroke="#fff7da" stroke-width="2" stroke-dasharray="6 6" opacity=".7"/>
+<!-- toy car + cushion on the rug -->
+<g transform="translate(300 392)"><ellipse cx="0" cy="10" rx="20" ry="4" fill="#000" opacity=".15"/><rect x="-16" y="-6" width="32" height="12" rx="5" fill="#ff6b5c"/><path d="M-8 -6 q8 -10 16 0 Z" fill="#bfe6ff"/><circle cx="-9" cy="7" r="4.5" fill="#333"/><circle cx="9" cy="7" r="4.5" fill="#333"/></g>
+<g fill="#fff7da">${[[60,150,4],[220,262,5],[150,200,4.4]].map((p,i)=>`<circle class="amb-ffly" style="--d:${p[2]}s;--dl:${i*.8}s" cx="${p[0]}" cy="${p[1]}" r="1.8" opacity=".7"/>`).join('')}</g>`;}
 
 
-function gardenSVG(){return`<defs>
-<linearGradient id="gdSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#39397a"/><stop offset="50%" stop-color="#585aa2"/><stop offset="100%" stop-color="#8083bd"/></linearGradient>
-<radialGradient id="gdMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="70%" stop-color="#ffe6a2"/><stop offset="100%" stop-color="#f3c869"/></radialGradient>
-<radialGradient id="gdGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="rgba(255,230,162,.3)"/><stop offset="100%" stop-color="rgba(255,230,162,0)"/></radialGradient>
-<linearGradient id="gdHillA" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#74bd7a"/><stop offset="100%" stop-color="#5aa066"/></linearGradient>
-<linearGradient id="gdHillB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#61ae9c"/><stop offset="100%" stop-color="#4f9888"/></linearGradient>
+// 3 — Taman Mimpi (dream garden under the stars)
+function gardenSVG(){const r=_rng(303);return`<defs>
+<linearGradient id="gdSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#26285e"/><stop offset="45%" stop-color="#4b4c94"/><stop offset="80%" stop-color="#9a78b8"/><stop offset="100%" stop-color="#f2a6b8"/></linearGradient>
+<radialGradient id="gdMoon" cx="40%" cy="38%" r="62%"><stop offset="0%" stop-color="#fffbe8"/><stop offset="70%" stop-color="#ffe9a8"/><stop offset="100%" stop-color="#f3c869"/></radialGradient>
+<radialGradient id="gdGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffe9a8" stop-opacity=".55"/><stop offset="100%" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient>
+<linearGradient id="gdH1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6c7fc0"/><stop offset="100%" stop-color="#5a6aa8"/></linearGradient>
+<linearGradient id="gdH2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4f9e8c"/><stop offset="100%" stop-color="#3f8576"/></linearGradient>
+<linearGradient id="gdH3" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6cbf74"/><stop offset="100%" stop-color="#4f9e5c"/></linearGradient>
+<linearGradient id="gdPond" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6a7fc8"/><stop offset="100%" stop-color="#3d4f96"/></linearGradient>
+<radialGradient id="gdFF" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff7b0"/><stop offset="40%" stop-color="#ffe866" stop-opacity=".8"/><stop offset="100%" stop-color="#ffe866" stop-opacity="0"/></radialGradient>
 </defs>
 <rect width="375" height="420" fill="url(#gdSky)"/>
-<g fill="#fff7da"><circle cx="40" cy="50" r="1.6"/><circle cx="110" cy="30" r="1.2"/><circle cx="170" cy="62" r="1.8"/><circle cx="150" cy="22" r="1.3"/><circle cx="230" cy="44" r="1.5"/><circle cx="60" cy="104" r="1.3"/><circle cx="205" cy="104" r="1.2"/><circle cx="276" cy="120" r="1.4"/></g>
-<text x="120" y="84" font-size="11" fill="#fff7da" opacity=".7">✦</text><text x="250" y="150" font-size="9" fill="#fff7da" opacity=".55">⋆</text>
-<circle cx="312" cy="66" r="46" fill="url(#gdGlow)"/><circle cx="312" cy="66" r="28" fill="url(#gdMoon)"/><circle cx="304" cy="60" r="4.5" fill="#f0c25e" opacity=".45"/><circle cx="320" cy="74" r="3" fill="#f0c25e" opacity=".4"/>
-<path d="M0 300 Q120 252 240 290 Q320 314 375 296 V420 H0 Z" fill="url(#gdHillB)"/>
-<ellipse cx="150" cy="378" rx="82" ry="20" fill="#6fc0d8" opacity=".5"/><ellipse cx="150" cy="376" rx="62" ry="13" fill="#8ad4e8" opacity=".45"/>
-<path d="M0 340 Q90 312 200 338 Q300 360 375 338 V420 H0 Z" fill="url(#gdHillA)"/>
-<rect x="40" y="250" width="13" height="94" rx="5" fill="#a8703f"/>
-<circle cx="46" cy="238" r="30" fill="#5aa066"/><circle cx="26" cy="252" r="23" fill="#6bbf72"/><circle cx="64" cy="252" r="23" fill="#6bbf72"/><circle cx="46" cy="262" r="25" fill="#7ace7e"/>
-<rect x="232" y="278" width="10" height="64" rx="4" fill="#a8703f"/>
-<circle cx="237" cy="268" r="21" fill="#5fae9c"/><circle cx="223" cy="278" r="16" fill="#6fc0a8"/><circle cx="251" cy="278" r="16" fill="#6fc0a8"/>
-<ellipse cx="318" cy="356" rx="46" ry="30" fill="#5aa066"/><circle cx="296" cy="346" r="22" fill="#6bbf72"/><circle cx="320" cy="338" r="26" fill="#6bbf72"/><circle cx="344" cy="348" r="20" fill="#5aa066"/><circle cx="330" cy="356" r="22" fill="#7ace7e"/>
-<g><rect x="92" y="350" width="4" height="22" rx="2" fill="#3f8a4f"/><circle cx="94" cy="348" r="9" fill="#ff8fb3"/><circle cx="94" cy="348" r="4" fill="#ffe066"/></g>
-<g><rect x="128" y="360" width="4" height="18" rx="2" fill="#3f8a4f"/><circle cx="130" cy="358" r="8" fill="#ffb15c"/><circle cx="130" cy="358" r="3.5" fill="#ffe066"/></g>
-<g><rect x="186" y="356" width="4" height="20" rx="2" fill="#3f8a4f"/><circle cx="188" cy="354" r="9" fill="#b48be8"/><circle cx="188" cy="354" r="4" fill="#ffe066"/></g>
-<g><rect x="62" y="372" width="4" height="16" rx="2" fill="#3f8a4f"/><circle cx="64" cy="370" r="7" fill="#7cc8e0"/><circle cx="64" cy="370" r="3" fill="#ffe066"/></g>
-<g fill="#fff3a8"><circle cx="120" cy="240" r="3"/><circle cx="210" cy="208" r="2.4"/><circle cx="268" cy="280" r="2.6"/><circle cx="92" cy="300" r="2.2"/></g>
-<g fill="#fff3a8" opacity=".3"><circle cx="120" cy="240" r="8"/><circle cx="210" cy="208" r="7"/><circle cx="268" cy="280" r="7"/></g>`;}
+<g fill="#fff7da">${_rep(34,i=>`<circle class="amb-tw" style="--d:${(2+r()*3).toFixed(1)}s;--dl:${(r()*3).toFixed(1)}s" cx="${(r()*375).toFixed(0)}" cy="${(r()*190).toFixed(0)}" r="${(.7+r()*1.4).toFixed(1)}"/>`)}</g>
+<g fill="#fff3c4">${[[64,120,9],[176,40,7],[262,150,8]].map((s,i)=>`<path class="amb-tw" style="--d:${3+i}s;--dl:${i*.7}s" d="M${s[0]} ${s[1]-s[2]} L${s[0]+s[2]*.28} ${s[1]-s[2]*.28} L${s[0]+s[2]} ${s[1]} L${s[0]+s[2]*.28} ${s[1]+s[2]*.28} L${s[0]} ${s[1]+s[2]} L${s[0]-s[2]*.28} ${s[1]+s[2]*.28} L${s[0]-s[2]} ${s[1]} L${s[0]-s[2]*.28} ${s[1]-s[2]*.28} Z"/>`).join('')}</g>
+<line class="amb-shoot" x1="330" y1="24" x2="360" y2="10" stroke="#fff" stroke-width="2.5" stroke-linecap="round"/>
+<circle cx="312" cy="70" r="58" fill="url(#gdGlow)"/><circle cx="312" cy="70" r="30" fill="url(#gdMoon)"/>
+<circle cx="302" cy="62" r="5" fill="#f0c25e" opacity=".45"/><circle cx="322" cy="80" r="3.5" fill="#f0c25e" opacity=".4"/><circle cx="318" cy="58" r="2.4" fill="#f0c25e" opacity=".35"/>
+<!-- drifting clouds (one is the cloud to find) -->
+<g class="amb-dr" style="--d:34s"><g fill="#c9c3ef" opacity=".85"><ellipse cx="96" cy="70" rx="44" ry="15"/><ellipse cx="80" cy="60" rx="22" ry="15"/><ellipse cx="106" cy="56" rx="24" ry="18"/></g><ellipse cx="96" cy="78" rx="40" ry="5" fill="#8e86c8" opacity=".35"/></g>
+<g class="amb-dr" style="--d:44s;--dl:4s"><g fill="#d9b6e0" opacity=".6"><ellipse cx="230" cy="128" rx="34" ry="10"/><ellipse cx="244" cy="120" rx="18" ry="11"/></g></g>
+<!-- layered hills -->
+<path d="M0 222 Q70 176 150 206 Q230 176 300 200 Q345 186 375 196 V420 H0 Z" fill="url(#gdH1)"/>
+<g fill="#56649c">${_rep(9,i=>`<ellipse cx="${10+i*44}" cy="${226-(i%2)*6}" rx="${18+(i%3)*5}" ry="${14+(i%3)*3}"/>`)}</g>
+<path d="M0 262 Q90 228 180 252 Q270 276 375 240 V420 H0 Z" fill="url(#gdH2)"/>
+<!-- tiny gazebo on the hill -->
+<g transform="translate(196 250)"><ellipse cx="0" cy="2" rx="30" ry="5" fill="#000" opacity=".15"/><rect x="-22" y="-26" width="4" height="28" fill="#f4ecff"/><rect x="18" y="-26" width="4" height="28" fill="#f4ecff"/><path d="M-30 -24 Q0 -50 30 -24 Z" fill="#c98ad8"/><path d="M-30 -24 H30" stroke="#a86cc0" stroke-width="3"/><circle cx="0" cy="-48" r="3" fill="#ffe066"/><g class="amb-glow" style="--d:2.4s"><circle cx="0" cy="-14" r="10" fill="url(#gdFF)"/><circle cx="0" cy="-14" r="3" fill="#fff6b0"/></g></g>
+<path d="M0 300 Q110 276 210 296 Q300 314 375 290 V420 H0 Z" fill="url(#gdH3)"/>
+<!-- pond reflecting the moon -->
+<ellipse cx="170" cy="372" rx="92" ry="22" fill="#3a8a5a" opacity=".5"/>
+<ellipse cx="170" cy="368" rx="84" ry="18" fill="url(#gdPond)"/>
+<ellipse cx="200" cy="364" rx="16" ry="4" fill="#ffe9a8" opacity=".55"/><ellipse class="amb-rip" cx="150" cy="370" rx="16" ry="4" fill="none" stroke="#c9d4ff" stroke-width="1.4"/><ellipse class="amb-rip" style="--dl:1.2s" cx="210" cy="374" rx="12" ry="3" fill="none" stroke="#c9d4ff" stroke-width="1.4"/>
+<g fill="#4fae6a"><ellipse cx="116" cy="372" rx="11" ry="4"/><ellipse cx="226" cy="378" rx="9" ry="3.4"/></g><path d="M114 368 q4 -9 4 0 q4 -7 6 0 q-5 3 -10 0 Z" fill="#ffb3c8"/>
+<!-- left tree with lanterns -->
+<path d="M40 330 Q36 270 48 214" stroke="#7a5236" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M44 262 Q70 246 92 250" stroke="#7a5236" stroke-width="6" fill="none" stroke-linecap="round"/>
+<g fill="#4c9a66"><circle cx="46" cy="196" r="34"/><circle cx="18" cy="214" r="24"/><circle cx="78" cy="212" r="26"/></g><g fill="#5fb276"><circle cx="40" cy="186" r="22"/><circle cx="70" cy="196" r="16"/></g><circle cx="32" cy="178" r="6" fill="#fff" opacity=".15"/>
+<g class="amb-sw" style="--d:3.6s"><line x1="88" y1="250" x2="88" y2="262" stroke="#5a3a2a" stroke-width="1.5"/><rect x="82" y="262" width="12" height="15" rx="5" fill="#ffd166"/><circle cx="88" cy="270" r="9" fill="url(#gdFF)"/></g>
+<!-- flower bed (front left) -->
+<path d="M0 340 Q50 322 112 340 V420 H0 Z" fill="#3f8a50"/>
+${[[20,344,'#ff8fb3'],[44,330,'#ffd166'],[70,340,'#b48be8'],[92,350,'#7cc8e0'],[30,370,'#ffb15c'],[60,364,'#ff8fb3'],[88,380,'#ffd166']].map(f=>`<line x1="${f[0]}" y1="${f[1]}" x2="${f[0]}" y2="${f[1]+18}" stroke="#2f7a40" stroke-width="2.4"/><ellipse cx="${f[0]+5}" cy="${f[1]+12}" rx="5" ry="2.2" fill="#4fae6a" transform="rotate(-30 ${f[0]+5} ${f[1]+12})"/><g fill="${f[2]}"><circle cx="${f[0]-4.5}" cy="${f[1]}" r="4.6"/><circle cx="${f[0]+4.5}" cy="${f[1]}" r="4.6"/><circle cx="${f[0]}" cy="${f[1]-4.5}" r="4.6"/><circle cx="${f[0]}" cy="${f[1]+4.5}" r="4.6"/></g><circle cx="${f[0]}" cy="${f[1]}" r="3" fill="#fff6c8"/>`).join('')}
+<!-- big bush on the right (Baby Mo peeks out) -->
+<ellipse cx="318" cy="344" rx="64" ry="10" fill="#000" opacity=".15"/>
+<g fill="#3f8a50"><circle cx="282" cy="318" r="26"/><circle cx="318" cy="300" r="34"/><circle cx="354" cy="316" r="28"/><circle cx="320" cy="330" r="30"/></g>
+<g fill="#55a866"><circle cx="300" cy="300" r="16"/><circle cx="340" cy="296" r="14"/></g>
+<g fill="#ff8fb3"><circle cx="292" cy="312" r="3.5"/><circle cx="338" cy="322" r="3.5"/><circle cx="356" cy="300" r="3"/></g><g fill="#fff"><circle cx="312" cy="334" r="3"/><circle cx="274" cy="326" r="2.6"/></g>
+<!-- mushrooms -->
+<g transform="translate(250 344)"><rect x="-3" y="-10" width="6" height="12" rx="2" fill="#fff3e0"/><path d="M-11 -9 Q0 -24 11 -9 Z" fill="#ff6b6b"/><circle cx="-4" cy="-14" r="1.8" fill="#fff"/><circle cx="4" cy="-12" r="1.4" fill="#fff"/></g>
+<g transform="translate(266 352) scale(.7)"><rect x="-3" y="-10" width="6" height="12" rx="2" fill="#fff3e0"/><path d="M-11 -9 Q0 -24 11 -9 Z" fill="#b48be8"/><circle cx="-3" cy="-14" r="2" fill="#fff"/></g>
+<!-- fireflies -->
+${_rep(9,i=>{const x=(30+r()*320).toFixed(0),y=(200+r()*170).toFixed(0);return`<g class="amb-ffly" style="--d:${(3+r()*3).toFixed(1)}s;--dl:${(r()*3).toFixed(1)}s"><circle cx="${x}" cy="${y}" r="8" fill="url(#gdFF)"/><circle cx="${x}" cy="${y}" r="1.8" fill="#fffbd0"/></g>`;})}
+<g fill="#3f8a50">${_rep(10,i=>`<path d="M${120+i*24} 420 l3 -12 l3 12 Z"/>`)}</g>`;}
 
-function marketSVG(){return`<defs>
-<linearGradient id="mkSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2b2b66"/><stop offset="60%" stop-color="#43417e"/><stop offset="100%" stop-color="#5d4d86"/></linearGradient>
-<linearGradient id="mkGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#b88a52"/><stop offset="100%" stop-color="#946b3c"/></linearGradient>
-<radialGradient id="mkMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+// 4 — Pasar Ramadan (night market)
+function marketSVG(){const r=_rng(404);return`<defs>
+<linearGradient id="mkSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1f2458"/><stop offset="60%" stop-color="#3d3a80"/><stop offset="100%" stop-color="#6a4a8c"/></linearGradient>
+<linearGradient id="mkGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a3e5a"/><stop offset="35%" stop-color="#9a6a4e"/><stop offset="100%" stop-color="#b07a52"/></linearGradient>
+<radialGradient id="mkGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffcf6b" stop-opacity=".6"/><stop offset="100%" stop-color="#ffcf6b" stop-opacity="0"/></radialGradient>
+<linearGradient id="mkWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98a52"/><stop offset="100%" stop-color="#9a6234"/></linearGradient>
 </defs>
 <rect width="375" height="420" fill="url(#mkSky)"/>
-<g fill="#fff7da"><circle cx="40" cy="30" r="1.5"/><circle cx="120" cy="20" r="1.2"/><circle cx="210" cy="34" r="1.6"/><circle cx="300" cy="22" r="1.3"/><circle cx="350" cy="54" r="1.4"/><circle cx="150" cy="64" r="1.2"/></g>
-<circle cx="50" cy="52" r="23" fill="url(#mkMoon)"/><circle cx="60" cy="46" r="23" fill="#2b2b66"/>
-<path d="M0 96 Q187 78 375 96" stroke="#ffd874" stroke-width="1.5" fill="none" opacity=".4"/>
-<g><circle cx="60" cy="92" r="5" fill="#ff8c66"/><circle cx="110" cy="88" r="5" fill="#ffd166"/><circle cx="160" cy="85" r="5" fill="#6cc0e8"/><circle cx="214" cy="85" r="5" fill="#ff8fb3"/><circle cx="264" cy="88" r="5" fill="#7ace7e"/><circle cx="314" cy="92" r="5" fill="#ffd166"/></g>
-<g fill="#ffd874" opacity=".22"><circle cx="60" cy="92" r="11"/><circle cx="160" cy="85" r="11"/><circle cx="264" cy="88" r="11"/></g>
-<rect x="0" y="354" width="375" height="66" fill="url(#mkGround)"/><rect x="0" y="350" width="375" height="6" fill="#7a5630"/>
-<g stroke="#7a5630" stroke-width="1.5" opacity=".4"><line x1="60" y1="356" x2="50" y2="420"/><line x1="160" y1="356" x2="156" y2="420"/><line x1="270" y1="356" x2="282" y2="420"/></g>
-<!-- left stall -->
-<rect x="16" y="150" width="9" height="204" fill="#9c6b3a"/><rect x="150" y="150" width="9" height="204" fill="#9c6b3a"/>
-<rect x="10" y="248" width="156" height="106" rx="6" fill="#a8703f"/><rect x="10" y="248" width="156" height="14" fill="#c08850"/>
-<rect x="12" y="150" width="152" height="34" rx="6" fill="#e8584e"/>
-<g fill="#fff1e6"><rect x="24" y="150" width="18" height="34"/><rect x="60" y="150" width="18" height="34"/><rect x="96" y="150" width="18" height="34"/><rect x="132" y="150" width="18" height="34"/></g>
-<path d="M12 184 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 L164 184 Z" fill="#e8584e"/>
-<circle cx="44" cy="286" r="14" fill="#ffb15c"/><circle cx="80" cy="288" r="13" fill="#ff8fb3"/><rect x="104" y="274" width="42" height="22" rx="6" fill="#7ace7e"/>
-<!-- right stall -->
-<rect x="216" y="150" width="9" height="204" fill="#9c6b3a"/><rect x="350" y="150" width="9" height="204" fill="#9c6b3a"/>
-<rect x="210" y="248" width="156" height="106" rx="6" fill="#a8703f"/><rect x="210" y="248" width="156" height="14" fill="#c08850"/>
-<rect x="212" y="150" width="152" height="34" rx="6" fill="#2e9d8a"/>
-<g fill="#eafff8"><rect x="224" y="150" width="18" height="34"/><rect x="260" y="150" width="18" height="34"/><rect x="296" y="150" width="18" height="34"/><rect x="332" y="150" width="18" height="34"/></g>
-<path d="M212 184 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 q9 12 18 0 L364 184 Z" fill="#2e9d8a"/>
-<circle cx="244" cy="286" r="14" fill="#ffd166"/><circle cx="280" cy="288" r="13" fill="#ff8c66"/><rect x="304" y="274" width="42" height="22" rx="6" fill="#b48be8"/>
-<!-- hanging lantern center -->
-<line x1="187" y1="96" x2="187" y2="120" stroke="#9c6b3a" stroke-width="2.5"/>
-<rect x="181" y="118" width="12" height="6" rx="2" fill="#c0392b"/><ellipse cx="187" cy="140" rx="16" ry="20" fill="#ff6b5c"/><ellipse cx="187" cy="160" rx="9" ry="5" fill="#c0392b"/><circle cx="187" cy="140" r="7" fill="#fff3c4" opacity=".6"/><circle cx="187" cy="140" r="30" fill="rgba(255,210,99,.07)"/>`;}
+<g fill="#fff7da">${_rep(26,i=>`<circle class="amb-tw" style="--d:${(2+r()*3).toFixed(1)}s;--dl:${(r()*3).toFixed(1)}s" cx="${(r()*375).toFixed(0)}" cy="${(r()*130).toFixed(0)}" r="${(.7+r()*1.2).toFixed(1)}"/>`)}</g>
+<!-- crescent moon -->
+<circle cx="60" cy="56" r="34" fill="url(#mkGlow)"/><path d="M66 30 A24 24 0 1 0 82 72 A19 19 0 1 1 66 30 Z" fill="#ffe9a8"/>
+<!-- far skyline with mosque -->
+<g fill="#3a3a7e"><rect x="0" y="150" width="50" height="60"/><rect x="46" y="136" width="40" height="74"/><rect x="150" y="146" width="56" height="64"/><path d="M150 148 a28 28 0 0 1 56 0 Z"/><rect x="212" y="104" width="10" height="106"/><path d="M210 106 l7 -18 l7 18 Z"/><rect x="250" y="140" width="60" height="70"/><rect x="306" y="126" width="69" height="84"/></g>
+<g fill="#ffd98a" opacity=".75">${_rep(10,i=>`<rect class="amb-tw" style="--d:${(4+r()*4).toFixed(1)}s;--dl:${(r()*4).toFixed(1)}s" x="${[10,56,70,262,284,318,346,24,330,160][i]}" y="${[166,150,176,156,176,140,160,186,186,170][i]}" width="7" height="9" rx="1.5"/>`)}</g>
+<path d="M174 130 a5 5 0 1 0 4 8 a4 4 0 1 1 -4 -8" fill="#ffd166"/>
+<g fill="#5a4f96">${[[0,176,60,'#5a4f96'],[96,170,52,'#64589e'],[236,172,56,'#5a4f96'],[320,166,55,'#64589e']].map(b=>`<rect x="${b[0]}" y="${b[1]}" width="${b[2]}" height="${210-b[1]}" fill="${b[3]}"/><path d="M${b[0]-4} ${b[1]+2} L${b[0]+b[2]/2} ${b[1]-14} L${b[0]+b[2]+4} ${b[1]+2} Z" fill="#7a4a6e"/>`).join('')}</g>
+<g fill="#ffcf6b">${[[12,186],[34,186],[108,182],[130,182],[248,184],[272,184],[334,178],[356,178]].map((w,i)=>`<rect class="amb-glow" style="--d:${3+i%3}s;--dl:${i*.4}s" x="${w[0]}" y="${w[1]}" width="10" height="12" rx="5"/>`).join('')}</g>
+<!-- warm street glow + ground -->
+<rect x="0" y="206" width="375" height="214" fill="url(#mkGround)"/>
+<g fill="#c08a62" opacity=".5">${_rep(60,i=>{const row=i/10|0,yy=214+row*row*7+row*14;return`<ellipse cx="${(i%10)*40+(row%2)*20}" cy="${yy}" rx="${10+row*2}" ry="${3+row}"/>`;})}</g>
+<rect x="0" y="206" width="375" height="16" fill="#c99a72" opacity=".55"/><ellipse cx="90" cy="320" rx="110" ry="40" fill="url(#mkGlow)" opacity=".8"/><ellipse cx="270" cy="320" rx="110" ry="40" fill="url(#mkGlow)" opacity=".8"/>
+<!-- string of lanterns that sway -->
+<path d="M0 36 Q100 84 190 62 Q280 40 375 78" stroke="#3a2a4a" stroke-width="2" fill="none"/>
+${[[30,48,'#ff6b5c'],[78,66,'#ffd166'],[128,72,'#4ec5b0'],[176,64,'#ff8fb3'],[226,52,'#ffd166'],[318,62,'#4ec5b0'],[356,72,'#ff6b5c']].map((l,i)=>`<g class="amb-sw" style="--d:${(3+i*.3).toFixed(1)}s;--dl:${(i*.4).toFixed(1)}s"><line x1="${l[0]}" y1="${l[1]}" x2="${l[0]}" y2="${l[1]+6}" stroke="#3a2a4a" stroke-width="1.4"/><circle cx="${l[0]}" cy="${l[1]+16}" r="16" fill="url(#mkGlow)"/><rect x="${l[0]-8}" y="${l[1]+6}" width="16" height="20" rx="7" fill="${l[2]}"/><rect x="${l[0]-5}" y="${l[1]+4}" width="10" height="4" rx="1" fill="#e0a800"/><rect x="${l[0]-5}" y="${l[1]+24}" width="10" height="3" rx="1" fill="#e0a800"/><rect x="${l[0]-5}" y="${l[1]+10}" width="3" height="12" rx="1.5" fill="#fff" opacity=".35"/></g>`).join('')}
+<!-- big hanging lantern spot (right) -->
+<line x1="270" y1="40" x2="270" y2="80" stroke="#3a2a4a" stroke-width="2"/>
+<!-- stall 1 (left, samosas) -->
+<g><ellipse cx="88" cy="324" rx="78" ry="10" fill="#000" opacity=".2"/>
+<rect x="18" y="200" width="6" height="124" fill="#7a4a2a"/><rect x="152" y="200" width="6" height="124" fill="#7a4a2a"/>
+<path d="M8 186 H168 V206 H8 Z" fill="#fff"/>${_rep(5,i=>`<rect x="${8+i*32}" y="186" width="16" height="20" fill="#e85d4f"/>`)}
+<path d="M8 206 ${_rep(10,i=>'q8 9 16 0 ')}" fill="#e85d4f"/><path d="M8 206 ${_rep(10,i=>'q8 9 16 0 ')}" fill="none" stroke="#c4473b" stroke-width="1"/>
+<rect x="12" y="282" width="152" height="42" rx="4" fill="url(#mkWood)"/><rect x="8" y="276" width="160" height="10" rx="3" fill="#d99a5a"/>
+<g stroke="#8a5a30" stroke-width="1.4" opacity=".6"><line x1="14" y1="298" x2="162" y2="298"/><line x1="14" y1="312" x2="162" y2="312"/></g>
+<ellipse cx="82" cy="274" rx="30" ry="6" fill="#e9f2f2"/><g fill="#e8a64a"><path d="M62 272 l10 -14 l10 14 Z"/><path d="M76 272 l10 -14 l10 14 Z"/><path d="M90 272 l8 -11 l8 11 Z"/></g>
+<g fill="#7a4a2a"><ellipse cx="142" cy="270" rx="12" ry="6"/></g><g fill="#5a2a1a">${_rep(6,i=>`<ellipse cx="${134+i*3.4}" cy="${266+(i%2)*2}" rx="2.6" ry="3.6"/>`)}</g>
+<rect x="34" y="232" width="20" height="16" rx="3" fill="#ffd166"/><rect x="58" y="236" width="16" height="12" rx="3" fill="#4ec5b0"/></g>
+<!-- stall 2 (middle, cakes) -->
+<g><rect x="132" y="232" width="5" height="92" fill="#6a3a22"/><rect x="214" y="232" width="5" height="92" fill="#6a3a22"/>
+<path d="M124 220 H226 V236 H124 Z" fill="#fff"/>${_rep(4,i=>`<rect x="${124+i*26}" y="220" width="13" height="16" fill="#2fa37a"/>`)}
+<rect x="128" y="290" width="96" height="34" rx="4" fill="url(#mkWood)"/><rect x="124" y="284" width="104" height="9" rx="3" fill="#d99a5a"/>
+<ellipse cx="150" cy="282" rx="18" ry="4" fill="#fff"/><g fill="#7ac36a"><rect x="138" y="270" width="10" height="10" rx="2"/><rect x="150" y="268" width="10" height="12" rx="2"/></g><g fill="#ff8fb3"><rect x="144" y="262" width="10" height="8" rx="2"/></g>
+<ellipse cx="200" cy="282" rx="16" ry="4" fill="#fff"/><path d="M188 280 q12 -18 24 0 Z" fill="#e8a64a"/></g>
+<!-- stall 3 (right, drinks) with a pole Baby Mo-safe area -->
+<g><ellipse cx="270" cy="330" rx="60" ry="8" fill="#000" opacity=".2"/>
+<rect x="208" y="296" width="96" height="34" rx="4" fill="url(#mkWood)"/><rect x="204" y="290" width="104" height="9" rx="3" fill="#d99a5a"/>
+<g><rect x="222" y="266" width="16" height="26" rx="3" fill="#ff9a3c" opacity=".85"/><rect x="242" y="262" width="16" height="30" rx="3" fill="#7ad0f0" opacity=".85"/><rect x="262" y="268" width="16" height="24" rx="3" fill="#ff6b8c" opacity=".85"/><rect x="224" y="270" width="3" height="18" fill="#fff" opacity=".4"/><rect x="244" y="266" width="3" height="22" fill="#fff" opacity=".4"/></g></g>
+<!-- bedug drum on a stand (right) -->
+<g transform="translate(330 278)"><ellipse cx="0" cy="44" rx="40" ry="7" fill="#000" opacity=".22"/><path d="M-30 44 L-20 8 M30 44 L20 8" stroke="#6a3a22" stroke-width="6" stroke-linecap="round"/><ellipse cx="0" cy="0" rx="36" ry="24" fill="#a85a2a"/><ellipse cx="-30" cy="0" rx="8" ry="24" fill="#f3e3c8"/><ellipse cx="-30" cy="0" rx="5" ry="18" fill="#e8d0a8"/><g fill="#e0a800">${_rep(6,i=>`<circle cx="${-22+i*9}" cy="-20" r="1.8"/><circle cx="${-22+i*9}" cy="20" r="1.8"/>`)}</g></g>
+<!-- left wall corner (Baby Mo peeks round it) -->
+<rect x="0" y="120" width="22" height="210" fill="#5a3f6e"/><rect x="0" y="120" width="26" height="8" fill="#7a5a8e"/>
+<!-- sparkles in the air -->
+<g fill="#ffe9a8">${_rep(8,i=>`<circle class="amb-ffly" style="--d:${(3+r()*3).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" cx="${(40+r()*300).toFixed(0)}" cy="${(110+r()*90).toFixed(0)}" r="1.8"/>`)}</g>
+<!-- ketupat bunting at the front -->
+<path d="M0 404 Q187 380 375 404" stroke="#3a2a4a" stroke-width="1.5" fill="none"/>
+${_rep(9,i=>{const x=20+i*42,y=400-Math.sin(i/8*Math.PI)*22;return`<path d="M${x} ${y} l9 9 l-9 9 l-9 -9 Z" fill="${i%2?'#2fa37a':'#ffd166'}"/><path d="M${x} ${y+2} v14 M${x-7} ${y+9} h14" stroke="#fff" stroke-width="1" opacity=".6"/>`;})}`;}
 
-function masjidSVG(){return`<defs>
-<linearGradient id="mjSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#1e3a5e"/><stop offset="60%" stop-color="#2f5c7e"/><stop offset="100%" stop-color="#4d8098"/></linearGradient>
-<linearGradient id="mjFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e8d4a8"/><stop offset="100%" stop-color="#cdb281"/></linearGradient>
-<radialGradient id="mjMoon" cx="42%" cy="40%" r="60%"><stop offset="0%" stop-color="#fff6d8"/><stop offset="100%" stop-color="#ffe6a2"/></radialGradient>
-<linearGradient id="mjWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f1e4c4"/><stop offset="100%" stop-color="#e2d1a8"/></linearGradient>
-<linearGradient id="mjDome" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#48c4aa"/><stop offset="100%" stop-color="#2e9d8a"/></linearGradient>
+// 5 — Halaman Masjid (mosque courtyard at golden hour)
+function masjidSVG(){const r=_rng(505);return`<defs>
+<linearGradient id="mjSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5a5aa8"/><stop offset="40%" stop-color="#c98ac0"/><stop offset="75%" stop-color="#ffb38a"/><stop offset="100%" stop-color="#ffd59a"/></linearGradient>
+<linearGradient id="mjDome" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#6fe0b8"/><stop offset="60%" stop-color="#2fbf8f"/><stop offset="100%" stop-color="#1f8f6a"/></linearGradient>
+<linearGradient id="mjWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fffaf0"/><stop offset="100%" stop-color="#f3e2c2"/></linearGradient>
+<linearGradient id="mjFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f1d9b0"/><stop offset="100%" stop-color="#ddbd88"/></linearGradient>
+<radialGradient id="mjSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff2b8"/><stop offset="100%" stop-color="#ffb867" stop-opacity="0"/></radialGradient>
+<radialGradient id="mjLamp" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffe08a" stop-opacity=".7"/><stop offset="100%" stop-color="#ffe08a" stop-opacity="0"/></radialGradient>
+<linearGradient id="mjWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9fe0f0"/><stop offset="100%" stop-color="#4fb3d2"/></linearGradient>
 </defs>
 <rect width="375" height="420" fill="url(#mjSky)"/>
-<g fill="#fff7da"><circle cx="40" cy="40" r="1.5"/><circle cx="120" cy="26" r="1.2"/><circle cx="250" cy="36" r="1.6"/><circle cx="296" cy="20" r="1.3"/><circle cx="80" cy="92" r="1.2"/><circle cx="352" cy="104" r="1.3"/></g>
-<circle cx="322" cy="58" r="26" fill="url(#mjMoon)"/><circle cx="332" cy="52" r="26" fill="#1e3a5e"/>
-<rect x="0" y="356" width="375" height="64" fill="url(#mjFloor)"/><rect x="0" y="352" width="375" height="5" fill="#b89a68"/>
-<g stroke="#b89a68" stroke-width="1.5" opacity=".5"><line x1="0" y1="386" x2="375" y2="386"/><line x1="70" y1="356" x2="60" y2="420"/><line x1="160" y1="356" x2="156" y2="420"/><line x1="250" y1="356" x2="262" y2="420"/></g>
-<!-- left minaret (Baby Mo hides here) -->
-<rect x="46" y="184" width="34" height="174" rx="5" fill="url(#mjWall)"/><rect x="44" y="176" width="38" height="10" rx="3" fill="#d8c084"/>
-<rect x="46" y="246" width="34" height="6" fill="#d8c084"/><rect x="46" y="306" width="34" height="6" fill="#d8c084"/>
-<path d="M48 176 Q63 138 78 176 Z" fill="url(#mjDome)"/><line x1="63" y1="150" x2="63" y2="142" stroke="#ffd166" stroke-width="2"/><circle cx="63" cy="138" r="5" fill="#ffd166"/><circle cx="66" cy="136" r="4.5" fill="#2f5c7e"/>
-<rect x="55" y="252" width="16" height="22" rx="8" fill="#c98a52"/>
-<!-- right minaret -->
-<rect x="295" y="184" width="34" height="174" rx="5" fill="url(#mjWall)"/><rect x="293" y="176" width="38" height="10" rx="3" fill="#d8c084"/>
-<rect x="295" y="246" width="34" height="6" fill="#d8c084"/><rect x="295" y="306" width="34" height="6" fill="#d8c084"/>
-<path d="M297 176 Q312 138 327 176 Z" fill="url(#mjDome)"/><line x1="312" y1="150" x2="312" y2="142" stroke="#ffd166" stroke-width="2"/><circle cx="312" cy="138" r="5" fill="#ffd166"/><circle cx="315" cy="136" r="4.5" fill="#2f5c7e"/>
-<rect x="304" y="252" width="16" height="22" rx="8" fill="#c98a52"/>
-<!-- main building -->
-<rect x="92" y="172" width="190" height="188" rx="6" fill="url(#mjWall)"/><rect x="92" y="172" width="190" height="188" rx="6" fill="none" stroke="#d8c084" stroke-width="2"/>
-<rect x="120" y="150" width="134" height="26" rx="6" fill="#e7d6ae"/>
-<ellipse cx="187" cy="150" rx="84" ry="52" fill="url(#mjDome)"/><ellipse cx="166" cy="134" rx="20" ry="28" fill="#62d4ba" opacity=".4"/>
-<line x1="187" y1="98" x2="187" y2="84" stroke="#ffd166" stroke-width="3"/><circle cx="187" cy="78" r="7" fill="#ffd166"/><circle cx="191" cy="75" r="6.5" fill="#1e3a5e"/>
-<path d="M118 250 q0 -22 22 -22 q22 0 22 22 V300 H118 Z" fill="#ffcf6b"/><path d="M124 250 q0 -16 16 -16 q16 0 16 16 V296 H124 Z" fill="#ffe39a"/>
-<path d="M212 250 q0 -22 22 -22 q22 0 22 22 V300 H212 Z" fill="#ffcf6b"/><path d="M218 250 q0 -16 16 -16 q16 0 16 16 V296 H218 Z" fill="#ffe39a"/>
-<path d="M160 360 V236 q0 -27 27 -27 q27 0 27 27 V360 Z" fill="#3a6e7a"/><path d="M166 360 V236 q0 -21 21 -21 q21 0 21 21 V360 Z" fill="#2e5a64"/><line x1="187" y1="214" x2="187" y2="360" stroke="#24474f" stroke-width="2"/>
-<line x1="110" y1="172" x2="110" y2="188" stroke="#9c6b3a" stroke-width="2"/><ellipse cx="110" cy="198" rx="9" ry="12" fill="#ff8c66"/><circle cx="110" cy="198" r="4" fill="#fff3c4" opacity=".6"/>
-<line x1="264" y1="172" x2="264" y2="188" stroke="#9c6b3a" stroke-width="2"/><ellipse cx="264" cy="198" rx="9" ry="12" fill="#ffd166"/><circle cx="264" cy="198" r="4" fill="#fff3c4" opacity=".6"/>
-<g><circle cx="26" cy="350" r="18" fill="#5aa066"/><circle cx="44" cy="352" r="14" fill="#6bbf72"/></g>
-<g><circle cx="349" cy="350" r="18" fill="#5aa066"/><circle cx="331" cy="352" r="14" fill="#6bbf72"/></g>`;}
+<circle cx="84" cy="190" r="70" fill="url(#mjSun)"/><circle cx="84" cy="196" r="22" fill="#fff0b0"/>
+<g class="amb-dr" style="--d:40s"><g fill="#ffd9e0" opacity=".75"><ellipse cx="290" cy="60" rx="40" ry="11"/><ellipse cx="306" cy="52" rx="20" ry="11"/><ellipse cx="60" cy="90" rx="30" ry="8"/></g></g>
+<g fill="#fff">${_rep(8,i=>`<circle class="amb-tw" style="--d:${(2+r()*2).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" cx="${(r()*375).toFixed(0)}" cy="${(10+r()*50).toFixed(0)}" r="1.2"/>`)}</g>
+<path d="M318 30 A14 14 0 1 0 322 58 A11 11 0 1 1 318 30 Z" fill="#fff6d0"/>
+<g stroke="#5a4060" stroke-width="2" fill="none" stroke-linecap="round"><path class="amb-fl" style="--d:3s" d="M140 120 q5 -5 10 0 q5 -5 10 0"/><path class="amb-fl" style="--d:3.6s;--dl:.5s" d="M164 108 q4 -4 8 0 q4 -4 8 0"/></g>
+<!-- minarets -->
+<g><rect x="104" y="96" width="20" height="150" fill="url(#mjWall)"/><rect x="100" y="130" width="28" height="7" rx="2" fill="#e8d2a8"/><path d="M100 98 Q114 64 128 98 Z" fill="url(#mjDome)"/><rect x="112" y="56" width="4" height="14" fill="#e0a800"/><rect x="109" y="150" width="10" height="16" rx="5" fill="#7a5a8e"/>
+<rect x="296" y="96" width="20" height="150" fill="url(#mjWall)"/><rect x="292" y="130" width="28" height="7" rx="2" fill="#e8d2a8"/><path d="M292 98 Q306 64 320 98 Z" fill="url(#mjDome)"/><rect x="304" y="56" width="4" height="14" fill="#e0a800"/><rect x="301" y="150" width="10" height="16" rx="5" fill="#7a5a8e"/></g>
+<!-- main hall + dome -->
+<ellipse cx="210" cy="250" rx="110" ry="10" fill="#000" opacity=".12"/>
+<rect x="128" y="146" width="164" height="104" fill="url(#mjWall)"/>
+<path d="M150 148 Q150 74 210 64 Q270 74 270 148 Z" fill="url(#mjDome)"/>
+<path d="M168 140 Q170 90 206 76" stroke="#bff5e0" stroke-width="5" fill="none" opacity=".55" stroke-linecap="round"/>
+<rect x="142" y="140" width="136" height="10" rx="3" fill="#e8d2a8"/>
+<rect x="208" y="40" width="4" height="26" fill="#e0a800"/><path d="M210 26 a7 7 0 1 0 5 11 a5.5 5.5 0 1 1 -5 -11" fill="#e0a800"/>
+<g fill="#2a8a68">${_rep(8,i=>`<path d="M${132+i*20.5} 156 l10 -8 l10 8 Z"/>`)}</g>
+<!-- glowing arches -->
+${[148,252].map(x=>`<path d="M${x} 236 V196 Q${x+10} 180 ${x+20} 196 V236 Z" fill="#ffe08a"/><path d="M${x+3} 236 V198 Q${x+10} 186 ${x+17} 198 V236 Z" fill="#ffd166" opacity=".6"/>`).join('')}
+<path d="M188 250 V188 Q210 160 232 188 V250 Z" fill="#2a8a68"/><path d="M194 250 V192 Q210 172 226 192 V250 Z" fill="#ffd98a"/><path d="M210 176 V250" stroke="#e0b860" stroke-width="2"/>
+<!-- courtyard floor tiles -->
+<path d="M0 246 H375 V420 H0 Z" fill="url(#mjFloor)"/>
+<g stroke="#d2ad78" stroke-width="1.2" opacity=".7">${_rep(9,i=>`<line x1="${-40+i*56}" y1="246" x2="${-140+i*80}" y2="420"/>`)}${_rep(5,i=>`<line x1="0" y1="${262+i*34+i*i*3}" x2="375" y2="${262+i*34+i*i*3}"/>`)}</g>
+<!-- prayer carpet in front of the door -->
+<path d="M150 262 H270 L282 300 H138 Z" fill="#c4553d"/><path d="M158 266 H262 L270 294 H150 Z" fill="none" stroke="#ffd166" stroke-width="2"/><path d="M196 290 V276 Q210 266 224 276 V290" fill="none" stroke="#ffd166" stroke-width="2"/>
+<!-- wudu fountain -->
+<g transform="translate(300 300)"><ellipse cx="0" cy="22" rx="52" ry="8" fill="#000" opacity=".12"/><path d="M-48 0 H48 L42 22 H-42 Z" fill="#e8d2a8"/><ellipse cx="0" cy="0" rx="48" ry="11" fill="#f6ead0"/><ellipse cx="0" cy="1" rx="40" ry="8" fill="url(#mjWater)"/><rect x="-3" y="-22" width="6" height="22" fill="#e8d2a8"/><path class="amb-fl" style="--d:1.4s" d="M0 -24 q-12 4 -16 18 M0 -24 q12 4 16 18" stroke="#bfefff" stroke-width="2.4" fill="none" stroke-linecap="round"/><ellipse class="amb-rip" cx="-14" cy="2" rx="8" ry="2.4" fill="none" stroke="#fff" stroke-width="1.2"/><ellipse class="amb-rip" style="--dl:1s" cx="14" cy="2" rx="8" ry="2.4" fill="none" stroke="#fff" stroke-width="1.2"/></g>
+<!-- palm (left) behind which Baby Mo hides -->
+<path d="M44 330 Q50 260 64 196" stroke="#9a6a3a" stroke-width="11" fill="none" stroke-linecap="round"/>
+<g stroke="#7a4f2c" stroke-width="2" opacity=".5">${_rep(6,i=>`<path d="M${46+i*3} ${318-i*22} q6 -3 11 0"/>`)}</g>
+<g fill="#3aa860"><path d="M64 194 Q30 170 2 188 Q34 186 64 194 Z"/><path d="M64 194 Q100 166 130 182 Q96 184 64 194 Z"/><path d="M64 194 Q52 156 26 150 Q46 170 64 194 Z"/><path d="M64 194 Q80 154 108 150 Q84 170 64 194 Z"/><path d="M64 194 Q40 206 22 234 Q46 214 64 194 Z"/><path d="M64 194 Q90 208 104 234 Q84 212 64 194 Z"/></g>
+<g fill="#7a3a1a"><circle cx="60" cy="200" r="4"/><circle cx="68" cy="201" r="4"/><circle cx="64" cy="206" r="4"/></g>
+<!-- hanging lantern left -->
+<path d="M0 132 Q30 120 60 126" stroke="#5a4060" stroke-width="1.5" fill="none"/>
+<g class="amb-sw" style="--d:3.4s"><circle cx="60" cy="160" r="22" fill="url(#mjLamp)"/></g>
+<!-- shoe rack (bottom left) -->
+<g transform="translate(26 350)"><ellipse cx="44" cy="36" rx="54" ry="7" fill="#000" opacity=".15"/><rect x="0" y="0" width="92" height="36" rx="5" fill="#a8703f"/><rect x="4" y="4" width="84" height="12" rx="2" fill="#8a5a30"/><rect x="4" y="20" width="84" height="12" rx="2" fill="#8a5a30"/><g fill="#4ec5b0"><rect x="10" y="9" width="16" height="6" rx="3"/><rect x="28" y="9" width="16" height="6" rx="3"/></g><g fill="#ff8c66"><rect x="62" y="25" width="16" height="6" rx="3"/></g></g>
+<!-- flower pots -->
+${[[130,330],[352,250]].map(p=>`<g transform="translate(${p[0]} ${p[1]})"><ellipse cx="0" cy="18" rx="18" ry="4" fill="#000" opacity=".15"/><path d="M-12 0 H12 L9 18 H-9 Z" fill="#e07a52"/><circle cx="-6" cy="-6" r="8" fill="#5bb85a"/><circle cx="6" cy="-6" r="8" fill="#5bb85a"/><circle cx="0" cy="-12" r="8" fill="#6bc866"/><circle cx="-5" cy="-10" r="3" fill="#ff8fb3"/><circle cx="5" cy="-6" r="3" fill="#ffd166"/></g>`).join('')}`;}
 
-function kitchenSVG(){return`<defs>
-<linearGradient id="ktWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f4d89a"/><stop offset="100%" stop-color="#f0c87e"/></linearGradient>
-<linearGradient id="ktFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#d9b48a"/><stop offset="100%" stop-color="#c29a6c"/></linearGradient>
-<linearGradient id="ktSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd0e6"/><stop offset="100%" stop-color="#bfe6f0"/></linearGradient>
-<radialGradient id="ktWarm" cx="50%" cy="0%" r="95%"><stop offset="0%" stop-color="rgba(255,240,200,.25)"/><stop offset="60%" stop-color="rgba(255,240,200,0)"/></radialGradient>
+// 6 — Dapur Baby Mo (sunny kitchen)
+function kitchenSVG(){const r=_rng(606);return`<defs>
+<linearGradient id="ktWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffd99a"/><stop offset="100%" stop-color="#ffc070"/></linearGradient>
+<linearGradient id="ktSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd3ff"/><stop offset="100%" stop-color="#d9f2ff"/></linearGradient>
+<linearGradient id="ktCab" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5cc2b0"/><stop offset="100%" stop-color="#3fa595"/></linearGradient>
+<linearGradient id="ktTop" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff8ec"/><stop offset="100%" stop-color="#e9dcc4"/></linearGradient>
+<radialGradient id="ktSun" cx="50%" cy="20%" r="80%"><stop offset="0%" stop-color="#fff6d0" stop-opacity=".35"/><stop offset="100%" stop-color="#fff6d0" stop-opacity="0"/></radialGradient>
+<pattern id="ktTile" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#fffaf0"/><rect width="21" height="21" fill="#f6fbff"/><circle cx="11" cy="11" r="3" fill="#bfe6f0" opacity=".7"/></pattern>
+<pattern id="ktFloor" width="40" height="40" patternUnits="userSpaceOnUse"><rect width="40" height="40" fill="#f3c08a"/><rect width="20" height="20" fill="#fff0d8"/><rect x="20" y="20" width="20" height="20" fill="#fff0d8"/></pattern>
 </defs>
-<rect width="375" height="420" fill="url(#ktWall)"/><rect width="375" height="420" fill="url(#ktWarm)"/>
-<g fill="none" stroke="#e0b878" stroke-width="1.5" opacity=".45"><line x1="0" y1="250" x2="375" y2="250"/><line x1="0" y1="276" x2="375" y2="276"/><line x1="48" y1="250" x2="48" y2="288"/><line x1="120" y1="250" x2="120" y2="288"/><line x1="255" y1="250" x2="255" y2="288"/><line x1="330" y1="250" x2="330" y2="288"/></g>
-<rect x="0" y="330" width="375" height="90" fill="url(#ktFloor)"/>
-<g fill="#b88e60" opacity=".5"><rect x="0" y="330" width="46" height="45"/><rect x="92" y="330" width="46" height="45"/><rect x="184" y="330" width="46" height="45"/><rect x="276" y="330" width="46" height="45"/><rect x="46" y="375" width="46" height="45"/><rect x="138" y="375" width="46" height="45"/><rect x="230" y="375" width="46" height="45"/><rect x="322" y="375" width="46" height="45"/></g>
-<!-- window + curtain (Baby Mo hides here) -->
-<rect x="138" y="44" width="100" height="104" rx="14" fill="#cfa05a"/>
-<rect x="144" y="50" width="88" height="92" rx="10" fill="url(#ktSky)"/>
-<circle cx="170" cy="78" r="20" fill="rgba(255,240,160,.35)"/><circle cx="170" cy="78" r="13" fill="#fff3b0"/>
-<g fill="#fff" opacity=".8"><ellipse cx="206" cy="74" rx="13" ry="7"/><ellipse cx="198" cy="70" rx="8" ry="5"/></g>
-<rect x="186" y="50" width="4" height="92" fill="#cfa05a"/><rect x="144" y="92" width="88" height="4" fill="#cfa05a"/>
-<rect x="138" y="44" width="100" height="104" rx="14" fill="none" stroke="#fff6e6" stroke-width="5"/>
-<rect x="130" y="38" width="116" height="7" rx="3.5" fill="#a8703f"/>
-<path d="M134 43 H242 V40 Q224 50 206 40 Q188 50 170 40 Q152 50 134 40 Z" fill="#ff8c66"/>
-<path d="M134 43 H170 V140 Q160 149 150 140 Q140 149 134 140 Z" fill="#ffa884"/>
-<path d="M206 43 H242 V140 Q232 149 222 140 Q212 149 206 140 Z" fill="#ffa884"/>
+<rect width="375" height="420" fill="url(#ktWall)"/>
+<g fill="#fff" opacity=".3">${_rep(30,i=>`<circle cx="${(i%6)*66+((i/6|0)%2)*33+10}" cy="${(i/6|0)*44+12}" r="3"/>`)}</g>
+<!-- window with sunny garden (Baby Mo peeks in) -->
+<rect x="124" y="40" width="126" height="116" rx="14" fill="#fff"/><rect x="132" y="48" width="110" height="100" rx="9" fill="url(#ktSky)"/>
+<circle cx="214" cy="74" r="14" fill="#ffe066"/><g class="amb-dr" style="--d:26s"><ellipse cx="160" cy="70" rx="18" ry="6" fill="#fff"/></g>
+<path d="M132 124 Q170 108 242 122 V148 H132 Z" fill="#7fcf6e"/><circle cx="150" cy="122" r="10" fill="#5fb85f"/><circle cx="228" cy="118" r="12" fill="#5fb85f"/>
+<rect x="185" y="48" width="4" height="100" fill="#fff"/><rect x="132" y="96" width="110" height="4" fill="#fff"/>
+<rect x="116" y="152" width="142" height="10" rx="4" fill="#fff"/>
+<rect x="116" y="34" width="142" height="8" rx="4" fill="#c97a4a"/>
+<path d="M118 40 H170 V112 Q156 122 144 112 Q132 122 120 112 Z" fill="#ff9e7a"/><path d="M204 40 H256 V112 Q244 122 232 112 Q220 122 206 112 Z" fill="#ff9e7a"/>
+<g fill="#fff" opacity=".5">${_rep(4,i=>`<circle cx="${130+i*11}" cy="${60+i*12}" r="2"/><circle cx="${216+i*11}" cy="${60+i*12}" r="2"/>`)}</g>
+<rect x="0" y="0" width="375" height="420" fill="url(#ktSun)"/>
+<!-- herb pots on the sill -->
+${[136,160,224].map((x,i)=>`<g><path d="M${x-8} 152 H${x+8} L${x+6} 140 H${x-6} Z" transform="translate(0 0)" fill="${['#e07a52','#5aa9e0','#f2a53a'][i]}"/><circle cx="${x}" cy="134" r="7" fill="#5bb85a"/><circle cx="${x-5}" cy="138" r="5" fill="#6bc866"/><circle cx="${x+5}" cy="137" r="5" fill="#6bc866"/></g>`).join('')}
+<!-- left open shelf with teapot spot & plates -->
+<rect x="14" y="160" width="96" height="8" rx="3" fill="#c97a4a"/><rect x="14" y="214" width="96" height="8" rx="3" fill="#c97a4a"/>
+<g><circle cx="94" cy="148" r="11" fill="#fff" stroke="#9fd4f0" stroke-width="3"/><circle cx="72" cy="150" r="9" fill="#fff" stroke="#ffb3a0" stroke-width="3"/><rect x="24" y="196" width="14" height="18" rx="3" fill="#ff8c66"/><rect x="40" y="200" width="12" height="14" rx="3" fill="#ffd166"/><rect x="88" y="198" width="14" height="16" rx="4" fill="#bfe6f0"/><rect x="90" y="194" width="10" height="5" rx="2" fill="#e85d4f"/></g>
+<!-- right: utensil rail (spoon spot) and clock -->
+<circle cx="322" cy="70" r="20" fill="#fff" stroke="#e8a64a" stroke-width="4"/><path d="M322 70 V58 M322 70 H331" stroke="#4a4a4a" stroke-width="2.5" stroke-linecap="round"/>
+<rect x="282" y="168" width="84" height="6" rx="3" fill="#b0b8c0"/>
+<g fill="#8a9aa8">${[292,342,356].map(x=>`<line class="amb-sw" style="--d:${(3+x%3)}s" x1="${x}" y1="174" x2="${x}" y2="206" stroke="#8a9aa8" stroke-width="3"/>`).join('')}<circle cx="292" cy="210" r="6"/><rect x="338" y="204" width="8" height="12" rx="2"/><path d="M352 204 h8 l-2 14 h-4 Z"/></g>
 <!-- upper cabinets -->
-<rect x="8" y="150" width="96" height="56" rx="8" fill="#5fb0a6"/><rect x="12" y="154" width="42" height="48" rx="5" fill="#6fc0b4"/><rect x="58" y="154" width="42" height="48" rx="5" fill="#6fc0b4"/><circle cx="50" cy="178" r="2.5" fill="#3a8478"/><circle cx="62" cy="178" r="2.5" fill="#3a8478"/>
-<rect x="270" y="150" width="98" height="56" rx="8" fill="#5fb0a6"/><rect x="274" y="154" width="43" height="48" rx="5" fill="#6fc0b4"/><rect x="321" y="154" width="43" height="48" rx="5" fill="#6fc0b4"/>
-<!-- left counter + stove -->
-<rect x="0" y="288" width="150" height="14" rx="4" fill="#ece0c8"/><rect x="0" y="302" width="150" height="58" fill="#4f9e94"/>
-<rect x="8" y="308" width="64" height="46" rx="6" fill="#5fb0a6"/><rect x="78" y="308" width="64" height="46" rx="6" fill="#5fb0a6"/>
-<rect x="14" y="266" width="58" height="24" rx="4" fill="#cfd6db"/><circle cx="28" cy="278" r="6" fill="#9aa4ab"/><circle cx="52" cy="278" r="6" fill="#9aa4ab"/>
-<!-- center island -->
-<rect x="150" y="300" width="112" height="60" rx="8" fill="#a8703f"/><rect x="150" y="300" width="112" height="12" fill="#c08850"/>
-<!-- fridge -->
-<rect x="300" y="214" width="66" height="146" rx="10" fill="#eaf3f0"/><rect x="300" y="214" width="66" height="146" rx="10" fill="none" stroke="#cfe0db" stroke-width="2"/><line x1="300" y1="276" x2="366" y2="276" stroke="#cfe0db" stroke-width="2"/><rect x="306" y="224" width="5" height="40" rx="2" fill="#bcd2cc"/><rect x="306" y="286" width="5" height="40" rx="2" fill="#bcd2cc"/>
-<!-- wall clock -->
-<circle cx="284" cy="120" r="15" fill="#fff6e6"/><circle cx="284" cy="120" r="15" fill="none" stroke="#cfa05a" stroke-width="2"/><line x1="284" y1="120" x2="284" y2="111" stroke="#a8703f" stroke-width="1.5"/><line x1="284" y1="120" x2="291" y2="120" stroke="#a8703f" stroke-width="1.5"/>
-<ellipse cx="200" cy="388" rx="118" ry="19" fill="#ff9e7a" opacity=".45"/>`;}
+<rect x="14" y="40" width="96" height="62" rx="8" fill="url(#ktCab)"/><rect x="20" y="46" width="40" height="50" rx="5" fill="#6ed0bd"/><rect x="64" y="46" width="40" height="50" rx="5" fill="#6ed0bd"/><circle cx="56" cy="72" r="3" fill="#fff"/><circle cx="68" cy="72" r="3" fill="#fff"/>
+<!-- backsplash tiles -->
+<rect x="0" y="236" width="375" height="40" fill="url(#ktTile)"/>
+<!-- counter + stove (left) -->
+<rect x="0" y="270" width="375" height="14" fill="url(#ktTop)"/><rect x="0" y="282" width="375" height="4" fill="#d2c2a4"/>
+<rect x="0" y="286" width="375" height="64" fill="url(#ktCab)"/>
+${_rep(5,i=>`<rect x="${6+i*75}" y="292" width="68" height="52" rx="6" fill="#6ed0bd"/><rect x="${32+i*75}" y="300" width="16" height="4" rx="2" fill="#fff"/>`)}
+<rect x="30" y="262" width="92" height="10" rx="3" fill="#4a4f58"/><circle cx="54" cy="266" r="9" fill="#2f333a"/><circle cx="98" cy="266" r="9" fill="#2f333a"/>
+<g fill="#ff6b3d" opacity=".9"><path class="amb-flame" d="M48 268 q6 -10 12 0 Z"/><path class="amb-flame" style="--dl:.2s" d="M92 268 q6 -10 12 0 Z"/></g>
+${_rep(3,i=>`<circle class="amb-smoke" style="--d:${3+i}s;--dl:${i*1.1}s" cx="${74+i*4}" cy="246" r="7" fill="#fff"/>`)}
+<!-- fruit bowl + bread board -->
+<ellipse cx="164" cy="268" rx="30" ry="6" fill="#000" opacity=".1"/><path d="M136 256 Q164 286 192 256 Z" fill="#5aa9e0"/><circle cx="150" cy="252" r="7" fill="#ffd166"/><circle cx="178" cy="252" r="7" fill="#8bd06a"/><path d="M158 250 q6 -14 14 -4" fill="#ffb347"/>
+<rect x="210" y="262" width="62" height="10" rx="4" fill="#c97a4a"/><circle cx="274" cy="267" r="4" fill="#c97a4a"/>
+<!-- fridge (right) -->
+<ellipse cx="330" cy="392" rx="48" ry="7" fill="#000" opacity=".12"/>
+<rect x="290" y="226" width="80" height="166" rx="12" fill="#f6fbff" stroke="#d6e4ee" stroke-width="3"/><rect x="290" y="282" width="80" height="4" fill="#d6e4ee"/>
+<rect x="298" y="240" width="5" height="32" rx="2.5" fill="#b0c4d4"/><rect x="298" y="296" width="5" height="44" rx="2.5" fill="#b0c4d4"/>
+<circle cx="330" cy="252" r="6" fill="#ff6b5c"/><rect x="342" y="246" width="12" height="12" rx="3" fill="#ffd166" transform="rotate(10 348 252)"/><rect x="316" y="300" width="34" height="26" rx="3" fill="#fff" stroke="#9fd4f0" stroke-width="2"/><path d="M322 316 l6 -6 l6 4 l8 -8" stroke="#ff8fb3" stroke-width="2" fill="none"/>
+<!-- checkered floor + rug -->
+<rect x="0" y="350" width="290" height="70" fill="url(#ktFloor)"/><rect x="290" y="392" width="85" height="28" fill="url(#ktFloor)"/>
+<rect x="0" y="350" width="375" height="4" fill="#000" opacity=".08"/>
+<ellipse cx="170" cy="392" rx="94" ry="18" fill="#ff8c66" opacity=".85"/><ellipse cx="170" cy="392" rx="78" ry="12" fill="none" stroke="#fff3e0" stroke-width="2" stroke-dasharray="6 5"/>
+<!-- cat bowl + sunbeam sparkle -->
+<ellipse cx="258" cy="404" rx="14" ry="5" fill="#5aa9e0"/><ellipse cx="258" cy="401" rx="10" ry="3" fill="#fff4d0"/>
+<g fill="#fff">${_rep(6,i=>`<circle class="amb-tw" style="--d:${(2+r()*2).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" cx="${(140+r()*110).toFixed(0)}" cy="${(170+r()*60).toFixed(0)}" r="1.6"/>`)}</g>`;}
 
-function classroomSVG(){return`<defs>
-<linearGradient id="clWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7cc3c0"/><stop offset="100%" stop-color="#99d6d0"/></linearGradient>
-<linearGradient id="clFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c98a52"/><stop offset="100%" stop-color="#a06a39"/></linearGradient>
-<linearGradient id="clSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd0e6"/><stop offset="100%" stop-color="#bfe6f0"/></linearGradient>
+// 7 — Kelas Baby Mo (classroom)
+function classroomSVG(){const r=_rng(707);return`<defs>
+<linearGradient id="clWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#cdeefc"/><stop offset="100%" stop-color="#a9dcf2"/></linearGradient>
+<linearGradient id="clBoard" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3f7a5e"/><stop offset="100%" stop-color="#2f6650"/></linearGradient>
+<linearGradient id="clFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e2a96a"/><stop offset="100%" stop-color="#c88a4e"/></linearGradient>
+<linearGradient id="clSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7cc6f2"/><stop offset="100%" stop-color="#d9f2ff"/></linearGradient>
+<linearGradient id="clWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffcf8a"/><stop offset="100%" stop-color="#e8a85a"/></linearGradient>
+<radialGradient id="clLight" cx="20%" cy="25%" r="70%"><stop offset="0%" stop-color="#fffbe0" stop-opacity=".6"/><stop offset="100%" stop-color="#fffbe0" stop-opacity="0"/></radialGradient>
 </defs>
 <rect width="375" height="420" fill="url(#clWall)"/>
-<rect x="0" y="330" width="375" height="90" fill="url(#clFloor)"/><rect x="0" y="324" width="375" height="9" fill="#8a5a30"/>
-<g stroke="#875a2f" stroke-width="2" opacity=".4"><line x1="80" y1="333" x2="64" y2="420"/><line x1="200" y1="333" x2="196" y2="420"/><line x1="300" y1="333" x2="312" y2="420"/></g>
-<!-- window left + curtain (Baby Mo hides here) -->
-<rect x="14" y="40" width="96" height="108" rx="14" fill="#5a8a86"/>
-<rect x="20" y="46" width="84" height="96" rx="10" fill="url(#clSky)"/>
-<circle cx="44" cy="74" r="13" fill="#fff3b0"/><g fill="#fff" opacity=".8"><ellipse cx="80" cy="66" rx="14" ry="8"/><ellipse cx="72" cy="62" rx="9" ry="6"/></g>
-<rect x="62" y="46" width="4" height="96" fill="#5a8a86"/><rect x="20" y="90" width="84" height="4" fill="#5a8a86"/>
-<rect x="14" y="40" width="96" height="108" rx="14" fill="none" stroke="#eef6f4" stroke-width="5"/>
-<rect x="8" y="34" width="108" height="7" rx="3.5" fill="#a8703f"/>
-<path d="M12 39 H112 V40 Q95 50 78 40 Q61 50 44 40 Q28 50 12 40 Z" fill="#ffd166"/>
-<path d="M12 39 H44 V140 Q35 149 26 140 Q18 149 12 140 Z" fill="#ffe08a"/>
-<path d="M82 39 H112 V140 Q103 149 94 140 Q86 149 82 140 Z" fill="#ffe08a"/>
-<!-- blackboard -->
-<rect x="130" y="44" width="182" height="96" rx="8" fill="#a8703f"/><rect x="136" y="50" width="170" height="84" rx="5" fill="#3a6b54"/>
-<text x="221" y="86" text-anchor="middle" font-size="25" fill="#fff6e6" font-family="'Fredoka One',cursive">A B C</text>
-<text x="221" y="116" text-anchor="middle" font-size="17" fill="#ffe39a" font-family="'Fredoka One',cursive">1 2 3</text>
-<!-- clock -->
-<circle cx="240" cy="172" r="15" fill="#fff6e6"/><circle cx="240" cy="172" r="15" fill="none" stroke="#a8703f" stroke-width="2.5"/><line x1="240" y1="172" x2="240" y2="162" stroke="#3a3a3a" stroke-width="2"/><line x1="240" y1="172" x2="248" y2="172" stroke="#3a3a3a" stroke-width="2"/>
-<!-- bookshelf right -->
-<rect x="322" y="150" width="48" height="180" rx="6" fill="#b87a44"/><rect x="326" y="158" width="40" height="6" fill="#8a5a30"/><rect x="326" y="206" width="40" height="6" fill="#8a5a30"/><rect x="326" y="254" width="40" height="6" fill="#8a5a30"/>
-<g><rect x="330" y="166" width="8" height="38" rx="2" fill="#ff6b5c"/><rect x="340" y="168" width="7" height="36" rx="2" fill="#6cc0e8"/><rect x="349" y="165" width="9" height="39" rx="2" fill="#ffd166"/><rect x="360" y="167" width="6" height="37" rx="2" fill="#6bbf59"/></g>
-<g><rect x="330" y="214" width="8" height="38" rx="2" fill="#b497e0"/><rect x="340" y="216" width="8" height="36" rx="2" fill="#ff8c66"/><rect x="350" y="213" width="9" height="39" rx="2" fill="#4ec5b0"/></g>
-<!-- teacher desk -->
-<rect x="120" y="300" width="150" height="58" rx="8" fill="#c98a52"/><rect x="120" y="300" width="150" height="12" fill="#d9a36a"/><rect x="128" y="316" width="44" height="38" rx="5" fill="#b87a44"/>
-<ellipse cx="195" cy="386" rx="120" ry="19" fill="#ff9e7a" opacity=".4"/>`;}
+<rect x="0" y="210" width="375" height="60" fill="#8fcde6" opacity=".5"/><rect x="0" y="208" width="375" height="5" fill="#fff" opacity=".7"/>
+<!-- bunting -->
+<path d="M0 18 Q187 44 375 18" stroke="#6a7a8a" stroke-width="1.5" fill="none"/>
+${_rep(11,i=>{const x=12+i*34,y=18+Math.sin(i/10*Math.PI)*24;return`<path class="amb-sw" style="--d:${(3+i%3*.4).toFixed(1)}s;--dl:${(i*.2).toFixed(1)}s" d="M${x-10} ${y} L${x+10} ${y} L${x} ${y+18} Z" fill="${['#ff6b5c','#ffd166','#4ec5b0','#5aa9e0','#b48be8'][i%5]}"/>`;})}
+<!-- window (left) — Baby Mo peeks from behind it -->
+<rect x="14" y="80" width="98" height="112" rx="12" fill="#fff"/><rect x="21" y="87" width="84" height="98" rx="8" fill="url(#clSky)"/>
+<circle cx="86" cy="108" r="11" fill="#ffe066"/><g class="amb-dr" style="--d:24s"><ellipse cx="44" cy="112" rx="16" ry="6" fill="#fff"/></g>
+<path d="M21 160 Q60 146 105 158 V185 H21 Z" fill="#7fcf6e"/><circle cx="40" cy="156" r="10" fill="#5fb85f"/>
+<rect x="61" y="87" width="4" height="98" fill="#fff"/><rect x="21" y="134" width="84" height="4" fill="#fff"/>
+<rect x="8" y="190" width="110" height="8" rx="4" fill="#fff"/>
+<rect x="0" y="0" width="375" height="420" fill="url(#clLight)"/>
+<!-- chalkboard -->
+<rect x="128" y="62" width="168" height="104" rx="8" fill="#b8763e"/><rect x="135" y="69" width="154" height="90" rx="4" fill="url(#clBoard)"/>
+<g font-family="'Fredoka One',cursive" text-anchor="middle"><text x="182" y="100" font-size="22" fill="#fff6c8">A B C</text><text x="182" y="126" font-size="16" fill="#bfe6ff">1 2 3</text></g>
+<g fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M240 96 l6 -12 l6 12 h-12" stroke="#ffd166"/><circle cx="262" cy="122" r="9" stroke="#ff8fb3"/><path d="M224 138 q10 -10 20 0 q10 10 20 0" stroke="#bfe6ff"/><path d="M150 146 h60" stroke="#fff" opacity=".6"/></g>
+<rect x="150" y="158" width="124" height="6" rx="2" fill="#a86a34"/><rect x="170" y="154" width="14" height="5" rx="1.5" fill="#fff"/><rect x="190" y="154" width="10" height="5" rx="1.5" fill="#ffd166"/>
+<!-- clock + drawings -->
+<circle cx="336" cy="66" r="18" fill="#fff" stroke="#5aa9e0" stroke-width="4"/><path d="M336 66 V55 M336 66 H344" stroke="#4a4a4a" stroke-width="2.4" stroke-linecap="round"/>
+<g transform="rotate(-4 330 122)"><rect x="310" y="100" width="44" height="40" fill="#fff"/><circle cx="324" cy="114" r="6" fill="#ffd166"/><path d="M312 136 q12 -14 24 0 q8 -8 16 0" fill="#7fcf6e"/></g><circle cx="332" cy="102" r="2.5" fill="#ff6b5c"/>
+<!-- right cabinet (pencil cup + scissors spot) -->
+<ellipse cx="300" cy="300" rx="60" ry="7" fill="#000" opacity=".1"/>
+<rect x="246" y="182" width="118" height="116" rx="8" fill="url(#clWood)"/><rect x="252" y="236" width="106" height="5" fill="#c88a4e"/>
+<rect x="252" y="188" width="106" height="46" rx="4" fill="#fff4e0"/><rect x="252" y="244" width="106" height="48" rx="4" fill="#fff4e0"/>
+<g>${_rep(6,i=>`<rect x="${300+i*9}" y="${198+(i%2)*4}" width="7" height="${32-(i%2)*4}" rx="1.5" fill="${['#ff6b5c','#5aa9e0','#ffd166','#4ec5b0','#b48be8','#ff8c66'][i]}"/>`)}</g>
+<g><rect x="262" y="260" width="22" height="28" rx="3" fill="#5aa9e0"/><rect x="288" y="270" width="22" height="18" rx="3" fill="#ff8fb3"/><rect x="336" y="256" width="16" height="32" rx="3" fill="#ffd166"/></g>
+<!-- left low shelf (globe spot) -->
+<ellipse cx="66" cy="324" rx="58" ry="7" fill="#000" opacity=".1"/>
+<rect x="14" y="290" width="104" height="34" rx="6" fill="url(#clWood)"/><rect x="20" y="296" width="44" height="22" rx="3" fill="#fff4e0"/><rect x="68" y="296" width="44" height="22" rx="3" fill="#fff4e0"/>
+<g>${_rep(4,i=>`<rect x="${24+i*9}" y="300" width="7" height="18" rx="1.5" fill="${['#4ec5b0','#ff6b5c','#ffd166','#5aa9e0'][i]}"/>`)}</g><path d="M74 318 l10 -16 l10 16 Z" fill="#b48be8"/><rect x="96" y="304" width="12" height="14" rx="6" fill="#ff8c66"/>
+<!-- floor -->
+<rect x="0" y="324" width="375" height="96" fill="url(#clFloor)"/><rect x="0" y="322" width="375" height="5" fill="#a86a34"/>
+<g stroke="#b87a40" stroke-width="1.5" opacity=".5">${_rep(7,i=>`<line x1="${i*62}" y1="327" x2="${i*62-30}" y2="420"/>`)}</g>
+<ellipse cx="190" cy="392" rx="120" ry="22" fill="#ff8fb3" opacity=".75"/><ellipse cx="190" cy="392" rx="100" ry="15" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="7 6" opacity=".8"/>
+<!-- kids' desk with chair -->
+<ellipse cx="200" cy="350" rx="80" ry="9" fill="#000" opacity=".12"/>
+<rect x="132" y="296" width="136" height="12" rx="5" fill="#ffcf8a"/><rect x="132" y="306" width="136" height="6" fill="#e8a85a"/>
+<rect x="140" y="310" width="8" height="40" rx="3" fill="#5aa9e0"/><rect x="252" y="310" width="8" height="40" rx="3" fill="#5aa9e0"/>
+<rect x="176" y="282" width="40" height="14" rx="2" fill="#fff"/><path d="M196 282 V296" stroke="#ddd" stroke-width="1.5"/><path d="M180 288 h12 M200 288 h12" stroke="#9fd4f0" stroke-width="1.5"/>
+<g transform="translate(296 330)"><rect x="-16" y="-34" width="32" height="6" rx="3" fill="#ff8c66"/><rect x="-14" y="-28" width="4" height="34" fill="#ff8c66"/><rect x="10" y="-28" width="4" height="34" fill="#ff8c66"/><rect x="-18" y="-10" width="36" height="6" rx="3" fill="#ffb347"/></g>
+<!-- plant -->
+<g transform="translate(350 360)"><ellipse cx="0" cy="24" rx="20" ry="4" fill="#000" opacity=".12"/><path d="M-13 0 H13 L10 24 H-10 Z" fill="#e07a52"/><g class="amb-swb" style="--d:5s"><path d="M0 0 Q-16 -26 -6 -46 M0 0 Q14 -22 10 -42 M0 0 Q2 -30 0 -52" stroke="#4ea84e" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="-8" cy="-44" rx="8" ry="5" fill="#6bc866"/><ellipse cx="10" cy="-40" rx="8" ry="5" fill="#6bc866"/><ellipse cx="0" cy="-52" rx="7" ry="5" fill="#7ad870"/></g></g>
+<g fill="#fff">${_rep(5,i=>`<circle class="amb-tw" style="--d:${(2+r()*2).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" cx="${(30+r()*90).toFixed(0)}" cy="${(200+r()*80).toFixed(0)}" r="1.5"/>`)}</g>`;}
 
-function beachSVG(){return`<defs>
-<linearGradient id="bcSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6cc4e8"/><stop offset="100%" stop-color="#abe2f1"/></linearGradient>
-<linearGradient id="bcSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2e9fd0"/><stop offset="100%" stop-color="#52bbe0"/></linearGradient>
-<linearGradient id="bcSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f1dda2"/><stop offset="100%" stop-color="#e3c87e"/></linearGradient>
-<radialGradient id="bcSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+// 8 — Pantai Baby Mo (beach)
+function beachSVG(){const r=_rng(808);return`<defs>
+<linearGradient id="bcSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#5ec2f0"/><stop offset="70%" stop-color="#bfe9ff"/><stop offset="100%" stop-color="#fff2d0"/></linearGradient>
+<linearGradient id="bcSea" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a9ad6"/><stop offset="60%" stop-color="#3fc0e0"/><stop offset="100%" stop-color="#7fe0e8"/></linearGradient>
+<linearGradient id="bcSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe7aa"/><stop offset="100%" stop-color="#f2cc82"/></linearGradient>
+<radialGradient id="bcSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff8c0"/><stop offset="100%" stop-color="#ffe066" stop-opacity="0"/></radialGradient>
 </defs>
 <rect width="375" height="420" fill="url(#bcSky)"/>
-<circle cx="320" cy="58" r="50" fill="rgba(255,240,160,.35)"/><circle cx="320" cy="58" r="30" fill="url(#bcSun)"/>
-<g fill="#fff" opacity=".85"><ellipse cx="92" cy="62" rx="34" ry="16"/><ellipse cx="70" cy="56" rx="20" ry="13"/><ellipse cx="114" cy="56" rx="20" ry="13"/></g>
-<g fill="#fff" opacity=".7"><ellipse cx="222" cy="104" rx="26" ry="12"/><ellipse cx="208" cy="99" rx="15" ry="10"/></g>
-<rect x="0" y="232" width="375" height="92" fill="url(#bcSea)"/>
-<g stroke="#cdeefa" stroke-width="2" fill="none" opacity=".55"><path d="M0 254 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0"/><path d="M0 284 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0 q20 7 40 0 q20 -7 40 0"/></g>
-<path d="M256 232 h26 l-5 13 h-16 Z" fill="#fff"/><polygon points="268,210 268,231 285,231" fill="#ff6b5c"/><line x1="268" y1="208" x2="268" y2="231" stroke="#a8703f" stroke-width="2"/>
-<path d="M0 300 Q187 282 375 300 V420 H0 Z" fill="url(#bcSand)"/>
-<!-- palm tree -->
-<path d="M48 364 Q42 312 56 272" stroke="#b07a3f" stroke-width="11" fill="none" stroke-linecap="round"/>
-<g fill="#3aa860"><ellipse cx="56" cy="266" rx="34" ry="12" transform="rotate(-16 56 266)"/><ellipse cx="56" cy="266" rx="34" ry="12" transform="rotate(16 56 266)"/><ellipse cx="40" cy="256" rx="30" ry="11" transform="rotate(-52 40 256)"/><ellipse cx="72" cy="256" rx="30" ry="11" transform="rotate(52 72 256)"/></g>
-<circle cx="56" cy="268" r="6" fill="#8a5a30"/>
+<g class="amb-rot" style="--d:40s"><g stroke="#ffe680" stroke-width="5" stroke-linecap="round" opacity=".6">${_rep(12,i=>{const a=i*Math.PI/6;return`<line x1="${(316+Math.cos(a)*40).toFixed(1)}" y1="${(60+Math.sin(a)*40).toFixed(1)}" x2="${(316+Math.cos(a)*54).toFixed(1)}" y2="${(60+Math.sin(a)*54).toFixed(1)}"/>`;})}</g></g>
+<circle cx="316" cy="60" r="60" fill="url(#bcSun)"/><circle cx="316" cy="60" r="28" fill="#ffe066"/><circle cx="306" cy="52" r="8" fill="#fff6b0" opacity=".7"/>
+<g class="amb-dr" style="--d:32s"><g fill="#fff"><ellipse cx="80" cy="54" rx="40" ry="13"/><ellipse cx="64" cy="44" rx="20" ry="14"/><ellipse cx="92" cy="40" rx="22" ry="16"/></g></g>
+<g class="amb-dr" style="--d:40s;--dl:3s"><g fill="#fff" opacity=".85"><ellipse cx="210" cy="96" rx="30" ry="9"/><ellipse cx="222" cy="88" rx="16" ry="10"/></g></g>
+<g stroke="#4a5a6a" stroke-width="2" fill="none" stroke-linecap="round"><path class="amb-fl" style="--d:3s" d="M170 46 q5 -5 10 0 q5 -5 10 0"/><path class="amb-fl" style="--d:3.6s;--dl:.6s" d="M196 32 q4 -4 8 0 q4 -4 8 0"/></g>
+<!-- island far away -->
+<path d="M250 152 Q280 132 316 152 Z" fill="#6fbf8a"/><path d="M286 146 q2 -16 6 -24" stroke="#8a6a4a" stroke-width="2" fill="none"/><path d="M292 122 q-10 -2 -14 4 M292 122 q10 -4 14 2 M292 122 q-2 -8 -8 -10" stroke="#3aa860" stroke-width="3" fill="none"/>
+<!-- sea with waves -->
+<rect x="0" y="150" width="375" height="110" fill="url(#bcSea)"/>
+<g stroke="#e8fbff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".8">${_rep(10,i=>`<path class="amb-wave" style="--d:${(3+r()*2).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" d="M${(r()*340).toFixed(0)} ${(166+i*9).toFixed(0)} q8 -5 16 0 q8 5 16 0"/>`)}</g>
+<g fill="#fff" opacity=".7">${_rep(6,i=>`<circle class="amb-tw" style="--d:${(1.5+r()*2).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" cx="${(60+r()*280).toFixed(0)}" cy="${(158+r()*40).toFixed(0)}" r="1.8"/>`)}</g>
+<!-- sailboat -->
+<g class="amb-bob" style="--d:3.4s"><path d="M330 182 H370 L362 194 H338 Z" fill="#e85d4f"/><line x1="350" y1="182" x2="350" y2="140" stroke="#6a4a3a" stroke-width="2"/><path d="M352 142 L370 180 H352 Z" fill="#fff"/><path d="M348 148 L334 180 H348 Z" fill="#ffd166"/></g>
+<!-- shore foam + sand -->
+<path d="M0 252 Q50 240 100 252 T200 252 T300 250 T375 252 V420 H0 Z" fill="url(#bcSand)"/>
+<path class="amb-wave" style="--d:3.6s" d="M-10 252 Q40 240 90 252 T190 252 T290 250 T390 252" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".9"/>
+<g fill="#e8c27a" opacity=".6">${_rep(40,i=>`<circle cx="${(r()*375).toFixed(0)}" cy="${(268+r()*150).toFixed(0)}" r="${(.8+r()*1.4).toFixed(1)}"/>`)}</g>
+<!-- palm tree (left), Baby Mo peeks from behind -->
+<ellipse cx="54" cy="330" rx="40" ry="7" fill="#000" opacity=".12"/>
+<path d="M44 330 Q36 250 58 168" stroke="#a8763e" stroke-width="13" fill="none" stroke-linecap="round"/>
+<g stroke="#8a5a2c" stroke-width="2" opacity=".5">${_rep(7,i=>`<path d="M${40+i*2.6} ${318-i*22} q7 -3 13 0"/>`)}</g>
+<g class="amb-sw" style="--d:5s"><g fill="#3aa860"><path d="M58 166 Q24 140 -6 156 Q28 156 58 166 Z"/><path d="M58 166 Q96 136 130 152 Q92 154 58 166 Z"/><path d="M58 166 Q48 124 18 116 Q40 138 58 166 Z"/><path d="M58 166 Q74 122 104 116 Q78 140 58 166 Z"/><path d="M58 166 Q30 180 14 210 Q40 188 58 166 Z"/><path d="M58 166 Q88 180 100 208 Q78 186 58 166 Z"/></g><g fill="#2f8a50" opacity=".6"><path d="M58 166 Q40 150 10 152 Q36 158 58 166 Z"/><path d="M58 166 Q84 150 116 150 Q86 158 58 166 Z"/></g></g>
+<g fill="#7a4a1a"><circle cx="54" cy="170" r="5"/><circle cx="63" cy="172" r="5"/></g>
+<!-- umbrella + towel -->
+<ellipse cx="300" cy="336" rx="50" ry="8" fill="#000" opacity=".1"/>
+<path d="M226 362 L326 344 L340 372 L240 392 Z" fill="#4ec5b0"/><path d="M233 368 L330 350 M237 380 L334 362" stroke="#fff" stroke-width="5"/>
+<line x1="300" y1="350" x2="290" y2="230" stroke="#fff" stroke-width="4"/><line x1="300" y1="350" x2="290" y2="230" stroke="#c4553d" stroke-width="4" stroke-dasharray="8 8"/>
+<path d="M234 248 Q284 196 344 226 Z" fill="#ff6b5c"/><path d="M262 238 Q284 200 302 232 Z" fill="#fff"/><path d="M234 248 Q250 240 262 238 Q282 232 302 232 Q324 226 344 226" stroke="#c4473b" stroke-width="2" fill="none"/>
 <!-- sandcastle -->
-<rect x="158" y="330" width="62" height="34" fill="#e0b870"/><rect x="150" y="316" width="22" height="48" fill="#e0b870"/><rect x="206" y="316" width="22" height="48" fill="#e0b870"/>
-<polygon points="161,316 150,316 155.5,302" fill="#d9a85a"/><polygon points="217,316 206,316 211.5,302" fill="#d9a85a"/>
-<rect x="180" y="322" width="18" height="42" fill="#d9a85a"/><polygon points="198,322 180,322 189,308" fill="#d9a85a"/>
-<line x1="189" y1="308" x2="189" y2="298" stroke="#a8703f" stroke-width="1.5"/><polygon points="189,298 189,307 198,302" fill="#ff6b5c"/>
-<!-- beach umbrella (Baby Mo hides here) -->
-<line x1="314" y1="364" x2="322" y2="286" stroke="#9c6b3a" stroke-width="4"/>
-<path d="M268 290 A55 28 0 0 1 378 290 Z" fill="#ff6b5c"/>
-<polygon points="323,262 295,290 323,290" fill="#fff1e6"/><polygon points="323,262 351,290 323,290" fill="#fff1e6"/>
-<path d="M268 290 q14 7 28 0 q14 7 28 0 q14 7 28 0 q14 7 26 0" fill="none" stroke="#e8584e" stroke-width="2" opacity=".5"/>
-<!-- shells -->
-<path d="M96 392 l3 7 7 .5 -5.5 4.8 1.8 7 -6.3 -3.8 -6.3 3.8 1.8 -7 -5.5 -4.8 7 -.5 Z" fill="#ffb15c"/>
-<circle cx="248" cy="394" r="7" fill="#ff8fb3"/><path d="M241 394 a7 7 0 0 1 14 0 Z" fill="#ffa9c4"/>`;}
+<g transform="translate(200 300)"><ellipse cx="0" cy="16" rx="40" ry="6" fill="#000" opacity=".1"/><rect x="-30" y="-10" width="60" height="26" fill="#f2c27a"/><rect x="-36" y="-26" width="16" height="42" fill="#f6cf8a"/><rect x="20" y="-26" width="16" height="42" fill="#f6cf8a"/><rect x="-10" y="-34" width="20" height="24" fill="#f6cf8a"/>${_rep(3,i=>`<rect x="${-36+i*5.5}" y="-30" width="4" height="5" fill="#f6cf8a"/><rect x="${20+i*5.5}" y="-30" width="4" height="5" fill="#f6cf8a"/>`)}<rect x="-5" y="2" width="10" height="14" rx="5" fill="#d9a85a"/><line x1="0" y1="-34" x2="0" y2="-52" stroke="#6a4a3a" stroke-width="1.5"/><path class="amb-sw" d="M0 -52 l12 4 l-12 4 Z" fill="#ff6b5c"/></g>
+<!-- starfish, pebbles -->
+<path d="M150 398 l3 7 7 .5 -5.5 4.8 1.8 7 -6.3 -3.8 -6.3 3.8 1.8 -7 -5.5 -4.8 7 -.5 Z" fill="#ff8c66"/>
+<g fill="#d2b48a"><ellipse cx="330" cy="404" rx="8" ry="4"/><ellipse cx="344" cy="408" rx="5" ry="3"/><ellipse cx="20" cy="380" rx="6" ry="3"/></g>`;}
 
-function zooSVG(){return`<defs>
-<linearGradient id="zoSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7ec8ec"/><stop offset="100%" stop-color="#b6e6f4"/></linearGradient>
-<linearGradient id="zoGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#82cd6c"/><stop offset="100%" stop-color="#5faf56"/></linearGradient>
-<radialGradient id="zoSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+// 9 — Kebun Binatang (zoo)
+function zooSVG(){const r=_rng(909);return`<defs>
+<linearGradient id="zoSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#6cc4f0"/><stop offset="100%" stop-color="#d4f1ff"/></linearGradient>
+<linearGradient id="zoH1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a6d98a"/><stop offset="100%" stop-color="#8cc874"/></linearGradient>
+<linearGradient id="zoH2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7cc864"/><stop offset="100%" stop-color="#5eae52"/></linearGradient>
+<linearGradient id="zoPath" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f2d9a8"/><stop offset="100%" stop-color="#e2be80"/></linearGradient>
+<linearGradient id="zoPond" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd8f0"/><stop offset="100%" stop-color="#4fb0d8"/></linearGradient>
+<linearGradient id="zoRock" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#e8c890"/><stop offset="100%" stop-color="#b8905a"/></linearGradient>
 </defs>
 <rect width="375" height="420" fill="url(#zoSky)"/>
-<circle cx="324" cy="56" r="46" fill="rgba(255,240,160,.35)"/><circle cx="324" cy="56" r="28" fill="url(#zoSun)"/>
-<g fill="#fff" opacity=".85"><ellipse cx="92" cy="56" rx="32" ry="15"/><ellipse cx="72" cy="50" rx="19" ry="12"/><ellipse cx="112" cy="50" rx="19" ry="12"/></g>
-<path d="M0 300 Q120 270 240 296 Q320 314 375 300 V420 H0 Z" fill="url(#zoGrass)"/>
-<rect x="118" y="148" width="139" height="22" rx="6" fill="#d2483c"/><text x="187" y="164" text-anchor="middle" font-size="11" fill="#fff6e6" font-family="'Fredoka One',cursive">KEBUN BINATANG</text>
-<rect x="120" y="168" width="12" height="140" fill="#9c6b3a"/><rect x="243" y="168" width="12" height="140" fill="#9c6b3a"/>
-<ellipse cx="200" cy="372" rx="92" ry="20" fill="#6fc0d8" opacity=".55"/><ellipse cx="200" cy="370" rx="70" ry="14" fill="#8ad4e8" opacity=".5"/>
-<rect x="40" y="250" width="15" height="92" rx="5" fill="#a8703f"/>
-<circle cx="47" cy="236" r="34" fill="#5aa066"/><circle cx="24" cy="252" r="26" fill="#6bbf72"/><circle cx="70" cy="252" r="26" fill="#6bbf72"/><circle cx="47" cy="262" r="28" fill="#7ace7e"/>
-<rect x="320" y="270" width="12" height="72" rx="4" fill="#a8703f"/>
-<circle cx="326" cy="258" r="24" fill="#5fae6c"/><circle cx="310" cy="270" r="18" fill="#6fc07a"/><circle cx="342" cy="270" r="18" fill="#6fc07a"/>
-<g fill="#ece0c8"><rect x="100" y="320" width="8" height="34" rx="2"/><rect x="130" y="320" width="8" height="34" rx="2"/><rect x="160" y="320" width="8" height="34" rx="2"/></g><rect x="96" y="328" width="80" height="6" fill="#d8c8a8"/>
-<g><circle cx="285" cy="334" r="18" fill="#5aa066"/><circle cx="302" cy="336" r="14" fill="#6bbf72"/></g>`;}
+<circle cx="56" cy="54" r="40" fill="#fff" opacity=".35"/><circle cx="56" cy="54" r="24" fill="#ffe066"/>
+<g class="amb-dr" style="--d:30s"><g fill="#fff"><ellipse cx="170" cy="48" rx="36" ry="12"/><ellipse cx="156" cy="40" rx="18" ry="12"/><ellipse cx="182" cy="36" rx="20" ry="14"/></g></g>
+<g class="amb-dr" style="--d:38s;--dl:2s"><g fill="#fff" opacity=".9"><ellipse cx="300" cy="80" rx="28" ry="9"/><ellipse cx="312" cy="72" rx="15" ry="10"/></g></g>
+<!-- far hills & savanna -->
+<path d="M0 176 Q80 140 170 166 Q260 136 375 160 V420 H0 Z" fill="url(#zoH1)"/>
+<g fill="#7ab868">${_rep(6,i=>`<ellipse cx="${30+i*66}" cy="${170-(i%2)*8}" rx="16" ry="10"/>`)}</g>
+<!-- acacia tree (right) for the giraffe -->
+<path d="M318 250 Q322 200 312 150" stroke="#8a5a2c" stroke-width="9" fill="none" stroke-linecap="round"/><path d="M314 172 Q296 150 280 146 M316 168 Q336 150 352 146" stroke="#8a5a2c" stroke-width="5" fill="none" stroke-linecap="round"/>
+<ellipse cx="314" cy="134" rx="58" ry="16" fill="#5aa65a"/><ellipse cx="300" cy="126" rx="36" ry="12" fill="#6bbf66"/><ellipse cx="334" cy="140" rx="30" ry="9" fill="#4f9a50"/>
+<!-- big jungle tree (left) for the monkey -->
+<path d="M96 290 Q90 230 104 150" stroke="#7a4f2c" stroke-width="14" fill="none" stroke-linecap="round"/>
+<path d="M100 196 Q130 186 150 190" stroke="#7a4f2c" stroke-width="7" fill="none" stroke-linecap="round"/>
+<g fill="#3f9550"><circle cx="100" cy="130" r="42"/><circle cx="62" cy="150" r="30"/><circle cx="138" cy="148" r="30"/></g><g fill="#53ad62"><circle cx="92" cy="118" r="26"/><circle cx="128" cy="134" r="18"/></g><circle cx="80" cy="108" r="8" fill="#fff" opacity=".15"/>
+<g class="amb-sw" style="--d:4s"><path d="M140 178 q6 30 -2 56 M60 168 q-6 34 4 62" stroke="#4f9a50" stroke-width="3" fill="none"/><ellipse cx="138" cy="236" rx="5" ry="3" fill="#6bbf66"/><ellipse cx="64" cy="232" rx="5" ry="3" fill="#6bbf66"/></g>
+<!-- bird perch -->
+<path d="M196 122 H240" stroke="#8a5a2c" stroke-width="5" stroke-linecap="round"/><line x1="234" y1="122" x2="234" y2="250" stroke="#8a5a2c" stroke-width="5"/>
+<!-- near hill -->
+<path d="M0 238 Q110 212 220 236 Q300 252 375 232 V420 H0 Z" fill="url(#zoH2)"/>
+<!-- lion rock (right-middle) -->
+<ellipse cx="270" cy="262" rx="56" ry="9" fill="#000" opacity=".12"/>
+<path d="M216 262 Q222 220 262 214 Q306 210 324 262 Z" fill="url(#zoRock)"/><path d="M232 244 Q250 232 268 236" stroke="#fff" stroke-width="3" opacity=".35" fill="none" stroke-linecap="round"/>
+<!-- wooden fence -->
+<g fill="#c9945a">${_rep(14,i=>`<rect x="${4+i*28}" y="262" width="8" height="34" rx="3"/>`)}</g><rect x="0" y="270" width="375" height="6" rx="2" fill="#b07e48"/><rect x="0" y="284" width="375" height="6" rx="2" fill="#b07e48"/>
+<!-- path + pond -->
+<path d="M150 420 Q170 360 150 300 H230 Q260 360 260 420 Z" fill="url(#zoPath)"/>
+<g fill="#d9b678" opacity=".7">${_rep(14,i=>`<ellipse cx="${(170+r()*70).toFixed(0)}" cy="${(320+r()*96).toFixed(0)}" rx="5" ry="2.4"/>`)}</g>
+<ellipse cx="140" cy="318" rx="70" ry="18" fill="#4f9a50"/><ellipse cx="140" cy="316" rx="62" ry="13" fill="url(#zoPond)"/>
+<ellipse class="amb-rip" cx="120" cy="316" rx="10" ry="3" fill="none" stroke="#fff" stroke-width="1.3"/><ellipse class="amb-rip" style="--dl:1.2s" cx="160" cy="318" rx="8" ry="2.4" fill="none" stroke="#fff" stroke-width="1.3"/>
+<!-- bushes; left bush hides Baby Mo -->
+${[[34,300,1.3],[300,322,1],[350,330,1.2],[250,380,.8]].map(b=>_bush(b[0],b[1],b[2])).join('')}
+<!-- signpost -->
+<g transform="translate(320 400)"><rect x="-3" y="-44" width="6" height="44" fill="#8a5a2c"/><rect x="-26" y="-50" width="52" height="18" rx="4" fill="#f6dfb0" stroke="#b07e48" stroke-width="2"/><g fill="#8a5a2c"><circle cx="-8" cy="-41" r="4"/><circle cx="-14" cy="-46" r="1.8"/><circle cx="-8" cy="-48" r="1.8"/><circle cx="-2" cy="-46" r="1.8"/></g><path d="M8 -41 h10 l-4 -4 M18 -41 l-4 4" stroke="#8a5a2c" stroke-width="2" fill="none"/></g>
+<!-- grass tufts + flowers -->
+<g stroke="#4f9a50" stroke-width="2" fill="none" stroke-linecap="round">${_rep(14,i=>{const x=(r()*375).toFixed(0),y=(300+r()*110).toFixed(0);return`<path d="M${x} ${y} l-3 -7 M${x} ${y} l0 -8 M${x} ${y} l3 -7"/>`;})}</g>
+${_flowers(40,396,['#ff7a9a','#ffd166'])}${_flowers(110,404,['#b197fc','#ff7a9a'])}
+${_rep(3,i=>`<g class="amb-ffly" style="--d:${4+i}s;--dl:${i}s">${_bfly(200+i*40,200+i*14,['#ffd166','#ff8fb3','#7cc8e0'][i])}</g>`)}`;}
 
-function playgroundSVG(){return`<defs>
-<linearGradient id="pgSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7ec8ec"/><stop offset="100%" stop-color="#b6e6f4"/></linearGradient>
-<linearGradient id="pgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#82cd6c"/><stop offset="100%" stop-color="#5faf56"/></linearGradient>
-<radialGradient id="pgSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+// 10 — Taman Bermain (playground)
+function playgroundSVG(){const r=_rng(1010);return`<defs>
+<linearGradient id="pgSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7ccfff"/><stop offset="100%" stop-color="#e0f6ff"/></linearGradient>
+<linearGradient id="pgGrass" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#94d874"/><stop offset="100%" stop-color="#6cbc58"/></linearGradient>
+<linearGradient id="pgSlide" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stop-color="#ffb347"/><stop offset="100%" stop-color="#ff8c42"/></linearGradient>
+<linearGradient id="pgSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffe3a0"/><stop offset="100%" stop-color="#f2c97a"/></linearGradient>
 </defs>
 <rect width="375" height="420" fill="url(#pgSky)"/>
-<circle cx="52" cy="54" r="44" fill="rgba(255,240,160,.35)"/><circle cx="52" cy="54" r="26" fill="url(#pgSun)"/>
-<g fill="#fff" opacity=".85"><ellipse cx="252" cy="60" rx="32" ry="15"/><ellipse cx="232" cy="54" rx="19" ry="12"/><ellipse cx="272" cy="54" rx="19" ry="12"/></g>
-<rect x="0" y="316" width="375" height="104" fill="url(#pgGrass)"/>
-<rect x="20" y="206" width="120" height="9" rx="4" fill="#5a8ab0"/><rect x="22" y="210" width="9" height="112" rx="3" fill="#6f9fc4"/><rect x="129" y="210" width="9" height="112" rx="3" fill="#6f9fc4"/>
-<line x1="55" y1="216" x2="55" y2="286" stroke="#cfa05a" stroke-width="2"/><line x1="75" y1="216" x2="75" y2="286" stroke="#cfa05a" stroke-width="2"/><rect x="52" y="286" width="26" height="7" rx="3" fill="#ff6b5c"/>
-<line x1="95" y1="216" x2="95" y2="286" stroke="#cfa05a" stroke-width="2"/><line x1="115" y1="216" x2="115" y2="286" stroke="#cfa05a" stroke-width="2"/><rect x="92" y="286" width="26" height="7" rx="3" fill="#ffd166"/>
-<rect x="300" y="200" width="9" height="122" rx="3" fill="#6f9fc4"/><rect x="338" y="248" width="9" height="74" rx="3" fill="#6f9fc4"/>
-<rect x="294" y="192" width="50" height="16" rx="6" fill="#ff8c66"/>
-<path d="M300 208 L258 300 Q256 312 268 312 L300 312 Z" fill="#ffd166"/><path d="M300 208 L266 300" stroke="#f5b942" stroke-width="3" fill="none"/>
-<rect x="120" y="318" width="120" height="8" rx="4" fill="#6cc0e8" transform="rotate(-7 180 322)"/><circle cx="180" cy="332" r="12" fill="#ff6b5c"/>
-<rect x="150" y="348" width="92" height="40" rx="6" fill="#e3c87e"/><rect x="150" y="348" width="92" height="8" rx="4" fill="#caa45e"/>`;}
+<circle cx="326" cy="52" r="42" fill="#fff" opacity=".35"/><circle cx="326" cy="52" r="24" fill="#ffe066"/>
+<g class="amb-dr" style="--d:30s"><g fill="#fff"><ellipse cx="190" cy="50" rx="36" ry="12"/><ellipse cx="176" cy="42" rx="18" ry="12"/><ellipse cx="202" cy="38" rx="20" ry="14"/></g></g>
+<g class="amb-dr" style="--d:42s;--dl:3s"><g fill="#fff" opacity=".9"><ellipse cx="40" cy="150" rx="30" ry="9"/><ellipse cx="52" cy="142" rx="15" ry="10"/></g></g>
+<!-- kite string & balloon string (the kite/balloon float in the sky) -->
+<path d="M112 108 Q130 190 96 290" stroke="#fff" stroke-width="1.4" fill="none" opacity=".8"/>
+<g class="amb-sw" style="--d:3s"><path d="M112 108 q-8 12 0 22 q8 12 0 22 q-8 10 0 20" stroke="#ff6b5c" stroke-width="2" fill="none"/></g>
+<path d="M232 146 Q240 180 226 214" stroke="#fff" stroke-width="1.4" fill="none" opacity=".8"/>
+<!-- far trees & houses -->
+<path d="M0 214 Q90 190 190 206 Q290 186 375 204 V420 H0 Z" fill="#a8dc8a"/>
+<g>${[[20,200,'#ffe0b0','#e85d4f'],[160,196,'#dff1ff','#5aa9e0']].map(h=>`<rect x="${h[0]}" y="${h[1]-26}" width="34" height="26" fill="${h[2]}"/><path d="M${h[0]-4} ${h[1]-24} L${h[0]+17} ${h[1]-42} L${h[0]+38} ${h[1]-24} Z" fill="${h[3]}"/><rect x="${h[0]+13}" y="${h[1]-14}" width="8" height="14" fill="#a86a34"/>`).join('')}</g>
+${_tree(70,212,.8,['#5aa65a','#6bbf66','#86d27a'])}${_tree(270,206,.75,['#5aa65a','#6bbf66','#86d27a'])}
+<!-- grass -->
+<path d="M0 232 Q120 214 240 230 Q310 240 375 226 V420 H0 Z" fill="url(#pgGrass)"/>
+<g stroke="#5aa64e" stroke-width="2" fill="none" stroke-linecap="round">${_rep(18,i=>{const x=(r()*375).toFixed(0),y=(250+r()*160).toFixed(0);return`<path d="M${x} ${y} l-3 -7 M${x} ${y} l0 -8 M${x} ${y} l3 -7"/>`;})}</g>
+<!-- swing set (left) -->
+<ellipse cx="80" cy="300" rx="64" ry="8" fill="#000" opacity=".1"/>
+<path d="M22 300 L40 196 L58 300 M102 300 L120 196 L138 300" stroke="#5aa9e0" stroke-width="7" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="36" y="190" width="88" height="10" rx="5" fill="#3a8ad0"/>
+<g class="amb-sw" style="--d:2.6s"><line x1="62" y1="200" x2="62" y2="268" stroke="#8a9aa8" stroke-width="2"/><line x1="86" y1="200" x2="86" y2="268" stroke="#8a9aa8" stroke-width="2"/><rect x="56" y="266" width="36" height="7" rx="3" fill="#ff6b5c"/></g>
+<!-- sandbox with bucket -->
+<path d="M110 350 H226 L236 378 H100 Z" fill="#c9945a"/><path d="M114 352 H222 L230 374 H106 Z" fill="url(#pgSand)"/>
+<path d="M140 360 q14 -14 28 0 Z" fill="#f2c97a"/><rect x="190" y="356" width="12" height="12" rx="2" fill="#5aa9e0"/><path d="M200 356 l10 -10" stroke="#e85d4f" stroke-width="3"/>
+<!-- slide tower (right) where Baby Mo plays -->
+<ellipse cx="320" cy="320" rx="60" ry="9" fill="#000" opacity=".12"/>
+<rect x="300" y="196" width="8" height="124" fill="#4ec5b0"/><rect x="352" y="196" width="8" height="124" fill="#4ec5b0"/>
+<rect x="294" y="230" width="72" height="10" rx="3" fill="#2fa37a"/>
+<path d="M296 196 L330 160 L364 196 Z" fill="#ff6b5c"/><path d="M296 196 L330 160 L330 196 Z" fill="#ff8a7a"/>
+<path d="M300 238 Q240 260 228 316 H246 Q258 270 306 252 Z" fill="url(#pgSlide)"/><path d="M300 240 Q246 262 234 314" stroke="#fff" stroke-width="2.5" fill="none" opacity=".5"/>
+<g stroke="#2fa37a" stroke-width="3">${_rep(5,i=>`<line x1="352" y1="${250+i*14}" x2="372" y2="${250+i*14}"/>`)}</g><line x1="372" y1="240" x2="372" y2="320" stroke="#4ec5b0" stroke-width="5"/>
+<!-- ice cream cart -->
+<g transform="translate(278 270)"><ellipse cx="4" cy="34" rx="40" ry="6" fill="#000" opacity=".1"/><rect x="-30" y="-2" width="62" height="30" rx="6" fill="#fff"/><rect x="-30" y="8" width="62" height="8" fill="#ff8fb3"/><circle cx="-18" cy="30" r="7" fill="#4a4f58"/><circle cx="22" cy="30" r="7" fill="#4a4f58"/><line x1="-4" y1="-2" x2="-4" y2="-38" stroke="#8a9aa8" stroke-width="2.5"/><path d="M-36 -36 Q-4 -60 28 -36 Z" fill="#ffd166"/><path d="M-20 -36 Q-4 -60 12 -36 Z" fill="#fff"/></g>
+<!-- see-saw -->
+<g transform="translate(190 300)"><path d="M-8 10 L0 -6 L8 10 Z" fill="#b48be8"/><g class="amb-sw" style="--d:3s"><rect x="-56" y="-10" width="112" height="7" rx="3" fill="#ffd166" transform="rotate(-8)"/></g></g>
+<!-- bike spot: little bike rack -->
+<path d="M40 330 v-18 a8 8 0 0 1 16 0 v18 M64 330 v-18 a8 8 0 0 1 16 0 v18" stroke="#b0b8c0" stroke-width="3" fill="none"/>
+<!-- bench + flowers -->
+<g transform="translate(330 380)"><rect x="-30" y="-14" width="60" height="7" rx="3" fill="#c9945a"/><rect x="-30" y="-26" width="60" height="7" rx="3" fill="#c9945a"/><rect x="-26" y="-8" width="5" height="16" fill="#6a4a3a"/><rect x="21" y="-8" width="5" height="16" fill="#6a4a3a"/></g>
+${_flowers(30,396,['#ff7a9a','#ffd166','#b197fc'])}${_flowers(256,404,['#ffd166','#ff7a9a'])}${_flowers(120,404,['#7cc8e0','#ff7a9a'])}
+<g class="amb-ffly" style="--d:5s">${_bfly(240,376,'#ffd166')}</g><g class="amb-ffly" style="--d:6s;--dl:1s">${_bfly(60,250,'#ff8fb3')}</g>`;}
 
-function farmSVG(){return`<defs>
-<linearGradient id="fmSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8fd2ec"/><stop offset="100%" stop-color="#c2e9f3"/></linearGradient>
-<linearGradient id="fmField" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8ace6e"/><stop offset="100%" stop-color="#69b052"/></linearGradient>
-<radialGradient id="fmSun" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#fff3b0"/><stop offset="100%" stop-color="#ffd874"/></radialGradient>
+// 11 — Kebun Baby Mo (farm)
+function farmSVG(){const r=_rng(1111);return`<defs>
+<linearGradient id="fmSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#76c8f2"/><stop offset="100%" stop-color="#fff0c8"/></linearGradient>
+<linearGradient id="fmF1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#c6e07a"/><stop offset="100%" stop-color="#a8cc5e"/></linearGradient>
+<linearGradient id="fmF2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#8ccf68"/><stop offset="100%" stop-color="#64b04e"/></linearGradient>
+<linearGradient id="fmBarn" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e2534a"/><stop offset="100%" stop-color="#bf3a34"/></linearGradient>
+<linearGradient id="fmSoil" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a8703f"/><stop offset="100%" stop-color="#8a5a30"/></linearGradient>
 </defs>
 <rect width="375" height="420" fill="url(#fmSky)"/>
-<circle cx="60" cy="54" r="44" fill="rgba(255,240,160,.35)"/><circle cx="60" cy="54" r="26" fill="url(#fmSun)"/>
-<g fill="#fff" opacity=".85"><ellipse cx="244" cy="56" rx="30" ry="14"/><ellipse cx="226" cy="50" rx="18" ry="11"/></g>
-<path d="M0 290 Q120 268 240 288 Q320 302 375 290 V420 H0 Z" fill="url(#fmField)"/>
-<rect x="40" y="224" width="22" height="96" fill="#ece0c8"/><polygon points="38,224 64,224 51,200" fill="#c0392b"/>
-<g transform="translate(51,210)" fill="#fff6e6"><rect x="-3" y="-26" width="6" height="52" rx="2" transform="rotate(22)"/><rect x="-26" y="-3" width="52" height="6" rx="2" transform="rotate(22)"/></g><circle cx="51" cy="210" r="4" fill="#a8703f"/>
-<rect x="248" y="226" width="112" height="100" fill="#d2483c"/><polygon points="248,226 360,226 348,196 260,196" fill="#b23a2e"/>
-<rect x="289" y="262" width="36" height="64" fill="#fff1e6"/><line x1="307" y1="262" x2="307" y2="326" stroke="#d2483c" stroke-width="2"/><line x1="289" y1="294" x2="325" y2="294" stroke="#d2483c" stroke-width="2"/>
-<polygon points="297,206 317,206 307,192" fill="#fff1e6"/><rect x="300" y="206" width="14" height="12" fill="#fff1e6"/>
-<g><ellipse cx="150" cy="350" rx="28" ry="20" fill="#ecc760"/><path d="M122 350 h56 M150 330 v40 M132 336 l36 28 M168 336 l-36 28" stroke="#d8b048" stroke-width="2" fill="none" opacity=".6"/></g>
-<g fill="#ece0c8"><rect x="70" y="334" width="7" height="28" rx="2"/><rect x="100" y="334" width="7" height="28" rx="2"/></g><rect x="66" y="340" width="48" height="5" fill="#d8c8a8"/>
-<ellipse cx="200" cy="394" rx="68" ry="13" fill="#6fc0d8" opacity=".5"/>`;}
+<circle cx="190" cy="60" r="44" fill="#fff" opacity=".35"/><circle cx="190" cy="60" r="24" fill="#ffe066"/>
+<g class="amb-dr" style="--d:34s"><g fill="#fff"><ellipse cx="70" cy="44" rx="34" ry="11"/><ellipse cx="56" cy="36" rx="17" ry="11"/><ellipse cx="82" cy="32" rx="19" ry="13"/></g></g>
+<g class="amb-dr" style="--d:40s;--dl:4s"><g fill="#fff" opacity=".9"><ellipse cx="300" cy="40" rx="28" ry="9"/><ellipse cx="312" cy="32" rx="15" ry="10"/></g></g>
+<g stroke="#4a5a6a" stroke-width="2" fill="none" stroke-linecap="round"><path class="amb-fl" style="--d:3s" d="M120 90 q5 -5 10 0 q5 -5 10 0"/></g>
+<!-- rolling fields with crop rows -->
+<path d="M0 170 Q90 140 190 162 Q290 140 375 158 V420 H0 Z" fill="url(#fmF1)"/>
+<g stroke="#98bc50" stroke-width="2" fill="none" opacity=".7">${_rep(6,i=>`<path d="M${-20+i*10} ${176+i*8} Q190 ${150+i*10} 395 ${170+i*8}"/>`)}</g>
+<!-- windmill (left, far) -->
+<g transform="translate(40 168)"><path d="M-10 0 L-5 -60 H5 L10 0 Z" fill="#f6ead0"/><path d="M-7 -60 L0 -70 L7 -60 Z" fill="#c4553d"/><g transform="translate(0 -62)"><g class="amb-rot" style="--d:9s">${_rep(4,i=>`<rect x="-3" y="-36" width="6" height="36" fill="#fff" stroke="#c9b28a" stroke-width="1" transform="rotate(${i*90})"/>`)}<circle r="4" fill="#8a5a30"/></g></g></g>
+<path d="M0 214 Q100 192 210 210 Q300 222 375 204 V420 H0 Z" fill="url(#fmF2)"/>
+<!-- red barn (right) — Baby Mo peeks from the door -->
+<ellipse cx="318" cy="276" rx="64" ry="9" fill="#000" opacity=".14"/>
+<rect x="270" y="186" width="100" height="90" fill="url(#fmBarn)"/>
+<path d="M262 190 L320 142 L378 190 Z" fill="#8a2a2a"/><path d="M262 190 L320 142 L378 190" stroke="#fff" stroke-width="4" fill="none"/>
+<rect x="306" y="160" width="28" height="20" rx="3" fill="#fff"/><rect x="309" y="163" width="22" height="14" rx="2" fill="#ffe7a8"/>
+<rect x="294" y="214" width="52" height="62" fill="#fff"/><rect x="298" y="218" width="44" height="58" fill="#6a2a2a"/>
+<path d="M298 218 L342 276 M342 218 L298 276" stroke="#fff" stroke-width="3"/>
+<g fill="#f6dfa0"><rect x="352" y="250" width="22" height="26" rx="4"/></g>
+<!-- hay bales with a nest (egg spot) -->
+<g transform="translate(216 214)"><ellipse cx="0" cy="22" rx="44" ry="6" fill="#000" opacity=".12"/><rect x="-40" y="-2" width="44" height="24" rx="6" fill="#f2cc5e"/><rect x="2" y="-2" width="40" height="24" rx="6" fill="#e8bf4e"/><rect x="-20" y="-24" width="44" height="24" rx="6" fill="#f6d46a"/><g stroke="#c9a03a" stroke-width="1.2" opacity=".7">${_rep(5,i=>`<line x1="${-36+i*9}" y1="2" x2="${-36+i*9}" y2="18"/><line x1="${-16+i*8}" y1="-20" x2="${-16+i*8}" y2="-4"/>`)}</g><ellipse cx="2" cy="-24" rx="16" ry="5" fill="#b88a3a"/></g>
+<!-- pasture fence + cow area -->
+<g fill="#fff4dc">${_rep(8,i=>`<rect x="${200+i*24}" y="290" width="6" height="30" rx="2"/>`)}</g><rect x="196" y="296" width="179" height="5" fill="#f6ead0"/><rect x="196" y="308" width="179" height="5" fill="#f6ead0"/>
+<!-- corn rows (left) -->
+${_rep(5,i=>{const x=24+i*22,y=270-(i%2)*6;return`<g class="amb-swb" style="--d:${(3.5+i*.3).toFixed(1)}s;--dl:${(i*.2).toFixed(1)}s"><path d="M${x} ${y} V${y-62}" stroke="#5a9a3a" stroke-width="4"/><path d="M${x} ${y-20} q-14 -6 -18 -18 M${x} ${y-34} q14 -6 18 -18 M${x} ${y-48} q-12 -6 -14 -16" stroke="#6cb04a" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="${x+5}" cy="${y-40}" rx="4" ry="9" fill="#ffd34a"/></g>`;})}
+<!-- veggie patch (carrots) -->
+<path d="M34 312 H190 L206 362 H18 Z" fill="url(#fmSoil)"/>
+<g stroke="#7a4a24" stroke-width="2" opacity=".6"><path d="M30 326 H196 M26 340 H200 M22 354 H204"/></g>
+${_rep(7,i=>`<g transform="translate(${44+i*22} ${322+(i%2)*14})"><path d="M0 0 q-5 -10 -2 -14 M0 0 q0 -12 0 -16 M0 0 q5 -10 3 -14" stroke="#4ea84e" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M-4 0 H4 L0 6 Z" fill="#ff8c3a"/></g>`)}
+<!-- dirt path -->
+<path d="M210 420 Q230 380 260 360 Q300 330 340 320 L375 322 V350 Q320 350 290 372 Q264 392 262 420 Z" fill="#e8c890"/>
+<!-- sunflowers + tractor-style cart -->
+${[[340,380],[360,396]].map((f,i)=>`<g class="amb-swb" style="--d:${4+i}s"><line x1="${f[0]}" y1="${f[1]}" x2="${f[0]}" y2="${f[1]+30}" stroke="#4ea84e" stroke-width="3"/><circle cx="${f[0]}" cy="${f[1]}" r="10" fill="#ffd34a"/><circle cx="${f[0]}" cy="${f[1]}" r="4.5" fill="#8a5a30"/></g>`).join('')}
+<g transform="translate(130 392)"><ellipse cx="0" cy="18" rx="34" ry="5" fill="#000" opacity=".1"/><rect x="-26" y="-8" width="52" height="18" rx="4" fill="#5aa9e0"/><circle cx="-16" cy="12" r="7" fill="#4a4f58"/><circle cx="16" cy="12" r="7" fill="#4a4f58"/><circle cx="-12" cy="-10" r="6" fill="#ff8c3a"/><circle cx="0" cy="-12" r="6" fill="#ffd34a"/><circle cx="12" cy="-10" r="6" fill="#8bd06a"/></g>
+${_rep(3,i=>`<g class="amb-ffly" style="--d:${4+i}s;--dl:${i*.8}s">${_bfly(100+i*80,200+i*20,['#fff','#ffd166','#ff8fb3'][i])}</g>`)}`;}
 
 // =============================================
 // NEW ROOMS (13–18) — richer illustrated scenes
@@ -1695,20 +2113,46 @@ function sceneThumb(id){
   return _thumbCache[id];
 }
 
-function seaSVG(){return`<defs>
-<linearGradient id="seWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#2a86c8"/><stop offset="60%" stop-color="#1f6ca8"/><stop offset="100%" stop-color="#185a90"/></linearGradient>
-<linearGradient id="seSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ecd9a0"/><stop offset="100%" stop-color="#d8bf80"/></linearGradient>
+// 12 — Bawah Laut (under the sea)
+function seaSVG(){const r=_rng(1212);return`<defs>
+<linearGradient id="seWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#4fc3e8"/><stop offset="45%" stop-color="#2a8fca"/><stop offset="100%" stop-color="#1d5f9a"/></linearGradient>
+<linearGradient id="seSand" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#f6e2a8"/><stop offset="100%" stop-color="#ddc084"/></linearGradient>
+<linearGradient id="seRay" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fff" stop-opacity=".35"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/></linearGradient>
+<linearGradient id="seRock" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#7a8ab0"/><stop offset="100%" stop-color="#4a5a82"/></linearGradient>
+<radialGradient id="seGlow" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#ffe9a0" stop-opacity=".8"/><stop offset="100%" stop-color="#ffe9a0" stop-opacity="0"/></radialGradient>
 </defs>
 <rect width="375" height="420" fill="url(#seWater)"/>
-<g fill="#bfe6f8" opacity=".1"><polygon points="60,0 110,0 70,420 20,420"/><polygon points="200,0 240,0 220,420 160,420"/><polygon points="320,0 360,0 340,420 290,420"/></g>
-<g fill="#bfe6f8" opacity=".4"><circle cx="90" cy="120" r="5"/><circle cx="100" cy="100" r="3"/><circle cx="300" cy="160" r="6"/><circle cx="312" cy="140" r="3"/><circle cx="210" cy="90" r="4"/></g>
-<path d="M0 350 Q120 332 240 350 Q320 362 375 350 V420 H0 Z" fill="url(#seSand)"/>
-<ellipse cx="120" cy="356" rx="40" ry="22" fill="#5a7a8a"/><ellipse cx="150" cy="352" rx="26" ry="16" fill="#6a8a9a"/>
-<g><path d="M320 360 q-6 -40 6 -56 q10 14 4 56 Z" fill="#ff6b8c"/><path d="M338 360 q4 -30 14 -42 q4 18 -2 42 Z" fill="#ff9a5c"/><path d="M306 360 q-8 -26 -2 -40 q12 12 10 40 Z" fill="#b48be8"/></g>
-<g><path d="M40 360 q-6 -34 4 -50 q10 14 6 50 Z" fill="#ffb15c"/><path d="M56 360 q4 -26 12 -36 q4 16 0 36 Z" fill="#ff6b8c"/></g>
-<g stroke="#3aa86a" stroke-width="6" fill="none" stroke-linecap="round"><path d="M180 360 q-10 -20 0 -40 q10 -18 0 -38"/><path d="M196 360 q10 -18 2 -36 q-8 -16 2 -34"/></g>
-<rect x="240" y="334" width="46" height="26" rx="4" fill="#a8703f"/><rect x="240" y="334" width="46" height="9" fill="#c08850"/><path d="M240 334 q23 -13 46 0" fill="#b87a44"/><circle cx="263" cy="348" r="3" fill="#ffd166"/>
-<path d="M70 392 l3 7 7 .5 -5.5 4.8 1.8 7 -6.3 -3.8 -6.3 3.8 1.8 -7 -5.5 -4.8 7 -.5 Z" fill="#ff8c66"/>`;}
+<path d="M0 12 Q47 4 94 12 T188 12 T282 12 T375 12 V0 H0 Z" fill="#bfefff" opacity=".6"/>
+<g>${[[40,70],[150,60],[250,80],[330,50]].map((p,i)=>`<polygon class="amb-glow" style="--d:${4+i}s;--dl:${i*.8}s" points="${p[0]},0 ${p[0]+p[1]},0 ${p[0]+p[1]*.6-30},420 ${p[0]-60},420" fill="url(#seRay)"/>`).join('')}</g>
+<!-- far reef silhouette -->
+<path d="M0 250 Q40 220 70 240 Q110 200 150 236 Q200 214 240 238 Q290 206 330 236 Q356 222 375 232 V420 H0 Z" fill="#2a6f9e" opacity=".7"/>
+<!-- school of tiny fish -->
+<g class="amb-swim" style="--d:10s"><g fill="#ffd166">${_rep(7,i=>`<path d="M${150+(i%4)*14} ${96+(i/4|0)*12+(i%2)*4} q7 -5 12 0 q-5 5 -12 0 Z M${150+(i%4)*14} ${96+(i/4|0)*12+(i%2)*4} l-5 -4 v8 Z"/>`)}</g></g>
+<g class="amb-swim" style="--d:13s;--dl:2s"><g fill="#ff8fb3">${_rep(4,i=>`<path d="M${40+i*14} ${130+(i%2)*8} q7 -5 12 0 q-5 5 -12 0 Z M${40+i*14} ${130+(i%2)*8} l-5 -4 v8 Z"/>`)}</g></g>
+<!-- jellyfish -->
+<g class="amb-fl" style="--d:4s"><path d="M318 104 q16 -26 32 0 Z" fill="#e0b0ff" opacity=".85"/><g stroke="#e0b0ff" stroke-width="2" fill="none" opacity=".8"><path d="M322 104 q-3 10 0 18"/><path d="M330 104 q3 10 0 20"/><path d="M338 104 q-3 10 0 18"/><path d="M346 104 q3 8 0 14"/></g></g>
+<!-- rocks with a cave for the octopus -->
+<path d="M240 300 Q246 236 290 228 Q340 224 360 268 Q376 300 375 330 H240 Z" fill="url(#seRock)"/>
+<path d="M270 300 Q276 266 294 264 Q314 266 316 300 Z" fill="#2a3a5e"/>
+<path d="M256 262 Q270 244 290 244" stroke="#9aaad0" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/>
+<path d="M0 286 Q10 240 52 236 Q90 238 96 286 Z" fill="url(#seRock)"/><path d="M14 260 Q30 246 48 246" stroke="#9aaad0" stroke-width="3" fill="none" stroke-linecap="round" opacity=".6"/>
+<!-- sand -->
+<path d="M0 320 Q90 300 187 316 Q280 330 375 312 V420 H0 Z" fill="url(#seSand)"/>
+<g fill="#cdb078" opacity=".6">${_rep(30,i=>`<circle cx="${(r()*375).toFixed(0)}" cy="${(330+r()*86).toFixed(0)}" r="${(.8+r()*1.4).toFixed(1)}"/>`)}</g>
+<g stroke="#e6cf96" stroke-width="2" fill="none" opacity=".8">${_rep(5,i=>`<path d="M${20+i*76} ${360+(i%2)*20} q10 -5 20 0 q10 5 20 0"/>`)}</g>
+<!-- seaweed swaying -->
+${[[20,330,'#3aa86a',70],[36,334,'#2f9a5a',52],[160,322,'#3aa86a',60],[226,330,'#4ab87a',48],[362,318,'#2f9a5a',66]].map((s,i)=>`<path class="amb-swb" style="--d:${(3+i*.4).toFixed(1)}s;--dl:${(i*.3).toFixed(1)}s" d="M${s[0]} ${s[1]} q-10 ${-s[3]*.25} 0 ${-s[3]*.5} q10 ${-s[3]*.25} 0 ${-s[3]*.5}" stroke="${s[2]}" stroke-width="7" fill="none" stroke-linecap="round"/>`).join('')}
+<!-- coral (right) near the treasure, Baby Mo hides here -->
+<g><path d="M300 344 q-6 -40 6 -56 q10 14 4 56 Z" fill="#ff6b8c"/><path d="M318 344 q4 -30 14 -42 q4 18 -2 42 Z" fill="#ff9a5c"/><path d="M286 344 q-8 -26 -2 -40 q12 12 10 40 Z" fill="#b48be8"/>
+<g fill="#ff6b8c"><circle cx="302" cy="290" r="4"/><circle cx="330" cy="302" r="4"/></g></g>
+<g transform="translate(120 340)"><path d="M0 0 V-30 M0 -16 l-12 -12 M0 -22 l10 -12 M-12 -28 v-8 M10 -34 v-6" stroke="#ff8c66" stroke-width="6" fill="none" stroke-linecap="round"/></g>
+<!-- treasure chest -->
+<g transform="translate(340 372)"><ellipse cx="0" cy="18" rx="30" ry="5" fill="#000" opacity=".15"/><circle cx="0" cy="0" r="26" fill="url(#seGlow)" class="amb-glow"/><rect x="-22" y="-6" width="44" height="24" rx="3" fill="#a8703f"/><path d="M-22 -6 Q0 -24 22 -6 Z" fill="#c08850"/><rect x="-22" y="-6" width="44" height="5" fill="#e0a800"/><rect x="-3" y="-2" width="6" height="8" rx="1" fill="#e0a800"/><g fill="#ffe066"><circle cx="-12" cy="-8" r="3"/><circle cx="10" cy="-9" r="3"/></g></g>
+<!-- shells -->
+<path d="M260 400 q8 -14 16 0 Z" fill="#ffd0e0"/><g stroke="#e8a0b8" stroke-width="1"><line x1="268" y1="400" x2="268" y2="390"/><line x1="264" y1="400" x2="266" y2="392"/><line x1="272" y1="400" x2="270" y2="392"/></g>
+<ellipse cx="40" cy="404" rx="8" ry="4" fill="#e9d8c8"/>
+<!-- bubbles rising -->
+<g fill="none" stroke="#e8fbff" stroke-width="1.6">${_rep(12,i=>`<circle class="amb-bub" style="--d:${(4+r()*4).toFixed(1)}s;--dl:${(r()*5).toFixed(1)}s" cx="${(20+r()*335).toFixed(0)}" cy="${(260+r()*120).toFixed(0)}" r="${(2+r()*4).toFixed(1)}"/>`)}</g>`;}
 
 // =============================================
 // EVENT WIRING
@@ -1716,7 +2160,7 @@ function seaSVG(){return`<defs>
 window.addEventListener('load',()=>{
   rCv();pts=Array.from({length:60},mkPt);animPts();
   buildMap();
-  window.addEventListener('resize',()=>{rCv();positionBubbles();});
+  window.addEventListener('resize',()=>{rCv();positionBubbles();layoutMap();});
 
   // Back from game → map
   document.getElementById('game-back').addEventListener('touchstart',e=>{e.preventDefault();showScreen('home');},{passive:false});
