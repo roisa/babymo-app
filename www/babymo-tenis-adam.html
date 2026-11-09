@@ -91,7 +91,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;
   background:#2E8A57;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.court{position:absolute;inset:0;width:100%;height:100%}
-.adam{position:absolute;width:38%;left:50%;top:-1.72%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
+.adam{position:absolute;width:38%;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
 .adam.serve{top:1.48%}
 .adam img{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
 .adam::after{content:'';position:absolute;left:25%;right:25%;bottom:4%;height:7%;border-radius:50%;background:rgba(0,0,0,.22);z-index:-1}
@@ -541,18 +541,19 @@ function place(gx,gy,h,s){
 }
 function hideBall(){ lastH=null; ballEl.style.opacity=shEl.style.opacity=0; }
 function lerp(a,b,t){ return a+(b-a)*t; }
+var RALLY_Y=240; /* rallies: Adam plays inside the court, between the baseline (196) and the service line (244) */
 var PB=.7; // bounce point along the flight
 /* incoming flight: from us (near) to beside Adam (far). p 0..1 (+ overshoot) */
 function incoming(p,hitX){
   var pp=Math.min(p,1.25), f=pp<1?1-Math.pow(1-pp,1.6):1+(pp-1)*.6; /* perspective: fast near us, slow far away; bounces in Adam's service box */
-  var gx=lerp(200,hitX,f), gy=lerp(540,196,f), s=lerp(1,.45,f), h;
+  var gx=lerp(200,hitX,f), gy=lerp(540,RALLY_Y,f), s=lerp(1,.45,f), h;
   if(p<PB){ var q=p/PB; h=lerp(26,0,q)+4*150*q*(1-q); }
   else { var r=(p-PB)/(1-PB); h=46*r*(2-r); }
   return {gx:gx,gy:gy,h:Math.max(0,h),s:s};
 }
 /* outgoing flight after a hit: from Adam back to our side */
 function outgoing(p,fromX,toX,good){
-  var f=good?Math.pow(p,1.5):p, gy=lerp(196, good?470:316, f), gx=lerp(fromX,toX,f), s=lerp(.45,good?.95:.62,f);
+  var f=good?Math.pow(p,1.5):p, gy=lerp(RALLY_Y, good?470:316, f), gx=lerp(fromX,toX,f), s=lerp(.45,good?.95:.62,f);
   var h=good ? lerp(46,0,p)+4*120*p*(1-p) : lerp(46,0,p)+4*30*p*(1-p);
   return {gx:gx,gy:gy,h:h,s:s};
 }
@@ -683,7 +684,7 @@ function feedLane(){
   var lanes=["L","C","R"].filter(function(x){ return x!==G.lane; });
   G.target=lanes[Math.floor(Math.random()*lanes.length)];
   var tx=LANEX[G.target], k=sc(), m=$("marker"), d=46;
-  m.style.width=m.style.height=d*k+"px"; m.style.left=(tx*k-d*k/2)+"px"; m.style.top=(196*k-d*k/2)+"px"; m.classList.add("on");
+  m.style.width=m.style.height=d*k+"px"; m.style.left=(tx*k-d*k/2)+"px"; m.style.top=(RALLY_Y*k-d*k/2)+"px"; m.classList.add("on");
   $("laneTip").textContent=T("Geser ke lingkaran!");
   var hitX=tx; G.p=0; G.fh=pickFh(); sfx("tap");
   G.flight=animate(G.speed*1.25,function(p){
