@@ -81,6 +81,10 @@
     "@keyframes dsRipple{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(1.4)}}",
     ".ds .beat{animation:dsBeat 1.4s ease-in-out infinite}",
     "@keyframes dsBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}",
+    ".ds .sink{animation:dsSink 8s ease-in-out infinite alternate}",
+    "@keyframes dsSink{from{transform:translateY(-6px)}to{transform:translateY(10px)}}",
+    ".ds .bead{animation:dsBeadOn 4s linear infinite;opacity:0}",
+    "@keyframes dsBeadOn{0%{opacity:0}5%,45%{opacity:1}60%,100%{opacity:0}}",
     "@media (prefers-reduced-motion:reduce){.ds *{animation:none!important}.ds .steam,.ds .bubble,.ds .step,.ds .letter,.ds .zz{opacity:.8}}"
   ].join("\n");
 
@@ -381,6 +385,63 @@
         '<circle class="glow" cx="246" cy="98" r="26" fill="#FFF3B0" opacity=".55"/><path d="M234 86 h24 l-5 -20 h-14z" fill="#FFD25A"/><rect x="244" y="86" width="4" height="56" fill="#B09080"/><rect x="236" y="140" width="20" height="6" rx="3" fill="#B09080"/>' +
         '<g class="beat"><path d="M116 76 c-5 -7 -15 -3 -13 4 c1 5 13 13 13 13 s12 -8 13 -13 c2 -7 -8 -11 -13 -4z" fill="#FF7A9A"/></g>' +
         sparkle(148, 44, .6, "twinkle t3", "#FFC94A")
+    },
+
+    /* 13 · Dzikir sore — the sun sinking behind the hills, birds flying home, the first star */
+    evening_dhikr: {
+      pose: "baby-mo-pose-42",
+      svg: '<defs><linearGradient id="dsSkyS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A5FC8"/><stop offset=".45" stop-color="#E98AA6"/><stop offset=".8" stop-color="#FFB27A"/><stop offset="1" stop-color="#FFD8A0"/></linearGradient>' +
+        '<radialGradient id="dsSunS"><stop offset="0" stop-color="#FFF4C2"/><stop offset=".6" stop-color="#FFC94A"/><stop offset="1" stop-color="#FF8A3D"/></radialGradient>' +
+        '<radialGradient id="dsHaloS"><stop offset="0" stop-color="#FFE29A" stop-opacity=".85"/><stop offset="1" stop-color="#FFE29A" stop-opacity="0"/></radialGradient></defs>' +
+        '<rect width="400" height="180" fill="url(#dsSkyS)"/>' +
+        /* the sun going down behind the far hills */
+        '<circle class="glow" cx="150" cy="112" r="62" fill="url(#dsHaloS)"/>' +
+        '<g class="sink"><circle cx="150" cy="112" r="28" fill="url(#dsSunS)"/></g>' +
+        star(300, 26, 5, "twinkle", "#FFF3B0") + star(250, 14, 2.6, "twinkle t2", "#fff") + star(352, 46, 2.2, "twinkle t3", "#fff") + star(60, 20, 2.4, "twinkle t4", "#fff") +
+        cloud(60, 58, .55, "#FFC7C2", "drift slow") + cloud(250, 50, .45, "#F7B3C6", "drift d2") +
+        /* birds flying home */
+        '<g class="bird"><g transform="translate(200 46)"><path class="flap" d="M-7 0q3.5-5 7 0q3.5-5 7 0" fill="none" stroke="#5A3A6A" stroke-width="2" stroke-linecap="round"/></g></g>' +
+        '<g class="bird" style="animation-delay:-3s"><g transform="translate(180 62)"><path class="flap" d="M-5 0q2.5-4 5 0q2.5-4 5 0" fill="none" stroke="#5A3A6A" stroke-width="1.8" stroke-linecap="round"/></g></g>' +
+        /* hills (they hide the lower half of the sun), a little mosque far away */
+        '<path d="M0 118 Q70 98 150 112 Q230 96 300 110 Q350 100 400 108 V180 H0Z" fill="#B0609A"/>' +
+        '<g fill="#7E3F7E"><rect x="44" y="92" width="34" height="20" rx="2"/><path d="M47 92a14 14 0 0 1 28 0z"/><rect x="82" y="78" width="6" height="34" rx="2"/><path d="M80 78l5-9 5 9z"/><rect x="58" y="100" width="7" height="12" rx="3.5" fill="#FFD27A"/></g>' +
+        '<path d="M0 138 Q110 120 220 134 Q320 122 400 132 V180 H0Z" fill="#7E4C8C"/>' +
+        '<rect y="152" width="400" height="28" fill="#5E3A78"/><rect y="152" width="400" height="3" fill="#6E4688"/>' +
+        /* a small house with warm windows on the near hill */
+        '<rect x="196" y="116" width="54" height="36" rx="3" fill="#4A2D63"/><path d="M190 118 L223 96 L256 118Z" fill="#3E2556"/>' +
+        '<rect class="glow" x="204" y="126" width="12" height="11" rx="2" fill="#FFD27A"/><rect class="glow" x="230" y="126" width="12" height="11" rx="2" fill="#FFD27A"/>' +
+        sparkle(120, 40, .7, "twinkle t2", "#FFF3B0") + sparkle(330, 84, .55, "twinkle", "#FFE29A")
+    },
+
+    /* 14 · Tasbih sebelum tidur — a cosy night room, a loop of prayer beads lighting up one by one */
+    bedtime_tasbih: {
+      pose: "baby-mo-pose-12",
+      svg: '<defs><linearGradient id="dsNightT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E2A5A"/><stop offset="1" stop-color="#3C4285"/></linearGradient>' +
+        '<clipPath id="dsWinT"><rect x="26" y="18" width="96" height="74" rx="12"/></clipPath>' +
+        '<radialGradient id="dsBeadGlow"><stop offset="0" stop-color="#FFE29A" stop-opacity=".55"/><stop offset="1" stop-color="#FFE29A" stop-opacity="0"/></radialGradient></defs>' +
+        '<rect width="400" height="180" fill="#2E3270"/><circle cx="330" cy="30" r="110" fill="#3A3F86" opacity=".6"/>' +
+        '<g clip-path="url(#dsWinT)"><rect x="26" y="18" width="96" height="74" fill="url(#dsNightT)"/>' +
+        '<circle class="glow" cx="92" cy="46" r="22" fill="#FFF3C4" opacity=".22"/><circle cx="92" cy="46" r="14" fill="#FFE29A"/><circle cx="99" cy="41" r="12.5" fill="#1E2A5A"/>' +
+        star(46, 34, 3.6, "twinkle", "#fff") + star(60, 70, 2.6, "twinkle t2", "#FFE29A") + star(110, 78, 2.6, "twinkle t3", "#fff") + '</g>' +
+        '<rect x="26" y="18" width="96" height="74" rx="12" fill="none" stroke="#5A64A8" stroke-width="6"/><path d="M74 18v74M26 55h96" stroke="#5A64A8" stroke-width="3.5"/>' +
+        star(160, 22, 3, "twinkle t4", "#FFE29A") + star(196, 46, 2.2, "twinkle", "#fff") + star(140, 64, 2, "twinkle t3", "#fff") +
+        floor("#3F4488", "#353A78") +
+        /* bed with a soft blanket */
+        '<rect x="0" y="112" width="132" height="42" rx="12" fill="#6C7AE0"/><rect x="0" y="104" width="132" height="16" rx="8" fill="#8E9BF0"/>' +
+        '<rect x="10" y="96" width="44" height="18" rx="9" fill="#E8EBFF"/><path d="M58 118c22-5 46-5 74 0v36H58z" fill="#A78BFA"/>' +
+        /* the prayer-bead loop on a little round rug, one bead lighting up after another */
+        '<ellipse cx="206" cy="150" rx="58" ry="10" fill="#5A4FB0"/><ellipse cx="206" cy="149" rx="46" ry="7" fill="#6E62C8"/>' +
+        '<circle class="glow" cx="206" cy="106" r="44" fill="url(#dsBeadGlow)"/>' +
+        (function () {
+          var h = '<circle cx="206" cy="104" r="30" fill="none" stroke="#C7B6FF" stroke-width="1.6" opacity=".7"/>';
+          for (var i = 1; i < 16; i++) {
+            var a = Math.PI / 2 + i * Math.PI * 2 / 16, x = (206 + 30 * Math.cos(a)).toFixed(1), y = (104 + 30 * Math.sin(a)).toFixed(1);
+            h += '<circle cx="' + x + '" cy="' + y + '" r="5.2" fill="#B9A4FF"/><circle class="bead" style="animation-delay:' + (i * .25).toFixed(2) + 's" cx="' + x + '" cy="' + y + '" r="5.2" fill="#FFD25A"/>';
+          }
+          return h + '<circle cx="206" cy="138" r="6.4" fill="#FFD25A"/><path d="M206 143l-6 9h12z" fill="#FFB400"/>';
+        })() +
+        '<g class="float2"><text x="206" y="110" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="16" fill="#FFF3C4">33</text></g>' +
+        sparkle(256, 70, .7, "twinkle", "#FFE29A") + sparkle(160, 92, .5, "twinkle t2", "#fff")
     }
 
   };
@@ -396,7 +457,7 @@
     var s = SCENES[id]; var card = document.getElementById("sceneCard"); if (!s || !card) return false;
     ensureCss();
     card.classList.add("has-scene", "ds");
-    card.classList.toggle("night", id === "sleep" || id === "parents");
+    card.classList.toggle("night", id === "sleep" || id === "parents" || id === "bedtime_tasbih");
     var bg = document.getElementById("sceneBg");
     bg.innerHTML = '<svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' + s.svg + "</svg>";
     var mo = document.getElementById("sceneMo");

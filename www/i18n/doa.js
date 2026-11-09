@@ -9,7 +9,7 @@
   "Mo sayang Abi dan Umi. Doakan mereka setiap hari!": "Mo loves Abi and Umi. Pray for them every day!",
   "Naik Kendaraan": "Riding", "Selesai Makan": "After Eating", "Turun Hujan": "When It Rains", "Pulang ke Rumah": "Coming Home", "Abi & Umi": "Abi & Umi",
   "Doa ini dibaca untuk...?": "This du'a is for...?", "Baca Bersama Mo": "Read Along with Mo",
-  "Doa Harian Anak — 12 Doa Sehari-hari + Audio Arab | Baby Mo": "Daily Du'a for Kids — 12 Everyday Du'as + Arabic Audio | Baby Mo",
+  "Doa Harian Anak — 14 Doa Sehari-hari + Audio Arab | Baby Mo": "Daily Du'a for Kids — 14 Everyday Du'as + Arabic Audio | Baby Mo",
   "Baby Mo — Doa Harian": "Baby Mo — Daily Du'a", "🌙 Baby Mo Game · Doa": "🌙 Baby Mo Game · Du'a", "Doa Harian 🌟": "Daily Du'a 🌟",
   "Belajar doa sehari-hari bersama Baby Mo!": "Learn everyday du'as with Baby Mo!", "Learn daily duas with Baby Mo! 🐻": "From morning to night, one du'a at a time 🐻",
   "🔊 Mulai Belajar — Bismillah!": "🔊 Start Learning — Bismillah!", "← Kembali ke Game Hub": "← Back to Game Hub", "← Hub": "← Hub", "🏠 Hub": "🏠 Hub",
@@ -39,7 +39,7 @@
   "Betul!": "Correct!", "Betul! Alhamdulillah! ✨": "Correct! Alhamdulillah! ✨", "Bagus!": "Nice!", "Luar biasa! ⭐": "Amazing! ⭐", "Subhanallah! Hebat! 💚": "Subhanallah! Great! 💚",
   "Alhamdulillah! ✨": "Alhamdulillah! ✨", "Hampir betul! Coba lagi nanti!": "Almost! Try again later!",
   "Sempurna! 🏆": "Perfect! 🏆", "Masya Allah! 🌟": "Masha Allah! 🌟", "Terus Berlatih! 🌱": "Keep Practicing! 🌱",
-  "Sempurna! Kamu hafal semua doa harian! 🏆": "Perfect! You know all the daily du'as! 🏆", "Kamu sudah hafal 12 doa harian!": "You've memorized 12 daily du'as!",
+  "Sempurna! Kamu hafal semua doa harian! 🏆": "Perfect! You know all the daily du'as! 🏆", "Kamu sudah hafal 14 doa harian!": "You've memorized 14 daily du'as!",
   "Bagus sekali! Terus belajar ya! ": "Great job! Keep learning!", "Bagus sekali! Terus belajar ya!": "Great job! Keep learning!", "Latihan lagi ya, pasti bisa!": "Practice again — you can do it!",
   "Doa": "Du'as", "Bintang": "Stars", "✅ Doa yang kamu pelajari hari ini": "✅ Du'as you learned today",
   "🏠 Hub": "🏠 Hub", "🔄 Main Lagi!": "🔄 Play Again!", "📤 Bagikan Hasil!": "📤 Share Result!", "Disalin!": "Copied!",
@@ -50,7 +50,17 @@
   "Masya Allah!": "Masha Allah!", "Hebat!": "Great job!", "Bintang emas!": "Gold star!",
   "Stiker baru untukmu!": "A new sticker for you!", "Satu lagi untuk bintang emas!": "One more for the gold star!",
   "Kamu hafal doa ini!": "You know this du'a by heart!", "Kamu sudah jago! Baca terus ya!": "You're a pro! Keep reading!",
-  "Baca lagi": "Read again", "Lanjut": "Next", "Menu": "Menu", "Bonus Doa Hari Ini!": "Du'a of the Day bonus!"
+  "Baca lagi": "Read again", "Lanjut": "Next", "Menu": "Menu", "Bonus Doa Hari Ini!": "Du'a of the Day bonus!",
+  /* evening dhikr + bedtime tasbih */
+  "Dzikir Sore": "Evening Dhikr", "Tasbih Sebelum Tidur": "Tasbih Before Sleeping",
+  "Matahari terbenam. Yuk ingat Allah di sore hari — ini awal dzikir sore!": "The sun is setting. Let's remember Allah in the evening — this is the start of the evening dhikr!",
+  "Sebelum tidur, ucapkan Subhanallah, Alhamdulillah, dan Allahu Akbar!": "Before sleeping, say Subhanallah, Alhamdulillah and Allahu Akbar!",
+  "Kami memasuki waktu sore dan kerajaan hanya milik Allah, segala puji bagi Allah.": "We have entered the evening and the whole kingdom belongs to Allah; all praise is for Allah.",
+  "Maha Suci Allah (33×), segala puji bagi Allah (33×), Allah Maha Besar (34×).": "Glory be to Allah (33×), all praise is for Allah (33×), Allah is the Greatest (34×).",
+  "Dzikir ini dibaca saat...?": "When do we say this dhikr...?", "Ini dzikir apa?": "Which dhikr is this?",
+  "Sore Hari": "In the Evening", "Bertasbih": "Tasbih",
+  "Ayo bertasbih!": "Let's say the tasbih!", "Versi pendek": "Short version", "Ulang dari awal": "Start over",
+  "Sore": "Evening", "Sore 🌇": "Evening 🌇"
 }, [
   [/^(\d+) hari berturut-turut$/, "$1-day streak"],
   [/^(\d+) \/ (\d+) stiker$/, "$1 / $2 stickers"],
