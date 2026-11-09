@@ -1623,7 +1623,7 @@ function showCelebration(){
   audio.playFanfare();
   spawnConfetti(40);
   // Play voice after short delay (so fanfare doesn't overlap)
-  setTimeout(() => audio.playPhrase(p), 700);
+  setTimeout(() => audio.playPhrase(p), 450);
 }
 
 function hideCelebration(){
@@ -1750,5 +1750,34 @@ init();
 document.addEventListener('click', () => audio.ensureCtx(), { once: true });
 </script>
 <script src="/bm-kit.js" defer></script>
+<script>
+/* Voice that works on iPhone: unlock speech on the first tap, then read the Arabic phrase
+   followed by its meaning in a natural Indonesian / English voice. */
+(function(){
+  var synth=window.speechSynthesis; if(!synth) return;
+  var EN=window.BM_LANG==='en', unlocked=false;
+  function unlock(){ if(unlocked) return; unlocked=true; try{ var u=new SpeechSynthesisUtterance(' '); u.volume=0; u.rate=2; synth.speak(u); }catch(e){} }
+  document.addEventListener('pointerdown',unlock,true); document.addEventListener('touchend',unlock,true); document.addEventListener('click',unlock,true);
+  function voiceFor(lang){ var v=synth.getVoices()||[], p=lang.slice(0,2);
+    var good=v.filter(function(x){ return x.lang&&x.lang.toLowerCase().indexOf(p)===0; });
+    var pref={id:['Damayanti','Google Bahasa Indonesia','Indonesia'],en:['Samantha','Karen','Google US English','Female'],ar:['Laila','Maged','Hoda','Tarik','Naayf']}[p]||[];
+    for(var i=0;i<pref.length;i++){ var f=good.find(function(x){return x.name&&x.name.indexOf(pref[i])>=0;}); if(f) return f; }
+    return good[0]||null; }
+  function utter(text,lang,rate,pitch){ var u=new SpeechSynthesisUtterance(text); u.lang=lang; u.rate=rate; u.pitch=pitch; var v=voiceFor(lang); if(v) u.voice=v; return u; }
+  function clean(t){ return String(t||'').replace(/[^\p{L}\p{N}\s'.,!?\-]/gu,'').trim(); }
+  audio.playPhrase=function(p){
+    if(state.muted||!p) return;
+    try{ synth.cancel(); }catch(e){}
+    var meaning=EN?(window.BM_T?BM_T(p.indo):p.indo):p.indo;
+    synth.speak(utter(p.arabic,'ar-SA',0.82,1.1));
+    synth.speak(utter(clean(p.title)+'.', EN?'en-US':'id-ID', 0.95, 1.15));
+    synth.speak(utter(clean(meaning), EN?'en-US':'id-ID', 0.95, 1.15));
+  };
+  // a short spoken cheer now and then while opening tiles
+  var _praise=showPraise;
+  showPraise=function(){ _praise(); try{ if(state.muted) return; if(state.tilesOpened===3||state.tilesOpened===6){ var t=document.getElementById('praiseToast').textContent;
+    synth.cancel(); synth.speak(utter(clean(window.BM_T?BM_T(clean(t)):t), EN?'en-US':'id-ID', 1.0, 1.25)); } }catch(e){} };
+})();
+</script>
 </body>
 </html>
