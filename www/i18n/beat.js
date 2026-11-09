@@ -11,7 +11,9 @@
   "Mantap!": "Way to go!", "Ketuk Main Lagi untuk terus bergoyang 🎵": "Tap Play Again to keep grooving 🎵",
   "Cara main Forehand Beat": "How to play Forehand Beat", "Bantu Baby Mo melompat mengikuti irama!": "Help Baby Mo jump to the beat!",
   "Ketuk layar": "Tap the screen", "Baby Mo melompat": "Baby Mo jumps", "Ketuk 3× cepat": "Tap 3× fast", "Baby Mo terbang tinggi!": "Baby Mo soars high!",
-  "Lompati rintangan": "Jump over obstacles", "Kerucut, bola, net… kamu punya 3 nyawa ❤️": "Cones, balls, nets… you have 3 lives ❤️"
+  "Lompati rintangan": "Jump over obstacles", "Kerucut, bola, net… kamu punya 3 nyawa ❤️": "Cones, balls, nets… you have 3 lives ❤️",
+  "Kamu punya 3 nyawa ❤️": "You have 3 lives ❤️",
+  "Ambil koin bintang": "Grab the star coins", "Bonus +5 skor!": "+5 bonus points!"
 }, [
   [/^sisa (\d+) ❤️$/, "$1 ❤️ left"]
 ]]);
