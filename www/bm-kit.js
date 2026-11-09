@@ -696,7 +696,7 @@
       text: { id: "Rutinitas tidur bareng Mo", en: "Bedtime routine with Mo" }, game: { id: "Dreamtime", en: "Dreamtime" } },
     { id: "kata-word", cat: "learn", gameId: "arabic-spelling", task: ["word", "section"], url: "babymo-arabic-spelling.html", icon: "🔤", art: "kata-islam",
       text: { id: "Susun 1 kata Arab", en: "Spell 1 Arabic word" }, game: { id: "Kata Islam", en: "Islamic Words" } },
-    { id: "huruf", cat: "learn", gameId: "hijaiyah-classic", task: ["lesson", "trace", "catch"], url: "babymo-hijaiyah-classic.html", icon: "✍️", art: "huruf-hijaiyah",
+    { id: "huruf", cat: "learn", gameId: "hijaiyah-classic", task: ["lesson", "trace", "catch", "review"], url: "babymo-hijaiyah-classic.html", icon: "✍️", art: "huruf-hijaiyah",
       text: { id: "Belajar huruf hijaiyah", en: "Learn a Hijaiyah letter" }, game: { id: "Huruf Hijaiyah", en: "Hijaiyah Letters" } },
     { id: "kata-baik", cat: "learn", gameId: "puzzle-katabaik", task: "phrase", url: "babymo-puzzle-katabaik.html", icon: "💖", art: "kata-baik",
       text: { id: "Temukan 1 kata baik", en: "Discover 1 good word" }, game: { id: "Kata Baik", en: "Good Words" } },

@@ -1274,6 +1274,7 @@ function showToast(e,t){
   <div class="hp-say"><img id="trMo" src="baby-mo-poses/baby-mo-pose-15.webp" alt=""><div class="bub" id="trBub"></div></div>
   <div class="tr-wrap" id="trWrap"><canvas id="trGuide"></canvas><canvas id="trInk"></canvas></div>
   <div class="tr-bar"><i id="trBar"></i></div>
+  <div class="tr-stars" id="trStars" aria-live="polite"></div>
   <div class="tr-row"><button class="clr" id="trClr">🔄 Hapus</button><button class="ok" id="trOk">✓ Selesai</button></div>
 </div>
 <!-- ═══ Tangkap Huruf ═══ -->
@@ -1427,7 +1428,8 @@ function showToast(e,t){
     document.querySelectorAll('#lcHar button').forEach(function(b){ b.onclick=function(){ document.querySelectorAll('#lcHar button').forEach(function(x){x.classList.toggle('on',x===b);}); sayAr(b.dataset.ar);
       var m=document.getElementById('iMo'); if(m) m.src=P('yes'); var bb=document.getElementById('iBub'); if(bb) bb.innerHTML=T('Dengan baris: <b>'+b.querySelector('small').textContent+'</b>! Fathah = a, kasrah = i, dhammah = u.','With its mark: <b>'+b.querySelector('small').textContent+'</b>! Fathah = a, kasrah = i, dhammah = u.'); }; });
     var tb=document.getElementById('lcTrace'); tb.classList.toggle('done',!!ST.traced[lt.id]);
-    tb.textContent=ST.traced[lt.id]?T('✅ Sudah ditulis · Tulis lagi','✅ Traced · Trace again'):T('✍️ Ayo Tulis!','✍️ Let\'s Write!');
+    var bs=(ST.stars||{})[lt.id]||0;
+    tb.textContent=ST.traced[lt.id]?(bs?'⭐'.repeat(bs)+' · ':'✅ ')+T('Tulis lagi','Trace again'):T('✍️ Ayo Tulis!','✍️ Let\'s Write!');
   };
   document.getElementById('lcTrace').onclick=function(){ openTrace(lessonLetters[cardIdx]); };
 
@@ -1464,15 +1466,23 @@ function showToast(e,t){
   ink.addEventListener('pointermove',function(e){ if(!tr.drawing) return; var p=pt(e), c=ink.getContext('2d');
     c.lineCap='round'; c.lineJoin='round'; c.lineWidth=tr.S*0.075; c.strokeStyle=tr.lt.color||'#E8590C';
     c.beginPath(); c.moveTo(tr.last[0],tr.last[1]); c.lineTo(p[0],p[1]); c.stroke(); tr.last=p; });
-  function up(){ if(!tr.drawing) return; tr.drawing=false; var r=score(); if(r.c>=0.7 && r.o<0.4) win(); else if(r.o>=0.4) { document.getElementById('trBub').innerHTML=T('Ups, keluar garis. Ikuti bentuk hurufnya, ya! 🙂','Oops, outside the lines. Follow the letter\'s shape! 🙂'); document.getElementById('trMo').src=P('pose-40'); } }
+  function up(){ if(!tr.drawing) return; tr.drawing=false; var r=score(); if(r.c>=0.7 && r.o<0.4) win(r); else if(r.o>=0.4) { document.getElementById('trBub').innerHTML=T('Ups, keluar garis. Ikuti bentuk hurufnya, ya! 🙂','Oops, outside the lines. Follow the letter\'s shape! 🙂'); document.getElementById('trMo').src=P('pose-40'); } }
   ink.addEventListener('pointerup',up); ink.addEventListener('pointercancel',up);
   function dot(p){ var c=ink.getContext('2d'); c.fillStyle=tr.lt.color||'#E8590C'; c.beginPath(); c.arc(p[0],p[1],tr.S*0.0375,0,Math.PI*2); c.fill(); }
-  function win(){
+  /* 3-star rating from accuracy: o = share of ink outside the letter, c = how much of the letter is covered */
+  function trStars(r){ var n = r.o<0.10 ? 3 : r.o<0.22 ? 2 : 1; if(r.c<0.7) n=Math.min(n,2); return n; }
+  function starTxt(n){ return '⭐'.repeat(n)+'☆'.repeat(3-n); }
+  function win(r){
     if(tr.done) return; tr.done=true; var lt=tr.lt;
+    var n=trStars(r||{c:1,o:0}), prev=(ST.stars||{})[lt.id]||0; ST.stars=ST.stars||{}; if(n>prev) ST.stars[lt.id]=n;
     document.getElementById('trWrap').classList.add('win'); setTimeout(function(){ document.getElementById('trWrap').classList.remove('win'); },700);
-    document.getElementById('trBar').style.width='100%'; document.getElementById('trPct').textContent='100%';
-    document.getElementById('trMo').src=P('yeyy');
-    document.getElementById('trBub').innerHTML=T('Masya Allah! Kamu menulis <b>'+lt.name+'</b> dengan bagus! ✨','Masha Allah! You wrote <b>'+lt.name+'</b> beautifully! ✨');
+    document.getElementById('trBar').style.width='100%'; document.getElementById('trPct').textContent=starTxt(n);
+    var se=document.getElementById('trStars'); se.innerHTML=[1,2,3].map(function(i){ return '<i class="'+(i<=n?'on':'')+'" style="animation-delay:'+(i*0.18)+'s">★</i>'; }).join(''); se.classList.add('on');
+    document.getElementById('trMo').src=P(n===3?'yeyy':n===2?'yes':'pose-41');
+    var tail = n===3 ? T(' 3 bintang! ✨',' 3 stars! ✨') : n===2 ? T(' Coba lebih rapi lagi untuk 3 bintang.',' Try a little neater for 3 stars.') : T(' Pelan-pelan ikuti garisnya untuk bintang lebih banyak.',' Follow the lines slowly for more stars.');
+    if(n>prev && prev) tail+=T(' Rekor baru! 🎉',' New best! 🎉');
+    document.getElementById('trBub').innerHTML=(n===3?T('Masya Allah! Kamu menulis <b>'+lt.name+'</b> dengan bagus!','Masha Allah! You wrote <b>'+lt.name+'</b> beautifully!'):T('Bagus! Kamu menulis <b>'+lt.name+'</b>.','Well done! You wrote <b>'+lt.name+'</b>.'))+tail;
+    try{ window.HJ&&HJ.note(lt.id,'trace',n); }catch(e){}
     try{ playCorrect(); spawnParticles(14); }catch(e){} sayAr(lt.arName||lt.speak);
     var first=!ST.traced[lt.id]; ST.traced[lt.id]=1; save();
     try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('hijaiyah-classic','trace'); }catch(e){}
@@ -1480,7 +1490,8 @@ function showToast(e,t){
     document.getElementById('trOk').textContent=T('Lanjut →','Next →');
   }
   window.openTrace=function(lt){
-    tr.lt=lt; tr.done=false; ov.classList.add('on');
+    tr.lt=lt; tr.done=false; ov.classList.add('on'); var se=document.getElementById('trStars'); se.classList.remove('on');
+    var best=(ST.stars||{})[lt.id]||0; se.innerHTML=best?'<small>'+T('Rekor','Best')+'</small> '+starTxt(best):''; if(best) se.classList.add('best'); else se.classList.remove('best');
     document.getElementById('trTitle').textContent='✍️ '+T('Tulis huruf ','Write ')+lt.name;
     document.getElementById('trMo').src=P('pose-15');
     document.getElementById('trBub').innerHTML=T('Ikuti garis abu-abu dengan jarimu. Pelan-pelan, ya! ✍️','Follow the grey lines with your finger. Nice and slow! ✍️');
@@ -1488,10 +1499,10 @@ function showToast(e,t){
     var go=function(){ requestAnimationFrame(setup); };
     if(document.fonts&&document.fonts.load) document.fonts.load('200px "Scheherazade New"').then(go,go); else go();
   };
-  function closeTrace(){ ov.classList.remove('on'); if(document.getElementById('sIntro').classList.contains('active')) loadCard(cardIdx); updateHomeUI(); }
+  function closeTrace(){ ov.classList.remove('on'); if(document.getElementById('sIntro').classList.contains('active')) loadCard(cardIdx); updateHomeUI(); try{ window.HJ&&HJ.onTraceClose(tr.done); }catch(e){} }
   document.getElementById('trX').onclick=closeTrace;
-  document.getElementById('trClr').onclick=function(){ tr.done=false; ink.getContext('2d').clearRect(0,0,tr.S,tr.S); score(true); document.getElementById('trMo').src=P('pose-15'); };
-  document.getElementById('trOk').onclick=function(){ if(tr.done){ closeTrace(); return; } var r=score(); if(r.c>=0.55 && r.o<0.45) win(); else { document.getElementById('trMo').src=P('idea');
+  document.getElementById('trClr').onclick=function(){ tr.done=false; var se=document.getElementById('trStars'); se.classList.remove('on'); se.innerHTML=''; document.getElementById('trOk').textContent=T('✓ Selesai','✓ Done'); ink.getContext('2d').clearRect(0,0,tr.S,tr.S); score(true); document.getElementById('trMo').src=P('pose-15'); };
+  document.getElementById('trOk').onclick=function(){ if(tr.done){ closeTrace(); return; } var r=score(); if(r.c>=0.55 && r.o<0.45) win(r); else { document.getElementById('trMo').src=P('idea');
     document.getElementById('trBub').innerHTML=T('Hampir! Tebalkan lagi bagian yang masih abu-abu 💪','Almost! Trace over the grey parts too 💪'); } };
   window.addEventListener('resize',function(){ if(ov.classList.contains('on')) setup(); });
 
@@ -1508,11 +1519,11 @@ function showToast(e,t){
     var o={el:b,lt:lt,x:Math.random()*(W-80)+4,y:H+10,v:(55+Math.random()*45)*(1+tk.hits*0.03),w:Math.random()*6.28};
     b.style.transform='translate('+o.x+'px,'+o.y+'px)'; field.appendChild(b); tk.bubbles.push(o);
     b.addEventListener('pointerdown',function(e){ e.preventDefault(); if(!tk.on) return;
-      if(o.lt.id===tk.target.id){ tk.score++; tk.hits++; b.classList.add('pop'); try{ playTone(660+tk.hits*20,.12,'triangle',.18); }catch(x){}
+      if(o.lt.id===tk.target.id){ tk.score++; tk.hits++; try{ window.HJ&&HJ.note(o.lt.id,'catch',true); }catch(x){} b.classList.add('pop'); try{ playTone(660+tk.hits*20,.12,'triangle',.18); }catch(x){}
         var pl=document.createElement('div'); pl.className='tk-plus'; pl.textContent='+1'; pl.style.left=(o.x+24)+'px'; pl.style.top=(o.y)+'px'; field.appendChild(pl); setTimeout(function(){pl.remove();},800);
         document.getElementById('tkScore').textContent='⭐ '+tk.score; o.dead=true; setTimeout(function(){ b.remove(); },350);
         if(tk.hits%5===0) newTarget();
-      } else { b.classList.remove('no'); void b.offsetWidth; b.classList.add('no'); try{ playWrong(); }catch(x){} }
+      } else { b.classList.remove('no'); void b.offsetWidth; b.classList.add('no'); try{ playWrong(); }catch(x){} try{ window.HJ&&HJ.note(tk.target.id,'catch',false); }catch(x){} }
     });
   }
   function loop(ts){
@@ -1559,6 +1570,266 @@ function showToast(e,t){
     LETTERS.forEach(function(l,i){ var sp=spans[i]; if(!sp) return; sp.classList.toggle('traced',!!ST.traced[l.id]); sp.onclick=function(){ sayAr(l.arName||l.speak); sp.style.transform='scale(1.2)'; setTimeout(function(){sp.style.transform='';},200); }; });
   };
   document.getElementById('trClr').textContent=T('🔄 Hapus','🔄 Clear');
+})();
+</script>
+<style id="bm-review">
+/* ═══════════ Ulasan Harian (daily review) + tracing stars — both themes (uses theme variables) ═══════════ */
+.tr-stars{min-height:34px;display:flex;align-items:center;justify-content:center;gap:4px;font-weight:900;font-size:15px;color:var(--cream-dim)}
+.tr-stars small{font-size:13px;font-weight:900;margin-right:4px}
+.tr-stars i{font-style:normal;font-size:30px;line-height:1;color:rgba(120,130,150,.35)}
+.tr-stars.on i.on{color:#FFC83D;text-shadow:0 2px 0 #E08600;animation:rvStar .5s cubic-bezier(.3,1.7,.5,1) both}
+@keyframes rvStar{0%{transform:scale(0) rotate(-40deg)}100%{transform:none}}
+.rv-card{width:100%;max-width:480px;padding:12px 16px 0}
+.rv-in{border-radius:22px;padding:14px;background:var(--card);border:1.5px solid var(--border);box-shadow:0 10px 22px -16px rgba(0,0,0,.45)}
+.rv-card.hl .rv-in{border-color:#FFC83D;background:linear-gradient(140deg,rgba(255,200,61,.20),rgba(255,200,61,.05));box-shadow:0 0 0 3px rgba(255,200,61,.22),0 14px 26px -16px rgba(224,134,0,.55)}
+.rv-top{display:flex;align-items:center;gap:10px}
+.rv-top .ic{flex:0 0 44px;height:44px;border-radius:14px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#FFC83D,#F08C00)}
+.rv-top b{display:block;font-size:17px;font-weight:900;color:var(--cream)}
+.rv-top small{display:block;font-size:13px;font-weight:800;color:var(--cream-dim)}
+.rv-done{margin-left:auto;font-size:12.5px;font-weight:900;color:#12A15A;background:rgba(18,161,90,.14);padding:5px 10px;border-radius:999px;white-space:nowrap}
+.rv-tamat{margin-top:10px;font-weight:800;font-size:14px;line-height:1.4;color:var(--cream)}
+.rv-chips{display:flex;gap:8px;justify-content:center;margin:12px 0 4px;direction:rtl}
+.rv-chips span{flex:0 0 auto;width:48px;height:52px;border-radius:14px;display:grid;place-items:center;font-family:'Scheherazade New',serif;font-size:28px;line-height:1;color:#fff;background:var(--lc);box-shadow:0 6px 12px -8px rgba(0,0,0,.5);padding-bottom:6px}
+.rv-weak{margin-top:8px;font-size:13.5px;font-weight:800;color:var(--cream-dim);text-align:center}
+.rv-weak b{display:inline-block;min-width:30px;font-family:'Scheherazade New',serif;font-size:22px;font-weight:700;color:var(--gold-lt);margin:0 3px;vertical-align:-2px;direction:rtl}
+.rv-go{margin-top:10px;width:100%;min-height:52px;border:none;border-radius:18px;font:900 17px 'Nunito',sans-serif;color:#fff;cursor:pointer;background:linear-gradient(135deg,#FFB020,#F2547D);box-shadow:0 10px 18px -10px rgba(242,84,125,.8)}
+.rv-go.again{background:linear-gradient(135deg,#5AC8FA,#3D7BF2);box-shadow:0 10px 18px -10px rgba(61,123,242,.8)}
+/* the review overlay (reuses .hp-ov) */
+#rvOv{z-index:590}  /* the trace overlay (600) opens on top of it */
+.rv-q{width:100%;max-width:440px;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.rv-hear{border:none;border-radius:999px;min-height:56px;padding:10px 22px;font:900 17px 'Nunito',sans-serif;color:#fff;background:linear-gradient(135deg,#3FD08C,#1FA971);box-shadow:0 10px 18px -10px rgba(31,169,113,.8);cursor:pointer}
+.rv-hear.ping{animation:rvPing .5s ease}
+@keyframes rvPing{40%{transform:scale(1.08)}}
+.rv-opts{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:min(88vw,360px)}
+.rv-opts button{aspect-ratio:1.25;border:none;border-radius:24px;background:#fff;color:var(--c,#E8590C);font-family:'Scheherazade New',serif;font-size:min(16vw,64px);line-height:1;padding-bottom:12px;cursor:pointer;box-shadow:0 0 0 2px rgba(21,34,48,.08),0 12px 22px -14px rgba(30,60,110,.5);transition:transform .15s}
+.rv-opts button:active{transform:scale(.95)}
+.rv-opts button.ok{background:#DDF8E9;box-shadow:0 0 0 4px #3FD08C}
+.rv-opts button.no{background:#FFE9DE;box-shadow:0 0 0 3px #FF9A4D;animation:tkNo .35s ease;opacity:.55}
+.rv-dots{display:flex;gap:6px;justify-content:center}
+.rv-dots i{width:12px;height:12px;border-radius:50%;background:rgba(120,130,150,.3)}
+.rv-dots i.ok{background:#3FD08C}.rv-dots i.mid{background:#FFC83D}.rv-dots i.cur{box-shadow:0 0 0 3px rgba(255,200,61,.6)}
+.rv-end{width:100%;max-width:400px;flex:1;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;overflow-y:auto}
+.rv-end img{width:130px;height:140px;object-fit:contain}
+.rv-end h3{font-size:26px;font-weight:900;color:var(--gold-lt);margin:0}
+.rv-end p{font-weight:800;color:var(--cream);font-size:15px;line-height:1.4}
+.rv-gain{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.rv-gain span{padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.92);color:#152230;font-weight:900;font-size:15px}
+.rv-end .rv-weak{background:rgba(255,255,255,.92);color:#33445A;border-radius:18px;padding:10px 14px;width:100%}
+.rv-end .rv-weak b{color:#E8590C}
+.rv-end .tr-row{width:100%}
+html[data-bm-theme="classic"] .rv-end .rv-weak,html[data-bm-theme="classic"] .rv-gain span{background:rgba(255,255,255,.1);color:var(--cream)}
+html[data-bm-theme="classic"] .rv-end .rv-weak b{color:var(--gold-lt)}
+@media (orientation:landscape) and (max-height:600px){
+  .rv-opts{grid-template-columns:repeat(4,1fr);width:min(92vw,640px)}
+  .rv-opts button{font-size:52px}
+  .tr-stars{display:none}   /* no room on a phone in landscape: the stars show in the top pill */
+  #rvOv .hp-say img{display:none}
+  #rvOv .hp-say{margin:4px 0}
+  #rvOv .hp-say .bub{margin-bottom:0;padding:6px 12px;font-size:14px}
+  .rv-end{flex-direction:row;flex-wrap:wrap;align-content:center}
+  .rv-end img{width:90px;height:96px}
+  .rv-end h3{width:calc(100% - 110px);text-align:left}
+}
+</style>
+<!-- ═══ Ulasan Harian (daily review) ═══ -->
+<div class="hp-ov" id="rvOv">
+  <div class="hp-top"><button class="hp-x" id="rvX" type="button" aria-label="Keluar">✕</button><div class="hp-title" id="rvTitle">🔁 Ulasan Harian</div><span class="hp-pill" id="rvPill">1 / 5</span></div>
+  <div class="hp-say"><img id="rvMo" src="baby-mo-poses/baby-mo-pose-15.webp" alt=""><div class="bub" id="rvBub"></div></div>
+  <div class="rv-q" id="rvQ">
+    <div class="rv-dots" id="rvDots"></div>
+    <button class="rv-hear" id="rvHear" type="button">🔊 Dengar</button>
+    <div class="rv-opts" id="rvOpts"></div>
+  </div>
+  <div class="rv-end" id="rvEnd" style="display:none"></div>
+</div>
+<script>
+/* ═══════════ Ulasan Harian — daily spaced review (Leitner boxes 1–5) ═══════════
+   Every answer feeds a small per-letter record: quiz + review answers move a letter
+   up a box (at most once a day) or back to box 1; tracing stars and Tangkap Huruf
+   taps nudge it too. Each day 5 letters are chosen: due and weak letters first.
+   Storage: localStorage "babymo_hijaiyah_srs_v1"
+     {v:1, L:{<letterId>:{b:box 1-5, due:'YYYY-MM-DD', last:'YYYY-MM-DD', up:'YYYY-MM-DD', ok, bad, m:recent-mistake weight 0-5}},
+      rev:{date, ids:[5], started, done, best}}                                            */
+(function(){
+  var EN=window.BM_LANG==='en', T=function(a,b){return EN?b:a;};
+  var P=function(n){return 'baby-mo-poses/baby-mo-'+n+'.webp';};
+  var KEY='babymo_hijaiyah_srs_v1', N=5, INT={1:1,2:2,3:4,4:7,5:14};
+  var S={v:1,L:{},rev:null};
+  try{ var raw=JSON.parse(localStorage.getItem(KEY)||'null'); if(raw&&typeof raw==='object'&&raw.L&&typeof raw.L==='object') S=raw; }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY,JSON.stringify(S)); }catch(e){} }
+  function pad(n){ return (n<10?'0':'')+n; }
+  function today(){ try{ if(window.BabyMo&&BabyMo.daily) return BabyMo.daily.today(); }catch(e){} var d=new Date(); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+  function shift(ds,n){ try{ if(window.BabyMo&&BabyMo.daily) return BabyMo.daily.shift(ds,n); }catch(e){} var p=ds.split('-'), d=new Date(+p[0],p[1]-1,+p[2]+n); return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate()); }
+  function since(a,b){ if(!a) return 99; var x=a.split('-'), y=b.split('-'); return Math.round((Date.UTC(+y[0],y[1]-1,+y[2])-Date.UTC(+x[0],x[1]-1,+x[2]))/864e5); }
+  function rng(salt){ try{ if(window.BabyMo&&BabyMo.daily) return BabyMo.daily.seed(today()+'|'+salt); }catch(e){} var h=2166136261, t=today()+'|'+salt; for(var i=0;i<t.length;i++){ h^=t.charCodeAt(i); h=Math.imul(h,16777619); } return function(){ h=Math.imul(h^(h>>>15),2246822507)^Math.imul(h^(h>>>13),3266489909); return ((h^=h>>>16)>>>0)/4294967296; }; }
+  function L(id){ return LETTERS.find(function(l){ return l.id===id; }); }
+  function rec(id){ var r=S.L[id]; if(!r||typeof r!=='object') r=S.L[id]={b:1,due:today(),last:'',ok:0,bad:0,m:0}; r.b=Math.max(1,Math.min(5,r.b|0||1)); return r; }
+  function learnedIds(){ var set={}; (userData.completed||[]).forEach(function(id){ var l=LESSONS.find(function(x){return x.id===id;}); if(l) l.letters.forEach(function(x){ set[x]=1; }); }); return set; }
+  function anyLearned(){ return Object.keys(learnedIds()).length>0 || Object.keys(S.L).length>0; }
+  function allDone(){ return (userData.completed||[]).indexOf(LESSONS[LESSONS.length-1].id)>=0; }
+
+  /* record one answer. src: quiz | review | trace (ok = stars 1–3) | catch */
+  function note(id, src, ok){
+    if(!L(id)) return; var r=rec(id), t=today(); r.last=t;
+    var canUp=function(){ return r.up!==t && r.miss!==t; };   /* one step up a day, and not on a day it was missed */
+    if(src==='catch'){ if(ok) r.ok++; else { r.bad++; r.m=Math.min(5,r.m+0.5); r.due=t; } }
+    else if(src==='trace'){
+      if(ok>=3){ r.ok++; r.m=Math.max(0,r.m-1); if(canUp()){ r.b=Math.min(5,r.b+1); r.up=t; r.due=shift(t,INT[r.b]); } }
+      else if(ok===2){ r.ok++; r.m=Math.max(0,r.m-0.5); }
+      else { r.m=Math.min(5,r.m+0.5); r.b=Math.max(1,r.b-1); r.due=t; }
+    } else if(ok){ r.ok++; r.m=Math.max(0,r.m-1); if(canUp()){ r.b=Math.min(5,r.b+1); r.up=t; r.due=shift(t,INT[r.b]); } }
+    else { r.bad++; r.m=Math.min(5,r.m+1); r.b=1; r.due=t; r.miss=t; }
+    save();
+  }
+  /* how much a letter needs practice today (higher = sooner) */
+  function need(id, t){
+    var r=S.L[id]; if(!r) return 40;                          /* learned in a lesson but never practised: before recently-correct ones */
+    return (r.due<=t?50:0) + (6-r.b)*8 + (r.m||0)*10 + Math.min(14,since(r.last,t));
+  }
+  function choose(){
+    var t=today(), set=learnedIds(); Object.keys(S.L).forEach(function(id){ if(L(id)) set[id]=1; });
+    var pool=Object.keys(set);
+    for(var i=0;i<LETTERS.length && pool.length<N;i++) if(!set[LETTERS[i].id]) pool.push(LETTERS[i].id);
+    var r=rng('hijaiyah-review'), sc={}; pool.forEach(function(id){ sc[id]=need(id,t)+r()*5; });
+    pool.sort(function(a,b){ return sc[b]-sc[a]; });
+    var ids=pool.slice(0,N), r2=rng('hijaiyah-review-order');
+    for(var k=ids.length-1;k>0;k--){ var j=Math.floor(r2()*(k+1)), x=ids[k]; ids[k]=ids[j]; ids[j]=x; }
+    return ids;
+  }
+  /* today's 5: fixed once the review starts, otherwise follows the latest answers */
+  function todays(){
+    var t=today();
+    if(!S.rev || S.rev.date!==t || !S.rev.started){ S.rev={date:t, ids:choose(), started:false, done:!!(S.rev&&S.rev.date===t&&S.rev.done), best:(S.rev&&S.rev.date===t&&S.rev.best)||0}; save(); }
+    return S.rev.ids;
+  }
+  function weak(max){
+    return Object.keys(S.L).filter(function(id){ var r=S.L[id]; return L(id) && (r.m>=1 || (r.b<=1 && r.bad>0)); })
+      .sort(function(a,b){ var x=S.L[a], y=S.L[b]; return (y.m-x.m)||(x.b-y.b)||(y.bad-x.bad); }).slice(0,max||8);
+  }
+  function weakHtml(){
+    var w=weak(8);
+    return w.length ? T('Huruf yang perlu dilatih:','Letters to practise:')+' '+w.map(function(id){ return '<b title="'+L(id).name+'">'+L(id).ar+'</b>'; }).join('')
+                    : T('Huruf yang perlu dilatih: belum ada — hebat! 🌟','Letters to practise: none yet — great job! 🌟');
+  }
+
+  /* ── home card ── */
+  var card=document.createElement('div'); card.className='rv-card'; card.id='rvCard';
+  function renderCard(){
+    if(!anyLearned()){ card.style.display='none'; return; } card.style.display='';
+    var ids=todays(), done=S.rev.done, tamat=allDone();
+    /* after the big exam it is the main thing to do, so it moves up under Baby Mo; before that it sits above the lessons */
+    var anchor = tamat ? document.querySelector('.home-hello') : (document.querySelector('#sHome .play-row')||document.querySelector('.kotak'));
+    if(card.previousElementSibling!==anchor) anchor.parentNode.insertBefore(card, anchor.nextSibling);
+    card.classList.toggle('hl', tamat && !done);
+    card.innerHTML='<div class="rv-in"><div class="rv-top"><span class="ic">🔁</span><div><b>'+T('Ulasan Harian','Daily Review')+'</b><small>'+T(N+' huruf hari ini · ± 2 menit',N+' letters today · about 2 minutes')+'</small></div>'+(done?'<span class="rv-done">✓ '+T('Selesai','Done')+'</span>':'')+'</div>'
+      +(tamat?'<div class="rv-tamat">🏆 '+T('Kamu sudah tamat 28 huruf! Ulas sedikit setiap hari supaya tetap ingat.','You finished all 28 letters! Review a little every day so you never forget them.')+'</div>':'')
+      +'<div class="rv-chips">'+ids.map(function(id){ var l=L(id); return '<span style="--lc:'+l.color+'">'+l.ar+'</span>'; }).join('')+'</div>'
+      +'<div class="rv-weak">'+weakHtml()+'</div>'
+      +'<button class="rv-go'+(done?' again':'')+'" id="rvGo" type="button">'+(done?'🔄 '+T('Ulas lagi','Review again'):'▶ '+T('Mulai Ulasan','Start Review'))+'</button></div>';
+    document.getElementById('rvGo').onclick=open;
+  }
+  var _uh=updateHomeUI; updateHomeUI=function(){ _uh(); renderCard(); };
+
+  /* every quiz answer counts (lessons) */
+  var _ha=handleAnswer;
+  handleAnswer=function(btn,choice,q){ var was=answered; _ha(btn,choice,q); if(was||!q||!q.lt) return; note(q.lt.id,'quiz',choice===q.correct); };
+
+  /* after the big exam the "next" button leads to the review */
+  var _fl=finishLesson;
+  finishLesson=function(){ _fl(); if(curLesson && curLesson.id===LESSONS[LESSONS.length-1].id) document.getElementById('resNextBtn').textContent='🔁 '+T('Ulasan Harian','Daily Review')+' →'; };
+  var _gn=goNextLesson;
+  goNextLesson=function(){ if(curLesson && curLesson.id===LESSONS[LESSONS.length-1].id){ goHome(); open(); return; } _gn(); };
+
+  /* ── the session: 5 × (hear → pick the letter), then trace one ── */
+  var ov=document.getElementById('rvOv'), rv=null;
+  function bub(h,pose){ document.getElementById('rvBub').innerHTML=h; if(pose) document.getElementById('rvMo').src=P(pose); }
+  function sayLt(l){ try{ speak(arabicVoice?l.arName:l.speak, arabicVoice?'ar-SA':'id-ID'); }catch(e){} }
+  function shuffleR(a){ return a.map(function(x){ return [Math.random(),x]; }).sort(function(p,q){ return p[0]-q[0]; }).map(function(p){ return p[1]; }); }
+  function bumpStreak(){
+    var t=new Date().toDateString();
+    if(userData.lastDate!==t){ var y=new Date(); y.setDate(y.getDate()-1);
+      if(userData.lastDate===y.toDateString()) userData.streak=(userData.streak||0)+1; else userData.streak = userData.lastDate ? 1 : Math.max(1,userData.streak||0);
+      userData.lastDate=t; saveUserData(); }
+  }
+  function open(){
+    var ids=todays(); S.rev.started=true; save(); bumpStreak();
+    rv={ids:ids.slice(), i:0, res:[], tries:0, trace:null, traced:0};
+    document.getElementById('rvTitle').textContent='🔁 '+T('Ulasan Harian','Daily Review');
+    document.getElementById('rvQ').style.display=''; document.getElementById('rvEnd').style.display='none'; document.querySelector('#rvOv .hp-say').style.display='';
+    document.getElementById('rvHear').textContent='🔊 '+T('Dengar lagi','Hear again');
+    ov.classList.add('on'); ask();
+  }
+  function dots(){ document.getElementById('rvDots').innerHTML=rv.ids.map(function(_,k){ var r=rv.res[k]; return '<i class="'+(r===true?'ok':r===false?'mid':'')+(k===rv.i?' cur':'')+'"></i>'; }).join(''); }
+  function ask(){
+    var l=L(rv.ids[rv.i]); rv.tries=0; rv.lock=false;
+    document.getElementById('rvPill').textContent=(rv.i+1)+' / '+rv.ids.length; dots();
+    bub(T('Dengarkan baik-baik… huruf apa ini? 👂','Listen carefully… which letter is it? 👂'),'pose-15');
+    var others=shuffleR(LETTERS.filter(function(x){ return x.id!==l.id; }));
+    /* include a look-alike if there is one (same base shape, different dots) — that's what needs practice */
+    var twin=others.find(function(x){ return x.dotsIcon!==l.dotsIcon && x.ar.length===l.ar.length && SHAPE[x.id]&&SHAPE[x.id]===SHAPE[l.id]; });
+    var wr=(twin?[twin]:[]).concat(others.filter(function(x){ return x!==twin; })).slice(0,3);
+    var opts=shuffleR([l].concat(wr)), box=document.getElementById('rvOpts');
+    box.innerHTML=opts.map(function(o){ return '<button type="button" data-id="'+o.id+'" style="--c:'+o.color+'">'+o.ar+'</button>'; }).join('');
+    box.querySelectorAll('button').forEach(function(b){ b.onclick=function(){ pickOpt(b,l); }; });
+    setTimeout(function(){ if(ov.classList.contains('on')) sayLt(l); },450);
+  }
+  /* letters that share a skeleton (so the review mixes in the look-alike) */
+  var SHAPE={ba:'b',ta:'b',tsa:'b',nun:'b',ya:'b',jim:'j',ha:'j',kha:'j',dal:'d',dzal:'d',ra:'r',zai:'r',sin:'s',syin:'s',shad:'sh',dhad:'sh',tha:'t',zha:'t',ain:'a',ghain:'a',fa:'f',qaf:'f'};
+  function pickOpt(b,l){
+    if(rv.lock) return;
+    if(b.dataset.id===l.id){
+      rv.lock=true; b.classList.add('ok'); var first=rv.tries===0; rv.res[rv.i]=first; dots();
+      note(l.id,'review',first);
+      try{ playCorrect(); }catch(e){} sayLt(l);
+      bub((first?T('Betul! ','Right! '):T('Nah, itu dia! ','There it is! '))+'<b>'+l.name+'</b> '+l.ar+' ✨',first?'yeyy':'yes');
+      setTimeout(function(){ if(!ov.classList.contains('on')) return; rv.i++; if(rv.i<rv.ids.length) ask(); else toTrace(); },1300);
+    } else {
+      rv.tries++; b.classList.add('no'); b.disabled=true; try{ playWrong(); }catch(e){}
+      if(rv.tries===1) bub(T('Hampir! Dengar lagi, lalu coba lagi 🤗','Almost! Listen again and try once more 🤗'),'pose-40');
+      else { bub(T('Ini dia hurufnya 👉 ','Here it is 👉 ')+'<b>'+l.name+'</b>','idea'); var c=document.querySelector('#rvOpts button[data-id="'+l.id+'"]'); if(c){ c.classList.add('ok'); } }
+      setTimeout(function(){ sayLt(l); },350);
+    }
+  }
+  function toTrace(){
+    /* trace the letter that was hardest just now (or the weakest of today's five) */
+    var miss=rv.ids.filter(function(id,k){ return rv.res[k]===false; });
+    var pickId = miss[0] || rv.ids.slice().sort(function(a,b){ return need(b,today())-need(a,today()); })[0];
+    rv.trace=pickId; dots();
+    bub(T('Terakhir, ayo tulis huruf <b>'+L(pickId).name+'</b> ✍️','Last one: let\'s write <b>'+L(pickId).name+'</b> ✍️'),'pose-15');
+    setTimeout(function(){ if(!ov.classList.contains('on')) return; rv.inTrace=true; openTrace(L(pickId)); },1100);
+  }
+  function onTraceClose(done){
+    if(!rv || !rv.inTrace) return; rv.inTrace=false;
+    var stars=0; try{ stars=done ? (JSON.parse(localStorage.getItem('babymo_hijaiyah_play_v1')||'{}').stars||{})[rv.trace]||0 : 0; }catch(e){}
+    rv.traced = done ? (rv.lastStars||stars||1) : 0;
+    finish();
+  }
+  function finish(){
+    var good=rv.res.filter(function(x){ return x===true; }).length, n=rv.ids.length;
+    var xp=5+good*3+(rv.traced||0); userData.xp=(userData.xp||0)+xp; saveUserData();
+    var star=false; try{ star=!!(window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('hijaiyah-classic','review',1)); }catch(e){}
+    try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('hijaiyah-classic','review'); }catch(e){}
+    S.rev.done=true; S.rev.best=Math.max(S.rev.best||0,good); save();
+    document.getElementById('rvQ').style.display='none'; document.querySelector('#rvOv .hp-say').style.display='none';
+    document.getElementById('rvPill').textContent='✓ '+good+' / '+n;
+    var pose=good===n?'yeyy':good>=3?'pose-41':'pose-33';
+    document.getElementById('rvBub').innerHTML=good===n?T('Masya Allah! Semua betul! 🌟','Masha Allah! All correct! 🌟'):T('Bagus! Huruf yang tadi salah akan muncul lagi besok 💪','Well done! The tricky ones will come back tomorrow 💪');
+    document.getElementById('rvMo').src=P(pose);
+    var end=document.getElementById('rvEnd'); end.style.display='';
+    end.innerHTML='<img src="'+P(pose)+'" alt=""><h3>'+T('Ulasan selesai!','Review done!')+' ✨</h3>'
+      +'<div class="rv-gain"><span>✅ '+good+' / '+n+'</span><span>✨ +'+xp+' XP</span>'+(rv.traced?'<span>✍️ '+'⭐'.repeat(rv.traced)+'</span>':'')+(star?'<span>⭐ +1</span>':'')+'</div>'
+      +'<p>'+T('Datang lagi besok untuk '+N+' huruf baru pilihan Baby Mo.','Come back tomorrow for '+N+' new letters picked by Baby Mo.')+'</p>'
+      +'<div class="rv-weak">'+weakHtml()+'</div>'
+      +'<div class="tr-row"><button class="clr" id="rvHome" type="button">🏠 '+T('Menu','Menu')+'</button><button class="ok" id="rvAgain" type="button">🔄 '+T('Ulas lagi','Again')+'</button></div>';
+    document.getElementById('rvHome').onclick=close; document.getElementById('rvAgain').onclick=open;
+    try{ if(good===n){ playLevelUp(); spawnParticles(18); } else playCorrect(); }catch(e){}
+  }
+  function close(){ ov.classList.remove('on'); rv=null; try{ stopSpeak(); }catch(e){} updateHomeUI(); }
+  document.getElementById('rvX').onclick=close;
+  document.getElementById('rvHear').onclick=function(){ if(!rv||rv.i>=rv.ids.length) return; var b=this; b.classList.remove('ping'); void b.offsetWidth; b.classList.add('ping'); sayLt(L(rv.ids[rv.i])); };
+
+  window.HJ={ note:function(id,src,ok){ if(src==='trace'&&rv&&rv.inTrace&&id===rv.trace) rv.lastStars=ok; note(id,src,ok); }, onTraceClose:onTraceClose, open:open, todays:todays, weak:weak, state:function(){ return S; } };
+  if(document.getElementById('sHome').classList.contains('active')) renderCard();
 })();
 </script>
 </body>

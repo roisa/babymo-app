@@ -1,5 +1,6 @@
 /* Huruf Hijaiyah (classic letters course) — English */
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
+  "Ulasan Harian": "Daily Review", "Dengar lagi": "Hear again", "Mulai Ulasan": "Start Review", "Ulas lagi": "Review again",
   "Belajar Huruf Hijaiyah Anak — 28 Huruf Arab + Audio | Baby Mo": "Learn the Hijaiyah Letters — 28 Arabic Letters + Audio | Baby Mo",
   "BabyMo · Huruf Arab": "BabyMo · Arabic Letters", "Huruf Hijaiyah": "Hijaiyah Letters",
   "Belajar 28 huruf Arab bersama Baby Mo!": "Learn the 28 Arabic letters with Baby Mo!",

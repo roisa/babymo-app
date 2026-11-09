@@ -79,7 +79,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .bed.sel::before{background:rgba(255,236,120,.38);box-shadow:0 0 0 3px #FFE066,0 0 18px 4px rgba(255,224,102,.7)}
 .bed .pl{transform-origin:60px 126px;transition:transform .5s}
 .bed .pl.thirsty{transform:skewX(8deg) scaleY(.92);filter:saturate(.45) brightness(1.05)}
-.bed .pl.pop{animation:grow .7s cubic-bezier(.3,1.6,.5,1)}
+.bed .pl.grow{animation:grow .7s cubic-bezier(.3,1.6,.5,1)}
 @keyframes grow{0%{transform:scale(.6,.4)}100%{transform:none}}
 .bed .weed{transform-origin:22px 130px;animation:sway 1.6s ease-in-out infinite alternate}
 @keyframes sway{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
@@ -228,6 +228,11 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
 .btn-pri{color:#fff}
+/* real-day morning note on the home screen (both themes: uses the theme variables) */
+.mnote{width:100%;margin-top:12px;padding:10px 14px;border-radius:18px;background:var(--card);border:1.5px solid var(--border);font-weight:800;font-size:15px;line-height:1.35;text-align:center;color:var(--ink)}
+.mnote:empty{display:none}
+.mnote.morn{border-color:#FFC83D;background:linear-gradient(135deg,rgba(255,200,61,.22),rgba(255,200,61,.08))}
+.mnote small{display:block;font-size:13px;color:var(--soft);margin-top:2px}
 .tool{border-radius:20px!important}
 /* status badge sits on the side away from Ais */
 .bed[data-i="1"] .badge,.bed[data-i="2"] .badge{left:auto;right:4%}
@@ -256,6 +261,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
       <div><span>🌙</span>Tidur</div>
       <div><span>🧺</span>Panen</div>
     </div>
+    <div class="mnote" id="mnote" aria-live="polite"></div>
     <div class="row">
       <button class="btn-pri" id="goGarden">🌱 Mulai Berkebun</button>
     </div>
@@ -469,6 +475,21 @@ function fresh(){ return { day:1, weather:"cerah", beds:[{},{},{}], basket:{}, b
 function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"null"); if(!d||!Array.isArray(d.beds)) return fresh(); var f=fresh(); for(var k in f) if(d[k]==null) d[k]=f[k]; return d; }catch(e){ return fresh(); } }
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(D)); }catch(e){} }
 var D = load();
+
+/* ═════════ real days ═════════
+   A new REAL date (local) means the night has passed by itself: plants that were
+   watered grow one stage, thirsty ones droop, weeds or a caterpillar may appear.
+   After 2+ days away the rain has watered the garden too, but a plant grows at most
+   2 stages, so nothing jumps straight to harvest. D.real = the last real date the
+   garden was opened. 🌙 Tidur still works as a "nap" (moves the in-game day on) and
+   never touches D.real, so the real-date morning only happens when D.real < today. */
+function pad2(n){ return (n<10?"0":"")+n; }
+function todayStr(){ var d=new Date(); return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()); }
+function daysBetween(a,b){ var pa=a.split("-"), pb=b.split("-"); return Math.round((Date.UTC(+pb[0],pb[1]-1,+pb[2])-Date.UTC(+pa[0],pa[1]-1,+pa[2]))/864e5); }
+function validDay(x){ return typeof x==="string" && /^\d{4}-\d{2}-\d{2}$/.test(x); }
+function hashStr(t){ var h=2166136261; for(var i=0;i<t.length;i++){ h^=t.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+if(!validDay(D.real)){ D.real=todayStr(); try{ localStorage.setItem(KEY,JSON.stringify(D)); }catch(e){} }   /* old saves + first visit: no catch-up */
+var MAX_CATCHUP=2;
 function starCount(){ return Object.keys(D.stars).length; }
 function giveStar(id){ if(D.stars[id]) return false; D.stars[id]=1; save(); try{ kit().addStars && kit().addStars(1); }catch(e){} return true; }
 function basketTotal(){ var n=0; for(var k in D.basket) n+=D.basket[k]; return n; }
@@ -582,7 +603,7 @@ function renderBed(i,anim){
   var soil = b.watered ? "#5A3820" : "#8A5A34";
   var s='<ellipse cx="60" cy="125" rx="56" ry="13" fill="'+soil+'"/>';
   if(b.crop) s+='<g><rect x="104" y="104" width="4" height="24" rx="1" fill="#B07A47"/><rect x="95" y="94" width="22" height="17" rx="5" fill="#FFF3D6" stroke="#B07A47" stroke-width="1.5"/><text x="106" y="103" font-size="11" text-anchor="middle" dominant-baseline="central">'+CROPS[b.crop].e+'</text></g>';
-  s+='<g transform="translate(60 126) scale(1.45) translate(-60 -126)"><g class="pl'+(b.thirsty?' thirsty':'')+(anim?' pop':'')+'">'+plant(b.crop,b.stage||0)+'</g>'+(b.cat?catSVG():'')+'</g>';
+  s+='<g transform="translate(60 126) scale(1.45) translate(-60 -126)"><g class="pl'+(b.thirsty?' thirsty':'')+(anim?' grow':'')+'">'+plant(b.crop,b.stage||0)+'</g>'+(b.cat?catSVG():'')+'</g>';
   s+='<rect x="4" y="128" width="112" height="34" rx="8" fill="#A9693A"/><rect x="4" y="128" width="112" height="8" rx="4" fill="#C58550"/><path d="M40 136v24M80 136v24" stroke="#8C5530" stroke-width="2"/>';
   if(b.weed) s+='<g transform="translate(22 132) scale(1.35) translate(-22 -132)">'+weedSVG()+'</g>';
   el.querySelector("svg").innerHTML=s;
@@ -734,6 +755,7 @@ async function doTool(t){
       await infoCard({ img:"jump-joy", title:L("Petani Cilik! 🏅","Little Farmer! 🏅"), text:L("Kamu sudah memanen semua tanaman. Masya Allah, hebat sekali!","You've harvested every plant. Masha Allah, amazing!") }); }
     pose("ready");
   }
+  if(t==="water"||t==="weed") await careReward();
   busy=false; renderTools();
 }
 async function rescueCat(i){
@@ -768,10 +790,29 @@ async function sleep(){
   say(L("Bismika Allahumma ahya wa amut","Bismika Allahumma ahya wa amut"));
   await pop("🌙 "+L("Bismika Allahumma ahya wa amut","Bismika Allahumma ahya wa amut")+"<small>"+L("Dengan nama-Mu ya Allah, aku hidup dan aku mati.","In Your name, O Allah, I live and I die.")+"</small>",2600);
   // grow overnight
+  var nr=nightPass(0), grew=nr.grew, ready=nr.ready, blocked=nr.blocked;
+  save();
+  for(var i=0;i<3;i++) renderBed(i, grew.indexOf(i)>=0);
+  renderHud();
+  await wait(500);
+  $("night").classList.remove("on");
+  pose("wake"); SND.birds();
+  hint(L("Hari ","Day ")+D.day+"!");
+  await pop("☀️ "+L("Hari ","Day ")+D.day+"<small>"+L("Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur","Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur")+"</small>",2400);
+  await dayWeather(grew, ready, blocked);
+  pose("idle",true);
+  busy=false; renderTools();
+}
+/* the night's changes (shared by 🌙 Tidur and the real-date morning).
+   bonus = extra growth for plants that weren't blocked (rain while the child was away). */
+function nightPass(bonus){
   var grew=[], ready=[], blocked=[];
   D.beds.forEach(function(b,i){
     if(!b.crop || b.stage>=5) return;
-    if(b.watered && !b.weed && !b.cat){ b.stage++; b.thirsty=false; grew.push(i); if(b.stage===5) ready.push(i); }
+    var free=!b.weed && !b.cat, g=0;
+    if(b.watered && free) g=1;
+    if(bonus && free) g=Math.min(MAX_CATCHUP, g+bonus);
+    if(g){ b.stage=Math.min(5,b.stage+g); b.thirsty=false; grew.push(i); if(b.stage===5) ready.push(i); }
     else if(!b.watered){ b.thirsty=true; }
     else blocked.push(i);
     b.watered=false;
@@ -783,14 +824,10 @@ async function sleep(){
     if(b.crop && b.stage>=1 && b.stage<5 && !b.weed && rand(.28)) b.weed=true;
     else if(b.crop && (b.stage===3||b.stage===4) && !b.cat && rand(.2)) b.cat=true;
   });
-  save();
-  for(var i=0;i<3;i++) renderBed(i, grew.indexOf(i)>=0);
-  renderHud();
-  await wait(500);
-  $("night").classList.remove("on");
-  pose("wake"); SND.birds();
-  hint(L("Hari ","Day ")+D.day+"!");
-  await pop("☀️ "+L("Hari ","Day ")+D.day+"<small>"+L("Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur","Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur")+"</small>",2400);
+  return { grew:grew, ready:ready, blocked:blocked };
+}
+/* weather + "it grew" pops after a night */
+async function dayWeather(grew, ready, blocked, quiet){
   if(D.weather==="hujan"){
     $("rain").classList.add("on"); pose("rain"); SND.rain();
     D.beds.forEach(function(b){ if(b.crop && b.stage<5){ b.watered=true; b.thirsty=false; } });
@@ -800,11 +837,81 @@ async function sleep(){
     pose("hot");
     await pop("🔆 "+L("Hari ini panas!","It's a hot day!")+"<small>"+L("Jangan lupa siram tanaman, dan kamu juga minum air, ya.","Don't forget to water the plants — and drink some water too.")+"</small>",2400);
   }
-  if(ready.length){ pose("celebrate",true); sfx("star"); await pop("✨ "+L("Ada yang siap dipanen!","Something is ready to harvest!"),1800); }
-  else if(grew.length){ pose("look",true); await pop("🌱 "+L("Tanamannya tumbuh!","The plants have grown!"),1500); }
+  if(!quiet){
+    if(ready.length){ pose("celebrate",true); sfx("star"); await pop("✨ "+L("Ada yang siap dipanen!","Something is ready to harvest!"),1800); }
+    else if(grew.length){ pose("look",true); await pop("🌱 "+L("Tanamannya tumbuh!","The plants have grown!"),1500); }
+  }
   if(blocked.length){ pose("think"); await pop(L("Rumput liar dan ulat membuat tanaman tidak tumbuh.","Weeds and caterpillars stopped a plant from growing."),2000); }
+}
+
+/* ═════════ the real-date morning ═════════ */
+var SURPRISES=["flower","butterfly","berry"];
+function catchUp(){
+  var t=todayStr();
+  if(!validDay(D.real) || D.real>t){ D.real=t; save(); return false; }   /* clock moved back: just re-anchor */
+  var gap=daysBetween(D.real,t);
+  if(gap<1) return false;
+  var nr=nightPass(gap>=2?1:0);
+  if(D.weather==="hujan") D.beds.forEach(function(b){ if(b.crop && b.stage<5){ b.watered=true; b.thirsty=false; } });
+  var sp=SURPRISES[hashStr(t+"|kebun-kejutan")%SURPRISES.length];
+  if(sp==="berry") D.basket.stroberi=(D.basket.stroberi||0)+1;
+  D.real=t;
+  D.morning={ gap:gap, grew:nr.grew, ready:nr.ready, blocked:nr.blocked, surprise:sp };
+  save();
+  return true;
+}
+function cropList(idx){
+  var seen={}, names=[];
+  idx.forEach(function(i){ var k=D.beds[i]&&D.beds[i].crop; if(k && !seen[k]){ seen[k]=1; names.push(k); } });
+  return names;
+}
+/* "Tomatmu tumbuh!" / "Your tomato has grown!" */
+function grewLine(idx, ripe){
+  var ks=cropList(idx); if(!ks.length) return "";
+  var id=CROPS[ks[0]].id.toLowerCase(), en=CROPS[ks[0]].en.toLowerCase();
+  if(ks.length>1){ id+=" dan "+CROPS[ks[1]].id.toLowerCase(); en+=" and "+CROPS[ks[1]].en.toLowerCase(); }
+  id=id.charAt(0).toUpperCase()+id.slice(1);
+  if(ripe) return L(id+"mu siap dipanen! 🧺","Your "+en+(ks.length>1?" are":" is")+" ready to pick! 🧺");
+  return L(id+"mu tumbuh! 🌱","Your "+en+(ks.length>1?" have":" has")+" grown! 🌱");
+}
+function morningLine(m){
+  if(m.ready.length) return grewLine(m.ready,true);
+  if(m.grew.length) return grewLine(m.grew,false);
+  if(D.beds.some(function(b){ return b.crop && b.thirsty; })) return L("Tanaman haus. Ayo siram! 💧","The plants are thirsty. Let's water them! 💧");
+  if(!D.beds.some(function(b){ return b.crop; })) return L("Ayo tanam benih hari ini! 🌱","Let's plant a seed today! 🌱");
+  return L("Ayo rawat kebun hari ini! 💧","Let's look after the garden today! 💧");
+}
+async function playMorning(){
+  var m=D.morning; if(!m || busy) return;
+  D.morning=null; save();
+  busy=true; renderTools(); sel=-1; beds.forEach(function(b){ b.classList.remove("sel"); });
+  hint("☀️ "+L("Selamat pagi!","Good morning!"));
+  $("night").classList.add("on"); $("rain").classList.remove("on"); pose("sleep",true);
+  await wait(900);
+  for(var i=0;i<3;i++) renderBed(i, m.grew.indexOf(i)>=0);
+  renderHud(); hint("☀️ "+L("Selamat pagi!","Good morning!"));
+  $("night").classList.remove("on"); pose("wake"); SND.birds();
+  await wait(700);
+  var line=morningLine(m);
+  say(L("Selamat pagi! ","Good morning! ")+line);
+  await pop("☀️ "+L("Selamat pagi!","Good morning!")+"<small>"+line+"</small>",2600);
+  if(m.gap>=2){ pose("hug"); await pop("🌧️ "+L("Selama kamu pergi, hujan turun","While you were away, the rain came")+"<small>"+L("Allah menyiram kebun kita. Senang kamu kembali!","Allah watered our garden. So glad you're back!")+"</small>",2600); }
+  if(m.ready.length){ pose("celebrate",true); sfx("star"); }
+  else if(m.grew.length) pose("look",true);
+  await dayWeather(m.grew, m.ready, m.blocked, true);
+  if(m.surprise==="flower"){ pose("smell"); SND.sparkle(); await pop("🌼 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Bunga kecil mekar di pinggir kebun.","A little flower bloomed by the garden.")+"</small>",2300); }
+  else if(m.surprise==="butterfly"){ pose("look",true); SND.sparkle(); await pop("🦋 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Kupu-kupu datang membantu bunga-bunga.","A butterfly came to help the flowers.")+"</small>",2300); }
+  else if(m.surprise==="berry"){ pose("basket"); SND.sparkle(); renderHud(); await pop("🍓 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Ada stroberi liar — sudah masuk keranjang.","A wild strawberry — it's in the basket.")+"</small>",2300); }
   pose("idle",true);
   busy=false; renderTools();
+}
+/* daily care reward: once per real day when every planted bed is watered (or ripe) and weed-free */
+function gardenDone(){ return D.beds.some(function(x){ return x.crop; }) && D.beds.every(function(x){ return !x.crop || ((x.watered||x.stage===5) && !x.weed); }); }
+async function careReward(){
+  var t=todayStr(); if(D.careDay===t || !gardenDone()) return;
+  D.careDay=t; save();
+  var got=false; try{ got=!!(window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward("kebun-ais","care",1)); }catch(e){}
+  if(got){ sfx("star"); pose("celebrate",true); await pop("⭐ "+L("Hadiah hari ini!","Today's reward!")+"<small>"+L("Kebun sudah dirawat. Besok pagi lihat tanamanmu tumbuh!","The garden is looked after. Come back tomorrow morning to see it grow!")+"</small>",2600); pose("ready"); }
 }
 
 /* ═════════ basket and sharing ═════════ */
@@ -871,12 +978,19 @@ function renderBook(){
 
 /* ═════════ wiring ═════════ */
 function enterGarden(){
+  catchUp();
   show("s-garden"); renderAll();
   aisEl.style.transitionDuration="0ms"; aisEl.style.left=BEDX[aisAt]+"%";
   pose("idle",true);
-  if(!D.seen.intro){ D.seen.intro=1; save(); pop("👋 "+L("Assalamu'alaikum! Ayo berkebun!","Assalamu'alaikum! Let's garden!"),1800); say(L("Assalamu'alaikum! Ayo berkebun bersama Ais!","Assalamu'alaikum! Let's do some gardening with Ais!")); }
+  if(D.morning && D.seen.intro){ playMorning(); return; }
+  if(!D.seen.intro){ D.morning=null; D.seen.intro=1; save(); pop("👋 "+L("Assalamu'alaikum! Ayo berkebun!","Assalamu'alaikum! Let's garden!"),1800); say(L("Assalamu'alaikum! Ayo berkebun bersama Ais!","Assalamu'alaikum! Let's do some gardening with Ais!")); }
 }
-function homeLabel(){ var started=D.day>1||D.beds.some(function(b){ return b.crop; }); $("goGarden").textContent=started? "🌱 "+L("Lanjut Berkebun · Hari ","Keep Gardening · Day ")+D.day : "🌱 "+L("Mulai Berkebun","Start Gardening"); }
+function homeLabel(){ var started=D.day>1||D.beds.some(function(b){ return b.crop; }); $("goGarden").textContent=started? "🌱 "+L("Lanjut Berkebun · Hari ","Keep Gardening · Day ")+D.day : "🌱 "+L("Mulai Berkebun","Start Gardening");
+  var mn=$("mnote");
+  if(D.morning){ mn.className="mnote morn"; mn.innerHTML="☀️ "+L("Selamat pagi! ","Good morning! ")+morningLine(D.morning)+(D.morning.gap>=2?"<small>"+L("Kebunmu kangen kamu 💚","Your garden missed you 💚")+"</small>":""); }
+  else if(D.careDay===todayStr()){ mn.className="mnote"; mn.innerHTML="✅ "+L("Kebun sudah dirawat hari ini.","The garden is looked after today.")+"<small>"+L("Besok pagi lihat tanamanmu tumbuh 🌅","Come back tomorrow morning to see it grow 🌅")+"</small>"; }
+  else mn.className="mnote", mn.innerHTML=started?"🌤️ "+L("Tanamanmu menunggu. Ayo siram hari ini!","Your plants are waiting. Let's water them today!"):"";
+}
 $("goGarden").addEventListener("click",function(){ sfx("tap"); enterGarden(); });
 $("goBook").addEventListener("click",function(){ sfx("tap"); renderBook(); show("s-book"); });
 $("bookBack").addEventListener("click",function(){ homeLabel(); renderStars(); show("s-home"); });
@@ -893,7 +1007,16 @@ $("aisHit").addEventListener("click",async function(e){ e.stopPropagation(); if(
 $("modal").addEventListener("click",function(e){ if(e.target.id==="modal" && $("mcard").querySelector("[data-close]")) closeModal(); });
 (function stars(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*45).toFixed(1)+'%;animation-delay:'+(Math.random()*1.4).toFixed(2)+'s"></i>'; n.innerHTML=h; })();
 if(window.BM_LANG==="en") $("quoteTxt").textContent='"Then let people look at their food: how We pour down water from the sky, then split the earth open, and make grain grow in it…"';
+catchUp();
 homeLabel(); renderStars();
+/* the app was left open overnight (or resumed from the background on a new day) */
+function onWake(){
+  if(document.visibilityState==="hidden" || !catchUp()) return;
+  if($("s-garden").classList.contains("on")){ renderAll(); if(!busy && !$("modal").classList.contains("on")) playMorning(); }
+  else homeLabel();
+}
+document.addEventListener("visibilitychange",onWake);
+window.addEventListener("pageshow",function(e){ if(e.persisted) onWake(); });
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
