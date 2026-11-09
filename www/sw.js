@@ -10,7 +10,7 @@
      - same-origin static → cache-first (fast), refreshed in background.
      - cross-origin (fonts) → opportunistic cache.
    ============================================================ */
-const CACHE = "babymo-games-v80";
+const CACHE = "babymo-games-v81";
 
 const SHELL = [
   "/",
@@ -187,6 +187,31 @@ const SHELL = [
   "/babymo_running.png",
   // Mo Companion reaction poses (precache the ones the kit picks from)
   "/baby-mo-poses/baby-mo-pose-01.webp",
+  "/baby-mo-poses/baby-mo-pose-02.webp",
+  "/baby-mo-poses/baby-mo-pose-04.webp",
+  "/baby-mo-poses/baby-mo-pose-06.webp",
+  "/baby-mo-poses/baby-mo-pose-11.webp",
+  "/baby-mo-poses/baby-mo-pose-13.webp",
+  "/baby-mo-poses/baby-mo-pose-14.webp",
+  "/baby-mo-poses/baby-mo-pose-16.webp",
+  "/baby-mo-poses/baby-mo-pose-18.webp",
+  "/baby-mo-poses/baby-mo-pose-20.webp",
+  "/baby-mo-poses/baby-mo-pose-21.webp",
+  "/baby-mo-poses/baby-mo-pose-23.webp",
+  "/baby-mo-poses/baby-mo-pose-24.webp",
+  "/baby-mo-poses/baby-mo-pose-25.webp",
+  "/baby-mo-poses/baby-mo-pose-26.webp",
+  "/baby-mo-poses/baby-mo-pose-28.webp",
+  "/baby-mo-poses/baby-mo-pose-29.webp",
+  "/baby-mo-poses/baby-mo-pose-30.webp",
+  "/baby-mo-poses/baby-mo-pose-31.webp",
+  "/baby-mo-poses/baby-mo-pose-32.webp",
+  "/baby-mo-poses/baby-mo-pose-34.webp",
+  "/baby-mo-poses/baby-mo-pose-35.webp",
+  "/baby-mo-poses/baby-mo-pose-37.webp",
+  "/baby-mo-poses/baby-mo-pose-41.webp",
+  "/baby-mo-poses/baby-mo-pose-42.webp",
+  "/baby-mo-poses/baby-mo-run.webp",
   "/baby-mo-poses/baby-mo-pose-05.webp",
   "/baby-mo-poses/baby-mo-idea.webp",
   "/baby-mo-poses/baby-mo-ok.webp",
