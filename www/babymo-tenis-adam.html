@@ -212,7 +212,7 @@ body:has(#s-map.on) #bm-mo.top,body:has(#s-intro.on) #bm-mo.top{top:calc(env(saf
         <span class="lbl">🎾 Gaya forehand Kak Adam</span>
         <div class="opts">
           <button data-fh="mix">🎲 Acak<small>ganti-ganti</small></button>
-          <button data-fh="one">✋ Satu tangan<small>klasik</small></button>
+          <button data-fh="one">✋ Satu tangan<small>jangkauan jauh</small></button>
           <button data-fh="two">🙌 Dua tangan<small>lebih kuat</small></button>
         </div>
       </div>
@@ -481,8 +481,8 @@ function say(text){
 }
 
 /* ───────── Adam sprite ───────── */
-var FR={}; [READY,"win-fist-r","fh-3-noball","fh-4-noball","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
-  [5].map(function(n){return "fh-"+n;}),[3,4,5,6].map(function(n){return "backhand-two-"+n;}),
+var FR={}; [READY,"win-fist-r","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
+  [3,4,5,6].map(function(n){return "backhand-two-"+n;}),
   [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
 ).forEach(function(n){ var im=new Image(); im.src="adam-tennis-v2/"+n+".webp"; FR[n]=im; });
 var animTimer=null;
@@ -495,17 +495,15 @@ function play(seq,ms,then){
 function swing(side,then){
   if(side==="bh"){ play(["backhand-two-3","backhand-two-3","backhand-two-4","backhand-two-5","backhand-two-6"],75,then); return; } /* two-handed backhand, finishing over his shoulder, smiling */
   var st=(G&&G.fh)||"one", b=FH_SET[st];
-  if(st==="one"){ play(["fh-3-noball","fh-4-noball","fh-5","fh-one-6"],80,then); return; } /* classic set, with its drawn-in ball removed */
-  if(st!=="two"){ play([b+3,b+4,b+5,"fh-one-6"],80,then); return; } /* one-handed forehands finish on the smiling follow-through */
   play([b+3,b+4,b+5,b+6],80,then); }
-/* forehand styles: two one-handed swings (classic + new) and a two-handed one */
-var FH_SET={ one:"fh-", one2:"fh-one-", two:"fh-two-" }, FH_KEY="bm_tenis_fh_style";
+/* forehand styles: one-handed or two-handed, each ending on its smiling follow-through */
+var FH_SET={ one:"fh-one-", two:"fh-two-" }, FH_KEY="bm_tenis_fh_style";
 function fhChoice(){ try{ return localStorage.getItem(FH_KEY)||"mix"; }catch(e){ return "mix"; } }
 function pickFh(){
   var c=fhChoice();
   if(c==="two") return "two";
-  if(c==="one") return G.oneSet || (G.oneSet=Math.random()<.5?"one":"one2"); /* keeps one look for the whole round */
-  return ["one","one2","two"][Math.floor(Math.random()*3)];
+  if(c==="one") return "one";
+  return Math.random()<.5?"one":"two";
 }
 var ADAMX={L:30,C:50,R:70,S:42}; /* S: serving spot, behind the baseline just right of the centre mark */
 function adamTo(lane){ $("adam").style.left=ADAMX[lane]+"%"; }

@@ -10,7 +10,7 @@
   "Ulangi": "Try Again", "Sertifikat": "Certificate", "Keluar": "Exit",
   "Tunggu Pantulannya!": "Wait for the Bounce!", "Pukul setelah bola memantul": "Hit after the ball bounces",
   "Forehand & Backhand": "Forehand & Backhand", "Pilih pukulan yang tepat": "Choose the right shot",
-  "🎾 Gaya forehand Kak Adam": "🎾 Kak Adam's forehand style", "✋ Satu tangan": "✋ One hand", "🙌 Dua tangan": "🙌 Two hands", "🎲 Acak": "🎲 Mix", "ganti-ganti": "switches up", "klasik": "classic", "lebih kuat": "more power",
+  "🎾 Gaya forehand Kak Adam": "🎾 Kak Adam's forehand style", "✋ Satu tangan": "✋ One hand", "🙌 Dua tangan": "🙌 Two hands", "🎲 Acak": "🎲 Mix", "ganti-ganti": "switches up", "jangkauan jauh": "long reach", "lebih kuat": "more power",
   "Forehand dua tangan: lebih kuat dan stabil!": "Two-handed forehand: strong and steady!", "Forehand satu tangan: jangkauan lebih panjang!": "One-handed forehand: longer reach!", "Acak: gaya forehand Kak Adam ganti-ganti!": "Mix: Kak Adam switches his forehand style!",
   "🙌 dua tangan": "🙌 two hands", "Bola di kanan — backhand dua tangan!": "Ball on the right — two-handed backhand!",
   "Forehand dipukul dari sisi tangan yang memegang raket, backhand dari sisi lainnya. Backhand dua tangan lebih kuat dan stabil untuk anak-anak.": "A forehand is hit on your racket-hand side, a backhand on the other side. A two-handed backhand is stronger and steadier for kids.",
