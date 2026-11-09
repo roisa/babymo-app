@@ -237,11 +237,19 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 #wordPanel .wp-s i.nx{border-color:#E8590C;color:rgba(232,89,12,.55)}
 #wordPanel .wp-m{font-size:12px;font-weight:900;color:#5A6878;max-width:90px;line-height:1.2}
 body.wp-on #compass{top:122px}
+body.wp-on #toast{top:184px}
 @media (max-height:500px) and (orientation:landscape){
   #compass{left:auto;right:12px;margin-left:0;top:60px}
   body.wp-on #compass{top:60px}
+  body.wp-on #toast{top:70px}
   #wordPanel{left:12px;transform:none;top:58px;padding:4px 8px}
   #wordPanel .wp-s i{width:34px;height:36px;font-size:22px}
+  #huntCard{align-items:flex-start;overflow-y:auto;padding:10px 20px}
+  #huntCard .hc{margin:auto;padding:10px 14px}
+  .hc .wpic{font-size:46px}
+  .hc .wword{font-size:42px;line-height:1.15}
+  .hc .tile{width:104px;height:104px;font-size:66px}
+  .hc .tile.hk{font-size:44px}
 }
 .hc .wpic{position:relative;font-size:76px;line-height:1.1;animation:hcFlip .7s .1s cubic-bezier(.3,1.4,.5,1) both}
 .hc .wword{position:relative;font-family:'Scheherazade New','Amiri',serif;font-size:58px;line-height:1.25;color:#12261F;direction:rtl}
@@ -3245,7 +3253,8 @@ tick();
     const n=npcById(id), d=n?n.def:NPC_DEFS.find(x=>x.id===id);
     document.getElementById('tkFace').src = faceURL(d.look);
     document.getElementById('tkName').textContent = EN?d.name[1]:d.name[0];
-    let k=0; const wasRun = running; running=false; talkOpen=true; Speech.stop();
+    let k=0; running=false; talkOpen=true; Speech.stop();
+    talkArmed[id]=false;   // walk away and back to hear it again
     document.exitPointerLock && document.exitPointerLock();
     const close=()=>{ vTalk.classList.remove('on'); talkOpen=false; running=true; };
     const show=()=>{
@@ -3258,7 +3267,7 @@ tick();
     };
     vTalk.classList.add('on'); show();
   }
-  const ar = s=>'<span class="ar">'+s+'</span>';
+  const ar = s=>'<bdi class="ar" dir="rtl">'+s+'</bdi>';
 
   function offerS2(){
     if(talkOpen || !s1Done()) return;
@@ -3507,6 +3516,255 @@ tick();
     skyTick(dt,t); nightTick(t); cosTick(t); compassTick(); markTick(t);
     if(window.Seasons.tick) window.Seasons.tick(dt,t);
   })();
+})();
+</script>
+<script>
+/* ═══════════ Musim 3 · Kata Pertama — villagers ask for letters to build a first Arabic word ═══════════ */
+(function(){
+  const EN = window.BM_LANG==='en', TT=(a,b)=>EN?b:a;
+  const Z = window.Seasons, S = Z.S, ar = Z.ar;
+  // standard MSA, fully vowelled; letters = indices into L, in reading order
+  const WORDS = [
+    { w:'أَسَدٌ',  lt:[0,11,7],    syl:[['أَ','a'],['سَ','sa'],['دٌ','dun']],          lat:'asadun',   pic:'🦁', m:['singa','lion'],        npc:'rafi',
+      ask:['Aku mau menggambar singa 🦁, tapi lupa tulisan Arabnya!','I want to draw a lion 🦁 but I forgot how to write it in Arabic!'] },
+    { w:'سَمَكٌ',  lt:[11,23,21],  syl:[['سَ','sa'],['مَ','ma'],['كٌ','kun']],          lat:'samakun',  pic:'🐟', m:['ikan','fish'],         npc:'udin',
+      ask:['Pak Udin mau memberi nama kolam ikan 🐟.','Pak Udin wants to name his fish pond 🐟.'] },
+    { w:'قَمَرٌ',  lt:[20,23,9],   syl:[['قَ','qa'],['مَ','ma'],['رٌ','run']],          lat:'qamarun',  pic:'🌙', m:['bulan','moon'],        npc:'nur',
+      ask:['Tadi malam bulannya indah sekali 🌙. Ayo tulis namanya!','The moon was so pretty last night 🌙. Let\'s write its name!'] },
+    { w:'قَلَمٌ',  lt:[20,22,23],  syl:[['قَ','qa'],['لَ','la'],['مٌ','mun']],          lat:'qalamun',  pic:'✏️', m:['pensil','pencil'],     npc:'ais',
+      ask:['Ais mau menulis dengan pensil ✏️. Pensil itu apa bahasa Arabnya?','Ais wants to write with a pencil ✏️. What is pencil in Arabic?'] },
+    { w:'جَمَلٌ',  lt:[4,23,22],   syl:[['جَ','ja'],['مَ','ma'],['لٌ','lun']],          lat:'jamalun',  pic:'🐪', m:['unta','camel'],        npc:'hasan',
+      ask:['Dulu Kakek pernah naik unta 🐪 di padang pasir. Ayo susun katanya!','Grandpa once rode a camel 🐪 in the desert. Let\'s build the word!'] },
+    { w:'بَابٌ',   lt:[1,0,1],     syl:[['بَا','baa'],['بٌ','bun']],                    lat:'baabun',   pic:'🚪', m:['pintu','door'],        npc:'abi',
+      ask:['Abi sedang memperbaiki pintu 🚪. Mau bantu menulis katanya?','Abi is fixing the door 🚪. Will you help write the word?'] },
+    { w:'فِيلٌ',   lt:[19,27,22],  syl:[['فِي','fii'],['لٌ','lun']],                    lat:'fiilun',   pic:'🐘', m:['gajah','elephant'],    npc:'rafi',
+      ask:['Gajah 🐘 itu besar sekali! Ayo tulis namanya.','Elephants 🐘 are so big! Let\'s write the name.'] },
+    { w:'بَيْتٌ',  lt:[1,27,2],    syl:[['بَيْ','bai','bay'],['تٌ','tun']],             lat:'baitun', latEn:'baytun', pic:'🏠', m:['rumah','house'], npc:'umi',
+      ask:['Rumah 🏠 kita nyaman ya, Ibra. Ayo tulis kata rumah!','Our house 🏠 is so cosy, Ibra. Let\'s write the word for house!'] },
+    { w:'شَمْسٌ',  lt:[12,23,11],  syl:[['شَمْ','syam','sham'],['سٌ','sun']],           lat:'syamsun', latEn:'shamsun', pic:'☀️', m:['matahari','sun'], npc:'siti',
+      ask:['Bu Siti menjemur buah di bawah matahari ☀️.','Bu Siti dries fruit under the sun ☀️.'] },
+    { w:'كِتَابٌ', lt:[21,2,0,1],  syl:[['كِ','ki'],['تَا','taa'],['بٌ','bun']],        lat:'kitaabun', pic:'📖', m:['buku','book'],         npc:'hasan',
+      ask:['Kata terakhir, yang paling panjang: buku 📖! Empat huruf, kamu pasti bisa.','The last word, the longest one: book 📖! Four letters, you can do it.'] }
+  ];
+  const latOf = (W)=>EN&&W.latEn?W.latEn:W.lat;
+  const sylLat = (s)=>EN&&s[2]?s[2]:s[1];
+
+  // state lives next to the harakat season, in the same seasons key
+  const d3 = S.s3 && typeof S.s3==='object' ? S.s3 : {};
+  S.s3 = {
+    done: Array.isArray(d3.done) ? [...new Set(d3.done.filter(i=>Number.isInteger(i)&&i>=0&&i<WORDS.length))] : [],
+    q: (Number.isInteger(d3.q) && d3.q>=0 && d3.q<WORDS.length) ? d3.q : -1,
+    got: Array.isArray(d3.got) ? [...new Set(d3.got.filter(i=>Number.isInteger(i)&&i>=0&&i<4))] : []
+  };
+  if(S.s3.q>=0 && S.s3.done.includes(S.s3.q)){ S.s3.q=-1; S.s3.got=[]; }
+  const unlocked = ()=>Z.s1Done() && Z.s2AllDone();
+  const active = ()=>unlocked() && S.s3.q>=0;
+  const nextWord = ()=>{ for(let i=0;i<WORDS.length;i++) if(!S.s3.done.includes(i)) return i; return -1; };
+  const s2Live = ()=>Z.s1Done() && S.s2.started && S.s2.active>=0;
+
+  /* — word panel (top of the screen) — */
+  const wp = document.createElement('div'); wp.id='wordPanel'; document.getElementById('hud').appendChild(wp);
+  function renderPanel(pop){
+    wp.classList.toggle('on', active()); document.body.classList.toggle('wp-on', active());
+    if(!active()){ wp.innerHTML=''; return; }
+    const W=WORDS[S.s3.q], nx=nextSlot();
+    wp.innerHTML='<span class="wp-e">'+W.pic+'</span><span class="wp-s">'+W.lt.map((li,k)=>'<i class="'+(S.s3.got.includes(k)?'got':(k===nx?'nx':''))+'"'+(pop===k?' style="animation-iteration-count:2"':'')+'>'+L[li].g+'</i>').join('')+'</span>'+
+      '<span class="wp-m">'+TT(W.m[0],W.m[1])+'<br>'+S.s3.got.length+'/'+W.lt.length+'</span>';
+  }
+  wp.addEventListener('click', ()=>{ if(!active()) return; const k=nextSlot(); if(k<0) return; const l=L[WORDS[S.s3.q].lt[k]];
+    Speech.say([{ar:l.ar, lat:l.name}]); toast(TT('Cari huruf '+l.name+' '+l.g+' — ikuti kompas 🧭','Find the letter '+l.name+' '+l.g+' — follow the compass 🧭'),2600); });
+  function nextSlot(){ if(!active()) return -1; const W=WORDS[S.s3.q]; for(let k=0;k<W.lt.length;k++) if(!S.s3.got.includes(k)) return k; return -1; }
+
+  /* — letters hide around the villager who asked — */
+  const S1POS = letterBlocks.filter(b=>b.season==null).map(b=>[b.mesh.position.x,b.mesh.position.z]);
+  function wordSpots(q){
+    const W=WORDS[q], def=NPC_DEFS.find(d=>d.id===W.npc), [hx,hz]=def.home, rand=Z.rng(9001+q*131);
+    const used=[], out=[]; let guard=0;
+    while(out.length<W.lt.length && guard++<3000){
+      const a=rand()*Math.PI*2, rad=3.6+rand()*(guard>1500?9:5.5), x=Math.floor(hx+Math.cos(a)*rad), z=Math.floor(hz+Math.sin(a)*rad);
+      if(Math.abs(x)>HALF-4 || Math.abs(z)>HALF-4) continue;
+      if(inBuilding(x,z,1) || inRect(x,z,VILLAGE.pen,1) || inRect(x,z,VILLAGE.field,1)) continue;
+      const h=heightAt(x,z); let blocked=false; for(let y=h+1;y<=h+7;y++) if(solidAt(x,y,z)){ blocked=true; break; } if(blocked) continue;
+      if(Math.abs(h+1-gTop(hx,hz))>3) continue;
+      if(used.concat(S1POS).some(u=>Math.hypot(u[0]-x-0.5,u[1]-z-0.5)<(used.includes(u)?3:1.5))) continue;
+      used.push([x+0.5,z+0.5]); out.push([x+0.5,z+0.5]);
+    }
+    return out;
+  }
+  const KINDS=['crystal','balloon','chest','crystal'];
+  function buildQuest(){
+    Z.removeSeason('s3');
+    if(!active()) return;
+    const q=S.s3.q, W=WORDS[q];
+    wordSpots(q).forEach(([x,z],k)=>{
+      if(S.s3.got.includes(k)) return;
+      const li=W.lt[k];
+      Z.addBlock({ season:'s3', li, slot:k, letter:L[li], kind:KINDS[k%4], x, z, tex:letterTex(L[li]), emi:0.25, glow:0x9FE8FF });
+    });
+    pointNext(14);
+  }
+  function blockForSlot(k){ return letterBlocks.find(b=>b.season==='s3' && !b.taken && b.slot===k); }
+  function pointNext(secs){ const b=blockForSlot(nextSlot()); if(b){ hintLetter=b; hintUntil=performance.now()/1000+(secs||10); } }
+
+  const s1Nearest = nearestLetter;
+  nearestLetter = function(){
+    if(active()){ const b=blockForSlot(nextSlot()) || letterBlocks.find(b=>b.season==='s3'&&!b.taken); if(b) return {b, d:Math.hypot(b.mesh.position.x-P.x,b.mesh.position.z-P.z)}; }
+    const live = letterBlocks.filter(b=>!b.taken && b.season!=='s3');
+    if(!live.length) return null;
+    let best=null, bd=1e9; live.forEach(b=>{ const d=Math.hypot(b.mesh.position.x-P.x,b.mesh.position.z-P.z); if(d<bd){ bd=d; best=b; } });
+    return {b:best, d:bd};
+  };
+
+  /* — quests — */
+  function offerWord(q){
+    if(q<0) return;
+    const W=WORDS[q];
+    Z.talk(W.npc, [
+      TT('Assalamu\'alaikum, Ibra! ','Assalamu\'alaikum, Ibra! ')+TT(W.ask[0],W.ask[1]),
+      TT('Tolong carikan huruf untuk kata '+ar(W.w)+' <b>('+W.m[0]+')</b> '+W.pic+', ya!','Please find the letters for the word '+ar(W.w)+' <b>('+W.m[1]+')</b> '+W.pic+'!')+
+      '<br>'+TT('Hurufnya: ','Its letters: ')+ar(W.lt.map(li=>L[li].g).join(' '))+' · '+TT('tersembunyi di dekat sini — ikuti kompas 🧭','hidden nearby — follow the compass 🧭')
+    ], [
+      {t:TT('Ayo cari! ▶','Let\'s find them! ▶'), fn:()=>accept(q)},
+      {t:TT('Nanti saja','Maybe later'), cls:'ghost', fn:()=>toast(TT('Cari tanda ! di atas kepala warga kalau sudah siap.','Look for the ! above a villager when you\'re ready.'),3000)}
+    ]);
+  }
+  function accept(q){
+    if(s2Live()) Z.stopS2();
+    S.s3.q=q; S.s3.got=[]; Z.save();
+    Z.fontReady.then(()=>{ buildQuest(); renderPanel(); updateJournalBadge(); });
+    const W=WORDS[q];
+    Speech.say([{ar:W.w, lat:latOf(W), slow:0.85}]);
+    toast(TT('🧩 Cari '+W.lt.length+' huruf untuk '+W.pic+' '+W.m[0]+'!','🧩 Find '+W.lt.length+' letters for '+W.pic+' '+W.m[1]+'!'),3200);
+  }
+  function collect(b){
+    if(b.season!=='s3') return false;
+    b.taken=true; b.mesh.visible=false; b.glow.visible=false; window.HuntAPI.hideDeco(b);
+    if(!active()) return true;
+    if(!S.s3.got.includes(b.slot)) S.s3.got.push(b.slot);
+    Z.save();
+    SFX.letterFound(); haptic(15);
+    spawnBurst(b.mesh.position.x,b.base,b.mesh.position.z,0x9FE8FF);
+    Speech.say([{ar:b.letter.ar, lat:b.letter.name}]);
+    renderPanel(b.slot); updateJournalBadge();
+    const W=WORDS[S.s3.q];
+    if(S.s3.got.length>=W.lt.length){ setTimeout(()=>wordComplete(S.s3.q), 900); }
+    else { const nl=L[W.lt[nextSlot()]]; toast(TT('✨ '+b.letter.name+'! Sekarang cari '+nl.name+' '+nl.g,'✨ '+b.letter.name+'! Now find '+nl.name+' '+nl.g),2600); pointNext(10); }
+    return true;
+  }
+
+  /* — the finished word is read slowly: letters → syllables → whole word — */
+  const card=document.getElementById('huntCard'), hcBox=document.getElementById('hcBox');
+  function readWord(W){
+    const hl=(sel,k)=>()=>{ hcBox.querySelectorAll('.say').forEach(e=>e.classList.remove('say')); if(sel) hcBox.querySelectorAll(sel).forEach(e=>e.classList.add('say')); };
+    const items=[];
+    W.lt.forEach((li,k)=>items.push({ar:L[li].ar, lat:L[li].name, gap:260, on:hl('.wl'+k)}));
+    W.syl.forEach((s,k)=>items.push({ar:s[0], lat:sylLat(s), slow:0.8, gap:380, on:hl('.ws'+k)}));
+    items.push({ar:W.w, lat:latOf(W), slow:0.75, gap:200, on:hl('.wword span, .wlat span')});
+    Speech.say(items, hl(null));
+  }
+  function wordComplete(q){
+    const W=WORDS[q], n=Z.npcById(W.npc), def=NPC_DEFS.find(d=>d.id===W.npc);
+    if(!S.s3.done.includes(q)) S.s3.done.push(q);
+    S.s3.q=-1; S.s3.got=[]; Z.save();
+    Z.removeSeason('s3'); renderPanel(); updateJournalBadge();
+    try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){}
+    SFX.finale(); haptic([15,60,15,60,30]);
+    celebrating=true; celebrateUntil=performance.now()/1000+4;
+    fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),900);
+    const thanks = TT('Jazakallahu khairan, Ibra! Sekarang aku bisa menulis '+W.m[0]+' '+W.pic,'Jazakallahu khairan, Ibra! Now I can write '+W.m[1]+' '+W.pic);
+    if(n) say3D(n, EN?def.name[1]:def.name[0], thanks, 6);
+    const lettersRow = W.lt.map((li,k)=>'<span class="wl'+k+'">'+L[li].g+'</span>').join(' ');
+    hcBox.innerHTML='<div class="rays"></div><div class="where">'+TT('🧩 Kata baru!','🧩 New word!')+'</div>'+
+      '<div class="wpic">'+W.pic+'</div>'+
+      '<div class="wword" id="hcWord">'+W.syl.map((s,k)=>'<span class="ws'+k+'">'+s[0]+'</span>').join('')+'</div>'+
+      '<div class="wlat">'+W.syl.map((s,k)=>'<span class="ws'+k+'">'+sylLat(s)+'</span>').join(' · ')+'</div>'+
+      '<div class="pic"><bdi dir="rtl" style="font-size:20px;font-family:\'Scheherazade New\',serif;font-weight:700">'+lettersRow+'</bdi> '+W.pic+' = '+TT(W.m[0],W.m[1])+'</div>'+
+      '<div class="next">💬 '+(EN?def.name[1]:def.name[0])+': '+thanks+'</div>'+
+      '<div class="unlock">⭐ +1 · '+TT('Kata ke-'+S.s3.done.length+' dari '+WORDS.length,'Word '+S.s3.done.length+' of '+WORDS.length)+'</div>'+
+      '<div class="row2"><button id="hcAgain" class="alt">🔊 '+TT('Dengar lagi','Listen again')+'</button><button id="hcGo">'+TT('Lanjut ▶','Next ▶')+'</button></div>';
+    running=false; card.classList.add('on');
+    document.getElementById('hcAgain').onclick=()=>readWord(W);
+    document.getElementById('hcWord').onclick=()=>readWord(W);
+    document.getElementById('hcGo').onclick=window.HuntAPI.closeCard;
+    window.__hcAfter = ()=>{ Speech.stop(); afterWord(); };
+    setTimeout(()=>readWord(W), 500);
+  }
+  function afterWord(){
+    const nx=nextWord();
+    if(nx<0){
+      toast(TT('🏆 Masya Allah! Semua '+WORDS.length+' kata pertama sudah tersusun!','🏆 Masha Allah! All '+WORDS.length+' first words are built!'),4200);
+      SFX.finale(); fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),900);
+      if(Z.onS3Done) setTimeout(Z.onS3Done, 2500);
+      return;
+    }
+    setTimeout(()=>offerWord(nx), 900);
+  }
+
+  /* — hooks into the season frame — */
+  const prevCollect = Z.collect; Z.collect = b=>collect(b) || (prevCollect?prevCollect(b):false);
+  Z.s3Active = active;
+  Z.pauseS3 = ()=>{ if(S.s3.q>=0){ S.s3.q=-1; S.s3.got=[]; Z.save(); Z.removeSeason('s3'); renderPanel(); } };
+  Z.onS2Done = ()=>{ Z.stopS2(); updateJournalBadge(); setTimeout(()=>offerWord(nextWord()), 900); };
+  const prevOffer = Z.offer;
+  Z.offer = ()=>{ if(unlocked() && !active()){ const nx=nextWord(); if(nx>=0) return {id:WORDS[nx].npc, fn:()=>offerWord(nx)}; } return prevOffer?prevOffer():null; };
+  const prevTarget = Z.target;
+  Z.target = ()=>{
+    if(active()){ const b=blockForSlot(nextSlot()); if(b) return {x:b.mesh.position.x, z:b.mesh.position.z}; }
+    if(unlocked() && !active() && !s2Live()){ const nx=nextWord(); const n=nx>=0 && Z.npcById(WORDS[nx].npc); if(n) return {x:n.x, z:n.z}; }
+    return prevTarget?prevTarget():null;
+  };
+  const prevBadge = Z.badge;
+  Z.badge = (lab,cnt)=>{
+    if(active()){ lab.textContent=TT('Musim 3 · Kata','Season 3 · Words'); cnt.textContent=WORDS[S.s3.q].pic+' '+S.s3.got.length+' / '+WORDS[S.s3.q].lt.length+' '+TT('huruf','letters'); return true; }
+    if(unlocked() && !s2Live()){ lab.textContent=TT('Musim 3 · Kata','Season 3 · Words'); cnt.textContent=S.s3.done.length+' / '+WORDS.length+' '+TT('kata','words'); return true; }
+    return prevBadge?prevBadge(lab,cnt):false;
+  };
+  const prevWelcome = Z.welcome;
+  Z.welcome = ()=>{
+    if(active()){ const W=WORDS[S.s3.q]; toast(TT('🧩 Musim 3: cari huruf untuk '+W.pic+' '+W.m[0],'🧩 Season 3: find the letters for '+W.pic+' '+W.m[1]),3400); return true; }
+    if(unlocked() && !s2Live() && nextWord()>=0){ const d=NPC_DEFS.find(x=>x.id===WORDS[nextWord()].npc); toast(TT('🧩 '+d.name[0]+' butuh bantuanmu — ikuti kompas!','🧩 '+d.name[1]+' needs your help — follow the compass!'),3400); return true; }
+    return prevWelcome?prevWelcome():false;
+  };
+  Z.TABS.push([3, ['🧩 Musim 3','🧩 Season 3'], ['Kata','Words'], ()=>true]);
+  const prevDefault = Z.defaultTab;
+  Z.defaultTab = ()=>{ if(active() || (unlocked() && !s2Live())) return 3; return prevDefault?prevDefault():(s2Live()||Z.s1Done()?2:1); };
+  const prevRender = Z.renderTab;
+  Z.renderTab = (tab, box)=>{
+    if(tab!==3) return prevRender?prevRender(tab,box):false;
+    const el=Z.el;
+    if(!unlocked()){
+      box.appendChild(el('div','sz-card lock','<div class="sz-top"><div class="sz-ico">🔒</div><div><b>'+TT('Musim 3: Kata Pertama','Season 3: First Words')+'</b><small>'+
+        TT('Selesaikan Musim 2 (fathah, kasrah, dhammah) untuk membuka.','Finish Season 2 (fathah, kasrah, dhammah) to unlock.')+'</small></div></div>'));
+      return true;
+    }
+    const nx=nextWord();
+    const head=el('div','sz-card','<div class="sz-top"><div class="sz-ico">🧩</div><div><b>'+TT('Musim 3: Kata Pertama','Season 3: First Words')+'</b><small>'+
+      S.s3.done.length+' / '+WORDS.length+' '+TT('kata tersusun','words built')+' · '+TT('ketuk kata untuk dengar','tap a word to hear it')+'</small></div></div>'+
+      '<div class="sz-bar"><i style="width:'+(S.s3.done.length/WORDS.length*100)+'%"></i></div>');
+    if(active()){ const W=WORDS[S.s3.q]; head.appendChild(el('small','','<b style="display:block;font-size:12.5px;color:var(--green-lt)">▶ '+TT('Sedang dicari: ','Finding now: ')+W.pic+' '+TT(W.m[0],W.m[1])+' · '+S.s3.got.length+'/'+W.lt.length+'</b>')); }
+    else if(nx>=0){ const W=WORDS[nx], d=NPC_DEFS.find(x=>x.id===W.npc); const go=el('button','btn',TT('Bantu '+d.name[0]+' ▶','Help '+d.name[1]+' ▶')); go.type='button';
+      go.onclick=()=>{ Z.closeJournal(); offerWord(nx); }; head.appendChild(go); }
+    box.appendChild(head);
+    const grid=el('div','sz-words');
+    WORDS.forEach((W,i)=>{
+      const done=S.s3.done.includes(i);
+      const c=el('button','sz-word'+(done?'':' lock'), done
+        ? '<div class="e">'+W.pic+'</div><div class="a">'+W.w+'</div><div class="m">'+latOf(W)+' · '+TT(W.m[0],W.m[1])+'</div>'
+        : '<div class="e">❔</div><div class="a">'+(i===S.s3.q?W.lt.map((li,k)=>S.s3.got.includes(k)?L[li].g:'·').join(' '):'· · ·')+'</div><div class="m">'+TT('belum','not yet')+'</div>');
+      c.type='button';
+      c.onclick=()=>{ if(!done){ toast(TT('Belum tersusun — bantu warga kampung ya!','Not built yet — help the villagers!')); return; }
+        Speech.say([].concat(W.syl.map(s=>({ar:s[0],lat:sylLat(s),slow:0.8,gap:320})), [{ar:W.w,lat:latOf(W),slow:0.75}])); };
+      grid.appendChild(c);
+    });
+    box.appendChild(grid);
+    return true;
+  };
+
+  // players who finished the harakat season before words existed: move them on to the words
+  if(unlocked() && S.s3.q<0 && !S.s3.done.length && s2Live() && S.s2.active===2) Z.stopS2();
+  if(active()) Z.fontReady.then(()=>{ buildQuest(); renderPanel(); updateJournalBadge(); });
+  renderPanel(); updateJournalBadge();
+  window.Seasons.WORDS = WORDS;
 })();
 </script>
 </body>
