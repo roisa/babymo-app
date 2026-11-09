@@ -335,12 +335,12 @@ html[data-lang="en"] .meaning-en{display:none;}
 <style id="bm-bright-fixes">
 /* contrast fixes after the bright theme */
 .q-title{color:#D9480F;}
+.latin-text{color:#08703B;}
+.no-audio-note{color:#8A5200;}
 
 
 </style>
 <style id="bm-layout">
-#welcomeScreen.dh-night .w-title{color:#FFD874!important;text-shadow:0 2px 14px rgba(0,0,0,.3)!important}
-#welcomeScreen.dh-night .w-arabic{color:#E9E3FF!important}
 
 /* ═════ Baby Mo's day (home) ═════ */
 #welcomeScreen{padding:calc(12px + env(safe-area-inset-top)) 16px 28px!important}
@@ -382,6 +382,175 @@ html[data-lang="en"] .meaning-en{display:none;}
 .arabic-text .w.on{background:#FFE066;color:#5A3A00;transform:scale(1.12)}
 .arabic-text .w.said{color:#12A15A}
 </style>
+<style id="dh-v3">
+/* ═════ Doa Harian v3 — readable titles, iOS-style du'a icons, stars & stickers.
+   Lives OUTSIDE any bm-bright* block on purpose: these rules apply in both
+   themes; dark ("classic") tweaks are scoped to html[data-bm-theme="classic"]. ═════ */
+#welcomeScreen{--ink:#152230;--ink2:#4A5A6C;--card:rgba(255,255,255,.86);--card-now:#fff;--tile:transparent;--line:rgba(21,34,48,.08);--pip:rgba(21,34,48,.16);--chip:rgba(255,255,255,.9);--chip-ink:#152230}
+/* title + Arabic subtitle: a deep ink tuned to each sky (≥5:1) */
+#welcomeScreen .w-title{font-size:clamp(28px,8vw,36px);font-weight:900;letter-spacing:-.02em;text-shadow:0 1px 0 rgba(255,255,255,.55);margin:2px 0 0;color:var(--tt)}
+#welcomeScreen .w-arabic{font-size:23px;line-height:1.5;opacity:1;color:var(--ta);margin:0 0 8px;text-shadow:0 1px 0 rgba(255,255,255,.45)}
+#welcomeScreen.w-pagi{--tt:#8A2E0C;--ta:#7A2A0E}
+#welcomeScreen.w-siang{--tt:#0A4377;--ta:#0B3F6E}
+#welcomeScreen.w-sore{--tt:#7A1F45;--ta:#6E1D44}
+#welcomeScreen.w-malam{--tt:#FFE08A;--ta:#EDE7FF;--ink:#152230}
+#welcomeScreen.w-malam .w-title,#welcomeScreen.w-malam .w-arabic{text-shadow:0 2px 12px rgba(0,0,0,.35)}
+/* dark theme: deep, time-tinted skies + glass cards */
+html[data-bm-theme="classic"] #welcomeScreen{--ink:#F2F5FA;--ink2:#B9C4D4;--card:rgba(255,255,255,.075);--card-now:rgba(255,255,255,.12);--line:rgba(255,255,255,.12);--pip:rgba(255,255,255,.22);--chip:rgba(255,255,255,.12);--chip-ink:#F2F5FA}
+html[data-bm-theme="classic"] #welcomeScreen .w-title,html[data-bm-theme="classic"] #welcomeScreen .w-arabic{text-shadow:0 2px 12px rgba(0,0,0,.35)}
+html[data-bm-theme="classic"] #welcomeScreen.w-pagi{--tt:#FFD9A0;--ta:#FFE9CC}
+html[data-bm-theme="classic"] #welcomeScreen.w-siang{--tt:#BFE7FF;--ta:#DDF2FF}
+html[data-bm-theme="classic"] #welcomeScreen.w-sore{--tt:#FFC6AE;--ta:#FFE3D6}
+html[data-bm-theme="classic"] #welcomeScreen.w-malam{--tt:#FFE08A;--ta:#EDE7FF}
+html[data-bm-theme="classic"] .dh-bub{background:#232B40;color:#F2F5FA;box-shadow:0 14px 26px -16px rgba(0,0,0,.7)}
+html[data-bm-theme="classic"] .dh-bub::before{border-right-color:#232B40}
+html[data-bm-theme="classic"] .dh-bub span{color:#C3CCDA}
+.dh-hub,.dh-count{background:var(--chip);color:var(--chip-ink);border:none;font-family:'Nunito',sans-serif;cursor:pointer;min-height:40px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+html[data-bm-theme="classic"] .dh-hub,html[data-bm-theme="classic"] .dh-count{box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+.dh-g{background:var(--card);border:2px solid transparent;-webkit-backdrop-filter:blur(18px) saturate(160%);backdrop-filter:blur(18px) saturate(160%)}
+.dh-g.now{background:var(--card-now);border-color:#FFC83D}
+html[data-bm-theme="classic"] .dh-g{box-shadow:inset 0 0 0 1px var(--line),0 14px 28px -18px rgba(0,0,0,.7)}
+.dh-gh{color:var(--ink);font-size:17px;gap:9px}
+html[data-bm-theme="classic"] .dh-gh .go{background:rgba(45,199,109,.18);color:#8BF0BC}
+.dh-gh .go{min-height:34px;padding:6px 13px}
+.dh-all{background:var(--chip);color:var(--chip-ink);min-height:52px}
+html[data-bm-theme="classic"] .dh-all{box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+
+/* ─── the icon: rounded-square "app icon", soft vertical gradient, gloss ─── */
+.di{--c1:#FFC94D;--c2:#FF8A3D;--k:#B4410E;position:relative;display:inline-grid;place-items:center;width:var(--s,60px);height:var(--s,60px);border-radius:calc(var(--s,60px)*.28);flex:0 0 auto;
+  background:linear-gradient(180deg,var(--c1) 0%,var(--c2) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 5px rgba(0,0,0,.10),0 8px 16px -9px var(--c2),0 2px 4px -2px rgba(20,30,60,.25);overflow:hidden;isolation:isolate}
+.di::before{content:'';position:absolute;left:-10%;right:-10%;top:-38%;height:78%;border-radius:50%;background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.42),rgba(255,255,255,.08) 60%,transparent 72%);z-index:0;pointer-events:none}
+.di svg{position:relative;z-index:1;width:62%;height:62%;overflow:visible;filter:drop-shadow(0 1.5px 1.5px rgba(0,0,0,.16))}
+.di .w{fill:#fff}.di .ws{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.di .k{fill:var(--k)}.di .ks{fill:none;stroke:var(--k);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.di .y{fill:#FFF1A8}
+.di-pagi{--c1:#FFD25A;--c2:#FF7E3B;--k:#B4410E}
+.di-siang{--c1:#5FDBF2;--c2:#2A86E0;--k:#1A5A9E}
+.di-sore{--c1:#FF9C86;--c2:#B05FE0;--k:#8A2F9E}
+.di-malam{--c1:#8E95FF;--c2:#4436C4;--k:#352A9E}
+.di.off{filter:grayscale(1);opacity:.38}
+
+/* ─── home tiles: icon + ring + label + star pips (iOS home-screen feel) ─── */
+.dh-row{gap:4px}
+.dh-s{background:var(--tile)!important;padding:6px 0 4px!important;gap:5px!important;border-radius:18px!important;min-height:56px;-webkit-user-select:none;user-select:none}
+.dh-s.got::after{display:none}
+.dh-s .ic{position:relative;width:70px;height:70px;display:grid;place-items:center}
+.dh-s .ring{position:absolute;inset:0;width:70px;height:70px;overflow:visible}
+.dh-s .ring rect{fill:none;stroke-width:3.2}
+.dh-s .ring .tr{stroke:var(--line)}
+.dh-s .ring .pr{stroke:#FFB400;stroke-linecap:round;transition:stroke-dasharray .6s ease}
+.dh-s.gold .ring .pr{stroke:#FFB400;filter:drop-shadow(0 0 4px rgba(255,180,0,.6))}
+.dh-s .t{font-size:12.5px!important;font-weight:800!important;color:var(--ink)!important;max-width:100%;padding:0 2px}
+.pips{display:flex;gap:1px;justify-content:center;height:13px}
+.dh-s .pips{margin-top:auto;padding-top:2px}
+.pips svg{width:13px;height:13px;fill:var(--pip)}
+.pips svg.on{fill:#FFB400}
+.dh-s .crown{position:absolute;top:-6px;right:-4px;z-index:3;width:24px;height:24px;border-radius:50%;background:linear-gradient(180deg,#FFD84D,#FFA500);display:grid;place-items:center;box-shadow:0 3px 8px -2px rgba(200,120,0,.6),inset 0 1px 0 rgba(255,255,255,.6)}
+.dh-s .crown svg{width:14px;height:14px;fill:#fff}
+.dh-s:active{transform:none}
+.dh-s.pop .di{animation:diPop .42s cubic-bezier(.34,1.7,.5,1)}
+.dh-s.pop .di svg{animation:diWig .42s ease}
+@keyframes diPop{0%{transform:scale(1)}30%{transform:scale(.82,.9)}60%{transform:scale(1.12)}100%{transform:scale(1)}}
+@keyframes diWig{30%{transform:rotate(-12deg)}60%{transform:rotate(9deg)}}
+.dh-gh .di{--s:30px;border-radius:9px}
+.dh-gh .di svg{width:70%;height:70%}
+
+/* ─── du'a of the day + streak ─── */
+.dod{width:100%;max-width:440px;display:flex;align-items:center;gap:14px;margin:0 0 10px;padding:12px 14px;border-radius:24px;background:var(--card);border:2px solid transparent;text-align:left;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--ink);box-shadow:0 10px 22px -16px rgba(30,40,80,.5);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);position:relative}
+html[data-bm-theme="classic"] .dod{box-shadow:inset 0 0 0 1px var(--line),0 14px 28px -18px rgba(0,0,0,.7)}
+.dod .di{--s:68px;animation:dodWig 4.5s ease-in-out 1.2s infinite}
+@keyframes dodWig{0%,82%,100%{transform:none}86%{transform:rotate(-8deg) scale(1.05)}90%{transform:rotate(7deg) scale(1.05)}94%{transform:rotate(-3deg)}}
+.dod .tx{flex:1;min-width:0}
+.dod .k1{display:inline-block;font-size:11.5px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#7A4A00;background:#FFE58A;padding:3px 9px;border-radius:999px}
+html[data-bm-theme="classic"] .dod .k1{background:rgba(255,216,116,.18);color:#FFE08A}
+.dod .k2{font-size:17px;font-weight:900;line-height:1.2;margin-top:5px}
+.dod .k3{font-size:13px;font-weight:800;color:var(--ink2);margin-top:3px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.dod .k3 .pips{height:14px}.dod .k3 .pips svg{width:14px;height:14px}
+.dod .play{flex:0 0 auto;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#34D17A,#12A15A);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 8px 16px -8px rgba(18,161,90,.8)}
+.dod .play svg{width:22px;height:22px;fill:#fff;margin-left:3px}
+.dod.done .play{background:linear-gradient(180deg,#FFD84D,#FFA500);box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 8px 16px -8px rgba(220,140,0,.8)}
+.dod.done .play svg{margin-left:0}
+.streak{display:inline-flex;align-items:center;gap:3px;font-weight:900;color:#B4410E}
+html[data-bm-theme="classic"] .streak{color:#FFB08A}
+
+/* ─── du'a screen: read-count stars ─── */
+.rd-row{display:flex;align-items:center;gap:10px;margin:-4px 0 10px;padding:7px 10px 7px 8px;border-radius:14px;background:rgba(255,180,0,.12)}
+.rd-row .pips{height:22px;gap:2px}.rd-row .pips svg{width:22px;height:22px;fill:rgba(140,110,40,.25)}
+html[data-bm-theme="classic"] .rd-row .pips svg:not(.on){fill:rgba(255,255,255,.18)}
+.rd-row .pips svg.on{fill:#FFB400}
+.rd-row .pips svg.new{animation:pipIn .6s cubic-bezier(.34,1.7,.5,1)}
+@keyframes pipIn{0%{transform:scale(0) rotate(-40deg)}100%{transform:none}}
+.rd-txt{font-size:13px;font-weight:800;color:#7A4A00;line-height:1.3}
+html[data-bm-theme="classic"] .rd-txt{color:#FFE08A}
+.dua-title{display:flex;align-items:center;gap:10px}
+.dua-title .di{--s:40px;border-radius:12px}
+.latin-text{font-weight:600}
+
+/* ─── celebration ─── */
+#cele{position:fixed;inset:0;z-index:600;display:none;align-items:center;justify-content:center;padding:20px;padding-top:calc(20px + env(safe-area-inset-top));padding-bottom:calc(20px + env(safe-area-inset-bottom));background:rgba(20,28,50,.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#cele.on{display:flex;animation:bmFade .25s ease}
+@keyframes bmFade{from{opacity:0}to{opacity:1}}
+.ce-card{position:relative;width:100%;max-width:360px;max-height:100%;overflow:auto;background:#fff;color:#152230;border-radius:30px;padding:18px 18px 16px;text-align:center;box-shadow:0 30px 60px -20px rgba(10,20,50,.6);animation:cePop .5s cubic-bezier(.34,1.56,.64,1)}
+html[data-bm-theme="classic"] .ce-card{background:#1D2536;color:#F2F5FA;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 30px 60px -20px rgba(0,0,0,.8)}
+@keyframes cePop{from{transform:scale(.7) translateY(30px);opacity:0}to{transform:none;opacity:1}}
+.ce-top{position:relative;height:128px;display:flex;align-items:flex-end;justify-content:center;gap:4px}
+.ce-top img{height:128px;width:auto;object-fit:contain;animation:ceJump 1s cubic-bezier(.3,1.5,.5,1) .15s 2 both;filter:drop-shadow(0 8px 10px rgba(30,40,80,.3))}
+@keyframes ceJump{0%{transform:translateY(0)}35%{transform:translateY(-18px) rotate(-4deg)}70%{transform:translateY(0) scale(1.04,.96)}100%{transform:none}}
+.ce-top .di{--s:84px;margin-bottom:14px;animation:ceIcon .7s cubic-bezier(.34,1.8,.5,1) .1s both}
+@keyframes ceIcon{0%{transform:scale(0) rotate(-30deg)}100%{transform:rotate(-6deg)}}
+.ce-t{font-size:26px;font-weight:900;margin-top:6px;line-height:1.15}
+.ce-s{font-size:15px;font-weight:800;color:#4A5A6C;margin-top:4px;line-height:1.35}
+html[data-bm-theme="classic"] .ce-s{color:#C3CCDA}
+.pips.ce-stars{height:auto}
+.q-choice .di{--s:58px}
+.cr-icon .di{--s:30px;border-radius:9px}
+.sticker-pop .di{--s:96px}
+.ce-stars{display:flex;justify-content:center;gap:8px;margin:12px 0 6px}
+.ce-stars svg{width:46px;height:46px;fill:#E6E9EF}
+html[data-bm-theme="classic"] .ce-stars svg:not(.on){fill:rgba(255,255,255,.14)}
+.ce-stars svg.on{fill:#FFB400;filter:drop-shadow(0 4px 6px rgba(220,140,0,.45))}
+.ce-stars svg.new{animation:ceStar .7s cubic-bezier(.34,1.8,.5,1) .45s both}
+@keyframes ceStar{0%{transform:scale(0) rotate(-90deg);fill:#E6E9EF}60%{transform:scale(1.35) rotate(10deg)}100%{transform:none}}
+.ce-card.gold .ce-t{color:#C26A00}
+html[data-bm-theme="classic"] .ce-card.gold .ce-t{color:#FFD15A}
+.ce-n{font-size:13px;font-weight:800;color:#6A7686;margin-bottom:12px}
+html[data-bm-theme="classic"] .ce-n{color:#AEB8C8}
+.ce-btns{display:flex;flex-direction:column;gap:8px}
+.ce-btns button{min-height:54px;border:none;border-radius:27px;font:900 17px 'Nunito',sans-serif;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
+.ce-again{background:linear-gradient(180deg,#FFD84D,#FFA500);color:#4A2A00;box-shadow:inset 0 1px 0 rgba(255,255,255,.6),0 10px 20px -10px rgba(220,140,0,.8)}
+.ce-next{background:linear-gradient(180deg,#34D17A,#12A15A);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.45),0 10px 20px -10px rgba(18,161,90,.8)}
+.ce-close{background:#EEF1F6;color:#152230}
+html[data-bm-theme="classic"] .ce-close{background:rgba(255,255,255,.1);color:#F2F5FA}
+.ce-btns button:active{transform:scale(.97)}
+.cf{position:fixed;left:50%;top:42%;width:10px;height:14px;border-radius:3px;z-index:700;pointer-events:none;animation:cfFly var(--d,1.6s) cubic-bezier(.15,.7,.35,1) forwards}
+@keyframes cfFly{0%{transform:translate(-50%,-50%) rotate(0) scale(.6);opacity:1}70%{opacity:1}100%{transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) rotate(var(--r)) scale(1);opacity:0}}
+
+/* ─── sticker book (bottom sheet) ─── */
+#book{position:fixed;inset:0;z-index:550;display:none;align-items:flex-end;justify-content:center;background:rgba(20,28,50,.42);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+#book.on{display:flex;animation:bmFade .2s ease}
+.bk-sheet{width:100%;max-width:560px;max-height:92%;overflow:auto;background:#F7F8FB;color:#152230;border-radius:30px 30px 0 0;padding:10px 16px calc(18px + env(safe-area-inset-bottom));animation:bkUp .38s cubic-bezier(.2,.9,.25,1.1)}
+html[data-bm-theme="classic"] .bk-sheet{background:#161D2C;color:#F2F5FA}
+@keyframes bkUp{from{transform:translateY(60%)}to{transform:none}}
+.bk-grab{width:44px;height:5px;border-radius:3px;background:rgba(120,130,150,.4);margin:0 auto 10px}
+.bk-head{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.bk-head h3{flex:1;font-size:22px;font-weight:900;text-align:left}
+.bk-x{width:44px;height:44px;border-radius:50%;border:none;background:rgba(120,130,150,.16);color:inherit;font:900 18px 'Nunito',sans-serif;cursor:pointer}
+.bk-sub{font-size:14px;font-weight:800;color:#5A6878;text-align:left;margin-bottom:12px}
+html[data-bm-theme="classic"] .bk-sub{color:#B9C4D4}
+.bk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px}
+.bk-it{border:none;background:#fff;border-radius:22px;padding:12px 4px 9px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;font-family:'Nunito',sans-serif;color:inherit;box-shadow:0 8px 18px -14px rgba(30,40,80,.5)}
+html[data-bm-theme="classic"] .bk-it{background:rgba(255,255,255,.07);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.bk-it .di{--s:62px;transform:rotate(var(--rot,0deg));outline:3px solid #fff;outline-offset:0}
+html[data-bm-theme="classic"] .bk-it .di{outline-color:rgba(255,255,255,.9)}
+.bk-it .di.off{outline-color:transparent}
+.bk-it b{font-size:12.5px;font-weight:800;line-height:1.2}
+.bk-it:active{transform:scale(.95)}
+
+@media (prefers-reduced-motion:reduce){.dod .di,.ce-top img,.cf{animation:none!important}.cf{display:none}}
+/* landscape phones: tighter hello */
+@media (max-height:500px) and (orientation:landscape){.dh-hello img{width:84px;height:90px}.ce-top{height:96px}.ce-top img{height:96px}.ce-top .di{--s:64px}.ce-t{font-size:22px}.ce-stars svg{width:36px;height:36px}.ce-card{max-width:520px}.ce-btns{flex-direction:row}.ce-btns button{flex:1}}
+</style>
 <script src="bm-icons.js" defer></script>
 <script src="doa-scenes.js"></script>
 </head>
@@ -393,13 +562,15 @@ html[data-lang="en"] .meaning-en{display:none;}
 <!-- ════ WELCOME = Baby Mo's day ════ -->
 <div class="screen active" id="welcomeScreen">
   <div class="day-sky" id="daySky"></div>
-  <div class="dh-top"><a href="./index.html" class="dh-hub">← Game Hub</a><span class="dh-count" id="dhCount">🏅 0 / 12</span></div>
+  <div class="dh-top"><a href="./index.html" class="dh-hub">← Game Hub</a><button class="dh-count" id="dhCount" type="button">🏅 0 / 12</button></div>
   <div class="dh-hello"><img id="dhMo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="Baby Mo"><div class="dh-bub"><b id="dhHello">Assalamu'alaikum!</b><span id="dhSub"></span></div></div>
   <div class="w-title">Doa Harian 🌟</div>
   <div class="w-arabic">تَعَلَّمِ الدُّعَاءَ مَعَ بَيبِي مُو</div>
   <button class="w-start" id="dhNow" onclick="startGroup(nowWaktu())">🔊 Mulai</button>
+  <button class="dod" id="dod" type="button"></button>
   <div class="dh-day" id="dhDay"></div>
   <button class="dh-all" onclick="startAll()">📿 <span id="dhAllTxt">Belajar semua doa</span></button>
+  <button class="dh-all" id="dhBook" type="button">🏅 Buku Stiker</button>
 </div>
 <!-- ════ LEARN SCREEN ════ -->
 <div class="screen" id="learnScreen">
@@ -426,6 +597,7 @@ html[data-lang="en"] .meaning-en{display:none;}
   <div class="dua-card">
     <div class="dua-title" id="duaTitle">Doa Bangun Tidur</div>
     <div class="dua-desc" id="duaDesc">Baby Mo baru bangun tidur di pagi hari!</div>
+    <div class="rd-row" id="rdRow"></div>
     <div class="arabic-box">
       <div class="arabic-text" id="arabicText">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا</div>
       <div class="latin-text" id="latinText">Alhamdulillāhil-ladhī ahyānā...</div>
@@ -1023,49 +1195,146 @@ function showToast(e, t){
 })();
 </script>
 <script>
+/* ═════ Du'a icons — one consistent, iOS-style set drawn as inline SVG.
+   Rounded-square tile with a soft vertical gradient + gloss (CSS .di),
+   a crisp white glyph, one hue family per time of day. ═════ */
+(function(){
+  function spark(x,y,r,c){ return '<path class="'+(c||'w')+'" d="M'+x+' '+(y-r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y+r)+'Q'+x+' '+y+' '+(x-r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y-r)+'z"/>'; }
+  function drop(x,y,s,c){ return '<path class="'+(c||'w')+'" transform="translate('+x+' '+y+') scale('+s+')" d="M0-6C0-6-4.2-1.4-4.2 1.4a4.2 4.2 0 0 0 8.4 0C4.2-1.4 0-6 0-6z"/>'; }
+  var heart=function(x,y,s,c){ return '<path class="'+(c||'k')+'" transform="translate('+x+' '+y+') scale('+s+')" d="M0 5.2S-6 1.6-6-2.4a3.1 3.1 0 0 1 6-1.4 3.1 3.1 0 0 1 6 1.4C6 1.6 0 5.2 0 5.2z"/>'; };
+  var G={
+    /* sun rising over a pillow */
+    wakeup:'<g class="ws"><path d="M24 9v4M11.5 14.5l2.8 2.8M36.5 14.5l-2.8 2.8M6 25.5h4M38 25.5h4"/></g><path class="y" d="M14 30a10 10 0 0 1 20 0z"/><path class="w" d="M7 33.5c0-2.6 2.1-4.5 4.7-4.5h24.6c2.6 0 4.7 1.9 4.7 4.5v3.2c0 1.6-1.2 2.8-2.8 2.8H9.8C8.2 39.5 7 38.3 7 36.7z"/><path class="ks" stroke-width="2" d="M13 34.5h22" opacity=".35"/>',
+    /* a big water drop (before the bathroom) */
+    bathroom_in:'<path class="w" d="M24 6S11 20.2 11 29a13 13 0 0 0 26 0C37 20.2 24 6 24 6z"/><path class="ks" d="M17.6 30.5a6.6 6.6 0 0 0 5.4 6.2"/>'+drop(37,12,.8),
+    /* sparkly clean (after the bathroom) */
+    bathroom_out:spark(20,25,14)+spark(36,11,6.5)+spark(37,36,4.5)+'<circle class="ws" stroke-width="2.4" cx="9" cy="10" r="3"/>',
+    /* open door + footsteps (leaving home) */
+    leave_home:'<path class="ws" d="M8 41h33"/><path class="ws" d="M10 40V9.5A1.5 1.5 0 0 1 11.5 8h15A1.5 1.5 0 0 1 28 9.5V40"/><path class="w" d="M11 8.6 21.5 12v29L11 39.6z"/><circle class="k" cx="18.5" cy="27" r="1.7"/><ellipse class="w" cx="34" cy="35" rx="2.6" ry="3.8" transform="rotate(-14 34 35)"/><ellipse class="w" cx="39.5" cy="25" rx="2.6" ry="3.8" transform="rotate(14 39.5 25)"/>',
+    /* a little car (riding) */
+    vehicle:'<path class="w" d="M5 31v-5c0-1.8 1.4-3.2 3.2-3.2h2.6l5-7.4c.7-1 1.8-1.6 3-1.6h11.2c1.2 0 2.3.6 3 1.6l5 7.4h1.8c1.8 0 3.2 1.4 3.2 3.2v5c0 1.2-1 2.2-2.2 2.2H7.2C6 33.2 5 32.2 5 31z"/><path class="k" d="M17.3 22.6l3.3-5c.3-.4.7-.6 1.2-.6h3.4v5.6zM28.6 22.6V17h3.2c.5 0 .9.2 1.2.6l3.3 5z"/><circle class="k" cx="14.5" cy="33.5" r="5.2"/><circle class="w" cx="14.5" cy="33.5" r="2.2"/><circle class="k" cx="33.5" cy="33.5" r="5.2"/><circle class="w" cx="33.5" cy="33.5" r="2.2"/>',
+    /* open book (study) */
+    study:'<path class="w" d="M23 13.5C19 10.6 13 9.6 6 10.4v24.4c7-.8 13 .2 17 3.1z"/><path class="w" opacity=".88" d="M25 13.5c4-2.9 10-3.9 17-3.1v24.4c-7-.8-13 .2-17 3.1z"/><g class="ks" stroke-width="2" opacity=".55"><path d="M10.5 17.2c3.2-.2 6.2.3 8.6 1.4M10.5 22.4c3.2-.2 6.2.3 8.6 1.4M10.5 27.6c3.2-.2 6.2.3 8.6 1.4M29 18.6c2.4-1.1 5.4-1.6 8.6-1.4M29 23.8c2.4-1.1 5.4-1.6 8.6-1.4"/></g>'+spark(38,6,4,'y'),
+    /* bowl & spoon (eat) */
+    eating:'<g class="ws" stroke-width="2.6"><path d="M17 17c-2-2 2-3.5 0-6M24 16c-2-2 2-3.5 0-6"/></g><path class="w" d="M38.5 7.5c1.6 1.2 1.6 4-.2 6.3-1.3 1.6-3 2.3-4.3 2l-3.4 6.4h-2.8l4.2-7.8c-.6-1.2-.3-3 .9-4.6 1.8-2.4 4.1-3.4 5.6-2.3z"/><path class="w" d="M6 23h36c0 9.4-8 17-18 17S6 32.4 6 23z"/><path class="ks" stroke-width="2.2" d="M12 28.5c2.4 3.8 6.6 6 12 6" opacity=".45"/>',
+    /* happy plate (full tummy) */
+    after_eat:'<circle class="w" cx="24" cy="25" r="16"/><circle class="ks" stroke-width="2" cx="24" cy="25" r="11" opacity=".28"/><circle class="k" cx="19.4" cy="21.6" r="2"/><circle class="k" cx="28.6" cy="21.6" r="2"/><path class="ks" d="M18.4 27.2c2.6 4 8.6 4 11.2 0"/>'+heart(38.5,8.5,.85,'w'),
+    /* cloud with drops (rain) */
+    rain:'<path class="w" d="M14 29a7.5 7.5 0 0 1-.6-15A10.5 10.5 0 0 1 33.6 13a8 8 0 0 1 .4 16z"/>'+drop(16,37,.95)+drop(24.5,40,.95)+drop(33,37,.95),
+    /* house with a heart door (coming home) */
+    enter_home:'<path class="w" d="M11.5 21.2 24 10.6l12.5 10.6V38a2 2 0 0 1-2 2h-21a2 2 0 0 1-2-2z"/><path class="ws" d="M6.5 22.5 24 8l17.5 14.5"/>'+heart(24,30,1,'k'),
+    /* two grown-ups with a heart (parents) */
+    parents:'<circle class="w" cx="15.5" cy="15" r="5.6"/><path class="w" d="M5.5 38.5c0-6.6 4.5-12 10-12s10 5.4 10 12z"/><circle class="w" opacity=".86" cx="32.5" cy="15" r="5.6"/><path class="w" opacity=".86" d="M22.5 38.5c0-6.6 4.5-12 10-12s10 5.4 10 12z"/>'+heart(24,30.5,.95,'k'),
+    /* moon & stars (sleep) */
+    sleep:'<path class="w" d="M27 7.5A16 16 0 1 0 40.6 31 13 13 0 0 1 27 7.5z"/>'+spark(36,12,4.6,'y')+spark(42,21,2.8)+spark(14,9,2.4)
+  };
+  var T={
+    pagi:'<path class="y" d="M13 30a11 11 0 0 1 22 0z"/><path class="ws" d="M6 34h36M24 9v5M10.5 15.5l3.3 3.3M37.5 15.5l-3.3 3.3"/><path class="ws" stroke-width="2.6" d="M13 39.5h22" opacity=".8"/>',
+    siang:'<circle class="y" cx="24" cy="24" r="9"/><g class="ws"><path d="M24 6v4M24 38v4M6 24h4M38 24h4M11.3 11.3l2.8 2.8M33.9 33.9l2.8 2.8M36.7 11.3l-2.8 2.8M14.1 33.9l-2.8 2.8"/></g>',
+    sore:'<path class="y" d="M12 28a12 12 0 0 1 24 0z"/><path class="ws" d="M6 28h36M12 34h24M17 40h14"/>',
+    malam:'<path class="w" d="M27 8A15 15 0 1 0 40 30.5 12 12 0 0 1 27 8z"/>'+spark(36,12,4.4,'y')
+  };
+  function svg(inner){ return '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">'+inner+'</svg>'; }
+  window.doaIcon=function(d,cls){ return '<span class="di di-'+d.waktu+(cls?' '+cls:'')+'">'+svg(G[d.id]||G.study)+'</span>'; };
+  window.doaTimeIcon=function(k){ return '<span class="di di-'+k+'">'+svg(T[k])+'</span>'; };
+  var STAR='<path d="M12 2.6l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/>';
+  window.doaStars=function(n,cls,fresh){ var h='<span class="pips'+(cls?' '+cls:'')+'">'; for(var i=0;i<3;i++) h+='<svg viewBox="0 0 24 24" class="'+(i<n?'on':'')+(fresh===i?' new':'')+'" aria-hidden="true">'+STAR+'</svg>'; return h+'</span>'; };
+  window.doaStarSvg=function(cls){ return '<svg viewBox="0 0 24 24" class="'+(cls||'')+'" aria-hidden="true">'+STAR+'</svg>'; };
+})();
+</script>
+<script>
 /* ═════ Doa Harian: Baby Mo's day, act-it-out, read-along, stickers ═════ */
 (function(){
   var EN=window.BM_LANG==='en', L=function(a,b){return EN?b:a;};
   var WAKTU=[
-    {k:'pagi', id:'Pagi', en:'Morning', e:'🌅', sky:'linear-gradient(180deg,#FFE3A3 0%,#FFD0B5 45%,#FFF2E2 100%)', mo:'pose-41',
+    {k:'pagi', id:'Pagi', en:'Morning', e:'🌅', sky:'linear-gradient(180deg,#FFE3A3 0%,#FFD0B5 45%,#FFF2E2 100%)', dark:'linear-gradient(180deg,#3B2A52 0%,#5A3A4C 42%,#1C1A2E 100%)', mo:'pose-41',
       hi:['Selamat pagi! ☀️','Good morning! ☀️'], sub:['Mulai hari dengan doa pagi bersama Mo.','Start the day with Mo\'s morning du\'as.']},
-    {k:'siang', id:'Siang', en:'Daytime', e:'☀️', sky:'linear-gradient(180deg,#8FD3FF 0%,#C9ECFF 50%,#F2FAFF 100%)', mo:'yes',
+    {k:'siang', id:'Siang', en:'Daytime', e:'☀️', sky:'linear-gradient(180deg,#8FD3FF 0%,#C9ECFF 50%,#F2FAFF 100%)', dark:'linear-gradient(180deg,#123A5E 0%,#15476C 40%,#0B1C30 100%)', mo:'yes',
       hi:['Selamat siang! 🌤️','Good afternoon! 🌤️'], sub:['Waktunya pergi, belajar, dan makan — jangan lupa doanya!','Time to go out, study and eat — don\'t forget the du\'as!']},
-    {k:'sore', id:'Sore', en:'Evening', e:'🌇', sky:'linear-gradient(180deg,#FFB38A 0%,#FFD6B0 45%,#F3E8FF 100%)', mo:'pose-33',
+    {k:'sore', id:'Sore', en:'Evening', e:'🌇', sky:'linear-gradient(180deg,#FFB38A 0%,#FFD6B0 45%,#F3E8FF 100%)', dark:'linear-gradient(180deg,#4A2340 0%,#5C2C48 40%,#1C1427 100%)', mo:'pose-33',
       hi:['Selamat sore! 🌇','Good evening! 🌇'], sub:['Mo pulang ke rumah. Ada doa untuk hujan juga!','Mo is coming home. There\'s a du\'a for rain too!']},
-    {k:'malam', id:'Malam', en:'Night', e:'🌙', sky:'linear-gradient(180deg,#2B3470 0%,#4C4A9C 55%,#7C6CC4 100%)', mo:'thank-you',
+    {k:'malam', id:'Malam', en:'Night', e:'🌙', sky:'linear-gradient(180deg,#2B3470 0%,#4C4A9C 55%,#7C6CC4 100%)', dark:'linear-gradient(180deg,#141A3A 0%,#262D63 50%,#1A1B3D 100%)', mo:'thank-you',
       hi:['Selamat malam! 🌙','Good night! 🌙'], sub:['Doakan Abi dan Umi, lalu baca doa sebelum tidur.','Pray for Abi and Umi, then read the bedtime du\'a.']}
   ];
   window.nowWaktu=function(){ var h=new Date().getHours(); return (h>=4&&h<10)?'pagi':(h>=10&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam'; };
   function W(k){ return WAKTU.find(function(w){return w.k===k;}); }
   var KEY='bm_doa_harian_v2', ST={learned:{}};
-  try{ ST=JSON.parse(localStorage.getItem(KEY)||'{"learned":{}}'); if(!ST.learned) ST.learned={}; }catch(e){}
+  try{ ST=JSON.parse(localStorage.getItem(KEY)||'{"learned":{}}')||{}; }catch(e){}
+  if(!ST.learned) ST.learned={}; if(!ST.reads) ST.reads={}; if(!ST.streak) ST.streak={last:'',n:0};
+  // earlier versions only remembered "learned" — count that as the first read
+  Object.keys(ST.learned).forEach(function(id){ if(!ST.reads[id]) ST.reads[id]=1; });
   function save(){ try{ localStorage.setItem(KEY,JSON.stringify(ST)); }catch(e){} }
   function nLearned(){ return DUAS.filter(function(d){ return ST.learned[d.id]; }).length; }
+  /* new strings are Indonesian; English lives in i18n/doa.js */
+  var T=function(t){ return (EN&&window.BM_T)?BM_T(t):t; };
+  function reads(id){ return ST.reads[id]||0; }
+  function starsOf(id){ return Math.min(3,reads(id)); }
+  function totalStars(){ return DUAS.reduce(function(a,d){ return a+starsOf(d.id); },0); }
+  function dayKey(off){ var t=new Date(); t.setDate(t.getDate()+(off||0)); return t.getFullYear()+'-'+(t.getMonth()+1)+'-'+t.getDate(); }
+  function streakNow(){ var s=ST.streak; return (s.last===dayKey(0)||s.last===dayKey(-1))?s.n:0; }
+  function dodDua(){ var t=new Date(), n=Math.floor(new Date(t.getFullYear(),t.getMonth(),t.getDate()).getTime()/864e5); return DUAS[((n*5)%DUAS.length+DUAS.length)%DUAS.length]; }
+  function sfx(n){ try{ if(window.BabyMo&&BabyMo.sfx) BabyMo.sfx(n); else playTone(660,.08,'triangle',.2); }catch(e){} }
+  function trTitle(d){ return T(d.title); }
 
   /* ─── home ─── */
   function renderHome(){
     var now=nowWaktu(), w=W(now), name=''; try{ name=(localStorage.getItem('mo_child_name')||'').trim(); }catch(e){}
-    document.getElementById('daySky').style.background=w.sky;
-    document.getElementById('welcomeScreen').classList.toggle('dh-night',now==='malam');
+    document.getElementById('daySky').style.background=window.BM_THEME==='classic'?w.dark:w.sky;
+    var ws=document.getElementById('welcomeScreen'); WAKTU.forEach(function(x){ ws.classList.toggle('w-'+x.k,x.k===now); }); ws.classList.toggle('dh-night',now==='malam');
     document.getElementById('dhMo').src='baby-mo-poses/baby-mo-'+w.mo+'.webp';
     document.getElementById('dhHello').textContent=L(w.hi[0],w.hi[1]).replace('!',name?', '+name+'!':'!');
     document.getElementById('dhSub').textContent=L(w.sub[0],w.sub[1]);
     document.getElementById('dhCount').textContent='🏅 '+nLearned()+' / '+DUAS.length;
+    document.getElementById('dhCount').onclick=openBook;
+    var bk=document.getElementById('dhBook'); bk.textContent='🏅 '+T('Buku Stiker'); bk.onclick=openBook;
+    renderDod();
     document.getElementById('dhNow').textContent='🔊 '+L('Mulai Doa '+w.id,'Start the '+w.en+' Du\'as');
     document.getElementById('dhAllTxt').textContent=L('Belajar semua '+DUAS.length+' doa','Learn all '+DUAS.length+' du\'as');
     var order=WAKTU.map(function(x){return x.k;}), h='';
     order.forEach(function(k){
       var g=W(k), list=DUAS.filter(function(d){return d.waktu===k;});
-      h+='<div class="dh-g'+(k===now?' now':'')+'" id="g-'+k+'"><div class="dh-gh">'+g.e+' '+L(g.id,g.en)+(k===now?'<span class="chip">⏰ '+L('SEKARANG','NOW')+'</span>':'')+'<button class="go" data-g="'+k+'">▶ '+L('Mulai','Start')+'</button></div><div class="dh-row">';
-      list.forEach(function(d){ h+='<button class="dh-s'+(ST.learned[d.id]?' got':'')+'" data-id="'+d.id+'"><span class="e">'+d.icon+'</span><span class="t">'+L(d.short[0],d.short[1])+'</span></button>'; });
+      h+='<div class="dh-g'+(k===now?' now':'')+'" id="g-'+k+'"><div class="dh-gh">'+doaTimeIcon(k)+' '+L(g.id,g.en)+(k===now?'<span class="chip">⏰ '+L('SEKARANG','NOW')+'</span>':'')+'<button class="go" data-g="'+k+'">▶ '+L('Mulai','Start')+'</button></div><div class="dh-row">';
+      list.forEach(function(d){ var n=starsOf(d.id);
+        h+='<button class="dh-s'+(ST.learned[d.id]?' got':'')+(n>=3?' gold':'')+'" data-id="'+d.id+'" aria-label="'+trTitle(d).replace(/"/g,'&quot;')+'"><span class="ic">'
+          +'<svg class="ring" viewBox="0 0 70 70" aria-hidden="true"><rect class="tr" x="1.6" y="1.6" width="66.8" height="66.8" rx="21"/>'+(n?'<rect class="pr" x="1.6" y="1.6" width="66.8" height="66.8" rx="21" pathLength="3" stroke-dasharray="'+n+' 3"/>':'')+'</svg>'
+          +doaIcon(d)+(n>=3?'<span class="crown">'+doaStarSvg()+'</span>':'')+'</span><span class="t">'+L(d.short[0],d.short[1])+'</span>'+doaStars(n)+'</button>'; });
       h+='</div></div>';
     });
     var day=document.getElementById('dhDay'); day.innerHTML=h;
-    day.querySelectorAll('.dh-s').forEach(function(b){ b.onclick=function(){ startOne(b.dataset.id); }; });
+    day.querySelectorAll('.dh-s').forEach(function(b){ b.onclick=function(){ tapTile(b,b.dataset.id); }; });
     day.querySelectorAll('.go').forEach(function(b){ b.onclick=function(){ startGroup(b.dataset.g); }; });
   }
-  window.goHome=function(){ renderHome(); showScreen('welcomeScreen'); };
+  window.goHome=function(){ closeCele(); renderHome(); showScreen('welcomeScreen'); };
+  /* a tile squishes, wiggles and pings before the du'a opens */
+  var tapping=false;
+  function tapTile(b,id){ if(tapping) return; tapping=true; b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop'); sfx('tap');
+    setTimeout(function(){ tapping=false; b.classList.remove('pop'); startOne(id); },300); }
+
+  /* ─── du'a of the day + streak ─── */
+  function renderDod(){
+    var d=dodDua(), el=document.getElementById('dod'), done=ST.dodDay===dayKey(0), n=streakNow();
+    el.className='dod'+(done?' done':'');
+    el.innerHTML=doaIcon(d)+'<span class="tx"><span class="k1">'+T('Doa Hari Ini')+'</span><div class="k2">'+trTitle(d)+'</div><div class="k3">'+doaStars(starsOf(d.id))
+      +(n?'<span class="streak">🔥 '+T(n+' hari berturut-turut')+'</span>':'<span>'+T('Baca satu doa setiap hari!')+'</span>')+'</div></span>'
+      +'<span class="play" aria-hidden="true">'+(done?'<svg viewBox="0 0 24 24"><path d="M9.5 16.6 5.4 12.5l-1.6 1.6 5.7 5.7L20.6 8.7 19 7.1z"/></svg>':'<svg viewBox="0 0 24 24"><path d="M7 4.8v14.4L19 12z"/></svg>')+'</span>';
+    el.setAttribute('aria-label',T('Doa Hari Ini')+': '+trTitle(d));
+    el.onclick=function(){ sfx('tap'); startOne(d.id); };
+  }
+
+  /* ─── sticker book ─── */
+  function openBook(){
+    sfx('tap');
+    var h='<div class="bk-grab"></div><div class="bk-head"><h3>🏅 '+T('Buku Stiker')+'</h3><button class="bk-x" type="button" aria-label="Tutup">✕</button></div>'
+      +'<div class="bk-sub">'+T(nLearned()+' / '+DUAS.length+' stiker')+' · ⭐ '+totalStars()+' / '+(DUAS.length*3)+'<br>'+T('Ketuk stiker untuk membaca doanya')+'</div><div class="bk-grid">';
+    DUAS.forEach(function(d,i){ var n=starsOf(d.id);
+      h+='<button class="bk-it" type="button" data-id="'+d.id+'" style="--rot:'+((i%3)-1)*4+'deg">'+doaIcon(d,n?'':'off')+'<b>'+L(d.short[0],d.short[1])+'</b>'+doaStars(n)+'</button>'; });
+    var sh=document.getElementById('bkSheet'); sh.innerHTML=h+'</div>';
+    var bx=document.getElementById('book'); bx.classList.add('on');
+    sh.querySelector('.bk-x').onclick=closeBook;
+    bx.onclick=function(e){ if(e.target===bx) closeBook(); };
+    sh.querySelectorAll('.bk-it').forEach(function(b){ b.onclick=function(){ closeBook(); sfx('tap'); startOne(b.dataset.id); }; });
+  }
+  function closeBook(){ document.getElementById('book').classList.remove('on'); }
 
   /* ─── playlists ─── */
   var PLAY=[], pos=0, groupKey=null;
@@ -1140,13 +1409,48 @@ function showToast(e, t){
 
   function earn(d){
     setSceneMoExpression('celebrate');
-    if(ST.learned[d.id]) return;
-    ST.learned[d.id]=1; save();
-    var sp=document.getElementById('stickerPop'); sp.textContent=d.icon; sp.classList.add('on'); setTimeout(function(){ sp.classList.remove('on'); },1300);
-    spawnParticles(10); playCorrect();
-    showToast('🏅',L('Stiker baru: '+d.title+'!','New sticker!'));
-    try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){}
+    var first=!ST.learned[d.id];
+    ST.learned[d.id]=1; ST.reads[d.id]=reads(d.id)+1;
+    var t=dayKey(0), s=ST.streak; if(s.last!==t){ s.n=(s.last===dayKey(-1))?(s.n||0)+1:1; s.last=t; }
+    var bonus=d.id===dodDua().id && ST.dodDay!==t; if(bonus) ST.dodDay=t;
+    save();
+    var n=reads(d.id);
+    try{ if(window.BabyMo&&BabyMo.addStars){ if(first||n===3||bonus) BabyMo.addStars(1); } }catch(e){}
+    var sp=document.getElementById('stickerPop'); sp.innerHTML=doaIcon(d); sp.classList.add('on'); setTimeout(function(){ sp.classList.remove('on'); },1100);
+    renderReads(d);
+    setTimeout(function(){ celebrate(d,n,bonus); },first?650:250);
   }
+  function renderReads(d,fresh){
+    var n=starsOf(d.id);
+    document.getElementById('rdRow').innerHTML=doaStars(n,'',fresh)+'<span class="rd-txt">'+(n>=3?T('Bintang emas! Kamu hafal doa ini!'):T('Baca 3× untuk bintang emas'))+'</span>';
+  }
+
+  /* ─── celebration: confetti, Baby Mo cheering, a star fills in ─── */
+  function confetti(k){
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var cols=['#FFB400','#FF6B5C','#2DC76D','#4FA8FF','#B05FE0','#FFD84D'];
+    for(var i=0;i<k;i++){ var c=document.createElement('i'); c.className='cf'; var a=Math.random()*Math.PI*2, r=140+Math.random()*240;
+      c.style.cssText='background:'+cols[i%cols.length]+';--x:'+Math.round(Math.cos(a)*r)+'px;--y:'+Math.round(Math.sin(a)*r+120)+'px;--r:'+Math.round(Math.random()*720-360)+'deg;--d:'+(1.2+Math.random()*.9).toFixed(2)+'s;'+(i%3?'':'border-radius:50%;width:9px;height:9px;');
+      document.body.appendChild(c); (function(el){ setTimeout(function(){ el.remove(); },2300); })(c); }
+  }
+  function celebrate(d,n,bonus){
+    var gold=n===3, pose=gold||n===1?'yeyy':n===2?'yes':'wow';
+    var title=n===1?T('Masya Allah!'):n===2?T('Hebat!'):gold?T('Bintang emas!'):T('Masya Allah!');
+    var sub=n===1?T('Stiker baru untukmu!'):n===2?T('Satu lagi untuk bintang emas!'):gold?T('Kamu hafal doa ini!'):T('Kamu sudah jago! Baca terus ya!');
+    var last=pos>=PLAY.length-1, nextTxt=!last?T('Lanjut')+' →':PLAY.length>1?T('Mulai Quiz 🎯'):'🏠 '+T('Menu');
+    var c=document.getElementById('ceCard'); c.className='ce-card'+(gold?' gold':'');
+    c.innerHTML='<div class="ce-top">'+doaIcon(d)+'<img src="baby-mo-poses/baby-mo-'+pose+'.webp" alt=""></div>'
+      +'<div class="ce-t">'+title+'</div><div class="ce-s">'+sub+'</div>'
+      +doaStars(Math.min(3,n),'ce-stars',n<=3?n-1:-1)
+      +'<div class="ce-n">'+trTitle(d)+' · '+T('Dibaca '+n+'×')+(bonus?'<br>⭐ '+T('Bonus Doa Hari Ini!'):'')+'</div>'
+      +'<div class="ce-btns"><button class="ce-again" type="button">🔁 '+T('Baca lagi')+'</button><button class="ce-next" type="button">'+nextTxt+'</button></div>';
+    document.getElementById('cele').classList.add('on');
+    confetti(gold?60:36); if(gold) setTimeout(function(){ confetti(30); },500);
+    sfx('win');
+    c.querySelector('.ce-again').onclick=function(){ closeCele(); renderReads(d); playTone(523,0.06); readAlong(function(){ earn(d); }); };
+    c.querySelector('.ce-next').onclick=function(){ closeCele(); nextDua(); };
+  }
+  function closeCele(){ document.getElementById('cele').classList.remove('on'); }
 
   /* ─── one du'a ─── */
   var _load=loadDua;
@@ -1157,7 +1461,11 @@ function showToast(e, t){
     showScene(d); renderArabic(d);
     document.getElementById('lCounter').textContent=L('Doa ','Du\'a ')+(pos+1)+' / '+PLAY.length;
     document.getElementById('sceneTime').textContent=W(d.waktu).e+' '+L(W(d.waktu).id,W(d.waktu).en);
-    document.getElementById('lLives').textContent=ST.learned[d.id]?'🏅':'';
+    document.getElementById('lLives').textContent='';
+    document.getElementById('duaTitle').innerHTML=doaIcon(d)+'<span></span>'; document.getElementById('duaTitle').lastChild.textContent=trTitle(d);
+    renderReads(d);
+    // English: the meaning from the dictionary, else the du'a's own English meaning
+    if(EN){ var mi=window.BM_T?BM_T(d.meaningId):d.meaningId; document.getElementById('meaningId').textContent=(mi&&mi!==d.meaningId)?mi:d.meaningEn; }
     var a=document.getElementById('actBtn'); a.classList.remove('done');
     document.getElementById('actEm').textContent=d.prop; document.getElementById('actTxt').textContent=L(d.act[0],d.act[1]);
     a.onclick=function(){ a.classList.add('done'); playTone(784,.12,'triangle',.2); spawnParticles(6); setSceneMoExpression('celebrate'); setTimeout(function(){ readAlong(function(){ earn(d); }); },350); };
@@ -1168,9 +1476,14 @@ function showToast(e, t){
   // the old version read the du'a by itself after 0.7s — now the child acts first
   var _sd=speakDua; window.speakDua=function(text,rate){ if(document.getElementById('learnScreen').classList.contains('active') && rate===undefined && !isSpeaking && document.getElementById('actBtn') && !document.getElementById('actBtn').classList.contains('done')) return; _sd(text,rate); };
   window.prevDua=function(){ if(pos===0){ goHome(); return; } loadDua(PLAY[pos-1]); };
-  window.nextDua=function(){ if(pos>=PLAY.length-1){ if(PLAY.length>1) startQuiz(); else { earn(DUAS[PLAY[0]]); goHome(); } } else loadDua(PLAY[pos+1]); };
+  window.nextDua=function(){ closeCele(); if(pos>=PLAY.length-1){ if(PLAY.length>1) startQuiz(); else goHome(); } else loadDua(PLAY[pos+1]); };
 
   /* ─── quiz from the playlist ─── */
+  window.buildChoices=function(ci){
+    var mk=function(i,ok){ return { emoji:doaIcon(DUAS[i]), label:DUAS[i].quizLabel, correct:ok }; };
+    var pool=DUAS.map(function(d,i){ return i; }).filter(function(i){ return i!==ci; }).sort(function(){ return Math.random()-.5; }).slice(0,2).map(function(i){ return mk(i,false); });
+    return [mk(ci,true)].concat(pool).sort(function(){ return Math.random()-.5; });
+  };
   var _sq=startQuiz;
   window.startQuiz=function(){ var q=PLAY.slice().sort(function(){return Math.random()-.5;}); QUIZ_Q=q.slice(0,Math.min(4,q.length)); _sq(); };
   var _sc=showComplete;
@@ -1178,7 +1491,7 @@ function showToast(e, t){
     document.getElementById('cDoa').textContent=PLAY.length;
     document.getElementById('cSub').textContent=L('Kamu sudah belajar '+PLAY.length+' doa bersama Mo! 🏅 '+nLearned()+' / '+DUAS.length+' stiker','You learned '+PLAY.length+' du\'as with Mo! 🏅 '+nLearned()+' / '+DUAS.length+' stickers');
     var recap=document.getElementById('cRecap'); recap.innerHTML='<div class="cr-head">✅ '+L('Doa yang kamu pelajari','Du\'as you learned')+'</div>';
-    PLAY.forEach(function(i){ var d=DUAS[i]; recap.innerHTML+='<div class="cr-item"><div class="cr-top"><span class="cr-icon">'+d.icon+'</span><span class="cr-title-small">'+d.title+'</span></div><div class="cr-arabic">'+d.arabic+'</div><div class="cr-meaning">'+(EN?d.meaningEn:d.meaningId)+'</div></div>'; });
+    PLAY.forEach(function(i){ var d=DUAS[i]; recap.innerHTML+='<div class="cr-item"><div class="cr-top"><span class="cr-icon">'+doaIcon(d)+'</span><span class="cr-title-small">'+d.title+'</span></div><div class="cr-arabic">'+d.arabic+'</div><div class="cr-meaning">'+(EN?d.meaningEn:d.meaningId)+'</div></div>'; });
     var m=document.querySelector('.c-mascot'); if(m) m.src='baby-mo-poses/baby-mo-yeyy.webp';
   };
   window.restartGame=function(){ ['cs1','cs2','cs3'].forEach(function(id){ document.getElementById(id).classList.remove('lit'); }); begin(); };
@@ -1190,6 +1503,8 @@ function showToast(e, t){
   if(did && idxOf(did)>=0) startOne(did); else if(wk && W(wk)) startGroup(wk);
 })();
 </script>
+<div id="cele" role="dialog" aria-modal="true"><div class="ce-card" id="ceCard"></div></div>
+<div id="book" role="dialog" aria-modal="true"><div class="bk-sheet" id="bkSheet"></div></div>
 <script src="/bm-kit.js" defer></script>
 </body>
 </html>
