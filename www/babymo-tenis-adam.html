@@ -9,7 +9,7 @@
 <script src="bm-fit.js"></script>
 <meta name="theme-color" content="#0A2118">
 <title>Akademi Tenis Kak Adam — Belajar Tenis untuk Anak | Baby Mo</title>
-<meta name="description" content="Belajar tenis bersama Kak Adam: tunggu pantulan, forehand & backhand, langkah kaki, servis, dan skor love-15-30-40. Game tenis ramah anak dari Baby Mo.">
+<meta name="description" content="Belajar tenis bersama Kak Adam: tunggu pantulan, forehand & backhand, voli di net, langkah kaki, servis, dan skor love-15-30-40. Game tenis ramah anak dari Baby Mo.">
 <link rel="canonical" href="https://play.babymo.id/babymo-tenis-adam.html">
 <link rel="stylesheet" href="fonts/fonts.css">
 <link rel="icon" href="icons/games/tenis-adam.svg">
@@ -91,8 +91,12 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;
   background:#2E8A57;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.court{position:absolute;inset:0;width:100%;height:100%}
+/* short landscape screens: size the court by its height so it keeps its 400x560 shape (the ball and Kak Adam are placed in court units) */
+@media (orientation:landscape) and (max-height:600px){.stage{width:auto;height:100%;max-width:100%}}
 .adam{position:absolute;width:38%;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
 .adam.serve{top:1.48%}
+.adam.net{width:44%;top:13.87%}
+.stage.vnet .pop{top:66%} /* keep the feedback off Kak Adam while he is at the net */ /* volley: feet just behind the net tape, a bit bigger as he is nearer to us */
 .adam img{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
 .adam::after{content:'';position:absolute;left:25%;right:25%;bottom:4%;height:7%;border-radius:50%;background:rgba(0,0,0,.22);z-index:-1}
 .ball,.bshadow{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;will-change:transform}
@@ -385,6 +389,11 @@ var STATIONS = [
     how:"Kak Adam menghadap kamu. Bola ke kiri layar? Forehand. Ke kanan layar? Backhand.", howIcon:"↔️",
     fact:"Hampir semua pukulan tenis adalah forehand atau backhand. Banyak pemain hebat memukul backhand dengan dua tangan supaya lebih kuat.",
     learn:"Forehand dipukul dari sisi tangan yang memegang raket, backhand dari sisi lainnya. Backhand dua tangan lebih kuat dan stabil untuk anak-anak." },
+  { key:"voli", tipEn:"Now I stand <b>close to the net</b>. A volley means hitting the ball <b>before it bounces</b>! Hold the <b>racket in front of your face</b> like a STOP sign, then <b>punch it short</b> — no big swing. <b>Don't wait for the bounce!</b>", icon:"👊", ball:"red", title:"Voli di Net", short:"Pukul sebelum bola memantul",
+    tip:"Sekarang Kakak berdiri <b>dekat net</b>. Voli artinya memukul bola <b>sebelum memantul</b>! <b>Raket di depan wajah</b> seperti tanda STOP, lalu <b>pukul pendek seperti meninju</b> — jangan ayun besar. <b>Jangan tunggu memantul!</b>",
+    how:"Ketuk VOLI saat bola terbang sampai di depan Kak Adam — sebelum memantul! Mulai sisi forehand, lalu backhand, lalu campur.", howIcon:"👊",
+    fact:"Pemain tenis maju ke net untuk voli supaya lawan punya lebih sedikit waktu. Voli itu pukulan pendek: langkah maju, pergelangan tangan kokoh, dan bola dipukul di depan badan.",
+    learn:"Voli artinya memukul bola sebelum memantul, biasanya dekat net. Raket siap di depan wajah, pukul pendek seperti meninju di depan badan, lalu kembali ke posisi siap." },
   { key:"kaki", tipEn:"The orange ball is faster! Look for the <b>circle</b> where the ball will land, then <b>move your feet</b> there before it arrives.", icon:"👟", ball:"orange", title:"Kaki Lincah", short:"Bergerak dulu, baru memukul",
     tip:"Bola oranye lebih cepat! Lihat <b>tanda lingkaran</b> tempat bola akan mendarat, lalu <b>geser kakimu</b> ke sana sebelum bola sampai.",
     how:"Ketuk Kiri, Tengah, atau Kanan untuk menggeser Kak Adam ke arah bola.", howIcon:"👟",
@@ -406,7 +415,12 @@ var BALLS_PER = 8;
 
 /* ───────── storage ───────── */
 var KEY = "bm_tenis_adam_v1";
-function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0,0]; if(!d.v){ if(d.stars.length===6) d.stars.splice(2,1); if(d.stars.length===5) d.stars.splice(1,0,0); d.v=2; } return d; }catch(e){ return {stars:[0,0,0,0,0,0],v:2}; } }
+var VOLI_AT=3; /* the volley station sits after Forehand & Backhand */
+function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d={stars:[0,0,0,0,0,0,0],v:3};
+  if(!d.v){ if(d.stars.length===6) d.stars.splice(2,1); if(d.stars.length===5) d.stars.splice(1,0,0); d.v=2; }
+  if(d.v===2){ if(d.stars.length===6){ if(d.stars.every(function(x){ return x>0; })) d.grad=1; d.stars.splice(VOLI_AT,0,0); } d.v=3; } /* v3: the volley station is new; graduates keep their certificate */
+  while(d.stars.length<7) d.stars.push(0);
+  return d; }catch(e){ return {stars:[0,0,0,0,0,0,0],v:3}; } }
 function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){} }
 var DATA = load();
 function T(s){ return (window.BM_T ? window.BM_T(s) : s); }
@@ -435,13 +449,13 @@ function renderMap(){
     p.appendChild(b);
   });
   $("mapStars").textContent="⭐ "+total+" / "+(STATIONS.length*3);
-  $("certBtn").style.display = DATA.stars.every(function(s){return s>0;}) ? "" : "none";
+  $("certBtn").style.display = (DATA.grad || DATA.stars.every(function(s){return s>0;})) ? "" : "none";
 }
 
 /* ───────── intro ───────── */
 var CUR=0;
 var READY="fh-two-1"; /* ready position: knees bent, racket in front, both hands on the grip */
-var INTRO_POSE=["hold-ball","backhand-two-3",READY,"shuffle-3","serve-blue-1","wave-3"];
+var INTRO_POSE=["hold-ball","backhand-two-3",READY,"punch-6","shuffle-3","serve-blue-1","wave-3"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
   $("introKicker").textContent="Latihan "+(i+1);
@@ -481,7 +495,7 @@ function say(text){
 }
 
 /* ───────── Adam sprite ───────── */
-var FR={}; [READY,"win-fist-r","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
+var FR={}; [READY,"punch-1","punch-2","punch-3","punch-6","win-fist-r","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
   [3,4,5,6].map(function(n){return "backhand-two-"+n;}),
   [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
 ).forEach(function(n){ var im=new Image(); im.src="adam-tennis-v2/"+n+".webp"; FR[n]=im; });
@@ -492,7 +506,15 @@ function play(seq,ms,then){
   $("adamImg").src="adam-tennis-v2/"+seq[0]+".webp";
   animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis-v2/"+seq[k]+".webp"; }, ms);
 }
+/* volley: a short punch, no big swing. Forehand side: racket up beside his head (punch-3), punch out in front (fh-one-4).
+   Backhand side: racket up across his body (punch-2), punch forward at chest height (punch-6). Both in his right hand. */
+var VREADY="punch-1"; /* net ready position: knees bent, racket up in front */
+function punch(side,then){
+  play(side==="bh"?["punch-2","punch-6","punch-6","punch-6"]:["punch-3","fh-one-4","fh-one-4","fh-one-4"],80,function(){
+    setTimeout(function(){ if(G && G.volley && G.recover && !G.flight && !G.over) pose(VREADY); },260); if(then) then(); }); /* recover to ready */
+}
 function swing(side,then){
+  if(G && G.volley){ punch(side,then); return; }
   if(side==="bh"){ play(["backhand-two-3","backhand-two-3","backhand-two-4","backhand-two-5","backhand-two-6"],75,then); return; } /* two-handed backhand, finishing over his shoulder, smiling */
   var st=(G&&G.fh)||"one", b=FH_SET[st];
   play([b+3,b+4,b+5,b+6],80,then); }
@@ -530,7 +552,10 @@ var TS=(function(){
       burst(c,t,.045,"bandpass",1700,1.1,.55*k); burst(c,t,.12,"bandpass",420,.9,.25*k);
       thump(c,t,320,140,.06,.4*k); thump(c,t+.002,1250,980,.035,.08*k); },
     /* a softer feed from the coach on the far side */
-    feed:function(){ this.hit(.45); }
+    feed:function(){ this.hit(.45); },
+    /* a volley: shorter, softer "pok" (a block, not a big swing) */
+    volley:function(){ var c=ctx(); if(!c) return; var t=c.currentTime;
+      burst(c,t,.028,"bandpass",2000,1.2,.42); thump(c,t,360,210,.045,.32); burst(c,t,.06,"bandpass",520,.9,.12); }
   };
 })();
 var lastH=null, lastBounceAt=0;
@@ -557,9 +582,10 @@ function incoming(p,hitX){
   return {gx:gx,gy:gy,h:Math.max(0,h),s:s};
 }
 /* outgoing flight after a hit: from Adam back to our side */
-function outgoing(p,fromX,toX,good){
-  var f=good?Math.pow(p,1.5):p, gy=lerp(RALLY_Y, good?470:316, f), gx=lerp(fromX,toX,f), s=lerp(.45,good?.95:.62,f);
-  var h=good ? lerp(46,0,p)+4*120*p*(1-p) : lerp(46,0,p)+4*30*p*(1-p);
+function outgoing(p,fromX,toX,good,o){
+  o=o||{y:RALLY_Y,h:46,s:.45}; /* o: where the ball was struck (volleys hit it wherever it is in the air) */
+  var f=good?Math.pow(p,1.5):p, gy=lerp(o.y, good?470:316, f), gx=lerp(fromX,toX,f), s=lerp(o.s,good?.95:.62,f);
+  var h=good ? lerp(o.h,0,p)+4*(o.h>46?50:120)*p*(1-p) : lerp(o.h,0,p)+4*30*p*(1-p);
   return {gx:gx,gy:gy,h:h,s:s};
 }
 function animate(dur,step,done){
@@ -585,10 +611,10 @@ function startStation(i){
   ballEl.style.setProperty("--ballc",G.ball);
   $("playTitle").textContent=st.title;
   $("score").classList.remove("on"); $("meter").classList.remove("on"); $("marker").classList.remove("on"); $("laneTip").textContent="";
-  adamTo("C"); $("adam").classList.remove("serve"); pose(READY); hideBall();
+  adamTo("C"); $("adam").classList.remove("serve","net"); stage.classList.remove("vnet"); ballEl.style.zIndex=""; pose(READY); hideBall();
   show("s-play");
   say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
-  ({pantul:setupPantul,bh:setupBh,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
+  ({pantul:setupPantul,bh:setupBh,sisi:setupSisi,voli:setupVoli,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
 }
 function count(){ $("playCount").textContent=G.hits+" / "+G.total; }
 function finishAfter(ms){ setTimeout(function(){ if(G) finish(); }, ms); }
@@ -625,18 +651,19 @@ function tapHit(side){
   hit(side);
 }
 function hit(side){
-  G.hits++; TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
+  G.hits++; G.recover=true; if(G.volley) TS.volley(); else TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
   swing(side); /* every swing ends on its own smiling follow-through */
-  var from=G.hitX, to=lerp(120,280,Math.random());
-  pop(["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
-  animate(.85,function(p){ var b=outgoing(Math.min(p,1),from,to,true); place(b.gx,b.gy,b.h,b.s); if(p>=1.1){ hideBall(); return false; } });
+  var from=G.o?G.o.x:G.hitX, to=lerp(120,280,Math.random()), o=G.o;
+  pop(G.volley?["Pok! Voli bagus!","Masya Allah!","Pukulan pendek, mantap!","Keren!"][G.hits%4]:["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
+  ballEl.style.zIndex="";
+  animate(.85,function(p){ var b=outgoing(Math.min(p,1),from,to,true,o); place(b.gx,b.gy,b.h,b.s); if(p>=1.1){ hideBall(); return false; } });
   done(true);
 }
 function missFly(msg){
   TS.hit(.7); setTimeout(function(){ sfx("wrong"); },150); pop(msg,"bad",1200);
-  var from=G.hitX;
+  var from=G.o?G.o.x:G.hitX, o=G.o;
   setTimeout(function(){ pose("oops-1"); },320);
-  animate(.6,function(p){ var b=outgoing(Math.min(p,1),from,from,false); place(b.gx,b.gy,b.h,b.s); if(p>=1.15){ hideBall(); return false; } });
+  animate(.6,function(p){ var b=outgoing(Math.min(p,1),from,from,false,o); place(b.gx,b.gy,b.h,b.s); if(p>=1.15){ hideBall(); return false; } });
   done(false);
 }
 function miss(msg){
@@ -704,6 +731,11 @@ function feedLane(){
 }
 var _done=done;
 done=function(ok){
+  if(STATIONS[G.i].key==="voli"){
+    dot(G.n, ok?"ok":"no"); G.n++; count();
+    if(G.n>=G.total){ G.over=true; finishAfter(1300); return; }
+    nextBall(feedVoli,1300); return;
+  }
   if(STATIONS[G.i].key==="kaki" && !G.onPoint){
     dot(G.n, ok?"ok":"no"); G.n++; count();
     if(G.n>=G.total){ G.over=true; finishAfter(1300); return; }
@@ -711,6 +743,76 @@ done=function(ok){
   }
   _done(ok);
 };
+
+/* ── Volley at the net ──
+   Teaching order (how kids learn the volley): ready position close to the net with the racket up in front,
+   a short "punch" (no big swing), contact in front of the body BEFORE the ball bounces, then recover to ready.
+   Balls 1-3 come to the forehand side, 4-5 to the backhand side, 6-8 mixed. */
+var VOLI_PLAN=["fh","fh","fh","bh","bh","mix","mix","mix"];
+var NETY=290;                       /* Adam's feet when he plays at the net (the net tape is at ~299) */
+var VHIT={ fh:{x:178,y:223}, bh:{x:233,y:179} }; /* racket strings at contact in fh-one-4 / punch-6, stage units */
+var VPB=1.2;                        /* if nobody hits it, the ball bounces just behind him at this point of the flight */
+var VWIN=[.8,1.08];                 /* the volley window: the ball is in front of him, still in the air */
+function volleyFlight(p,side){
+  var c=VHIT[side], gy0=NETY+2, s1=.56, hc=(gy0-c.y)/s1, sx=side==="fh"?232:168, gx, gy, s, h;
+  if(p<=1){ var f=1-Math.pow(1-p,1.6); gx=lerp(sx,c.x,f); gy=lerp(540,gy0,f); s=lerp(1,s1,f); h=lerp(26,hc,p)+4*40*p*(1-p); }
+  else { var e=p-1; gx=c.x+(c.x-200)*e*.8; gy=gy0-e*80; s=s1-e*.12;
+    if(p<=VPB){ var r=e/(VPB-1); h=hc*(1-r*r); } else { var r2=(p-VPB)/.4; h=46*r2*(2-r2); } }
+  return {gx:gx,gy:gy,h:Math.max(0,h),s:s};
+}
+function voliControls(){
+  var ph=VOLI_PLAN[Math.min(G.n,VOLI_PLAN.length-1)];
+  if(ph===G.phase) return; G.phase=ph;
+  if(ph==="mix"){
+    controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>bola di kanan</small></button>');
+    $("fhBtn").addEventListener("click",function(){ tapVoli("fh"); });
+    $("bhBtn").addEventListener("click",function(){ tapVoli("bh"); });
+    stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapVoli(e.clientX<r.left+r.width/2?"fh":"bh"); };
+  } else {
+    controls('<button class="btn-pri" id="hitBtn">👊 VOLI!</button>');
+    $("hitBtn").addEventListener("click",function(){ tapVoli(ph); });
+    stage.onclick=function(){ tapVoli(ph); };
+  }
+}
+function setupVoli(){
+  G.volley=true; G.total=BALLS_PER; G.phase=null; dots(G.total); $("dots").children[0].classList.add("now"); count();
+  $("adam").classList.add("net"); stage.classList.add("vnet"); pose(VREADY);
+  voliControls();
+  nextBall(function(){ pop("Raket di depan wajah!","tip",1300); },1000); nextBall(feedVoli,2400);
+}
+function feedVoli(){
+  if(!G||G.over) return;
+  var prev=G.phase; voliControls();
+  if(G.phase!==prev){ pop(G.phase==="bh"?"Sekarang sisi backhand!":"Campur! Kiri atau kanan?","tip",1300); nextBall(feedVoli2,1500); return; }
+  feedVoli2();
+}
+function feedVoli2(){
+  if(!G||G.over) return;
+  var side=G.phase==="mix" ? (Math.random()<.5?"fh":"bh") : G.phase;
+  G.side=side; G.tapped=false; G.whiff=false; G.p=0; G.pb=VPB; G.o=null; G.hitX=VHIT[side].x;
+  pose(VREADY); TS.feed(); lastH=null; ballEl.style.zIndex="";
+  $("laneTip").textContent=T(G.n%2?"Jangan tunggu memantul!":"Pukul pendek seperti meninju!");
+  G.flight=animate(1.7,function(p){
+    G.p=p; var b=volleyFlight(p,side); G.b=b; place(b.gx,b.gy,b.h,b.s);
+    if(p>1.03) ballEl.style.zIndex="2"; /* it has passed him: draw it behind Kak Adam */
+    if(p>1.6){ G.flight=null; $("laneTip").textContent=""; if(G.whiff){ hideBall(); done(false); } else miss("Voli itu sebelum memantul!"); return false; }
+  });
+}
+function tapVoli(side){
+  if(!G||G.over||!G.flight||G.tapped) return;
+  var p=G.p;
+  if(p<.15) return; /* ignore taps right as the ball is fed */
+  G.tapped=true; G.recover=false; $("laneTip").textContent="";
+  var whiff=function(msg){ G.whiff=true; swing(side); sfx("wrong"); pop(msg,"bad",1300); setTimeout(function(){ if(G&&G.volley) pose("oops-1"); },420); }; /* air swing: the ball flies on past him */
+  if(p>VPB){ G.flight.stop(); G.flight=null; G.o={x:G.b.gx,y:G.b.gy,h:G.b.h,s:G.b.s}; swing(side); missFly("Voli itu sebelum memantul!"); return; }
+  if(p<VWIN[0]){ whiff("Terlalu cepat! Tunggu bola dekat."); return; }
+  if(p>VWIN[1]){ whiff("Pukul di depan badan!"); return; }
+  if(side!==G.side){ whiff(G.side==="fh"?"Bola di kiri — voli forehand!":"Bola di kanan — voli backhand!"); return; }
+  G.flight.stop(); G.flight=null;
+  var c=volleyFlight(1,side), b=G.b, k=.7; /* meet it on the strings, in front of him */
+  G.o={x:lerp(b.gx,c.gx,k),y:lerp(b.gy,c.gy,k),h:lerp(b.h,c.h,k),s:lerp(b.s,c.s,k)};
+  hit(side);
+}
 
 /* ── 4. Serve ── */
 function setupServis(){
