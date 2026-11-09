@@ -676,7 +676,12 @@
         "background:linear-gradient(120deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%);text-shadow:0 1px 1.5px rgba(0,70,35,.38);" +
         "box-shadow:inset 0 18px 16px -14px rgba(255,255,255,.45),0 12px 24px -12px rgba(10,143,160,.6);}" +
         "#bm-coach .c-go:active{transform:scale(.96)}" +
-        "@media (prefers-reduced-motion:reduce){#bm-coach .c-ico{animation:none}}";
+        "@media (prefers-reduced-motion:reduce){#bm-coach .c-ico{animation:none}}" +
+        // short landscape phones: steps side by side, card scrolls instead of being cut off
+        "@media (orientation:landscape) and (max-height:500px){#bm-coach{align-items:flex-start;overflow-y:auto;padding:12px}" +
+        "#bm-coach .c-card{max-width:640px;margin:auto;padding:14px 18px 14px}#bm-coach .c-mo{width:54px;height:54px;margin:0 auto 2px}" +
+        "#bm-coach h3{font-size:19px}#bm-coach .c-sub{margin-bottom:10px}#bm-coach .c-steps{flex-direction:row;gap:8px}" +
+        "#bm-coach .c-step{flex:1 1 0;flex-direction:column;text-align:center;align-items:center}#bm-coach .c-go{margin-top:12px;min-height:48px}}";
       document.head.appendChild(st);
     }
     var o = document.createElement("div"); o.id = "bm-coach"; o.setAttribute("role", "dialog"); o.setAttribute("aria-modal", "true");

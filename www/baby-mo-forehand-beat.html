@@ -430,6 +430,18 @@
 
 /* tablet/iPad — widen the play area */
 @media(min-width:820px){.panel{max-width:680px!important;}}
+/* phone landscape: keep the home screen and panels inside the short screen */
+@media (orientation:landscape) and (max-height:500px){
+  .screen{padding:10px 24px;gap:8px;overflow-y:auto}
+  .logo-wrap{width:auto;max-width:none;height:34vh}
+  .logo-wrap img{height:100%;width:auto}
+  .tagline{font-size:20px!important}
+  .big-btn{padding:10px 26px;font-size:17px}
+  .panel{max-height:calc(100dvh - 20px);overflow-y:auto;padding:16px 20px!important}
+  .panel h1{font-size:22px}
+  .stat-row{margin:6px 0!important}
+  .panel-btns{flex-direction:row!important;flex-wrap:wrap;justify-content:center}
+}
 
 /* Desktop / iMac: the game world is responsive (WORLD_W follows the viewport
    aspect), so the canvas fills the screen widescreen — no letterbox bars.
@@ -609,13 +621,15 @@ const ctx = canvas.getContext('2d');
 const WORLD_H = 960;
 let WORLD_W = 540;
 const WORLD_W_MIN = 540;   // phone portrait
-const WORLD_W_MAX = 1707;  // ~16:9 on a tall stage
+const WORLD_W_MAX = 2400;  // wide enough for iPhone landscape (~2.2:1), so no side bars
 
 function computeWorldW() {
-  const ar = window.innerWidth / window.innerHeight; // viewport aspect
+  const r = canvas.getBoundingClientRect();
+  const ar = (r.width && r.height) ? r.width / r.height : window.innerWidth / window.innerHeight; // canvas aspect
   // World aspect follows the viewport so the canvas fills it with no bars,
   // clamped so the world never gets absurdly wide/narrow.
   WORLD_W = Math.max(WORLD_W_MIN, Math.min(WORLD_W_MAX, Math.round(WORLD_H * ar)));
+  try { PLAYER_X = Math.max(130, Math.round(WORLD_W * 0.16)); } catch (e) { /* not declared yet on the first call */ }
 }
 computeWorldW();
 let scale = 1, offsetX = 0, offsetY = 0;
@@ -638,7 +652,8 @@ window.addEventListener('resize', resize);
 
 /* ─── Game constants ────────────────────────────────────────────────────── */
 const GROUND_Y = 760;            // y of ground line in world coords
-const PLAYER_X = 130;
+let PLAYER_X = 130;   // moved in from the edge on wide (landscape) worlds, see computeWorldW()
+PLAYER_X = Math.max(130, Math.round(WORLD_W * 0.16));
 // Source character is 229×400 (aspect 0.574). Render at proper proportions
 // — taller and slimmer than before — so the character isn't horizontally
 // stretched. Approximate visual height ~165 in world units.
@@ -851,7 +866,7 @@ function drawBackground(dt) {
   // Distant tree silhouette band
   bgState.bgScrollNear = (bgState.bgScrollNear + moveSpeed * 0.3 * dt) % 90;
   ctx.fillStyle = '#94D26F';
-  for (let i = -1; i < 8; i++) {
+  for (let i = -1, n = Math.ceil(WORLD_W / 90) + 1; i < n; i++) {   // hedge spans the whole (wide) world
     const x = i * 90 - bgState.bgScrollNear;
     const tH = 90;
     ctx.beginPath();
