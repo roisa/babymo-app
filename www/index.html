@@ -1484,6 +1484,28 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
         </div>
       </div>
 
+      <!-- Display & sound (same settings as the gear menu) -->
+      <div class="list-group-title" data-i18n="disp_group">Tampilan &amp; Suara</div>
+      <div class="list-group">
+        <div class="lrow" style="flex-wrap:wrap;gap:10px">
+          <div class="lrow-icon blue">🌗</div>
+          <div class="lrow-body"><div class="lrow-title" data-i18n="theme_row">Tema</div></div>
+          <div class="lang-toggle" id="themeToggle">
+            <button class="lang-opt" data-mode="auto" onclick="bmSetTheme('auto')" data-i18n="theme_auto">Otomatis</button>
+            <button class="lang-opt" data-mode="light" onclick="bmSetTheme('light')" data-i18n="theme_light">☀️ Terang</button>
+            <button class="lang-opt" data-mode="dark" onclick="bmSetTheme('dark')" data-i18n="theme_dark">🌙 Gelap</button>
+          </div>
+        </div>
+        <div class="lrow" style="gap:10px">
+          <div class="lrow-icon gold">🔊</div>
+          <div class="lrow-body"><div class="lrow-title" data-i18n="sound_row">Suara &amp; musik</div><div class="lrow-sub" data-i18n="sound_sub">Efek suara dan bacaan</div></div>
+          <div class="lang-toggle" id="soundToggle">
+            <button class="lang-opt" data-snd="on" onclick="bmSetSound(true)" data-i18n="sound_on">Nyala</button>
+            <button class="lang-opt" data-snd="off" onclick="bmSetSound(false)" data-i18n="sound_off">Mati</button>
+          </div>
+        </div>
+      </div>
+
       <div class="list-group-title" data-i18n="name_group">Si Kecil</div>
       <div class="list-group">
         <a class="lrow" href="#" onclick="event.preventDefault();openNameSheet()">
@@ -1627,7 +1649,7 @@ const I18N={
   doa_dua_s:{id:'Cocokkan doa dengan artinya',en:'Match duas with their meanings'},
   doa_dream_s:{id:'Doa & rutinitas tidur',en:'Dua & bedtime routine'},
   foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
-  about_title:{id:'Orang Tua',en:'Parents'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
+  about_title:{id:'Orang Tua',en:'Parents'},disp_group:{id:'Tampilan & Suara',en:'Display & Sound'},theme_row:{id:'Tema',en:'Theme'},theme_auto:{id:'Otomatis',en:'Auto'},theme_light:{id:'☀️ Terang',en:'☀️ Light'},theme_dark:{id:'🌙 Gelap',en:'🌙 Dark'},sound_row:{id:'Suara & musik',en:'Sound & music'},sound_sub:{id:'Efek suara dan bacaan',en:'Sound effects and read-aloud'},sound_on:{id:'Nyala',en:'On'},sound_off:{id:'Mati',en:'Off'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
   about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
   about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'15 game siap dimainkan',en:'15 games ready to play'},
   cat_tenis_t:{id:'Akademi Tenis Kak Adam',en:"Kak Adam's Tennis Academy"},cat_tenis_s:{id:'Belajar tenis dari bola merah sampai bertanding',en:'Learn tennis from the red ball to your first match'},
@@ -1859,7 +1881,13 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     document.documentElement.setAttribute('data-theme',dark?'dark':'light');
     if(meta) meta.setAttribute('content',dark?'#0B1020':'#F2F6FC');
     var b=document.getElementById('themeBtn'); if(b){b.innerHTML=ICONS[m]; b.setAttribute('aria-label',(LABEL[curLang==='en'?'en':'id'])[m]);}
+    document.querySelectorAll('#themeToggle .lang-opt').forEach(function(x){x.classList.toggle('active',x.getAttribute('data-mode')===m);});
   }
+  window.bmSetTheme=function(next){
+    try{localStorage.setItem('bm_theme',next)}catch(e){}
+    document.documentElement.classList.add('theme-anim'); apply();
+    setTimeout(function(){document.documentElement.classList.remove('theme-anim')},450);
+  };
   apply();
   if(mq&&mq.addEventListener) mq.addEventListener('change',function(){if(mode()==='auto')apply();});
   document.getElementById('themeBtn').addEventListener('click',function(){
@@ -1902,7 +1930,9 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
   function ready(fn){ if(window.BabyMo&&BabyMo.getStars) fn(); else setTimeout(function(){ready(fn);},120); }
   ready(function(){
     var pill=document.getElementById('starPill'), cnt=document.getElementById('starCount'), mute=document.getElementById('muteBtn');
-    function render(){ if(cnt) cnt.textContent=BabyMo.getStars(); if(mute) mute.textContent=BabyMo.isMuted()?'🔇':'🔊'; }
+    function render(){ if(cnt) cnt.textContent=BabyMo.getStars(); if(mute) mute.textContent=BabyMo.isMuted()?'🔇':'🔊';
+      var off=BabyMo.isMuted(); document.querySelectorAll('#soundToggle .lang-opt').forEach(function(x){x.classList.toggle('active',(x.getAttribute('data-snd')==='off')===off);}); }
+    window.bmSetSound=function(on){ BabyMo.setMuted(!on); render(); if(on) BabyMo.sfx('tap'); };
     render();
     // refresh when returning to the portal (stars earned in a game)
     window.addEventListener('pageshow',render);
