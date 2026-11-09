@@ -186,6 +186,84 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 #jLabel{color:#0B8A4A;}
 #desktopHint{text-shadow:0 1px 3px rgba(0,0,0,.45);}
 </style>
+<style id="bm-seasons">
+/* ═══ Seasons (harakat, words, daily): needed in both themes ═══ */
+#jTabs{display:flex;gap:6px;margin:10px 0 4px}
+#jTabs:empty{display:none}
+#jTabs button{flex:1;min-width:0;min-height:44px;border-radius:14px;border:1.5px solid var(--card-b);background:rgba(127,140,150,.12);color:var(--cream);font:900 12.5px var(--ui);padding:6px 2px;line-height:1.15;white-space:nowrap}
+#jTabs button.on{background:var(--green);color:#06231A;border-color:var(--green)}
+#jTabs button small{display:block;font-size:11.5px;font-weight:800;opacity:.85}
+#jSeason{text-align:left;margin:10px 0 4px}
+#jSeason:empty{display:none}
+.sz-card{border-radius:18px;background:rgba(127,140,150,.12);border:1.5px solid var(--card-b);padding:12px;margin:0 0 10px;color:var(--cream)}
+.sz-card.lock{opacity:.6}
+.sz-top{display:flex;align-items:center;gap:10px}
+.sz-ico{flex:0 0 52px;height:52px;border-radius:16px;background:#FFF6E0;color:#12261F;display:grid;place-items:center;font-family:var(--ar);font-size:34px;line-height:1;padding-bottom:6px}
+.sz-top b{display:block;font-size:15.5px}
+.sz-top small{display:block;font-size:12.5px;font-weight:700;color:var(--cream-dim)}
+.sz-bar{height:10px;border-radius:99px;background:rgba(127,140,150,.22);overflow:hidden;margin:9px 0 6px}
+.sz-bar i{display:block;height:100%;background:linear-gradient(90deg,#FFC83D,#3FD08C);border-radius:99px}
+.sz-chips{display:flex;flex-wrap:wrap;gap:5px;direction:rtl;margin-top:6px}
+.sz-chips button{min-width:40px;height:40px;border-radius:12px;border:2px solid var(--gold);background:#FFF6E0;color:#12261F;font-family:var(--ar);font-size:22px;line-height:1;padding:0 5px 4px}
+.sz-card .btn{margin-top:8px;padding:11px 14px;font-size:14.5px}
+.sz-words{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}
+.sz-word{border-radius:16px;background:#FFF6E0;border:2px solid var(--gold);color:#12261F;padding:8px 6px;text-align:center;min-height:96px}
+.sz-word .e{font-size:28px;line-height:1.1}
+.sz-word .a{font-family:var(--ar);font-size:26px;line-height:1.3}
+.sz-word .m{font-size:12px;font-weight:800;color:#7A5A30}
+.sz-word.lock{background:rgba(127,140,150,.12);border-color:var(--card-b);color:var(--cream-dim)}
+.sz-word.lock .m{color:var(--cream-dim)}
+.sz-days{display:flex;gap:5px;justify-content:space-between;margin-top:8px}
+.sz-days span{flex:1;text-align:center;border-radius:10px;background:rgba(127,140,150,.16);font-size:11.5px;font-weight:800;padding:5px 0;color:var(--cream-dim)}
+.sz-days span b{display:block;font-size:16px}
+.sz-days span.ok{background:#3FD08C;color:#06231A}
+.panel.talk{text-align:left;max-width:440px}
+.tk-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+#tkFace{width:64px;height:64px;border-radius:18px;image-rendering:pixelated;background:#fff;border:3px solid var(--gold);flex:0 0 64px}
+#tkName{font-size:18px;font-weight:900;color:var(--gold-lt)}
+#tkText{font-size:16px;line-height:1.55;font-weight:700;color:var(--cream);min-height:70px}
+#tkText .ar{font-family:var(--ar);font-size:1.6em;line-height:1;color:var(--green-lt);font-weight:700}
+#tkBtns .btn{margin-top:10px}
+.hc .snd{position:relative;font-size:34px;font-weight:900;color:#E8590C;margin:0;line-height:1.1}
+.hc .tile.hk{font-size:56px;padding-bottom:0;line-height:2.15}
+.hc .tile.h1{background:linear-gradient(160deg,#FFE4D6,#FFB990);border-color:#E8794A}
+.hc .tile.h2{background:linear-gradient(160deg,#E4E6FF,#B9C1FF);border-color:#6B74D6}
+#wordPanel{position:absolute;top:60px;left:50%;transform:translateX(-50%);display:none;align-items:center;gap:8px;padding:6px 10px;border-radius:18px;background:rgba(255,255,255,.94);color:#152230;box-shadow:0 8px 18px -8px rgba(0,0,0,.4);pointer-events:auto;max-width:94vw}
+#wordPanel.on{display:flex}
+#wordPanel .wp-e{font-size:28px;line-height:1}
+#wordPanel .wp-s{display:flex;gap:5px;direction:rtl}
+#wordPanel .wp-s i{width:40px;height:44px;border-radius:12px;border:2px dashed #C9B27A;display:grid;place-items:center;font-style:normal;font-family:var(--ar);font-size:26px;line-height:1;padding-bottom:5px;color:rgba(21,34,48,.25);background:#FFFBEF}
+#wordPanel .wp-s i.got{border:2px solid #E0B84D;color:#12261F;background:linear-gradient(160deg,#FFF6D8,#FFE08A);animation:hcPulse .5s ease-in-out 1}
+#wordPanel .wp-s i.nx{border-color:#E8590C;color:rgba(232,89,12,.55)}
+#wordPanel .wp-m{font-size:12px;font-weight:900;color:#5A6878;max-width:90px;line-height:1.2}
+body.wp-on #compass{top:122px}
+body.wp-on #toast{top:184px}
+#dailyChip{position:absolute;top:62px;left:10px;display:none;align-items:center;gap:4px;min-height:40px;padding:6px 12px;border-radius:99px;border:1.5px solid var(--card-b);background:var(--card);color:var(--cream);font:800 13.5px var(--ui);pointer-events:auto}
+#dailyChip.on{display:flex}
+#dailyChip b{color:var(--gold-lt);font-weight:900}
+@media (max-height:500px) and (orientation:landscape){
+  #compass{left:auto;right:12px;margin-left:0;top:60px}
+  body.wp-on #compass{top:60px}
+  body.wp-on #toast{top:70px}
+  #wordPanel{left:12px;transform:none;top:58px;padding:4px 8px}
+  #wordPanel .wp-s i{width:34px;height:36px;font-size:22px}
+  #huntCard{align-items:flex-start;overflow-y:auto;padding:10px 20px}
+  #huntCard .hc{margin:auto;padding:10px 14px}
+  .hc .wpic{font-size:46px}
+  .hc .wword{font-size:42px;line-height:1.15}
+  .hc .tile{width:104px;height:104px;font-size:66px}
+  .hc .tile.hk{font-size:44px}
+}
+.hc .wpic{position:relative;font-size:76px;line-height:1.1;animation:hcFlip .7s .1s cubic-bezier(.3,1.4,.5,1) both}
+.hc .wword{position:relative;font-family:'Scheherazade New','Amiri',serif;font-size:58px;line-height:1.25;color:#12261F;direction:rtl}
+.hc .wword span{transition:color .2s,background .2s;border-radius:10px;padding:0 2px}
+.hc .wword span.say{background:#FFE08A;color:#E8590C}
+.hc .wlat{position:relative;font-size:20px;font-weight:900;color:#0A7FB0;letter-spacing:.02em}
+.hc .wlat span.say{color:#E8590C}
+.hc .row2{display:flex;gap:8px}
+.hc .row2 button{flex:1}
+.hc button.alt{background:#EEF1F6;color:#152230}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -237,8 +315,10 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 <!-- JOURNAL -->
 <div class="veil" id="vJournal"><div class="panel">
   <h2>📖 Buku Huruf Ibra</h2>
-  <p>Ketuk huruf yang sudah ditemukan untuk dengar lagi. Yang masih gelap belum ditemukan — cari terus ya!</p>
+  <div id="jTabs"></div>
+  <p id="jIntro">Ketuk huruf yang sudah ditemukan untuk dengar lagi. Yang masih gelap belum ditemukan — cari terus ya!</p>
   <div id="journalGrid"></div>
+  <div id="jSeason"></div>
   <button class="btn gold" id="btnCloseJournal">Tutup</button>
 </div></div>
 
@@ -250,10 +330,18 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
   <button class="btn ghost" id="btnToggleSfx">🔊 Efek Suara: Aktif</button>
   <button class="btn ghost" id="btnToggleMusic">🎵 Musik Latar: Aktif</button>
   <button class="btn ghost" id="btnToggleFly">🚶 Mode Jalan (bukan Terbang)</button>
+  <button class="btn ghost" id="btnSeasons">🌙 Musim Petualangan</button>
   <button class="btn gold" id="btnShare">📸 Bagikan Pulauku</button>
   <button class="btn" id="btnResume">Lanjut Main</button>
   <a class="btn ghost" id="btnHome" href="index.html" style="display:block;text-decoration:none;text-align:center">← Kembali ke Beranda</a>
   <button class="btn ghost" id="btnReset">Ulangi dari Awal (hapus progres)</button>
+</div></div>
+
+<!-- SEASON TALK -->
+<div class="veil" id="vTalk"><div class="panel talk">
+  <div class="tk-head"><img id="tkFace" alt=""><b id="tkName"></b></div>
+  <div id="tkText"></div>
+  <div id="tkBtns"></div>
 </div></div>
 
 <div id="huntCard"><div class="hc" id="hcBox"></div></div>
@@ -307,10 +395,11 @@ const Speech = {
       if(my !== this.seq) return;
       if(i >= items.length){ done && done(); return; }
       const it = items[i++];
+      if(it.on){ try{ it.on(); }catch(e){} }
       const u = new SpeechSynthesisUtterance(useAr ? it.ar : it.lat);
       u.lang = this.chosen ? this.chosen.lang : 'ar-SA';
       if(this.chosen) u.voice = this.chosen;
-      u.rate = this.rate; u.pitch = 1.05;
+      u.rate = this.rate*(it.slow||1); u.pitch = 1.05;
       u.onend   = ()=>{ if(my===this.seq) setTimeout(next, it.gap!=null?it.gap:220); };
       u.onerror = ()=>{ if(my===this.seq) setTimeout(next, 260); };
       try{ speechSynthesis.speak(u); }catch(e){ setTimeout(next,300); }
@@ -957,8 +1046,9 @@ function skyPaint(dayT, dt){
   x.fillStyle=g; x.fillRect(0,0,2,128);
   if(!skyTex){ skyTex=new THREE.CanvasTexture(skyCv); scene.background=skyTex; } else skyTex.needsUpdate=true;
 }
+let skyLock = null;   // seasons can hold the island at one time of day
 function updateSky(dt,t){
-  const dayT = (t % DAY_CYCLE) / DAY_CYCLE;
+  const dayT = skyLock!=null ? skyLock : (t % DAY_CYCLE) / DAY_CYCLE;
   const sky = skyAt(dayT);
   const k = Math.min(1, dt*0.6);
   sunLight.intensity += (sky.sun - sunLight.intensity) * k;
@@ -1855,7 +1945,7 @@ function openMenu(){
 $('#btnMenu').onclick = openMenu;
 $('#btnResume').onclick = ()=>{ veil.menu.classList.remove('on'); running = true; };
 $('#btnReset').onclick = ()=>{
-  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+  try{ localStorage.removeItem(SAVE_KEY); localStorage.removeItem('bm-pulau-hijaiyah-seasons-v1'); }catch(e){}
   location.reload();
 };
 
@@ -2762,7 +2852,7 @@ tick();
     decorate(b, gy);
     if(b.taken) hideDeco(b);
   });
-  function decorate(b, gy){
+  function decorate(b, gy, opt){
     const x=b.mesh.position.x, z=b.mesh.position.z, g=new THREE.Group(); scene.add(g); b.deco=g;
     if(b.kind==='cave'||b.kind==='tree'||b.kind==='well'||b.kind==='hay') b.mesh.scale.setScalar(0.72);
     if(b.kind==='chest'){
@@ -2784,7 +2874,7 @@ tick();
     } else if(b.kind==='tree'){
       const nest=new THREE.Mesh(new THREE.TorusGeometry(0.34,0.12,8,14),M(0x8A6424)); nest.rotation.x=Math.PI/2; nest.position.set(x,b.base-0.45,z); g.add(nest);
       b.fall=0;
-    } else if(b.kind==='cave'){
+    } else if(b.kind==='cave' && !(opt&&opt.noLight)){
       const lamp=new THREE.PointLight(0xFFC98A,0.6,4); lamp.position.set(x,b.base+0.6,z); g.add(lamp);
     }
   }
@@ -2857,6 +2947,7 @@ tick();
     }catch(e){} };
     (document.fonts&&document.fonts.load ? document.fonts.load('86px "Scheherazade New"', g).then(draw,draw) : Promise.resolve().then(draw));
   }
+  window.__centerGlyph=centerGlyph;
   function showCard(b){
     const L0=b.letter, p=PIC[b.i]||PIC[0], c=n(), nx=MILES.find(m=>m[0]>c), hit=MILES.find(m=>m[0]===c), w=WHERE[b.kind]||WHERE.crystal;
     hcBox.innerHTML='<div class="rays"></div><div class="where">'+TT(w[0],w[1])+'</div><div class="tile" id="hcTile">'+L0.g+'</div><h3>'+L0.name+' · '+L0.ar+'</h3>'+
@@ -2871,7 +2962,7 @@ tick();
     document.getElementById('hcGo').onclick=closeCard;
     if(hit){ setTimeout(()=>{ SFX.weaponUp(); haptic([12,40,18]); },700); try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
   }
-  function closeCard(){ card.classList.remove('on'); running=true; applyRewards(); }
+  function closeCard(){ card.classList.remove('on'); running=true; applyRewards(); const cb=window.__hcAfter; window.__hcAfter=null; if(cb) cb(); }
   card.addEventListener('click',e=>{ if(e.target===card) closeCard(); });
 
   collectLetter=function(b){
@@ -2888,6 +2979,1008 @@ tick();
   };
   applyRewards();
   huntTick();
+  window.HuntAPI = { decorate, hideDeco, WHERE, trees, closeCard, toastFor };
+})();
+</script>
+<script>
+/* ═══════════ Seasons: after the 28 letters, the island keeps going ═══════════
+   Musim 2 · Harakat — Kakek Hasan hides the letters again wearing fathah / kasrah / dhammah,
+   and the island changes mood each round (morning, sunset, lantern night).
+   Saved under its own key so the season-1 save never changes shape. */
+(function(){
+  const EN = window.BM_LANG==='en', TT=(a,b)=>EN?b:a;
+  const SKEY = 'bm-pulau-hijaiyah-seasons-v1';
+  const API = window.HuntAPI;
+  const GOAL = 10;
+
+  /* — state — */
+  const S = { v:1, s2:{ started:false, active:-1, found:[[],[],[]] } };
+  try{
+    const d = JSON.parse(localStorage.getItem(SKEY)||'null');
+    if(d && typeof d==='object'){
+      if(d.s2 && typeof d.s2==='object'){
+        S.s2.started = !!d.s2.started;
+        S.s2.active = (typeof d.s2.active==='number' && d.s2.active>=-1 && d.s2.active<=2) ? d.s2.active : -1;
+        if(Array.isArray(d.s2.found)) for(let r=0;r<3;r++){ const f=d.s2.found[r]; if(Array.isArray(f)) S.s2.found[r]=[...new Set(f.filter(i=>Number.isInteger(i)&&i>=0&&i<28))]; }
+      }
+      for(const k in d) if(!(k in S)) S[k]=d[k];   // keep fields written by later seasons
+    }
+  }catch(e){}
+  function save(){ try{ localStorage.setItem(SKEY, JSON.stringify(S)); }catch(e){} }
+  window.Seasons = { S, save };
+
+  const s1Done = ()=>collected.size>=L.length;
+  const roundDone = r=>S.s2.found[r].length>=GOAL;
+  const s2AllDone = ()=>roundDone(0)&&roundDone(1)&&roundDone(2);
+  const s2Live = ()=>s1Done() && S.s2.started && S.s2.active>=0;
+
+  /* — harakat — */
+  const HAR = [
+    { k:'fathah',  mark:'َ', ar:'فَتْحَة', name:['Fathah','Fathah'],   v:'a', mood:0.985, emi:0.22,
+      how:['garis kecil di atas huruf','a little line above the letter'], markCol:'#E8590C',
+      tile:['#FFF9E8','#FFE7A8','#E0B84D'], glow:0xFFD874,
+      badge:'🌅', bname:['Lencana Fathah','Fathah badge'], cos:['🧣',['Syal Fajar','Dawn scarf'],['Ibra memakai syal oranye pagi.','Ibra wears an orange morning scarf.']],
+      mood_name:['Pulau pagi','Morning island'] },
+    { k:'kasrah',  mark:'ِ', ar:'كَسْرَة', name:['Kasrah','Kasrah'],   v:'i', mood:0.535, emi:0.3,
+      how:['garis kecil di bawah huruf','a little line below the letter'], markCol:'#C2255C',
+      tile:['#FFF1EA','#FFC8A8','#E8794A'], glow:0xFFA07A,
+      badge:'🌇', bname:['Lencana Kasrah','Kasrah badge'], cos:['🪽',['Sayap Senja','Sunset wings'],['Sayap kecil berwarna senja di punggung Ibra.','Little sunset-coloured wings on Ibra\'s back.']],
+      mood_name:['Langit senja','Sunset sky'] },
+    { k:'dhammah', mark:'ُ', ar:'ضَمَّة', name:['Dhammah','Dhammah'], v:'u', mood:0.72, emi:0.55,
+      how:['seperti huruf و kecil di atas huruf','like a tiny و above the letter'], markCol:'#3B5BDB',
+      tile:['#F0F2FF','#C5CCFF','#6B74D6'], glow:0xFFC46B,
+      badge:'🌙', bname:['Lencana Dhammah','Dhammah badge'], cos:['🏮',['Lentera Ibra','Ibra\'s lantern'],['Lentera hangat menerangi jalanmu.','A warm lantern lights your way.']],
+      mood_name:['Malam berlentera','Lantern night'] }
+  ];
+  // the sound of a letter with a harakat, in Latin letters (alif → a/i/u, 'ain → 'a/'i/'u)
+  function sound(li, r){ const v=HAR[r].v; if(li===0) return v; if(li===17) return '’'+v; return L[li].t+v; }
+  const withMark = (li,r)=>L[li].drill[r];
+
+  /* — little helpers — */
+  let seed = 1;
+  function rng(s){ seed = s>>>0 || 1; return ()=>{ seed = (seed*1664525 + 1013904223)>>>0; return seed/4294967296; }; }
+  function shuffle(a, rand){ for(let i=a.length-1;i>0;i--){ const j=(rand()*(i+1))|0; [a[i],a[j]]=[a[j],a[i]]; } return a; }
+  const fontReady = (document.fonts && document.fonts.load)
+    ? Promise.race([Promise.all([document.fonts.load('bold 60px "Amiri"','بَ'), document.fonts.load('60px "Scheherazade New"','بَ')]).catch(()=>{}), new Promise(r=>setTimeout(r,1500))])
+    : Promise.resolve();
+  const AR_FONT = '"Amiri","Scheherazade New","Noto Naskh Arabic","Traditional Arabic",serif';
+
+  function harakatTex(li, r){
+    const H = HAR[r];
+    return tex((x,s)=>{
+      const g = x.createLinearGradient(0,0,s,s); g.addColorStop(0,H.tile[0]); g.addColorStop(1,H.tile[1]);
+      x.fillStyle=g; x.fillRect(0,0,s,s);
+      x.strokeStyle=H.tile[2]; x.lineWidth=s*0.075; x.strokeRect(x.lineWidth/2,x.lineWidth/2,s-x.lineWidth,s-x.lineWidth);
+      x.textAlign='center';
+      const full = withMark(li,r), base = full.slice(0,-1);
+      // fit the letter + mark (their real ink box) into the space above the label
+      let fs = s*0.46, m;
+      x.font = 'bold '+Math.round(fs)+'px '+AR_FONT; x.textBaseline='alphabetic'; m = x.measureText(full);
+      let asc = m.actualBoundingBoxAscent||fs*0.7, desc = m.actualBoundingBoxDescent||fs*0.3;
+      const room = s*0.68;
+      if(asc+desc > room){ const k = room/(asc+desc); fs*=k; asc*=k; desc*=k; x.font = 'bold '+Math.round(fs)+'px '+AR_FONT; }
+      const by = s*0.08 + (room-(asc+desc))/2 + asc;
+      // the whole letter in the harakat colour, then the bare letter on top: only the mark stays coloured
+      x.fillStyle=H.markCol; x.fillText(full, s/2, by);
+      x.fillStyle='#12261F'; x.fillText(base, s/2, by);
+      x.textBaseline='middle';
+      x.fillStyle=H.markCol; x.font='900 '+Math.round(s*0.15)+'px Nunito, system-ui, sans-serif';
+      x.fillText(sound(li,r), s/2, s*0.875);
+    }, 256, true);
+  }
+
+  /* — season blocks live in letterBlocks so the hunt (chests, balloons, magnet, hints) animates them — */
+  const GEO = new THREE.BoxGeometry(0.92,0.92,0.92);
+  let uid = 1000;
+  function addBlock(o){
+    const mat = new THREE.MeshLambertMaterial({map:o.tex, emissiveMap:o.tex, emissive:0xFFFFFF, emissiveIntensity:o.emi||0.25});
+    const mesh = new THREE.Mesh(GEO, mat); scene.add(mesh);
+    const glow = new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow, color:o.glow||0xFFD874, transparent:true, depthWrite:false}));
+    glow.scale.set(2.2,2.2,1); scene.add(glow);
+    const b = { letter:o.letter, mesh, glow, i:uid++, base:0, taken:false, kind:o.kind, season:o.season, li:o.li, round:o.round, slot:o.slot, armAt:performance.now()+2500 };
+    const gx=Math.floor(o.x), gz=Math.floor(o.z), gy=heightAt(gx,gz)+1;
+    mesh.position.set(o.x, 0, o.z);
+    if(o.y!=null){ b.base=o.y; }
+    else if(o.kind==='balloon'){ b.base=gy+4.6; b.home=gy+0.9; }
+    else if(o.kind==='chest'){ b.base=gy+0.35; }
+    else b.base=gy+1.1;
+    mesh.position.y=b.base; glow.position.set(o.x,b.base-0.5,o.z);
+    API.decorate(b, gy, {noLight:true});
+    if(o.kind==='cave'){ const cg=new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow,color:0xFFC98A,transparent:true,depthWrite:false,opacity:0.7})); cg.scale.set(1.6,1.6,1); cg.position.set(o.x,b.base+0.5,o.z); b.deco.add(cg); }
+    letterBlocks.push(b);
+    return b;
+  }
+  function removeBlock(b){
+    scene.remove(b.mesh); scene.remove(b.glow); if(b.deco) scene.remove(b.deco);
+    try{ b.mesh.material.map.dispose(); b.mesh.material.dispose(); b.glow.material.dispose(); }catch(e){}
+    const k = letterBlocks.indexOf(b); if(k>=0) letterBlocks.splice(k,1);
+    if(hintLetter===b){ hintLetter=null; hintBeam.visible=false; }
+  }
+  function removeSeason(tag){ letterBlocks.filter(b=>b.season===tag).forEach(removeBlock); }
+
+  /* — where letters can hide — */
+  const S1POS = letterBlocks.filter(b=>b.season==null).map(b=>[b.mesh.position.x,b.mesh.position.z]);
+  function openGround(x,z,used,minGap){
+    if(Math.abs(x)>HALF-4 || Math.abs(z)>HALF-4) return false;
+    if(inVillage(x,z,1) || Math.hypot(x-0.5,z-5.5)<5.5) return false;
+    const h=heightAt(x,z);
+    for(let y=h+1;y<=h+7;y++) if(solidAt(x,y,z)) return false;
+    if(used.some(u=>Math.hypot(u[0]-x-0.5,u[1]-z-0.5)<minGap)) return false;
+    return true;
+  }
+  function roundPlan(r){
+    const rand = rng(4099 + r*7919);
+    const cv=caveInfo, ex=CAVE_HILL.x-5, ez=CAVE_HILL.z;
+    const well=VILLAGE.build.find(b=>b.t==='well'), stall=VILLAGE.build.find(b=>b.t==='stall'), pen=VILLAGE.pen;
+    const sp = [];
+    // the cave, the mountain top and the village corners are always good hiding places
+    const caveSpots=[[ex+2.5,ez+0.5],[cv.chamber.x+0.5,ez-1+0.5],[cv.chamber.x+0.5,ez+1+0.5],[ex+5.5,ez+0.5]];
+    caveSpots.filter((c,i)=>i!==r).slice(0,2).forEach(c=>sp.push({kind:'cave',x:c[0],y:cv.baseY+0.55,z:c[1]}));
+    sp.push({kind:'peak',x:PEAK.x+(r===1?1.5:-0.5),y:heightAt(PEAK.x+(r===1?1:-1),PEAK.z)+1.2,z:PEAK.z+(r===2?1.5:0.5)});
+    if(r!==1) sp.push({kind:'well',x:well.x+1,y:gTop(well.x+1,well.z+1)+0.9,z:well.z+1});
+    if(r!==2) sp.push({kind:'stall',x:stall.x+1.5,y:gTop(stall.x+1,stall.z)+1.45,z:stall.z+1.2});
+    if(r!==0) sp.push({kind:'hay',x:pen.x0+0.6,y:gTop(pen.x0,pen.z1)+0.9,z:pen.z1+0.4});
+    // trees the first season did not use
+    const tr = API.trees.filter((t,i)=>i%2===1 && Math.abs(t.x)<HALF-4 && Math.abs(t.z)<HALF-4 && solidAt(t.x,t.top,t.z));
+    for(let k=0;k<4 && tr.length;k++){ const t=tr[(r*3+k*2)%tr.length]; if(sp.some(s=>s.kind==='tree'&&s.tx===t.x&&s.tz===t.z)) continue; sp.push({kind:'tree',x:t.x+0.5,y:t.top+1.0,z:t.z+0.5,tx:t.x,tz:t.z}); }
+    // the rest scattered over the island, in fresh places
+    const used = S1POS.concat(sp.map(s=>[s.x,s.z]));
+    const kinds = [['chest','balloon','crystal'],['balloon','crystal','chest'],['crystal','chest','balloon']][r];
+    let guard=0;
+    while(sp.length<28 && guard++<4000){
+      const a=rand()*Math.PI*2, rad=5+rand()*15, x=Math.round(Math.cos(a)*rad), z=Math.round(Math.sin(a)*rad);
+      if(!openGround(x,z,used,guard>2500?2:3)) continue;
+      used.push([x+0.5,z+0.5]);
+      sp.push({kind:kinds[sp.length%3], x:x+0.5, z:z+0.5});
+    }
+    const letters = shuffle([...Array(28).keys()], rand);
+    return sp.map((s,k)=>Object.assign({li:letters[k]}, s));
+  }
+
+  /* — the round on the island — */
+  let lantern=null;
+  function buildRound(r){
+    removeSeason('s2');
+    const H=HAR[r];
+    roundPlan(r).forEach(p=>{
+      if(S.s2.found[r].includes(p.li)) return;
+      const letter = Object.assign({}, L[p.li], { name: withMark(p.li,r)+' ('+sound(p.li,r)+')' });
+      addBlock({ season:'s2', round:r, li:p.li, letter, kind:p.kind, x:p.x, y:p.y, z:p.z, tex:harakatTex(p.li,r), emi:H.emi, glow:H.glow });
+    });
+    setNight(r===2);
+  }
+  function startRound(r, quiet){
+    S.s2.started = true; S.s2.active = r; save();
+    fontReady.then(()=>{
+      buildRound(r);
+      updateJournalBadge();
+      if(!quiet){
+        const H=HAR[r];
+        toast(TT(H.badge+' '+H.mood_name[0]+' · cari '+GOAL+' huruf ber'+H.name[0].toLowerCase()+'!', H.badge+' '+H.mood_name[1]+' · find '+GOAL+' letters with '+H.name[1].toLowerCase()+'!'), 3600);
+      }
+    });
+  }
+
+  /* — lantern night: warm lights and fireflies, made of sprites (no extra scene lights) — */
+  let night=null;
+  function setNight(on){
+    if(on && !night){
+      night = { g:new THREE.Group(), lights:[], flies:[] };
+      const post = new THREE.MeshLambertMaterial({color:0x4A3B30});
+      const glass = new THREE.MeshBasicMaterial({color:0xFFD27A});
+      const postGeo = new THREE.BoxGeometry(0.12,1.5,0.12), boxGeo = new THREE.BoxGeometry(0.34,0.38,0.34), capGeo = new THREE.BoxGeometry(0.44,0.08,0.44);
+      const rand = rng(77), used=[];
+      const spots = [];
+      for(let k=0;k<400 && spots.length<16;k++){
+        const a=k*2.4, rad=6+((k*37)%13), x=Math.round(Math.cos(a)*rad), z=Math.round(Math.sin(a)*rad);
+        if(!openGround(x,z,used,4)) continue; used.push([x+0.5,z+0.5]); spots.push([x,z]);
+      }
+      spots.push([-1,6],[2,6]);
+      spots.forEach(([x,z])=>{
+        const g=gTop(x+0.5,z+0.5), cx=x+0.5, cz=z+0.5;
+        const p=new THREE.Mesh(postGeo,post); p.position.set(cx,g+0.75,cz); night.g.add(p);
+        const l=new THREE.Mesh(boxGeo,glass); l.position.set(cx,g+1.62,cz); night.g.add(l);
+        const c=new THREE.Mesh(capGeo,post); c.position.set(cx,g+1.85,cz); night.g.add(c);
+        const s=new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow,color:0xFFB347,transparent:true,depthWrite:false,opacity:0.8}));
+        s.scale.set(2.6,2.6,1); s.position.set(cx,g+1.62,cz); night.g.add(s); night.lights.push({s,ph:rand()*6});
+      });
+      for(let k=0;k<22;k++){
+        const s=new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow,color:0xD8FF8A,transparent:true,depthWrite:false,opacity:0.8}));
+        s.scale.set(0.28,0.28,1); night.g.add(s); night.flies.push({s,ox:(rand()-0.5)*18,oz:(rand()-0.5)*18,ph:rand()*9});
+      }
+      scene.add(night.g);
+    }
+    if(night) night.g.visible = !!on;
+  }
+  function nightTick(t){
+    if(!night || !night.g.visible) return;
+    night.lights.forEach(l=>{ l.s.material.opacity = 0.62 + 0.18*Math.sin(t*3.1+l.ph) + 0.06*Math.sin(t*7.3+l.ph); });
+    night.flies.forEach(f=>{ const x=P.x+f.ox+Math.sin(t*0.4+f.ph)*2, z=P.z+f.oz+Math.cos(t*0.33+f.ph)*2;
+      f.s.position.set(x, gTop(x,z)+0.7+Math.sin(t*1.3+f.ph)*0.5, z); f.s.material.opacity=0.35+0.45*Math.abs(Math.sin(t*2+f.ph)); });
+  }
+
+  /* — time of day follows the round (always moving forward, so the day never rewinds) — */
+  let skyAim = null, skyReleasing = false;
+  function skyTick(dt,t){
+    const want = s2Live() ? HAR[S.s2.active].mood : null;
+    const cyc = (t % DAY_CYCLE) / DAY_CYCLE;
+    if(want==null){
+      if(skyLock==null) return;
+      const d=(cyc-skyLock+1)%1;
+      if(d<0.004){ skyLock=null; return; }
+      skyLock=(skyLock+Math.min(d, dt*0.14))%1; return;
+    }
+    if(skyLock==null) skyLock=cyc;
+    const d=(want-skyLock+1)%1;
+    if(d>0.0005 && d<0.9995) skyLock=(skyLock+Math.min(d, dt*0.14))%1; else skyLock=want;
+  }
+
+  /* — cosmetics for finished rounds — */
+  const cos = {};
+  function applyCosmetics(){
+    if(roundDone(0) && !cos.scarf){
+      const g=new THREE.Group(), o=new THREE.MeshLambertMaterial({color:0xFF8C42}), st=new THREE.MeshLambertMaterial({color:0xFFE066});
+      const ring=new THREE.Mesh(new THREE.BoxGeometry(0.6,0.13,0.4),o); g.add(ring);
+      const band=new THREE.Mesh(new THREE.BoxGeometry(0.61,0.04,0.41),st); g.add(band);
+      const tail=new THREE.Mesh(new THREE.BoxGeometry(0.13,0.34,0.05),o); tail.position.set(-0.14,-0.2,-0.19); g.add(tail);
+      g.position.set(0,1.12,0); playerGroup.add(g); cos.scarf=g;
+    }
+    if(roundDone(1) && !cos.wings){
+      const g=new THREE.Group(), m=new THREE.MeshLambertMaterial({color:0xFF9DB0, emissive:0xFF7A59, emissiveIntensity:0.25});
+      [-1,1].forEach(sd=>{ const w=new THREE.Group(); w.position.set(sd*0.16,0,0);
+        const a=new THREE.Mesh(new THREE.BoxGeometry(0.42,0.3,0.03),m); a.position.set(sd*0.21,0.06,0); w.add(a);
+        const b=new THREE.Mesh(new THREE.BoxGeometry(0.28,0.2,0.03),m); b.position.set(sd*0.15,-0.16,0); w.add(b);
+        w.userData.sd=sd; g.add(w); });
+      g.position.set(0,0.95,0.42); playerGroup.add(g); cos.wings=g;
+    }
+    if(roundDone(2) && !cos.lantern){
+      const g=new THREE.Group(), dark=new THREE.MeshLambertMaterial({color:0x4A3B30});
+      const h=new THREE.Mesh(new THREE.BoxGeometry(0.03,0.12,0.03),dark); h.position.y=0.02; g.add(h);
+      const l=new THREE.Mesh(new THREE.BoxGeometry(0.16,0.2,0.16),new THREE.MeshBasicMaterial({color:0xFFD27A})); l.position.y=-0.14; g.add(l);
+      const c=new THREE.Mesh(new THREE.BoxGeometry(0.2,0.04,0.2),dark); c.position.y=-0.02; g.add(c);
+      const s=new THREE.Sprite(new THREE.SpriteMaterial({map:T.glow,color:0xFFB347,transparent:true,depthWrite:false,opacity:0.75})); s.scale.set(1.1,1.1,1); s.position.y=-0.14; g.add(s);
+      g.position.set(0,-0.66,-0.04); playerParts.armL.add(g); cos.lantern=g; cos.lanternGlow=s;
+    }
+  }
+  function cosTick(t){
+    if(cos.wings) cos.wings.children.forEach(w=>{ w.rotation.y = w.userData.sd*(0.35+Math.sin(t*(lastSpeed>0.1?9:3))*0.25); });
+    if(cos.lanternGlow){ const big = night&&night.g.visible; cos.lanternGlow.scale.setScalar((big?2.1:1.1)+Math.sin(t*5)*0.06); }
+  }
+
+  /* — dialogue with a villager — */
+  const vTalk = document.getElementById('vTalk');
+  const faceCache = {};
+  function faceURL(look){ if(!faceCache[look]){ try{ faceCache[look]=faceTexFor(LOOKS[look]).image.toDataURL(); }catch(e){ faceCache[look]=''; } } return faceCache[look]; }
+  const npcById = id=>npcs.find(n=>n.def.id===id);
+  let talkOpen=false;
+  function talk(id, lines, buttons){
+    const n=npcById(id), d=n?n.def:NPC_DEFS.find(x=>x.id===id);
+    document.getElementById('tkFace').src = faceURL(d.look);
+    document.getElementById('tkName').textContent = EN?d.name[1]:d.name[0];
+    let k=0; running=false; talkOpen=true; Speech.stop();
+    talkArmed[id]=false;   // walk away and back to hear it again
+    document.exitPointerLock && document.exitPointerLock();
+    const close=()=>{ vTalk.classList.remove('on'); talkOpen=false; running=true; };
+    const show=()=>{
+      document.getElementById('tkText').innerHTML = lines[k];
+      talkBlip(d.family?520:420);
+      const box=document.getElementById('tkBtns'); box.innerHTML='';
+      const list = k<lines.length-1 ? [{t:TT('Lanjut ▶','Next ▶'), fn:()=>{ k++; show(); }, stay:true}] : buttons;
+      list.forEach(bt=>{ const e=document.createElement('button'); e.type='button'; e.className='btn '+(bt.cls||''); e.textContent=bt.t;
+        e.onclick=()=>{ if(!bt.stay) close(); bt.fn&&bt.fn(); }; box.appendChild(e); });
+    };
+    vTalk.classList.add('on'); show();
+  }
+  const ar = s=>'<bdi class="ar" dir="rtl">'+s+'</bdi>';
+
+  function offerS2(){
+    if(talkOpen || !s1Done()) return;
+    talk('hasan', [
+      TT('Assalamu\'alaikum, Ibra! Masya Allah, kamu sudah menemukan <b>semua 28 huruf</b> hijaiyah! 🎉',
+         'Assalamu\'alaikum, Ibra! Masha Allah, you found <b>all 28</b> hijaiyah letters! 🎉'),
+      TT('Sekarang huruf-hurufnya memakai <b>harakat</b>, tanda kecil yang membuat huruf bisa dibaca: '+ar('بَ')+' "ba", '+ar('بِ')+' "bi", '+ar('بُ')+' "bu".',
+         'Now the letters wear <b>harakat</b>, little marks that let us read them: '+ar('بَ')+' "ba", '+ar('بِ')+' "bi", '+ar('بُ')+' "bu".'),
+      TT('Kakek sudah menyembunyikan huruf ber-<b>fathah</b> ('+ar('ـَ')+' garis kecil di atas) di seluruh pulau. Temukan '+GOAL+' huruf, ya! ☀️',
+         'Grandpa hid letters with <b>fathah</b> ('+ar('ـَ')+' a little line on top) all over the island. Find '+GOAL+' of them! ☀️')
+    ], [
+      {t:TT('Ayo mulai Musim 2! ▶','Start Season 2! ▶'), fn:()=>{ Speech.say([{ar:'فَتْحَة',lat:'Fathah'},{ar:'بَ',lat:'ba'}]); startRound(0); }},
+      {t:TT('Nanti saja','Maybe later'), cls:'ghost', fn:()=>toast(TT('Temui Kakek Hasan kapan saja, atau buka 📖','Visit Grandpa Hasan any time, or open 📖'),3000)}
+    ]);
+  }
+  function offerRound(r){
+    if(talkOpen) return;
+    const H=HAR[r], P0=HAR[r-1];
+    const intro = r===1
+      ? TT('Lihat, langit sudah <b>senja</b> 🌇. Huruf sekarang memakai <b>kasrah</b> ('+ar('ـِ')+' garis kecil di bawah). '+ar('بِ')+' dibaca "bi".',
+           'Look, the sky turns to <b>sunset</b> 🌇. Now the letters wear <b>kasrah</b> ('+ar('ـِ')+' a little line below). '+ar('بِ')+' reads "bi".')
+      : TT('Sudah <b>malam</b>, lentera-lentera menyala 🏮. Huruf sekarang memakai <b>dhammah</b> ('+ar('ـُ')+' seperti و kecil di atas). '+ar('بُ')+' dibaca "bu".',
+           'It\'s <b>night</b> and the lanterns are glowing 🏮. Now the letters wear <b>dhammah</b> ('+ar('ـُ')+' like a tiny و on top). '+ar('بُ')+' reads "bu".');
+    talk('hasan', [
+      TT('Masya Allah! '+P0.name[0]+' sudah kamu kuasai '+P0.badge, 'Masha Allah! You mastered '+P0.name[1]+' '+P0.badge),
+      intro + TT(' Cari '+GOAL+' huruf, ya!',' Find '+GOAL+' letters!')
+    ], [
+      {t:TT('Lanjut ke '+H.name[0]+' ▶','On to '+H.name[1]+' ▶'), fn:()=>{ Speech.say([{ar:H.ar,lat:H.name[0]},{ar:withMark(1,r),lat:sound(1,r)}]); startRound(r); }},
+      {t:TT('Cari bonus dulu','Find bonus letters first'), cls:'ghost', fn:()=>toast(TT('Huruf bonus masih tersembunyi. Temui Kakek Hasan kalau sudah siap!','Bonus letters are still hidden. Visit Grandpa Hasan when you\'re ready!'),3400)}
+    ]);
+  }
+  function seasonDoneTalk(){
+    talk('hasan', [
+      TT('Masya Allah, hebat sekali! '+ar('بَ بِ بُ')+' — fathah, kasrah, dan dhammah sudah kamu kenal semua! 🌅🌇🌙',
+         'Masha Allah, wonderful! '+ar('بَ بِ بُ')+' — you know fathah, kasrah and dhammah! 🌅🌇🌙'),
+      TT('<b>Musim 3: Kata Pertama</b> sudah terbuka. Sebentar lagi warga kampung butuh bantuanmu menyusun kata!',
+         '<b>Season 3: First Words</b> is open. Soon the villagers will need your help to build words!')
+    ], [{t:TT('Alhamdulillah! ▶','Alhamdulillah! ▶'), fn:()=>{ if(window.Seasons.onS2Done) window.Seasons.onS2Done(); }}]);
+  }
+  // what Kakek Hasan wants to talk about right now (null = nothing new)
+  function hasanOffer(){
+    if(!s1Done()) return null;
+    if(!S.s2.started) return offerS2;
+    const a=S.s2.active;
+    if(a>=0 && a<2 && roundDone(a) && !roundDone(a+1)) return ()=>offerRound(a+1);
+    return null;
+  }
+
+  /* — finding a letter with a harakat — */
+  const card=document.getElementById('huntCard'), hcBox=document.getElementById('hcBox');
+  function s2Collect(b){
+    b.taken=true; b.mesh.visible=false; b.glow.visible=false; API.hideDeco(b);
+    const r=b.round, H=HAR[r], F=S.s2.found[r];
+    const before = F.length;
+    if(!F.includes(b.li)) F.push(b.li);
+    save();
+    SFX.letterFound(); haptic(15);
+    spawnBurst(b.mesh.position.x,b.base,b.mesh.position.z,H.glow); fireworksAt(b.mesh.position.x,b.base+1.5,b.mesh.position.z);
+    celebrating=true; celebrateUntil=performance.now()/1000+2.2;
+    Speech.say([{ar:withMark(b.li,r), lat:sound(b.li,r)}]);
+    updateJournalBadge();
+    const goal = before<GOAL && F.length>=GOAL;
+    if(goal){ applyCosmetics(); try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
+    setTimeout(()=>showS2Card(b, goal), 650);
+  }
+  function countText(r){ const c=S.s2.found[r].length; return Math.min(c,GOAL)+' / '+GOAL+(c>GOAL?' · bonus '+(c-GOAL):''); }
+  function showS2Card(b, goal){
+    const r=b.round, H=HAR[r], c=S.s2.found[r].length, w=API.WHERE[b.kind]||API.WHERE.crystal;
+    hcBox.innerHTML='<div class="rays"></div><div class="where">'+TT(w[0],w[1])+'</div>'+
+      '<div class="tile hk'+(r?' h'+r:'')+'" id="hcTile">'+withMark(b.li,r)+'</div>'+
+      '<p class="snd">"'+sound(b.li,r)+'"</p>'+
+      '<div class="pic"><b>'+H.ar+'</b> '+H.name[EN?1:0]+' · '+TT(H.how[0],H.how[1])+'</div>'+
+      '<div class="bar"><i id="hcBar" style="width:'+(Math.min(GOAL,c-1)/GOAL*100)+'%"></i></div>'+
+      '<div class="next">'+H.badge+' '+H.name[EN?1:0]+' · '+countText(r)+(c<GOAL?' · '+TT('lagi '+(GOAL-c),(GOAL-c)+' to go'):'')+'</div>'+
+      (goal?'<div class="unlock">'+H.badge+' '+TT(H.bname[0],H.bname[1])+' + '+H.cos[0]+' '+TT(H.cos[1][0],H.cos[1][1])+'<small>'+TT(H.cos[2][0],H.cos[2][1])+'</small></div>':'')+
+      '<button id="hcGo">'+(goal?TT('🎉 Hore!','🎉 Hooray!'):TT('🔍 Cari lagi!','🔍 Find more!'))+'</button>';
+    running=false; card.classList.add('on');
+    requestAnimationFrame(()=>{ const bar=document.getElementById('hcBar'); if(bar) bar.style.width=(Math.min(GOAL,c)/GOAL*100)+'%'; });
+    if(window.__centerGlyph){ const t=document.getElementById('hcTile'); window.__centerGlyph(t, t.textContent); }
+    document.getElementById('hcTile').onclick=()=>Speech.say([{ar:withMark(b.li,r),lat:sound(b.li,r)},{ar:L[b.li].ar,lat:L[b.li].name},{ar:H.ar,lat:H.name[0]}]);
+    document.getElementById('hcGo').onclick=API.closeCard;
+    window.__hcAfter = goal ? ()=>roundComplete(r) : null;
+    if(goal) setTimeout(()=>{ SFX.weaponUp(); haptic([12,40,18]); },700);
+  }
+  function roundComplete(r){
+    SFX.finale(); haptic([15,60,15,60,15,80,30]);
+    celebrating=true; celebrateUntil=performance.now()/1000+5;
+    fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),800); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),1600);
+    toast(TT(HAR[r].badge+' Ronde '+HAR[r].name[0]+' selesai! Masya Allah!', HAR[r].badge+' '+HAR[r].name[1]+' round complete! Masha Allah!'), 3200);
+    setTimeout(()=>{ if(r<2) offerRound(r+1); else seasonDoneTalk(); }, 2300);
+  }
+
+  const s1Collect = collectLetter;
+  collectLetter = function(b){
+    if(b.armAt && performance.now()<b.armAt) return;   // a letter that just appeared next to you waits a moment
+    if(b.season==='s2') return s2Collect(b);
+    if(window.Seasons.collect && b.season && window.Seasons.collect(b)) return;
+    const was = collected.size;
+    s1Collect(b);
+    if(was<L.length && collected.size===L.length && !S.s2.started) window.__hcAfter = ()=>setTimeout(offerS2, 4200);
+  };
+
+  /* — the badge at the top shows the current goal — */
+  const s1Badge = updateJournalBadge;
+  updateJournalBadge = function(){
+    const lab=document.getElementById('jLabel'), cnt=document.getElementById('jCount');
+    if(window.Seasons.badge && window.Seasons.badge(lab,cnt)) return;
+    if(s2Live()){ const H=HAR[S.s2.active]; lab.textContent=TT('Musim 2 · '+H.name[0],'Season 2 · '+H.name[1]); cnt.textContent=countText(S.s2.active); return; }
+    lab.textContent=TT('Huruf ditemukan','Letters found'); s1Badge();
+  };
+
+  /* — hints and the compass point at the current hunt — */
+  const compass=document.getElementById('compass'), needle=compass.querySelector('i');
+  let compassOn=false;
+  function compassTarget(){
+    if(window.Seasons.target){ const t=window.Seasons.target(); if(t) return t; }
+    if(!s1Done()) return null;
+    const offer = hasanOffer() && npcById('hasan');
+    if(offer) return {x:offer.x, z:offer.z};
+    if(s2Live()){ const n=nearestLetter(); if(n) return {x:n.b.mesh.position.x, z:n.b.mesh.position.z}; }
+    return null;
+  }
+  function compassTick(){
+    const tg = running ? compassTarget() : null;
+    const want = !!tg;
+    if(want!==compassOn){ compassOn=want; compass.classList.toggle('on', want); }
+    else if(compass.classList.contains('on')!==want) compass.classList.toggle('on', want);
+    if(tg){ const vx=tg.x-P.x, vz=tg.z-P.z, fwd=-(vx*Math.sin(P.yaw)+vz*Math.cos(P.yaw)), rgt=vx*Math.cos(P.yaw)-vz*Math.sin(P.yaw);
+      needle.style.transform='rotate('+(Math.atan2(rgt,fwd)*180/Math.PI)+'deg)'; }
+  }
+
+  /* — a "!" over villagers who have something new to say — */
+  const markTex = tex((x,s)=>{ x.clearRect(0,0,s,s); x.fillStyle='#FFC83D'; x.beginPath(); x.arc(s/2,s/2,s*0.44,0,Math.PI*2); x.fill();
+    x.lineWidth=s*0.06; x.strokeStyle='#fff'; x.stroke(); x.fillStyle='#7A3B00'; x.font='900 '+Math.round(s*0.62)+'px Nunito, sans-serif'; x.textAlign='center'; x.textBaseline='middle'; x.fillText('!',s/2,s*0.54); },64,true);
+  const mark = new THREE.Sprite(new THREE.SpriteMaterial({map:markTex, transparent:true, depthWrite:false, depthTest:false}));
+  mark.scale.set(0.7,0.7,1); mark.renderOrder=6; mark.visible=false; scene.add(mark);
+  let talkArmed = {};
+  function offerFor(){
+    if(window.Seasons.offer){ const o=window.Seasons.offer(); if(o) return o; }
+    const h=hasanOffer(); return h ? {id:'hasan', fn:h} : null;
+  }
+  function markTick(t){
+    const o = s1Done() ? offerFor() : null;
+    const n = o && npcById(o.id);
+    mark.visible = !!n;
+    if(!n) return;
+    mark.position.set(n.x, n.g.position.y+n.h+0.85+Math.abs(Math.sin(t*3))*0.18, n.z);
+    if(n.bubble && t<n.bubbleUntil) mark.position.y += n.bubbleH+0.1;
+    const d=Math.hypot(P.x-n.x,P.z-n.z);
+    if(d>4.5) talkArmed[o.id]=true;
+    if(running && d<2.3 && talkArmed[o.id]!==false && !card.classList.contains('on')){ talkArmed[o.id]=false; o.fn(); }
+  }
+
+  /* — journal: one tab per season — */
+  let jTab = 1;
+  const tabsEl=document.getElementById('jTabs'), introEl=document.getElementById('jIntro'), gridEl=document.getElementById('journalGrid'), seasonEl=document.getElementById('jSeason');
+  const TABS = [
+    [1, ['Musim 1','Season 1'], ['📖 Huruf','📖 Letters'], ()=>true],
+    [2, ['Musim 2','Season 2'], ['✨ Harakat','✨ Harakat'], ()=>true]
+  ];
+  window.Seasons.TABS = TABS;
+  function closeJournal(){ veil.journal.classList.remove('on'); running=true; }
+  window.Seasons.closeJournal = closeJournal;
+  function renderTabs(){
+    tabsEl.innerHTML='';
+    TABS.forEach(([id,name,sub])=>{ const e=document.createElement('button'); e.type='button'; e.className=id===jTab?'on':'';
+      e.innerHTML=TT(name[0],name[1])+'<small>'+TT(sub[0],sub[1])+'</small>'; e.onclick=()=>{ jTab=id; renderJournal(); }; tabsEl.appendChild(e); });
+  }
+  function renderJournal(){
+    renderTabs();
+    const s1 = jTab===1;
+    introEl.style.display = s1?'':'none'; gridEl.style.display = s1?'':'none';
+    seasonEl.innerHTML='';
+    if(s1) return;
+    const R = window.Seasons.renderTab && window.Seasons.renderTab(jTab, seasonEl);
+    if(R) return;
+    if(jTab===2) renderS2(seasonEl);
+  }
+  window.Seasons.renderJournal = renderJournal;
+  function el(tag, cls, html){ const e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e; }
+  window.Seasons.el = el;
+  function renderS2(box){
+    if(!s1Done()){
+      box.appendChild(el('div','sz-card lock','<div class="sz-top"><div class="sz-ico">🔒</div><div><b>'+TT('Musim 2: Harakat','Season 2: Harakat')+'</b><small>'+
+        TT('Temukan semua 28 huruf dulu ('+collected.size+'/28), lalu Kakek Hasan punya tugas baru!','Find all 28 letters first ('+collected.size+'/28), then Grandpa Hasan has a new quest!')+'</small></div></div>'));
+      return;
+    }
+    if(!S.s2.started){
+      const c=el('div','sz-card','<div class="sz-top"><div class="sz-ico">بَ</div><div><b>'+TT('Musim 2: Harakat','Season 2: Harakat')+'</b><small>'+
+        TT('Kakek Hasan menunggumu! Belajar membaca بَ بِ بُ.','Grandpa Hasan is waiting! Learn to read بَ بِ بُ.')+'</small></div></div>');
+      const go=el('button','btn',TT('Mulai Musim 2 ▶','Start Season 2 ▶')); go.type='button'; go.onclick=()=>{ closeJournal(); offerS2(); }; c.appendChild(go);
+      box.appendChild(c); return;
+    }
+    HAR.forEach((H,r)=>{
+      const open = r===0 || roundDone(r-1), F=S.s2.found[r], done=roundDone(r), cur=S.s2.active===r;
+      const c=el('div','sz-card'+(open?'':' lock'));
+      c.appendChild(el('div','sz-top','<div class="sz-ico">'+withMark(1,r)+'</div><div><b>'+(done?H.badge+' ':'')+H.name[EN?1:0]+' · <span style="font-family:var(--ar)">'+H.ar+'</span></b><small>'+
+        (open ? TT(H.mood_name[0],H.mood_name[1])+' · '+countText(r)+(done?' · '+TT(H.bname[0],H.bname[1])+' ✓':'') : '🔒 '+TT('Selesaikan ronde sebelumnya','Finish the round before'))+'</small></div>'));
+      if(open){
+        c.appendChild(el('div','sz-bar','<i style="width:'+(Math.min(GOAL,F.length)/GOAL*100)+'%"></i>'));
+        if(F.length){ const ch=el('div','sz-chips'); F.slice().sort((a,b)=>a-b).forEach(li=>{ const e=el('button','',withMark(li,r)); e.type='button'; e.title=sound(li,r);
+          e.onclick=()=>Speech.say([{ar:withMark(li,r),lat:sound(li,r)}]); ch.appendChild(e); }); c.appendChild(ch); }
+        if(cur && !(window.Seasons.s3Active && window.Seasons.s3Active())) c.appendChild(el('small','', '<b style="display:block;margin-top:8px;font-size:12.5px;color:var(--green-lt)">▶ '+TT('Sedang dimainkan','Playing now')+'</b>'));
+        else { const go=el('button','btn ghost',(done?TT('Main lagi · cari bonus ▶','Play again · bonus letters ▶'):TT('Main ▶','Play ▶'))); go.type='button';
+          go.onclick=()=>{ closeJournal(); if(window.Seasons.pauseS3) window.Seasons.pauseS3(); Speech.say([{ar:H.ar,lat:H.name[0]}]); startRound(r); }; c.appendChild(go); }
+      }
+      box.appendChild(c);
+    });
+  }
+  const jBtn=document.getElementById('btnJournal');
+  const s1Journal = jBtn.onclick;
+  jBtn.onclick = function(){ s1Journal(); jTab = window.Seasons.defaultTab ? window.Seasons.defaultTab() : (s2Live()?2:1); renderJournal(); };
+  window.Seasons.openJournal = function(tab){ s1Journal(); jTab=tab; renderJournal(); };
+  document.getElementById('btnSeasons').onclick = ()=>{ veil.menu.classList.remove('on'); window.Seasons.openJournal(window.Seasons.defaultTab ? window.Seasons.defaultTab() : (s1Done()?2:1)); };
+  // the season-1 intro text comes back when the first tab is shown
+  introEl.textContent = TT('Ketuk huruf yang sudah ditemukan untuk dengar lagi. Yang masih gelap belum ditemukan — cari terus ya!','Tap a letter you\'ve found to hear it again. Dark ones haven\'t been found yet — keep looking!');
+
+  /* — a welcome back for players who already finished — */
+  const playBtn=document.getElementById('btnPlay'), s1Play=playBtn.onclick;
+  let greeted=false;
+  playBtn.onclick = function(){
+    s1Play.apply(this, arguments);
+    if(!running || greeted) return; greeted=true;
+    updateJournalBadge();
+    setTimeout(()=>{
+      if(!running) return;
+      if(s1Done() && !S.s2.started){ offerS2(); return; }
+      if(window.Seasons.welcome && window.Seasons.welcome()) return;
+      if(s2Live()){ const H=HAR[S.s2.active]; toast(TT(H.badge+' Musim 2 · '+H.name[0]+': '+countText(S.s2.active),H.badge+' Season 2 · '+H.name[1]+': '+countText(S.s2.active)),3400); }
+    }, 3200);
+  };
+
+  /* — boot — */
+  window.Seasons.HAR = HAR; window.Seasons.sound = sound; window.Seasons.withMark = withMark; window.Seasons.harakatTex = harakatTex;
+  window.Seasons.talk = talk; window.Seasons.addBlock = addBlock; window.Seasons.removeSeason = removeSeason;
+  window.Seasons.rng = rng; window.Seasons.shuffle = shuffle; window.Seasons.openGround = openGround; window.Seasons.ar = ar;
+  window.Seasons.s1Done = s1Done; window.Seasons.s2AllDone = s2AllDone; window.Seasons.fontReady = fontReady;
+  window.Seasons.stopS2 = ()=>{ S.s2.active=-1; save(); removeSeason('s2'); setNight(false); };
+  window.Seasons.npcById = npcById;
+  if(s2Live()){ skyLock = HAR[S.s2.active].mood; startRound(S.s2.active, true); }
+  applyCosmetics();
+  updateJournalBadge();
+  let last=performance.now();
+  (function seasonTick(){
+    requestAnimationFrame(seasonTick);
+    const now=performance.now(), dt=Math.min(0.05,(now-last)/1000), t=now/1000; last=now;
+    skyTick(dt,t); nightTick(t); cosTick(t); compassTick(); markTick(t);
+    if(window.Seasons.tick) window.Seasons.tick(dt,t);
+  })();
+})();
+</script>
+<script>
+/* ═══════════ Musim 3 · Kata Pertama — villagers ask for letters to build a first Arabic word ═══════════ */
+(function(){
+  const EN = window.BM_LANG==='en', TT=(a,b)=>EN?b:a;
+  const Z = window.Seasons, S = Z.S, ar = Z.ar;
+  // standard MSA, fully vowelled; letters = indices into L, in reading order
+  const WORDS = [
+    { w:'أَسَدٌ',  lt:[0,11,7],    syl:[['أَ','a'],['سَ','sa'],['دٌ','dun']],          lat:'asadun',   pic:'🦁', m:['singa','lion'],        npc:'rafi',
+      ask:['Aku mau menggambar singa 🦁, tapi lupa tulisan Arabnya!','I want to draw a lion 🦁 but I forgot how to write it in Arabic!'] },
+    { w:'سَمَكٌ',  lt:[11,23,21],  syl:[['سَ','sa'],['مَ','ma'],['كٌ','kun']],          lat:'samakun',  pic:'🐟', m:['ikan','fish'],         npc:'udin',
+      ask:['Pak Udin mau memberi nama kolam ikan 🐟.','Pak Udin wants to name his fish pond 🐟.'] },
+    { w:'قَمَرٌ',  lt:[20,23,9],   syl:[['قَ','qa'],['مَ','ma'],['رٌ','run']],          lat:'qamarun',  pic:'🌙', m:['bulan','moon'],        npc:'nur',
+      ask:['Tadi malam bulannya indah sekali 🌙. Ayo tulis namanya!','The moon was so pretty last night 🌙. Let\'s write its name!'] },
+    { w:'قَلَمٌ',  lt:[20,22,23],  syl:[['قَ','qa'],['لَ','la'],['مٌ','mun']],          lat:'qalamun',  pic:'✏️', m:['pensil','pencil'],     npc:'ais',
+      ask:['Ais mau menulis dengan pensil ✏️. Pensil itu apa bahasa Arabnya?','Ais wants to write with a pencil ✏️. What is pencil in Arabic?'] },
+    { w:'جَمَلٌ',  lt:[4,23,22],   syl:[['جَ','ja'],['مَ','ma'],['لٌ','lun']],          lat:'jamalun',  pic:'🐪', m:['unta','camel'],        npc:'hasan',
+      ask:['Dulu Kakek pernah naik unta 🐪 di padang pasir. Ayo susun katanya!','Grandpa once rode a camel 🐪 in the desert. Let\'s build the word!'] },
+    { w:'بَابٌ',   lt:[1,0,1],     syl:[['بَا','baa'],['بٌ','bun']],                    lat:'baabun',   pic:'🚪', m:['pintu','door'],        npc:'abi',
+      ask:['Abi sedang memperbaiki pintu 🚪. Mau bantu menulis katanya?','Abi is fixing the door 🚪. Will you help write the word?'] },
+    { w:'فِيلٌ',   lt:[19,27,22],  syl:[['فِي','fii'],['لٌ','lun']],                    lat:'fiilun',   pic:'🐘', m:['gajah','elephant'],    npc:'rafi',
+      ask:['Gajah 🐘 itu besar sekali! Ayo tulis namanya.','Elephants 🐘 are so big! Let\'s write the name.'] },
+    { w:'بَيْتٌ',  lt:[1,27,2],    syl:[['بَيْ','bai','bay'],['تٌ','tun']],             lat:'baitun', latEn:'baytun', pic:'🏠', m:['rumah','house'], npc:'umi',
+      ask:['Rumah 🏠 kita nyaman ya, Ibra. Ayo tulis kata rumah!','Our house 🏠 is so cosy, Ibra. Let\'s write the word for house!'] },
+    { w:'شَمْسٌ',  lt:[12,23,11],  syl:[['شَمْ','syam','sham'],['سٌ','sun']],           lat:'syamsun', latEn:'shamsun', pic:'☀️', m:['matahari','sun'], npc:'siti',
+      ask:['Bu Siti menjemur buah di bawah matahari ☀️.','Bu Siti dries fruit under the sun ☀️.'] },
+    { w:'كِتَابٌ', lt:[21,2,0,1],  syl:[['كِ','ki'],['تَا','taa'],['بٌ','bun']],        lat:'kitaabun', pic:'📖', m:['buku','book'],         npc:'hasan',
+      ask:['Kata terakhir, yang paling panjang: buku 📖! Empat huruf, kamu pasti bisa.','The last word, the longest one: book 📖! Four letters, you can do it.'] }
+  ];
+  const latOf = (W)=>EN&&W.latEn?W.latEn:W.lat;
+  const sylLat = (s)=>EN&&s[2]?s[2]:s[1];
+
+  // state lives next to the harakat season, in the same seasons key
+  const d3 = S.s3 && typeof S.s3==='object' ? S.s3 : {};
+  S.s3 = {
+    done: Array.isArray(d3.done) ? [...new Set(d3.done.filter(i=>Number.isInteger(i)&&i>=0&&i<WORDS.length))] : [],
+    q: (Number.isInteger(d3.q) && d3.q>=0 && d3.q<WORDS.length) ? d3.q : -1,
+    got: Array.isArray(d3.got) ? [...new Set(d3.got.filter(i=>Number.isInteger(i)&&i>=0&&i<4))] : []
+  };
+  if(S.s3.q>=0 && S.s3.done.includes(S.s3.q)){ S.s3.q=-1; S.s3.got=[]; }
+  const unlocked = ()=>Z.s1Done() && Z.s2AllDone();
+  const active = ()=>unlocked() && S.s3.q>=0;
+  const nextWord = ()=>{ for(let i=0;i<WORDS.length;i++) if(!S.s3.done.includes(i)) return i; return -1; };
+  const s2Live = ()=>Z.s1Done() && S.s2.started && S.s2.active>=0;
+
+  /* — word panel (top of the screen) — */
+  const wp = document.createElement('div'); wp.id='wordPanel'; document.getElementById('hud').appendChild(wp);
+  function renderPanel(pop){
+    wp.classList.toggle('on', active()); document.body.classList.toggle('wp-on', active());
+    if(!active()){ wp.innerHTML=''; return; }
+    const W=WORDS[S.s3.q], nx=nextSlot();
+    wp.innerHTML='<span class="wp-e">'+W.pic+'</span><span class="wp-s">'+W.lt.map((li,k)=>'<i class="'+(S.s3.got.includes(k)?'got':(k===nx?'nx':''))+'"'+(pop===k?' style="animation-iteration-count:2"':'')+'>'+L[li].g+'</i>').join('')+'</span>'+
+      '<span class="wp-m">'+TT(W.m[0],W.m[1])+'<br>'+S.s3.got.length+'/'+W.lt.length+'</span>';
+  }
+  wp.addEventListener('click', ()=>{ if(!active()) return; const k=nextSlot(); if(k<0) return; const l=L[WORDS[S.s3.q].lt[k]];
+    Speech.say([{ar:l.ar, lat:l.name}]); toast(TT('Cari huruf '+l.name+' '+l.g+' — ikuti kompas 🧭','Find the letter '+l.name+' '+l.g+' — follow the compass 🧭'),2600); });
+  function nextSlot(){ if(!active()) return -1; const W=WORDS[S.s3.q]; for(let k=0;k<W.lt.length;k++) if(!S.s3.got.includes(k)) return k; return -1; }
+
+  /* — letters hide around the villager who asked — */
+  const S1POS = letterBlocks.filter(b=>b.season==null).map(b=>[b.mesh.position.x,b.mesh.position.z]);
+  function wordSpots(q){
+    const W=WORDS[q], def=NPC_DEFS.find(d=>d.id===W.npc), [hx,hz]=def.home, rand=Z.rng(9001+q*131);
+    const used=[], out=[]; let guard=0;
+    while(out.length<W.lt.length && guard++<3000){
+      const a=rand()*Math.PI*2, rad=3.6+rand()*(guard>1500?9:5.5), x=Math.floor(hx+Math.cos(a)*rad), z=Math.floor(hz+Math.sin(a)*rad);
+      if(Math.abs(x)>HALF-4 || Math.abs(z)>HALF-4) continue;
+      if(inBuilding(x,z,1) || inRect(x,z,VILLAGE.pen,1) || inRect(x,z,VILLAGE.field,1)) continue;
+      const h=heightAt(x,z); let blocked=false; for(let y=h+1;y<=h+7;y++) if(solidAt(x,y,z)){ blocked=true; break; } if(blocked) continue;
+      if(Math.abs(h+1-gTop(hx,hz))>3) continue;
+      if(used.concat(S1POS).some(u=>Math.hypot(u[0]-x-0.5,u[1]-z-0.5)<(used.includes(u)?3:1.5))) continue;
+      used.push([x+0.5,z+0.5]); out.push([x+0.5,z+0.5]);
+    }
+    return out;
+  }
+  const KINDS=['crystal','balloon','chest','crystal'];
+  function buildQuest(){
+    Z.removeSeason('s3');
+    if(!active()) return;
+    const q=S.s3.q, W=WORDS[q];
+    wordSpots(q).forEach(([x,z],k)=>{
+      if(S.s3.got.includes(k)) return;
+      const li=W.lt[k];
+      Z.addBlock({ season:'s3', li, slot:k, letter:L[li], kind:KINDS[k%4], x, z, tex:letterTex(L[li]), emi:0.25, glow:0x9FE8FF });
+    });
+    pointNext(14);
+  }
+  function blockForSlot(k){ return letterBlocks.find(b=>b.season==='s3' && !b.taken && b.slot===k); }
+  function pointNext(secs){ const b=blockForSlot(nextSlot()); if(b){ hintLetter=b; hintUntil=performance.now()/1000+(secs||10); } }
+
+  const s1Nearest = nearestLetter;
+  nearestLetter = function(){
+    if(active()){ const b=blockForSlot(nextSlot()) || letterBlocks.find(b=>b.season==='s3'&&!b.taken); if(b) return {b, d:Math.hypot(b.mesh.position.x-P.x,b.mesh.position.z-P.z)}; }
+    const live = letterBlocks.filter(b=>!b.taken && b.season!=='s3');
+    if(!live.length) return null;
+    let best=null, bd=1e9; live.forEach(b=>{ const d=Math.hypot(b.mesh.position.x-P.x,b.mesh.position.z-P.z); if(d<bd){ bd=d; best=b; } });
+    return {b:best, d:bd};
+  };
+
+  /* — quests — */
+  function offerWord(q){
+    if(q<0) return;
+    const W=WORDS[q];
+    Z.talk(W.npc, [
+      TT('Assalamu\'alaikum, Ibra! ','Assalamu\'alaikum, Ibra! ')+TT(W.ask[0],W.ask[1]),
+      TT('Tolong carikan huruf untuk kata '+ar(W.w)+' <b>('+W.m[0]+')</b> '+W.pic+', ya!','Please find the letters for the word '+ar(W.w)+' <b>('+W.m[1]+')</b> '+W.pic+'!')+
+      '<br>'+TT('Hurufnya: ','Its letters: ')+ar(W.lt.map(li=>L[li].g).join(' '))+' · '+TT('tersembunyi di dekat sini — ikuti kompas 🧭','hidden nearby — follow the compass 🧭')
+    ], [
+      {t:TT('Ayo cari! ▶','Let\'s find them! ▶'), fn:()=>accept(q)},
+      {t:TT('Nanti saja','Maybe later'), cls:'ghost', fn:()=>toast(TT('Cari tanda ! di atas kepala warga kalau sudah siap.','Look for the ! above a villager when you\'re ready.'),3000)}
+    ]);
+  }
+  function accept(q){
+    if(s2Live()) Z.stopS2();
+    S.s3.q=q; S.s3.got=[]; Z.save();
+    Z.fontReady.then(()=>{ buildQuest(); renderPanel(); updateJournalBadge(); });
+    const W=WORDS[q];
+    Speech.say([{ar:W.w, lat:latOf(W), slow:0.85}]);
+    toast(TT('🧩 Cari '+W.lt.length+' huruf untuk '+W.pic+' '+W.m[0]+'!','🧩 Find '+W.lt.length+' letters for '+W.pic+' '+W.m[1]+'!'),3200);
+  }
+  function collect(b){
+    if(b.season!=='s3') return false;
+    b.taken=true; b.mesh.visible=false; b.glow.visible=false; window.HuntAPI.hideDeco(b);
+    if(!active()) return true;
+    if(!S.s3.got.includes(b.slot)) S.s3.got.push(b.slot);
+    Z.save();
+    SFX.letterFound(); haptic(15);
+    spawnBurst(b.mesh.position.x,b.base,b.mesh.position.z,0x9FE8FF);
+    Speech.say([{ar:b.letter.ar, lat:b.letter.name}]);
+    renderPanel(b.slot); updateJournalBadge();
+    const W=WORDS[S.s3.q];
+    if(S.s3.got.length>=W.lt.length){ setTimeout(()=>wordComplete(S.s3.q), 900); }
+    else { const nl=L[W.lt[nextSlot()]]; toast(TT('✨ '+b.letter.name+'! Sekarang cari '+nl.name+' '+nl.g,'✨ '+b.letter.name+'! Now find '+nl.name+' '+nl.g),2600); pointNext(10); }
+    return true;
+  }
+
+  /* — the finished word is read slowly: letters → syllables → whole word — */
+  const card=document.getElementById('huntCard'), hcBox=document.getElementById('hcBox');
+  function readWord(W){
+    const hl=(sel,k)=>()=>{ hcBox.querySelectorAll('.say').forEach(e=>e.classList.remove('say')); if(sel) hcBox.querySelectorAll(sel).forEach(e=>e.classList.add('say')); };
+    const items=[];
+    W.lt.forEach((li,k)=>items.push({ar:L[li].ar, lat:L[li].name, gap:260, on:hl('.wl'+k)}));
+    W.syl.forEach((s,k)=>items.push({ar:s[0], lat:sylLat(s), slow:0.8, gap:380, on:hl('.ws'+k)}));
+    items.push({ar:W.w, lat:latOf(W), slow:0.75, gap:200, on:hl('.wword span, .wlat span')});
+    Speech.say(items, hl(null));
+  }
+  function wordComplete(q){
+    const W=WORDS[q], n=Z.npcById(W.npc), def=NPC_DEFS.find(d=>d.id===W.npc);
+    if(!S.s3.done.includes(q)) S.s3.done.push(q);
+    S.s3.q=-1; S.s3.got=[]; Z.save();
+    Z.removeSeason('s3'); renderPanel(); updateJournalBadge();
+    try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){}
+    SFX.finale(); haptic([15,60,15,60,30]);
+    celebrating=true; celebrateUntil=performance.now()/1000+4;
+    fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),900);
+    const thanks = TT('Jazakallahu khairan, Ibra! Sekarang aku bisa menulis '+W.m[0]+' '+W.pic,'Jazakallahu khairan, Ibra! Now I can write '+W.m[1]+' '+W.pic);
+    if(n) say3D(n, EN?def.name[1]:def.name[0], thanks, 6);
+    const lettersRow = W.lt.map((li,k)=>'<span class="wl'+k+'">'+L[li].g+'</span>').join(' ');
+    hcBox.innerHTML='<div class="rays"></div><div class="where">'+TT('🧩 Kata baru!','🧩 New word!')+'</div>'+
+      '<div class="wpic">'+W.pic+'</div>'+
+      '<div class="wword" id="hcWord">'+W.syl.map((s,k)=>'<span class="ws'+k+'">'+s[0]+'</span>').join('')+'</div>'+
+      '<div class="wlat">'+W.syl.map((s,k)=>'<span class="ws'+k+'">'+sylLat(s)+'</span>').join(' · ')+'</div>'+
+      '<div class="pic"><bdi dir="rtl" style="font-size:20px;font-family:\'Scheherazade New\',serif;font-weight:700">'+lettersRow+'</bdi> '+W.pic+' = '+TT(W.m[0],W.m[1])+'</div>'+
+      '<div class="next">💬 '+(EN?def.name[1]:def.name[0])+': '+thanks+'</div>'+
+      '<div class="unlock">⭐ +1 · '+TT('Kata ke-'+S.s3.done.length+' dari '+WORDS.length,'Word '+S.s3.done.length+' of '+WORDS.length)+'</div>'+
+      '<div class="row2"><button id="hcAgain" class="alt">🔊 '+TT('Dengar lagi','Listen again')+'</button><button id="hcGo">'+TT('Lanjut ▶','Next ▶')+'</button></div>';
+    running=false; card.classList.add('on');
+    document.getElementById('hcAgain').onclick=()=>readWord(W);
+    document.getElementById('hcWord').onclick=()=>readWord(W);
+    document.getElementById('hcGo').onclick=window.HuntAPI.closeCard;
+    window.__hcAfter = ()=>{ Speech.stop(); afterWord(); };
+    setTimeout(()=>readWord(W), 500);
+  }
+  function afterWord(){
+    const nx=nextWord();
+    if(nx<0){
+      toast(TT('🏆 Masya Allah! Semua '+WORDS.length+' kata pertama sudah tersusun!','🏆 Masha Allah! All '+WORDS.length+' first words are built!'),4200);
+      SFX.finale(); fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),900);
+      if(Z.onS3Done) setTimeout(Z.onS3Done, 2500);
+      return;
+    }
+    setTimeout(()=>offerWord(nx), 900);
+  }
+
+  /* — hooks into the season frame — */
+  const prevCollect = Z.collect; Z.collect = b=>collect(b) || (prevCollect?prevCollect(b):false);
+  Z.s3Active = active;
+  Z.pauseS3 = ()=>{ if(S.s3.q>=0){ S.s3.q=-1; S.s3.got=[]; Z.save(); Z.removeSeason('s3'); renderPanel(); } };
+  Z.onS2Done = ()=>{ Z.stopS2(); updateJournalBadge(); setTimeout(()=>offerWord(nextWord()), 900); };
+  const prevOffer = Z.offer;
+  Z.offer = ()=>{ if(unlocked() && !active()){ const nx=nextWord(); if(nx>=0) return {id:WORDS[nx].npc, fn:()=>offerWord(nx)}; } return prevOffer?prevOffer():null; };
+  const prevTarget = Z.target;
+  Z.target = ()=>{
+    if(active()){ const b=blockForSlot(nextSlot()); if(b) return {x:b.mesh.position.x, z:b.mesh.position.z}; }
+    if(unlocked() && !active() && !s2Live()){ const nx=nextWord(); const n=nx>=0 && Z.npcById(WORDS[nx].npc); if(n) return {x:n.x, z:n.z}; }
+    return prevTarget?prevTarget():null;
+  };
+  const prevBadge = Z.badge;
+  Z.badge = (lab,cnt)=>{
+    if(active()){ lab.textContent=TT('Musim 3 · Kata','Season 3 · Words'); cnt.textContent=WORDS[S.s3.q].pic+' '+S.s3.got.length+' / '+WORDS[S.s3.q].lt.length+' '+TT('huruf','letters'); return true; }
+    if(unlocked() && !s2Live()){ lab.textContent=TT('Musim 3 · Kata','Season 3 · Words'); cnt.textContent=S.s3.done.length+' / '+WORDS.length+' '+TT('kata','words'); return true; }
+    return prevBadge?prevBadge(lab,cnt):false;
+  };
+  const prevWelcome = Z.welcome;
+  Z.welcome = ()=>{
+    if(active()){ const W=WORDS[S.s3.q]; toast(TT('🧩 Musim 3: cari huruf untuk '+W.pic+' '+W.m[0],'🧩 Season 3: find the letters for '+W.pic+' '+W.m[1]),3400); return true; }
+    if(unlocked() && !s2Live() && nextWord()>=0){ const d=NPC_DEFS.find(x=>x.id===WORDS[nextWord()].npc); toast(TT('🧩 '+d.name[0]+' butuh bantuanmu — ikuti kompas!','🧩 '+d.name[1]+' needs your help — follow the compass!'),3400); return true; }
+    return prevWelcome?prevWelcome():false;
+  };
+  Z.TABS.push([3, ['Musim 3','Season 3'], ['🧩 Kata','🧩 Words'], ()=>true]);
+  const prevDefault = Z.defaultTab;
+  Z.defaultTab = ()=>{ if(active() || (unlocked() && !s2Live())) return 3; return prevDefault?prevDefault():(s2Live()||Z.s1Done()?2:1); };
+  const prevRender = Z.renderTab;
+  Z.renderTab = (tab, box)=>{
+    if(tab!==3) return prevRender?prevRender(tab,box):false;
+    const el=Z.el;
+    if(!unlocked()){
+      box.appendChild(el('div','sz-card lock','<div class="sz-top"><div class="sz-ico">🔒</div><div><b>'+TT('Musim 3: Kata Pertama','Season 3: First Words')+'</b><small>'+
+        TT('Selesaikan Musim 2 (fathah, kasrah, dhammah) untuk membuka.','Finish Season 2 (fathah, kasrah, dhammah) to unlock.')+'</small></div></div>'));
+      return true;
+    }
+    const nx=nextWord();
+    const head=el('div','sz-card','<div class="sz-top"><div class="sz-ico">🧩</div><div><b>'+TT('Musim 3: Kata Pertama','Season 3: First Words')+'</b><small>'+
+      S.s3.done.length+' / '+WORDS.length+' '+TT('kata tersusun','words built')+' · '+TT('ketuk kata untuk dengar','tap a word to hear it')+'</small></div></div>'+
+      '<div class="sz-bar"><i style="width:'+(S.s3.done.length/WORDS.length*100)+'%"></i></div>');
+    if(active()){ const W=WORDS[S.s3.q]; head.appendChild(el('small','','<b style="display:block;font-size:12.5px;color:var(--green-lt)">▶ '+TT('Sedang dicari: ','Finding now: ')+W.pic+' '+TT(W.m[0],W.m[1])+' · '+S.s3.got.length+'/'+W.lt.length+'</b>')); }
+    else if(nx>=0){ const W=WORDS[nx], d=NPC_DEFS.find(x=>x.id===W.npc); const go=el('button','btn',TT('Bantu '+d.name[0]+' ▶','Help '+d.name[1]+' ▶')); go.type='button';
+      go.onclick=()=>{ Z.closeJournal(); offerWord(nx); }; head.appendChild(go); }
+    box.appendChild(head);
+    const grid=el('div','sz-words');
+    WORDS.forEach((W,i)=>{
+      const done=S.s3.done.includes(i);
+      const c=el('button','sz-word'+(done?'':' lock'), done
+        ? '<div class="e">'+W.pic+'</div><div class="a">'+W.w+'</div><div class="m">'+latOf(W)+' · '+TT(W.m[0],W.m[1])+'</div>'
+        : '<div class="e">❔</div><div class="a">'+(i===S.s3.q?W.lt.map((li,k)=>S.s3.got.includes(k)?L[li].g:'·').join(' '):'· · ·')+'</div><div class="m">'+TT('belum','not yet')+'</div>');
+      c.type='button';
+      c.onclick=()=>{ if(!done){ toast(TT('Belum tersusun — bantu warga kampung ya!','Not built yet — help the villagers!')); return; }
+        Speech.say([].concat(W.syl.map(s=>({ar:s[0],lat:sylLat(s),slow:0.8,gap:320})), [{ar:W.w,lat:latOf(W),slow:0.75}])); };
+      grid.appendChild(c);
+    });
+    box.appendChild(grid);
+    return true;
+  };
+
+  // players who finished the harakat season before words existed: move them on to the words
+  if(unlocked() && S.s3.q<0 && !S.s3.done.length && s2Live() && S.s2.active===2) Z.stopS2();
+  if(active()) Z.fontReady.then(()=>{ buildQuest(); renderPanel(); updateJournalBadge(); });
+  renderPanel(); updateJournalBadge();
+  window.Seasons.WORDS = WORDS;
+})();
+</script>
+<script>
+/* ═══════════ Huruf Harian — three letters hide in fresh places every day ═══════════
+   Same date → same letters and spots (seeded from the date). One plain letter, one with a
+   harakat, one letter of the word of the day. Finding all three keeps the streak going. */
+(function(){
+  const EN = window.BM_LANG==='en', TT=(a,b)=>EN?b:a;
+  const Z = window.Seasons, S = Z.S, WORDS = Z.WORDS, HAR = Z.HAR;
+  const ymd = d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const today = ()=>ymd(new Date());
+  const dayShift = (s,n)=>{ const [y,m,d]=s.split('-').map(Number); return ymd(new Date(y,m-1,d+n)); };
+  const isDate = s=>typeof s==='string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
+
+  const d0 = S.daily && typeof S.daily==='object' ? S.daily : {};
+  S.daily = {
+    date: isDate(d0.date) ? d0.date : '',
+    found: Array.isArray(d0.found) ? [...new Set(d0.found.filter(i=>i===0||i===1||i===2))] : [],
+    streak: Number.isInteger(d0.streak) && d0.streak>0 ? d0.streak : 0,
+    best: Number.isInteger(d0.best) && d0.best>0 ? d0.best : 0,
+    last: isDate(d0.last) ? d0.last : '',
+    hist: Array.isArray(d0.hist) ? d0.hist.filter(isDate).slice(-60) : []
+  };
+  const D = S.daily;
+  const unlocked = ()=>Z.s1Done() && Z.s2AllDone() && S.s3 && S.s3.done.length>=WORDS.length;
+  // the streak only counts while yesterday (or today) was completed
+  const liveStreak = ()=> (D.last===today() || D.last===dayShift(today(),-1)) ? D.streak : 0;
+
+  function hash(str){ let h=2166136261; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+  // what hides today
+  function plan(date){
+    const rand = Z.rng(hash('huruf-harian|'+date));
+    const W = WORDS[(rand()*WORDS.length)|0], ws = (rand()*W.lt.length)|0;
+    const li0 = (rand()*28)|0;
+    let li1 = (rand()*28)|0; if(li1===li0) li1=(li1+7)%28;
+    const r1 = (rand()*3)|0;
+    const items = [
+      {type:'plain', li:li0},
+      {type:'har', li:li1, r:r1},
+      {type:'word', li:W.lt[ws], w:WORDS.indexOf(W), ws}
+    ];
+    // spots spread over the island, away from earlier hiding places
+    const used = letterBlocks.filter(b=>b.season!=='daily').map(b=>[b.mesh.position.x,b.mesh.position.z]);
+    const kinds = Z.shuffle(['chest','balloon','crystal'], rand);
+    let guard=0;
+    items.forEach((it,k)=>{
+      it.kind = kinds[k];
+      while(guard++<3000){
+        const a=rand()*Math.PI*2, rad=5+rand()*15, x=Math.round(Math.cos(a)*rad), z=Math.round(Math.sin(a)*rad);
+        if(!Z.openGround(x,z,used,guard>2000?2:4)) continue;
+        used.push([x+0.5,z+0.5]); it.x=x+0.5; it.z=z+0.5; break;
+      }
+      if(it.x==null){ it.x=2.5+k*3; it.z=-4.5; }
+    });
+    return items;
+  }
+  let todays = null, builtFor = '';
+  const label = it=> it.type==='har' ? Z.withMark(it.li,it.r) : L[it.li].g;
+  const spoken = it=> it.type==='har' ? {ar:Z.withMark(it.li,it.r), lat:Z.sound(it.li,it.r)} : {ar:L[it.li].ar, lat:L[it.li].name};
+  const nameOf = it=> it.type==='har' ? '"'+Z.sound(it.li,it.r)+'"' : L[it.li].name;
+
+  function refresh(){
+    const t = today();
+    if(D.date!==t){ D.date=t; D.found=[]; Z.save(); }
+    if(!unlocked()){ if(builtFor){ Z.removeSeason('daily'); builtFor=''; } renderChip(); return; }
+    if(builtFor===t) return;
+    builtFor=t; todays=plan(t);
+    Z.removeSeason('daily');
+    todays.forEach((it,k)=>{
+      if(D.found.includes(k)) return;
+      const letter = it.type==='har' ? Object.assign({}, L[it.li], {name:Z.withMark(it.li,it.r)+' ('+Z.sound(it.li,it.r)+')'}) : L[it.li];
+      Z.addBlock({ season:'daily', slot:k, li:it.li, letter, kind:it.kind, x:it.x, z:it.z,
+        tex: it.type==='har' ? Z.harakatTex(it.li,it.r) : letterTex(L[it.li]), emi: it.type==='har'?HAR[it.r].emi:0.25, glow:0xFF9FD0 });
+    });
+    renderChip();
+  }
+
+  /* — the little "today" chip under the top bar — */
+  const chip = document.createElement('button'); chip.type='button'; chip.id='dailyChip'; document.getElementById('hud').appendChild(chip);
+  chip.onclick = ()=>{ if(!unlocked()) return; Z.openJournal(4); };
+  function renderChip(){
+    const on = unlocked() && !(Z.s3Active && Z.s3Active());
+    chip.classList.toggle('on', on);
+    if(!on) return;
+    const st=liveStreak();
+    chip.innerHTML = '📅 '+TT('Hari ini','Today')+' <b>'+D.found.length+'/3</b>'+(st?' · 🔥'+st:'');
+  }
+
+  /* — finding one — */
+  const card=document.getElementById('huntCard'), hcBox=document.getElementById('hcBox');
+  function collect(b){
+    if(b.season!=='daily') return false;
+    b.taken=true; b.mesh.visible=false; b.glow.visible=false; window.HuntAPI.hideDeco(b);
+    if(D.date!==today()){ refresh(); return true; }
+    if(!D.found.includes(b.slot)) D.found.push(b.slot);
+    let finished=false;
+    if(D.found.length>=3 && D.last!==today()){
+      D.streak = D.last===dayShift(today(),-1) ? D.streak+1 : 1;
+      D.last = today(); D.best = Math.max(D.best, D.streak);
+      if(!D.hist.includes(D.last)) D.hist.push(D.last); D.hist = D.hist.slice(-60);
+      finished=true;
+      try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){}
+    }
+    Z.save();
+    SFX.letterFound(); haptic(15);
+    spawnBurst(b.mesh.position.x,b.base,b.mesh.position.z,0xFF9FD0); fireworksAt(b.mesh.position.x,b.base+1.5,b.mesh.position.z);
+    celebrating=true; celebrateUntil=performance.now()/1000+2.2;
+    const it = todays[b.slot];
+    Speech.say([spoken(it)]);
+    renderChip(); applyPin(); updateJournalBadge();
+    setTimeout(()=>showCard(it, finished), 650);
+    return true;
+  }
+  function showCard(it, finished){
+    const n=D.found.length, st=liveStreak();
+    let info;
+    if(it.type==='plain') info = '<b>'+L[it.li].ar+'</b> '+TT('Huruf '+L[it.li].name,'The letter '+L[it.li].name);
+    else if(it.type==='har') info = '<b>'+HAR[it.r].ar+'</b> '+TT(L[it.li].name+' + '+HAR[it.r].name[0],L[it.li].name+' + '+HAR[it.r].name[1]);
+    else { const W=WORDS[it.w]; info = '<span>'+W.pic+'</span><b>'+W.w+'</b> '+TT('Kata hari ini: '+W.m[0],'Word of the day: '+W.m[1]); }
+    hcBox.innerHTML='<div class="rays"></div><div class="where">📅 '+TT('Huruf hari ini','Today\'s letters')+'</div>'+
+      '<div class="tile'+(it.type==='har'?' hk'+(it.r?' h'+it.r:''):'')+'" id="hcTile">'+label(it)+'</div>'+
+      '<h3>'+nameOf(it)+'</h3><div class="pic">'+info+'</div>'+
+      '<div class="bar"><i id="hcBar" style="width:'+((n-1)/3*100)+'%"></i></div>'+
+      '<div class="next">📅 '+n+' / 3'+(n<3?' · '+TT('lagi '+(3-n),(3-n)+' to go'):'')+'</div>'+
+      (finished?'<div class="unlock">🔥 '+TT(st+' hari berturut-turut!',st+(st===1?' day':' days')+' in a row!')+' ⭐ +1<small>'+
+        (st>0&&st%7===0?TT('Seminggu penuh! Lencana Bintang Rajin di ranselmu ⭐','A whole week! A Busy Star pin on your backpack ⭐'):TT('Besok ada 3 huruf baru di tempat baru.','Tomorrow 3 new letters hide in new places.'))+'</small></div>':'')+
+      '<button id="hcGo">'+(finished?TT('🎉 Hore!','🎉 Hooray!'):TT('🔍 Cari lagi!','🔍 Find more!'))+'</button>';
+    running=false; card.classList.add('on');
+    requestAnimationFrame(()=>{ const bar=document.getElementById('hcBar'); if(bar) bar.style.width=(n/3*100)+'%'; });
+    if(window.__centerGlyph){ const t=document.getElementById('hcTile'); window.__centerGlyph(t, t.textContent); }
+    document.getElementById('hcTile').onclick=()=>Speech.say([spoken(it)]);
+    document.getElementById('hcGo').onclick=window.HuntAPI.closeCard;
+    window.__hcAfter = finished ? ()=>{ SFX.finale(); fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),800); celebrating=true; celebrateUntil=performance.now()/1000+4; } : null;
+    if(finished) setTimeout(()=>{ SFX.weaponUp(); haptic([12,40,18]); },700);
+  }
+
+  /* — a star pin on the backpack after a full week — */
+  let pin=null;
+  function applyPin(){
+    if(pin || D.best<7) return;
+    const s=tex((x,sz)=>{ x.clearRect(0,0,sz,sz); star5(x,sz/2,sz/2,sz*0.46,'#FFC83D'); star5(x,sz/2,sz/2,sz*0.26,'#FFF3B0'); },64,true);
+    pin=new THREE.Mesh(new THREE.PlaneGeometry(0.26,0.26), new THREE.MeshLambertMaterial({map:s, transparent:true, emissive:0x664400, emissiveIntensity:0.4, side:THREE.DoubleSide}));
+    pin.position.set(0,1.06,0.47); playerGroup.add(pin);
+  }
+
+  /* — journal page — */
+  Z.TABS.push([4, ['Harian','Daily'], ['📅 Hari ini','📅 Today'], ()=>true]);
+  const prevRender = Z.renderTab;
+  Z.renderTab = (tab, box)=>{
+    if(tab!==4) return prevRender?prevRender(tab,box):false;
+    const el=Z.el;
+    if(!unlocked()){
+      box.appendChild(el('div','sz-card lock','<div class="sz-top"><div class="sz-ico">🔒</div><div><b>'+TT('Huruf Harian','Daily Letters')+'</b><small>'+
+        TT('Selesaikan Musim 3 (semua kata pertama) untuk membuka 3 huruf baru setiap hari.','Finish Season 3 (all first words) to unlock 3 new letters every day.')+'</small></div></div>'));
+      return true;
+    }
+    refresh();
+    const st=liveStreak();
+    const c=el('div','sz-card','<div class="sz-top"><div class="sz-ico">📅</div><div><b>'+TT('Huruf Harian','Daily Letters')+' · '+D.found.length+'/3</b><small>🔥 '+
+      TT(st+' hari berturut-turut',st+(st===1?' day':' days')+' in a row')+(D.best?' · '+TT('rekor ','best ')+D.best:'')+'</small></div></div>'+
+      '<div class="sz-bar"><i style="width:'+(D.found.length/3*100)+'%"></i></div>');
+    const ch=el('div','sz-chips');
+    todays.forEach((it,k)=>{
+      const got=D.found.includes(k), e=el('button','', got?label(it):'?'); e.type='button';
+      if(!got){ e.style.opacity='.55'; e.style.borderStyle='dashed'; }
+      e.onclick=()=>{ if(got) Speech.say([spoken(it)]); else toast(TT('Masih tersembunyi — ikuti kompas 🧭','Still hidden — follow the compass 🧭')); };
+      ch.appendChild(e);
+    });
+    c.appendChild(ch);
+    c.appendChild(el('small','','<span style="display:block;font-size:12.5px;font-weight:700;color:var(--cream-dim);margin-top:8px">'+
+      TT('Satu huruf biasa, satu berharakat, satu untuk kata hari ini ','One plain letter, one with harakat, one for the word of the day ')+WORDS[todays[2].w].pic+'</span>'));
+    const days=el('div','sz-days');
+    const DN = EN?['Su','Mo','Tu','We','Th','Fr','Sa']:['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+    for(let i=6;i>=0;i--){ const ds=dayShift(today(),-i), [y,m,d]=ds.split('-').map(Number), ok=D.hist.includes(ds);
+      days.appendChild(el('span', ok?'ok':'', '<b>'+(ok?'✓':(i===0?'·':'–'))+'</b>'+DN[new Date(y,m-1,d).getDay()])); }
+    c.appendChild(days);
+    box.appendChild(c);
+    if(D.best>=7) box.appendChild(el('div','sz-card','<div class="sz-top"><div class="sz-ico">⭐</div><div><b>'+TT('Lencana Bintang Rajin','Busy Star pin')+'</b><small>'+TT('Hadiah seminggu penuh mencari huruf.','For a whole week of letter hunting.')+'</small></div></div>'));
+    return true;
+  };
+  const prevDefault = Z.defaultTab;
+  Z.defaultTab = ()=>{ const d=prevDefault?prevDefault():1; if(d===3 && unlocked() && !(Z.s3Active&&Z.s3Active())) return 4; return d; };
+
+  /* — hooks — */
+  const prevCollect = Z.collect; Z.collect = b=>collect(b) || (prevCollect?prevCollect(b):false);
+  const prevTarget = Z.target;
+  Z.target = ()=>{ const t=prevTarget?prevTarget():null; if(t) return t;
+    if(!unlocked()) return null;
+    let best=null, bd=1e9; letterBlocks.forEach(b=>{ if(b.season!=='daily'||b.taken) return; const d=Math.hypot(b.mesh.position.x-P.x,b.mesh.position.z-P.z); if(d<bd){ bd=d; best=b; } });
+    return best ? {x:best.mesh.position.x, z:best.mesh.position.z} : null; };
+  const prevBadge = Z.badge;
+  Z.badge = (lab,cnt)=>{
+    if(unlocked() && !(Z.s3Active&&Z.s3Active())){ const sl=letterBlocks.some(b=>b.season==='s2'&&!b.taken);
+      if(!sl){ lab.textContent=TT('Huruf Harian','Daily Letters'); cnt.textContent=D.found.length+' / 3'+(liveStreak()?' · 🔥'+liveStreak():''); return true; } }
+    return prevBadge?prevBadge(lab,cnt):false;
+  };
+  const prevWelcome = Z.welcome;
+  Z.welcome = ()=>{
+    if(unlocked()){ refresh(); toast(D.found.length>=3 ? TT('📅 Huruf hari ini sudah lengkap! Besok ada yang baru 🔥','📅 Today\'s letters are done! New ones tomorrow 🔥')
+      : TT('📅 Ada 3 huruf baru hari ini — ikuti kompas!','📅 3 new letters are hiding today — follow the compass!'),3600); return true; }
+    return prevWelcome?prevWelcome():false;
+  };
+  const prevS3Done = Z.onS3Done;
+  Z.onS3Done = ()=>{ if(prevS3Done) prevS3Done(); refresh(); updateJournalBadge();
+    Z.talk('hasan', [TT('Masya Allah, Ibra! Sepuluh kata pertama sudah kamu susun 🏆','Masha Allah, Ibra! You built ten first words 🏆'),
+      TT('Mulai sekarang, setiap hari ada <b>3 huruf baru</b> yang bersembunyi di pulau. Datang lagi tiap hari, ya! 📅🔥','From now on, <b>3 new letters</b> hide on the island every day. Come back every day! 📅🔥')],
+      [{t:TT('Ayo cari huruf hari ini ▶','Find today\'s letters ▶'), fn:()=>{ refresh(); updateJournalBadge(); }}]); };
+  let acc=0;
+  const prevTick = Z.tick;
+  Z.tick = (dt,t)=>{ if(prevTick) prevTick(dt,t); acc+=dt; if(acc>2){ acc=0; const was=builtFor; refresh(); if(builtFor!==was){ updateJournalBadge(); } } };
+  Z.fontReady.then(()=>{ refresh(); applyPin(); updateJournalBadge(); });
 })();
 </script>
 </body>

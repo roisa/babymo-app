@@ -36,7 +36,8 @@
   "🌳 Baby Mo: \"Tanam 'taman' kecil di sekitar sini!\"": "🌳 Baby Mo: \"Plant a little garden around here!\"", "⛺ Baby Mo: \"Bikin tenda buat istirahat, seru tuh!\"": "⛺ Baby Mo: \"Build a tent for a rest — fun!\"",
   "🚧 Baby Mo: \"Buat pagar sekeliling rumahmu!\"": "🚧 Baby Mo: \"Build a fence around your house!\"",
   "🏆 Semua 28 huruf hijaiyah ditemukan, hebat Ibra!": "🏆 All 28 hijaiyah letters found — great job, Ibra!",
-  "📋 Tautan disalin!": "📋 Link copied!", "Gagal membagikan, coba lagi ya": "Couldn't share — please try again", "Bismillah": "Bismillah"
+  "📋 Tautan disalin!": "📋 Link copied!", "Gagal membagikan, coba lagi ya": "Couldn't share — please try again", "Bismillah": "Bismillah",
+  "🌙 Musim Petualangan": "🌙 Adventure Seasons"
 }, [
   [/^✨ Ditemukan: (.+?) — (.+)$/, "✨ Found: $1 — $2"],
   [/^✨ Ditemukan: (.+)$/, "✨ Found: $1"],
