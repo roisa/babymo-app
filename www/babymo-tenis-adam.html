@@ -488,7 +488,9 @@ function play(seq,ms,then){
 }
 function swing(side,then){
   if(side==="bh"){ play(["backhand-3","backhand-4","backhand-5","fh-two-6"],80,then); return; } /* two-handed finish over the shoulder, smiling */
-  var b=FH_SET[(G&&G.fh)||"one"]; play([b+3,b+4,b+5,b+6],80,then); }
+  var st=(G&&G.fh)||"one", b=FH_SET[st];
+  if(st!=="two"){ play([b+3,b+4,b+5,"fh-one-6"],80,then); return; } /* one-handed forehands finish on the smiling follow-through */
+  play([b+3,b+4,b+5,b+6],80,then); }
 /* forehand styles: two one-handed swings (classic + new) and a two-handed one */
 var FH_SET={ one:"fh-", one2:"fh-one-", two:"fh-two-" }, FH_KEY="bm_tenis_fh_style";
 function fhChoice(){ try{ return localStorage.getItem(FH_KEY)||"mix"; }catch(e){ return "mix"; } }
@@ -618,7 +620,7 @@ function tapHit(side){
 }
 function hit(side){
   G.hits++; TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
-  swing(side,function(){ if(side!=="bh") pose("win-fist"); }); /* backhand stays on its smiling two-handed finish */
+  swing(side,function(){ if(side==="fh" && G && G.fh==="two") pose("win-fist"); }); /* backhand and one-handed forehands stay on their smiling finish */
   var from=G.hitX, to=lerp(120,280,Math.random());
   pop(["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
   animate(.85,function(p){ var b=outgoing(Math.min(p,1),from,to,true); place(b.gx,b.gy,b.h,b.s); if(p>=1.1){ hideBall(); return false; } });
