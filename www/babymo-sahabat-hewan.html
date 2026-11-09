@@ -185,6 +185,11 @@ h1{color:#E8590C}
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
 .btn-pri{color:#fff}
+/* real-day morning note on the home screen (both themes: uses the theme variables) */
+.mnote{width:100%;margin-top:12px;padding:10px 14px;border-radius:18px;background:var(--card);border:1.5px solid var(--border);font-weight:800;font-size:15px;line-height:1.35;text-align:center;color:var(--ink)}
+.mnote:empty{display:none}
+.mnote.morn{border-color:#FFC83D;background:linear-gradient(135deg,rgba(255,200,61,.22),rgba(255,200,61,.08))}
+.mnote small{display:block;font-size:13px;color:var(--soft);margin-top:2px}
 .tool{border-radius:20px!important}
 </style>
 <script src="bm-icons.js" defer></script>
@@ -204,6 +209,7 @@ h1{color:#E8590C}
     <h1>Sahabat Hewan Mo</h1>
     <p class="sub">Rawat kucing dan hewan di peternakan kecil Baby Mo. Beri makan, beri minum, bersihkan, dan sayangi mereka setiap hari!</p>
     <div class="friends" id="friends"></div>
+    <div class="mnote" id="mnote" aria-live="polite"></div>
     <div class="row"><button class="btn-pri" id="goFarm">🐾 Mulai Merawat</button></div>
     <div class="row" style="margin-top:10px"><button class="btn-sec" id="goBook">📖 Buku Sahabat</button></div>
     <div class="quote">
@@ -360,6 +366,20 @@ function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"null"); if(!d
 function save(){ try{ localStorage.setItem(KEY,JSON.stringify(D)); }catch(e){} }
 var D = load();
 var STAR_MAX = 9;
+
+/* ═════ real days ═════
+   A new REAL date (local) means the night has passed by itself: the animals wake up
+   hungry and thirsty again. D.real = the last real date the farm was opened.
+   The 🌙 Tidur button still works — it is a "nap" that moves the in-game day on,
+   but it never touches D.real, so the real-date morning only happens when
+   D.real < today. However long the child was away, it is only ONE gentle morning. */
+function pad2(n){ return (n<10?"0":"")+n; }
+function todayStr(){ var d=new Date(); return d.getFullYear()+"-"+pad2(d.getMonth()+1)+"-"+pad2(d.getDate()); }
+function daysBetween(a,b){ var pa=a.split("-"), pb=b.split("-"); return Math.round((Date.UTC(+pb[0],pb[1]-1,+pb[2])-Date.UTC(+pa[0],pa[1]-1,+pa[2]))/864e5); }
+function validDay(x){ return typeof x==="string" && /^\d{4}-\d{2}-\d{2}$/.test(x); }
+function hashStr(t){ var h=2166136261; for(var i=0;i<t.length;i++){ h^=t.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+if(!validDay(D.real)){ D.real=todayStr(); save(); }   /* old saves + first visit: today, no catch-up */
+function daily(){ return (window.BabyMo&&BabyMo.daily)||null; }
 function starCount(){ return Object.keys(D.stars).length; }
 function giveStar(id){ if(D.stars[id]) return false; D.stars[id]=1; save(); try{ kit().addStars && kit().addStars(1); }catch(e){} return true; }
 function basketTotal(){ var n=0; for(var k in D.basket) n+=D.basket[k]; return n; }
@@ -579,6 +599,7 @@ async function doTool(t){
     await lesson("susu",{ title:g[1]+" "+L("Alhamdulillah!","Alhamdulillah!"), text:L("Telur, susu, dan wol adalah nikmat dari Allah lewat hewan-hewan.","Eggs, milk and wool are Allah's gifts through animals.") });
   }
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('sahabat-hewan','care'); }catch(e){}
+  await careReward();
   if(D.have.every(function(j){ var x=D.st[j]; return x.fed&&x.water&&x.clean&&x.pet; }) && !D.seen["allhappy"+D.day]){
     D.seen["allhappy"+D.day]=1; save(); pose("jump"); sfx("win");
     var st=giveStar("lovely");
@@ -612,6 +633,17 @@ async function sleep(){
   say("Bismika Allahumma ahya wa amut");
   await pop("🌙 Bismika Allahumma ahya wa amut<small>"+L("Dengan nama-Mu ya Allah, aku hidup dan aku mati.","In Your name, O Allah, I live and I die.")+"</small>",2600);
   // a new day
+  var nd=advanceDay();
+  save();
+  await wait(400);
+  $("night").classList.remove("on"); renderAll();
+  pose("wave"); say(L("Assalamu'alaikum, teman-teman!","Assalamu'alaikum, friends!"));
+  await pop("☀️ "+L("Hari ","Day ")+D.day+"<small>Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur</small>",2300);
+  await welcomeNew(nd.newcomer, nd.chicks);
+  pose("idle"); busy=false; renderTools();
+}
+/* the night's changes (shared by 🌙 Tidur and the real-date morning) */
+function advanceDay(){
   D.day++;
   D.have.forEach(function(k){ var s=D.st[k]; s.fed=false; s.water=false; s.pet=false; s.got=false; s.clean=Math.random()<.6; });
   var newcomer=null;
@@ -619,11 +651,9 @@ async function sleep(){
   if(newcomer){ D.have.push(newcomer); D.st[newcomer]=freshAnimal(); D.st[newcomer].clean=false; }
   var chicksNow = !D.chicks && D.day>=3;
   if(chicksNow) D.chicks=true;
-  save();
-  await wait(400);
-  $("night").classList.remove("on"); renderAll();
-  pose("wave"); say(L("Assalamu'alaikum, teman-teman!","Assalamu'alaikum, friends!"));
-  await pop("☀️ "+L("Hari ","Day ")+D.day+"<small>Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur</small>",2300);
+  return { newcomer:newcomer, chicks:chicksNow };
+}
+async function welcomeNew(newcomer, chicksNow){
   if(newcomer){
     var a=ANIMALS[newcomer]; animalSound(a.snd); pose("happy"); sfx("win");
     var st=giveStar("friend-"+newcomer); renderStars();
@@ -635,7 +665,57 @@ async function sleep(){
     pose("wow"); await card({ art:"anakAyam", title:"🐣 "+L("Ciko punya anak!","Ciko has chicks!"), text:L("Dua anak ayam lucu menetas. Mereka selalu mengikuti induknya.","Two cute chicks have hatched. They always follow their mother."), adab:"induk" });
     D.adab.induk=1; save();
   }
-  pose("idle"); busy=false; renderTools();
+}
+
+/* ═════ the real-date morning ═════ */
+var SURPRISES=["egg","butterfly","rainbow"];
+function catchUp(){
+  var t=todayStr();
+  if(!validDay(D.real) || D.real>t){ D.real=t; save(); return false; }   /* clock moved back: just re-anchor */
+  var gap=daysBetween(D.real,t);
+  if(gap<1) return false;
+  var nd=advanceDay();
+  var sp=SURPRISES[hashStr(t+"|hewan-kejutan")%SURPRISES.length];
+  if(sp==="egg"){ if(D.have.indexOf("ayam")>=0) D.basket.telur=(D.basket.telur||0)+1; else sp="butterfly"; }
+  D.real=t; D.morning={ gap:gap, newcomer:nd.newcomer, chicks:nd.chicks, surprise:sp };
+  save();
+  return true;
+}
+function firstNeedy(){
+  for(var i=0;i<D.have.length;i++){ var s=D.st[D.have[i]]; if(!s.fed) return D.have[i]; }
+  return D.have[0];
+}
+async function playMorning(){
+  var m=D.morning; if(!m || busy) return;
+  D.morning=null; save();
+  busy=true; renderTools(); sel=null; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.remove("sel"); });
+  hint("☀️ "+L("Selamat pagi!","Good morning!"));
+  $("night").classList.add("on"); D.have.forEach(function(k){ renderAnimal(k,"sleep"); }); pose("sleep");
+  await wait(900);
+  $("night").classList.remove("on"); renderAll(); pose("yawn"); await wait(700);
+  pose("wave"); sfx("star");
+  var k=firstNeedy(), n=pname(k);
+  say(L("Selamat pagi! "+n+" lapar, ayo beri makan.","Good morning! "+n+" is hungry — time for breakfast!"));
+  await pop("☀️ "+L("Selamat pagi!","Good morning!")+"<small>Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur</small>",2400);
+  if(m.gap>=2) { pose("cuddle"); animalSound(ANIMALS[k].snd); await pop("💗 "+L(n+" kangen kamu!",n+" missed you!")+"<small>"+L("Senang kamu datang lagi.","So happy you're back.")+"</small>",2000); }
+  await welcomeNew(m.newcomer, m.chicks);
+  if(m.surprise==="egg" && D.have.indexOf("ayam")>=0){ pose("wow"); sfx("star"); renderAll();
+    await pop("🥚 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Ciko bertelur tadi malam — sudah masuk keranjang.","Ciko laid an egg in the night — it's in the basket.")+"</small>",2300); }
+  else if(m.surprise==="butterfly"){ pose("wow"); sfx("star");
+    await pop("🦋 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Kupu-kupu cantik mampir ke peternakan.","A pretty butterfly came to visit the farm.")+"</small>",2200); }
+  else if(m.surprise==="rainbow"){ pose("wow"); sfx("star");
+    await pop("🌈 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Ada pelangi di langit. Subhanallah!","There's a rainbow in the sky. Subhanallah!")+"</small>",2200); }
+  pose("worry"); FarmKit.setState(spotEls[k].querySelector(".farm-a"),"hungry");
+  await pop("🥣 "+L(n+" lapar, ayo beri makan!",n+" is hungry — time for breakfast!"),1900);
+  pose("idle"); busy=false;
+  selectAnimal(k);
+}
+/* daily care reward: once per real day when every friend has food, water and is clean */
+async function careReward(){
+  var t=todayStr(); if(D.careDay===t || !allCared()) return;
+  D.careDay=t; save();
+  var got=false; try{ var dl=daily(); got=!!(dl && dl.reward("sahabat-hewan","care-all",1)); }catch(e){}
+  if(got){ sfx("win"); pose("jump"); await pop("⭐ "+L("Hadiah hari ini!","Today's reward!")+"<small>"+L("Semua sahabat sudah makan, minum, dan bersih. Besok pagi mereka menunggumu lagi!","Every friend has food, water and is clean. They'll wait for you again tomorrow morning!")+"</small>",2600); }
 }
 
 /* ═════ basket & sharing ═════ */
@@ -713,14 +793,20 @@ function renderHome(){
   $("friends").innerHTML=ORDER.map(function(k){ return '<span class="'+(D.have.indexOf(k)>=0?'on':'')+'">'+ANIMALS[k].e+'</span>'; }).join('');
   var started=D.day>1||D.have.some(function(k){ return D.st[k].fed; });
   $("goFarm").textContent=started?"🐾 "+L("Lanjut · Hari ","Continue · Day ")+D.day:"🐾 "+L("Mulai Merawat","Start Caring");
+  var mn=$("mnote");
+  if(D.morning){ var k=firstNeedy(); mn.className="mnote morn"; mn.innerHTML="☀️ "+L("Selamat pagi! "+pname(k)+" lapar, ayo beri makan.","Good morning! "+pname(k)+" is hungry — time for breakfast!")+(D.morning.gap>=2?"<small>"+L("Sahabat-sahabatmu kangen kamu 💗","Your animal friends missed you 💗")+"</small>":""); }
+  else if(D.careDay===todayStr()){ mn.className="mnote"; mn.innerHTML="✅ "+L("Semua sahabat sudah dirawat hari ini.","Every friend is cared for today.")+"<small>"+L("Datang lagi besok pagi, mereka akan lapar lagi 🌅","Come back tomorrow morning — they'll be hungry again 🌅")+"</small>"; }
+  else { mn.className="mnote"; mn.innerHTML=started?"🌤️ "+L("Sahabat-sahabatmu menunggu. Ayo rawat mereka hari ini!","Your animal friends are waiting. Let's look after them today!"):""; }
   renderStars();
 }
 $("hero").insertAdjacentHTML("beforeend",'<div class="pet">'+FarmKit.animal("kucing",{state:"happy"})+'</div>');
 
 /* ═════ wiring ═════ */
 function enterFarm(){
+  catchUp();
   show("s-farm"); renderAll(); moPlace(200,396,142,false); pose("idle");
-  if(!D.seen.intro){ D.seen.intro=1; save(); pose("wave"); say(L("Assalamu'alaikum! Ayo rawat sahabat-sahabat kita!","Assalamu'alaikum! Let's look after our animal friends!"));
+  if(D.morning && D.seen.intro){ playMorning(); return; }
+  if(!D.seen.intro){ D.morning=null; D.seen.intro=1; save(); pose("wave"); say(L("Assalamu'alaikum! Ayo rawat sahabat-sahabat kita!","Assalamu'alaikum! Let's look after our animal friends!"));
     pop("👋 "+L("Assalamu'alaikum! Ayo rawat sahabat hewan!","Assalamu'alaikum! Let's care for our animal friends!"),2000); }
 }
 buildSpots();
@@ -737,7 +823,16 @@ $("resetBtn").addEventListener("click",function(){
 });
 (function(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*45).toFixed(1)+'%;animation-delay:'+(Math.random()*1.4).toFixed(2)+'s"></i>'; n.innerHTML=h; })();
 if(window.BM_LANG==="en") $("quoteTxt").textContent='"There is no creature on earth, nor bird that flies with its wings, but they are communities like you."';
+catchUp();
 renderHome();
+/* the app was left open overnight (or resumed from the background on a new day) */
+function onWake(){
+  if(document.visibilityState==="hidden" || !catchUp()) return;
+  if($("s-farm").classList.contains("on")){ renderAll(); if(!busy && !$("modal").classList.contains("on")) playMorning(); }
+  else renderHome();
+}
+document.addEventListener("visibilitychange",onWake);
+window.addEventListener("pageshow",function(e){ if(e.persisted) onWake(); });
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
