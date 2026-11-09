@@ -361,6 +361,11 @@ var STATIONS = [
     how:"Ketuk tombol PUKUL saat bola sudah memantul dan sampai di dekat Kak Adam.", howIcon:"👆",
     fact:"Bola merah dipakai anak-anak yang baru belajar. Bolanya lebih besar, lebih pelan, dan memantul lebih rendah — jadi lebih mudah dipukul!",
     learn:"Dalam tenis, bola boleh memantul satu kali sebelum dipukul. Sabar menunggu pantulan membuat pukulan lebih tepat." },
+  { key:"bh", tipEn:"Now the <b>backhand</b>! When the ball comes to the side <b>without</b> my racket hand, hold the racket with <b>both hands</b>, turn, and swing!", icon:"🙌", ball:"red", title:"Backhand Dua Tangan", short:"Pukul dengan dua tangan",
+    tip:"Sekarang <b>backhand</b>! Kalau bola datang ke sisi <b>tanpa</b> tangan raket, pegang raket dengan <b>dua tangan</b>, putar badan, lalu ayun!",
+    how:"Semua bola datang ke kanan layar. Ketuk BACKHAND saat bola sampai di dekat Kak Adam.", howIcon:"🙌",
+    fact:"Backhand dua tangan membuat raket lebih stabil dan pukulan lebih kuat. Banyak juara dunia memakai backhand dua tangan!",
+    learn:"Backhand dipukul dari sisi yang tidak memegang raket. Dua tangan membuat pukulan kuat dan terkontrol." },
   { key:"sisi", tipEn:"If the ball comes to my <b>racket-hand side</b>, use a <b>forehand</b>. If it comes to the other side, use a <b>two-handed backhand</b> — both hands on the racket for power!", icon:"↔️", ball:"red", title:"Forehand & Backhand", short:"Pilih pukulan yang tepat",
     tip:"Kalau bola datang ke <b>sisi tangan raket</b>, pakai <b>forehand</b>. Kalau ke sisi satunya, pakai <b>backhand dua tangan</b> — kedua tangan memegang raket supaya kuat!",
     how:"Kak Adam menghadap kamu. Bola ke kiri layar? Forehand. Ke kanan layar? Backhand.", howIcon:"↔️",
@@ -387,7 +392,7 @@ var BALLS_PER = 8;
 
 /* ───────── storage ───────── */
 var KEY = "bm_tenis_adam_v1";
-function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0]; if(d.stars.length===6) d.stars.splice(2,1); return d; }catch(e){ return {stars:[0,0,0,0,0]}; } }
+function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0,0]; if(!d.v){ if(d.stars.length===6) d.stars.splice(2,1); if(d.stars.length===5) d.stars.splice(1,0,0); d.v=2; } return d; }catch(e){ return {stars:[0,0,0,0,0,0],v:2}; } }
 function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){} }
 var DATA = load();
 function T(s){ return (window.BM_T ? window.BM_T(s) : s); }
@@ -422,7 +427,7 @@ function renderMap(){
 /* ───────── intro ───────── */
 var CUR=0;
 var READY="fh-two-1"; /* ready position: knees bent, racket in front, both hands on the grip */
-var INTRO_POSE=["hold-ball",READY,"shuffle-3","serve-blue-1","wave-3"];
+var INTRO_POSE=["hold-ball","backhand-3",READY,"shuffle-3","serve-blue-1","wave-3"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
   $("introKicker").textContent="Latihan "+(i+1);
@@ -550,7 +555,7 @@ function startStation(i){
   adamTo("C"); pose(READY); hideBall();
   show("s-play");
   say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
-  ({pantul:setupPantul,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
+  ({pantul:setupPantul,bh:setupBh,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
 }
 function count(){ $("playCount").textContent=G.hits+" / "+G.total; }
 function finishAfter(ms){ setTimeout(function(){ if(G) finish(); }, ms); }
@@ -610,10 +615,19 @@ function done(ok){
   if(G.onPoint){ G.onPoint(ok); return; }
   dot(G.n, ok?"ok":"no"); G.n++; count();
   if(G.n>=G.total){ G.over=true; finishAfter(1300); return; }
-  nextBall(function(){ feed(G.mode==="sides" ? (Math.random()<.5?"fh":"bh") : "fh"); }, 1300);
+  nextBall(function(){ feed(G.mode==="sides" ? (Math.random()<.5?"fh":"bh") : G.mode==="bh" ? "bh" : "fh"); }, 1300);
 }
 
-/* ── 2. Forehand & backhand ── */
+/* ── 2. Two-handed backhand only ── */
+function setupBh(){
+  G.mode="bh"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
+  controls('<button class="btn-pri" id="hitBtn">🙌 BACKHAND!</button>');
+  $("hitBtn").addEventListener("click",function(){ tapHit("bh"); });
+  stage.onclick=function(){ tapHit("bh"); };
+  pop("Dua tangan, siap?","tip",1000); nextBall(function(){ feed("bh"); },1200);
+}
+
+/* ── 3. Forehand & backhand ── */
 function setupSisi(){
   G.mode="sides"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
   controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>🙌 dua tangan</small></button>');
