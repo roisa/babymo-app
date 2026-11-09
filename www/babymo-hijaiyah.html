@@ -190,7 +190,7 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 /* ═══ Seasons (harakat, words, daily): needed in both themes ═══ */
 #jTabs{display:flex;gap:6px;margin:10px 0 4px}
 #jTabs:empty{display:none}
-#jTabs button{flex:1;min-height:44px;border-radius:14px;border:1.5px solid var(--card-b);background:rgba(127,140,150,.12);color:var(--cream);font:800 12.5px var(--ui);padding:6px 4px;line-height:1.15}
+#jTabs button{flex:1;min-width:0;min-height:44px;border-radius:14px;border:1.5px solid var(--card-b);background:rgba(127,140,150,.12);color:var(--cream);font:900 12.5px var(--ui);padding:6px 2px;line-height:1.15;white-space:nowrap}
 #jTabs button.on{background:var(--green);color:#06231A;border-color:var(--green)}
 #jTabs button small{display:block;font-size:11.5px;font-weight:800;opacity:.85}
 #jSeason{text-align:left;margin:10px 0 4px}
@@ -238,6 +238,9 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 #wordPanel .wp-m{font-size:12px;font-weight:900;color:#5A6878;max-width:90px;line-height:1.2}
 body.wp-on #compass{top:122px}
 body.wp-on #toast{top:184px}
+#dailyChip{position:absolute;top:62px;left:10px;display:none;align-items:center;gap:4px;min-height:40px;padding:6px 12px;border-radius:99px;border:1.5px solid var(--card-b);background:var(--card);color:var(--cream);font:800 13.5px var(--ui);pointer-events:auto}
+#dailyChip.on{display:flex}
+#dailyChip b{color:var(--gold-lt);font-weight:900}
 @media (max-height:500px) and (orientation:landscape){
   #compass{left:auto;right:12px;margin-left:0;top:60px}
   body.wp-on #compass{top:60px}
@@ -3424,8 +3427,8 @@ tick();
   let jTab = 1;
   const tabsEl=document.getElementById('jTabs'), introEl=document.getElementById('jIntro'), gridEl=document.getElementById('journalGrid'), seasonEl=document.getElementById('jSeason');
   const TABS = [
-    [1, ['📖 Musim 1','📖 Season 1'], ['Huruf','Letters'], ()=>true],
-    [2, ['✨ Musim 2','✨ Season 2'], ['Harakat','Harakat'], ()=>true]
+    [1, ['Musim 1','Season 1'], ['📖 Huruf','📖 Letters'], ()=>true],
+    [2, ['Musim 2','Season 2'], ['✨ Harakat','✨ Harakat'], ()=>true]
   ];
   window.Seasons.TABS = TABS;
   function closeJournal(){ veil.journal.classList.remove('on'); running=true; }
@@ -3725,7 +3728,7 @@ tick();
     if(unlocked() && !s2Live() && nextWord()>=0){ const d=NPC_DEFS.find(x=>x.id===WORDS[nextWord()].npc); toast(TT('🧩 '+d.name[0]+' butuh bantuanmu — ikuti kompas!','🧩 '+d.name[1]+' needs your help — follow the compass!'),3400); return true; }
     return prevWelcome?prevWelcome():false;
   };
-  Z.TABS.push([3, ['🧩 Musim 3','🧩 Season 3'], ['Kata','Words'], ()=>true]);
+  Z.TABS.push([3, ['Musim 3','Season 3'], ['🧩 Kata','🧩 Words'], ()=>true]);
   const prevDefault = Z.defaultTab;
   Z.defaultTab = ()=>{ if(active() || (unlocked() && !s2Live())) return 3; return prevDefault?prevDefault():(s2Live()||Z.s1Done()?2:1); };
   const prevRender = Z.renderTab;
@@ -3765,6 +3768,216 @@ tick();
   if(active()) Z.fontReady.then(()=>{ buildQuest(); renderPanel(); updateJournalBadge(); });
   renderPanel(); updateJournalBadge();
   window.Seasons.WORDS = WORDS;
+})();
+</script>
+<script>
+/* ═══════════ Huruf Harian — three letters hide in fresh places every day ═══════════
+   Same date → same letters and spots (seeded from the date). One plain letter, one with a
+   harakat, one letter of the word of the day. Finding all three keeps the streak going. */
+(function(){
+  const EN = window.BM_LANG==='en', TT=(a,b)=>EN?b:a;
+  const Z = window.Seasons, S = Z.S, WORDS = Z.WORDS, HAR = Z.HAR;
+  const ymd = d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  const today = ()=>ymd(new Date());
+  const dayShift = (s,n)=>{ const [y,m,d]=s.split('-').map(Number); return ymd(new Date(y,m-1,d+n)); };
+  const isDate = s=>typeof s==='string' && /^\d{4}-\d{2}-\d{2}$/.test(s);
+
+  const d0 = S.daily && typeof S.daily==='object' ? S.daily : {};
+  S.daily = {
+    date: isDate(d0.date) ? d0.date : '',
+    found: Array.isArray(d0.found) ? [...new Set(d0.found.filter(i=>i===0||i===1||i===2))] : [],
+    streak: Number.isInteger(d0.streak) && d0.streak>0 ? d0.streak : 0,
+    best: Number.isInteger(d0.best) && d0.best>0 ? d0.best : 0,
+    last: isDate(d0.last) ? d0.last : '',
+    hist: Array.isArray(d0.hist) ? d0.hist.filter(isDate).slice(-60) : []
+  };
+  const D = S.daily;
+  const unlocked = ()=>Z.s1Done() && Z.s2AllDone() && S.s3 && S.s3.done.length>=WORDS.length;
+  // the streak only counts while yesterday (or today) was completed
+  const liveStreak = ()=> (D.last===today() || D.last===dayShift(today(),-1)) ? D.streak : 0;
+
+  function hash(str){ let h=2166136261; for(let i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } return h>>>0; }
+  // what hides today
+  function plan(date){
+    const rand = Z.rng(hash('huruf-harian|'+date));
+    const W = WORDS[(rand()*WORDS.length)|0], ws = (rand()*W.lt.length)|0;
+    const li0 = (rand()*28)|0;
+    let li1 = (rand()*28)|0; if(li1===li0) li1=(li1+7)%28;
+    const r1 = (rand()*3)|0;
+    const items = [
+      {type:'plain', li:li0},
+      {type:'har', li:li1, r:r1},
+      {type:'word', li:W.lt[ws], w:WORDS.indexOf(W), ws}
+    ];
+    // spots spread over the island, away from earlier hiding places
+    const used = letterBlocks.filter(b=>b.season!=='daily').map(b=>[b.mesh.position.x,b.mesh.position.z]);
+    const kinds = Z.shuffle(['chest','balloon','crystal'], rand);
+    let guard=0;
+    items.forEach((it,k)=>{
+      it.kind = kinds[k];
+      while(guard++<3000){
+        const a=rand()*Math.PI*2, rad=5+rand()*15, x=Math.round(Math.cos(a)*rad), z=Math.round(Math.sin(a)*rad);
+        if(!Z.openGround(x,z,used,guard>2000?2:4)) continue;
+        used.push([x+0.5,z+0.5]); it.x=x+0.5; it.z=z+0.5; break;
+      }
+      if(it.x==null){ it.x=2.5+k*3; it.z=-4.5; }
+    });
+    return items;
+  }
+  let todays = null, builtFor = '';
+  const label = it=> it.type==='har' ? Z.withMark(it.li,it.r) : L[it.li].g;
+  const spoken = it=> it.type==='har' ? {ar:Z.withMark(it.li,it.r), lat:Z.sound(it.li,it.r)} : {ar:L[it.li].ar, lat:L[it.li].name};
+  const nameOf = it=> it.type==='har' ? '"'+Z.sound(it.li,it.r)+'"' : L[it.li].name;
+
+  function refresh(){
+    const t = today();
+    if(D.date!==t){ D.date=t; D.found=[]; Z.save(); }
+    if(!unlocked()){ if(builtFor){ Z.removeSeason('daily'); builtFor=''; } renderChip(); return; }
+    if(builtFor===t) return;
+    builtFor=t; todays=plan(t);
+    Z.removeSeason('daily');
+    todays.forEach((it,k)=>{
+      if(D.found.includes(k)) return;
+      const letter = it.type==='har' ? Object.assign({}, L[it.li], {name:Z.withMark(it.li,it.r)+' ('+Z.sound(it.li,it.r)+')'}) : L[it.li];
+      Z.addBlock({ season:'daily', slot:k, li:it.li, letter, kind:it.kind, x:it.x, z:it.z,
+        tex: it.type==='har' ? Z.harakatTex(it.li,it.r) : letterTex(L[it.li]), emi: it.type==='har'?HAR[it.r].emi:0.25, glow:0xFF9FD0 });
+    });
+    renderChip();
+  }
+
+  /* — the little "today" chip under the top bar — */
+  const chip = document.createElement('button'); chip.type='button'; chip.id='dailyChip'; document.getElementById('hud').appendChild(chip);
+  chip.onclick = ()=>{ if(!unlocked()) return; Z.openJournal(4); };
+  function renderChip(){
+    const on = unlocked() && !(Z.s3Active && Z.s3Active());
+    chip.classList.toggle('on', on);
+    if(!on) return;
+    const st=liveStreak();
+    chip.innerHTML = '📅 '+TT('Hari ini','Today')+' <b>'+D.found.length+'/3</b>'+(st?' · 🔥'+st:'');
+  }
+
+  /* — finding one — */
+  const card=document.getElementById('huntCard'), hcBox=document.getElementById('hcBox');
+  function collect(b){
+    if(b.season!=='daily') return false;
+    b.taken=true; b.mesh.visible=false; b.glow.visible=false; window.HuntAPI.hideDeco(b);
+    if(D.date!==today()){ refresh(); return true; }
+    if(!D.found.includes(b.slot)) D.found.push(b.slot);
+    let finished=false;
+    if(D.found.length>=3 && D.last!==today()){
+      D.streak = D.last===dayShift(today(),-1) ? D.streak+1 : 1;
+      D.last = today(); D.best = Math.max(D.best, D.streak);
+      if(!D.hist.includes(D.last)) D.hist.push(D.last); D.hist = D.hist.slice(-60);
+      finished=true;
+      try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){}
+    }
+    Z.save();
+    SFX.letterFound(); haptic(15);
+    spawnBurst(b.mesh.position.x,b.base,b.mesh.position.z,0xFF9FD0); fireworksAt(b.mesh.position.x,b.base+1.5,b.mesh.position.z);
+    celebrating=true; celebrateUntil=performance.now()/1000+2.2;
+    const it = todays[b.slot];
+    Speech.say([spoken(it)]);
+    renderChip(); applyPin(); updateJournalBadge();
+    setTimeout(()=>showCard(it, finished), 650);
+    return true;
+  }
+  function showCard(it, finished){
+    const n=D.found.length, st=liveStreak();
+    let info;
+    if(it.type==='plain') info = '<b>'+L[it.li].ar+'</b> '+TT('Huruf '+L[it.li].name,'The letter '+L[it.li].name);
+    else if(it.type==='har') info = '<b>'+HAR[it.r].ar+'</b> '+TT(L[it.li].name+' + '+HAR[it.r].name[0],L[it.li].name+' + '+HAR[it.r].name[1]);
+    else { const W=WORDS[it.w]; info = '<span>'+W.pic+'</span><b>'+W.w+'</b> '+TT('Kata hari ini: '+W.m[0],'Word of the day: '+W.m[1]); }
+    hcBox.innerHTML='<div class="rays"></div><div class="where">📅 '+TT('Huruf hari ini','Today\'s letters')+'</div>'+
+      '<div class="tile'+(it.type==='har'?' hk'+(it.r?' h'+it.r:''):'')+'" id="hcTile">'+label(it)+'</div>'+
+      '<h3>'+nameOf(it)+'</h3><div class="pic">'+info+'</div>'+
+      '<div class="bar"><i id="hcBar" style="width:'+((n-1)/3*100)+'%"></i></div>'+
+      '<div class="next">📅 '+n+' / 3'+(n<3?' · '+TT('lagi '+(3-n),(3-n)+' to go'):'')+'</div>'+
+      (finished?'<div class="unlock">🔥 '+TT(st+' hari berturut-turut!',st+(st===1?' day':' days')+' in a row!')+' ⭐ +1<small>'+
+        (st>0&&st%7===0?TT('Seminggu penuh! Lencana Bintang Rajin di ranselmu ⭐','A whole week! A Busy Star pin on your backpack ⭐'):TT('Besok ada 3 huruf baru di tempat baru.','Tomorrow 3 new letters hide in new places.'))+'</small></div>':'')+
+      '<button id="hcGo">'+(finished?TT('🎉 Hore!','🎉 Hooray!'):TT('🔍 Cari lagi!','🔍 Find more!'))+'</button>';
+    running=false; card.classList.add('on');
+    requestAnimationFrame(()=>{ const bar=document.getElementById('hcBar'); if(bar) bar.style.width=(n/3*100)+'%'; });
+    document.getElementById('hcTile').onclick=()=>Speech.say([spoken(it)]);
+    document.getElementById('hcGo').onclick=window.HuntAPI.closeCard;
+    window.__hcAfter = finished ? ()=>{ SFX.finale(); fireworksAt(P.x,visY+2,P.z); setTimeout(()=>fireworksAt(P.x,visY+2,P.z),800); celebrating=true; celebrateUntil=performance.now()/1000+4; } : null;
+    if(finished) setTimeout(()=>{ SFX.weaponUp(); haptic([12,40,18]); },700);
+  }
+
+  /* — a star pin on the backpack after a full week — */
+  let pin=null;
+  function applyPin(){
+    if(pin || D.best<7) return;
+    const s=tex((x,sz)=>{ x.clearRect(0,0,sz,sz); star5(x,sz/2,sz/2,sz*0.46,'#FFC83D'); star5(x,sz/2,sz/2,sz*0.26,'#FFF3B0'); },64,true);
+    pin=new THREE.Mesh(new THREE.PlaneGeometry(0.26,0.26), new THREE.MeshLambertMaterial({map:s, transparent:true, emissive:0x664400, emissiveIntensity:0.4, side:THREE.DoubleSide}));
+    pin.position.set(0,1.06,0.47); playerGroup.add(pin);
+  }
+
+  /* — journal page — */
+  Z.TABS.push([4, ['Harian','Daily'], ['📅 Hari ini','📅 Today'], ()=>true]);
+  const prevRender = Z.renderTab;
+  Z.renderTab = (tab, box)=>{
+    if(tab!==4) return prevRender?prevRender(tab,box):false;
+    const el=Z.el;
+    if(!unlocked()){
+      box.appendChild(el('div','sz-card lock','<div class="sz-top"><div class="sz-ico">🔒</div><div><b>'+TT('Huruf Harian','Daily Letters')+'</b><small>'+
+        TT('Selesaikan Musim 3 (semua kata pertama) untuk membuka 3 huruf baru setiap hari.','Finish Season 3 (all first words) to unlock 3 new letters every day.')+'</small></div></div>'));
+      return true;
+    }
+    refresh();
+    const st=liveStreak();
+    const c=el('div','sz-card','<div class="sz-top"><div class="sz-ico">📅</div><div><b>'+TT('Huruf Harian','Daily Letters')+' · '+D.found.length+'/3</b><small>🔥 '+
+      TT(st+' hari berturut-turut',st+(st===1?' day':' days')+' in a row')+(D.best?' · '+TT('rekor ','best ')+D.best:'')+'</small></div></div>'+
+      '<div class="sz-bar"><i style="width:'+(D.found.length/3*100)+'%"></i></div>');
+    const ch=el('div','sz-chips');
+    todays.forEach((it,k)=>{
+      const got=D.found.includes(k), e=el('button','', got?label(it):'?'); e.type='button';
+      if(!got){ e.style.opacity='.55'; e.style.borderStyle='dashed'; }
+      e.onclick=()=>{ if(got) Speech.say([spoken(it)]); else toast(TT('Masih tersembunyi — ikuti kompas 🧭','Still hidden — follow the compass 🧭')); };
+      ch.appendChild(e);
+    });
+    c.appendChild(ch);
+    c.appendChild(el('small','','<span style="display:block;font-size:12.5px;font-weight:700;color:var(--cream-dim);margin-top:8px">'+
+      TT('Satu huruf biasa, satu berharakat, satu untuk kata hari ini ','One plain letter, one with harakat, one for the word of the day ')+WORDS[todays[2].w].pic+'</span>'));
+    const days=el('div','sz-days');
+    const DN = EN?['Su','Mo','Tu','We','Th','Fr','Sa']:['Min','Sen','Sel','Rab','Kam','Jum','Sab'];
+    for(let i=6;i>=0;i--){ const ds=dayShift(today(),-i), [y,m,d]=ds.split('-').map(Number), ok=D.hist.includes(ds);
+      days.appendChild(el('span', ok?'ok':'', '<b>'+(ok?'✓':(i===0?'·':'–'))+'</b>'+DN[new Date(y,m-1,d).getDay()])); }
+    c.appendChild(days);
+    box.appendChild(c);
+    if(D.best>=7) box.appendChild(el('div','sz-card','<div class="sz-top"><div class="sz-ico">⭐</div><div><b>'+TT('Lencana Bintang Rajin','Busy Star pin')+'</b><small>'+TT('Hadiah seminggu penuh mencari huruf.','For a whole week of letter hunting.')+'</small></div></div>'));
+    return true;
+  };
+  const prevDefault = Z.defaultTab;
+  Z.defaultTab = ()=>{ const d=prevDefault?prevDefault():1; if(d===3 && unlocked() && !(Z.s3Active&&Z.s3Active())) return 4; return d; };
+
+  /* — hooks — */
+  const prevCollect = Z.collect; Z.collect = b=>collect(b) || (prevCollect?prevCollect(b):false);
+  const prevTarget = Z.target;
+  Z.target = ()=>{ const t=prevTarget?prevTarget():null; if(t) return t;
+    if(!unlocked()) return null;
+    let best=null, bd=1e9; letterBlocks.forEach(b=>{ if(b.season!=='daily'||b.taken) return; const d=Math.hypot(b.mesh.position.x-P.x,b.mesh.position.z-P.z); if(d<bd){ bd=d; best=b; } });
+    return best ? {x:best.mesh.position.x, z:best.mesh.position.z} : null; };
+  const prevBadge = Z.badge;
+  Z.badge = (lab,cnt)=>{
+    if(unlocked() && !(Z.s3Active&&Z.s3Active())){ const sl=letterBlocks.some(b=>b.season==='s2'&&!b.taken);
+      if(!sl){ lab.textContent=TT('Huruf Harian','Daily Letters'); cnt.textContent=D.found.length+' / 3'+(liveStreak()?' · 🔥'+liveStreak():''); return true; } }
+    return prevBadge?prevBadge(lab,cnt):false;
+  };
+  const prevWelcome = Z.welcome;
+  Z.welcome = ()=>{
+    if(unlocked()){ refresh(); toast(D.found.length>=3 ? TT('📅 Huruf hari ini sudah lengkap! Besok ada yang baru 🔥','📅 Today\'s letters are done! New ones tomorrow 🔥')
+      : TT('📅 Ada 3 huruf baru hari ini — ikuti kompas!','📅 3 new letters are hiding today — follow the compass!'),3600); return true; }
+    return prevWelcome?prevWelcome():false;
+  };
+  const prevS3Done = Z.onS3Done;
+  Z.onS3Done = ()=>{ if(prevS3Done) prevS3Done(); refresh(); updateJournalBadge();
+    Z.talk('hasan', [TT('Masya Allah, Ibra! Sepuluh kata pertama sudah kamu susun 🏆','Masha Allah, Ibra! You built ten first words 🏆'),
+      TT('Mulai sekarang, setiap hari ada <b>3 huruf baru</b> yang bersembunyi di pulau. Datang lagi tiap hari, ya! 📅🔥','From now on, <b>3 new letters</b> hide on the island every day. Come back every day! 📅🔥')],
+      [{t:TT('Ayo cari huruf hari ini ▶','Find today\'s letters ▶'), fn:()=>{ refresh(); updateJournalBadge(); }}]); };
+  let acc=0;
+  const prevTick = Z.tick;
+  Z.tick = (dt,t)=>{ if(prevTick) prevTick(dt,t); acc+=dt; if(acc>2){ acc=0; const was=builtFor; refresh(); if(builtFor!==was){ updateJournalBadge(); } } };
+  Z.fontReady.then(()=>{ refresh(); applyPin(); updateJournalBadge(); });
 })();
 </script>
 </body>
