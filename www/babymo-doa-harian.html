@@ -1416,6 +1416,7 @@ function showToast(e, t){
     save();
     var n=reads(d.id);
     try{ if(window.BabyMo&&BabyMo.addStars){ if(first||n===3||bonus) BabyMo.addStars(1); } }catch(e){}
+    try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('doa-harian','read'); }catch(e){}
     var sp=document.getElementById('stickerPop'); sp.innerHTML=doaIcon(d); sp.classList.add('on'); setTimeout(function(){ sp.classList.remove('on'); },1100);
     renderReads(d);
     setTimeout(function(){ celebrate(d,n,bonus); },first?650:250);

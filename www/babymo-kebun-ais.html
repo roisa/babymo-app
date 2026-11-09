@@ -701,6 +701,7 @@ async function doTool(t){
       hint(L("Siram pelan-pelan…","Water it gently…"));
       var wt=pose("water"); SND.pour(1.3); setTimeout(function(){ dropsOn(i,12); },560); await wait(wt);
       b.watered=true; b.thirsty=false; save(); renderBed(i); sfx("correct");
+      try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('kebun-ais','water'); }catch(e){}
       pose("ready");
       if(!D.seen.water){ D.seen.water=1; save(); await pop("💧 "+L("Segar!","Fresh!")+"<small>"+L("Tanaman minum air lewat akarnya.","Plants drink water through their roots.")+"</small>",2200); }
       else await pop("💧 "+L("Segar!","Fresh!"),1000);
@@ -720,6 +721,7 @@ async function doTool(t){
     D.basket[crop]=(D.basket[crop]||0)+n;
     var isNew=!D.book[crop]; D.book[crop]=(D.book[crop]||0)+n;
     D.beds[i]={}; save(); renderBed(i); renderHud();
+    try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('kebun-ais','harvest'); }catch(e){}
     pose("celebrate",true); carrying=true;
     var star=isNew && giveStar("crop-"+crop); renderStars();
     say(L("Alhamdulillah! Panen "+CROPS[crop].id,"Alhamdulillah! We picked "+CROPS[crop].en));

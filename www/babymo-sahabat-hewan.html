@@ -578,6 +578,7 @@ async function doTool(t){
     await pop(g[1]+" "+L("Alhamdulillah! Dapat "+g[2].toLowerCase(),"Alhamdulillah! A "+g[3].toLowerCase()),1500);
     await lesson("susu",{ title:g[1]+" "+L("Alhamdulillah!","Alhamdulillah!"), text:L("Telur, susu, dan wol adalah nikmat dari Allah lewat hewan-hewan.","Eggs, milk and wool are Allah's gifts through animals.") });
   }
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('sahabat-hewan','care'); }catch(e){}
   if(D.have.every(function(j){ var x=D.st[j]; return x.fed&&x.water&&x.clean&&x.pet; }) && !D.seen["allhappy"+D.day]){
     D.seen["allhappy"+D.day]=1; save(); pose("jump"); sfx("win");
     var st=giveStar("lovely");
@@ -607,6 +608,7 @@ async function sleep(){
   hint(L("Selamat malam…","Good night…"));
   pose("yawn"); await wait(900);
   pose("sleep"); $("night").classList.add("on"); D.have.forEach(function(k){ renderAnimal(k,"sleep"); });
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('sahabat-hewan','sleep'); }catch(e){}
   say("Bismika Allahumma ahya wa amut");
   await pop("🌙 Bismika Allahumma ahya wa amut<small>"+L("Dengan nama-Mu ya Allah, aku hidup dan aku mati.","In Your name, O Allah, I live and I die.")+"</small>",2600);
   // a new day

@@ -1320,6 +1320,7 @@ function stopRecitation(){
 function finishGuide(){
   stepsViewed[currentStep]=true;
   var all=true;for(var i=0;i<STEPS.length;i++){if(!stepsViewed[i]){all=false;break}}
+  if(all){try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('pray-with-mo','practice'); }catch(e){}}
   if(all&&!sessionStorage.getItem('mo_pray_celebrated')){sessionStorage.setItem('mo_pray_celebrated','1');showCelebration()}
   else{showView('dzikir')}
 }
@@ -1606,6 +1607,7 @@ function tasbihTap(){
   if(tasbihCurrent>=d.count){
     dzikirDone[currentDzikir]=true;
     if(navigator.vibrate) navigator.vibrate(100);
+    try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('pray-with-mo','dzikir'); }catch(e){}
   }
 }
 

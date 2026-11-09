@@ -775,6 +775,70 @@ body::before{
 <meta name="twitter:title" content="Baby Mo — Game Islami &amp; Belajar Sholat, Doa, Hijaiyah untuk Anak">
 <meta name="twitter:description" content="Kumpulan game &amp; aktivitas islami untuk anak: panduan sholat, doa harian, hijaiyah, kata baik &amp; puzzle seru bersama Baby Mo. Gratis &amp; ramah anak.">
 <meta name="twitter:image" content="https://play.babymo.id/og/index.jpg">
+<style id="bm-daily-hub">
+/* ═══════════ Misi Hari Ini (daily missions card) — light + dark ═══════════ */
+.dm-card{position:relative;margin:14px 16px 2px;padding:14px 14px 12px;border-radius:26px;color:var(--cream);overflow:hidden;
+  background:radial-gradient(120% 90% at 100% 0%,rgba(255,214,102,.55),transparent 55%),linear-gradient(150deg,#FFF4D6 0%,#FFE8F0 52%,#E6EEFF 100%);
+  box-shadow:0 0 0 .5px rgba(21,34,48,.06),0 14px 30px -18px rgba(30,60,110,.5)}
+.dm-head{display:flex;align-items:flex-start;gap:10px}
+.dm-titles{flex:1;min-width:0}
+.dm-kicker{font-size:11px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#C2560C}
+.dm-title{margin:1px 0 0;font-family:var(--font);font-size:21px;font-weight:900;line-height:1.15;color:var(--cream)}
+.dm-sub{margin-top:3px;font-size:13.5px;font-weight:800;line-height:1.3;color:var(--cream-dim)}
+.dm-streak{flex:0 0 auto;display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:62px;height:66px;padding:0 8px;border-radius:20px;
+  background:linear-gradient(180deg,#FFB547,#FF6A2B);color:#fff;box-shadow:inset 0 1px 0 rgba(255,255,255,.55),0 10px 18px -10px rgba(232,89,12,.9)}
+.dm-fire{font-size:22px;line-height:1;filter:drop-shadow(0 2px 2px rgba(150,40,0,.35))}
+.dm-sn{font-size:20px;font-weight:900;line-height:1.05}
+.dm-sl{font-size:10.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;opacity:.92}
+.dm-streak.off{background:linear-gradient(180deg,#FFFFFF,#F3F0EA);color:#9A5A00;box-shadow:0 0 0 1.5px rgba(232,89,12,.28) inset}
+.dm-streak.off .dm-fire{filter:grayscale(.75);opacity:.6}
+.dm-streak.lit .dm-fire{animation:dmFlame 1.6s ease-in-out infinite}
+@keyframes dmFlame{0%,100%{transform:scale(1) rotate(-3deg)}50%{transform:scale(1.14) rotate(3deg)}}
+.dm-prog{display:flex;gap:6px;margin:12px 2px 10px}
+.dm-prog i{flex:1;height:8px;border-radius:99px;background:rgba(21,34,48,.1);transition:background .4s}
+.dm-prog i.on{background:linear-gradient(90deg,#22C06E,#0A9488)}
+.dm-card.all .dm-prog i.on{background:linear-gradient(90deg,#FFC93C,#FF8A00)}
+.dm-list{display:grid;gap:8px}
+.dm-row{display:flex;align-items:center;gap:12px;min-height:66px;padding:8px 10px 8px 8px;border-radius:20px;text-decoration:none;color:var(--cream);
+  background:rgba(255,255,255,.88);box-shadow:0 0 0 .5px rgba(21,34,48,.06),0 8px 18px -14px rgba(30,60,110,.55);-webkit-tap-highlight-color:transparent;transition:transform .15s,background .3s}
+.dm-row:active{transform:scale(.97)}
+.dm-art{position:relative;flex:0 0 50px;width:50px;height:50px}
+.dm-art img{width:50px;height:50px;border-radius:14px;display:block;box-shadow:0 6px 12px -6px rgba(0,0,0,.4)}
+.dm-art span{position:absolute;right:-6px;bottom:-6px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:14px;background:#fff;box-shadow:0 3px 8px -3px rgba(0,0,0,.35)}
+.dm-txt{flex:1;min-width:0}
+.dm-txt b{display:block;font-size:15.5px;font-weight:900;line-height:1.2}
+.dm-txt small{display:block;margin-top:2px;font-size:12.5px;font-weight:800;color:var(--cream-dim)}
+.dm-go{flex:0 0 44px;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-size:16px;font-weight:900;color:#fff;
+  background:linear-gradient(135deg,#22C06E,#0A9488);box-shadow:0 8px 16px -8px rgba(10,148,136,.8)}
+.dm-row.done{background:linear-gradient(90deg,rgba(214,247,228,.95),rgba(255,255,255,.88))}
+.dm-row.done .dm-txt small{color:#0E8A4A}
+.dm-row.done .dm-go{background:#fff;color:#12A15A;font-size:22px;box-shadow:0 0 0 2.5px #22C06E inset,0 6px 12px -6px rgba(18,161,90,.6)}
+.dm-row.pop .dm-go{animation:dmPop .7s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dmPop{0%{transform:scale(.3)}60%{transform:scale(1.25)}100%{transform:none}}
+.dm-all{display:flex;align-items:center;gap:12px;margin-top:10px;padding:10px 12px;border-radius:18px;background:linear-gradient(120deg,#FFE27A,#FFB938);color:#5A2E00;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 10px 20px -12px rgba(232,140,0,.8)}
+.dm-all[hidden]{display:none}
+.dm-all b{display:block;font-size:15.5px;font-weight:900;line-height:1.2}.dm-all small{display:block;font-size:12.5px;font-weight:800;opacity:.85;margin-top:1px}
+.dm-trophy{font-size:30px;line-height:1;animation:dmFlame 2s ease-in-out infinite}
+.dm-card.all{background:radial-gradient(120% 90% at 100% 0%,rgba(255,214,102,.75),transparent 60%),linear-gradient(150deg,#FFF1C2 0%,#FFE3D0 50%,#E3F6EA 100%)}
+html[data-theme="dark"] .dm-card{background:radial-gradient(120% 90% at 100% 0%,rgba(255,170,60,.22),transparent 55%),linear-gradient(150deg,#2A2342 0%,#1F2440 52%,#16283F 100%);
+  box-shadow:0 0 0 .5px rgba(255,255,255,.08),0 14px 30px -18px rgba(0,0,0,.9)}
+html[data-theme="dark"] .dm-card.all{background:radial-gradient(120% 90% at 100% 0%,rgba(255,200,60,.3),transparent 60%),linear-gradient(150deg,#3A2E1C 0%,#2A2440 55%,#173329 100%)}
+html[data-theme="dark"] .dm-kicker{color:#FDBA74}
+html[data-theme="dark"] .dm-prog i{background:rgba(255,255,255,.12)}
+html[data-theme="dark"] .dm-row{background:rgba(255,255,255,.07);box-shadow:0 0 0 .5px rgba(255,255,255,.08)}
+html[data-theme="dark"] .dm-row.done{background:linear-gradient(90deg,rgba(34,192,110,.24),rgba(255,255,255,.06))}
+html[data-theme="dark"] .dm-row.done .dm-txt small{color:#7EE2A8}
+html[data-theme="dark"] .dm-row.done .dm-go{background:#12321F;color:#4ADE80;box-shadow:0 0 0 2.5px #22C06E inset}
+html[data-theme="dark"] .dm-art span{background:#1C2338}
+html[data-theme="dark"] .dm-streak.off{background:rgba(255,255,255,.08);color:#FDBA74;box-shadow:0 0 0 1.5px rgba(253,186,116,.35) inset}
+@media (min-width:700px){.dm-list{grid-template-columns:repeat(3,minmax(0,1fr))}.dm-txt b{font-size:15px}}
+@media (min-width:700px) and (min-height:600px){.dm-row{flex-direction:column;align-items:center;text-align:center;padding:12px 10px;gap:8px}}
+@media (min-width:700px) and (max-height:599px){.dm-row{gap:9px;padding:8px}.dm-art,.dm-art img{flex-basis:44px;width:44px;height:44px}
+  .dm-go{flex:0 0 36px;width:36px;height:36px;font-size:14px}.dm-row.done .dm-go{font-size:18px}.dm-txt b{font-size:14px}.dm-txt small{font-size:12px}}
+@media (min-width:820px){.dm-card{margin:14px 32px 2px;padding:16px 18px 14px}.dm-title{font-size:24px}}
+@media (prefers-reduced-motion:reduce){.dm-streak.lit .dm-fire,.dm-trophy,.dm-row.pop .dm-go{animation:none}}
+</style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","name":"Baby Mo","url":"https://play.babymo.id/","inLanguage":"id-ID","publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"}}</script>
 <style id="bm-fixes">
 /* phones: the large title already names the page; keep the top bar clear for its buttons */
@@ -1098,6 +1162,19 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
         <div class="cc-body"><div class="cc-kicker" data-i18n="cont_kicker">Lanjut main</div><div class="cc-title" id="continueTitle"></div></div>
         <div class="cc-play">▶</div>
       </a>
+      <section class="dm-card" id="dailyCard" aria-labelledby="dmTitle">
+        <div class="dm-head">
+          <div class="dm-titles">
+            <div class="dm-kicker" id="dmDate"></div>
+            <h2 class="dm-title" id="dmTitle" data-i18n="dm_title">Misi Hari Ini</h2>
+            <div class="dm-sub" id="dmSub"></div>
+          </div>
+          <div class="dm-streak" id="dmStreak"><span class="dm-fire">🔥</span><span class="dm-sn" id="dmStreakN">0</span><span class="dm-sl" id="dmStreakL">hari</span></div>
+        </div>
+        <div class="dm-prog" id="dmProg" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="dm-list" id="dmList"></div>
+        <div class="dm-all" id="dmAll" hidden><span class="dm-trophy">🏆</span><div><b id="dmAllT"></b><small id="dmAllS"></small></div></div>
+      </section>
       <div class="icon-grid home-grid">
         <a class="app-icon" href="./babymo-puzzle.html">
           <div class="ai-square has-art g-puzzle"><img class="ai-art" src="./icons/games/puzzle.svg" alt="" draggable="false"><div class="ai-badge start">▶</div></div>
@@ -1498,7 +1575,7 @@ html[data-theme="dark"] .doa-now-ar{color:#7EE2A8}
 /* ===== i18n TRANSLATION SYSTEM ===== */
 const I18N={
   g_hewan:{id:'Sahabat Hewan',en:'Animal Friends'},g_hewan_sub:{id:'Hewan',en:'Animals'},cat_hewan_t:{id:'Sahabat Hewan Mo',en:"Mo's Animal Friends"},cat_hewan_s:{id:'Rawat hewan & belajar adab terhadap hewan',en:'Care for animals & learn Islamic manners towards them'},
-  cont_kicker:{id:'Lanjut main',en:'Keep playing'},sec_allgames:{id:'Semua Game',en:'All Games'},
+  cont_kicker:{id:'Lanjut main',en:'Keep playing'},dm_title:{id:'Misi Hari Ini',en:"Today's Missions"},sec_allgames:{id:'Semua Game',en:'All Games'},
   g_wudhu:{id:'Wudhu',en:'Wudu'},g_wudhu_sub:{id:'Baru ✨',en:'New ✨'},comp_wudhu_t:{id:'Wudhu Bareng Mo',en:'Wudu with Mo'},comp_wudhu_s:{id:'Langkah wudhu + game urutkan · Baru',en:'Wudu steps + ordering game · New'},
   name_chip:{id:'Siapa nama si kecil?',en:"What's your little one's name?"},name_group:{id:'Si Kecil',en:'Your Child'},name_row:{id:'Nama si kecil',en:"Child's name"},
   trust_free:{id:'✓ Gratis',en:'✓ Free'},
@@ -1888,6 +1965,78 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     var h=document.getElementById('moHello').textContent.replace(/[^\p{L}\p{N}\s',!?]/gu,''), s2=document.getElementById('greetSub').textContent.replace(/[^\p{L}\p{N}\s',!?]/gu,'');
     try{ BabyMo.sfx('tap'); if(!BabyMo.isMuted()&&window.speechSynthesis){ var u=new SpeechSynthesisUtterance(h+'. '+s2); u.lang=en()?'en-US':'id-ID'; u.pitch=1.4; speechSynthesis.cancel(); speechSynthesis.speak(u);} }catch(e){}
     var im=mp.querySelector('img'); im.style.animation='none'; void im.offsetWidth; im.style.animation='';
+  });
+})();
+</script>
+<script>
+/* Home: "Misi Hari Ini" — today's 3 missions + app-wide streak (BabyMo.daily) */
+(function(){
+  var TX={
+    id:{day:'hari',days:'hari',start:'Selesaikan 1 misi untuk mulai 🔥',keep:'Selesaikan 1 misi agar 🔥 tetap menyala!',
+        some:function(n){return 'Hebat! '+n+' dari 3 selesai ⭐';},all:'Semua selesai! Sampai besok 🌙',
+        allT:'Masya Allah, semua misi selesai!',allS:function(b){return '+'+b+' ⭐ bonus · Datang lagi besok ya 🌙';},
+        done:'Selesai! ✓',go:'+1 ⭐ · ',streakA:function(n){return 'Streak '+n+' hari';}},
+    en:{day:'day',days:'days',start:'Finish 1 mission to start 🔥',keep:'Finish 1 mission to keep the 🔥 going!',
+        some:function(n){return 'Great! '+n+' of 3 done ⭐';},all:'All done! See you tomorrow 🌙',
+        allT:'Masha Allah, all missions done!',allS:function(b){return '+'+b+' ⭐ bonus · Come back tomorrow 🌙';},
+        done:'Done! ✓',go:'+1 ⭐ · ',streakA:function(n){return n+'-day streak';}}
+  };
+  function lang(){ try{ return localStorage.getItem('bm_lang')==='en'?'en':'id'; }catch(e){ return 'id'; } }
+  function esc(t){ return String(t).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+  function get(k){ try{ return localStorage.getItem(k)||''; }catch(e){ return ''; } }
+  function put(k,v){ try{ localStorage.setItem(k,v); }catch(e){} }
+  function ready(fn){ if(window.BabyMo&&BabyMo.daily) fn(); else setTimeout(function(){ready(fn);},120); }
+  ready(function(){
+    var D=BabyMo.daily, card=document.getElementById('dailyCard'); if(!card) return;
+    function render(){
+      var L=lang(), t=TX[L], ms=D.missions(), st=D.streak(), today=D.today();
+      if(!ms.length){ card.hidden=true; return; } card.hidden=false;
+      var n=ms.filter(function(m){return m.done;}).length, all=n===ms.length;
+      try{ var p=today.split('-'); document.getElementById('dmDate').textContent=new Date(+p[0],p[1]-1,+p[2],12).toLocaleDateString(L==='en'?'en-GB':'id-ID',{weekday:'long',day:'numeric',month:'long'}); }catch(e){ document.getElementById('dmDate').textContent=today; }
+      document.getElementById('dmTitle').textContent=I18N.dm_title[L];
+      document.getElementById('dmSub').textContent=all?t.all:n?t.some(n):(st.count>0?t.keep:t.start);
+      var sk=document.getElementById('dmStreak');
+      sk.classList.toggle('off',!st.todayDone); sk.classList.toggle('lit',st.todayDone);
+      document.getElementById('dmStreakN').textContent=st.count;
+      document.getElementById('dmStreakL').textContent=st.count===1?t.day:t.days;
+      sk.setAttribute('aria-label',t.streakA(st.count)); sk.title=t.streakA(st.count)+(st.best>st.count?' · best '+st.best:'');
+      [].forEach.call(document.querySelectorAll('#dmProg i'),function(el,i){ el.classList.toggle('on',i<n); });
+      // which checks are new since the last time this card was shown → pop
+      var seenRaw=get('bm_daily_seen'), seen=seenRaw.indexOf(today+'|')===0?seenRaw.slice(today.length+1).split(','):[];
+      var h='';
+      ms.forEach(function(m){
+        var fresh=m.done&&seen.indexOf(m.id)<0;
+        h+='<a class="dm-row'+(m.done?' done':'')+(fresh?' pop':'')+'" href="./'+esc(m.url)+'" data-mission="'+esc(m.id)+'" aria-label="'+esc(m.text[L]+(m.done?' — '+t.done:''))+'">'
+          +'<span class="dm-art"><img src="'+esc(m.art)+'" alt="" draggable="false"><span>'+m.icon+'</span></span>'
+          +'<span class="dm-txt"><b>'+esc(m.text[L])+'</b><small>'+(m.done?esc(t.done):esc(t.go+m.game[L]))+'</small></span>'
+          +'<span class="dm-go" aria-hidden="true">'+(m.done?'✓':'▶')+'</span></a>';
+      });
+      document.getElementById('dmList').innerHTML=h;
+      put('bm_daily_seen',today+'|'+ms.filter(function(m){return m.done;}).map(function(m){return m.id;}).join(','));
+      card.classList.toggle('all',all);
+      var box=document.getElementById('dmAll'); box.hidden=!all;
+      if(all){ document.getElementById('dmAllT').textContent=t.allT; document.getElementById('dmAllS').textContent=t.allS((D.rewards&&D.rewards.bonus)||2); }
+      // all-done celebration: once per day, the first time the hub shows it
+      if(all && get('bm_daily_cele')!==today){
+        put('bm_daily_cele',today);
+        setTimeout(function(){
+          try{ var r=card.getBoundingClientRect(); if(window.burst){ burst(r.left+r.width/2,r.top+r.height*.4,36); setTimeout(function(){ burst(r.left+r.width*.25,r.top+r.height*.6,20); burst(r.left+r.width*.75,r.top+r.height*.6,20); },260); } }catch(e){}
+          try{ BabyMo.sfx('win'); }catch(e){}
+        },450);
+      }
+    }
+    render();
+    window.addEventListener('pageshow',render);
+    window.addEventListener('bm-daily',render);
+    document.addEventListener('visibilitychange',function(){ if(!document.hidden) render(); });
+    document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('#langBtn,.lang-opt')) setTimeout(render,40); });
+    card.addEventListener('click',function(e){
+      var a=e.target.closest&&e.target.closest('.dm-row'); if(!a) return;
+      try{ BabyMo.sfx('tap'); var r=a.getBoundingClientRect(); window.burst&&burst(r.left+r.width/2,r.top+r.height/2,6); BabyMo.track('daily_open',{id:a.dataset.mission}); }catch(er){}
+    });
+    // midnight rollover while the hub stays open
+    setInterval(function(){ if(D.today()!==card.dataset.day){ card.dataset.day=D.today(); render(); } },60000);
+    card.dataset.day=D.today();
   });
 })();
 </script>

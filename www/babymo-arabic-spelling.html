@@ -1694,6 +1694,7 @@ function spawnCelebration(emoji) {
 function onWordComplete() {
   const word = WORDS[state.currentIdx];
   state.completedWords.push(word);
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('arabic-spelling','word'); }catch(e){}
 
   const slots = document.querySelectorAll('.slot');
   slots.forEach(function (s, i) {
@@ -1739,6 +1740,8 @@ function showCompletion() {
   cancelSpeech();
   const completedSectionId = WORDS[state.currentIdx].section;
   const sec = getSection(completedSectionId);
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('arabic-spelling','section'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('arabic-spelling','section-'+completedSectionId,1); }catch(e){}
   const next = getNextSection(completedSectionId);
 
   const tagEl = document.getElementById('completeSectionTag');

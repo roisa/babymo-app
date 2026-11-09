@@ -888,6 +888,8 @@ function showComplete(){
   document.getElementById('sticker').textContent=lv.sticker;
   document.getElementById('comp-msg').textContent=lv.msg;
   prog[lv.id]=3;localStorage.setItem('bmo2',JSON.stringify(prog));
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('look-and-find','room'); }catch(e){}
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('look-and-find','room-'+lv.id,1); }catch(e){}
   showScreen('complete');
   // burst stars
   setTimeout(()=>{

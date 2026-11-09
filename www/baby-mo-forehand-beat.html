@@ -2377,6 +2377,7 @@ function startGame() {
 
 function gameOver() {
   state.scene = 'over';
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('forehand-beat','run'); }catch(e){}
   music.pause();
   sfx('oops');
   if (navigator.vibrate) navigator.vibrate([20, 40, 20]);
