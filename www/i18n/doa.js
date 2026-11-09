@@ -43,8 +43,18 @@
   "Bagus sekali! Terus belajar ya! ": "Great job! Keep learning!", "Bagus sekali! Terus belajar ya!": "Great job! Keep learning!", "Latihan lagi ya, pasti bisa!": "Practice again — you can do it!",
   "Doa": "Du'as", "Bintang": "Stars", "✅ Doa yang kamu pelajari hari ini": "✅ Du'as you learned today",
   "🏠 Hub": "🏠 Hub", "🔄 Main Lagi!": "🔄 Play Again!", "📤 Bagikan Hasil!": "📤 Share Result!", "Disalin!": "Copied!",
-  "Aku belajar doa harian bersama Baby Mo! Yuk coba juga 🌙": "I learned daily du'as with Baby Mo! Come try it too 🌙"
+  "Aku belajar doa harian bersama Baby Mo! Yuk coba juga 🌙": "I learned daily du'as with Baby Mo! Come try it too 🌙",
+  "Doa Hari Ini": "Du'a of the Day", "Baca satu doa setiap hari!": "Read one du'a every day!", "Buku Stiker": "Sticker Book",
+  "Ketuk stiker untuk membaca doanya": "Tap a sticker to read its du'a", "Tutup": "Close",
+  "Baca 3× untuk bintang emas": "Read 3× for a gold star", "Bintang emas! Kamu hafal doa ini!": "Gold star! You know this du'a by heart!",
+  "Masya Allah!": "Masha Allah!", "Hebat!": "Great job!", "Bintang emas!": "Gold star!",
+  "Stiker baru untukmu!": "A new sticker for you!", "Satu lagi untuk bintang emas!": "One more for the gold star!",
+  "Kamu hafal doa ini!": "You know this du'a by heart!", "Kamu sudah jago! Baca terus ya!": "You're a pro! Keep reading!",
+  "Baca lagi": "Read again", "Lanjut": "Next", "Menu": "Menu", "Bonus Doa Hari Ini!": "Du'a of the Day bonus!"
 }, [
+  [/^(\d+) hari berturut-turut$/, "$1-day streak"],
+  [/^(\d+) \/ (\d+) stiker$/, "$1 / $2 stickers"],
+  [/^Dibaca (\d+)×$/, "Read $1×"],
   [/^Doa (\d+) \/ (\d+)$/, "Du'a $1 / $2"],
   [/^Doa "(.+)" — (.+)$/, "Du'a \"{1}\" — {2}"],
   [/^Kamu sudah hafal (\d+) doa harian!$/, "You've memorized $1 daily du'as!"]
