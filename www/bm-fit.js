@@ -8,6 +8,8 @@
 (function () {
   "use strict";
   var TARGET_H = 880;          // logical height a tablet page is laid out at
+  var TARGET_W = 540;          // portrait: logical width (a big phone)
+  var MIN_H = 700;             // portrait: never lay out shorter than this
   var meta = document.querySelector('meta[name="viewport"]');
   if (!meta) return;
   var original = meta.getAttribute("content");
@@ -27,7 +29,11 @@
       if (last !== "off") { meta.setAttribute("content", original); root.removeAttribute("data-bm-fit"); last = "off"; }
       return;
     }
-    var scale = Math.max(1, H / TARGET_H);
+    // Portrait: lay the page out about as wide as a big phone (TARGET_W) so the
+    // phone-first layouts fill the screen instead of floating in the middle; the
+    // logical height stays above an iPhone SE's (667), which every game handles.
+    // Landscape keeps the phone-like height.
+    var scale = W < H ? Math.max(1, H / TARGET_H, Math.min(W / TARGET_W, H / MIN_H)) : Math.max(1, H / TARGET_H);
     var lw = Math.round(W / scale);
     var sc = scale.toFixed(4);
     var c = "width=" + lw + ", initial-scale=" + sc + ", minimum-scale=" + sc + ", maximum-scale=" + sc + ", user-scalable=no, viewport-fit=cover";
