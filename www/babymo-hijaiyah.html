@@ -126,7 +126,9 @@ p{font-size:14px;line-height:1.55;color:var(--cream-dim);margin:6px 0}
 .hc .rays{position:absolute;left:50%;top:70px;width:260px;height:260px;margin-left:-130px;margin-top:-130px;background:repeating-conic-gradient(rgba(255,200,61,.28) 0 12deg,transparent 12deg 24deg);border-radius:50%;animation:hcSpin 8s linear infinite;pointer-events:none;-webkit-mask-image:radial-gradient(circle,#000 30%,transparent 70%);mask-image:radial-gradient(circle,#000 30%,transparent 70%)}
 @keyframes hcSpin{to{transform:rotate(360deg)}}
 .hc .where{position:relative;font-size:12px;font-weight:900;letter-spacing:.1em;text-transform:uppercase;color:#E8590C}
-.hc .tile{position:relative;width:132px;height:132px;margin:8px auto 4px;border-radius:28px;background:linear-gradient(160deg,#FFF6D8,#FFE08A);border:4px solid #E0B84D;display:grid;place-items:center;font-family:'Scheherazade New','Amiri',serif;font-size:86px;line-height:1;color:#12261F;box-shadow:0 14px 24px -12px rgba(160,110,0,.6);animation:hcFlip .7s .1s cubic-bezier(.3,1.4,.5,1) both;cursor:pointer;padding-bottom:16px}
+.hc .tile{position:relative;width:132px;height:132px;margin:8px auto 4px;border-radius:28px;background:linear-gradient(160deg,#FFF6D8,#FFE08A);border:4px solid #E0B84D;display:grid;place-items:center;font-family:'Scheherazade New','Amiri',serif;font-size:86px;line-height:1;color:#12261F;box-shadow:0 14px 24px -12px rgba(160,110,0,.6);animation:hcFlip .7s .1s cubic-bezier(.3,1.4,.5,1) both;cursor:pointer}
+.hc .tile canvas{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hc .tile.inked{color:transparent}
 @keyframes hcFlip{from{transform:rotateY(180deg) scale(.6)}}
 .hc h3{position:relative;font-size:26px;font-weight:900;margin:2px 0 0}
 .hc .pic{position:relative;display:inline-flex;align-items:center;gap:8px;margin:6px 0 8px;padding:6px 14px;border-radius:999px;background:#F2F7FF;font-weight:800;font-size:14px}
@@ -2839,6 +2841,22 @@ tick();
   /* — the reward card — */
   const card=document.getElementById('huntCard'), hcBox=document.getElementById('hcBox');
   let wasRunning=false;
+  /* draw the letter on a canvas centred on its actual ink (Arabic fonts sit unevenly in their line box) */
+  function centerGlyph(tile, g){
+    const draw=()=>{ try{
+      const W=tile.clientWidth, H=tile.clientHeight; if(!W) return;
+      const dpr=Math.min(window.devicePixelRatio||1,3), cv=document.createElement('canvas'); cv.width=W*dpr; cv.height=H*dpr;
+      const x=cv.getContext('2d'); x.scale(dpr,dpr);
+      const fam=getComputedStyle(tile).fontFamily; let size=Math.round(W*0.62);
+      x.font=size+'px '+fam; x.textAlign='center'; x.textBaseline='alphabetic';
+      let m=x.measureText(g); const inkW=m.actualBoundingBoxLeft+m.actualBoundingBoxRight, inkH=m.actualBoundingBoxAscent+m.actualBoundingBoxDescent;
+      const fit=Math.min(1,(W*0.62)/inkW,(H*0.62)/inkH); if(fit<1){ size=Math.floor(size*fit); x.font=size+'px '+fam; m=x.measureText(g); }
+      const cx=W/2+(m.actualBoundingBoxLeft-m.actualBoundingBoxRight)/2, cy=H/2+(m.actualBoundingBoxAscent-m.actualBoundingBoxDescent)/2;
+      x.fillStyle='#12261F'; x.fillText(g,cx,cy);
+      tile.querySelectorAll('canvas').forEach(c=>c.remove()); tile.appendChild(cv); tile.classList.add('inked');
+    }catch(e){} };
+    (document.fonts&&document.fonts.load ? document.fonts.load('86px "Scheherazade New"', g).then(draw,draw) : Promise.resolve().then(draw));
+  }
   function showCard(b){
     const L0=b.letter, p=PIC[b.i]||PIC[0], c=n(), nx=MILES.find(m=>m[0]>c), hit=MILES.find(m=>m[0]===c), w=WHERE[b.kind]||WHERE.crystal;
     hcBox.innerHTML='<div class="rays"></div><div class="where">'+TT(w[0],w[1])+'</div><div class="tile" id="hcTile">'+L0.g+'</div><h3>'+L0.name+' · '+L0.ar+'</h3>'+
@@ -2848,6 +2866,7 @@ tick();
       '<button id="hcGo">'+(c>=28?TT('🏆 Masya Allah!','🏆 Masha Allah!'):TT('🔍 Cari lagi!','🔍 Find more!'))+'</button>';
     wasRunning=running; running=false; card.classList.add('on');
     requestAnimationFrame(()=>{ const bar=document.getElementById('hcBar'); if(bar) bar.style.width=(c/28*100)+'%'; });
+    centerGlyph(document.getElementById('hcTile'), L0.g);
     document.getElementById('hcTile').onclick=()=>Speech.say([{ar:L0.ar,lat:L0.name},{ar:p[1],lat:TT(p[2],p[3])}]);
     document.getElementById('hcGo').onclick=closeCard;
     if(hit){ setTimeout(()=>{ SFX.weaponUp(); haptic([12,40,18]); },700); try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
