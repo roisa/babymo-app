@@ -148,6 +148,31 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .linkbtn{background:none;border:none;color:var(--soft);font:inherit;font-weight:800;font-size:14px;text-decoration:underline;margin-top:16px;cursor:pointer;padding:8px}
 </style>
 <link rel="stylesheet" href="bm-bright.css">
+<style id="bm-land">
+/* Wide-stage fix: the illustrated world keeps its 400:560 shape (never stretched).
+   On wide screens it sits in the middle and the sky, hills and grass continue to the sides. */
+.stagewrap{container-type:size}
+.stageframe{position:relative;width:min(100cqw,calc(100cqh * 400 / 560));height:min(100cqh,calc(100cqw * 560 / 400));border-radius:26px;overflow:hidden;background:#BFE7FF;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
+.stageframe>.stage{position:absolute!important;top:0;left:50%;height:100%!important;width:auto!important;max-height:none!important;aspect-ratio:400/560;transform:translateX(-50%);border-radius:0!important;box-shadow:none!important;background:transparent!important}
+.stagefill{position:absolute;inset:0;pointer-events:none}
+.stagefill svg{width:100%;height:100%;display:block}
+.stageframe>.night,.stageframe>.rain{position:absolute;inset:0}
+@media (orientation:landscape) and (max-height:600px){
+  .screen.on.land{display:grid!important;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr);column-gap:12px;
+    padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right));padding-top:calc(8px + env(safe-area-inset-top))}
+  .screen.land>.hud{grid-column:1/-1;max-width:none;margin-bottom:6px}
+  .screen.land>.stagewrap{grid-column:1;grid-row:2;max-width:none;width:100%;height:100%}
+  .screen.land>.tools{grid-column:2;grid-row:2;width:auto;max-width:none;margin:0;grid-template-columns:1fr;align-content:center;gap:6px}
+  .screen.land>.tools .tool{min-height:0;height:clamp(44px,calc((100vh - 120px) / var(--ntools)),66px);width:clamp(92px,13vw,124px);flex-direction:row;gap:6px;font-size:13px;padding:4px 8px;justify-content:flex-start;white-space:nowrap}
+  .screen.land>.tools .tool span{font-size:22px}
+  .stageframe{width:100cqw;height:100cqh}
+  /* bigger world: trim some empty sky so the animals/plants are larger; the hint moves to the frame */
+  .stageframe>.stage{height:122%!important;top:auto!important;bottom:0}
+  .stagefill{top:auto;bottom:0;height:122%}
+  .stageframe>.hint{position:absolute;left:0;right:0;top:8px;z-index:6;display:flex;justify-content:center;pointer-events:none}
+  .stageframe>.stage svg.bg{-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
+}
+</style>
 <style id="bm-bright">
 :root{--bg:#F2F7EE;--bg2:#FFFFFF;--card:rgba(255,255,255,.92);--card2:#FFFFFF;--ink:#173022;--soft:#5B6E60;--border:rgba(23,48,34,.10);
   --green:#1E9A4C;--green-lt:#1E9A4C;--gold:#E8590C;--sheet:#FFFFFF}
@@ -198,7 +223,7 @@ h1{color:#E8590C}
     <button class="pill" id="sleepBtn">🌙 Tidur</button>
   </div>
   <div class="stagewrap">
-    <div class="stage" id="stage">
+    <div class="stageframe"><div class="stagefill" aria-hidden="true"></div><div class="stage" id="stage">
       <svg class="bg" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
         <defs>
           <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3FF"/><stop offset="1" stop-color="#DDF3FF"/></linearGradient>
@@ -234,7 +259,7 @@ h1{color:#E8590C}
       <div class="night" id="night"></div>
       <div class="hint"><span id="hint">Ketuk hewan untuk merawatnya.</span></div>
       <div class="pop" id="pop"></div>
-    </div>
+    </div></div>
   </div>
   <div class="tools" id="tools">
     <button class="tool" data-t="feed"><span>🥣</span>Makan</button>
@@ -703,5 +728,27 @@ renderHome();
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
+<script>
+/* wide-stage fix: frame + side fill that mirrors the world's sky/hill/grass bands */
+(function(){
+  var st=document.getElementById("stage"); if(!st) return;
+  var frame=st.parentNode; if(!frame.classList.contains("stageframe")) return;
+  var scr=frame.closest(".screen"); if(scr){ scr.classList.add("land"); var t=scr.querySelector(".tools"); if(t) t.style.setProperty("--ntools", t.children.length); }
+  ["night","rain"].forEach(function(id){ var el=document.getElementById(id); if(el && el.parentNode===st) frame.appendChild(el); });
+  var mq=matchMedia("(orientation:landscape) and (max-height:600px)"), hint=st.querySelector(".hint");
+  function place(){ if(!hint) return; if(mq.matches){ if(hint.parentNode!==frame) frame.appendChild(hint); } else if(hint.parentNode!==st) st.appendChild(hint); }
+  place(); mq.addEventListener ? mq.addEventListener("change",place) : mq.addListener(place);
+  var bg=st.querySelector("svg.bg"), fill=frame.querySelector(".stagefill");
+  function sync(){
+    var s=bg.cloneNode(false); s.removeAttribute("class"); s.setAttribute("preserveAspectRatio","none");
+    [].forEach.call(bg.children,function(n){ var tg=n.tagName.toLowerCase();
+      if(tg==="defs") return;   /* gradients are shared by id with the world's svg */
+      if((tg==="rect"||tg==="path") && !n.getAttribute("transform")){ var c=n.cloneNode(true);
+        if(tg==="rect"){ c.setAttribute("x","-2"); c.setAttribute("width","404"); } s.appendChild(c); } });
+    fill.innerHTML=""; fill.appendChild(s);
+  }
+  sync(); new MutationObserver(sync).observe(bg,{subtree:true,attributes:true,childList:true});
+})();
+</script>
 </body>
 </html>
