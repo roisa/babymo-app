@@ -7,326 +7,295 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/dua.js"></script>
 <script src="bm-i18n.js"></script>
-<meta name="description" content="Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.">
+<meta name="description" content="Perjalanan doa sehari bersama Baby Mo: buka kartu bergambar dan cocokkan setiap momen dengan doanya.">
 <title>Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
 <style>
+/* ═════ Dua Journey v2 — a child's day as a path of memory-card stops.
+   Every rule here applies to BOTH themes: the default values are the dark
+   ("classic") look, light tweaks are scoped to html[data-bm-theme="bright"].
+   (bm-theme.js switches <style id="bm-bright…"> off in dark mode, so nothing
+   that both themes need lives in such a block.) ═════ */
 :root{
-  /* Fresh iOS-style palette — brighter emerald→teal, soft glass surfaces */
-  --bg:#0A2118;--bg2:#0C2A20;--bg3:#0E3326;
-  --green:#1FA971;--green-lt:#3FD08C;--green-glow:#7BE8B0;
-  --gold:#E0B84D;--gold-lt:#FFD874;--gold-dim:#A88330;
-  --cream:#F2F7F2;--cream-dim:#9FB5A8;
-  --card-back:rgba(255,255,255,.055);--card-ara:rgba(91,198,232,.10);--card-mean:rgba(255,255,255,.05);
-  --red:#FF6B5C;--star:#FFD874;
-  --border:rgba(255,255,255,.10);
+  --bg:#0A2118;--ink:#F2F7F2;--ink2:#B4CBBE;--line:rgba(255,255,255,.12);
+  --glass:rgba(255,255,255,.07);--glass2:rgba(255,255,255,.12);--sheet:#13291F;
+  --gold:#FFD874;--gold-ink:#FFE08A;--green:#1FA971;--green-lt:#3FD08C;
+  --pill-bg:rgba(255,216,116,.18);--pill-ink:#FFE08A;
+  --paper1:#173D2C;--paper2:#0F2A1E;--paper-line:rgba(255,216,116,.5);--paper-ink:#F2F7F2;--paper-ink2:#BCD3C6;--arabic:#FFE08A;
+  --lab-bg:rgba(10,30,22,.82);--lab-ink:#F2F7F2;
+}
+html[data-bm-theme="bright"]{
+  --bg:#F2F6FC;--ink:#152230;--ink2:#4A5A6C;--line:rgba(21,34,48,.10);
+  --glass:rgba(255,255,255,.9);--glass2:#fff;--sheet:#fff;
+  --gold:#F08C00;--gold-ink:#9A5B00;--green:#12A15A;--green-lt:#2DC76D;
+  --pill-bg:#FFE58A;--pill-ink:#6B4000;
+  --paper1:#FFFFFF;--paper2:#FFF4DA;--paper-line:#F5C04A;--paper-ink:#152230;--paper-ink2:#4A5A6C;--arabic:#0B6B3A;
+  --lab-bg:rgba(255,255,255,.94);--lab-ink:#152230;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;touch-action:manipulation;}
 html,body{height:100%;overflow:hidden;}
-body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--cream);position:relative;}
-body::before{
-  content:'';position:fixed;inset:0;
-  background:
-    radial-gradient(ellipse 70% 55% at 20% 8%,rgba(31,169,113,.32),transparent 70%),
-    radial-gradient(ellipse 65% 50% at 85% 18%,rgba(91,198,232,.16),transparent 70%),
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--ink);position:relative;}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background:radial-gradient(ellipse 70% 55% at 20% 8%,rgba(31,169,113,.30),transparent 70%),
+    radial-gradient(ellipse 65% 50% at 85% 18%,rgba(91,198,232,.15),transparent 70%),
     radial-gradient(ellipse 80% 60% at 50% 108%,rgba(224,184,77,.12),transparent 70%),
-    linear-gradient(180deg,#0C2A20 0%,#0A2118 55%,#081B14 100%);
-  pointer-events:none;z-index:0;
-}
-.star-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.star-bg span{position:absolute;color:var(--gold-lt);font-size:10px;animation:twinkle var(--d,3s) var(--dl,0s) ease-in-out infinite;opacity:.08;}
-@keyframes twinkle{0%,100%{opacity:.05;transform:scale(1)}50%{opacity:.24;transform:scale(1.2)}}
+    linear-gradient(180deg,#0C2A20 0%,#0A2118 55%,#081B14 100%);}
+button{font-family:inherit;color:inherit;}
+.ar{font-family:'Scheherazade New',serif;direction:rtl;}
 
-/* ── SCREENS ── */
-.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;padding:0 18px 24px;overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
+/* ── screens ── */
+.screen{position:fixed;inset:0;display:none;flex-direction:column;align-items:center;padding:calc(12px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));overflow-y:auto;overflow-x:hidden;z-index:1;-webkit-overflow-scrolling:touch;}
 .screen.active{display:flex;}
+@media(min-width:760px){.screen:not(#gameScreen){max-width:520px;margin:0 auto;}body{background:#06100A;}}
+html[data-bm-theme="bright"] body{background:#F2F6FC;}
 
-/* ════ WELCOME ════ */
-#welcomeScreen{justify-content:flex-start;padding-top:calc(24px + env(safe-area-inset-top));}
-/* On tall screens (iPad/desktop) vertically center the welcome content so it
-   isn't top-stacked with a big empty bottom. */
-@media(min-height:760px){#welcomeScreen,#completeScreen{justify-content:center;}}
-.welcome-top{text-align:center;width:100%;padding-bottom:16px;}
+/* ── iOS-style du'a icons (same set as Doa Harian) ── */
+.di{--c1:#FFC94D;--c2:#FF8A3D;--k:#B4410E;position:relative;display:inline-grid;place-items:center;width:var(--s,60px);height:var(--s,60px);border-radius:calc(var(--s,60px)*.28);flex:0 0 auto;
+  background:linear-gradient(180deg,var(--c1) 0%,var(--c2) 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -2px 5px rgba(0,0,0,.10),0 8px 16px -9px var(--c2),0 2px 4px -2px rgba(20,30,60,.25);overflow:hidden;isolation:isolate}
+.di::before{content:'';position:absolute;left:-10%;right:-10%;top:-38%;height:78%;border-radius:50%;background:radial-gradient(ellipse at 50% 100%,rgba(255,255,255,.42),rgba(255,255,255,.08) 60%,transparent 72%);z-index:0;pointer-events:none}
+.di svg{position:relative;z-index:1;width:62%;height:62%;overflow:visible;filter:drop-shadow(0 1.5px 1.5px rgba(0,0,0,.16))}
+.di .w{fill:#fff}.di .ws{fill:none;stroke:#fff;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.di .k{fill:var(--k)}.di .ks{fill:none;stroke:var(--k);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round}
+.di .y{fill:#FFF1A8}
+.di-pagi{--c1:#FFD25A;--c2:#FF7E3B;--k:#B4410E}
+.di-siang{--c1:#5FDBF2;--c2:#2A86E0;--k:#1A5A9E}
+.di-sore{--c1:#FF9C86;--c2:#B05FE0;--k:#8A2F9E}
+.di-malam{--c1:#8E95FF;--c2:#4436C4;--k:#352A9E}
+.di-juara{--c1:#FFE066;--c2:#F59E0B;--k:#9A5B00}
 
-.mascot-wrap{position:relative;width:140px;height:140px;margin:0 auto 14px;}
-.mascot-wrap img{
-  width:140px;height:140px;object-fit:contain;display:block;
-  filter:drop-shadow(0 6px 18px rgba(0,0,0,.38));
-  animation:gentleFloat 3.6s ease-in-out infinite;
+/* ════ JOURNEY MAP ════ */
+.m-top{width:100%;max-width:460px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line);font-size:14px;font-weight:900;color:var(--ink);text-decoration:none;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);cursor:pointer;white-space:nowrap;}
+.chip:active{transform:scale(.96);}
+.chip b{color:var(--gold-ink);}
+.hero{width:100%;max-width:460px;display:flex;align-items:center;gap:12px;margin:10px 0 12px;}
+.hero img{width:86px;height:86px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3));animation:bob 3.4s ease-in-out infinite;}
+@keyframes bob{50%{transform:translateY(-5px) rotate(2deg)}}
+.hero-t{font-size:clamp(26px,7.4vw,32px);font-weight:900;color:var(--gold);letter-spacing:-.5px;line-height:1.05;}
+.hero-s{font-size:14px;font-weight:800;color:var(--ink2);margin-top:4px;line-height:1.3;}
+
+.mode{width:100%;max-width:460px;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:22px;background:var(--glass);border:1px solid var(--line);margin-bottom:12px;}
+.mode button{border:0;background:transparent;border-radius:17px;padding:9px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:56px;transition:background .2s;}
+.mode b{font-size:15px;font-weight:900;white-space:nowrap;}
+.mode small{font-size:12px;font-weight:800;color:var(--ink2);white-space:nowrap;}
+.mode button.on{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;box-shadow:0 8px 18px -10px rgba(31,169,113,.9);}
+.mode button.on small{color:#0A3A26;}
+html[data-bm-theme="bright"] .mode button.on{color:#fff;}
+html[data-bm-theme="bright"] .mode button.on small{color:#E9FFF3;}
+
+/* Du'a of the day — two rows so nothing is squeezed */
+.dod{width:100%;max-width:460px;margin:0 0 14px;padding:12px 14px;border-radius:22px;background:var(--glass);border:1.5px solid rgba(255,216,116,.4);box-shadow:0 12px 26px -18px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+html[data-bm-theme="bright"] .dod{border-color:#FFD15C;box-shadow:0 12px 26px -18px rgba(30,60,110,.5);}
+.dod-r1{display:flex;align-items:center;gap:12px;}
+.dod .di{--s:56px;}
+.dod-tx{flex:1;min-width:0;}
+.dod-k{display:inline-block;white-space:nowrap;font-size:11.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--pill-ink);background:var(--pill-bg);padding:3px 10px;border-radius:999px;}
+.dod-t{font-size:17px;font-weight:900;line-height:1.2;margin-top:5px;}
+.dod-p{font-size:13px;font-weight:800;color:var(--ink2);margin-top:3px;line-height:1.3;}
+.dod-p b{color:var(--gold-ink);}
+.dod-r2{display:flex;gap:8px;margin-top:10px;}
+.dod-r2 a,.dod-r2 button{flex:1;min-height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:900;text-decoration:none;cursor:pointer;border:0;white-space:nowrap;}
+.dod-play{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;}
+html[data-bm-theme="bright"] .dod-play{color:#fff;}
+.dod-read{background:var(--glass2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);}
+
+/* the path through the day */
+.journey{position:relative;width:100%;max-width:460px;border-radius:30px;overflow:hidden;flex:0 0 auto;
+  background:linear-gradient(180deg,#4A3420 0%,#5A3A22 10%,#163B57 30%,#16405A 48%,#4A2A45 64%,#2A2458 80%,#141A3D 100%);
+  box-shadow:inset 0 0 0 1px var(--line),0 18px 36px -24px rgba(0,0,0,.7);}
+html[data-bm-theme="bright"] .journey{background:linear-gradient(180deg,#FFE3C2 0%,#FFEBC9 10%,#CDEBFF 30%,#D6F0FF 48%,#FFD6CC 64%,#B7B2F0 80%,#3E3F94 100%);box-shadow:0 18px 36px -24px rgba(30,60,110,.6);}
+.journey svg.road{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.jr-dec{position:absolute;pointer-events:none;}
+.node{position:absolute;width:132px;margin-left:-66px;display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:none;cursor:pointer;z-index:2;}
+.node .ic{position:relative;}
+.node .di{--s:68px;transition:transform .2s;}
+.node:active .di{transform:scale(.92);}
+.node .num{position:absolute;left:-6px;top:-6px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:900;background:#fff;color:#152230;box-shadow:0 3px 8px -2px rgba(0,0,0,.35);z-index:2;}
+.node .lock{position:absolute;inset:0;display:grid;place-items:center;font-size:26px;z-index:3;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));}
+.node .tod{position:absolute;right:-8px;top:-8px;font-size:20px;z-index:3;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));animation:twk 1.8s ease-in-out infinite;}
+@keyframes twk{50%{transform:scale(1.18) rotate(10deg)}}
+.node .lab{max-width:132px;padding:4px 10px;border-radius:12px;background:var(--lab-bg);color:var(--lab-ink);font-size:13.5px;font-weight:900;line-height:1.15;text-align:center;box-shadow:0 6px 14px -8px rgba(0,0,0,.5);}
+.node .pips{display:flex;gap:1px;height:16px;}
+.pips svg{width:16px;height:16px;fill:rgba(255,255,255,.35);filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));}
+.pips svg.on{fill:#FFC21A;}
+html[data-bm-theme="bright"] .node .pips svg:not(.on){fill:rgba(21,34,48,.2);filter:none;}
+.node.locked .di{filter:grayscale(1) brightness(.85);opacity:.6;}
+.node.locked .lab{opacity:.75;}
+.node.cur .di{animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,216,116,.85),0 8px 16px -9px var(--c2)}60%{box-shadow:0 0 0 12px rgba(255,216,116,0),0 8px 16px -9px var(--c2)}}
+.mo-here{position:absolute;width:70px;height:84px;object-fit:contain;z-index:3;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35));animation:bob 2.2s ease-in-out infinite;}
+.brand{margin-top:16px;font-size:12px;color:var(--ink2);text-align:center;}
+.brand b{color:var(--gold-ink);}
+
+/* stop sheet */
+.sheet-wrap{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(5,15,10,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+html[data-bm-theme="bright"] .sheet-wrap{background:rgba(30,45,80,.35);}
+.sheet-wrap.on{display:flex;animation:fade .2s ease;}
+@keyframes fade{from{opacity:0}}
+.sheet{width:100%;max-width:480px;max-height:92%;overflow:auto;background:var(--sheet);border-radius:28px 28px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom));box-shadow:0 -20px 40px -20px rgba(0,0,0,.6);animation:up .32s cubic-bezier(.2,.9,.3,1.1);}
+@keyframes up{from{transform:translateY(60%)}}
+@media(orientation:landscape) and (max-height:520px){.sheet-wrap{align-items:center}.sheet{border-radius:28px;max-height:94%;max-width:620px}}
+.sh-top{display:flex;align-items:center;gap:14px;}
+.sh-top .di{--s:64px;}
+.sh-k{font-size:12px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--ink2);}
+.sh-t{font-size:23px;font-weight:900;line-height:1.1;margin-top:2px;}
+.sh-m{font-size:14px;font-weight:800;color:var(--ink2);margin-top:3px;}
+.sh-l{font-size:13px;font-weight:900;color:var(--ink2);margin:14px 0 8px;}
+.sh-pics{display:grid;grid-template-columns:repeat(auto-fill,minmax(128px,1fr));gap:10px;}
+.sh-pic{border-radius:16px;overflow:hidden;background:var(--glass);box-shadow:inset 0 0 0 1px var(--line);}
+.sh-pic .ph{position:relative;height:84px;overflow:hidden;}
+.sh-pic .ph svg{position:absolute;inset:0;width:100%;height:100%;}
+.sh-pic .ph img{position:absolute;right:2%;bottom:0;height:92%;object-fit:contain;}
+.sh-pic span{display:block;padding:6px 8px;font-size:13px;font-weight:900;line-height:1.2;}
+.sh-rev{display:flex;flex-wrap:wrap;gap:6px;}
+.sh-rev .di{--s:34px;border-radius:10px;}
+.sh-rec{margin-top:12px;font-size:13.5px;font-weight:800;color:var(--ink2);display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
+.sh-rec .pips svg{fill:var(--line);}
+.sh-rec .pips svg.on{fill:#FFC21A;}
+html[data-bm-theme="bright"] .node .pips svg:not(.on){fill:rgba(21,34,48,.2);filter:none;}
+.sh-go{width:100%;min-height:58px;margin-top:16px;border:0;border-radius:20px;background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;font-size:19px;font-weight:900;cursor:pointer;box-shadow:0 10px 24px -10px rgba(31,169,113,.8);}
+html[data-bm-theme="bright"] .sh-go{color:#fff;text-shadow:0 1px 1px rgba(0,60,30,.35);}
+.sh-go:active,.sh-x:active{transform:scale(.97);}
+.sh-x{width:100%;min-height:46px;margin-top:8px;border:0;border-radius:16px;background:transparent;color:var(--ink2);font-size:15px;font-weight:900;cursor:pointer;}
+
+/* ════ GAME ════ */
+#gameScreen{overflow:hidden;padding-bottom:calc(10px + env(safe-area-inset-bottom));max-width:1000px;margin:0 auto;}
+.g-top{width:100%;max-width:760px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;flex:0 0 auto;}
+.g-btn{min-width:44px;min-height:44px;border-radius:14px;border:1px solid var(--line);background:var(--glass);font-size:18px;font-weight:900;cursor:pointer;display:grid;place-items:center;padding:0 10px;}
+.g-btn:active{transform:scale(.94);}
+.g-title{flex:1;min-width:0;display:flex;align-items:center;gap:8px;font-size:16px;font-weight:900;line-height:1.1;}
+.g-title .di{--s:34px;border-radius:10px;}
+.g-title span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.g-stat{display:flex;align-items:center;gap:4px;min-height:36px;padding:0 10px;border-radius:12px;background:var(--glass);font-size:14px;font-weight:900;white-space:nowrap;}
+@media(max-width:430px){.g-stat.t{display:none;}}
+.tray{flex:0 0 100%;display:flex;justify-content:center;flex-wrap:wrap;gap:5px;padding:6px 0 2px;}
+.tray .di{--s:28px;border-radius:8px;filter:grayscale(1);opacity:.35;transition:filter .3s,opacity .3s;}
+.tray .di.got{filter:none;opacity:1;animation:pop .5s cubic-bezier(.34,1.7,.5,1);}
+@keyframes pop{0%{transform:scale(.4)}100%{transform:none}}
+@media(orientation:landscape) and (max-height:520px){
+  .g-top{flex-wrap:nowrap;max-width:none;}
+  .tray{flex:1 1 auto;order:3;padding:0;flex-wrap:nowrap;overflow:hidden;}
+  .tray .di{--s:24px;}
+  .g-title{flex:0 1 auto;}
+  .g-stat.t{display:none;}
 }
-@keyframes gentleFloat{
-  0%,100%{transform:translateY(0)    rotate(-1.5deg);}
-  50%     {transform:translateY(-6px) rotate(1.5deg);}
-}
-.mascot-shadow{
-  width:70px;height:8px;border-radius:50%;
-  background:rgba(44,90,62,.28);margin:-4px auto 0;
-  filter:blur(3px);animation:shadowBreathe 3.6s ease-in-out infinite;
-}
-@keyframes shadowBreathe{
-  0%,100%{transform:scaleX(1);  opacity:.55;}
-  50%     {transform:scaleX(.8); opacity:.3;}
-}
+.board{flex:1 1 auto;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding-top:8px;}
+.grid{display:flex;flex-wrap:wrap;justify-content:center;align-content:center;gap:var(--gap,8px);}
 
-.game-title{font-size:clamp(24px,7vw,32px);font-weight:900;color:var(--gold-lt);letter-spacing:-.5px;text-shadow:0 2px 16px rgba(200,144,64,.35);}
-.arabic-tagline{font-family:'Scheherazade New',serif;font-size:20px;color:var(--gold);direction:rtl;margin:6px 0;text-shadow:0 2px 10px rgba(200,144,64,.2);}
-.game-sub{font-size:12px;color:var(--cream-dim);margin-bottom:4px;}
+/* ── cards ── */
+.card{position:relative;width:var(--cw);height:var(--ch);perspective:1000px;border:0;background:none;padding:0;cursor:pointer;-webkit-user-select:none;user-select:none;font-size:var(--fs,13px);--r:calc(var(--cw) * .14);}
+.inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,1.32,.55,1);}
+.card.up .inner{transform:rotateY(180deg);}
+.card.lift{animation:lift .55s ease;}
+@keyframes lift{40%{scale:1.07}}
+.face{position:absolute;inset:0;border-radius:var(--r);backface-visibility:hidden;-webkit-backface-visibility:hidden;overflow:hidden;}
+.front{transform:rotateY(180deg);}
+/* back: time-of-day gradient + 8-point-star pattern + crescent medallion */
+.back{--c1:#FFC24D;--c2:#FF7A3D;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='34' viewBox='0 0 34 34'%3E%3Cg fill='none' stroke='%23fff' stroke-opacity='.24' stroke-width='1.3'%3E%3Crect x='10' y='10' width='14' height='14'/%3E%3Crect x='10' y='10' width='14' height='14' transform='rotate(45 17 17)'/%3E%3Cpath d='M0 0l4 4M34 0l-4 4M0 34l4-4M34 34l-4-4'/%3E%3C/g%3E%3C/svg%3E") center/34px 34px,
+    radial-gradient(circle at 50% 40%,rgba(255,255,255,.28),transparent 60%),linear-gradient(160deg,var(--c1),var(--c2));
+  box-shadow:inset 0 0 0 2px rgba(255,255,255,.55),inset 0 0 0 5px rgba(255,255,255,.12),0 8px 16px -9px rgba(0,0,0,.55);}
+.w-pagi .back{--c1:#FFC24D;--c2:#FF7A3D;}
+.w-siang .back{--c1:#55D3F5;--c2:#2A7DE1;}
+.w-sore .back{--c1:#FF9A7A;--c2:#B45CDB;}
+.w-malam .back{--c1:#7F86FF;--c2:#3B2FB5;}
+.w-juara .back{--c1:#FFD54D;--c2:#E8850C;}
+.back .medal{position:absolute;left:50%;top:50%;width:min(56%,calc(var(--ch) * .44));aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff,#FFF2CF);box-shadow:0 0 0 3px rgba(255,255,255,.4),0 6px 14px -6px rgba(0,0,0,.45);display:grid;place-items:center;}
+.back .medal svg{width:68%;height:68%;}
+.back .sp{position:absolute;width:12%;max-width:16px;aspect-ratio:1;fill:#fff;opacity:.85;}
+.back .sp.a{left:9%;top:7%;}.back .sp.b{right:9%;bottom:7%;}
+.back::after{content:'';position:absolute;inset:-20%;background:linear-gradient(115deg,transparent 40%,rgba(255,255,255,.35) 50%,transparent 60%);transform:translateX(-70%);animation:shine 5s ease-in-out infinite;animation-delay:var(--dl,0s);}
+@keyframes shine{0%,70%{transform:translateX(-70%)}100%{transform:translateX(70%)}}
+/* picture face */
+.pic{background:#fff;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7),0 8px 16px -9px rgba(0,0,0,.5);}
+.pic svg.sc{position:absolute;inset:0;width:100%;height:100%;display:block;}
+.pic .mo{position:absolute;right:-2%;bottom:0;height:60%;max-width:70%;object-fit:contain;object-position:right bottom;filter:drop-shadow(0 4px 5px rgba(30,40,70,.3));}
+.pic .di{position:absolute;left:6%;top:5%;--s:calc(var(--cw) * .3);border-radius:calc(var(--cw) * .085);}
+/* du'a face */
+.dua{background:linear-gradient(165deg,var(--paper1),var(--paper2));box-shadow:inset 0 0 0 2px var(--paper-line),0 8px 16px -9px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--fs) * .3);padding:var(--pad,8px) 7%;text-align:center;color:var(--paper-ink);}
+.dua>*{flex:0 0 auto;max-width:100%;}
+.dua .di{--s:var(--is,40px);}
+.dua .t{font-weight:900;line-height:1.15;font-size:var(--fs);display:none;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;overflow-wrap:anywhere;}
+.dua .a{font-family:'Scheherazade New',serif;direction:rtl;color:var(--arabic);font-weight:700;font-size:calc(var(--fs) * 1.3);line-height:1.45;display:none;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;}
+.grid.sz-l .dua .t.l,.grid.sz-l .dua .a,.grid.sz-m .dua .t.s,.grid.sz-m .dua .a,.grid.sz-s .dua .t.s{display:-webkit-box;}
+.grid.sz-m .dua .a{-webkit-line-clamp:1;}
+.grid.sz-s .dua .t.s{-webkit-line-clamp:var(--ll,3);}
+/* states */
+.card.ok .front{box-shadow:inset 0 0 0 3px #FFD233,0 0 0 3px rgba(255,210,51,.45),0 10px 22px -8px rgba(255,190,0,.7);}
+.card.ok{animation:okPop .55s cubic-bezier(.34,1.7,.5,1);}
+@keyframes okPop{0%{scale:1}40%{scale:1.12}100%{scale:1}}
+.card.ok::after{content:'✓';position:absolute;right:-6px;top:-6px;width:24px;height:24px;border-radius:50%;background:#1FA971;color:#fff;font-size:15px;font-weight:900;display:grid;place-items:center;z-index:4;box-shadow:0 3px 8px -2px rgba(0,0,0,.4);}
+.card.today.ok::after{content:'⭐';background:#FFC21A;font-size:13px;}
+.card.no{animation:shake .45s ease;}
+@keyframes shake{20%{translate:-6px 0}40%{translate:6px 0}60%{translate:-4px 0}80%{translate:4px 0}}
+.burst{position:fixed;pointer-events:none;z-index:60;font-size:18px;color:#FFD233;text-shadow:0 0 6px rgba(255,220,80,.9);animation:burst .8s cubic-bezier(.2,.8,.3,1) forwards;}
+@keyframes burst{0%{transform:translate(-50%,-50%) scale(.3);opacity:1}100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(1) rotate(180deg);opacity:0}}
 
-/* Level buttons */
-.level-wrap{width:100%;max-width:420px;}
-.level-title{font-size:10px;font-weight:800;letter-spacing:2.5px;text-transform:uppercase;color:var(--cream-dim);text-align:center;margin-bottom:12px;}
-.level-list{display:flex;flex-direction:column;gap:10px;}
-.lvl-btn{background:var(--card-back);border:1px solid var(--border);-webkit-backdrop-filter:blur(16px) saturate(150%);backdrop-filter:blur(16px) saturate(150%);border-radius:20px;padding:15px 18px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:.18s ease;width:100%;box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 6px 16px -8px rgba(0,0,0,.4);}
-.lvl-btn:active{transform:scale(.97);}
-.lvl-btn.sel{border-color:var(--gold-lt);background:rgba(255,216,116,.10);box-shadow:0 0 0 1px rgba(255,216,116,.3),0 8px 22px -8px rgba(224,184,77,.4);}
-.lvl-icon{font-size:28px;flex-shrink:0;filter:drop-shadow(0 2px 5px rgba(0,0,0,.25));}
-.lvl-info{flex:1;text-align:left;}
-.lvl-name{font-size:15px;font-weight:800;color:var(--cream);line-height:1.2;}
-.lvl-desc{font-size:12px;color:var(--cream-dim);margin-top:2px;}
-.lvl-badge{font-size:10px;font-weight:800;letter-spacing:.5px;background:rgba(123,232,176,.14);color:var(--green-glow);padding:5px 11px;border-radius:999px;flex-shrink:0;}
-
-.start-btn{
-  width:100%;max-width:420px;margin-top:16px;padding:17px;
-  background:linear-gradient(135deg,var(--green-lt),var(--green));
-  border:none;border-radius:20px;
-  font-family:'Nunito',sans-serif;font-size:18px;font-weight:900;
-  color:#06231A;cursor:pointer;
-  box-shadow:0 8px 26px -6px rgba(63,208,140,.55),inset 0 1px 0 rgba(255,255,255,.3);
-  transition:transform .15s ease, box-shadow .15s ease;letter-spacing:.3px;
-}
-.start-btn:active{transform:scale(.97);box-shadow:0 4px 14px -6px rgba(63,208,140,.5),inset 0 1px 0 rgba(255,255,255,.3);}
-
-.hub-back-btn{
-  display:block;width:100%;max-width:420px;
-  margin-top:10px;padding:13px;
-  background:var(--card-back);
-  border:1px solid var(--border);
-  -webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);
-  border-radius:16px;
-  font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
-  color:var(--cream-dim);text-align:center;text-decoration:none;
-  transition:.15s;cursor:pointer;
-}
-.hub-back-btn:active{transform:scale(.97);}
-.hub-back-btn:hover{color:var(--green-glow);border-color:rgba(93,170,120,.25);}
-
-.brand-tag{margin-top:14px;font-size:11px;color:rgba(154,160,152,.45);text-align:center;}
-.brand-tag b{color:var(--gold-dim);}
-
-/* ════ GAME SCREEN ════ */
-#gameScreen{padding-top:calc(16px + env(safe-area-inset-top));justify-content:flex-start;}
-.g-header{width:100%;max-width:480px;display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-shrink:0;}
-.g-back{
-  background:var(--card-back);border:1.5px solid var(--border);
-  border-radius:10px;padding:7px 14px;
-  font-size:12px;font-weight:700;color:var(--cream-dim);cursor:pointer;
-  font-family:'Nunito',sans-serif;transition:.15s;
-}
-.g-back:active{opacity:.7;}
-.g-stats{display:flex;gap:8px;}
-.g-stat{background:var(--card-back);border-radius:10px;padding:6px 12px;font-size:13px;font-weight:700;color:var(--cream);display:flex;align-items:center;gap:5px;}
-.g-level{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--green-glow);background:rgba(93,170,120,.1);padding:4px 10px;border-radius:8px;}
-
-.prog-wrap{width:100%;max-width:480px;height:5px;background:rgba(255,255,255,.07);border-radius:5px;margin-bottom:14px;flex-shrink:0;overflow:hidden;}
-.prog-bar{height:100%;background:linear-gradient(90deg,var(--green),var(--green-glow));border-radius:5px;transition:width .5s ease;}
-
-.hint-strip{width:100%;max-width:480px;display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-shrink:0;font-size:11px;color:var(--cream-dim);}
-.hint-pill{background:rgba(93,170,120,.1);border:1px solid rgba(93,170,120,.15);border-radius:8px;padding:4px 10px;display:flex;gap:6px;align-items:center;}
-
-/* Card grid */
-.card-grid{width:100%;max-width:480px;display:grid;gap:9px;}
-.grid-2{grid-template-columns:1fr 1fr;}
-.grid-3{grid-template-columns:1fr 1fr 1fr;}
-
-/* ── CARD ── */
-.card{perspective:1200px;cursor:pointer;user-select:none;border-radius:15px;}
-.grid-2 .card{height:178px;}
-.grid-3 .card{height:155px;}
-
-.card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .48s cubic-bezier(.4,.2,.2,1);border-radius:15px;}
-.card.flipped .card-inner{transform:rotateY(180deg);}
-.card.matched .card-inner{transform:rotateY(180deg);animation:matchPop .38s ease;}
-@keyframes matchPop{0%{transform:rotateY(180deg) scale(1);}50%{transform:rotateY(180deg) scale(1.05);}100%{transform:rotateY(180deg) scale(1);}}
-
-.cf{
-  position:absolute;inset:0;border-radius:15px;
-  backface-visibility:hidden;-webkit-backface-visibility:hidden;
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  gap:4px;
-  padding:10px 8px;overflow:hidden;
-}
-
-/* CARD BACK */
-.cb{background:var(--card-back);border:1.5px solid var(--border);}
-.cb-pattern{position:absolute;inset:0;border-radius:15px;background:repeating-linear-gradient(45deg,rgba(93,170,120,.03) 0,rgba(93,170,120,.03) 1px,transparent 1px,transparent 12px),repeating-linear-gradient(-45deg,rgba(93,170,120,.03) 0,rgba(93,170,120,.03) 1px,transparent 1px,transparent 12px);}
-.cb-moon{font-size:40px;opacity:.15;position:relative;z-index:1;}
-.cb-txt{font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(93,170,120,.3);position:relative;z-index:1;}
-.cb::before,.cb::after{content:'◆';position:absolute;font-size:8px;color:rgba(200,144,64,.12);}
-.cb::before{top:8px;left:8px;}.cb::after{bottom:8px;right:8px;}
-
-/* CARD FRONT - Arabic */
-.cf-front{transform:rotateY(180deg);}
-.ca{background:linear-gradient(150deg,#192E20,#1E3A28);border:1.5px solid rgba(200,144,64,.18);}
-.ca::after{content:'';position:absolute;inset:0;border-radius:15px;background:radial-gradient(ellipse at 50% 0%,rgba(200,144,64,.06),transparent 60%);}
-.ca-emoji{font-size:20px;position:relative;z-index:1;line-height:1;}
-.grid-3 .ca-emoji{font-size:16px;}
-.ca-arabic{
-  font-family:'Scheherazade New',serif;
-  font-size:clamp(18px,5vw,26px);
-  font-weight:700;color:var(--gold-lt);
-  text-align:center;direction:rtl;
-  line-height:1.35;
-  position:relative;z-index:1;
-  width:100%;word-break:keep-all;
-}
-.grid-3 .ca-arabic{font-size:clamp(15px,4vw,19px);}
-.ca-trans{font-size:10px;font-weight:700;color:var(--cream-dim);position:relative;z-index:1;letter-spacing:.3px;text-align:center;}
-.grid-3 .ca-trans{font-size:9px;}
-
-/* CARD FRONT - Meaning */
-.cm{background:linear-gradient(150deg,#1C2E1C,#243824);border:1.5px solid rgba(93,170,120,.18);}
-.cm::after{content:'';position:absolute;inset:0;border-radius:15px;background:radial-gradient(ellipse at 50% 100%,rgba(93,170,120,.06),transparent 60%);}
-.cm-emoji{font-size:38px;position:relative;z-index:1;line-height:1;flex-shrink:0;}
-.grid-3 .cm-emoji{font-size:28px;}
-.cm-id{font-size:12px;font-weight:900;color:var(--cream);text-align:center;line-height:1.25;position:relative;z-index:1;width:100%;}
-.grid-3 .cm-id{font-size:10px;}
-.cm-en{font-size:10px;font-weight:600;color:var(--cream-dim);text-align:center;line-height:1.2;position:relative;z-index:1;font-style:italic;}
-.grid-3 .cm-en{display:none;}
-.cm-use{font-size:9px;color:var(--green-glow);text-align:center;font-weight:700;position:relative;z-index:1;line-height:1.2;}
-.grid-3 .cm-use{display:none;}
-
-/* Matched glow */
-.card.matched .ca{border-color:var(--green-glow);box-shadow:0 0 22px rgba(93,170,120,.25),inset 0 0 12px rgba(93,170,120,.05);background:linear-gradient(150deg,#1E3A2A,#244030);}
-.card.matched .cm{border-color:var(--green-glow);box-shadow:0 0 22px rgba(93,170,120,.25),inset 0 0 12px rgba(93,170,120,.05);background:linear-gradient(150deg,#1E3424,#283E28);}
-.card.matched .ca::before{content:'✓';position:absolute;top:7px;left:9px;font-size:12px;color:var(--green-glow);font-weight:900;z-index:2;}
-.card.matched .cm::before{content:'✓';position:absolute;top:7px;left:9px;font-size:12px;color:var(--green-glow);font-weight:900;z-index:2;}
-.card.disabled{pointer-events:none;}
-
-/* ── TOAST ── */
-.toast{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);background:linear-gradient(135deg,var(--green),#3A7050);border-radius:20px;padding:14px 24px;text-align:center;z-index:200;box-shadow:0 8px 32px rgba(0,0,0,.4);pointer-events:none;transition:transform .2s cubic-bezier(.34,1.56,.64,1);}
-.toast.show{transform:translate(-50%,-50%) scale(1);}
-.toast-emoji{font-size:32px;}
-.toast-text{font-size:16px;font-weight:900;color:#fff;margin-top:3px;}
-
-/* ── WRONG SHAKE ── */
-.card.wrong{animation:shake .4s ease;}
-@keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-6px);}40%{transform:translateX(6px);}60%{transform:translateX(-4px);}80%{transform:translateX(4px);}}
-
-/* ════ COMPLETE SCREEN ════ */
-#completeScreen{padding-top:calc(24px + env(safe-area-inset-top));justify-content:flex-start;}
-
-.comp-mascot-wrap{position:relative;width:110px;height:110px;margin:0 auto 14px;}
-.comp-mascot{
-  width:110px;height:110px;object-fit:contain;display:block;
-  filter:drop-shadow(0 5px 14px rgba(0,0,0,.35));
-  animation:completeSway 2.8s ease-in-out infinite alternate;
-}
-@keyframes completeSway{from{transform:rotate(-10deg) scale(1);}to{transform:rotate(10deg) scale(1.06);}}
-
-.comp-card{
-  background:var(--bg2);border:1px solid rgba(200,144,64,.18);
-  border-radius:24px;padding:24px 20px 22px;
-  text-align:center;width:100%;max-width:400px;
-  position:relative;overflow:visible;
-}
-.comp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
-
-.stars-row{display:flex;justify-content:center;gap:10px;margin:14px 0;}
-.star-big{font-size:44px;opacity:.15;transition:opacity .3s,transform .4s;}
-.star-big.lit{opacity:1;animation:starPop .45s cubic-bezier(.34,1.56,.64,1);}
-@keyframes starPop{0%{transform:scale(0) rotate(-30deg);}80%{transform:scale(1.15) rotate(5deg);}100%{transform:scale(1) rotate(0);}}
-
-.comp-title{font-size:24px;font-weight:900;color:var(--gold-lt);line-height:1.1;margin-bottom:4px;}
-.comp-sub{font-size:12px;color:var(--cream-dim);margin-bottom:12px;}
-.comp-stats{display:flex;justify-content:center;gap:20px;margin-bottom:16px;}
-.cst{text-align:center;}
-.cst-n{font-size:28px;font-weight:900;color:var(--cream);line-height:1;}
-.cst-l{font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--cream-dim);margin-top:3px;}
-
-/* ── RECAP — fixed layout ── */
-.dua-recap{
-  background:rgba(44,90,62,.15);
-  border:1px solid rgba(93,170,120,.15);
-  border-radius:14px;
-  padding:12px 14px;
-  margin-bottom:16px;
-  text-align:left;
-}
-.dr-title{
-  font-size:9px;font-weight:700;letter-spacing:2px;
-  text-transform:uppercase;color:var(--cream-dim);
-  margin-bottom:10px;text-align:center;
-}
-.dr-item{
-  padding:10px 0;
-  border-bottom:1px solid rgba(255,255,255,.05);
-}
-.dr-item:last-child{border-bottom:none;}
-
-/* Row 1: emoji + name LEFT, Arabic RIGHT — same line */
-.dr-row1{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:8px;
-  margin-bottom:5px;
-}
-.dr-left{display:flex;align-items:center;gap:7px;min-width:0;}
-.dr-emoji{font-size:18px;flex-shrink:0;}
-.dr-trans{font-size:13px;font-weight:900;color:var(--cream);white-space:nowrap;}
-.dr-arabic{
-  font-family:'Scheherazade New',serif;
-  font-size:19px;color:var(--gold-lt);
-  direction:rtl;line-height:1.4;
-  text-align:right;
-  flex-shrink:0;
+/* match reveal: the picture, the du'a and its meaning */
+.rv{position:fixed;inset:0;z-index:70;display:none;align-items:center;justify-content:center;padding:16px;padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:calc(16px + env(safe-area-inset-bottom));background:rgba(5,15,10,.45);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);}
+html[data-bm-theme="bright"] .rv{background:rgba(30,45,80,.3);}
+.rv.on{display:flex;animation:fade .2s ease;}
+.rv-card{width:100%;max-width:400px;max-height:100%;overflow:auto;background:var(--sheet);border-radius:26px;box-shadow:0 30px 60px -20px rgba(0,0,0,.6),inset 0 0 0 1px var(--line);animation:rvIn .45s cubic-bezier(.34,1.5,.6,1);}
+@keyframes rvIn{from{transform:scale(.7) translateY(30px);opacity:0}}
+.rv-sc{position:relative;height:150px;overflow:hidden;}
+.rv-sc svg{position:absolute;inset:0;width:100%;height:100%;}
+.rv-sc img{position:absolute;right:5%;bottom:0;height:130px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(30,40,70,.28));animation:rvMo .6s cubic-bezier(.34,1.56,.64,1);}
+@keyframes rvMo{from{transform:translateY(30px) scale(.8);opacity:0}}
+.rv-ok{position:absolute;left:12px;top:12px;padding:5px 12px;border-radius:999px;background:#FFE58A;color:#6B4000;font-size:14px;font-weight:900;box-shadow:0 4px 10px -4px rgba(0,0,0,.35);}
+.rv-b{padding:14px 18px 16px;text-align:center;}
+.rv-t{display:flex;align-items:center;justify-content:center;gap:9px;font-size:19px;font-weight:900;line-height:1.2;}
+.rv-t .di{--s:36px;border-radius:10px;}
+.rv-ar{font-size:clamp(24px,7vw,30px);line-height:1.65;color:var(--arabic);font-weight:700;margin-top:8px;}
+.rv-la{font-size:14px;font-weight:700;font-style:italic;color:var(--ink2);margin-top:2px;line-height:1.35;}
+.rv-me{font-size:15px;font-weight:800;margin-top:8px;line-height:1.35;}
+.rv-btns{display:flex;gap:8px;margin-top:14px;}
+.rv-btns button{flex:1;min-height:50px;border-radius:16px;border:0;font-size:16px;font-weight:900;cursor:pointer;}
+.rv-say{background:var(--glass);box-shadow:inset 0 0 0 1px var(--line);}
+.rv-go{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;}
+html[data-bm-theme="bright"] .rv-go{color:#fff;}
+.rv-bar{height:4px;background:var(--line);}
+.rv-bar i{display:block;height:100%;width:100%;background:linear-gradient(90deg,var(--green-lt),#FFD233);transform-origin:left;}
+@media(orientation:landscape) and (max-height:520px){
+  .rv-card{max-width:680px;display:grid;grid-template-columns:42% 1fr;align-items:stretch;}
+  .rv-sc{height:auto;min-height:200px;}
+  .rv-sc img{height:70%;}
+  .rv-bar{grid-column:1/-1;order:3;}
 }
 
-/* Row 2: meanings below, indented */
-.dr-row2{
-  display:flex;gap:5px;
-  flex-wrap:wrap;
-  align-items:baseline;
-  padding-left:26px;
-}
-.dr-mean-id{font-size:11px;color:var(--cream);font-weight:700;}
-.dr-mean-en{font-size:10px;color:var(--cream-dim);font-style:italic;}
-
-/* ── COMPLETE SCREEN BUTTONS ── */
-.btn-row{display:flex;gap:9px;width:100%;max-width:400px;}
-.btn-row+.btn-row{margin-top:9px;}
-.btn-sec{
-  flex:1;padding:14px 10px;
-  background:var(--card-back);
-  border:1.5px solid var(--border);
-  border-radius:14px;
-  font-family:'Nunito',sans-serif;font-size:13px;font-weight:800;
-  color:var(--cream);cursor:pointer;transition:.15s;text-align:center;
-}
-.btn-pri{
-  flex:1;padding:14px 10px;
-  background:linear-gradient(135deg,var(--green),#3A7050);
-  border:none;border-radius:14px;
-  font-family:'Nunito',sans-serif;font-size:15px;font-weight:900;
-  color:#fff;cursor:pointer;
-  box-shadow:0 4px 20px rgba(44,90,62,.45);
-  transition:.15s;text-align:center;
-}
-.btn-sec:active,.btn-pri:active{transform:scale(.97);}
-
-/* Particles */
-.particle{position:fixed;pointer-events:none;z-index:300;animation:pfall linear forwards;}
-@keyframes pfall{0%{transform:translateY(0) rotate(0deg);opacity:1;}80%{opacity:.8;}100%{transform:translateY(105vh) rotate(900deg);opacity:0;}}
-
-.scroll-hint{font-size:11px;color:var(--cream-dim);text-align:center;margin-top:8px;animation:fadeHint 3s ease 1s forwards;flex-shrink:0;}
-@keyframes fadeHint{0%{opacity:1;}80%{opacity:1;}100%{opacity:0;}}
-
-/* tablet/iPad — widen the play area */
-@media(min-width:820px){.btn-row,.card-grid,.g-header,.hint-strip,.level-wrap,.prog-wrap{max-width:680px!important;}}
-
-/* bm-letterbox: comfortable centered column on tablet/desktop */
-@media(min-width:760px){.screen{max-width:520px!important;margin-left:auto!important;margin-right:auto!important;left:0!important;right:0!important;}body{background:#06100A;}}
+/* ════ DONE ════ */
+.dn{width:100%;max-width:420px;text-align:center;background:var(--glass);border:1px solid var(--line);border-radius:28px;padding:16px 18px 18px;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);margin-top:6px;}
+.dn img{display:block;margin:0 auto 4px;height:120px;width:auto;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(0,0,0,.3));animation:bob 2.4s ease-in-out infinite;}
+.dn-k{display:inline-flex;align-items:center;gap:7px;font-size:14px;font-weight:900;color:var(--ink2);}
+.dn-k .di{--s:28px;border-radius:8px;}
+.dn-t{font-size:28px;font-weight:900;color:var(--gold);line-height:1.15;margin-top:4px;}
+.stars{display:flex;justify-content:center;gap:8px;margin:10px 0 8px;}
+.stars svg{width:50px;height:50px;fill:var(--line);}
+.stars svg.on{fill:#FFC21A;filter:drop-shadow(0 4px 6px rgba(220,140,0,.45));animation:star .6s cubic-bezier(.34,1.8,.5,1) both;}
+@keyframes star{0%{transform:scale(0) rotate(-90deg)}100%{transform:none}}
+.badges{display:flex;flex-wrap:wrap;justify-content:center;gap:7px;margin:4px 0 8px;}
+.badges:empty{display:none;}
+.bdg{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:999px;font-size:13.5px;font-weight:900;background:var(--pill-bg);color:var(--pill-ink);animation:star .5s cubic-bezier(.34,1.56,.64,1) both;}
+.bdg.g{background:rgba(63,208,140,.2);color:#8BF0BC;}
+html[data-bm-theme="bright"] .bdg.g{background:#E3F7EC;color:#0B6B3A;}
+.dn-st{font-size:15px;font-weight:900;}
+.dn-best{font-size:13px;font-weight:800;color:var(--ink2);margin-top:4px;}
+.dn-btns{width:100%;max-width:420px;display:flex;flex-direction:column;gap:8px;margin-top:12px;}
+.dn-row{display:flex;gap:8px;}
+.b1{width:100%;min-height:58px;border:0;border-radius:20px;background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;font-size:18px;font-weight:900;cursor:pointer;padding:6px 12px;line-height:1.2;}
+html[data-bm-theme="bright"] .b1{color:#fff;text-shadow:0 1px 1px rgba(0,60,30,.35);}
+.b2{flex:1;min-height:50px;border:1px solid var(--line);border-radius:16px;background:var(--glass);font-size:14.5px;font-weight:900;cursor:pointer;white-space:nowrap;padding:0 6px;}
+.b1:active,.b2:active{transform:scale(.97);}
+.recap{width:100%;max-width:420px;margin-top:14px;background:var(--glass);border:1px solid var(--line);border-radius:22px;padding:12px 14px;}
+.recap h3{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--ink2);text-align:center;margin-bottom:4px;}
+.rc{display:grid;grid-template-columns:auto 1fr auto;gap:4px 10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);}
+.rc:last-child{border-bottom:0;}
+.rc .di{--s:40px;border-radius:12px;grid-row:span 2;}
+.rc-t{font-size:15px;font-weight:900;line-height:1.2;}
+.rc-say{grid-row:span 2;width:44px;height:44px;border-radius:50%;border:0;background:var(--glass2);box-shadow:inset 0 0 0 1px var(--line);font-size:18px;cursor:pointer;}
+.rc-a{grid-column:2/3;font-size:20px;color:var(--arabic);line-height:1.6;text-align:right;}
+.rc-m{grid-column:1/-1;font-size:13px;font-weight:700;color:var(--ink2);line-height:1.35;}
+@media(prefers-reduced-motion:reduce){.hero img,.mo-here,.dn img,.node.cur .di,.back::after,.node .tod{animation:none!important}}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-dua-game.html">
 <meta name="robots" content="index,follow">
@@ -334,587 +303,598 @@ body::before{
 <meta property="og:site_name" content="Baby Mo">
 <meta property="og:locale" content="id_ID">
 <meta property="og:title" content="Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo">
-<meta property="og:description" content="Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.">
+<meta property="og:description" content="Perjalanan doa sehari bersama Baby Mo: buka kartu bergambar dan cocokkan setiap momen dengan doanya.">
 <meta property="og:url" content="https://play.babymo.id/babymo-dua-game.html">
 <meta property="og:image" content="https://play.babymo.id/og/babymo-dua-game.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Dua Journey — Game Mencocokkan Doa untuk Anak | Baby Mo">
-<meta name="twitter:description" content="Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.">
+<meta name="twitter:description" content="Perjalanan doa sehari bersama Baby Mo: buka kartu bergambar dan cocokkan setiap momen dengan doanya.">
 <meta name="twitter:image" content="https://play.babymo.id/og/babymo-dua-game.jpg">
-<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Dua Journey — Baby Mo","url":"https://play.babymo.id/babymo-dua-game.html","description":"Cocokkan kartu doa dengan situasinya sambil melatih daya ingat.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-dua-game.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":6},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Dua Journey","item":"https://play.babymo.id/babymo-dua-game.html"}]}]}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"VideoGame","name":"Dua Journey — Baby Mo","url":"https://play.babymo.id/babymo-dua-game.html","description":"Perjalanan doa sehari bersama Baby Mo: buka kartu bergambar dan cocokkan setiap momen dengan doanya.","inLanguage":"id-ID","genre":"Educational","image":"https://play.babymo.id/og/babymo-dua-game.jpg","gamePlatform":"Web browser","applicationCategory":"GameApplication","operatingSystem":"Any","isFamilyFriendly":true,"publisher":{"@type":"Organization","name":"Baby Mo","url":"https://babymo.id/","logo":"https://play.babymo.id/Logo_Baby_Mo_Transparant.png"},"audience":{"@type":"PeopleAudience","suggestedMinAge":3,"suggestedMaxAge":8},"offers":{"@type":"Offer","price":"0","priceCurrency":"IDR","availability":"https://schema.org/InStock"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Baby Mo Games","item":"https://play.babymo.id/"},{"@type":"ListItem","position":2,"name":"Dua Journey","item":"https://play.babymo.id/babymo-dua-game.html"}]}]}</script>
 <link rel="stylesheet" href="bm-bright.css">
-<style id="bm-bright">
-:root{
-  --bg:#F2F6FC;--bg2:#FFFFFF;--bg3:#F7F9FC;
-  --green:#12A15A;--green-lt:#2DC76D;--green-glow:#0B8A4A;
-  --gold:#F08C00;--gold-lt:#D9480F;--gold-dim:#B45309;
-  --cream:#152230;--cream-dim:#5A6878;
-  --card-back:linear-gradient(160deg,#BFE6FF,#7CC3FF);--card-ara:#E6F4FF;--card-mean:#FFF4DB;
-  --star:#FFB800;--border:rgba(21,34,48,.10);
-}
-.cb{border-color:rgba(255,255,255,.85);box-shadow:0 8px 18px -10px rgba(47,116,234,.55),inset 0 1px 0 rgba(255,255,255,.55);}
-.cb-moon{opacity:.85;filter:drop-shadow(0 2px 4px rgba(30,60,110,.25));}
-.cb-txt{color:rgba(255,255,255,.95);text-shadow:0 1px 2px rgba(30,60,110,.35);}
-.cb::before,.cb::after{color:rgba(255,255,255,.7);}
-.ca{background:linear-gradient(150deg,#FFFFFF,#FFF6E1);border-color:rgba(240,140,0,.28);box-shadow:0 8px 18px -10px rgba(30,60,110,.45);}
-.ca-arabic{color:#0B6B3A;}
-.cm{background:linear-gradient(150deg,#FFFFFF,#E8F7EE);border-color:rgba(18,161,90,.25);box-shadow:0 8px 18px -10px rgba(30,60,110,.45);}
-</style>
-<link rel="stylesheet" href="bm-buttons.css">
-<style id="bm-fixes">
-/* English mode: the meaning is already shown in English */
-html[data-lang="en"] .cm-en,html[data-lang="en"] .dr-mean-en{display:none;}
-/* readable text: nothing under ~11.5px */
-.level-title,.lvl-badge,.g-level,.cst-l,.dr-title{font-size:11.5px!important;}
-</style>
-<style id="bm-bright-fixes">
-/* contrast fixes after the bright theme */
-.arabic-tagline{color:#0B6B3A;}
-.brand-tag{color:#6B7787;}
-.lvl-btn{background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.08);box-shadow:0 10px 22px -16px rgba(30,60,110,.45);}
-.lvl-btn.sel{background:linear-gradient(135deg,#FFF6DD,#FFEBC2);border-color:#F5B800;box-shadow:0 0 0 1.5px rgba(245,184,0,.45),0 10px 22px -14px rgba(245,159,0,.5);}
-.lvl-desc{color:#5A6878;}
-.lvl-badge{background:rgba(18,161,90,.12);color:#0B6B3A;}
-</style>
-<style id="bm-loops">
-/* Replay loops: records per level, Tanpa Salah badge, Doa Hari Ini.
-   Both themes (not a bm-bright block): colours come from the theme vars. */
-.lvl-rec{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;font-size:12px;font-weight:800;color:var(--cream-dim);}
-.lvl-rec .lr-st{letter-spacing:1px;color:var(--star);font-size:13px;}
-.lvl-rec .lr-st i{font-style:normal;opacity:.28;}
-.lvl-rec .lr-st i.on{opacity:1;}
-.lvl-rec .lr-pf{background:rgba(255,216,116,.18);color:var(--gold-lt);border-radius:999px;padding:2px 8px;font-size:11.5px;}
-.dod-card{width:100%;max-width:420px;display:flex;align-items:center;gap:12px;margin:0 0 14px;padding:12px 14px;border-radius:20px;
-  background:var(--bg2);border:1.5px solid rgba(255,216,116,.35);box-shadow:0 10px 24px -16px rgba(0,0,0,.5);text-align:left;}
-.dod-ic{flex:0 0 54px;height:54px;border-radius:16px;display:grid;place-items:center;font-size:30px;background:rgba(255,216,116,.16);}
-.dod-tx{flex:1;min-width:0;}
-.dod-k{display:inline-block;font-size:11.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:#7A4A00;background:#FFE58A;padding:2px 9px;border-radius:999px;}
-.dod-t{font-size:16px;font-weight:900;color:var(--cream);margin-top:4px;line-height:1.2;}
-.dod-p{font-size:12.5px;font-weight:700;color:var(--cream-dim);margin-top:3px;line-height:1.3;}
-.dod-p b{color:var(--gold-lt);}
-.dod-go{flex:0 0 auto;min-height:48px;display:inline-flex;align-items:center;justify-content:center;padding:0 14px;border-radius:16px;text-decoration:none;
-  font-size:13px;font-weight:900;color:#06231A;background:linear-gradient(135deg,var(--green-lt),var(--green));text-align:center;line-height:1.15;max-width:112px;}
-.dod-go:active{transform:scale(.96);}
-.card.today .cf-front{box-shadow:0 0 0 3px #FFD874,0 8px 18px -8px rgba(255,184,0,.7)!important;}
-.card.today.flipped::after,.card.today.matched::after{content:'⭐';position:absolute;top:-8px;right:-6px;font-size:18px;z-index:5;filter:drop-shadow(0 2px 3px rgba(0,0,0,.3));pointer-events:none;}
-.card{position:relative;}
-.comp-badges{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:-4px 0 14px;}
-.comp-badges:empty{display:none;}
-.cb-badge{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;font-size:13px;font-weight:900;
-  background:rgba(255,216,116,.18);color:var(--gold-lt);border:1.5px solid rgba(255,216,116,.45);animation:starPop .45s cubic-bezier(.34,1.56,.64,1) both;}
-.cb-badge.pf{background:linear-gradient(135deg,#FFE58A,#FFC21A);color:#5A3A00;border-color:#fff;}
-.cb-badge.bonus{background:rgba(123,232,176,.18);color:var(--green-glow);border-color:rgba(123,232,176,.45);}
-.comp-best{font-size:12.5px;font-weight:800;color:var(--cream-dim);margin:-6px 0 14px;}
-html[data-bm-theme="bright"] .dod-card{border-color:#FFD15C;box-shadow:0 12px 26px -18px rgba(30,60,110,.5);}
-html[data-bm-theme="bright"] .dod-ic{background:#FFF4D1;}
-html[data-bm-theme="bright"] .cb-badge{background:#FFF4D1;color:#9A5B00;border-color:#FFD15C;}
-html[data-bm-theme="bright"] .cb-badge.bonus{background:#E3F7EC;color:#0B6B3A;border-color:#9BE0B9;}
-html[data-bm-theme="bright"] .lvl-rec .lr-pf{background:#FFF4D1;color:#9A5B00;}
-html[data-bm-theme="bright"] .dod-p b{color:#B45309;}
-</style>
 <script src="bm-icons.js" defer></script>
+<script src="doa-scenes.js"></script>
 </head>
 <body>
 
-<div class="star-bg" id="starBg"></div>
-
-<div class="toast" id="toast">
-  <div class="toast-emoji" id="toastEmoji">⭐</div>
-  <div class="toast-text" id="toastText">Masya Allah!</div>
+<!-- ════ JOURNEY MAP ════ -->
+<div class="screen active" id="mapScreen">
+  <div class="m-top">
+    <a class="chip" href="./index.html">🏠 Hub</a>
+    <span class="chip" id="totStars">⭐ 0/21</span>
+  </div>
+  <div class="hero">
+    <img src="baby-mo-poses/baby-mo-yes.webp" alt="Baby Mo">
+    <div>
+      <div class="hero-t">Dua Journey 🌙</div>
+      <div class="hero-s">Perjalanan doa sehari bersama Baby Mo</div>
+    </div>
+  </div>
+  <div class="mode" role="radiogroup">
+    <button type="button" data-mode="little" role="radio"><b>🧸 Si Kecil</b><small>Gambar kembar · 3–5 th</small></button>
+    <button type="button" data-mode="big" role="radio"><b>🎒 Si Besar</b><small>Gambar ↔ Doa · 5–8 th</small></button>
+  </div>
+  <div class="dod" id="dod" hidden></div>
+  <div class="journey" id="journey"></div>
+  <div class="brand">Made with ♥ by <b>BabyMo.id</b></div>
 </div>
 
-<!-- ════ WELCOME ════ -->
-<div class="screen active" id="welcomeScreen">
-  <div class="welcome-top">
-    <div class="mascot-wrap">
-      <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
-    </div>
-    <div class="mascot-shadow"></div>
-    <div class="game-title">Dua Journey 🌙</div>
-    <div class="arabic-tagline">بِسْمِ اللَّهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-    <div class="game-sub">Cocokkan doa bersama Baby Mo! 🐻 · Belajar · Main · Berkembang</div>
-  </div>
+<!-- stop details -->
+<div class="sheet-wrap" id="sheetWrap"><div class="sheet" id="sheet" role="dialog" aria-modal="true"></div></div>
 
-  <div class="dod-card" id="dodCard" hidden></div>
-
-  <div class="level-wrap">
-    <div class="level-title">— Pilih tingkat kesulitan —</div>
-    <div class="level-list">
-      <button class="lvl-btn sel" id="lvl1" onclick="selectLevel(1)">
-        <span class="lvl-icon">🌱</span>
-        <div class="lvl-info">
-          <div class="lvl-name">Mudah — Easy</div>
-          <div class="lvl-desc">3 doa · Cocok untuk pemula</div>
-          <div class="lvl-rec" data-rec></div>
-        </div>
-        <span class="lvl-badge">6 kartu</span>
-      </button>
-      <button class="lvl-btn" id="lvl2" onclick="selectLevel(2)">
-        <span class="lvl-icon">🌿</span>
-        <div class="lvl-info">
-          <div class="lvl-name">Sedang — Medium</div>
-          <div class="lvl-desc">5 doa · Semakin mahir</div>
-          <div class="lvl-rec" data-rec></div>
-        </div>
-        <span class="lvl-badge">10 kartu</span>
-      </button>
-      <button class="lvl-btn" id="lvl3" onclick="selectLevel(3)">
-        <span class="lvl-icon">🌟</span>
-        <div class="lvl-info">
-          <div class="lvl-name">Hebat — Amazing!</div>
-          <div class="lvl-desc">6 doa · Juara doa 🏆</div>
-          <div class="lvl-rec" data-rec></div>
-        </div>
-        <span class="lvl-badge">12 kartu</span>
-      </button>
-    </div>
-    <button class="start-btn" onclick="startGame()">🌙 Mulai — Bismillah!</button>
-    <a href="././index.html" class="hub-back-btn">🏠 Kembali ke Game Hub</a>
-  </div>
-
-  <div class="brand-tag">Made with ♥ by <b>BabyMo.id</b></div>
-  <div style="height:20px"></div>
-</div>
-
-
-<!-- ════ GAME SCREEN ════ -->
+<!-- ════ GAME ════ -->
 <div class="screen" id="gameScreen">
-  <div class="g-header">
-    <button class="g-back" onclick="goHome()">← Hub</button>
-    <span class="g-level" id="gLevelBadge">Mudah 🌱</span>
-    <div class="g-stats">
-      <div class="g-stat"><span>👣</span><span id="moveCount">0</span></div>
-      <div class="g-stat"><span>⏱</span><span id="timerDisp">0:00</span></div>
-    </div>
+  <div class="g-top">
+    <button class="g-btn" id="gBack" aria-label="Peta">🗺️</button>
+    <div class="g-title" id="gTitle"></div>
+    <div class="g-stat" title="Langkah">👣 <span id="gMoves">0</span></div>
+    <div class="g-stat t">⏱ <span id="gTime">0:00</span></div>
+    <button class="g-btn" id="gSound" aria-label="Suara">🔊</button>
+    <div class="tray" id="tray"></div>
   </div>
-
-  <div class="prog-wrap">
-    <div class="prog-bar" id="progBar" style="width:0%"></div>
-  </div>
-
-  <div class="hint-strip">
-    <div class="hint-pill">🌙 Arab</div>
-    <span style="color:rgba(255,255,255,.15)">×</span>
-    <div class="hint-pill">✨ Arti</div>
-    <span style="flex:1;text-align:right;font-size:11px">
-      <span id="matchDisp">0</span>/<span id="totalDisp">3</span> cocok
-    </span>
-  </div>
-
-  <div id="cardGrid" class="card-grid grid-2"></div>
-  <div class="scroll-hint" id="scrollHint" style="display:none">↕ Geser untuk lihat semua kartu</div>
-  <div style="height:20px;flex-shrink:0"></div>
+  <div class="board" id="board"><div class="grid" id="grid"></div></div>
 </div>
 
+<!-- match reveal -->
+<div class="rv" id="rv"><div class="rv-card" id="rvCard"></div></div>
 
-<!-- ════ COMPLETE SCREEN ════ -->
-<div class="screen" id="completeScreen">
-  <div class="comp-card">
-
-    <div class="comp-mascot-wrap">
-      <img class="comp-mascot" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
-    </div>
-
-    <div class="comp-title" id="compTitle">Masya Allah! 🌟</div>
-    <div class="comp-sub" id="compSub">Kamu hebat sekali!</div>
-
-    <div class="stars-row">
-      <div class="star-big" id="s1">⭐</div>
-      <div class="star-big" id="s2">⭐</div>
-      <div class="star-big" id="s3">⭐</div>
-    </div>
-
-    <div class="comp-badges" id="compBadges"></div>
-    <div class="comp-stats">
-      <div class="cst"><div class="cst-n" id="cMoves">-</div><div class="cst-l">Langkah</div></div>
-      <div class="cst"><div class="cst-n" id="cTime">-</div><div class="cst-l">Waktu</div></div>
-      <div class="cst"><div class="cst-n" id="cStars">⭐⭐⭐</div><div class="cst-l">Bintang</div></div>
-    </div>
-
-    <div class="comp-best" id="compBest"></div>
-    <div class="dua-recap">
-      <div class="dr-title">✅ Doa yang kamu pelajari hari ini</div>
-      <div id="duaList"></div>
-    </div>
-
-    </div>
-
-  <!-- Buttons outside card so they are never clipped -->
-  <div class="btn-row" style="margin-top:12px;">
-    <button class="btn-pri" onclick="playAgain()">🔄 Main Lagi!</button>
+<!-- ════ DONE ════ -->
+<div class="screen" id="doneScreen">
+  <div class="dn">
+    <img id="dnMo" src="baby-mo-poses/baby-mo-yeyy.webp" alt="">
+    <div class="dn-k" id="dnK"></div>
+    <div class="dn-t" id="dnT"></div>
+    <div class="stars" id="dnStars"></div>
+    <div class="badges" id="dnBadges"></div>
+    <div class="dn-st" id="dnSt"></div>
+    <div class="dn-best" id="dnBest"></div>
   </div>
-  <div class="btn-row" style="margin-top:9px;">
-    <button class="btn-sec" onclick="window.BabyMo&&BabyMo.shareScore(document.getElementById('cStars').textContent,'','Aku menyelesaikan Dua Journey bareng Baby Mo! 🌟')">📤 Bagikan</button>
-    <button class="btn-sec" onclick="changeLevelFromComplete()">⚙️ Ganti Level</button>
-    <button class="btn-sec" onclick="goHome()">🏠 Ke Hub</button>
-  </div>
-
-  <div style="height:30px"></div>
+  <div class="dn-btns" id="dnBtns"></div>
+  <div class="recap"><h3>✅ Doa yang kamu cocokkan</h3><div id="recap"></div></div>
 </div>
-
 
 <script>
 // ════════════ DATA ════════════
+// Du'a texts are copied verbatim from Doa Harian (babymo-doa-harian.html) and
+// kept in the SAME ORDER as its DUAS list, so the du'a of the day matches.
+// To add a du'a: append it here (same order as Doa Harian), give it a label
+// in ART (optional), and put its id in a stop's `learn` list below.
 const DUAS = [
-  {
-    id:1, arabic:"بِسْمِ اللَّهِ", trans:"Bismillah",
-    meaningId:"Dengan nama Allah", meaningEn:"In the name of Allah",
-    emoji:"🍽️", use:"Sebelum makan"
-  },
-  {
-    id:2, arabic:"الْحَمْدُ لِلَّهِ", trans:"Alhamdulillah",
-    meaningId:"Segala puji bagi Allah", meaningEn:"All praise to Allah",
-    emoji:"🌟", use:"Saat bersyukur"
-  },
-  {
-    id:3, arabic:"سُبْحَانَ اللَّهِ", trans:"Subhanallah",
-    meaningId:"Maha suci Allah", meaningEn:"Glory be to Allah",
-    emoji:"✨", use:"Saat takjub"
-  },
-  {
-    id:4, arabic:"اللَّهُ أَكْبَرُ", trans:"Allahu Akbar",
-    meaningId:"Allah Maha Besar", meaningEn:"Allah is the Greatest",
-    emoji:"🕌", use:"Saat adzan"
-  },
-  {
-    id:5, arabic:"مَا شَاءَ اللَّهُ", trans:"Masha Allah",
-    meaningId:"Atas kehendak Allah", meaningEn:"As Allah has willed",
-    emoji:"💚", use:"Mensyukuri nikmat"
-  },
-  {
-    id:6, arabic:"إِنْ شَاءَ اللَّهُ", trans:"Insha Allah",
-    meaningId:"Jika Allah menghendaki", meaningEn:"If Allah wills",
-    emoji:"🌙", use:"Saat berencana"
-  }
+  {id:"wakeup", waktu:"pagi", emoji:"🌅", title:["Doa Bangun Tidur","Du'a for Waking Up"],
+    arabic:"الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+    latin:"Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr",
+    meaningId:"Segala puji bagi Allah yang menghidupkan kami setelah mematikan kami.",
+    meaningEn:"All praise to Allah who revived us after death."},
+  {id:"bathroom_in", waktu:"pagi", emoji:"🚿", title:["Masuk Kamar Mandi","Entering the Bathroom"],
+    arabic:"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ",
+    latin:"Allāhumma innī a'ūdhu bika minal-khubthi wal-khabā'ith",
+    meaningId:"Ya Allah, aku berlindung kepada-Mu dari gangguan setan.",
+    meaningEn:"O Allah, I seek Your protection from evil jinns."},
+  {id:"bathroom_out", waktu:"pagi", emoji:"✨", title:["Keluar Kamar Mandi","Leaving the Bathroom"],
+    arabic:"غُفْرَانَكَ",
+    latin:"Ghufrānaka",
+    meaningId:"Ya Allah, ampunilah aku.",
+    meaningEn:"I seek Your forgiveness, O Allah."},
+  {id:"leave_home", waktu:"pagi", emoji:"🎒", title:["Doa Keluar Rumah","Du'a for Leaving Home"],
+    arabic:"بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+    latin:"Bismillāhi tawakkaltu 'alallāh, lā ḥaula wa lā quwwata illā billāh",
+    meaningId:"Dengan nama Allah, aku berserah diri kepada Allah. Tiada daya dan kekuatan kecuali dengan pertolongan Allah.",
+    meaningEn:"In the name of Allah, I put my trust in Allah. There is no power and no strength except with Allah."},
+  {id:"vehicle", waktu:"siang", emoji:"🚗", title:["Doa Naik Kendaraan","Du'a for Riding"],
+    arabic:"سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+    latin:"Subḥānal-ladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn, wa innā ilā rabbinā lamunqalibūn",
+    meaningId:"Mahasuci Allah yang menundukkan kendaraan ini untuk kami, padahal kami tidak mampu menguasainya, dan sungguh kami akan kembali kepada Tuhan kami.",
+    meaningEn:"Glory be to Allah who made this ride easy for us, which we could not have done ourselves, and to our Lord we will surely return."},
+  {id:"study", waktu:"siang", emoji:"📚", title:["Doa Belajar","Du'a for Studying"],
+    arabic:"رَبِّ زِدْنِي عِلْمًا",
+    latin:"Rabbi zidnī 'ilmā",
+    meaningId:"Ya Rabb-ku, tambahkanlah ilmu kepadaku.",
+    meaningEn:"My Lord, increase me in knowledge."},
+  {id:"eating", waktu:"siang", emoji:"🍽️", title:["Sebelum Makan","Before Eating"],
+    arabic:"بِسْمِ اللَّهِ",
+    latin:"Bismillāh",
+    meaningId:"Dengan nama Allah.",
+    meaningEn:"In the name of Allah."},
+  {id:"after_eat", waktu:"siang", emoji:"😋", title:["Doa Sesudah Makan","Du'a After Eating"],
+    arabic:"الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
+    latin:"Alhamdulillāhil-ladhī aṭ'amanā wa saqānā wa ja'alanā muslimīn",
+    meaningId:"Segala puji bagi Allah yang memberi kami makan dan minum, dan menjadikan kami muslim.",
+    meaningEn:"All praise to Allah who gave us food and drink and made us Muslims."},
+  {id:"rain", waktu:"sore", emoji:"🌧️", title:["Doa Ketika Hujan","Du'a When It Rains"],
+    arabic:"اللَّهُمَّ صَيِّبًا نَافِعًا",
+    latin:"Allāhumma ṣayyiban nāfi'ā",
+    meaningId:"Ya Allah, jadikanlah hujan ini hujan yang bermanfaat.",
+    meaningEn:"O Allah, make it a beneficial rain."},
+  {id:"enter_home", waktu:"sore", emoji:"🏠", title:["Doa Masuk Rumah","Du'a for Coming Home"],
+    arabic:"بِسْمِ اللَّهِ وَلَجْنَا وَبِسْمِ اللَّهِ خَرَجْنَا وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا",
+    latin:"Bismillāhi walajnā, wa bismillāhi kharajnā, wa 'alallāhi rabbinā tawakkalnā",
+    meaningId:"Dengan nama Allah kami masuk, dengan nama Allah kami keluar, dan kepada Allah Tuhan kami, kami berserah diri.",
+    meaningEn:"In the name of Allah we enter, in the name of Allah we leave, and in Allah our Lord we put our trust."},
+  {id:"evening_dhikr", waktu:"sore", emoji:"🌇", title:["Dzikir Sore","Evening Dhikr"],
+    arabic:"أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ",
+    latin:"Amsainā wa amsal-mulku lillāh, walḥamdu lillāh",
+    meaningId:"Kami memasuki waktu sore dan kerajaan hanya milik Allah, segala puji bagi Allah.",
+    meaningEn:"We have entered the evening and the whole kingdom belongs to Allah; all praise is for Allah."},
+  {id:"parents", waktu:"malam", emoji:"👪", title:["Doa untuk Orang Tua","Du'a for Parents"],
+    arabic:"رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+    latin:"Rabbighfir lī wa liwālidayya warḥamhumā kamā rabbayānī ṣaghīrā",
+    meaningId:"Ya Allah, ampunilah aku dan kedua orang tuaku, dan sayangilah mereka sebagaimana mereka menyayangiku di waktu kecil.",
+    meaningEn:"My Lord, forgive me and my parents, and have mercy on them as they cared for me when I was little."},
+  {id:"bedtime_tasbih", waktu:"malam", emoji:"📿", title:["Tasbih Sebelum Tidur","Tasbih Before Sleeping"],
+    arabic:"سُبْحَانَ اللَّهِ، الْحَمْدُ لِلَّهِ، اللَّهُ أَكْبَرُ",
+    latin:"Subḥānallāh (33×), Alḥamdulillāh (33×), Allāhu akbar (34×)",
+    meaningId:"Maha Suci Allah (33×), segala puji bagi Allah (33×), Allah Maha Besar (34×).",
+    meaningEn:"Glory be to Allah (33×), all praise is for Allah (33×), Allah is the Greatest (34×)."},
+  {id:"sleep", waktu:"malam", emoji:"🌙", title:["Doa Sebelum Tidur","Du'a Before Sleeping"],
+    arabic:"بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ",
+    latin:"Bismika Allāhumma aḥyā wa bismika amūtu",
+    meaningId:"Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati.",
+    meaningEn:"With Your name, O Allah, I live and with Your name I die."}
 ];
-
-const LEVELS = {
-  1: { name:"Mudah 🌱",  pairs:3, grid:"grid-2", ids:[0,1,2] },
-  2: { name:"Sedang 🌿", pairs:5, grid:"grid-2", ids:[0,1,2,3,4] },
-  3: { name:"Hebat 🌟",  pairs:6, grid:"grid-3", ids:[0,1,2,3,4,5] }
+// Game-only extras per du'a: short label (ID/EN) and the scene's focal x (0–400)
+const ART = {
+  wakeup:{label:['Bangun Tidur','Waking Up'],fx:100},
+  bathroom_in:{label:['Masuk Kamar Mandi','Into the Bathroom'],fx:150},
+  bathroom_out:{label:['Keluar Kamar Mandi','Out of the Bathroom'],fx:190},
+  leave_home:{label:['Keluar Rumah','Leaving Home'],fx:150},
+  vehicle:{label:['Naik Kendaraan','Riding'],fx:205},
+  study:{label:['Mau Belajar','Study Time'],fx:180},
+  eating:{label:['Mau Makan','Before Eating'],fx:170},
+  after_eat:{label:['Selesai Makan','After Eating'],fx:200},
+  rain:{label:['Turun Hujan','Rainy Day'],fx:105},
+  enter_home:{label:['Pulang ke Rumah','Coming Home'],fx:160},
+  evening_dhikr:{label:['Sore Hari','In the Evening'],fx:150},
+  parents:{label:['Abi & Umi','My Parents'],fx:170},
+  bedtime_tasbih:{label:['Bertasbih','Tasbih'],fx:190},
+  sleep:{label:['Mau Tidur','Bedtime'],fx:135}
 };
-
-const MATCH_MSGS = [
-  ["✨","Masya Allah!"],["🌟","Subhanallah!"],["💚","Alhamdulillah!"],
-  ["⭐","Hebat sekali!"],["🌙","Luar biasa!"],["🤲","Amazing!"]
+// The journey: a child's day. Each stop teaches new du'as and mixes in ones
+// learned earlier, so the board grows: 6 → 8 → 10 → 12 → 14 → 16 → 20 cards.
+const STOPS = [
+  {id:'pagi',      waktu:'pagi',  icon:'wakeup',     name:['Bangun Pagi','Rise & Shine'],   learn:['wakeup','bathroom_in','bathroom_out'], pairs:3},
+  {id:'berangkat', waktu:'pagi',  icon:'leave_home', name:['Berangkat','Off We Go'],         learn:['leave_home','vehicle'],               pairs:4},
+  {id:'belajar',   waktu:'siang', icon:'study',      name:['Waktu Belajar','Study Time'],    learn:['study'],                              pairs:5},
+  {id:'makan',     waktu:'siang', icon:'eating',     name:['Makan Siang','Lunch Time'],      learn:['eating','after_eat'],                 pairs:6},
+  {id:'pulang',    waktu:'sore',  icon:'rain',       name:['Sore & Pulang','Home at Dusk'],  learn:['rain','enter_home','evening_dhikr'],  pairs:7},
+  {id:'malam',     waktu:'malam', icon:'sleep',      name:['Selamat Malam','Good Night'],    learn:['parents','bedtime_tasbih','sleep'],   pairs:8},
+  {id:'juara',     waktu:'juara', icon:'trophy',     name:['Juara Sehari','Day Champion'],   learn:[],                                     pairs:10}
 ];
 
-// ════════════ STATE ════════════
-let level=1, flipped=[], matched=0, moves=0;
-let canFlip=true, secs=0, ticker=null, msgIdx=0;
-let activeDuas=[], misses=0, todayId=0, bonusShown=false;
-
-// ════════════ LOOPS: records + Doa Hari Ini ════════════
 const EN = window.BM_LANG==='en';
 const L = (id,en)=>EN?en:id;
-const REC_KEY='bm_dua_game_v1';
-function recLoad(){ try{ const r=JSON.parse(localStorage.getItem(REC_KEY)); if(r&&typeof r==='object'&&r.levels) return r; }catch(e){} return {v:1,levels:{}}; }
-function recSave(r){ try{ localStorage.setItem(REC_KEY,JSON.stringify(r)); }catch(e){} }
+const T2 = a=>EN?a[1]:a[0];
+const esc = s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const DUA = {}; DUAS.forEach(d=>DUA[d.id]=d);
+const label = d=>ART[d.id]?T2(ART[d.id].label):T2(d.title);
+const meaning = d=>EN?d.meaningEn:d.meaningId;
 const fmtT = t=>Math.floor(t/60)+':'+String(t%60).padStart(2,'0');
-function renderRecords(){
-  const r=recLoad();
-  document.querySelectorAll('.lvl-btn').forEach((b,i)=>{
-    const box=b.querySelector('[data-rec]'); if(!box) return;
-    const x=r.levels[i+1];
-    if(!x){ box.innerHTML=''; return; }
-    box.innerHTML='<span class="lr-st">'+[1,2,3].map(k=>'<i class="'+(k<=x.stars?'on':'')+'">★</i>').join('')+'</span>'
-      +'<span>👣 '+x.bestMoves+' · ⏱ '+fmtT(x.bestTime)+'</span>'
-      +(x.perfect?'<span class="lr-pf">🏅 '+L('Tanpa Salah','No Misses')+'</span>':'');
+const $ = id=>document.getElementById(id);
+
+// ════════════ ICONS (the iOS-style set from Doa Harian) ════════════
+const ICONS = (function(){
+  function spark(x,y,r,c){ return '<path class="'+(c||'w')+'" d="M'+x+' '+(y-r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y+r)+'Q'+x+' '+y+' '+(x-r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y-r)+'z"/>'; }
+  function drop(x,y,s,c){ return '<path class="'+(c||'w')+'" transform="translate('+x+' '+y+') scale('+s+')" d="M0-6C0-6-4.2-1.4-4.2 1.4a4.2 4.2 0 0 0 8.4 0C4.2-1.4 0-6 0-6z"/>'; }
+  var heart=function(x,y,s,c){ return '<path class="'+(c||'k')+'" transform="translate('+x+' '+y+') scale('+s+')" d="M0 5.2S-6 1.6-6-2.4a3.1 3.1 0 0 1 6-1.4 3.1 3.1 0 0 1 6 1.4C6 1.6 0 5.2 0 5.2z"/>'; };
+  var G={
+    /* sun rising over a pillow */
+    wakeup:'<g class="ws"><path d="M24 9v4M11.5 14.5l2.8 2.8M36.5 14.5l-2.8 2.8M6 25.5h4M38 25.5h4"/></g><path class="y" d="M14 30a10 10 0 0 1 20 0z"/><path class="w" d="M7 33.5c0-2.6 2.1-4.5 4.7-4.5h24.6c2.6 0 4.7 1.9 4.7 4.5v3.2c0 1.6-1.2 2.8-2.8 2.8H9.8C8.2 39.5 7 38.3 7 36.7z"/><path class="ks" stroke-width="2" d="M13 34.5h22" opacity=".35"/>',
+    /* a big water drop (before the bathroom) */
+    bathroom_in:'<path class="w" d="M24 6S11 20.2 11 29a13 13 0 0 0 26 0C37 20.2 24 6 24 6z"/><path class="ks" d="M17.6 30.5a6.6 6.6 0 0 0 5.4 6.2"/>'+drop(37,12,.8),
+    /* sparkly clean (after the bathroom) */
+    bathroom_out:spark(20,25,14)+spark(36,11,6.5)+spark(37,36,4.5)+'<circle class="ws" stroke-width="2.4" cx="9" cy="10" r="3"/>',
+    /* open door + footsteps (leaving home) */
+    leave_home:'<path class="ws" d="M8 41h33"/><path class="ws" d="M10 40V9.5A1.5 1.5 0 0 1 11.5 8h15A1.5 1.5 0 0 1 28 9.5V40"/><path class="w" d="M11 8.6 21.5 12v29L11 39.6z"/><circle class="k" cx="18.5" cy="27" r="1.7"/><ellipse class="w" cx="34" cy="35" rx="2.6" ry="3.8" transform="rotate(-14 34 35)"/><ellipse class="w" cx="39.5" cy="25" rx="2.6" ry="3.8" transform="rotate(14 39.5 25)"/>',
+    /* a little car (riding) */
+    vehicle:'<path class="w" d="M5 31v-5c0-1.8 1.4-3.2 3.2-3.2h2.6l5-7.4c.7-1 1.8-1.6 3-1.6h11.2c1.2 0 2.3.6 3 1.6l5 7.4h1.8c1.8 0 3.2 1.4 3.2 3.2v5c0 1.2-1 2.2-2.2 2.2H7.2C6 33.2 5 32.2 5 31z"/><path class="k" d="M17.3 22.6l3.3-5c.3-.4.7-.6 1.2-.6h3.4v5.6zM28.6 22.6V17h3.2c.5 0 .9.2 1.2.6l3.3 5z"/><circle class="k" cx="14.5" cy="33.5" r="5.2"/><circle class="w" cx="14.5" cy="33.5" r="2.2"/><circle class="k" cx="33.5" cy="33.5" r="5.2"/><circle class="w" cx="33.5" cy="33.5" r="2.2"/>',
+    /* open book (study) */
+    study:'<path class="w" d="M23 13.5C19 10.6 13 9.6 6 10.4v24.4c7-.8 13 .2 17 3.1z"/><path class="w" opacity=".88" d="M25 13.5c4-2.9 10-3.9 17-3.1v24.4c-7-.8-13 .2-17 3.1z"/><g class="ks" stroke-width="2" opacity=".55"><path d="M10.5 17.2c3.2-.2 6.2.3 8.6 1.4M10.5 22.4c3.2-.2 6.2.3 8.6 1.4M10.5 27.6c3.2-.2 6.2.3 8.6 1.4M29 18.6c2.4-1.1 5.4-1.6 8.6-1.4M29 23.8c2.4-1.1 5.4-1.6 8.6-1.4"/></g>'+spark(38,6,4,'y'),
+    /* bowl & spoon (eat) */
+    eating:'<g class="ws" stroke-width="2.6"><path d="M17 17c-2-2 2-3.5 0-6M24 16c-2-2 2-3.5 0-6"/></g><path class="w" d="M38.5 7.5c1.6 1.2 1.6 4-.2 6.3-1.3 1.6-3 2.3-4.3 2l-3.4 6.4h-2.8l4.2-7.8c-.6-1.2-.3-3 .9-4.6 1.8-2.4 4.1-3.4 5.6-2.3z"/><path class="w" d="M6 23h36c0 9.4-8 17-18 17S6 32.4 6 23z"/><path class="ks" stroke-width="2.2" d="M12 28.5c2.4 3.8 6.6 6 12 6" opacity=".45"/>',
+    /* happy plate (full tummy) */
+    after_eat:'<circle class="w" cx="24" cy="25" r="16"/><circle class="ks" stroke-width="2" cx="24" cy="25" r="11" opacity=".28"/><circle class="k" cx="19.4" cy="21.6" r="2"/><circle class="k" cx="28.6" cy="21.6" r="2"/><path class="ks" d="M18.4 27.2c2.6 4 8.6 4 11.2 0"/>'+heart(38.5,8.5,.85,'w'),
+    /* cloud with drops (rain) */
+    rain:'<path class="w" d="M14 29a7.5 7.5 0 0 1-.6-15A10.5 10.5 0 0 1 33.6 13a8 8 0 0 1 .4 16z"/>'+drop(16,37,.95)+drop(24.5,40,.95)+drop(33,37,.95),
+    /* house with a heart door (coming home) */
+    enter_home:'<path class="w" d="M11.5 21.2 24 10.6l12.5 10.6V38a2 2 0 0 1-2 2h-21a2 2 0 0 1-2-2z"/><path class="ws" d="M6.5 22.5 24 8l17.5 14.5"/>'+heart(24,30,1,'k'),
+    /* two grown-ups with a heart (parents) */
+    parents:'<circle class="w" cx="15.5" cy="15" r="5.6"/><path class="w" d="M5.5 38.5c0-6.6 4.5-12 10-12s10 5.4 10 12z"/><circle class="w" opacity=".86" cx="32.5" cy="15" r="5.6"/><path class="w" opacity=".86" d="M22.5 38.5c0-6.6 4.5-12 10-12s10 5.4 10 12z"/>'+heart(24,30.5,.95,'k'),
+    /* moon & stars (sleep) */
+    sleep:'<path class="w" d="M27 7.5A16 16 0 1 0 40.6 31 13 13 0 0 1 27 7.5z"/>'+spark(36,12,4.6,'y')+spark(42,21,2.8)+spark(14,9,2.4),
+    /* the sun going down + the first star (evening dhikr) */
+    evening_dhikr:'<path class="y" d="M13 31a11 11 0 0 1 22 0z"/><path class="ws" d="M5 31h38"/><path class="ws" stroke-width="2.6" d="M13 36.5h22M18 41.5h12" opacity=".85"/><path class="ws" stroke-width="2.8" d="M24 5.5v10M19.6 11.4 24 15.8l4.4-4.4"/>'+spark(38.5,11,5.4,'y')+spark(9.5,14,2.8),
+    /* a loop of prayer beads with a tassel (bedtime tasbih) */
+    bedtime_tasbih:(function(){ var h='<circle class="ws" stroke-width="1.6" cx="24" cy="19" r="12.5" opacity=".55"/>';
+      for(var i=1;i<12;i++){ var a=Math.PI/2+i*Math.PI*2/12; h+='<circle class="'+(i===6?'y':'w')+'" cx="'+(24+12.5*Math.cos(a)).toFixed(1)+'" cy="'+(19+12.5*Math.sin(a)).toFixed(1)+'" r="3.1"/>'; }
+      return h+'<circle class="w" cx="24" cy="34.2" r="3.9"/><path class="w" d="M24 37.4l-4.6 7.6h9.2z"/><path class="ks" stroke-width="1.6" d="M24 39.5v4.6" opacity=".45"/>'; })()
+  };
+  G.trophy='<path class="w" d="M15 8h18v9.5a9 9 0 0 1-18 0z"/><path class="ws" d="M15 11.5H9.8a5.4 5.4 0 0 0 6.2 8.2M33 11.5h5.2a5.4 5.4 0 0 1-6.2 8.2"/><path class="w" d="M21.5 26h5v5.5h-5z"/><rect class="w" x="15" y="31" width="18" height="6.5" rx="2.2"/>'+spark(24,16.5,4.2,'y');
+  return G;
+})();
+function icon(key, waktu, attr){ return '<span class="di di-'+waktu+'"'+(attr||'')+'><svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">'+(ICONS[key]||ICONS.study)+'</svg></span>'; }
+const duaIcon = d=>icon(d.id, d.waktu);
+const stopIcon = s=>icon(s.icon, s.waktu);
+const STAR_P = 'M12 2.6l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z';
+const pips = (n,max,sz)=>'<span class="pips">'+Array.from({length:max||3},(_,i)=>'<svg viewBox="0 0 24 24" class="'+(i<n?'on':'')+'"'+(sz?' style="width:'+sz+'px;height:'+sz+'px"':'')+'><path d="'+STAR_P+'"/></svg>').join('')+'</span>';
+
+// ════════════ SCENE ART (Doa Harian's illustrated scenes) ════════════
+// doa-scenes.js only exposes renderDoaScene(id) into a #sceneCard header, so
+// render each scene once into a hidden stand-in and keep the SVG + pose.
+const SCENES = {};
+(function(){
+  const box = document.createElement('div');
+  box.style.cssText='position:absolute;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none';
+  box.innerHTML='<div id="sceneCard"><div id="sceneBg"></div><img id="sceneMo" alt=""></div>';
+  (document.body||document.documentElement).appendChild(box);
+  DUAS.forEach(d=>{
+    try{
+      if(window.renderDoaScene && renderDoaScene(d.id)){
+        const svg=$('sceneBg').innerHTML, m=svg.match(/^<svg[^>]*>([\s\S]*)<\/svg>$/);
+        SCENES[d.id]={inner:m?m[1]:svg, pose:($('sceneMo').getAttribute('src')||'').replace(/^.*\/|\.webp$/g,'')||'baby-mo-yes'};
+      }
+    }catch(e){}
   });
+  box.remove();
+})();
+const WAKTU_BG = {pagi:['#FFE2B8','#FFC98A'],siang:['#CFF0FF','#8FD3F5'],sore:['#FFD3C2','#E7A6D9'],malam:['#5A5FB8','#2A2C6E']};
+let sceneSeq = 0;
+function sceneSvg(d, vb){
+  const s = SCENES[d.id], k = ++sceneSeq;
+  let inner;
+  if(s) inner = s.inner.replace(/id="(ds\w+)"/g,'id="$1_'+k+'"').replace(/url\(#(ds\w+)\)/g,'url(#$1_'+k+')');
+  else { // a du'a without a drawn scene yet: soft sky + its emoji
+    const c = WAKTU_BG[d.waktu]||WAKTU_BG.siang, fx=(ART[d.id]&&ART[d.id].fx)||200;
+    inner = '<defs><linearGradient id="fb'+k+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+c[0]+'"/><stop offset="1" stop-color="'+c[1]+'"/></linearGradient></defs>'
+      +'<rect width="400" height="180" fill="url(#fb'+k+')"/><rect y="146" width="400" height="34" fill="#E8C99A"/>'
+      +'<text x="'+fx+'" y="118" font-size="84" text-anchor="middle">'+esc(d.emoji||'🤲')+'</text>';
+  }
+  return '<svg class="sc" viewBox="'+(vb||'0 0 400 180')+'" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+inner+'</svg>';
 }
-// Doa Harian's du'a of the day: same list order and the same formula as
-// babymo-doa-harian.html dodDua(), so both games show the same du'a.
-const DH=[['wakeup','🌅','Doa Bangun Tidur',"Du'a for Waking Up"],['bathroom_in','🚿','Masuk Kamar Mandi','Entering the Bathroom'],
-  ['bathroom_out','✨','Keluar Kamar Mandi','Leaving the Bathroom'],['leave_home','🎒','Doa Keluar Rumah',"Du'a for Leaving Home"],
-  ['vehicle','🚗','Doa Naik Kendaraan',"Du'a for Riding"],['study','📚','Doa Belajar',"Du'a for Studying"],
-  ['eating','🍽️','Sebelum Makan','Before Eating'],['after_eat','😋','Doa Sesudah Makan',"Du'a After Eating"],
-  ['rain','🌧️','Doa Ketika Hujan',"Du'a When It Rains"],['enter_home','🏠','Doa Masuk Rumah',"Du'a for Coming Home"],
-  ['parents','👪','Doa untuk Orang Tua',"Du'a for Parents"],['sleep','🌙','Doa Sebelum Tidur',"Du'a Before Sleeping"]];
-function dhOfDay(){ const t=new Date(), n=Math.floor(new Date(t.getFullYear(),t.getMonth(),t.getDate()).getTime()/864e5); return DH[((n*5)%DH.length+DH.length)%DH.length]; }
-function phraseOfDay(){
-  if(dhOfDay()[0]==='eating') return 0;            // Bismillah — the same du'a as Doa Harian today
-  try{ if(window.BabyMo&&BabyMo.daily) return BabyMo.daily.pick(DUAS,'dua-game-phrase').id-1; }catch(e){}
-  const t=new Date(); return (t.getFullYear()*372+t.getMonth()*31+t.getDate())%DUAS.length;
+const poseOf = d=>'baby-mo-poses/'+((SCENES[d.id]&&SCENES[d.id].pose)||'baby-mo-yes')+'.webp';
+// crop window of a scene for a box of aspect a (=w/h), keeping the du'a's prop in view
+function cropFor(d, a){
+  const fx=(ART[d.id]&&ART[d.id].fx)||200;
+  if(a>=400/180) return '0 0 400 180';
+  const vw=Math.max(60,180*a), x0=Math.min(400-vw,Math.max(0,fx-vw*.42));
+  return x0.toFixed(1)+' 0 '+vw.toFixed(1)+' 180';
+}
+
+// ════════════ SAVE (records + progress) ════════════
+const KEY='bm_dua_journey_v2', OLD_KEY='bm_dua_game_v1';
+function load(){
+  let r=null;
+  try{ r=JSON.parse(localStorage.getItem(KEY)); }catch(e){}
+  if(!r||typeof r!=='object'||!r.stops) r={v:2,mode:null,sound:true,stops:{}};
+  if(!r.mig){
+    // v1 had 3 levels (Easy / Medium / Amazing) of read-and-match cards: carry
+    // each finished level over as the matching first stops, in the reading mode.
+    try{
+      const o=JSON.parse(localStorage.getItem(OLD_KEY));
+      if(o&&o.levels){
+        ['pagi','berangkat','belajar'].forEach((sid,i)=>{
+          const x=o.levels[i+1]; if(!x||!x.stars) return;
+          const st=r.stops[sid]=r.stops[sid]||{}, cur=st.big;
+          if(!cur||cur.stars<x.stars) st.big={stars:Math.min(3,x.stars|0),bestMoves:cur?cur.bestMoves:null,bestTime:cur?cur.bestTime:null,perfect:!!(x.perfect||(cur&&cur.perfect)),plays:(x.plays|0)+(cur?cur.plays|0:0)};
+        });
+        if(!r.mode) r.mode='big';
+      }
+    }catch(e){}
+    r.mig=1; save(r);
+  }
+  if(r.mode!=='little'&&r.mode!=='big') r.mode='little';
+  return r;
+}
+function save(r){ try{ localStorage.setItem(KEY,JSON.stringify(r)); }catch(e){} }
+let R = load();
+const recOf = (sid,mode)=>(R.stops[sid]||{})[mode]||null;
+const bestStars = sid=>Math.max(...['little','big'].map(m=>(recOf(sid,m)||{}).stars||0));
+const doneStop = i=>bestStars(STOPS[i].id)>0;
+function furthest(){ let f=-1; STOPS.forEach((s,i)=>{ if(doneStop(i)) f=i; }); return f; }
+const unlocked = i=>i<=furthest()+1;
+
+// ════════════ DU'A OF THE DAY (same formula as Doa Harian's dodDua) ════════════
+function todayDua(){ const t=new Date(), n=Math.floor(new Date(t.getFullYear(),t.getMonth(),t.getDate()).getTime()/864e5); return DUAS[((n*5)%DUAS.length+DUAS.length)%DUAS.length]; }
+function poolOf(i){ const out=[]; for(let k=0;k<=i;k++) STOPS[k].learn.forEach(id=>{ if(DUA[id]&&out.indexOf(id)<0) out.push(id); }); if(!STOPS[i].learn.length) DUAS.forEach(d=>{ if(out.indexOf(d.id)<0) out.push(d.id); }); return out; }
+function hasToday(i){ const t=todayDua().id, s=STOPS[i], pool=poolOf(i); if(pool.indexOf(t)<0) return false; return s.learn.indexOf(t)>=0 || Math.min(s.pairs,pool.length)>s.learn.length; }
+function shuffle(a){ for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; } return a; }
+function setFor(i){
+  const s=STOPS[i], pool=poolOf(i), fresh=s.learn.filter(id=>DUA[id]);
+  const set=fresh.concat(shuffle(pool.filter(id=>fresh.indexOf(id)<0))).slice(0,Math.min(s.pairs,pool.length));
+  const t=todayDua().id;
+  if(pool.indexOf(t)>=0&&set.indexOf(t)<0) for(let j=set.length-1;j>=0;j--) if(fresh.indexOf(set[j])<0){ set[j]=t; break; }
+  return set;
+}
+
+// ════════════ MAP ════════════
+const XS=[28,72,30,70,28,72,50], GAP=128, TOP=86, BOT=96;
+function renderMap(){
+  R=load();
+  const tot=STOPS.reduce((a,s)=>a+bestStars(s.id),0);
+  $('totStars').innerHTML='⭐ <b>'+tot+'</b>/'+(STOPS.length*3);
+  document.querySelectorAll('.mode button').forEach(b=>{ const on=b.dataset.mode===R.mode; b.classList.toggle('on',on); b.setAttribute('aria-checked',on); });
+  renderDod();
+  const j=$('journey'), f=furthest(), cur=Math.min(f+1,STOPS.length-1);
+  j.style.height=(TOP+GAP*(STOPS.length-1)+BOT)+'px';
+  let h='<svg class="road" id="road"></svg>'
+    +'<svg class="jr-dec" style="right:18px;top:14px;width:58px;height:58px" viewBox="0 0 60 60"><circle cx="30" cy="30" r="15" fill="#FFC94A"/><g stroke="#FFC94A" stroke-width="3.5" stroke-linecap="round"><path d="M30 4v7M30 49v7M4 30h7M49 30h7M11.6 11.6l5 5M43.4 43.4l5 5M48.4 11.6l-5 5M16.6 43.4l-5 5"/></g></svg>'
+    +'<svg class="jr-dec" style="left:16px;top:22px;width:70px;height:34px;opacity:.9" viewBox="0 0 70 34"><g fill="#fff"><ellipse cx="34" cy="22" rx="30" ry="11"/><ellipse cx="22" cy="16" rx="13" ry="11"/><ellipse cx="42" cy="13" rx="15" ry="12"/></g></svg>'
+    +'<svg class="jr-dec" style="right:22px;top:'+(TOP+GAP*2.4)+'px;width:60px;height:30px;opacity:.85" viewBox="0 0 70 34"><g fill="#fff"><ellipse cx="34" cy="22" rx="30" ry="11"/><ellipse cx="22" cy="16" rx="13" ry="11"/><ellipse cx="42" cy="13" rx="15" ry="12"/></g></svg>'
+    +'<svg class="jr-dec" style="left:18px;bottom:22px;width:46px;height:46px" viewBox="0 0 48 48"><path d="M27 7.5A16 16 0 1 0 40.6 31 13 13 0 0 1 27 7.5z" fill="#FFE27A"/></svg>'
+    +'<svg class="jr-dec" style="right:16px;bottom:16px;width:120px;height:70px" viewBox="0 0 120 70"><g fill="#FFF3B0"><circle cx="20" cy="18" r="2.2"/><circle cx="64" cy="8" r="1.6"/><circle cx="100" cy="26" r="2.4"/><circle cx="44" cy="44" r="1.5"/><circle cx="86" cy="58" r="1.8"/></g></svg>';
+  STOPS.forEach((s,i)=>{
+    const lock=!unlocked(i), st=bestStars(s.id), y=TOP+GAP*i;
+    h+='<button class="node'+(lock?' locked':'')+(i===cur&&!lock&&!st?' cur':'')+'" data-i="'+i+'" style="left:'+XS[i]+'%;top:'+(y-34)+'px" aria-label="'+esc(T2(s.name))+'">'
+      +'<span class="ic">'+stopIcon(s)+'<span class="num">'+(i+1)+'</span>'+(lock?'<span class="lock">🔒</span>':'')+(hasToday(i)&&!lock?'<span class="tod">⭐</span>':'')+'</span>'
+      +'<span class="lab">'+esc(T2(s.name))+'</span>'+pips(st)+'</button>';
+  });
+  // Baby Mo stands at the stop to play next
+  const left=XS[cur]<50;
+  h+='<img class="mo-here" src="baby-mo-poses/baby-mo-run.webp" alt="" style="top:'+(TOP+GAP*cur-50)+'px;'+(left?'left:calc('+XS[cur]+'% + 40px)':'right:calc('+(100-XS[cur])+'% + 40px)')+(left?'':';transform:scaleX(-1)')+'">';
+  j.innerHTML=h;
+  j.querySelectorAll('.node').forEach(n=>n.addEventListener('click',()=>tapStop(+n.dataset.i)));
+  drawRoad();
+}
+function drawRoad(){
+  const j=$('journey'), svg=$('road'); if(!svg) return;
+  const W=j.clientWidth, H=j.clientHeight, P=STOPS.map((s,i)=>[XS[i]/100*W, TOP+GAP*i]);
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  const seg=(a,b)=>' C'+a[0]+' '+(a[1]+GAP*.6)+' '+b[0]+' '+(b[1]-GAP*.6)+' '+b[0]+' '+b[1];
+  let d='M'+P[0][0]+' '+(P[0][1]-60)+' L'+P[0][0]+' '+P[0][1]; for(let i=1;i<P.length;i++) d+=seg(P[i-1],P[i]);
+  const f=furthest(); let dd='';
+  if(f>=0){ dd='M'+P[0][0]+' '+(P[0][1]-60)+' L'+P[0][0]+' '+P[0][1]; for(let i=1;i<=Math.min(f+1,P.length-1);i++) dd+=seg(P[i-1],P[i]); }
+  svg.innerHTML='<path d="'+d+'" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="22" stroke-linecap="round"/>'
+    +'<path d="'+d+'" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>'
+    +(dd?'<path d="'+dd+'" fill="none" stroke="#FFC94A" stroke-width="8" stroke-linecap="round" opacity=".95"/>':'');
 }
 function renderDod(){
-  const el=document.getElementById('dodCard'); if(!el) return;
-  const d=dhOfDay(), p=DUAS[todayId=phraseOfDay()];
-  el.innerHTML='<div class="dod-ic">'+d[1]+'</div><div class="dod-tx"><span class="dod-k">📖 '+L('Doa Hari Ini',"Du'a of the Day")+'</span>'
-    +'<div class="dod-t">'+(EN?d[3]:d[2])+'</div>'
-    +'<div class="dod-p">'+L('Kartu bintang hari ini: ','Star card today: ')+'<b>'+p.emoji+' '+p.trans+'</b>'+L(' — cocokkan untuk ⭐ bonus!',' — match it for a bonus ⭐!')+'</div></div>'
-    +'<a class="dod-go" href="babymo-doa-harian.html?doa='+d[0]+'">'+L('Baca di Doa Harian','Read in Daily Du\'a')+' →</a>';
+  const d=todayDua(), el=$('dod'); if(!d){ el.hidden=true; return; }
+  let where=-1; for(let i=0;i<STOPS.length;i++) if(hasToday(i)&&unlocked(i)){ where=i; break; }
+  const first=STOPS.findIndex((s,i)=>hasToday(i));
+  el.innerHTML='<div class="dod-r1">'+duaIcon(d)+'<div class="dod-tx"><span class="dod-k">📖 '+L('Doa Hari Ini',"Du'a of the Day")+'</span>'
+    +'<div class="dod-t">'+esc(T2(d.title))+'</div>'
+    +'<div class="dod-p">'+(where>=0
+      ? L('Temukan kartu ⭐-nya di ','Find its ⭐ card at ')+'<b>'+esc(T2(STOPS[where].name))+'</b>'+L(' untuk bonus bintang!',' for a bonus star!')
+      : L('Kartu ⭐-nya ada di ','Its ⭐ card waits at ')+'<b>'+esc(T2(STOPS[Math.max(0,first)].name))+'</b>')+'</div></div></div>'
+    +'<div class="dod-r2">'+(where>=0?'<button type="button" class="dod-play" data-i="'+where+'">▶ '+L('Main','Play')+'</button>':'')
+    +'<a class="dod-read" href="babymo-doa-harian.html?doa='+encodeURIComponent(d.id)+'">📖 '+L('Baca doanya','Read the du\'a')+'</a></div>';
+  const p=el.querySelector('.dod-play'); if(p) p.addEventListener('click',()=>tapStop(+p.dataset.i));
   el.hidden=false;
 }
-document.addEventListener('DOMContentLoaded',()=>{ renderDod(); renderRecords(); });
+document.querySelectorAll('.mode button').forEach(b=>b.addEventListener('click',()=>{ R=load(); R.mode=b.dataset.mode; save(R); renderMap(); }));
+addEventListener('resize',()=>{ drawRoad(); if($('gameScreen').classList.contains('active')) fitGrid(); });
 
-
-// ════════════ INIT ════════════
-(function initStars(){
-  const bg = document.getElementById('starBg');
-  const stars = ['✦','·','✧','*'];
-  for(let i=0;i<28;i++){
-    const s = document.createElement('span');
-    s.textContent = stars[i%stars.length];
-    s.style.cssText = `left:${Math.random()*98}%;top:${Math.random()*98}%;--d:${2+Math.random()*3}s;--dl:${Math.random()*3}s;`;
-    bg.appendChild(s);
+// ════════════ STOP SHEET ════════════
+function tapStop(i){
+  if(!unlocked(i)){ try{ BabyMo.sfx&&BabyMo.sfx('wrong'); }catch(e){} toastLock(i); return; }
+  const s=STOPS[i], pool=poolOf(i), n=Math.min(s.pairs,pool.length), rec=recOf(s.id,R.mode);
+  const fresh=s.learn.filter(id=>DUA[id]).map(id=>DUA[id]);
+  const rev=pool.filter(id=>s.learn.indexOf(id)<0).map(id=>DUA[id]);
+  let h='<div class="sh-top">'+stopIcon(s)+'<div><div class="sh-k">'+L('Pemberhentian ','Stop ')+(i+1)+L(' dari ',' of ')+STOPS.length+'</div>'
+    +'<div class="sh-t">'+esc(T2(s.name))+'</div><div class="sh-m">'+n+L(' doa · ',' du\'as · ')+(n*2)+L(' kartu',' cards')+'</div></div></div>';
+  if(fresh.length){
+    h+='<div class="sh-l">✨ '+L('Doa baru di sini:','New du\'as here:')+'</div><div class="sh-pics">'
+      +fresh.map(d=>'<div class="sh-pic"><div class="ph">'+sceneSvg(d,cropFor(d,1.55))+'<img src="'+poseOf(d)+'" alt=""></div><span>'+esc(label(d))+'</span></div>').join('')+'</div>';
   }
-})();
-
-// ════════════ LEVEL SELECT ════════════
-function selectLevel(l){
-  level = l;
-  document.querySelectorAll('.lvl-btn').forEach(b => b.classList.remove('sel'));
-  document.getElementById('lvl'+l).classList.add('sel');
+  if(rev.length){
+    h+='<div class="sh-l">🔁 '+(fresh.length?L('Plus doa yang sudah dipelajari:','Plus du\'as you already know:'):L('Semua doa sepanjang hari, campur!','Every du\'a of the day, all mixed up!'))+'</div><div class="sh-rev">'+rev.map(duaIcon).join('')+'</div>';
+  }
+  h+='<div class="sh-rec">'+(rec?pips(rec.stars,3,20)+(rec.bestMoves!=null?'<span>👣 '+rec.bestMoves+' · ⏱ '+fmtT(rec.bestTime)+'</span>':'')+(rec.perfect?'<span>🏅 '+L('Tanpa Salah','No Misses')+'</span>':''):'<span>'+L('Belum dimainkan — ayo coba!','Not played yet — give it a go!')+'</span>')+'</div>'
+    +'<button class="sh-go" type="button">▶ '+L('Ayo Main! Bismillah','Let\'s Play! Bismillah')+'</button>'
+    +'<button class="sh-x" type="button">'+L('Nanti saja','Maybe later')+'</button>';
+  $('sheet').innerHTML=h;
+  $('sheetWrap').classList.add('on');
+  $('sheet').querySelector('.sh-go').addEventListener('click',()=>{ closeSheet(); startStop(i); });
+  $('sheet').querySelector('.sh-x').addEventListener('click',closeSheet);
 }
+function closeSheet(){ $('sheetWrap').classList.remove('on'); }
+$('sheetWrap').addEventListener('click',e=>{ if(e.target.id==='sheetWrap') closeSheet(); });
+function toastLock(i){ try{ BabyMo.toast&&BabyMo.toast('🔒 '+L('Selesaikan dulu: ','First finish: ')+T2(STOPS[i-1].name)); }catch(e){} }
 
-// ════════════ START ════════════
-function startGame(){
-  const cfg = LEVELS[level];
-  const ids = cfg.ids.slice();
-  todayId = phraseOfDay();
-  if(ids.indexOf(todayId)<0) ids[ids.length-1]=todayId;   // today's star card is in every level
-  activeDuas = ids.map(i => DUAS[i]);
-  flipped=[]; matched=0; moves=0; secs=0; canFlip=true; msgIdx=0; misses=0; bonusShown=false;
+// ════════════ SPEECH (device Arabic voice; started from the tap for iOS) ════════════
+let arVoice=null;
+function pickVoice(){ try{ const v=speechSynthesis.getVoices(); arVoice=v.find(x=>x.lang==='ar-SA')||v.find(x=>/^ar/i.test(x.lang))||null; }catch(e){} }
+if(window.speechSynthesis){ pickVoice(); try{ speechSynthesis.onvoiceschanged=pickVoice; }catch(e){} }
+function soundOn(){ return R.sound!==false && !(window.BabyMo&&BabyMo.isMuted&&BabyMo.isMuted()); }
+function say(text){
+  if(!soundOn()||!window.speechSynthesis) return;
+  try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(text); u.lang='ar-SA'; u.rate=.6; u.pitch=1; if(arVoice) u.voice=arVoice; speechSynthesis.speak(u); }catch(e){}
+}
+function hush(){ try{ window.speechSynthesis&&speechSynthesis.cancel(); }catch(e){} }
+function sfx(n){ try{ window.BabyMo&&BabyMo.sfx&&BabyMo.sfx(n); }catch(e){} }
+function paintSound(){ $('gSound').textContent=R.sound!==false?'🔊':'🔇'; }
+$('gSound').addEventListener('click',()=>{ R.sound=R.sound===false; save(R); paintSound(); if(R.sound===false) hush(); });
 
-  document.getElementById('moveCount').textContent  = '0';
-  document.getElementById('timerDisp').textContent  = '0:00';
-  document.getElementById('matchDisp').textContent  = '0';
-  document.getElementById('totalDisp').textContent  = cfg.pairs;
-  document.getElementById('progBar').style.width    = '0%';
-  document.getElementById('gLevelBadge').textContent = cfg.name;
-  document.getElementById('scrollHint').style.display = level===2 ? 'block' : 'none';
-
-  buildGrid(cfg);
+// ════════════ GAME ════════════
+let G=null, ticker=null;
+function startStop(i){
+  R=load();
+  const s=STOPS[i], ids=setFor(i);
+  G={i, s, mode:R.mode, ids, open:[], got:0, moves:0, misses:0, secs:0, lock:false, today:todayDua().id, bonus:false, rvOpen:false};
+  $('gTitle').innerHTML=stopIcon(s)+'<span>'+esc(T2(s.name))+'</span>';
+  $('gMoves').textContent='0'; $('gTime').textContent='0:00'; paintSound();
+  $('tray').innerHTML=ids.map(id=>icon(id,DUA[id].waktu,' data-k="'+id+'"')).join('');
+  const cards=[]; ids.forEach(id=>{ cards.push({id,face:'pic'}); cards.push({id,face:G.mode==='big'?'dua':'pic'}); });
+  shuffle(cards);
+  const grid=$('grid'); grid.className='grid w-'+s.waktu;
+  const medal='<svg viewBox="0 0 40 40"><path d="M23 6.5a14 14 0 1 0 11 22.6A11.2 11.2 0 0 1 23 6.5z" fill="#F5B400"/><path d="M28.5 11.5l1.4 2.9 3.2.5-2.3 2.2.5 3.2-2.8-1.5-2.8 1.5.5-3.2-2.3-2.2 3.2-.5z" fill="#FF8A3D"/></svg>';
+  const sp='<svg class="sp a" viewBox="-10 -10 20 20"><path d="M0-10C1.2-2.4 2.4-1.2 10 0 2.4 1.2 1.2 2.4 0 10-1.2 2.4-2.4 1.2-10 0-2.4-1.2-1.2-2.4 0-10z"/></svg>';
+  grid.innerHTML=cards.map((c,n)=>{
+    const d=DUA[c.id];
+    const front=c.face==='pic'
+      ? '<div class="face front pic">'+sceneSvg(d)+'<img class="mo" src="'+poseOf(d)+'" alt="">'+(G.mode==='little'?duaIcon(d):'')+'</div>'
+      : '<div class="face front dua">'+duaIcon(d)+'<span class="t l">'+esc(T2(d.title))+'</span><span class="t s">'+esc(label(d))+'</span><span class="a" lang="ar">'+d.arabic+'</span></div>';
+    return '<div class="card'+(c.id===G.today?' today':'')+'" role="button" tabindex="0" aria-label="'+L('Kartu ','Card ')+(n+1)+'" data-id="'+c.id+'" data-face="'+c.face+'" data-label="'+esc(label(d))+'">'
+      +'<div class="inner"><div class="face back" style="--dl:'+(n*.37%5).toFixed(2)+'s"><div class="medal">'+medal+'</div>'+sp+sp.replace('sp a','sp b')+'</div>'+front+'</div></div>';
+  }).join('');
+  grid.querySelectorAll('.card').forEach(c=>{
+    c.addEventListener('click',()=>flip(c));
+    c.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); flip(c); } });
+  });
+  show('gameScreen');
+  fitGrid();
   clearInterval(ticker);
-  ticker = setInterval(()=>{
-    secs++;
-    const m=Math.floor(secs/60), s=secs%60;
-    document.getElementById('timerDisp').textContent=`${m}:${s.toString().padStart(2,'0')}`;
-  },1000);
-
-  showScreen('gameScreen');
+  ticker=setInterval(()=>{ if(!G||G.rvOpen||!$('gameScreen').classList.contains('active')) return; G.secs++; $('gTime').textContent=fmtT(G.secs); },1000);
 }
-
-// ════════════ BUILD GRID ════════════
-function buildGrid(cfg){
-  const grid = document.getElementById('cardGrid');
-  grid.className = 'card-grid '+cfg.grid;
-  grid.innerHTML = '';
-
-  const cards = [];
-  activeDuas.forEach(d=>{
-    cards.push({dua:d, type:'arabic'});
-    cards.push({dua:d, type:'meaning'});
-  });
-  for(let i=cards.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [cards[i],cards[j]]=[cards[j],cards[i]];
+// Size the cards so the whole board fits the screen without scrolling
+function fitGrid(){
+  const board=$('board'), grid=$('grid'), n=grid.children.length; if(!n) return;
+  const W=board.clientWidth, H=board.clientHeight-8, gap=W<520?8:12;
+  let best=null;
+  for(let c=2;c<=8;c++){
+    const r=Math.ceil(n/c); if(c*r-n>=c) continue;
+    let cw=(W-gap*(c-1))/c, ch=(H-gap*(r-1))/r;
+    ch=Math.min(ch,cw*1.45); cw=Math.min(cw,ch/.8,210); ch=Math.min(ch,cw*1.45);
+    const sc=cw*ch*(r*c===n?1.04:1);
+    if(cw>0&&ch>0&&(!best||sc>best.sc)) best={c,cw:Math.floor(cw),ch:Math.floor(ch),sc};
   }
-
-  cards.forEach(c=>{
-    const el = document.createElement('div');
-    el.className = 'card'+(c.dua.id===todayId+1?' today':'');
-    el.dataset.id   = c.dua.id;
-    el.dataset.type = c.type;
-
-    el.innerHTML = `
-      <div class="card-inner">
-        <div class="cf cb">
-          <div class="cb-pattern"></div>
-          <div class="cb-moon">🌙</div>
-          <div class="cb-txt">Ketuk untuk buka</div>
-        </div>
-        <div class="cf cf-front ${c.type==='arabic'?'ca':'cm'}">
-          ${c.type==='arabic' ? `
-            <div class="ca-emoji">${c.dua.emoji}</div>
-            <div class="ca-arabic">${c.dua.arabic}</div>
-            <div class="ca-trans">${c.dua.trans}</div>
-          ` : `
-            <div class="cm-emoji">${c.dua.emoji}</div>
-            <div class="cm-id">${c.dua.meaningId}</div>
-            <div class="cm-en">${c.dua.meaningEn}</div>
-            <div class="cm-use">${c.dua.use}</div>
-          `}
-        </div>
-      </div>`;
-
-    el.addEventListener('click', ()=>flipCard(el));
-    el.addEventListener('touchend', e=>{e.preventDefault();flipCard(el);},{passive:false});
-    grid.appendChild(el);
-  });
+  grid.style.setProperty('--cw',best.cw+'px'); grid.style.setProperty('--ch',best.ch+'px'); grid.style.setProperty('--gap',gap+'px');
+  grid.style.width=(best.c*best.cw+gap*(best.c-1))+'px';
+  // what fits on a du'a face: l = icon + title + 2 lines of Arabic, m = icon + label + 1 line, s = icon + label
+  const cw=best.cw, ch=best.ch, fs=Math.max(11.5,Math.min(17,cw*.12)), pad=Math.max(6,Math.round(ch*.07)), g=fs*.3, tl=fs*1.15, al=fs*1.3*1.45;
+  let is=Math.round(Math.min(cw*.42,ch*.36)), sz='s', ll=3;
+  if(cw>=120&&pad*2+is+2*g+2*tl+2*al<=ch) sz='l';
+  else if(cw>=96&&pad*2+is+2*g+2*tl+al<=ch) sz='m';
+  else { if(pad*2+is+g+3*tl>ch) ll=2; if(pad*2+is+g+ll*tl>ch) is=Math.max(22,Math.floor(ch-pad*2-g-ll*tl)); }
+  grid.classList.remove('sz-s','sz-m','sz-l'); grid.classList.add('sz-'+sz);
+  grid.style.setProperty('--fs',fs.toFixed(1)+'px'); grid.style.setProperty('--is',is+'px'); grid.style.setProperty('--pad',pad+'px'); grid.style.setProperty('--ll',ll);
+  const a=best.cw/best.ch;
+  grid.querySelectorAll('.card').forEach(c=>{ const sc=c.querySelector('.pic svg.sc'); if(sc) sc.setAttribute('viewBox',cropFor(DUA[c.dataset.id],a)); });
 }
-
-// ════════════ FLIP ════════════
-function flipCard(card){
-  if(!canFlip) return;
-  if(card.classList.contains('flipped'))  return;
-  if(card.classList.contains('matched'))  return;
-  if(card.classList.contains('disabled')) return;
-  if(flipped.length>=2) return;
-
-  card.classList.add('flipped');
-  flipped.push(card);
-
-  if(flipped.length===2){
-    moves++;
-    document.getElementById('moveCount').textContent = moves;
-    checkMatch();
-  }
-}
-
-// ════════════ MATCH CHECK ════════════
-function checkMatch(){
-  canFlip = false;
-  const [a,b] = flipped;
-  const isMatch = a.dataset.id===b.dataset.id && a.dataset.type!==b.dataset.type;
-
-  if(isMatch){
-    matched++;
-    if(window.BabyMo&&BabyMo.react)BabyMo.react('correct');
-    const pct = (matched/activeDuas.length)*100;
-    document.getElementById('progBar').style.width = pct+'%';
-    document.getElementById('matchDisp').textContent = matched;
-
+function flip(card){
+  if(!G||G.lock||G.rvOpen||card.classList.contains('up')||G.open.length>=2) return;
+  card.classList.add('up','lift'); setTimeout(()=>card.classList.remove('lift'),600);
+  card.querySelector('.front').classList.add('ds');
+  card.setAttribute('aria-label',card.dataset.label);
+  sfx('tap');
+  G.open.push(card);
+  if(G.open.length<2) return;
+  G.moves++; $('gMoves').textContent=G.moves;
+  const [a,b]=G.open;
+  const match=a.dataset.id===b.dataset.id && (G.mode==='little' || a.dataset.face!==b.dataset.face);
+  if(match){
+    const d=DUA[a.dataset.id];
+    say(d.arabic);                       // right inside the tap, so iOS lets it speak
+    G.got++; G.lock=true;
+    let bonus=false;
+    if(d.id===G.today){ try{ bonus=!!(window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('dua-game','star-card',1)); }catch(e){} if(bonus) G.bonus=true; }
     setTimeout(()=>{
-      a.classList.add('matched','disabled');
-      b.classList.add('matched','disabled');
-      const msg=MATCH_MSGS[msgIdx%MATCH_MSGS.length]; msgIdx++;
-      let gotBonus=false;
-      if(+a.dataset.id===todayId+1){ try{ gotBonus=!!(window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('dua-game','star-card',1)); }catch(e){} }
-      if(gotBonus){ bonusShown=true; showToast('⭐',L('Bonus bintang hari ini!',"Today's bonus star!")); }
-      else showToast(msg[0],msg[1]);
-      flipped=[]; canFlip=true;
-      if(matched===activeDuas.length) setTimeout(showComplete,900);
-    },250);
-
+      a.classList.add('ok'); b.classList.add('ok'); sfx(bonus?'star':'correct');
+      burst(a); burst(b);
+      const t=$('tray').querySelector('[data-k="'+d.id+'"]'); if(t) t.classList.add('got');
+      G.open=[];
+      setTimeout(()=>reveal(d,bonus),520);
+    },380);
   } else {
-    misses++;
-    a.classList.add('wrong');
-    b.classList.add('wrong');
-    if(window.BabyMo&&BabyMo.react)BabyMo.react('wrong');
+    G.misses++; G.lock=true;
+    setTimeout(()=>{ a.classList.add('no'); b.classList.add('no'); sfx('wrong'); },520);
     setTimeout(()=>{
-      a.classList.remove('flipped','wrong');
-      b.classList.remove('flipped','wrong');
-      flipped=[]; canFlip=true;
-    },950);
+      [a,b].forEach(c=>{ c.classList.remove('up','no'); c.setAttribute('aria-label',L('Kartu','Card')); setTimeout(()=>c.querySelector('.front').classList.remove('ds'),500); });
+      G.open=[]; G.lock=false;
+    },1150);
   }
 }
-
-// ════════════ TOAST ════════════
-function showToast(emoji,text){
-  const t=document.getElementById('toast');
-  document.getElementById('toastEmoji').textContent=emoji;
-  document.getElementById('toastText').textContent=text;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),1100);
+function burst(card){
+  const r=card.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2, g=['✦','✧','⭐','✦','✨'];
+  for(let k=0;k<9;k++){
+    const p=document.createElement('span'); p.className='burst'; p.textContent=g[k%g.length];
+    const ang=k/9*Math.PI*2+Math.random()*.5, dist=r.width*.55+Math.random()*30;
+    p.style.cssText='left:'+cx+'px;top:'+cy+'px;--dx:'+(Math.cos(ang)*dist).toFixed(0)+'px;--dy:'+(Math.sin(ang)*dist).toFixed(0)+'px;font-size:'+(12+Math.random()*12).toFixed(0)+'px';
+    document.body.appendChild(p); setTimeout(()=>p.remove(),850);
+  }
 }
+const CHEERS=[['Masya Allah!','Masha Allah!'],['Cocok!','A match!'],['Hebat!','Great job!'],['Alhamdulillah!','Alhamdulillah!'],['Pintar!','So clever!']];
+let rvTimer=null;
+function reveal(d,bonus){
+  G.rvOpen=true;
+  const ms=Math.min(14000,(soundOn()?4200+d.arabic.length*70:4200));
+  const ch=CHEERS[(G.got-1)%CHEERS.length];
+  $('rvCard').innerHTML='<div class="rv-sc ds">'+sceneSvg(d)+'<img src="'+poseOf(d)+'" alt=""><span class="rv-ok">'+(bonus?'⭐ '+L('Bonus bintang hari ini!','Today\'s bonus star!'):'✨ '+T2(ch))+'</span></div>'
+    +'<div class="rv-b"><div class="rv-t">'+duaIcon(d)+'<span>'+esc(T2(d.title))+'</span></div>'
+    +'<div class="rv-ar ar" lang="ar">'+d.arabic+'</div><div class="rv-la">'+esc(d.latin)+'</div><div class="rv-me">'+esc(meaning(d))+'</div>'
+    +'<div class="rv-btns"><button type="button" class="rv-say">🔊 '+L('Dengar','Listen')+'</button><button type="button" class="rv-go">'+(G.got===G.ids.length?L('Selesai! 🎉','Done! 🎉'):L('Lanjut ▶','Next ▶'))+'</button></div></div>'
+    +'<div class="rv-bar"><i style="transition:transform '+ms+'ms linear"></i></div>';
+  $('rv').classList.add('on');
+  const bar=$('rvCard').querySelector('.rv-bar i'); requestAnimationFrame(()=>requestAnimationFrame(()=>{ bar.style.transform='scaleX(0)'; }));
+  $('rvCard').querySelector('.rv-say').addEventListener('click',e=>{ e.stopPropagation(); say(d.arabic); });
+  clearTimeout(rvTimer); rvTimer=setTimeout(closeReveal,ms);
+}
+function closeReveal(){
+  if(!G||!G.rvOpen) return;
+  clearTimeout(rvTimer); $('rv').classList.remove('on'); G.rvOpen=false; G.lock=false;
+  if(G.got===G.ids.length){ G.lock=true; setTimeout(finish,250); }
+}
+$('rv').addEventListener('click',e=>{ if(!e.target.closest('.rv-say')) closeReveal(); });
 
-// ════════════ COMPLETE ════════════
-function showComplete(){
-  clearInterval(ticker);
-  const cfg = LEVELS[level];
-  const m=Math.floor(secs/60), s=secs%60;
-  const ts=`${m}:${s.toString().padStart(2,'0')}`;
-
-  let stars=1;
-  if(moves<=cfg.pairs*2.5) stars=2;
-  if(moves<=cfg.pairs+Math.ceil(cfg.pairs*0.6)) stars=3;
-
-  const titles={1:"Terus berlatih! 🌱",2:"Alhamdulillah! ✨",3:"Masya Allah! 🌟"};
-  const subs  ={1:"Latihan lagi ya, pasti bisa!",2:"Bagus sekali, Baby Mo!",3:"Sempurna! Juara doa! 🏆"};
-
-  document.getElementById('compTitle').textContent = titles[stars];
-  document.getElementById('compSub').textContent   = subs[stars];
-  document.getElementById('cMoves').textContent    = moves;
-  document.getElementById('cTime').textContent     = ts;
-  document.getElementById('cStars').textContent    = '⭐'.repeat(stars);
-
-  // records (kept per level: best stars, fewest moves, fastest time, no-miss badge)
-  const perfect = misses===0;
-  const R=recLoad(), prev=R.levels[level]||null;
-  const cur={stars:Math.max(stars,prev?prev.stars:0),
-    bestMoves:prev?Math.min(prev.bestMoves,moves):moves, bestTime:prev?Math.min(prev.bestTime,secs):secs,
+// ════════════ FINISH ════════════
+function starsFor(pairs,moves){ return moves<=pairs+Math.ceil(pairs*.8)?3:moves<=Math.ceil(pairs*2.5)+1?2:1; }
+function finish(){
+  clearInterval(ticker); hush();
+  const s=G.s, pairs=G.ids.length, stars=starsFor(pairs,G.moves), perfect=G.misses===0;
+  const before=furthest();
+  R=load();
+  const st=R.stops[s.id]=R.stops[s.id]||{}, prev=st[G.mode]||null;
+  st[G.mode]={stars:Math.max(stars,prev?prev.stars:0),
+    bestMoves:prev&&prev.bestMoves!=null?Math.min(prev.bestMoves,G.moves):G.moves,
+    bestTime:prev&&prev.bestTime!=null?Math.min(prev.bestTime,G.secs):G.secs,
     perfect:!!(perfect||(prev&&prev.perfect)), plays:(prev&&prev.plays||0)+1};
-  R.levels[level]=cur; recSave(R);
-  const badges=[];
-  if(perfect) badges.push('<span class="cb-badge pf">🏅 '+L('Tanpa Salah!','No Misses!')+'</span>');
-  if(prev&&(moves<prev.bestMoves||secs<prev.bestTime)) badges.push('<span class="cb-badge">🎉 '+L('Rekor baru!','New record!')+'</span>');
-  if(bonusShown) badges.push('<span class="cb-badge bonus">⭐ '+L('Bonus kartu hari ini','Star card bonus')+'</span>');
-  document.getElementById('compBadges').innerHTML=badges.join('');
-  document.getElementById('compBest').textContent = prev
-    ? L('Rekormu: ','Your best: ')+'👣 '+cur.bestMoves+' · ⏱ '+fmtT(cur.bestTime)
-    : L('Rekor pertamamu tersimpan! ✨','Your first record is saved! ✨');
-  renderRecords();
-
-  showScreen('completeScreen');
+  save(R);
+  const cur=st[G.mode], opened=furthest()>before&&G.i+1<STOPS.length;
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('dua-game','level'); }catch(e){}
-  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('dua-game','level-'+level,1); }catch(e){}
-
-  ['s1','s2','s3'].forEach((id,i)=>{
-    document.getElementById(id).classList.remove('lit');
-    if((i+1)<=stars) setTimeout(()=>document.getElementById(id).classList.add('lit'),400+i*350);
-  });
-
-  // Recap — emoji+name left, Arabic right, meanings below
-  const list = document.getElementById('duaList');
-  list.innerHTML = '';
-  activeDuas.forEach(d=>{
-    list.innerHTML += `
-      <div class="dr-item">
-        <div class="dr-row1">
-          <div class="dr-left">
-            <span class="dr-emoji">${d.emoji}</span>
-            <span class="dr-trans">${d.trans}</span>
-          </div>
-          <span class="dr-arabic">${d.arabic}</span>
-        </div>
-        <div class="dr-row2">
-          <span class="dr-mean-id">${d.meaningId}</span>
-          <span class="dr-mean-en">· ${d.meaningEn}</span>
-        </div>
-      </div>`;
-  });
-
-  spawnParticles(stars);
-}
-
-// ════════════ PARTICLES ════════════
-function spawnParticles(stars){
-  const glyphs=['⭐','✨','🌙','💚','🌟','🤲','✦'];
-  const count=stars*8;
-  for(let i=0;i<count;i++){
-    setTimeout(()=>{
-      const p=document.createElement('div');
-      p.className='particle';
-      p.textContent=glyphs[Math.floor(Math.random()*glyphs.length)];
-      const dur=2+Math.random()*2;
-      p.style.cssText=`left:${Math.random()*98}vw;top:-30px;font-size:${10+Math.random()*18}px;animation-duration:${dur}s;`;
-      document.body.appendChild(p);
-      setTimeout(()=>p.remove(),dur*1000+100);
-    },i*80);
-  }
+  try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('dua-game','stop-'+s.id,1); }catch(e){}
+  sfx('win');
+  const last=G.i===STOPS.length-1;
+  $('dnMo').src='baby-mo-poses/'+(stars===3?'baby-mo-yeyy':stars===2?'baby-mo-thank-you':'baby-mo-ok')+'.webp';
+  $('dnK').innerHTML=stopIcon(s)+'<span>'+esc(T2(s.name))+' ✓</span>';
+  $('dnT').textContent=last?L('Juara Doa Sehari! 🏆','Du\'a Champion of the Day! 🏆'):stars===3?L('Masya Allah! 🌟','Masha Allah! 🌟'):stars===2?L('Alhamdulillah! ✨','Alhamdulillah! ✨'):L('Terus berlatih! 🌱','Keep practising! 🌱');
+  $('dnStars').innerHTML=[0,1,2].map(k=>'<svg viewBox="0 0 24 24" class="'+(k<stars?'on':'')+'" style="animation-delay:'+(.3+k*.3)+'s"><path d="'+STAR_P+'"/></svg>').join('');
+  const b=[];
+  if(opened) b.push('<span class="bdg g">🔓 '+L('Terbuka: ','Unlocked: ')+esc(T2(STOPS[G.i+1].name))+'</span>');
+  if(perfect) b.push('<span class="bdg">🏅 '+L('Tanpa Salah!','No Misses!')+'</span>');
+  if(prev&&prev.bestMoves!=null&&(G.moves<prev.bestMoves||G.secs<prev.bestTime)) b.push('<span class="bdg">🎉 '+L('Rekor baru!','New record!')+'</span>');
+  if(G.bonus) b.push('<span class="bdg">⭐ '+L('Bonus kartu hari ini','Star card bonus')+'</span>');
+  $('dnBadges').innerHTML=b.join('');
+  $('dnSt').textContent='👣 '+G.moves+L(' langkah',' moves')+' · ⏱ '+fmtT(G.secs);
+  $('dnBest').textContent=prev&&prev.bestMoves!=null?L('Rekormu: ','Your best: ')+'👣 '+cur.bestMoves+' · ⏱ '+fmtT(cur.bestTime):L('Rekor pertamamu tersimpan! ✨','Your first record is saved! ✨');
+  const nx=G.i+1<STOPS.length?STOPS[G.i+1]:null;
+  $('dnBtns').innerHTML=(nx?'<button class="b1" id="bNext">▶ '+L('Lanjut: ','Next: ')+esc(T2(nx.name))+'</button>':'<button class="b1" id="bAgain1">🔄 '+L('Main Lagi','Play Again')+'</button>')
+    +'<div class="dn-row">'+(nx?'<button class="b2" id="bAgain">🔄 '+L('Ulangi','Replay')+'</button>':'')+'<button class="b2" id="bMap">🗺️ '+L('Peta','Map')+'</button><button class="b2" id="bShare">📤 '+L('Bagikan','Share')+'</button></div>';
+  if(nx) $('bNext').onclick=()=>startStop(G.i+1);
+  const again=$('bAgain')||$('bAgain1'); again.onclick=()=>startStop(G.i);
+  $('bMap').onclick=goMap;
+  $('bShare').onclick=()=>{ try{ BabyMo.shareScore('⭐'.repeat(stars),'',L('Aku menyelesaikan ','I finished ')+T2(s.name)+L(' di Dua Journey bareng Baby Mo! 🌟',' in Dua Journey with Baby Mo! 🌟')); }catch(e){} };
+  $('recap').innerHTML=G.ids.map(id=>{ const d=DUA[id]; return '<div class="rc">'+duaIcon(d)+'<div class="rc-t">'+esc(T2(d.title))+'</div><button class="rc-say" type="button" data-id="'+id+'" aria-label="'+L('Dengar','Listen')+'">🔊</button>'
+    +'<div class="rc-a ar" lang="ar">'+d.arabic+'</div><div class="rc-m">'+esc(meaning(d))+'</div></div>'; }).join('');
+  $('recap').querySelectorAll('.rc-say').forEach(x=>x.addEventListener('click',()=>{ const was=R.sound; R.sound=true; say(DUA[x.dataset.id].arabic); R.sound=was; }));
+  show('doneScreen');
 }
 
 // ════════════ NAV ════════════
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  document.getElementById(id).scrollTop=0;
-}
-function goHome(){
-  clearInterval(ticker);
-  ['s1','s2','s3'].forEach(id=>document.getElementById(id).classList.remove('lit'));
-  showScreen('welcomeScreen');
-}
-function playAgain(){
-  ['s1','s2','s3'].forEach(id=>document.getElementById(id).classList.remove('lit'));
-  startGame();
-}
-function changeLevelFromComplete(){
-  clearInterval(ticker);
-  ['s1','s2','s3'].forEach(id=>document.getElementById(id).classList.remove('lit'));
-  showScreen('welcomeScreen');
-}
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id)); $(id).scrollTop=0; }
+function goMap(){ clearInterval(ticker); hush(); if(G) G.rvOpen=false; $('rv').classList.remove('on'); G=null; renderMap(); show('mapScreen'); scrollToCur(); }
+function scrollToCur(){ const n=document.querySelector('.node.cur')||[...document.querySelectorAll('.node:not(.locked)')].pop(); if(n){ const sc=$('mapScreen'), y=n.offsetTop+$('journey').offsetTop; if(y+150>sc.clientHeight) sc.scrollTop=Math.max(0,y-sc.clientHeight*.45); } }
+$('gBack').addEventListener('click',goMap);
+
+renderMap();
+requestAnimationFrame(()=>{ drawRoad(); scrollToCur(); });
 </script>
 <script src="/bm-kit.js" defer></script>
 </body>
