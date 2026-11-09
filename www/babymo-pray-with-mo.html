@@ -166,6 +166,11 @@ body{background-image:
 .feat-card:nth-child(3) .fc-icon{background:linear-gradient(160deg,#BCE9D2,#5FCB9A)}
 .feat-card:nth-child(4) .fc-icon{background:linear-gradient(160deg,#FFD3CE,#F39A92)}
 .feat-card .fc-icon{font-size:30px;margin-bottom:10px}
+/* new-style icons (icons/ui/*.svg): pure-vector squircles, no emoji */
+.feat-card .fc-icon.has-art{background:none!important;padding:0;overflow:hidden;border-radius:23%;box-shadow:0 8px 16px -9px rgba(20,40,80,.55)}
+.fc-icon.has-art img,.ui-ic img{width:100%;height:100%;display:block}
+.ui-ic{display:inline-block;width:22px;height:22px;border-radius:23%;overflow:hidden;vertical-align:-5px;margin-right:7px;flex:0 0 auto;box-shadow:0 3px 7px -4px rgba(20,40,80,.5)}
+.ui-ic-lg{width:28px;height:28px;margin-right:0}
 .feat-card .fc-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:2px;letter-spacing:-.005em}
 .feat-card .fc-sub{font-size:11px;color:rgba(250,245,234,.55);line-height:1.35}
 
@@ -888,28 +893,28 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
     </a>
     <div class="features">
       <div class="feat-card" onclick="showView('guide')">
-        <div class="fc-icon">🕌</div>
+        <div class="fc-icon has-art"><img src="icons/ui/sholat-guide.svg" alt="" draggable="false"></div>
         <div class="fc-title">Panduan Sholat</div>
         <div class="fc-sub">7 langkah gerakan & bacaan</div>
       </div>
       <div class="feat-card" onclick="showView('progress')">
-        <div class="fc-icon">⭐</div>
+        <div class="fc-icon has-art"><img src="icons/ui/sholat-progress.svg" alt="" draggable="false"></div>
         <div class="fc-title">Progress</div>
         <div class="fc-sub">Streak & rewards kamu</div>
       </div>
       <div class="feat-card" onclick="showPrayerTimes()">
-        <div class="fc-icon">🕐</div>
+        <div class="fc-icon has-art"><img src="icons/ui/sholat-times.svg" alt="" draggable="false"></div>
         <div class="fc-title">Waktu Sholat</div>
         <div class="fc-sub">5 waktu sholat harian</div>
       </div>
       <div class="feat-card" onclick="showView('dzikir')">
-        <div class="fc-icon">🤲</div>
+        <div class="fc-icon has-art"><img src="icons/ui/sholat-dzikir.svg" alt="" draggable="false"></div>
         <div class="fc-title">Dzikir & Doa</div>
         <div class="fc-sub">Dzikir setelah sholat</div>
       </div>
     </div>
 
-    <div class="section-title">📋 Langkah Sholat</div>
+    <div class="section-title"><span class="ui-ic ui-ic-lg"><img src="icons/ui/sholat-guide.svg" alt="" draggable="false"></span>Langkah Sholat</div>
     <div class="step-strip" id="homeStepStrip"></div>
   </div>
 
@@ -987,7 +992,7 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
 
       <div class="cap-row" onclick="showView('guide')">
         <div class="cap-row-head">
-          <div class="cap-row-label">🕌 Langkah Sholat</div>
+          <div class="cap-row-label"><span class="ui-ic"><img src="icons/ui/sholat-guide.svg" alt="" draggable="false"></span>Langkah Sholat</div>
           <div class="cap-row-count" id="stepMasteredCount">0 <span>/7</span></div>
         </div>
         <div class="cap-segments" id="stepSegments"></div>
@@ -996,7 +1001,7 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
 
       <div class="cap-row" onclick="showView('dzikir')">
         <div class="cap-row-head">
-          <div class="cap-row-label">📿 Jenis Dzikir</div>
+          <div class="cap-row-label"><span class="ui-ic"><img src="icons/ui/sholat-dzikir.svg" alt="" draggable="false"></span>Jenis Dzikir</div>
           <div class="cap-row-count" id="dzMasteredCount">0 <span>/6</span></div>
         </div>
         <div class="cap-segments" id="dzSegments"></div>
@@ -1092,7 +1097,7 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
 <!-- PRAYER TIMES -->
 <div class="modal-overlay" id="timesOverlay" style="z-index:310">
   <div class="modal-card" style="padding:24px 20px">
-    <div class="modal-emoji" style="animation:none;font-size:40px">🕌</div>
+    <div class="modal-emoji" style="animation:none"><span class="ui-ic" style="width:56px;height:56px;margin:0;box-shadow:0 8px 16px -9px rgba(20,40,80,.55)"><img src="icons/ui/sholat-times.svg" alt="" draggable="false"></span></div>
     <h2 class="modal-title" style="margin-bottom:4px">Waktu Sholat Hari Ini</h2>
     <div id="prayerTimesCity" style="font-size:12px;color:var(--ink-soft);font-weight:600;margin-bottom:14px"></div>
     <div id="prayerTimesList" style="text-align:left"></div>
