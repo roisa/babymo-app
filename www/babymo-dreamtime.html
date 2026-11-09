@@ -227,6 +227,46 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* bm-fit: let the night sky run edge to edge on tablets */
 @media(min-width:760px){.screen{background:transparent!important;}}
 </style>
+<style id="bm-dream-loop">
+/* Nightly bedtime streak (moon that fills night by night) + story of the night.
+   Dreamtime is a night-only look, so these apply in both themes. */
+#s-home{overflow-y:auto;-webkit-overflow-scrolling:touch}
+#s-home>div{flex:1 0 auto!important}
+.moonbox{display:flex;align-items:center;gap:14px;width:100%;max-width:340px;margin:0 auto 14px;padding:12px 14px;border-radius:22px;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);text-align:left;cursor:pointer;font:inherit;color:var(--cream)}
+.moonbox:active{transform:scale(.98)}
+.moonsvg{flex:0 0 64px;width:64px;height:64px;filter:drop-shadow(0 0 14px rgba(255,226,140,.35))}
+.moonbox .mt{flex:1;min-width:0}
+.moonbox .mt b{display:block;font-size:17px;font-weight:900;line-height:1.2}
+.moonbox .mt small{display:block;font-size:12.5px;font-weight:700;color:var(--cream-dim);margin-top:3px;line-height:1.3}
+.mdots{display:flex;gap:5px;margin-top:7px}
+.mdots i{width:14px;height:14px;border-radius:50%;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.14)}
+.mdots i.on{background:radial-gradient(circle at 35% 35%,#FFF6CF,#FFD27A);border-color:transparent;box-shadow:0 0 8px rgba(255,210,122,.6)}
+.storychip{display:inline-flex;align-items:center;gap:8px;min-height:48px;margin:0 auto 18px;padding:10px 18px;border-radius:999px;
+  background:rgba(185,140,240,.16);border:1px solid rgba(185,140,240,.38);color:var(--cream);font:inherit;font-size:14px;font-weight:800;cursor:pointer;max-width:100%}
+.storychip span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sleepextra{display:flex;flex-direction:column;align-items:center;gap:10px;margin-top:10px;width:100%;max-width:340px}
+.sleepextra .moonbox{margin:0;background:rgba(255,255,255,.04)}
+.fullmoon{font-size:15px;font-weight:900;color:var(--gold-lt);text-align:center;animation:pu 2s ease-in-out infinite}
+#storySheet{position:fixed;inset:0;z-index:40;display:none;align-items:flex-end;justify-content:center;background:rgba(8,6,24,.72);
+  -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+#storySheet.on{display:flex}
+.storycard{width:100%;max-width:520px;max-height:92%;overflow-y:auto;border-radius:28px 28px 0 0;padding:22px 22px calc(22px + env(safe-area-inset-bottom));
+  background:linear-gradient(170deg,#2A2366,#1A1740 60%,#151236);border:1px solid rgba(255,255,255,.12);border-bottom:none;animation:su .45s ease}
+.storycard .sk{font-size:12px;font-weight:900;letter-spacing:2px;text-transform:uppercase;color:var(--gold)}
+.storycard h2{font-size:24px;font-weight:900;line-height:1.2;margin:6px 0 10px;color:var(--cream)}
+.storycard .sem{font-size:44px;line-height:1;float:right;margin:-4px 0 6px 10px}
+.storycard p{font-size:17px;line-height:1.65;color:#E6E3FF;margin-bottom:8px}
+.storycard p.read{color:var(--gold-lt)}
+.storycard .lesson{clear:both;margin-top:10px;padding:10px 12px;border-radius:14px;background:rgba(255,210,122,.10);border:1px dashed rgba(255,210,122,.4);font-size:14px;font-weight:800;color:var(--gold-lt)}
+.storybtns{display:flex;gap:10px;margin-top:14px}
+.storybtns button{flex:1;min-height:54px;border-radius:18px;font:inherit;font-size:16px;font-weight:900;cursor:pointer;border:1px solid var(--border);background:rgba(255,255,255,.07);color:var(--cream)}
+.storybtns .sread{background:linear-gradient(135deg,var(--green-lt),var(--purple));border:none;color:#fff}
+@media (min-width:760px){.storycard{border-radius:28px;margin-bottom:24px}}
+@media (max-height:500px){.storycard{max-height:100%;padding-top:14px}.storycard p{font-size:15px;line-height:1.45;margin-bottom:4px}.storycard h2{font-size:20px;margin:2px 0 6px}.storycard .sem{font-size:34px}.storycard .lesson{margin-top:6px;padding:6px 10px}.storybtns{margin-top:8px}.storybtns button{min-height:48px}}
+@media (orientation:landscape) and (max-height:500px){#sleepcontent{display:grid!important;grid-template-columns:1fr 1fr;justify-items:center;align-content:center;column-gap:24px;row-gap:4px!important}#sleepcontent>*{grid-column:1}#sleepcontent>#sleepExtra{grid-column:2;grid-row:1/span 6;align-self:center;margin:0}#sleepcontent img{width:110px!important;height:110px!important}}
+#sleepcontent{overflow-y:auto;justify-content:safe center!important;padding:24px!important}
+</style>
 </head>
 <body>
 
@@ -254,7 +294,9 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
       <div class="mo-shadow" style="width:90px;height:10px;margin-top:-4px;"></div>
       <div style="font-size:36px;font-weight:900;color:var(--cream);line-height:1.15;margin-top:14px;margin-bottom:8px;">Waktunya<br>Tidur! 🌙</div>
-      <div style="font-size:15px;color:var(--cream-dim);margin-bottom:32px;line-height:1.5;">4 langkah malam bersama Baby Mo ⭐</div>
+      <div style="font-size:15px;color:var(--cream-dim);margin-bottom:18px;line-height:1.5;">4 langkah malam bersama Baby Mo ⭐</div>
+      <button class="moonbox" id="homeMoon" type="button"></button>
+      <button class="storychip" id="homeStory" type="button">📖 <span id="homeStoryT">Cerita malam ini</span></button>
     </div>
 
     <div style="text-align:center;">
@@ -318,9 +360,15 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
     <div style="font-size:24px;font-weight:900;color:rgba(240,232,216,.5);text-align:center;line-height:1.3;">Selamat tidur,<br>sayang... 🌙</div>
     <div style="font-size:14px;color:rgba(200,180,140,.35);text-align:center;">Mimpi yang indah ya ⭐</div>
     <div id="viz" style="display:flex;gap:5px;align-items:flex-end;height:32px;margin-top:6px;"></div>
+    <div class="sleepextra" id="sleepExtra"></div>
   </div>
 </div>
 
+
+<!-- ════ STORY OF THE NIGHT ════ -->
+<div id="storySheet" role="dialog" aria-modal="true">
+  <div class="storycard" id="storyCard"></div>
+</div>
 
 <script>
 /* ── STARS ── */
@@ -936,6 +984,191 @@ function startSleep(){
   var dim=document.getElementById('sleepdim'),d=0;
   var iv=setInterval(function(){d=Math.min(d+.003,.8);dim.style.opacity=d;if(d>=.8)clearInterval(iv);},130);
 }
+</script>
+<script>
+/* ══════════════════════════════════════════
+   NIGHTLY BEDTIME STREAK + STORY OF THE NIGHT
+   • Each night the routine reaches the sleep screen counts once. Nights before
+     05:00 belong to the evening before. The moon fills one phase a night; on the
+     7th night in a row it is a full moon (+3 ⭐ via BabyMo.daily.reward).
+   • A short, gentle story changes every night (date-seeded shuffle bag).
+   Storage: bm_dream_v1 = {v:1, last:'YYYY-MM-DD', count:n, best:n, moons:n, nights:[…]}
+══════════════════════════════════════════ */
+(function(){
+  var EN = window.BM_LANG === 'en';
+  function L(id, en){ return EN ? en : id; }
+  var KEY = 'bm_dream_v1';
+  function kit(){ return (window.BabyMo && BabyMo.daily) ? BabyMo.daily : null; }
+  function fmt(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
+  function shift(ds, n){
+    try{ var k = kit(); if(k) return k.shift(ds, n); }catch(e){}
+    var a = ds.split('-').map(Number); return fmt(new Date(a[0], a[1]-1, a[2]+n, 12));
+  }
+  function today(){ try{ var k = kit(); if(k) return k.today(); }catch(e){} return fmt(new Date()); }
+  /* the "night" a bedtime belongs to: before 05:00 it is still last night */
+  function night(){ var t = today(); return new Date().getHours() < 5 ? shift(t, -1) : t; }
+  function load(){
+    try{ var d = JSON.parse(localStorage.getItem(KEY) || '{}'); if(d && d.v === 1) { d.nights = d.nights || []; return d; } }catch(e){}
+    return { v:1, last:null, count:0, best:0, moons:0, nights:[] };
+  }
+  function save(d){ d.nights = d.nights.slice(-30); try{ localStorage.setItem(KEY, JSON.stringify(d)); }catch(e){} }
+  /* streak that is still alive tonight (0 when a night was missed) */
+  function alive(d){ var n = night(); return (d.last === n || d.last === shift(n, -1)) ? d.count : 0; }
+
+  function recordNight(){
+    var d = load(), n = night(), res = { isNew:false, full:false, d:d };
+    if (d.last === n) return res;
+    d.count = (d.last === shift(n, -1)) ? d.count + 1 : 1;
+    d.last = n; d.best = Math.max(d.best || 0, d.count); d.nights.push(n);
+    res.isNew = true;
+    if (d.count % 7 === 0) {
+      d.moons = (d.moons || 0) + 1; res.full = true;
+      try{ var k = kit(); if(k) k.reward('dreamtime', 'full-moon', 3); else if (window.BabyMo && BabyMo.addStars) BabyMo.addStars(3); }catch(e){}
+    }
+    save(d); return res;
+  }
+
+  /* moon with f in 0..1 lit (waxing, lit from the right) */
+  var moonN = 0;
+  function moonSvg(f){
+    var gid = 'mlit' + (++moonN);
+    var r = 26, rx = Math.abs(1 - 2*f) * r, sweep = f < .5 ? 0 : 1, lit;
+    if (f <= 0.001) lit = '';
+    else if (f >= .999) lit = '<circle cx="0" cy="0" r="'+r+'" fill="url(#'+gid+')"/>';
+    else lit = '<path d="M0 '+(-r)+' A'+r+' '+r+' 0 0 1 0 '+r+' A'+rx.toFixed(2)+' '+r+' 0 0 '+sweep+' 0 '+(-r)+'Z" fill="url(#'+gid+')"/>';
+    return '<svg class="moonsvg" viewBox="-32 -32 64 64" aria-hidden="true"><defs><radialGradient id="'+gid+'" cx="35%" cy="35%"><stop offset="0" stop-color="#FFF8DA"/><stop offset="1" stop-color="#FFD27A"/></radialGradient></defs>'
+      + '<circle cx="0" cy="0" r="'+r+'" fill="#2C2770" stroke="rgba(255,255,255,.18)" stroke-width="1.2"/>' + lit
+      + (f >= .999 ? '<circle cx="-8" cy="-6" r="4" fill="#F2D58A" opacity=".55"/><circle cx="7" cy="9" r="3" fill="#F2D58A" opacity=".5"/><circle cx="9" cy="-10" r="2" fill="#F2D58A" opacity=".45"/>' : '')
+      + '</svg>';
+  }
+  function moonHtml(d, sleepView){
+    var c = alive(d), ph = c === 0 ? 0 : ((c - 1) % 7) + 1;   // 1..7 nights into this moon
+    var dots = ''; for (var i = 1; i <= 7; i++) dots += '<i class="'+(i <= ph ? 'on' : '')+'"></i>';
+    var title = c ? ('🌙 ' + c + ' ' + L('malam berturut-turut', c === 1 ? 'night in a row' : 'nights in a row')) : L('🌙 Mulai bulan malammu', '🌙 Start your bedtime moon');
+    var sub = ph === 7 ? L('Bulan purnama! MasyaAllah 🌕', 'Full moon! MasyaAllah 🌕')
+      : c ? L((7 - ph) + ' malam lagi sampai bulan purnama 🌕', (7 - ph) + (7 - ph === 1 ? ' more night' : ' more nights') + ' to a full moon 🌕')
+          : L('Tidur tepat waktu setiap malam, bulannya makin penuh!', 'Sleep on time each night and the moon fills up!');
+    if (d.moons && !sleepView) sub += ' · ' + '🌕×' + d.moons;
+    return moonSvg(ph / 7) + '<span class="mt"><b>'+title+'</b><small>'+sub+'</small><span class="mdots">'+dots+'</span></span>';
+  }
+
+  /* ── stories: 3–5 short sentences, kind and calm ── */
+  var STORIES = [
+    { e:'🐱', t:['Kucing Kecil Kedinginan','The Cold Little Kitten'],
+      id:['Malam itu hujan turun pelan-pelan.','Baby Mo melihat seekor kucing kecil menggigil di teras.','Ia mengambil handuk lembut dan menyelimutinya sambil berbisik, "Bismillah, kamu aman sekarang."','Kucing kecil itu mendengkur hangat, dan Baby Mo tersenyum senang.'],
+      en:['That night the rain fell softly.','Baby Mo saw a little kitten shivering on the porch.','He fetched a soft towel, wrapped it gently and whispered, "Bismillah, you are safe now."','The kitten purred, warm and cosy, and Baby Mo smiled.'],
+      l:['Menyayangi hewan adalah kebaikan.','Being gentle with animals is a kindness.'] },
+    { e:'⭐', t:['Bintang yang Malu','The Shy Little Star'],
+      id:['Di langit ada bintang kecil yang malu untuk bersinar.','Bulan berkata lembut, "Cahayamu kecil, tapi tetap indah."','Bintang kecil pun mencoba bersinar, sedikit demi sedikit.','Dari jendela, Baby Mo berbisik, "MasyaAllah, cantik sekali!" lalu menutup mata.'],
+      en:['High in the sky lived a little star who was too shy to shine.','The moon said gently, "Your light is small, but it is lovely."','So the little star tried to shine, a tiny bit at a time.','From his window Baby Mo whispered, "MasyaAllah, how pretty!" and closed his eyes.'],
+      l:['Setiap orang punya cahaya kebaikannya sendiri.','Everyone has their own little light of goodness.'] },
+    { e:'🌴', t:['Tiga Butir Kurma','Three Sweet Dates'],
+      id:['Sore itu Baby Mo punya tiga butir kurma manis.','Adiknya memandang dengan mata berbinar.','Baby Mo memberikan satu kurma sambil tersenyum.','"Berbagi membuat hati hangat," kata Bunda, dan Baby Mo tidur dengan hati senang.'],
+      en:['That afternoon Baby Mo had three sweet dates.','His little sister looked at them with shining eyes.','Baby Mo gave her one, with a big smile.','"Sharing makes hearts warm," said Mum, and Baby Mo went to sleep feeling happy.'],
+      l:['Berbagi itu indah.','Sharing is beautiful.'] },
+    { e:'🧱', t:['Kata Maaf','The Sorry Word'],
+      id:['Siang tadi Baby Mo tidak sengaja menjatuhkan menara balok temannya.','Temannya jadi sedih.','Baby Mo berkata, "Maaf ya, ayo kita bangun lagi bersama."','Menara barunya malah lebih tinggi! Sebelum tidur, Baby Mo bersyukur punya teman yang baik.'],
+      en:['Today Baby Mo knocked over his friend\'s block tower by accident.','His friend felt sad.','Baby Mo said, "I\'m sorry. Let\'s build it again together."','The new tower was even taller! At bedtime Baby Mo was thankful for his kind friend.'],
+      l:['Minta maaf membuat teman kembali tersenyum.','Saying sorry helps a friend smile again.'] },
+    { e:'🐦', t:['Burung Pulang ke Sarang','Birds Fly Home'],
+      id:['Matahari terbenam dengan warna jingga.','Burung-burung kecil terbang pulang ke sarangnya.','Induk burung menunggu dengan sabar dan memeluk mereka dengan sayapnya.','Baby Mo memeluk bonekanya dan berbisik, "Alhamdulillah, semua sudah di rumah."'],
+      en:['The sun set, all orange and gold.','The little birds flew home to their nest.','Mother bird waited patiently and tucked them under her wings.','Baby Mo hugged his teddy and whispered, "Alhamdulillah, everyone is home."'],
+      l:['Bersyukur atas rumah dan keluarga.','Be thankful for home and family.'] },
+    { e:'🌱', t:['Tanaman Kecil','The Little Plant'],
+      id:['Baby Mo menanam sebutir biji di dalam pot.','Setiap pagi ia menyiramnya dengan sabar.','Hari ini muncul daun hijau yang mungil!','"SubhanAllah, tumbuh!" serunya gembira. Malam ini ia bermimpi tentang kebun penuh bunga.'],
+      en:['Baby Mo planted one tiny seed in a pot.','Every morning he watered it patiently.','Today a teeny green leaf popped up!','"SubhanAllah, it\'s growing!" he cheered. Tonight he dreams of a garden full of flowers.'],
+      l:['Sabar membuat hal kecil tumbuh besar.','Patience helps little things grow.'] },
+    { e:'🛍️', t:['Menolong Nenek','Helping Grandma'],
+      id:['Nenek membawa belanjaan yang berat.','Baby Mo berlari kecil dan membantu membawa kantong yang ringan.','Nenek tersenyum, "JazakAllah khairan, cucuku."','Hati Baby Mo terasa hangat seperti selimut, dan ia tidur dengan senyum.'],
+      en:['Grandma was carrying heavy shopping.','Baby Mo trotted over and carried a light bag for her.','Grandma smiled, "JazakAllah khairan, my dear."','Baby Mo\'s heart felt warm like a blanket, and he fell asleep smiling.'],
+      l:['Menolong orang lain itu menyenangkan.','Helping others feels wonderful.'] },
+    { e:'🌙', t:['Bulan Menemani','The Moon Keeps Watch'],
+      id:['Lampu kamar sudah redup.','Baby Mo melihat bulan bulat di luar jendela.','"Bulan, kamu tidak tidur?" tanyanya, dan cahaya bulan terasa lembut.','Baby Mo membaca doa tidur, lalu terlelap dengan tenang.'],
+      en:['The bedroom light was low.','Baby Mo saw a round moon outside the window.','"Moon, aren\'t you sleepy?" he asked, and the moonlight felt soft and gentle.','Baby Mo said his bedtime du\'a and drifted off peacefully.'],
+      l:['Berdoa sebelum tidur membuat hati tenang.','A du\'a before sleep makes the heart calm.'] },
+    { e:'🐜', t:['Semut yang Rajin','The Busy Ants'],
+      id:['Di taman, Baby Mo melihat barisan semut kecil.','Mereka membawa remah roti bersama-sama, saling menolong.','"Kalau bekerja sama, yang berat jadi ringan," pikir Baby Mo.','Malam ini ia berjanji membantu Bunda merapikan mainan besok.'],
+      en:['In the garden Baby Mo saw a line of tiny ants.','They carried a breadcrumb together, helping one another.','"When we work together, heavy things feel light," thought Baby Mo.','Tonight he promised to help Mum tidy the toys tomorrow.'],
+      l:['Bekerja sama membuat semuanya lebih mudah.','Working together makes things easier.'] }
+  ];
+  function rng(str){
+    try{ var k = kit(); if(k) return k.seed(str); }catch(e){}
+    var h = 2166136261; for (var i = 0; i < str.length; i++){ h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    var a = h >>> 0;
+    return function(){ a = (a + 0x6D2B79F5) >>> 0; var t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  }
+  function bag(cycle){
+    var r = rng('dream-story|' + cycle), o = STORIES.map(function(_, i){ return i; });
+    for (var i = o.length - 1; i > 0; i--) { var j = Math.floor(r() * (i + 1)), t = o[i]; o[i] = o[j]; o[j] = t; }
+    return o;
+  }
+  /* a new story every night; each one once per cycle, never two nights in a row */
+  function storyFor(ds){
+    var a = ds.split('-').map(Number), day = Math.round(Date.UTC(a[0], a[1]-1, a[2]) / 864e5), n = STORIES.length;
+    var cyc = Math.floor(day / n), b = bag(cyc), prev = bag(cyc - 1)[n - 1];
+    if (b[0] === prev) { var t = b[0]; b[0] = b[1]; b[1] = t; }
+    return STORIES[b[day - cyc * n]];
+  }
+  function tonight(){ return storyFor(night()); }
+
+  var reading = false;
+  function stopRead(){ reading = false; try{ speechSynthesis.cancel(); }catch(e){} document.querySelectorAll('#storyCard p').forEach(function(p){ p.classList.remove('read'); }); var b = document.getElementById('sRead'); if (b) b.textContent = '🔊 ' + L('Bacakan', 'Read aloud'); }
+  function readAloud(){
+    if (reading) { stopRead(); return; }
+    if (!window.speechSynthesis) return;
+    var st = tonight(), lines = EN ? st.en : st.id, ps = document.querySelectorAll('#storyCard p');
+    reading = true; document.getElementById('sRead').textContent = '⏸ ' + L('Berhenti', 'Stop');
+    try{ speechSynthesis.cancel(); }catch(e){}
+    var lang = EN ? 'en-US' : 'id-ID', vs = speechSynthesis.getVoices() || [];
+    var v = vs.find(function(x){ return x.lang === lang && /female|Damayanti|Samantha|Karen|Google/i.test(x.name); }) || vs.find(function(x){ return x.lang && x.lang.indexOf(lang.slice(0,2)) === 0; }) || null;
+    var all = [st.t[EN ? 1 : 0] + '.'].concat(lines);
+    all.forEach(function(text, i){
+      var u = new SpeechSynthesisUtterance(text); u.lang = lang; u.rate = .82; u.pitch = 1.3; if (v) u.voice = v;
+      u.onstart = function(){ ps.forEach(function(p){ p.classList.remove('read'); }); if (i > 0 && ps[i-1]) ps[i-1].classList.add('read'); };
+      if (i === all.length - 1) u.onend = u.onerror = function(){ if (reading) stopRead(); };
+      speechSynthesis.speak(u);
+    });
+  }
+  function openStory(){
+    var st = tonight(), lines = EN ? st.en : st.id;
+    document.getElementById('storyCard').innerHTML =
+      '<span class="sem">'+st.e+'</span><div class="sk">📖 '+L('Cerita malam ini', "Tonight's story")+'</div>'
+      + '<h2>'+st.t[EN ? 1 : 0]+'</h2>'
+      + lines.map(function(x){ return '<p>'+x+'</p>'; }).join('')
+      + '<div class="lesson">💛 '+st.l[EN ? 1 : 0]+'</div>'
+      + '<div class="storybtns"><button id="sRead" type="button">🔊 '+L('Bacakan', 'Read aloud')+'</button><button class="sread" id="sClose" type="button">🌙 '+L('Selesai', 'Done')+'</button></div>';
+    document.getElementById('sRead').addEventListener('click', function(){ vib(30); readAloud(); });
+    document.getElementById('sClose').addEventListener('click', closeStory);
+    document.getElementById('storySheet').classList.add('on');
+  }
+  function closeStory(){ stopRead(); document.getElementById('storySheet').classList.remove('on'); }
+  document.getElementById('storySheet').addEventListener('click', function(e){ if (e.target.id === 'storySheet') closeStory(); });
+
+  function renderHome(){
+    var d = load();
+    document.getElementById('homeMoon').innerHTML = moonHtml(d, false);
+    document.getElementById('homeStoryT').textContent = L('Cerita malam ini: ', "Tonight's story: ") + tonight().t[EN ? 1 : 0];
+  }
+  document.getElementById('homeMoon').addEventListener('click', function(){ vib(30); openStory(); });
+  document.getElementById('homeStory').addEventListener('click', function(){ vib(30); openStory(); });
+  document.getElementById('btn-home').addEventListener('click', renderHome);
+
+  var _startSleep = startSleep;
+  startSleep = function(){
+    _startSleep();
+    var res = recordNight(), d = load(), box = document.getElementById('sleepExtra');
+    box.innerHTML = (res.full ? '<div class="fullmoon">🌕 '+L('Bulan purnama! 7 malam berturut-turut · +3 ⭐', 'Full moon! 7 nights in a row · +3 ⭐')+'</div>' : '')
+      + '<button class="moonbox" type="button" id="sleepMoon">'+moonHtml(d, true)+'</button>'
+      + '<button class="storychip" type="button" id="sleepStory" style="margin:0">📖 <span>'+L('Dengar cerita malam ini', "Hear tonight's story")+'</span></button>';
+    document.getElementById('sleepMoon').addEventListener('click', openStory);
+    document.getElementById('sleepStory').addEventListener('click', openStory);
+    renderHome();
+  };
+  // a page left open past midnight: refresh when it comes back
+  document.addEventListener('visibilitychange', function(){ if (!document.hidden) renderHome(); });
+  window.BM_DREAM = { load:load, night:night, tonight:tonight, storyFor:storyFor, stories:STORIES.length }; /* read-only hook for tests */
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', renderHome); else renderHome();
+})();
 </script>
 <script src="/bm-kit.js" defer></script>
 </body>

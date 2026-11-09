@@ -171,6 +171,48 @@ body:has(#s-map.on) #bm-mo.top,body:has(#s-intro.on) #bm-mo.top{top:calc(env(saf
 .btn-pri{color:#fff}
 .controls button{border-radius:20px!important}
 </style>
+<style id="bm-tenis-loop">
+/* Latihan Harian + Rally Tanpa Henti + racket colours — base (classic dark) look */
+.loopbox{width:100%;display:flex;flex-direction:column;gap:10px;margin:2px 0 6px}
+.lcard{display:flex;align-items:center;gap:12px;width:100%;padding:12px 14px;border-radius:22px;border:2px solid var(--gold);
+  background:linear-gradient(135deg,rgba(255,200,61,.16),rgba(31,169,113,.12));color:var(--ink);font:inherit;text-align:left;cursor:pointer;position:relative}
+.lcard:active{transform:scale(.98)}
+.lcard .li{flex:0 0 54px;height:54px;border-radius:18px;display:grid;place-items:center;font-size:28px;background:rgba(255,255,255,.12)}
+.lcard .lt{flex:1;min-width:0}
+.lcard .lt small{display:block;font-size:12px;font-weight:900;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+.lcard .lt b{display:block;font-size:17px;font-weight:900;line-height:1.2;margin-top:2px}
+.lcard .lt span{display:block;font-size:13.5px;color:var(--soft);margin-top:2px;line-height:1.3}
+.lcard .lgo{flex:0 0 auto;min-width:64px;min-height:46px;border-radius:15px;display:grid;place-items:center;padding:0 10px;font-weight:900;font-size:15px;
+  background:linear-gradient(135deg,var(--green-lt),var(--green));color:#fff}
+.lcard.done{border-color:var(--green-lt)}
+.lcard.done .lgo{background:var(--card2);color:var(--ink);border:1px solid var(--border)}
+.lcard.endless{border-color:rgba(91,198,232,.7);background:linear-gradient(135deg,rgba(91,198,232,.16),rgba(155,111,232,.12))}
+.lcard.locked{border-style:dashed;border-color:var(--border);background:var(--card);cursor:default;opacity:.85}
+.node .dtag{position:absolute;top:-9px;right:12px;font-size:12px;font-weight:900;padding:2px 9px;border-radius:999px;background:var(--gold);color:#2A1A00}
+.res-drill{margin-top:10px;padding:10px 12px;border-radius:16px;font-size:15px;font-weight:800;line-height:1.4;background:rgba(255,200,61,.12);border:1.5px solid rgba(255,200,61,.5)}
+.res-drill[hidden]{display:none}
+.res-drill.ok{background:rgba(63,208,140,.14);border-color:var(--green-lt)}
+.dots i.life{background:#FF6B8A;border-color:#FF6B8A}
+.rackets{margin-top:14px;text-align:center}
+.rackets .rl{font-weight:900;font-size:15px;margin-bottom:8px}
+.rackets .ro{display:flex;gap:10px;justify-content:center}
+.rackets button{width:60px;height:60px;border-radius:18px;border:3px solid var(--border);background:var(--card);cursor:pointer;display:grid;place-items:center;font-size:26px}
+.rackets button i{width:30px;height:30px;border-radius:50%;display:block;box-shadow:inset -3px -4px 0 rgba(0,0,0,.18)}
+.rackets button.on{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.3)}
+body[data-racket="gold"] .controls .btn-pri{background:linear-gradient(135deg,#FFE066,#F5A800)!important}
+body[data-racket="gold"] .controls .btn-pri,body[data-racket="gold"] .controls .btn-pri *{color:#3A2400!important;-webkit-text-fill-color:#3A2400!important;text-shadow:none!important}
+body[data-racket="pink"] .controls .btn-pri{background:linear-gradient(135deg,#FF9EC4,#E2457E)!important;color:#fff!important}
+body[data-racket="blue"] .controls .btn-pri{background:linear-gradient(135deg,#7CC8FF,#2F74EA)!important;color:#fff!important}
+</style>
+<style id="bm-bright-tenis-loop">
+.lcard{background:linear-gradient(135deg,#FFF6D6,#E6FAEA);box-shadow:0 10px 22px -16px rgba(30,60,110,.45)}
+.lcard .lt small{color:#B35C00}
+.lcard .li{background:#fff}
+.lcard.endless{background:linear-gradient(135deg,#E3F4FF,#EFE9FF)}
+.lcard.locked{background:#fff}
+.res-drill{background:#FFF6D6;border-color:#FFC83D}
+.res-drill.ok{background:#E6FAEA;border-color:#12A15A}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -193,6 +235,7 @@ body:has(#s-map.on) #bm-mo.top,body:has(#s-intro.on) #bm-mo.top{top:calc(env(saf
         <span class="bchip"><i style="background:#C8E83A"></i>Bola hijau</span>
       </div>
     </div>
+    <div class="loopbox" id="loopBox"></div>
     <div class="path" id="path"></div>
     <button class="btn-pri cert-link" id="certBtn" style="display:none">🏅 Lihat Sertifikatku</button>
   </div>
@@ -338,6 +381,7 @@ body:has(#s-map.on) #bm-mo.top,body:has(#s-intro.on) #bm-mo.top{top:calc(env(saf
       <h2 id="resTitle">Hebat!</h2>
       <div class="stars" id="resStars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
       <p class="sub" id="resLine" style="margin:0 auto"></p>
+      <div class="res-drill" id="resDrill" hidden></div>
       <div class="fact"><span class="ft">🎾 Yang kamu pelajari</span><span id="resLearn"></span></div>
     </div>
     <div class="row">
@@ -361,6 +405,7 @@ body:has(#s-map.on) #bm-mo.top,body:has(#s-intro.on) #bm-mo.top{top:calc(env(saf
       <p>sudah menyelesaikan latihan bola merah, oranye, dan hijau, lalu bertanding dengan sportif. Masya Allah!</p>
       <div class="seal"><i style="background:#FF5A4A"></i><i style="background:#FF9A3C"></i><i style="background:#C8E83A"></i></div>
     </div>
+    <div class="rackets" id="rackets"><div class="rl">🎾 Hadiah: warna raket baru!</div><div class="ro"></div></div>
     <div class="row">
       <button class="btn-sec" id="certShare">📤 Bagikan</button>
       <button class="btn-pri" id="certMap">🗺 Peta Latihan</button>
@@ -427,6 +472,45 @@ function T(s){ return (window.BM_T ? window.BM_T(s) : s); }
 function kit(){ return window.BabyMo || {}; }
 function sfx(n){ try{ kit().sfx && kit().sfx(n); }catch(e){} }
 
+/* ───────── after the certificate: Latihan Harian + Rally Tanpa Henti ─────────
+   Kept apart from the stars save (bm_tenis_adam_v1 stays v:3).
+   bm_tenis_adam_loop_v1 = {v:1, drill:{date, done}, best:n, racket:"green"|"gold"|"pink"|"blue"} */
+var EN = window.BM_LANG==="en";
+function L(id,en){ return EN?en:id; }
+var LKEY="bm_tenis_adam_loop_v1";
+function lload(){ try{ var d=JSON.parse(localStorage.getItem(LKEY)||"{}"); if(d && d.v===1) return d; }catch(e){} return {v:1,drill:{},best:0,racket:"green"}; }
+function lsave(d){ try{ localStorage.setItem(LKEY,JSON.stringify(d)); }catch(e){} }
+var LOOP=lload();
+function graduated(){ return !!DATA.grad || DATA.stars.every(function(x){ return x>0; }); }
+function daily(){ return (window.BabyMo && BabyMo.daily) ? BabyMo.daily : null; }
+function tday(){ try{ var k=daily(); if(k) return k.today(); }catch(e){} var d=new Date(); return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0"); }
+function trng(str){
+  try{ var k=daily(); if(k) return k.seed(str); }catch(e){}
+  var h=2166136261; for(var i=0;i<str.length;i++){ h^=str.charCodeAt(i); h=Math.imul(h,16777619); } var a=h>>>0;
+  return function(){ a=(a+0x6D2B79F5)>>>0; var t=a; t=Math.imul(t^(t>>>15),t|1); t^=t+Math.imul(t^(t>>>7),t|61); return ((t^(t>>>14))>>>0)/4294967296; };
+}
+/* Kak Adam's drill of the day: a date-seeded shuffle bag over the 7 stations (never the same two days running) */
+var DRILLS={
+  pantul:{n:7, id:"7 pukulan bagus dari 8", en:"7 good hits out of 8"},
+  bh:{n:7, id:"7 backhand bagus dari 8", en:"7 good backhands out of 8"},
+  sisi:{n:7, id:"7 pukulan tepat dari 8", en:"7 right shots out of 8"},
+  voli:{n:8, id:"8 voli tanpa salah", en:"8 volleys without a miss"},
+  kaki:{stars:3, id:"3 bintang di Kaki Lincah", en:"3 stars in Quick Feet"},
+  servis:{n:5, id:"5 servis masuk dari 6", en:"5 serves in out of 6"},
+  tanding:{win:1, id:"Menang game melawan Raka", en:"Win a game against Raka"}
+};
+function tbag(c){ var r=trng("tenis-drill|"+c), o=STATIONS.map(function(_,i){return i;}); for(var i=o.length-1;i>0;i--){ var j=Math.floor(r()*(i+1)), t=o[i]; o[i]=o[j]; o[j]=t; } return o; }
+function drillIndex(ds){
+  var a=(ds||tday()).split("-").map(Number), n=STATIONS.length, day=Math.round(Date.UTC(a[0],a[1]-1,a[2])/864e5), c=Math.floor(day/n), b=tbag(c);
+  var prev=tbag(c-1)[n-1]; if(b[0]===prev){ var t=b[0]; b[0]=b[1]; b[1]=t; }
+  return b[day-c*n];
+}
+function drillTarget(i){ var d=DRILLS[STATIONS[i].key]; return EN?d.en:d.id; }
+function drillDone(){ return LOOP.drill && LOOP.drill.date===tday() && LOOP.drill.done; }
+function applyRacket(){ try{ document.body.setAttribute("data-racket", graduated() ? (LOOP.racket||"green") : "green"); }catch(e){} }
+var PENDING=null; /* "drill" when the intro was opened from the drill card */
+try{ window.BM_TENIS={ drillIndex:drillIndex, loop:function(){ return LOOP; } }; }catch(e){} /* read-only hook for automated play tests */
+
 /* ───────── screens ───────── */
 function show(id){ document.querySelectorAll(".screen").forEach(function(s){ s.classList.toggle("on", s.id===id); }); }
 var $ = function(id){ return document.getElementById(id); };
@@ -442,14 +526,32 @@ function renderMap(){
     b.className="node"+(open?"":" locked");
     if(open && !DATA.stars[i] && !nextSet){ b.classList.add("next"); nextSet=true; }
     var col=BALL[st.ball];
-    b.innerHTML='<span class="num" style="background:'+col+'33">'+(open?st.icon:"🔒")+'<b>'+(i+1)+'</b></span>'+
+    var isDrill = graduated() && i===drillIndex();
+    b.innerHTML=(isDrill?'<span class="dtag">🎯 '+(drillDone()?"✓ ":"")+T("Hari ini")+'</span>':'')+'<span class="num" style="background:'+col+'33">'+(open?st.icon:"🔒")+'<b>'+(i+1)+'</b></span>'+
       '<span class="t"><b>'+st.title+'</b><small>'+st.short+'</small></span>'+
       '<span class="st">'+("⭐".repeat(DATA.stars[i])+"☆".repeat(3-DATA.stars[i]))+'</span>';
-    if(open) b.addEventListener("click",function(){ sfx("tap"); openIntro(i); });
+    if(open) b.addEventListener("click",function(){ sfx("tap"); PENDING=isDrill&&!drillDone()?"drill":null; openIntro(i); });
     p.appendChild(b);
   });
   $("mapStars").textContent="⭐ "+total+" / "+(STATIONS.length*3);
   $("certBtn").style.display = (DATA.grad || DATA.stars.every(function(s){return s>0;})) ? "" : "none";
+  renderLoop(); applyRacket();
+}
+function renderLoop(){
+  var box=$("loopBox"); box.innerHTML="";
+  if(!graduated()){
+    box.innerHTML='<div class="lcard locked"><span class="li">🔒</span><span class="lt"><small>'+L("Setelah sertifikat","After the certificate")+'</small><b>'+L("Latihan Harian & Rally Tanpa Henti","Daily Drill & Endless Rally")+'</b><span>'+L("Dapatkan bintang di semua latihan untuk membukanya!","Earn a star in every station to unlock them!")+'</span></span></div>';
+    return;
+  }
+  var i=drillIndex(), st=STATIONS[i], done=drillDone();
+  var a=document.createElement("button"); a.className="lcard"+(done?" done":""); a.type="button";
+  a.innerHTML='<span class="li">'+st.icon+'</span><span class="lt"><small>🎯 '+L("Latihan Harian Kak Adam","Kak Adam's Daily Drill")+'</small><b>'+T(st.title)+'</b><span>'+L("Target: ","Target: ")+drillTarget(i)+(done?" ✅":" · +2 ⭐")+'</span></span><span class="lgo">'+(done?L("Lagi","Again"):L("Mulai","Go"))+'</span>';
+  a.addEventListener("click",function(){ sfx("tap"); PENDING=done?null:"drill"; openIntro(i); });
+  box.appendChild(a);
+  var e=document.createElement("button"); e.className="lcard endless"; e.type="button";
+  e.innerHTML='<span class="li">♾️</span><span class="lt"><small>'+L("Lawan Raka","Versus Raka")+'</small><b>'+L("Rally Tanpa Henti","Endless Rally")+'</b><span>'+(LOOP.best?L("Rekor: ","Best: ")+LOOP.best+" "+L("pukulan","hits"):L("Berapa lama kamu bisa rally?","How long can you keep the rally going?"))+'</span></span><span class="lgo">'+L("Main","Play")+'</span>';
+  e.addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(err){} startStation(6,"endless"); });
+  box.appendChild(e);
 }
 
 /* ───────── intro ───────── */
@@ -458,7 +560,7 @@ var READY="fh-two-1"; /* ready position: knees bent, racket in front, both hands
 var INTRO_POSE=["hold-ball","backhand-two-3",READY,"punch-6","shuffle-3","serve-blue-1","wave-3"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
-  $("introKicker").textContent="Latihan "+(i+1);
+  $("introKicker").textContent = PENDING==="drill" ? "🎯 "+L("Target hari ini: ","Today's target: ")+drillTarget(i) : "Latihan "+(i+1);
   $("introTitle").textContent=st.title;
   $("introTip").innerHTML=(window.BM_LANG==="en"?st.tipEn:st.tip);
   $("introHow").textContent=st.how;
@@ -605,16 +707,68 @@ function controls(html){ $("controls").innerHTML=html; }
 /* ───────── round engine ───────── */
 var G=null; // current game state
 try{ Object.defineProperty(window,"G",{get:function(){ return G; },configurable:true}); }catch(e){} /* read-only hook for automated play tests */
-function startStation(i){
+function startStation(i, mode){
   CUR=i; var st=STATIONS[i];
-  G={ i:i, n:0, hits:0, busy:false, flight:null, ball:BALL[st.ball], speed:SPEED[st.ball], lane:"C" };
+  G={ i:i, n:0, hits:0, busy:false, flight:null, ball:BALL[st.ball], speed:SPEED[st.ball], lane:"C", drill:mode==="drill"&&i===drillIndex(), endless:mode==="endless" };
   ballEl.style.setProperty("--ballc",G.ball);
   $("playTitle").textContent=st.title;
   $("score").classList.remove("on"); $("meter").classList.remove("on"); $("marker").classList.remove("on"); $("laneTip").textContent="";
   adamTo("C"); $("adam").classList.remove("serve","net"); stage.classList.remove("vnet"); ballEl.style.zIndex=""; pose(READY); hideBall();
   show("s-play");
   say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
+  if(G.endless){ setupEndless(); return; }
+  if(G.drill) $("playTitle").textContent="🎯 "+T(st.title);
   ({pantul:setupPantul,bh:setupBh,sisi:setupSisi,voli:setupVoli,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
+}
+
+/* ── Rally Tanpa Henti: keep returning Raka's balls; 3 lives; the ball slowly gets faster ── */
+function lives(){ var d=$("dots").children; for(var k=0;k<d.length;k++){ d[k].className = k<G.lives ? "life" : "no"; } }
+function setupEndless(){
+  G.mode="sides"; G.lives=3; G.score=0; G.total=0; G.speed=SPEED.green;
+  $("playTitle").textContent="♾️ "+L("Rally Tanpa Henti","Endless Rally");
+  dots(3); lives(); $("playCount").textContent="🎾 0";
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>🙌 dua tangan</small></button>');
+  $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
+  $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
+  stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
+  G.onPoint=endlessShot;
+  pop(L("Rally sebanyak-banyaknya!","Keep the rally going!"),"tip",1300); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1500);
+}
+function endlessShot(ok){
+  if(ok){
+    G.score++; $("playCount").textContent="🎾 "+G.score;
+    if(G.score===LOOP.best+1 && LOOP.best>0) setTimeout(function(){ if(G) pop(L("Rekor baru! 🏆","New best! 🏆"),"good",1000); },420);
+    G.speed=Math.max(.95, SPEED.green-G.score*.02);
+    setTimeout(function(){ if(G&&!G.over){ TS.hit(.6); pop("Raka mengembalikan!","tip",800); } },850);
+    nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1500);
+  } else {
+    G.lives--; lives();
+    if(G.lives<=0){ G.over=true; setTimeout(function(){ if(G) pop(L("Rally selesai!","Rally over!"),"tip",1100); },500); finishAfter(1700); return; }
+    setTimeout(function(){ if(G&&!G.over) pop(L("Ayo lagi! ","Again! ")+"❤️".repeat(G.lives),"tip",900); },700);
+    nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1700);
+  }
+}
+function finishEndless(){
+  var sc=G.score, isBest=sc>(LOOP.best||0);
+  if(isBest){ LOOP.best=sc; lsave(LOOP); }
+  if(sc>=10){ try{ var k=daily(); if(k) k.reward("tenis-adam","endless",1); }catch(e){} }
+  try{ var k2=daily(); if(k2) k2.mark("tenis-adam","endless"); }catch(e){}
+  var s=sc>=20?3:sc>=10?2:sc>=4?1:0;
+  stage.onclick=null;
+  say(T(s>=1?"Alhamdulillah! Masya Allah!":"Alhamdulillah. Ayo coba lagi!"));
+  $("resTitle").textContent = (isBest&&sc>0?"🏆 ":"")+sc+" "+L("pukulan berturut!","hits in the rally!");
+  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-1")+".webp";
+  var spans=$("resStars").children; for(var k3=0;k3<3;k3++) spans[k3].classList.remove("on");
+  for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
+  $("resLine").textContent = isBest&&sc>0 ? L("Rekor baru! Hebat sekali!","A new best! Amazing!") : L("Rekormu: ","Your best: ")+LOOP.best;
+  $("resDrill").hidden=false; $("resDrill").className="res-drill"+(sc>=10?" ok":"");
+  $("resDrill").textContent = sc>=10 ? L("⭐ 10 pukulan atau lebih: +1 bintang hari ini!","⭐ 10 hits or more: +1 star today!") : L("🎯 Coba capai 10 pukulan untuk bintang hari ini!","🎯 Reach 10 hits for today's star!");
+  $("resLearn").textContent = L("Kembali ke posisi siap setelah setiap pukulan — kaki dibuka, lutut ditekuk, raket di depan. Begitu cara pemain menjaga rally tetap panjang.","Get back to the ready position after every shot — feet apart, knees bent, racket in front. That is how players keep a long rally going.");
+  $("resNext").style.display="none";
+  try{ kit().react && kit().react(s>0?"win":"wrong",{star:false}); }catch(e){}
+  G=null;
+  $("resRetry").onclick=function(){ sfx("tap"); startStation(6,"endless"); };
+  show("s-result");
 }
 function count(){ $("playCount").textContent=G.hits+" / "+G.total; }
 function finishAfter(ms){ setTimeout(function(){ if(G) finish(); }, ms); }
@@ -911,7 +1065,20 @@ function starsFor(){
   var r=G.hits/G.total; return r>=.85?3:r>=.6?2:r>=.35?1:0;
 }
 function finish(){
+  if(G.endless){ finishEndless(); return; }
   var s=starsFor(), st=STATIONS[G.i], prev=DATA.stars[G.i];
+  /* Latihan Harian: did today's target get reached? */
+  var dr=$("resDrill"); dr.hidden=true;
+  if(G.drill){
+    var tg=DRILLS[st.key], met = tg.win ? !!G.won : tg.stars ? s>=tg.stars : G.hits>=tg.n;
+    var first = met && !drillDone();
+    if(met){ LOOP.drill={date:tday(),done:1}; lsave(LOOP); }
+    if(first){ try{ var dk=daily(); if(dk){ dk.reward("tenis-adam","drill",2); dk.mark("tenis-adam","drill"); } }catch(e){} }
+    dr.hidden=false; dr.className="res-drill"+(met?" ok":"");
+    dr.textContent = met ? (first ? L("🎯 Target hari ini tercapai! +2 ⭐","🎯 Today's target reached! +2 ⭐") : L("🎯 Target hari ini tercapai lagi!","🎯 Today's target reached again!"))
+                         : L("🎯 Target: ","🎯 Target: ")+drillTarget(G.i)+L(" — coba lagi, kamu pasti bisa!"," — try again, you can do it!");
+  }
+  var wasDrill=G.drill;
   say(T(s>=1?(s===3?"Alhamdulillah! Masya Allah!":"Alhamdulillah!"):"Alhamdulillah. Ayo coba lagi!"));
   if(s>prev){ DATA.stars[G.i]=s; save(DATA); try{ kit().addStars && kit().addStars(s-prev); }catch(e){} }
   stage.onclick=null;
@@ -927,14 +1094,26 @@ function finish(){
   $("resNext").textContent = G.i===STATIONS.length-1 ? T("🏅 Sertifikat") : T("Lanjut →");
   if(s>0){ try{ kit().react && kit().react("win",{star:false}); }catch(e){} } else { try{ kit().react && kit().react("wrong"); }catch(e){} }
   var last=G.i; G=null;
-  $("resRetry").onclick=function(){ sfx("tap"); startStation(last); };
+  $("resRetry").onclick=function(){ sfx("tap"); startStation(last, wasDrill?"drill":null); };
   $("resNext").onclick=function(){ sfx("tap"); if(last===STATIONS.length-1) openCert(); else openIntro(last+1); };
   show("s-result");
 }
 
 /* ───────── certificate ───────── */
+var RACKETS={green:"linear-gradient(135deg,#3FD08C,#1FA971)",gold:"linear-gradient(135deg,#FFE066,#F5A800)",pink:"linear-gradient(135deg,#FF9EC4,#E2457E)",blue:"linear-gradient(135deg,#7CC8FF,#2F74EA)"};
+function renderRackets(){
+  var ro=$("rackets").querySelector(".ro"); ro.innerHTML="";
+  Object.keys(RACKETS).forEach(function(k){
+    var b=document.createElement("button"); b.type="button"; b.className=(LOOP.racket||"green")===k?"on":""; b.setAttribute("aria-label",k);
+    b.innerHTML='<i style="background:'+RACKETS[k]+'"></i>';
+    b.addEventListener("click",function(){ LOOP.racket=k; lsave(LOOP); sfx("tap"); renderRackets(); applyRacket(); });
+    ro.appendChild(b);
+  });
+  $("rackets").querySelector(".rl").textContent=L("🎾 Hadiah: pilih warna tombol raketmu!","🎾 Your prize: pick your racket button colour!");
+}
 function openCert(){
   var n=""; try{ n=(localStorage.getItem("mo_child_name")||"").trim(); }catch(e){}
+  renderRackets();
   $("certName").textContent = n || T("Pemain Hebat");
   show("s-cert");
 }
@@ -952,11 +1131,14 @@ $("fhPick").querySelectorAll("button").forEach(function(b){ b.addEventListener("
   $("introPose").src="adam-tennis-v2/"+(c==="two"?"fh-two-3":c==="one"?"fh-one-3":READY)+".webp";
   say(T(c==="two"?"Forehand dua tangan: lebih kuat dan stabil!":c==="one"?"Forehand satu tangan: jangkauan lebih panjang!":"Acak: gaya forehand Kak Adam ganti-ganti!"));
 }); });
-$("introGo").addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(e){} startStation(CUR); });
+$("introGo").addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(e){} startStation(CUR, PENDING); });
 $("playX").addEventListener("click",function(){ if(G){ G.over=true; if(G.flight) G.flight.stop(); } G=null; stage.onclick=null; hideBall(); renderMap(); show("s-map"); });
 $("resMap").addEventListener("click",function(){ renderMap(); show("s-map"); });
 window.addEventListener("resize",function(){ if(!G) hideBall(); });
 renderMap();
+/* bm-kit.js is deferred: draw the map again once BabyMo.daily is there, so the drill of the day uses it */
+if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",renderMap);
+document.addEventListener("visibilitychange",function(){ if(!document.hidden && $("s-map").classList.contains("on")) renderMap(); });
 })();
 </script>
 <script src="/bm-kit.js" defer></script>

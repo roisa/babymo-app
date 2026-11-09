@@ -1,5 +1,7 @@
 /* Kenalan Baby Mo (puzzle) — English */
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
+  "🌞 Gambar hari ini": "🌞 Today's picture", "Gambar hari ini": "Today's picture", "🔁 Main Lagi": "🔁 Play Again", "📒 Album": "📒 Album",
+  "Album Stiker Baby Mo": "Baby Mo Sticker Album", "Album Stiker": "Sticker Album",
   "Kenalan dengan Baby Mo — Puzzle Interaktif Anak | Baby Mo": "Meet Baby Mo — Interactive Puzzle for Kids | Baby Mo",
   "Kenalan dulu yuk!": "Let's get to know each other!", "Siapa": "Who", "aku": "am I", "Ketuk petak untuk membuka rahasia!": "Tap the tiles to reveal the secret!",
   "👆 Ketuk petak yang belum terbuka": "👆 Tap a tile that's still closed", "Bagus!": "Nice!", "Bagus sekali!": "Very nice!", "Ketemu!": "Found it!",

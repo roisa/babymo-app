@@ -25,7 +25,9 @@
   "Penjelajah": "Explorer", "Kado": "Gift Box", "Medali": "Medal", "Pikiran Kilat": "Quick Mind", "Mata Elang": "Eagle Eye", "Taman": "Garden",
   "Lebah Kecil": "Little Bee", "Hati Hijau": "Green Heart", "Singa Kecil": "Little Lion", "Master Agung": "Grand Master", "Bintang Emas": "Golden Star",
   "Tamatkan semua 10 mode": "Beat all 10 modes", "Semua lencana!": "All badges!", "Main 10 kali": "Play 10 games", "Main 20 kali": "Play 20 games",
-  "Mudah dalam ≤ 4 langkah": "Easy in ≤ 4 moves", "Sedang dalam ≤ 8 langkah": "Medium in ≤ 8 moves"
+  "Mudah dalam ≤ 4 langkah": "Easy in ≤ 4 moves", "Sedang dalam ≤ 8 langkah": "Medium in ≤ 8 moves",
+  "Kartu Harian": "Daily Cards", "Susunan kartu baru setiap hari · ⭐ bonus": "A new card layout every day · ⭐ bonus",
+  "Tema Kartu": "Card Themes", "🎨 Tema Kartu": "🎨 Card Themes", "Lagi": "Again"
 }, [
   [/^(\d+) kartu · Usia (\d+)\+$/, "$1 cards · Ages $2+"],
   [/^(\d+) langkah$/, "$1 moves"],

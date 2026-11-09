@@ -386,6 +386,51 @@ a[href="index.html"]{color:#5A6878!important;}
 /* bm-fit: let the backdrop span the whole width on tablets */
 @media(min-width:520px){#app{max-width:none!important;}}
 </style>
+<style id="bm-loop">
+/* Kartu Harian (daily deck) + card themes — base look (both themes) */
+.mode-card.daily{grid-column:1/-1;display:flex;align-items:center;gap:12px;text-align:left;padding:12px 14px;
+  background:linear-gradient(135deg,rgba(255,200,61,.22),rgba(255,154,77,.14));border:2px solid rgba(255,216,116,.55);
+  box-shadow:0 0 22px rgba(255,216,116,.16)}
+.mode-card.daily .mode-icon{font-size:34px;margin:0;flex:0 0 auto}
+.mode-card.daily .dl-txt{flex:1;min-width:0}
+.mode-card.daily .mode-name{font-size:17px}
+.mode-card.daily .mode-desc{font-size:12.5px;color:rgba(255,255,255,.75)}
+.dl-go{flex:0 0 auto;min-width:64px;min-height:44px;border-radius:14px;display:grid;place-items:center;padding:0 10px;
+  font-family:'Fredoka One',cursive;font-size:15px;color:#3A2200;background:linear-gradient(135deg,#FFD874,#FF9A4D);box-shadow:0 4px 12px rgba(255,154,77,.35)}
+.mode-card.daily.done .dl-go{background:linear-gradient(135deg,#7BE3A9,#1FA971);color:#06231A}
+.theme-box{width:100%;margin-top:12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.11);border-radius:20px;padding:10px 10px 12px}
+.theme-hd{display:flex;align-items:center;justify-content:space-between;gap:8px;font-family:'Fredoka One',cursive;font-size:15px;color:#fff;margin:0 4px 8px}
+.theme-hd small{font-family:'Nunito',sans-serif;font-size:12px;font-weight:800;color:rgba(255,255,255,.6);text-align:right}
+.theme-row{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}
+.th-chip{min-height:72px;border-radius:16px;border:2px solid rgba(255,255,255,.12);background:rgba(255,255,255,.06);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;cursor:pointer;padding:6px 2px;font-family:'Nunito',sans-serif;position:relative}
+.th-chip .te{font-size:26px;line-height:1}
+.th-chip .te[data-ar]{font-family:serif;font-weight:700;color:#FFD874}
+.th-chip .tn{font-size:11.5px;font-weight:800;line-height:1.1;text-align:center}
+.th-chip.on{border-color:#FFD874;background:rgba(255,216,116,.16);box-shadow:0 0 0 3px rgba(255,216,116,.18)}
+.th-chip.locked{opacity:.55}
+.th-chip.locked .te{filter:grayscale(1)}
+.th-chip .tl{position:absolute;top:-6px;right:-4px;font-size:10.5px;font-weight:900;background:#2A3A33;color:#FFE3A8;border-radius:9px;padding:1px 5px}
+.th-chip:active{transform:scale(.94)}
+.c-emo{font-size:calc(var(--cs,90px)*.46);line-height:1}
+#card-grid.tiny .c-emo{font-size:calc(var(--cs,90px)*.38)}
+#card-grid.tiny .c-label{font-size:9.5px;line-height:1.05}
+.win-daily{display:none;margin:-6px 0 14px;font-size:13.5px;font-weight:800;color:#FFE3A8}
+.win-daily.on{display:block}
+.win-daily b{color:#7BE3A9}
+@media (orientation:landscape) and (max-height:500px){.theme-row{grid-template-columns:repeat(5,minmax(0,96px));justify-content:center}}
+</style>
+<style id="bm-bright-loop">
+.mode-card.daily{background:linear-gradient(135deg,#FFF3C4,#FFE0C2);border-color:#FFC24D;box-shadow:0 10px 22px -16px rgba(240,140,0,.6)}
+.mode-card.daily .mode-desc{color:#7A4E12}
+.theme-box{background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.08);box-shadow:0 10px 22px -16px rgba(30,60,110,.45)}
+.theme-hd{color:#152230}.theme-hd small{color:#5A6878}
+.th-chip{background:#fff;border-color:rgba(21,34,48,.10);color:#152230}
+.th-chip.on{border-color:#F08C00;background:#FFF6D6;box-shadow:0 0 0 3px rgba(240,140,0,.18)}
+.th-chip .tl{background:#152230;color:#FFE3A8}
+.th-chip .te[data-ar]{color:#B35C00}
+.win-daily{color:#B35C00}.win-daily b{color:#12A15A}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -419,6 +464,14 @@ a[href="index.html"]{color:#5A6878!important;}
     </div>
 
     <div class="mode-grid">
+      <div class="mode-card daily" data-mode="daily" id="daily-card">
+        <div class="mode-icon">🎴</div>
+        <div class="dl-txt">
+          <span class="mode-name" id="daily-name">Kartu Harian</span>
+          <span class="mode-desc" id="daily-desc">Susunan kartu baru setiap hari · ⭐ bonus</span>
+        </div>
+        <span class="dl-go" id="daily-go">Main</span>
+      </div>
       <div class="mode-card" data-mode="easy">
         <div class="mode-icon">🌟</div>
         <span class="mode-name">Mudah</span>
@@ -474,6 +527,10 @@ a[href="index.html"]{color:#5A6878!important;}
         <span class="mode-badge">✨ Spesial</span>
       </div>
     </div>
+    <div class="theme-box" id="theme-box">
+      <div class="theme-hd"><span id="theme-title">🎨 Tema Kartu</span><small id="theme-note"></small></div>
+      <div class="theme-row" id="theme-row"></div>
+    </div>
     <a href="index.html" style="margin-top:14px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.45);text-decoration:none;padding:8px 14px;">← Game Hub</a>
   </div>
 
@@ -512,6 +569,7 @@ a[href="index.html"]{color:#5A6878!important;}
       <span class="win-title">MasyaAllah! 🌙</span>
       <span class="win-sub" id="win-sub">Ingatanmu super! ⭐</span>
       <div class="win-moves"><span id="win-moves-txt">Selesai dalam 0 langkah</span></div>
+      <div class="win-daily" id="win-daily"></div>
 
       <div class="sticker-box">
         <span class="sk-icon" id="earn-icon">⭐</span>
@@ -671,6 +729,131 @@ const MODES = {
   hijaiyah_easy:{ name:'Hijaiyah Mudah', emoji:'🌿', pairs:4, cols:2, types:['h_alif','h_ba','h_ta','h_tsa'] },
   hijaiyah:  { name:'Hijaiyah',  emoji:'🕌', pairs:12,cols:4, types:['h_alif','h_ba','h_ta','h_tsa','h_jim','h_haa','h_kha','h_dal','h_dzal','h_ra','h_zay','h_sin'] }
 };
+
+
+/* ════════════════════════════════════════════
+   CARD THEMES  (unlocked by badge count) + KARTU HARIAN (daily deck)
+   ════════════════════════════════════════════ */
+const MM_EN = window.BM_LANG === 'en';
+const ML = (id, en) => MM_EN ? en : id;
+// The classic cards in a fixed order; each theme swaps these 12 faces 1:1.
+const BASE_ORDER = ['crescent','star','lantern','kaaba','mosque','dates','teddy','brush','quran','pajamas','cup','slippers'];
+const LETTER_COLS = ['#1B5E20','#0D47A1','#4A148C','#880E4F','#E65100','#1A237E','#004D40','#BF360C','#33691E','#263238','#311B92','#006064'];
+function letterSvg(ch, i) {
+  const c = LETTER_COLS[i % LETTER_COLS.length];
+  return `<svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg"><circle cx="40" cy="40" r="36" fill="${c}"/><circle cx="40" cy="40" r="30" fill="#fff" opacity=".12"/><text x="40" y="57" text-anchor="middle" font-size="44" fill="#FFD700" font-family="serif" font-weight="bold">${ch}</text></svg>`;
+}
+const THEMES = [
+  { id:'classic', need:0,  icon:'🌙', name:['Klasik','Classic'] },
+  { id:'buah',    need:3,  icon:'🍎', name:['Buah','Fruits'], items:[
+    ['🍎','Apel','Apple'],['🍌','Pisang','Banana'],['🍇','Anggur','Grapes'],['🍉','Semangka','Melon'],['🍊','Jeruk','Orange'],['🍓','Stroberi','Berry'],
+    ['🍍','Nanas','Pineapple'],['🥭','Mangga','Mango'],['🍐','Pir','Pear'],['🍒','Ceri','Cherry'],['🥝','Kiwi','Kiwi'],['🍑','Persik','Peach'] ] },
+  { id:'hewan',   need:6,  icon:'🐪', name:['Hewan','Animals'], items:[
+    ['🐱','Kucing','Cat'],['🐪','Unta','Camel'],['🐑','Domba','Sheep'],['🐄','Sapi','Cow'],['🐝','Lebah','Bee'],['🐦','Burung','Bird'],
+    ['🐟','Ikan','Fish'],['🐘','Gajah','Elephant'],['🐰','Kelinci','Rabbit'],['🐢','Kura-kura','Turtle'],['🦋','Kupu-kupu','Butterfly'],['🐜','Semut','Ant'] ] },
+  { id:'ramadan', need:10, icon:'🏮', name:['Ramadan','Ramadan'], items:[
+    ['🌙','Hilal','New moon'],['🏮','Lentera','Lantern'],['🕌','Masjid','Mosque'],['📿','Tasbih','Prayer beads'],['🌴','Kurma','Dates'],['🥣','Sahur','Suhoor'],
+    ['🤲','Berdoa','Du\'a'],['🥛','Susu','Milk'],['📖','Al-Qur\'an','Quran'],['🍽️','Berbuka','Iftar'],['🎁','Hadiah','Gift'],['⭐','Bintang','Star'] ] },
+  { id:'huruf',   need:15, icon:'ش', name:['Huruf','Letters'], letters:[
+    ['ش','Syin','شِين'],['ص','Shad','صَاد'],['ض','Dhad','ضَاد'],['ط','Tha','طَاء'],['ظ','Zha','ظَاء'],['ع','Ain','عَيْن'],
+    ['غ','Ghain','غَيْن'],['ف','Fa','فَاء'],['ق','Qaf','قَاف'],['ك','Kaf','كَاف'],['ل','Lam','لَام'],['م','Mim','مِيم'] ] }
+];
+const THEME_KEY = 'bm_mm_theme';
+function themeById(id){ return THEMES.find(t => t.id === id) || THEMES[0]; }
+function themeUnlocked(t){ return Store.getBadges().length >= t.need; }
+function currentTheme(){
+  let id = 'classic'; try { id = localStorage.getItem(THEME_KEY) || 'classic'; } catch(e) {}
+  const t = themeById(id); return themeUnlocked(t) ? t : THEMES[0];
+}
+// Card face for a type in the current mode (hijaiyah modes always keep their letters)
+function cardFace(type) {
+  const base = CARD_DATA[type];
+  if (!G.mode || /^hijaiyah/.test(G.mode)) return base;
+  const t = currentTheme(), i = BASE_ORDER.indexOf(type);
+  if (t.id === 'classic' || i < 0) return base;
+  if (t.letters) { const l = t.letters[i]; return { label:l[1], speak:l[2], svg:letterSvg(l[0], i), arabic:true }; }
+  const it = t.items[i]; return { label:ML(it[1], it[2]), emoji:it[0] };
+}
+function renderThemes() {
+  const row = document.getElementById('theme-row'); if (!row) return;
+  const have = Store.getBadges().length, cur = currentTheme();
+  row.innerHTML = '';
+  THEMES.forEach(t => {
+    const ok = have >= t.need, b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'th-chip' + (t.id === cur.id ? ' on' : '') + (ok ? '' : ' locked');
+    b.innerHTML = `<span class="te"${t.id==='huruf'?' data-ar="1"':''}>${t.icon}</span><span class="tn">${ML(t.name[0], t.name[1])}</span>` + (ok ? '' : `<span class="tl">🔒${t.need}</span>`);
+    b.addEventListener('click', () => {
+      SFX.tap();
+      if (!ok) { themeNote(ML(`Kumpulkan ${t.need} lencana untuk membuka ${t.name[0]}!`, `Collect ${t.need} badges to unlock ${t.name[1]}!`)); return; }
+      try { localStorage.setItem(THEME_KEY, t.id); } catch(e) {}
+      renderThemes(); themeNote(ML('Tema dipakai: ', 'Theme on: ') + ML(t.name[0], t.name[1]) + ' ' + (t.id==='huruf'?'🔤':t.icon));
+    });
+    row.appendChild(b);
+  });
+  const next = THEMES.find(t => have < t.need);
+  themeNote(next ? ML(`Tema baru di ${next.need} lencana`, `New theme at ${next.need} badges`) : ML('Semua tema terbuka! 🎉', 'All themes unlocked! 🎉'));
+}
+function themeNote(txt){ const n = document.getElementById('theme-note'); if (n) n.textContent = txt; }
+
+/* ── Kartu Harian: one date-seeded deck per day, best moves per day ── */
+const MM_DAILY_KEY = 'bm_mm_daily_v1';
+function mmToday() {
+  try { if (window.BabyMo && BabyMo.daily) return BabyMo.daily.today(); } catch(e) {}
+  const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function mmShift(ds, n) {
+  try { if (window.BabyMo && BabyMo.daily) return BabyMo.daily.shift(ds, n); } catch(e) {}
+  const p = ds.split('-').map(Number), d = new Date(p[0], p[1]-1, p[2] + n, 12);
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function mmRng(str) {
+  try { if (window.BabyMo && BabyMo.daily) return BabyMo.daily.seed(str); } catch(e) {}
+  let h = 2166136261; for (let i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+  let a = h >>> 0;
+  return () => { a = (a + 0x6D2B79F5) >>> 0; let t = a; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+}
+function mmDailyLoad() {
+  try { const d = JSON.parse(localStorage.getItem(MM_DAILY_KEY) || '{}'); if (d && typeof d.days === 'object' && d.days) return d; } catch(e) {}
+  return { v:1, days:{} };
+}
+function mmDailySave(d) {
+  const keys = Object.keys(d.days).sort(); while (keys.length > 40) delete d.days[keys.shift()];
+  try { localStorage.setItem(MM_DAILY_KEY, JSON.stringify(d)); } catch(e) {}
+}
+function mmDailyStreak(d) {
+  let n = 0, day = mmToday();
+  if (!d.days[day]) day = mmShift(day, -1);
+  while (d.days[day]) { n++; day = mmShift(day, -1); }
+  return n;
+}
+// Today's deck: 6 pairs from the 12 classic cards, laid out the same way all day
+function dailyDeck() {
+  const r = mmRng('mm-daily|' + mmToday());
+  const pool = BASE_ORDER.slice();
+  for (let i = pool.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [pool[i], pool[j]] = [pool[j], pool[i]]; }
+  const types = pool.slice(0, 6), arr = [...types, ...types];
+  for (let i = arr.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [arr[i], arr[j]] = [arr[j], arr[i]]; }
+  return { types, arr };
+}
+MODES.daily = { name:ML('Kartu Harian','Daily Cards'), emoji:'🎴', pairs:6, cols:3, types:[] };
+function renderDailyCard() {
+  const d = mmDailyLoad(), t = d.days[mmToday()], st = mmDailyStreak(d);
+  const card = document.getElementById('daily-card'); if (!card) return;
+  card.classList.toggle('done', !!t);
+  document.getElementById('daily-name').textContent = ML('Kartu Harian', 'Daily Cards') + (st >= 2 ? ` · 🔥${st}` : '');
+  document.getElementById('daily-desc').textContent = t
+    ? ML(`Rekor hari ini: ${t.best} langkah ✓ · Bisa lebih sedikit?`, `Today's best: ${t.best} moves ✓ · Can you beat it?`)
+    : ML('Susunan kartu baru setiap hari · ⭐ bonus', 'A new card layout every day · ⭐ bonus');
+  document.getElementById('daily-go').textContent = t ? ML('Lagi', 'Again') : ML('Main', 'Play');
+}
+function recordDaily(moves) {
+  const d = mmDailyLoad(), k = mmToday(), prev = d.days[k];
+  const isNew = !prev || moves < prev.best;
+  d.days[k] = { best: prev ? Math.min(prev.best, moves) : moves, plays: (prev ? prev.plays : 0) + 1 };
+  mmDailySave(d);
+  return { best: d.days[k].best, isNew, first: !prev, streak: mmDailyStreak(d) };
+}
 
 /* ════════════════════════════════════════════
    BADGE DEFINITIONS  (3 tiers, 29 total)
@@ -834,11 +1017,15 @@ function startGame(mode) {
   G = { mode, cards:[], selected:[], matched:new Set(), moves:0, canFlip:true };
   const cfg = MODES[mode];
 
-  // Build + shuffle card array
-  const arr = [...cfg.types, ...cfg.types];
-  for (let i=arr.length-1;i>0;i--) {
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
+  // Build + shuffle card array (Kartu Harian: the same seeded layout all day)
+  let arr;
+  if (mode === 'daily') { const dk = dailyDeck(); cfg.types = dk.types; arr = dk.arr; }
+  else {
+    arr = [...cfg.types, ...cfg.types];
+    for (let i=arr.length-1;i>0;i--) {
+      const j=Math.floor(Math.random()*(i+1));
+      [arr[i],arr[j]]=[arr[j],arr[i]];
+    }
   }
   G.cards = arr.map((type,i)=>({id:i,type,flipped:false,matched:false}));
 
@@ -885,13 +1072,15 @@ function renderGrid() {
 
   grid.style.gridTemplateColumns = `repeat(${cols}, ${cardSize}px)`;
   grid.style.gridAutoRows = `${cardSize}px`;
+  grid.style.setProperty('--cs', cardSize + 'px');
+  grid.classList.toggle('tiny', cardSize < 84);
   grid.innerHTML = '';
 
   const backSvg = `<svg class="cb-pattern" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><polygon points="20,4 22.5,13 32,13 24.5,18.5 27,28 20,22.5 13,28 15.5,18.5 8,13 17.5,13" fill="rgba(245,197,24,.38)"/></svg>`;
 
   G.cards.forEach((_,idx)=>{
     const card = G.cards[idx];
-    const cd = CARD_DATA[card.type];
+    const cd = cardFace(card.type);
     const el = document.createElement('div');
     el.className='mem-card';
     el.dataset.idx = idx;
@@ -902,7 +1091,7 @@ function renderGrid() {
       <div class="card-inn">
         <div class="c-face c-back">${backSvg}</div>
         <div class="c-face c-front">
-          <div class="c-icon">${cd.svg}</div>
+          ${cd.emoji ? `<div class="c-emo">${cd.emoji}</div>` : `<div class="c-icon">${cd.svg}</div>`}
           ${labelHtml}
         </div>
       </div>`;
@@ -947,7 +1136,7 @@ function handleClick(idx) {
   G.selected.push(idx);
   document.querySelector(`[data-idx="${idx}"]`)?.classList.add('flipped');
 
-  const cd = CARD_DATA[card.type];
+  const cd = cardFace(card.type);
   if (cd.speak) speakArabic(cd.speak);
 
   if (G.selected.length === 2) {
@@ -1014,9 +1203,14 @@ function showWin() {
   SFX.win();
 
   // Record the game first, then check badges
-  Store.recordGame(G.mode, G.moves);
+  // (Kartu Harian keeps its own per-day record; it still counts as a game played)
+  let daily = null;
+  if (G.mode === 'daily') { daily = recordDaily(G.moves); localStorage.setItem('bm_games', Store.getTotalGames() + 1); }
+  else Store.recordGame(G.mode, G.moves);
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('memory-match','win'); }catch(e){}
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('memory-match','win-'+G.mode,1); }catch(e){}
+  let dailyBonus = false;
+  if (daily) { try{ dailyBonus = !!(window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('memory-match','daily-bonus',1)); }catch(e){} }
   const newlyEarned = Store.checkBadges(G.mode, G.moves);
 
   // Determine featured badge to show
@@ -1051,6 +1245,15 @@ function showWin() {
   document.getElementById('win-sub').textContent = subs[Math.floor(Math.random()*subs.length)];
   document.getElementById('win-moves-txt').textContent = `Selesai dalam ${G.moves} langkah`;
 
+  const wd = document.getElementById('win-daily');
+  if (daily) {
+    wd.innerHTML = (daily.isNew && !daily.first ? ML('🏆 <b>Rekor baru hari ini!</b> ', '🏆 <b>New best today!</b> ') : '🎴 ')
+      + ML(`Rekor hari ini: ${daily.best} langkah`, `Today's best: ${daily.best} moves`)
+      + (dailyBonus ? ML(' · <b>+1 ⭐ bonus</b>', ' · <b>+1 ⭐ bonus</b>') : '')
+      + (daily.streak >= 2 ? ML(` · 🔥 ${daily.streak} hari`, ` · 🔥 ${daily.streak} days`) : '');
+    wd.classList.add('on');
+  } else wd.classList.remove('on');
+  renderThemes(); renderDailyCard();
   spawnParticles();
   goTo('s-success');
 }
@@ -1174,6 +1377,8 @@ function syncMute() {
 document.addEventListener('DOMContentLoaded', ()=>{
   buildBg();
   updateBadgePill();
+  renderThemes();
+  renderDailyCard();
   if (window.speechSynthesis) { window.speechSynthesis.getVoices(); window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices(); }
 
   // Mode cards
@@ -1186,7 +1391,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     SFX.tap();
     document.getElementById('dt-overlay').classList.remove('on');
     document.getElementById('app').classList.remove('dt');
-    updateBadgePill();
+    updateBadgePill(); renderDailyCard(); renderThemes();
     goTo('s-home');
   });
 
@@ -1198,13 +1403,15 @@ document.addEventListener('DOMContentLoaded', ()=>{
     SFX.tap();
     document.getElementById('dt-overlay').classList.remove('on');
     document.getElementById('app').classList.remove('dt');
-    updateBadgePill();
+    updateBadgePill(); renderDailyCard(); renderThemes();
     goTo('s-home');
   });
 
   // Stickers / badges
   document.getElementById('btn-stickers').addEventListener('click', ()=>{ SFX.tap(); renderStickers(); goTo('s-stickers'); });
-  document.getElementById('btn-stk-back').addEventListener('click', ()=>{ SFX.tap(); goTo('s-home'); });
+  document.getElementById('btn-stk-back').addEventListener('click', ()=>{ SFX.tap(); renderThemes(); goTo('s-home'); });
+  // A new day while the page stays open: refresh the daily card
+  document.addEventListener('visibilitychange', ()=>{ if (!document.hidden) renderDailyCard(); });
 
   // Mute toggles
   ['btn-mute-home','btn-mute-game'].forEach(id=>{
