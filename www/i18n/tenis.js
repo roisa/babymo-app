@@ -17,6 +17,8 @@
   "🙌 Dua tangan": "🙌 Two hands", "✋ Satu tangan": "✋ One hand", "bola dekat": "close ball", "bola jauh": "far ball",
   "Bola jauh…": "Far ball…", "Bola dekat…": "Close ball…",
   "Bola jauh — jangkau dengan satu tangan!": "Far ball — reach with one hand!", "Bola dekat — pakai dua tangan supaya kuat!": "Close ball — use two hands for power!",
+  "🎾 Gaya forehand Kak Adam": "🎾 Kak Adam's forehand style", "🎲 Acak": "🎲 Mix", "ganti-ganti": "switches up", "klasik": "classic", "lebih kuat": "more power",
+  "Forehand dua tangan: lebih kuat dan stabil!": "Two-handed forehand: strong and steady!", "Forehand satu tangan: jangkauan lebih panjang!": "One-handed forehand: longer reach!", "Acak: gaya forehand Kak Adam ganti-ganti!": "Mix: Kak Adam switches his forehand style!",
   "Kaki Lincah": "Quick Feet", "Bergerak dulu, baru memukul": "Move first, then hit",
   "Servis Roket": "Rocket Serve", "Pukul bola di titik tertinggi": "Hit the ball at its highest point",
   "Pertandingan Pertama": "First Match", "Main satu game melawan Raka": "Play one game against Raka",
