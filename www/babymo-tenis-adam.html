@@ -145,6 +145,12 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .dots i{background:rgba(21,34,48,.10)}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-mo-room">
+/* Baby Mo's greeting drops in at the top of the map/intro: slide the content down so he never covers Kak Adam */
+#s-map .wrap,#s-intro .wrap{transition:padding-top .35s ease}
+body:has(#bm-mo.top.show) #s-map .wrap,body:has(#bm-mo.top.show) #s-intro .wrap{padding-top:86px}
+body:has(#s-map.on) #bm-mo.top,body:has(#s-intro.on) #bm-mo.top{top:calc(env(safe-area-inset-top) + 6px)}
+</style>
 <style id="bm-adam-frames">
 /* Adam frames are 300x390 with headroom for the jump serve: crop the headroom in the small square portraits */
 .hero img,.card .pose,.cert img{object-fit:cover;object-position:50% 100%}
@@ -324,7 +330,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 <section class="screen" id="s-result">
   <div class="wrap">
     <div class="card" style="margin-top:10px">
-      <img class="pose" id="resPose" src="adam-tennis-v2/win-fist.webp" alt="">
+      <img class="pose" id="resPose" src="adam-tennis-v2/win-fist-r.webp" alt="">
       <h2 id="resTitle">Hebat!</h2>
       <div class="stars" id="resStars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
       <p class="sub" id="resLine" style="margin:0 auto"></p>
@@ -475,8 +481,8 @@ function say(text){
 }
 
 /* ───────── Adam sprite ───────── */
-var FR={}; [READY,"ready-wide","win-fist","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
-  [1,2,3,4,5,6].map(function(n){return "fh-"+n;}),[3,4,5,6].map(function(n){return "backhand-two-"+n;}),
+var FR={}; [READY,"win-fist-r","fh-3-noball","fh-4-noball","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
+  [5].map(function(n){return "fh-"+n;}),[3,4,5,6].map(function(n){return "backhand-two-"+n;}),
   [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
 ).forEach(function(n){ var im=new Image(); im.src="adam-tennis-v2/"+n+".webp"; FR[n]=im; });
 var animTimer=null;
@@ -489,6 +495,7 @@ function play(seq,ms,then){
 function swing(side,then){
   if(side==="bh"){ play(["backhand-two-3","backhand-two-3","backhand-two-4","backhand-two-5","backhand-two-6"],75,then); return; } /* two-handed backhand, finishing over his shoulder, smiling */
   var st=(G&&G.fh)||"one", b=FH_SET[st];
+  if(st==="one"){ play(["fh-3-noball","fh-4-noball","fh-5","fh-one-6"],80,then); return; } /* classic set, with its drawn-in ball removed */
   if(st!=="two"){ play([b+3,b+4,b+5,"fh-one-6"],80,then); return; } /* one-handed forehands finish on the smiling follow-through */
   play([b+3,b+4,b+5,b+6],80,then); }
 /* forehand styles: two one-handed swings (classic + new) and a two-handed one */
@@ -621,7 +628,7 @@ function tapHit(side){
 }
 function hit(side){
   G.hits++; TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
-  swing(side,function(){ if(side==="fh" && G && G.fh==="two") pose("win-fist"); }); /* backhand and one-handed forehands stay on their smiling finish */
+  swing(side); /* every swing ends on its own smiling follow-through */
   var from=G.hitX, to=lerp(120,280,Math.random());
   pop(["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
   animate(.85,function(p){ var b=outgoing(Math.min(p,1),from,to,true); place(b.gx,b.gy,b.h,b.s); if(p>=1.1){ hideBall(); return false; } });
@@ -748,7 +755,7 @@ function serveHit(){
 }
 function serveResult(ok,msg){
   $("meterLvl").style.height="0%";
-  if(ok){ G.hits++; pop(msg,"good",1000); setTimeout(function(){ pose("win-fist"); },300); dot(G.n,"ok"); G.n++; G.chance=1; }
+  if(ok){ G.hits++; pop(msg,"good",1000); setTimeout(function(){ pose("win-fist-r"); },300); dot(G.n,"ok"); G.n++; G.chance=1; }
   else if(G.chance===1){ sfx("wrong"); pop("Fault! "+T(msg),"bad",1500); pose("oops-1"); G.chance=2; nextBall(toss,1700); return; }
   else { sfx("wrong"); pop("Double fault!","bad",1300); pose("sad-miss"); dot(G.n,"no"); G.n++; G.chance=1; }
   count();
@@ -809,7 +816,7 @@ function finish(){
   if(s>prev){ DATA.stars[G.i]=s; save(DATA); try{ kit().addStars && kit().addStars(s-prev); }catch(e){} }
   stage.onclick=null;
   $("resTitle").textContent = s===3?"Masya Allah, sempurna!":s>=1?"Hebat, kamu berhasil!":"Ayo coba lagi!";
-  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist":"oops-1")+".webp";
+  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-1")+".webp";
   var spans=$("resStars").children; for(var k=0;k<3;k++){ spans[k].classList.remove("on"); }
   for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
   if(st.key==="tanding") $("resLine").textContent = G.won ? T("Kak Adam menang game!")+" "+label(G.a,G.r).join("–") : T("Raka menang kali ini. Pemain hebat tidak menyerah!");

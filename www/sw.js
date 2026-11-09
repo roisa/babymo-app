@@ -10,7 +10,7 @@
      - same-origin static → cache-first (fast), refreshed in background.
      - cross-origin (fonts) → opportunistic cache.
    ============================================================ */
-const CACHE = "babymo-games-v64";
+const CACHE = "babymo-games-v65";
 
 const SHELL = [
   "/",
@@ -68,19 +68,10 @@ const SHELL = [
   "/adam-tennis-v2/backhand-two-4.webp",
   "/adam-tennis-v2/backhand-two-5.webp",
   "/adam-tennis-v2/backhand-two-6.webp",
-  "/adam-tennis-v2/backhand-1.webp",
-  "/adam-tennis-v2/backhand-2.webp",
-  "/adam-tennis-v2/backhand-3.webp",
-  "/adam-tennis-v2/backhand-4.webp",
-  "/adam-tennis-v2/backhand-5.webp",
-  "/adam-tennis-v2/backhand-6.webp",
   "/adam-tennis-v2/celebrate-3.webp",
-  "/adam-tennis-v2/fh-1.webp",
-  "/adam-tennis-v2/fh-2.webp",
-  "/adam-tennis-v2/fh-3.webp",
-  "/adam-tennis-v2/fh-4.webp",
+  "/adam-tennis-v2/fh-3-noball.webp",
+  "/adam-tennis-v2/fh-4-noball.webp",
   "/adam-tennis-v2/fh-5.webp",
-  "/adam-tennis-v2/fh-6.webp",
   "/adam-tennis-v2/fh-one-1.webp",
   "/adam-tennis-v2/fh-one-2.webp",
   "/adam-tennis-v2/fh-one-3.webp",
@@ -95,7 +86,6 @@ const SHELL = [
   "/adam-tennis-v2/fh-two-6.webp",
   "/adam-tennis-v2/hold-ball.webp",
   "/adam-tennis-v2/oops-1.webp",
-  "/adam-tennis-v2/ready-wide.webp",
   "/adam-tennis-v2/sad-miss.webp",
   "/adam-tennis-v2/serve-blue-1.webp",
   "/adam-tennis-v2/serve-blue-2.webp",
@@ -111,7 +101,7 @@ const SHELL = [
   "/adam-tennis-v2/shuffle-6.webp",
   "/adam-tennis-v2/wave-1.webp",
   "/adam-tennis-v2/wave-3.webp",
-  "/adam-tennis-v2/win-fist.webp",
+  "/adam-tennis-v2/win-fist-r.webp",
   "/i18n/tenis.js",
   "/icons/games/tenis-adam.svg",
   "/babymo-kebun-ais.html",
