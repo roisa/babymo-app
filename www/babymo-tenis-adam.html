@@ -92,6 +92,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
   background:#2E8A57;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.court{position:absolute;inset:0;width:100%;height:100%}
 .adam{position:absolute;width:38%;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
+.adam.serve{top:9.7%}
 .adam img{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
 .adam::after{content:'';position:absolute;left:25%;right:25%;bottom:4%;height:7%;border-radius:50%;background:rgba(0,0,0,.22);z-index:-1}
 .ball,.bshadow{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;will-change:transform}
@@ -269,7 +270,9 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
         <rect y="122" width="400" height="16" fill="url(#mesh)" opacity=".75"/>
         <rect y="134" width="400" height="5" fill="#1E6A43"/>
         <g fill="#E8EEF5"><rect x="0" y="120" width="400" height="2"/><rect x="48" y="120" width="2.5" height="19"/><rect x="148" y="120" width="2.5" height="19"/><rect x="250" y="120" width="2.5" height="19"/><rect x="350" y="120" width="2.5" height="19"/></g>
-        <!-- court (far baseline y=150, net y=288, near baseline y=556; true perspective) -->
+        <!-- court: drawn with far baseline y=150, net y=288, near baseline y=556, then squeezed toward us so
+             there is a wide run-off behind the far baseline (far baseline ends up at y=196, net at y=318) -->
+        <g transform="translate(0 63) scale(1 .8867)">
         <polygon points="96,145 304,145 394,560 6,560" fill="#2E8A57" opacity=".35"/>
         <polygon points="104,150 296,150 386,556 14,556" fill="url(#cg)"/>
         <g stroke="#fff" stroke-width="2.6" fill="none" stroke-linejoin="round" stroke-linecap="round">
@@ -294,6 +297,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
           <rect x="0" y="0" width="38" height="7" rx="2" fill="#2A84D2"/><rect x="0" y="-9" width="38" height="6" rx="2" fill="#2A84D2"/>
           <path d="M4 7 v10 M34 7 v10" stroke="#E8EEF5" stroke-width="2.4"/>
           <circle cx="44" cy="12" r="5" fill="#C9E84A"/><circle cx="50" cy="15" r="4" fill="#D9F05A"/>
+        </g>
         </g>
         <!-- flowers at the near corners -->
         <g><ellipse cx="0" cy="560" rx="34" ry="22" fill="#2B7F4C"/><circle cx="8" cy="548" r="4" fill="#FF8FB8"/><circle cx="20" cy="554" r="3.5" fill="#FFE066"/><circle cx="4" cy="538" r="3" fill="#fff"/>
@@ -441,11 +445,27 @@ function openIntro(i){
   $("introBall").textContent={red:"🔴 Bola merah",orange:"🟠 Bola oranye",green:"🟢 Bola hijau"}[st.ball];
   show("s-intro");
 }
+/* pick a soft, friendly voice: known gentle voices first, never a known deep one */
+var SOFT={ id:["Damayanti","Gadis","Google Bahasa Indonesia","id-id-x-idc","id-id-x-idd","Female","Wanita"],
+           en:["Samantha","Karen","Tessa","Moira","Nicky","Ava","Allison","Susan","Google US English","Microsoft Aria","Microsoft Jenny","Microsoft Zira","Female"] };
+var DEEP=/\b(male|Ardi|Daniel|Fred|Aaron|Arthur|Gordon|Rishi|Alex|Tom|Oliver|Guy|David|Mark|Ralph|Albert|Bruce|Junior)\b|x-(dfz|ide|idf)/i;
+function kidVoice(lang){
+  try{
+    var p=lang.slice(0,2), all=(speechSynthesis.getVoices()||[]).filter(function(x){ return x.lang && x.lang.replace("_","-").toLowerCase().indexOf(p)===0; });
+    var ok=all.filter(function(x){ return !DEEP.test(x.name+" "+(x.voiceURI||"")); });
+    var pref=SOFT[p]||[];
+    for(var i=0;i<pref.length;i++){ for(var j=0;j<ok.length;j++){ if((ok[j].name+" "+(ok[j].voiceURI||"")).indexOf(pref[i])>=0) return ok[j]; } }
+    return ok[0]||null;
+  }catch(e){ return null; }
+}
+try{ speechSynthesis.getVoices(); speechSynthesis.addEventListener && speechSynthesis.addEventListener("voiceschanged",function(){}); }catch(e){}
 function say(text){
   try{
     if(kit().isMuted && kit().isMuted()) return;
     var u=new SpeechSynthesisUtterance(text.replace(/<[^>]+>/g,""));
-    u.lang=(localStorage.getItem("bm_lang")==="en")?"en-US":"id-ID"; u.rate=.95;
+    u.lang=(localStorage.getItem("bm_lang")==="en")?"en-US":"id-ID";
+    var v=kidVoice(u.lang); if(v) u.voice=v;
+    u.rate=1.02; u.pitch=1.35; /* bright, cheerful and gentle, never a deep voice */
     speechSynthesis.cancel(); speechSynthesis.speak(u);
   }catch(e){}
 }
@@ -473,7 +493,7 @@ function pickFh(){
   if(c==="one") return G.oneSet || (G.oneSet=Math.random()<.5?"one":"one2"); /* keeps one look for the whole round */
   return ["one","one2","two"][Math.floor(Math.random()*3)];
 }
-var ADAMX={L:30,C:50,R:70};
+var ADAMX={L:30,C:50,R:70,S:42}; /* S: serving spot, behind the baseline just right of the centre mark */
 function adamTo(lane){ $("adam").style.left=ADAMX[lane]+"%"; }
 
 /* ───────── stage geometry (viewBox 400×560) ───────── */
@@ -525,7 +545,7 @@ function incoming(p,hitX){
 }
 /* outgoing flight after a hit: from Adam back to our side */
 function outgoing(p,fromX,toX,good){
-  var f=good?Math.pow(p,1.5):p, gy=lerp(196, good?470:286, f), gx=lerp(fromX,toX,f), s=lerp(.45,good?.95:.62,f);
+  var f=good?Math.pow(p,1.5):p, gy=lerp(196, good?470:316, f), gx=lerp(fromX,toX,f), s=lerp(.45,good?.95:.62,f);
   var h=good ? lerp(46,0,p)+4*120*p*(1-p) : lerp(46,0,p)+4*30*p*(1-p);
   return {gx:gx,gy:gy,h:h,s:s};
 }
@@ -552,7 +572,7 @@ function startStation(i){
   ballEl.style.setProperty("--ballc",G.ball);
   $("playTitle").textContent=st.title;
   $("score").classList.remove("on"); $("meter").classList.remove("on"); $("marker").classList.remove("on"); $("laneTip").textContent="";
-  adamTo("C"); pose(READY); hideBall();
+  adamTo("C"); $("adam").classList.remove("serve"); pose(READY); hideBall();
   show("s-play");
   say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
   ({pantul:setupPantul,bh:setupBh,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
@@ -682,18 +702,18 @@ done=function(ok){
 /* ── 4. Serve ── */
 function setupServis(){
   G.total=6; G.chance=1; dots(G.total); $("dots").children[0].classList.add("now"); count();
-  $("meter").classList.add("on");
+  $("meter").classList.add("on"); adamTo("S"); $("adam").classList.add("serve"); /* feet just behind the baseline */
   controls('<button class="btn-pri" id="srvBtn">🚀 SERVIS!</button>');
   $("srvBtn").addEventListener("click",serveHit);
   stage.onclick=serveHit;
   pop("Siap?","tip",900); nextBall(toss,1100);
 }
-var TOSS={x:234, hand:164, peak:100}; /* tuned to the blue-racket serve frames */
+var TOSS={x:202, base:194, hand:234, peak:100}; /* tuned to the blue-racket serve frames, Adam at the serving spot */ /* tuned to the blue-racket serve frames */
 function toss(){
   if(!G||G.over) return;
   G.tossing=true; G.tp=0; pose("serve-blue-2");
   $("laneTip").textContent=T(G.chance===1?"Kesempatan pertama":"Kesempatan kedua");
-  var x=TOSS.x, base=150, peak=TOSS.peak, dur=1.5; /* the ball leaves his tossing hand and rises above the racket */
+  var x=TOSS.x, base=TOSS.base, peak=TOSS.peak, dur=1.5; /* the ball leaves his tossing hand and rises above the racket */
   G.flight=animate(dur,function(p){
     G.tp=p; var up=peak*Math.sin(Math.PI*Math.min(p,1)), h=TOSS.hand+up;
     place(x,base,h,.5); $("meterLvl").style.height=(up/peak*100)+"%";
@@ -707,14 +727,14 @@ function serveHit(){
   var top=Math.sin(Math.PI*G.tp); // 0..1 height
   var good=top>=.82;
   play(["serve-blue-4","serve-blue-5","serve-blue-6"],90);
-  var tx=lerp(150,250,Math.random());
+  var tx=lerp(232,282,Math.random()); /* crosscourt into the deuce box */
   TS.hit(good?1.1:.8);
   if(good){
     setTimeout(function(){ sfx("correct"); },180);
-    animate(.75,function(p){ var q=Math.min(p,1), gy=lerp(150,400,q), gx=lerp(TOSS.x,tx,q), s=lerp(.5,.85,q), h=lerp(TOSS.hand+TOSS.peak,0,q)+4*40*q*(1-q); place(gx,gy,h,s); if(p>=1.15){ hideBall(); return false; } });
+    animate(.75,function(p){ var q=Math.min(p,1), gy=lerp(TOSS.base,392,q), gx=lerp(TOSS.x,tx,q), s=lerp(.5,.85,q), h=lerp(TOSS.hand+TOSS.peak,0,q)+4*40*q*(1-q); place(gx,gy,h,s); if(p>=1.15){ hideBall(); return false; } });
     setTimeout(function(){ serveResult(true,"Masuk! Servis roket!"); },700);
   } else {
-    animate(.55,function(p){ var q=Math.min(p,1), gy=lerp(150,286,q), gx=lerp(TOSS.x,tx,q), s=lerp(.5,.62,q), h=lerp(TOSS.hand+TOSS.peak*.7,34,q)*(1-q*.4); place(gx,gy,h,s); if(p>=1.1){ hideBall(); return false; } });
+    animate(.55,function(p){ var q=Math.min(p,1), gy=lerp(TOSS.base,316,q), gx=lerp(TOSS.x,tx,q), s=lerp(.5,.62,q), h=lerp(TOSS.hand+TOSS.peak*.7,34,q)*(1-q*.4); place(gx,gy,h,s); if(p>=1.1){ hideBall(); return false; } });
     setTimeout(function(){ serveResult(false, top>.5 ? "Kena net! Tunggu sampai paling tinggi." : "Terlalu cepat — tunggu bolanya naik!"); },560);
   }
 }
