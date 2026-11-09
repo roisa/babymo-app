@@ -350,6 +350,11 @@ var STATIONS = [
     how:"Kak Adam menghadap kamu. Bola ke kiri layar? Forehand. Ke kanan layar? Backhand.", howIcon:"↔️",
     fact:"Hampir semua pukulan tenis adalah forehand atau backhand. Banyak pemain hebat memukul backhand dengan dua tangan supaya lebih kuat.",
     learn:"Forehand dipukul dari sisi tangan yang memegang raket, backhand dari sisi lainnya." },
+  { key:"bh12", tipEn:"A backhand can be hit with <b>one hand</b> or <b>two hands</b>. Ball <b>far away</b>? Stretch with one hand. Ball <b>close</b>? Two hands for power!", icon:"🙌", ball:"red", title:"Backhand Satu & Dua Tangan", short:"Pilih satu atau dua tangan",
+    tip:"Backhand bisa dipukul dengan <b>satu tangan</b> atau <b>dua tangan</b>. Bola <b>jauh</b>? Jangkau dengan satu tangan. Bola <b>dekat</b>? Dua tangan supaya kuat!",
+    how:"Semua bola datang ke sisi backhand. Bola jauh di kanan? Satu tangan. Bola dekat badan? Dua tangan.", howIcon:"🙌",
+    fact:"Backhand dua tangan lebih kuat dan stabil, cocok untuk anak-anak. Backhand satu tangan bisa menjangkau lebih jauh — banyak juara memakai keduanya!",
+    learn:"Dua tangan untuk bola dekat (kuat dan terkontrol), satu tangan untuk bola jauh (jangkauan lebih panjang)." },
   { key:"kaki", tipEn:"The orange ball is faster! Look for the <b>circle</b> where the ball will land, then <b>move your feet</b> there before it arrives.", icon:"👟", ball:"orange", title:"Kaki Lincah", short:"Bergerak dulu, baru memukul",
     tip:"Bola oranye lebih cepat! Lihat <b>tanda lingkaran</b> tempat bola akan mendarat, lalu <b>geser kakimu</b> ke sana sebelum bola sampai.",
     how:"Ketuk Kiri, Tengah, atau Kanan untuk menggeser Kak Adam ke arah bola.", howIcon:"👟",
@@ -371,7 +376,7 @@ var BALLS_PER = 8;
 
 /* ───────── storage ───────── */
 var KEY = "bm_tenis_adam_v1";
-function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0]; return d; }catch(e){ return {stars:[0,0,0,0,0]}; } }
+function load(){ try{ var d=JSON.parse(localStorage.getItem(KEY)||"{}"); if(!Array.isArray(d.stars)) d.stars=[0,0,0,0,0,0]; if(d.stars.length===5) d.stars.splice(2,0,0); return d; }catch(e){ return {stars:[0,0,0,0,0,0]}; } }
 function save(d){ try{ localStorage.setItem(KEY,JSON.stringify(d)); }catch(e){} }
 var DATA = load();
 function T(s){ return (window.BM_T ? window.BM_T(s) : s); }
@@ -383,7 +388,7 @@ function show(id){ document.querySelectorAll(".screen").forEach(function(s){ s.c
 var $ = function(id){ return document.getElementById(id); };
 
 /* ───────── map ───────── */
-function unlocked(i){ return i===0 || DATA.stars[i-1] > 0; }
+function unlocked(i){ return i===0 || DATA.stars[i-1] > 0 || DATA.stars[i] > 0; }
 function renderMap(){
   var p=$("path"); p.innerHTML="";
   var total=0, nextSet=false;
@@ -399,13 +404,13 @@ function renderMap(){
     if(open) b.addEventListener("click",function(){ sfx("tap"); openIntro(i); });
     p.appendChild(b);
   });
-  $("mapStars").textContent="⭐ "+total+" / 15";
+  $("mapStars").textContent="⭐ "+total+" / "+(STATIONS.length*3);
   $("certBtn").style.display = DATA.stars.every(function(s){return s>0;}) ? "" : "none";
 }
 
 /* ───────── intro ───────── */
 var CUR=0;
-var INTRO_POSE=["hold-ball","ready-wide","shuffle-3","serve-1","wave-3"];
+var INTRO_POSE=["hold-ball","ready-wide","bh1-reach","shuffle-3","serve-n-1","wave-3"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
   $("introKicker").textContent="Latihan "+(i+1);
@@ -430,7 +435,7 @@ function say(text){
 /* ───────── Adam sprite ───────── */
 var FR={}; ["ready-wide","win-fist","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
   [1,2,3,4,5,6].map(function(n){return "fh-"+n;}),[1,2,3,4,5,6].map(function(n){return "backhand-"+n;}),
-  [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-"+n;})
+  [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-n-"+n;}),["bh1-lunge","bh1-reach"]
 ).forEach(function(n){ var im=new Image(); im.src="adam-tennis/"+n+".webp"; FR[n]=im; });
 var animTimer=null;
 function pose(n){ clearInterval(animTimer); $("adamImg").src="adam-tennis/"+n+".webp"; }
@@ -439,7 +444,9 @@ function play(seq,ms,then){
   $("adamImg").src="adam-tennis/"+seq[0]+".webp";
   animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis/"+seq[k]+".webp"; }, ms);
 }
-function swing(side,then){ var b=side==="bh"?"backhand-":"fh-"; play([b+3,b+4,b+5,b+6],80,then); }
+function swing(side,then){
+  if(side==="bh1"){ play(["backhand-2","bh1-lunge","bh1-reach","bh1-reach"],95,then); return; } /* one-handed: reach out, free arm back */
+  var b=(side==="bh"||side==="bh2")?"backhand-":"fh-"; play([b+3,b+4,b+5,b+6],80,then); }
 var ADAMX={L:30,C:50,R:70};
 function adamTo(lane){ $("adam").style.left=ADAMX[lane]+"%"; }
 
@@ -512,6 +519,7 @@ function controls(html){ $("controls").innerHTML=html; }
 
 /* ───────── round engine ───────── */
 var G=null; // current game state
+try{ Object.defineProperty(window,"G",{get:function(){ return G; },configurable:true}); }catch(e){} /* read-only hook for automated play tests */
 function startStation(i){
   CUR=i; var st=STATIONS[i];
   G={ i:i, n:0, hits:0, busy:false, flight:null, ball:BALL[st.ball], speed:SPEED[st.ball], lane:"C" };
@@ -521,7 +529,7 @@ function startStation(i){
   adamTo("C"); pose("ready-wide"); hideBall();
   show("s-play");
   say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
-  ({pantul:setupPantul,sisi:setupSisi,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
+  ({pantul:setupPantul,sisi:setupSisi,bh12:setupBh12,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
 }
 function count(){ $("playCount").textContent=G.hits+" / "+G.total; }
 function finishAfter(ms){ setTimeout(function(){ if(G) finish(); }, ms); }
@@ -554,6 +562,7 @@ function tapHit(side){
   if(p<PB && key==="pantul"){ swing(side); missFly("Tunggu pantulannya dulu!"); return; }
   if(p<.8){ swing(side); missFly("Terlalu cepat!"); return; }
   if((key==="sisi"||key==="tanding") && side!==G.side){ swing(side); missFly(G.side==="fh"?"Bola di kiri — pakai forehand!":"Bola di kanan — pakai backhand!"); return; }
+  if(key==="bh12" && side!==G.side){ swing(side); missFly(G.side==="bh1"?"Bola jauh — jangkau dengan satu tangan!":"Bola dekat — pakai dua tangan supaya kuat!"); return; }
   hit(side);
 }
 function hit(side){
@@ -580,7 +589,7 @@ function done(ok){
   if(G.onPoint){ G.onPoint(ok); return; }
   dot(G.n, ok?"ok":"no"); G.n++; count();
   if(G.n>=G.total){ G.over=true; finishAfter(1300); return; }
-  nextBall(function(){ feed(G.mode==="sides" ? (Math.random()<.5?"fh":"bh") : "fh"); }, 1300);
+  nextBall(function(){ if(G.mode==="grip") feedGrip(); else feed(G.mode==="sides" ? (Math.random()<.5?"fh":"bh") : "fh"); }, 1300);
 }
 
 /* ── 2. Forehand & backhand ── */
@@ -591,6 +600,23 @@ function setupSisi(){
   $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
   stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
   pop("Siap?","tip",900); nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); },1100);
+}
+
+/* ── 2b. One- or two-handed backhand ── */
+function setupBh12(){
+  G.mode="grip"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
+  controls('<button class="btn-pri side" id="bh2Btn"><span class="lb">🙌 Dua tangan</span><small>bola dekat</small></button><button class="btn-pri side" id="bh1Btn"><span class="lb">✋ Satu tangan</span><small>bola jauh</small></button>');
+  $("bh2Btn").addEventListener("click",function(){ tapHit("bh2"); });
+  $("bh1Btn").addEventListener("click",function(){ tapHit("bh1"); });
+  stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit((e.clientX-r.left)/r.width>.7?"bh1":"bh2"); };
+  pop("Siap?","tip",900); nextBall(feedGrip,1100);
+}
+function feedGrip(){
+  if(!G||G.over) return;
+  var g=Math.random()<.5?"bh1":"bh2";
+  feed("bh"); G.side=g; G.hitX = g==="bh1" ? 312 : 240;
+  if(G.n<2) $("laneTip").textContent=T(g==="bh1"?"Bola jauh…":"Bola dekat…");
+  else $("laneTip").textContent="";
 }
 
 /* ── 3. Footwork ── */
@@ -646,13 +672,13 @@ function setupServis(){
 }
 function toss(){
   if(!G||G.over) return;
-  G.tossing=true; G.tp=0; pose("serve-2");
+  G.tossing=true; G.tp=0; pose("serve-n-2");
   $("laneTip").textContent=T(G.chance===1?"Kesempatan pertama":"Kesempatan kedua");
   var x=212, base=150, peak=118, dur=1.5;
   G.flight=animate(dur,function(p){
     G.tp=p; var h=peak*Math.sin(Math.PI*Math.min(p,1));
     place(x,base,h,.5); $("meterLvl").style.height=(h/peak*100)+"%";
-    if(p>.35 && $("adamImg").src.indexOf("serve-3")<0) pose("serve-3");
+    if(p>.35 && $("adamImg").src.indexOf("serve-n-3")<0) pose("serve-n-3");
     if(p>=1.02){ G.tossing=false; G.flight=null; serveResult(false,"Bolanya jatuh — pukul saat paling tinggi!"); return false; }
   });
 }
@@ -661,7 +687,7 @@ function serveHit(){
   G.tossing=false; if(G.flight) G.flight.stop(); G.flight=null;
   var top=Math.sin(Math.PI*G.tp); // 0..1 height
   var good=top>=.82;
-  play(["serve-4","serve-5","serve-6"],90);
+  play(["serve-n-4","serve-n-5","serve-n-6"],90);
   var tx=lerp(150,250,Math.random());
   TS.hit(good?1.1:.8);
   if(good){
@@ -761,7 +787,7 @@ function openCert(){
 $("certBtn").addEventListener("click",function(){ sfx("tap"); openCert(); });
 $("certBack").addEventListener("click",function(){ renderMap(); show("s-map"); });
 $("certMap").addEventListener("click",function(){ renderMap(); show("s-map"); });
-$("certShare").addEventListener("click",function(){ try{ kit().shareScore ? kit().shareScore(15,3,T("Aku lulus Akademi Tenis Kak Adam! 🎾")) : kit().share && kit().share({}); }catch(e){} });
+$("certShare").addEventListener("click",function(){ try{ kit().shareScore ? kit().shareScore(STATIONS.length*3,3,T("Aku lulus Akademi Tenis Kak Adam! 🎾")) : kit().share && kit().share({}); }catch(e){} });
 
 /* ───────── wiring ───────── */
 $("introBack").addEventListener("click",function(){ renderMap(); show("s-map"); });
