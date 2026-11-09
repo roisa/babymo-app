@@ -487,7 +487,8 @@ function play(seq,ms,then){
   animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis-v2/"+seq[k]+".webp"; }, ms);
 }
 function swing(side,then){
-  var b=side==="bh"?"backhand-":FH_SET[(G&&G.fh)||"one"]; play([b+3,b+4,b+5,b+6],80,then); }
+  if(side==="bh"){ play(["backhand-3","backhand-4","backhand-5","fh-two-6"],80,then); return; } /* two-handed finish over the shoulder, smiling */
+  var b=FH_SET[(G&&G.fh)||"one"]; play([b+3,b+4,b+5,b+6],80,then); }
 /* forehand styles: two one-handed swings (classic + new) and a two-handed one */
 var FH_SET={ one:"fh-", one2:"fh-one-", two:"fh-two-" }, FH_KEY="bm_tenis_fh_style";
 function fhChoice(){ try{ return localStorage.getItem(FH_KEY)||"mix"; }catch(e){ return "mix"; } }
@@ -617,7 +618,7 @@ function tapHit(side){
 }
 function hit(side){
   G.hits++; TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
-  swing(side,function(){ if(side!=="bh") pose("win-fist"); }); /* backhand keeps backhand-6, the happy finish from its own set */
+  swing(side,function(){ if(side!=="bh") pose("win-fist"); }); /* backhand stays on its smiling two-handed finish */
   var from=G.hitX, to=lerp(120,280,Math.random());
   pop(["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
   animate(.85,function(p){ var b=outgoing(Math.min(p,1),from,to,true); place(b.gx,b.gy,b.h,b.s); if(p>=1.1){ hideBall(); return false; } });
