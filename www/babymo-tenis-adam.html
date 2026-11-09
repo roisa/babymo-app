@@ -91,8 +91,8 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;
   background:#2E8A57;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.court{position:absolute;inset:0;width:100%;height:100%}
-.adam{position:absolute;width:38%;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
-.adam.serve{top:9.7%}
+.adam{position:absolute;width:38%;left:50%;top:-1.72%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
+.adam.serve{top:1.48%}
 .adam img{display:block;width:100%;height:auto;filter:drop-shadow(0 8px 6px rgba(0,0,0,.25))}
 .adam::after{content:'';position:absolute;left:25%;right:25%;bottom:4%;height:7%;border-radius:50%;background:rgba(0,0,0,.22);z-index:-1}
 .ball,.bshadow{position:absolute;left:0;top:0;border-radius:50%;pointer-events:none;will-change:transform}
@@ -145,6 +145,10 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .dots i{background:rgba(21,34,48,.10)}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
+<style id="bm-adam-frames">
+/* Adam frames are 300x390 with headroom for the jump serve: crop the headroom in the small square portraits */
+.hero img,.card .pose,.cert img{object-fit:cover;object-position:50% 100%}
+</style>
 <style id="bm-fh-style">
 .fhpick{margin-top:12px;text-align:left}
 .fhpick .lbl{display:block;font-weight:800;font-size:14px;margin-bottom:6px;opacity:.85}
@@ -169,7 +173,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
       <span class="pill" id="mapStars">⭐ 0 / 15</span>
     </div>
     <div class="hero">
-      <img src="adam-tennis/wave-1.webp" alt="">
+      <img src="adam-tennis-v2/wave-1.webp" alt="">
       <div><span class="kicker">🎾 Baby Mo · Tenis</span></div>
       <h1>Akademi Tenis Kak Adam</h1>
       <p class="sub">Belajar tenis langkah demi langkah bersama Kak Adam — dari bola merah sampai pertandingan pertamamu!</p>
@@ -192,7 +196,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
       <span class="pill" id="introBall">🎾</span>
     </div>
     <div class="card">
-      <img class="pose" id="introPose" src="adam-tennis/hold-ball.webp" alt="">
+      <img class="pose" id="introPose" src="adam-tennis-v2/hold-ball.webp" alt="">
       <span class="kicker" id="introKicker">Latihan 1</span>
       <h2 id="introTitle"></h2>
       <div class="bubble" id="introTip"></div>
@@ -306,7 +310,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
       <div class="score" id="score"><div>Kak Adam<b id="scA">0</b></div><div>Raka<b id="scR">0</b></div></div>
       <div class="meter" id="meter"><div class="zone"></div><div class="lvl" id="meterLvl"></div></div>
       <div class="marker" id="marker"></div>
-      <div class="adam" id="adam"><img id="adamImg" src="adam-tennis/fh-two-1.webp" alt=""></div>
+      <div class="adam" id="adam"><img id="adamImg" src="adam-tennis-v2/fh-two-1.webp" alt=""></div>
       <div class="bshadow" id="bshadow"></div>
       <div class="ball" id="ball"></div>
       <div class="pop" id="pop"></div>
@@ -320,7 +324,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 <section class="screen" id="s-result">
   <div class="wrap">
     <div class="card" style="margin-top:10px">
-      <img class="pose" id="resPose" src="adam-tennis/win-fist.webp" alt="">
+      <img class="pose" id="resPose" src="adam-tennis-v2/win-fist.webp" alt="">
       <h2 id="resTitle">Hebat!</h2>
       <div class="stars" id="resStars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
       <p class="sub" id="resLine" style="margin:0 auto"></p>
@@ -339,7 +343,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
   <div class="wrap">
     <div class="topbar"><button class="w-back" id="certBack">← Peta</button><span></span></div>
     <div class="cert" id="certCard">
-      <img src="adam-tennis/celebrate-3.webp" alt="">
+      <img src="adam-tennis-v2/celebrate-3.webp" alt="">
       <div class="kicker" style="background:#fff;color:#12A15A;border-color:#BFE8CF">🎾 Akademi Tenis Kak Adam</div>
       <h2>Sertifikat Pemain Tenis Cilik</h2>
       <p>Diberikan kepada</p>
@@ -440,7 +444,7 @@ function openIntro(i){
   $("introHow").textContent=st.how;
   $("howIcon").textContent=st.howIcon;
   $("introFact").textContent=st.fact;
-  $("introPose").src="adam-tennis/"+INTRO_POSE[i]+".webp";
+  $("introPose").src="adam-tennis-v2/"+INTRO_POSE[i]+".webp";
   $("fhPick").style.display = /^(pantul|sisi|kaki|tanding)$/.test(st.key) ? "" : "none"; markFh();
   $("introBall").textContent={red:"🔴 Bola merah",orange:"🟠 Bola oranye",green:"🟢 Bola hijau"}[st.ball];
   show("s-intro");
@@ -474,13 +478,13 @@ function say(text){
 var FR={}; [READY,"ready-wide","win-fist","oops-1","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
   [1,2,3,4,5,6].map(function(n){return "fh-"+n;}),[1,2,3,4,5,6].map(function(n){return "backhand-"+n;}),
   [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
-).forEach(function(n){ var im=new Image(); im.src="adam-tennis/"+n+".webp"; FR[n]=im; });
+).forEach(function(n){ var im=new Image(); im.src="adam-tennis-v2/"+n+".webp"; FR[n]=im; });
 var animTimer=null;
-function pose(n){ clearInterval(animTimer); $("adamImg").src="adam-tennis/"+n+".webp"; }
+function pose(n){ clearInterval(animTimer); $("adamImg").src="adam-tennis-v2/"+n+".webp"; }
 function play(seq,ms,then){
   clearInterval(animTimer); var k=0;
-  $("adamImg").src="adam-tennis/"+seq[0]+".webp";
-  animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis/"+seq[k]+".webp"; }, ms);
+  $("adamImg").src="adam-tennis-v2/"+seq[0]+".webp";
+  animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis-v2/"+seq[k]+".webp"; }, ms);
 }
 function swing(side,then){
   var b=side==="bh"?"backhand-":FH_SET[(G&&G.fh)||"one"]; play([b+3,b+4,b+5,b+6],80,then); }
@@ -613,7 +617,7 @@ function tapHit(side){
 }
 function hit(side){
   G.hits++; TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
-  swing(side,function(){ pose("win-fist"); });
+  swing(side,function(){ if(side!=="bh") pose("win-fist"); }); /* backhand keeps backhand-6, the happy finish from its own set */
   var from=G.hitX, to=lerp(120,280,Math.random());
   pop(["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
   animate(.85,function(p){ var b=outgoing(Math.min(p,1),from,to,true); place(b.gx,b.gy,b.h,b.s); if(p>=1.1){ hideBall(); return false; } });
@@ -708,7 +712,7 @@ function setupServis(){
   stage.onclick=serveHit;
   pop("Siap?","tip",900); nextBall(toss,1100);
 }
-var TOSS={x:202, base:194, hand:234, peak:100}; /* tuned to the blue-racket serve frames, Adam at the serving spot */ /* tuned to the blue-racket serve frames */
+var TOSS={x:209, base:194, hand:278, peak:100}; /* tuned to the blue-racket serve frames, Adam at the serving spot */ /* tuned to the blue-racket serve frames */
 function toss(){
   if(!G||G.over) return;
   G.tossing=true; G.tp=0; pose("serve-blue-2");
@@ -801,7 +805,7 @@ function finish(){
   if(s>prev){ DATA.stars[G.i]=s; save(DATA); try{ kit().addStars && kit().addStars(s-prev); }catch(e){} }
   stage.onclick=null;
   $("resTitle").textContent = s===3?"Masya Allah, sempurna!":s>=1?"Hebat, kamu berhasil!":"Ayo coba lagi!";
-  $("resPose").src="adam-tennis/"+(s>=2?"celebrate-3":s===1?"win-fist":"oops-1")+".webp";
+  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist":"oops-1")+".webp";
   var spans=$("resStars").children; for(var k=0;k<3;k++){ spans[k].classList.remove("on"); }
   for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
   if(st.key==="tanding") $("resLine").textContent = G.won ? T("Kak Adam menang game!")+" "+label(G.a,G.r).join("–") : T("Raka menang kali ini. Pemain hebat tidak menyerah!");
@@ -834,7 +838,7 @@ $("introSay").addEventListener("click",function(){ var st=STATIONS[CUR]; say(T(s
 function markFh(){ var c=fhChoice(); $("fhPick").querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-fh")===c); }); }
 $("fhPick").querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){
   var c=b.getAttribute("data-fh"); try{ localStorage.setItem(FH_KEY,c); }catch(e){} sfx("tap"); markFh();
-  $("introPose").src="adam-tennis/"+(c==="two"?"fh-two-3":c==="one"?"fh-one-3":READY)+".webp";
+  $("introPose").src="adam-tennis-v2/"+(c==="two"?"fh-two-3":c==="one"?"fh-one-3":READY)+".webp";
   say(T(c==="two"?"Forehand dua tangan: lebih kuat dan stabil!":c==="one"?"Forehand satu tangan: jangkauan lebih panjang!":"Acak: gaya forehand Kak Adam ganti-ganti!"));
 }); });
 $("introGo").addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(e){} startStation(CUR); });
