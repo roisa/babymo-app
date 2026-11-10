@@ -145,75 +145,10 @@ body{background-image:
 .hero-mo{flex-shrink:0;display:flex;align-items:flex-end;justify-content:center;position:relative}
 .hero-mo img{height:170px;object-fit:contain;display:block;margin-bottom:-2px;filter:drop-shadow(0 10px 18px rgba(14,59,46,.28))}
 
-/* ===== HOME: FEATURES ===== */
-.features{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px}
-.feat-card{
-  background:rgba(255,255,255,.045);
-  -webkit-backdrop-filter:blur(20px) saturate(150%);backdrop-filter:blur(20px) saturate(150%);
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:22px;padding:18px 16px;cursor:pointer;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 8px 22px -10px rgba(0,0,0,.45);
-  transition:transform .15s ease, box-shadow .15s ease, background .2s;
-  animation:rise .5s ease-out backwards;
-}
-.feat-card:nth-child(1){animation-delay:.15s}.feat-card:nth-child(2){animation-delay:.18s}.feat-card:nth-child(3){animation-delay:.21s}.feat-card:nth-child(4){animation-delay:.24s}
-.feat-card:active{transform:scale(.97)}
-.feat-card:hover{background:rgba(255,255,255,.07);transform:translateY(-1px)}
-/* Playful coloured icon chips per feature card (kid-friendly) */
-.feat-card .fc-icon{display:inline-flex;align-items:center;justify-content:center;width:54px;height:54px;border-radius:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 6px 14px -4px rgba(0,0,0,.35)}
-.feat-card:nth-child(1) .fc-icon{background:linear-gradient(160deg,#FFE3B0,#F6B45A)}
-.feat-card:nth-child(2) .fc-icon{background:linear-gradient(160deg,#FFE08A,#F4C04A)}
-.feat-card:nth-child(3) .fc-icon{background:linear-gradient(160deg,#BCE9D2,#5FCB9A)}
-.feat-card:nth-child(4) .fc-icon{background:linear-gradient(160deg,#FFD3CE,#F39A92)}
-.feat-card .fc-icon{font-size:30px;margin-bottom:10px}
-/* new-style icons (icons/ui/*.svg): pure-vector squircles, no emoji */
-.feat-card .fc-icon.has-art{background:none!important;padding:0;overflow:hidden;border-radius:23%;box-shadow:0 8px 16px -9px rgba(20,40,80,.55)}
-.fc-icon.has-art img,.ui-ic img{width:100%;height:100%;display:block}
+/* (home step path styles live in <style id="pw-home"> below — both themes) */
+.ui-ic img{width:100%;height:100%;display:block}
 .ui-ic{display:inline-block;width:22px;height:22px;border-radius:23%;overflow:hidden;vertical-align:-5px;margin-right:7px;flex:0 0 auto;box-shadow:0 3px 7px -4px rgba(20,40,80,.5)}
 .ui-ic-lg{width:28px;height:28px;margin-right:0}
-.feat-card .fc-title{font-family:'Fraunces',serif;font-size:15px;font-weight:700;color:var(--cream);margin-bottom:2px;letter-spacing:-.005em}
-.feat-card .fc-sub{font-size:11px;color:rgba(250,245,234,.55);line-height:1.35}
-
-/* ===== HOME: STEP STRIP ===== */
-.section-title{font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:var(--cream);margin-bottom:12px;display:flex;align-items:center;gap:8px;letter-spacing:-.005em}
-.step-strip{
-  display:flex;align-items:flex-start;gap:0;
-  overflow-x:scroll;-webkit-overflow-scrolling:touch;
-  padding:4px 0 12px;margin:0 -18px;padding-left:18px;padding-right:18px;
-  scroll-snap-type:x proximity;
-  touch-action:pan-x;
-}
-.step-strip::-webkit-scrollbar{display:none}
-.step-chip{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  flex-shrink:0;width:84px;cursor:pointer;transition:transform .15s;
-  scroll-snap-align:start;
-}
-.step-chip:active{transform:scale(.94)}
-.step-chip .sc-img{
-  width:68px;height:68px;border-radius:18px;
-  background:rgba(255,255,255,.05);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,.10);overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.06), 0 4px 12px -4px rgba(0,0,0,.35);
-  transition:all .2s;
-}
-.step-chip .sc-img img{width:100%;height:100%;object-fit:contain}
-.step-chip .sc-num{
-  width:22px;height:22px;border-radius:50%;
-  background:linear-gradient(160deg,#F6B45A,#C9A25F);
-  color:#1a1208;font-size:11px;font-weight:900;
-  display:flex;align-items:center;justify-content:center;
-  margin-top:-12px;position:relative;z-index:1;
-  border:2px solid var(--green-deep);
-  box-shadow:0 2px 6px rgba(0,0,0,.4);
-}
-.step-chip .sc-name{font-size:11px;font-weight:700;color:rgba(250,245,234,.85);text-align:center;line-height:1.2;margin-top:0}
-.step-arrow{
-  flex-shrink:0;display:flex;align-items:center;justify-content:center;
-  width:16px;height:68px;color:rgba(201,162,95,.6);font-size:13px;font-weight:700;
-}
 
 /* ===== GUIDE: STEP INDICATOR ===== */
 .step-indicator{
@@ -778,8 +713,8 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 .hero-title{color:#152230;}
 .hero-title em{color:#12A15A;}
 .hero-prayer{background:rgba(255,255,255,.75);border-color:rgba(255,255,255,.95);color:#152230;}
-.topbar-title,.card-title,.hero-prayer .hp-name,.feat-card .fc-title,.section-title,.step-chip .sc-name,.step-name,.dzikir-title,.tasbih-count,.dzikir-complete .dc-title,.progress-title,.stat .num,.pray-slide .ps-name,.cap-row-label,.prog-closer-msg,.lencana .ln-name{color:#152230!important;}
-.card-sub,.feat-card .fc-sub,.step-desc,.recitation-meaning,.recitation-page,.tip-text,.dzikir-meaning,.tasbih-total,.tasbih-label,.dzikir-complete .dc-sub,.progress-subtitle,.streak-label,.streak-day .sd-label,.stat .lbl,.pray-slide .ps-desc,.cap-row-count span,.cap-row-hint,.prog-closer-sub,.lencana:not(.unlocked) .ln-name,.lencana .ln-hint{color:#5A6878!important;}
+.topbar-title,.card-title,.hero-prayer .hp-name,.step-name,.dzikir-title,.tasbih-count,.dzikir-complete .dc-title,.progress-title,.stat .num,.pray-slide .ps-name,.cap-row-label,.prog-closer-msg,.lencana .ln-name{color:#152230!important;}
+.card-sub,.step-desc,.recitation-meaning,.recitation-page,.tip-text,.dzikir-meaning,.tasbih-total,.tasbih-label,.dzikir-complete .dc-sub,.progress-subtitle,.streak-label,.streak-day .sd-label,.stat .lbl,.pray-slide .ps-desc,.cap-row-count span,.cap-row-hint,.prog-closer-sub,.lencana:not(.unlocked) .ln-name,.lencana .ln-hint{color:#5A6878!important;}
 .recitation-arabic,.dzikir-arabic{color:#0B6B3A!important;}
 .rec-btn-small{color:#152230!important;}
 .back-btn{background:rgba(255,255,255,.88);border-color:rgba(21,34,48,.1);color:#152230;}
@@ -793,20 +728,6 @@ body[data-view="home"] .main{padding-bottom:calc(96px + var(--safe-bottom));}
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-fixes">
 .cta-bar a{background:linear-gradient(120deg,#10A765 0%,#0A9488 52%,#0A7FB0 100%)!important;color:#fff!important;text-shadow:0 1px 1.5px rgba(0,70,35,.38);box-shadow:inset 0 18px 16px -14px rgba(255,255,255,.45),0 12px 24px -12px rgba(10,143,160,.6)!important;}
-/* "wudhu first" banner on the home screen */
-.wudhu-banner{display:flex;align-items:center;gap:12px;margin:14px 0 4px;padding:8px 14px 8px 8px;border-radius:22px;text-decoration:none;color:#152230;
-  background:linear-gradient(120deg,#E0F4FF,#D6EEFF 60%,#E9E4FF);box-shadow:inset 0 1px 0 #fff,0 12px 24px -16px rgba(3,105,161,.55);border:1px solid rgba(255,255,255,.9)}
-.wudhu-banner img{width:68px;height:68px;object-fit:contain;border-radius:16px;background:#fff;flex:0 0 68px}
-.wudhu-banner .wb-text{flex:1;min-width:0}
-.wudhu-banner b{display:block;font-size:16px}
-.wudhu-banner .wb-text span{display:block;font-size:13px;color:#4A5A6B;font-weight:700;margin-top:2px}
-.wudhu-banner .wb-chev{font-size:24px;color:#0369A1;font-weight:700}
-.wudhu-banner:active{transform:scale(.98)}
-html[data-bm-theme="classic"] .wudhu-banner{color:#F0E8D8;background:linear-gradient(120deg,#164B3A,#12403A 60%,#1C3550);border-color:rgba(255,255,255,.1);box-shadow:0 12px 24px -16px rgba(0,0,0,.7)}
-html[data-bm-theme="classic"] .wudhu-banner img{background:#1E4A39}
-html[data-bm-theme="classic"] .wudhu-banner .wb-text span{color:#C9D6CC}
-html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
-
 /* real Baby Mo renders on the finish panels */
 .dc-mo{width:140px;height:140px;object-fit:contain;display:block;margin:0 auto 4px;filter:drop-shadow(0 8px 14px rgba(30,60,110,.22));}
 .modal-mo{width:150px;height:150px;object-fit:contain;display:block;margin:-6px auto 2px;filter:drop-shadow(0 8px 14px rgba(30,60,110,.22));animation:celebBounce 1.4s ease infinite;}
@@ -842,6 +763,101 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
 .dz-btn{color:#152230!important;}
 .modal-highlight{color:#9A5A00!important;}
 </style>
+<style id="pw-home">
+/* ===== HOME: prayer-step path (the focus of this page) =====
+   Base rules = dark "classic" look; html[data-bm-theme="bright"] = light.
+   Kept out of the bm-bright* blocks, which bm-theme.js switches off in dark. */
+.hero-prayer{cursor:pointer;transition:transform .15s}
+.hero-prayer:active{transform:scale(.97)}
+.hero-prayer .hp-chev{font-size:24px;line-height:1;font-weight:700;color:var(--gold-soft);margin-left:2px;position:relative;z-index:1}
+html[data-bm-theme="bright"] .hero-prayer .hp-chev{color:#C2410C}
+
+.path-wrap{margin:6px 0 8px}
+.path-head{display:flex;align-items:flex-end;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.ph-text{min-width:0;flex:1 1 180px}
+.ph-title{font-family:'Fraunces',serif;font-size:24px;font-weight:700;letter-spacing:-.01em;line-height:1.1;color:var(--cream)}
+.ph-sub{font-size:13.5px;font-weight:600;color:rgba(250,245,234,.66);margin-top:4px;line-height:1.35}
+.ph-count{flex:0 0 auto;padding:7px 12px;border-radius:999px;font-size:12.5px;font-weight:800;white-space:nowrap;
+  background:rgba(95,203,154,.16);color:#7FE0B4;border:1px solid rgba(95,203,154,.34)}
+.ph-count.all{background:rgba(201,162,95,.2);color:#FFE3A3;border-color:rgba(201,162,95,.45)}
+.ph-bar{display:flex;gap:5px;margin:12px 0 16px}
+.ph-bar span{flex:1;height:8px;border-radius:4px;background:rgba(255,255,255,.09);transition:background .3s}
+.ph-bar span.on{background:linear-gradient(90deg,#5FCB9A,#C9A25F);box-shadow:0 0 8px rgba(95,203,154,.35)}
+
+.step-path{list-style:none;margin:0;padding:0}
+.sp-step{position:relative;display:grid;grid-template-columns:46px minmax(0,1fr);gap:10px;align-items:center;margin-bottom:12px;
+  animation:rise .45s ease-out backwards;animation-delay:calc(var(--i,0) * .05s + .1s)}
+.sp-step::before{content:'';position:absolute;left:21.5px;top:50%;height:calc(100% + 12px);border-left:3px dashed rgba(201,162,95,.38);z-index:0}
+.sp-step:last-child::before{display:none}
+.sp-step.done::before{border-left-style:solid;border-left-color:rgba(95,203,154,.5)}
+.sp-num{position:relative;z-index:1;width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-family:'Fraunces',serif;font-size:20px;font-weight:800;color:#1a1208;
+  background:linear-gradient(160deg,#FFE08A,#E8A93E);border:3px solid #0b1a12;box-shadow:0 4px 10px -3px rgba(0,0,0,.45)}
+.sp-step.done .sp-num{background:linear-gradient(160deg,#7FE0B4,#2C9A64);color:#fff;font-size:19px}
+.sp-card{display:flex;align-items:center;gap:12px;width:100%;min-height:96px;padding:9px 10px 9px 9px;margin:0;
+  border-radius:24px;text-align:left;font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;
+  background:rgba(255,255,255,.05);border:1.5px solid rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.06),0 10px 24px -12px rgba(0,0,0,.55);
+  transition:transform .15s ease,background .2s,border-color .2s}
+.sp-card:active{transform:scale(.97)}
+.sp-card:focus-visible{outline:3px solid #5FCB9A;outline-offset:2px}
+.sp-pose{flex:0 0 78px;width:78px;height:78px;border-radius:18px;overflow:hidden;display:flex;align-items:center;justify-content:center;
+  background:linear-gradient(160deg,#fffaef,#fdf2e3);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 4px 10px -4px rgba(0,0,0,.35)}
+.sp-pose img{width:100%;height:100%;object-fit:contain;display:block}
+.sp-text{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:3px}
+.sp-name{font-family:'Fraunces',serif;font-size:18px;font-weight:700;line-height:1.15;letter-spacing:-.005em;color:var(--cream)}
+.sp-desc{font-size:12.5px;font-weight:600;line-height:1.35;color:rgba(250,245,234,.64);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.sp-tag{display:inline-block;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:800;letter-spacing:.2px;
+  background:linear-gradient(160deg,#FFE08A,#E8A93E);color:#3a2604}
+.sp-go{flex:0 0 auto;font-size:28px;font-weight:700;line-height:1;color:rgba(201,162,95,.85);padding-right:2px}
+.sp-step.next .sp-card{border:2px solid rgba(232,169,62,.75);background:rgba(232,169,62,.09);animation:spGlow 2.4s ease-in-out infinite}
+@keyframes spGlow{0%,100%{box-shadow:0 0 0 0 rgba(232,169,62,.35),0 10px 24px -12px rgba(0,0,0,.55)}50%{box-shadow:0 0 0 6px rgba(232,169,62,0),0 10px 24px -12px rgba(0,0,0,.55)}}
+@media (prefers-reduced-motion:reduce){.sp-step,.sp-step.next .sp-card{animation:none}}
+
+.more-wrap{margin:22px 0 6px}
+.more-title{font-family:'Fraunces',serif;font-size:16px;font-weight:700;color:rgba(250,245,234,.78);margin-bottom:10px}
+.more-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.more-tile{display:flex;align-items:center;gap:10px;min-height:72px;padding:10px 12px 10px 10px;border-radius:20px;text-align:left;font:inherit;color:inherit;cursor:pointer;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);transition:transform .15s,background .2s;-webkit-tap-highlight-color:transparent}
+.more-tile:active{transform:scale(.97)}
+.more-tile:focus-visible{outline:3px solid #5FCB9A;outline-offset:2px}
+.mt-ic{flex:0 0 44px;width:44px;height:44px;border-radius:23%;overflow:hidden;box-shadow:0 6px 12px -7px rgba(20,40,80,.6)}
+.mt-ic img{width:100%;height:100%;display:block}
+.mt-text{min-width:0;display:flex;flex-direction:column;gap:2px}
+.mt-name{font-size:14px;font-weight:800;line-height:1.2;color:var(--cream)}
+.mt-sub{font-size:11.5px;font-weight:600;line-height:1.3;color:rgba(250,245,234,.58)}
+
+/* light theme */
+html[data-bm-theme="bright"] .ph-title,html[data-bm-theme="bright"] .sp-name,html[data-bm-theme="bright"] .mt-name{color:#152230}
+html[data-bm-theme="bright"] .ph-sub,html[data-bm-theme="bright"] .sp-desc,html[data-bm-theme="bright"] .mt-sub{color:#5A6878}
+html[data-bm-theme="bright"] .more-title{color:#3A4858}
+html[data-bm-theme="bright"] .ph-count{background:#E3F7EC;color:#0B7A43;border-color:rgba(11,122,67,.18)}
+html[data-bm-theme="bright"] .ph-count.all{background:#FFF1C2;color:#8A5300;border-color:rgba(194,120,12,.25)}
+html[data-bm-theme="bright"] .ph-bar span{background:rgba(21,34,48,.09)}
+html[data-bm-theme="bright"] .ph-bar span.on{background:linear-gradient(90deg,#10A765,#0A9488);box-shadow:none}
+html[data-bm-theme="bright"] .sp-step::before{border-left-color:rgba(232,150,40,.45)}
+html[data-bm-theme="bright"] .sp-step.done::before{border-left-color:rgba(16,167,101,.45)}
+html[data-bm-theme="bright"] .sp-num{border-color:#F2F6FC;box-shadow:0 4px 10px -4px rgba(30,60,110,.45)}
+html[data-bm-theme="bright"] .sp-step.done .sp-num{background:linear-gradient(160deg,#34D399,#0E9F6E)}
+html[data-bm-theme="bright"] .sp-card{background:#fff;border-color:rgba(21,34,48,.06);box-shadow:0 12px 24px -16px rgba(30,60,110,.45)}
+html[data-bm-theme="bright"] .sp-step:nth-child(7n+1) .sp-pose{background:linear-gradient(160deg,#FFF6D8,#FFE7A8)}
+html[data-bm-theme="bright"] .sp-step:nth-child(7n+2) .sp-pose{background:linear-gradient(160deg,#E6F8EE,#C4EED8)}
+html[data-bm-theme="bright"] .sp-step:nth-child(7n+3) .sp-pose{background:linear-gradient(160deg,#E6F2FF,#C9E2FF)}
+html[data-bm-theme="bright"] .sp-step:nth-child(7n+4) .sp-pose{background:linear-gradient(160deg,#F0EBFF,#DCD2FF)}
+html[data-bm-theme="bright"] .sp-step:nth-child(7n+5) .sp-pose{background:linear-gradient(160deg,#FFEDF2,#FFD3E0)}
+html[data-bm-theme="bright"] .sp-step:nth-child(7n+6) .sp-pose{background:linear-gradient(160deg,#FFF1E3,#FFD9B5)}
+html[data-bm-theme="bright"] .sp-step:nth-child(7n+7) .sp-pose{background:linear-gradient(160deg,#E3F7F5,#BDEBE5)}
+html[data-bm-theme="bright"] .sp-go{color:#C2560C}
+html[data-bm-theme="bright"] .sp-tag{background:linear-gradient(160deg,#FFD66B,#F59E0B);color:#3a2604}
+html[data-bm-theme="bright"] .sp-step.next .sp-card{background:#FFFBEF;border-color:rgba(245,158,11,.7)}
+@keyframes spGlowB{0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,.35),0 12px 24px -16px rgba(30,60,110,.45)}50%{box-shadow:0 0 0 6px rgba(245,158,11,0),0 12px 24px -16px rgba(30,60,110,.45)}}
+html[data-bm-theme="bright"] .sp-step.next .sp-card{animation-name:spGlowB}
+html[data-bm-theme="bright"] .more-tile{background:rgba(255,255,255,.85);border-color:rgba(21,34,48,.06);box-shadow:0 10px 20px -16px rgba(30,60,110,.45)}
+
+/* very narrow phones: stack the two secondary tiles */
+@media (max-width:350px){.more-row{grid-template-columns:1fr}.sp-pose{flex-basis:66px;width:66px;height:66px}}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -868,7 +884,7 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
         <div class="hero-left">
           <p class="hero-greeting" id="heroGreeting">As-Salamu 'Alaikum</p>
           <h1 class="hero-title">Yuk sholat<br><em>bareng Mo!</em></h1>
-          <div class="hero-prayer">
+          <div class="hero-prayer" role="button" tabindex="0" aria-label="Lihat jadwal sholat" onclick="showPrayerTimes()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();showPrayerTimes()}">
             <div class="hp-info">
               <div class="hp-name" id="prayerName">Dzuhur</div>
               <div class="hp-time" id="prayerTime">12:00</div>
@@ -877,6 +893,7 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
               <div class="hp-pulse"></div>
               <span id="countdown">--:--:--</span>
             </div>
+            <span class="hp-chev" aria-hidden="true">›</span>
             <div class="hp-progress" id="prayerProgress"></div>
           </div>
         </div>
@@ -886,36 +903,34 @@ html[data-bm-theme="classic"] .wudhu-banner .wb-chev{color:#7DD3FC}
       </div>
     </div>
 
-    <a class="wudhu-banner" href="./babymo-wudhu.html">
-      <img src="wudhu-assets/w02-tangan.webp" alt="">
-      <span class="wb-text"><b>Wudhu dulu, yuk! 💧</b><span>Sebelum sholat, bersihkan diri bareng Mo</span></span>
-      <span class="wb-chev">›</span>
-    </a>
-    <div class="features">
-      <div class="feat-card" onclick="showView('guide')">
-        <div class="fc-icon has-art"><img src="icons/ui/sholat-guide.svg" alt="" draggable="false"></div>
-        <div class="fc-title">Panduan Sholat</div>
-        <div class="fc-sub">7 langkah gerakan & bacaan</div>
+    <!-- The prayer steps are the heart of this page. Wudhu, prayer times and
+         the other prayer tools live on the hub's Prayer tab, so they are not
+         repeated here (the hero chip still opens today's times). -->
+    <section class="path-wrap" aria-labelledby="pathTitle">
+      <div class="path-head">
+        <div class="ph-text">
+          <h2 class="ph-title" id="pathTitle">Langkah Sholat</h2>
+          <p class="ph-sub">Ketuk langkah untuk belajar bareng Mo</p>
+        </div>
+        <div class="ph-count" id="pathCount">0/7</div>
       </div>
-      <div class="feat-card" onclick="showView('progress')">
-        <div class="fc-icon has-art"><img src="icons/ui/sholat-progress.svg" alt="" draggable="false"></div>
-        <div class="fc-title">Progress</div>
-        <div class="fc-sub">Streak & rewards kamu</div>
-      </div>
-      <div class="feat-card" onclick="showPrayerTimes()">
-        <div class="fc-icon has-art"><img src="icons/ui/sholat-times.svg" alt="" draggable="false"></div>
-        <div class="fc-title">Waktu Sholat</div>
-        <div class="fc-sub">5 waktu sholat harian</div>
-      </div>
-      <div class="feat-card" onclick="showView('dzikir')">
-        <div class="fc-icon has-art"><img src="icons/ui/sholat-dzikir.svg" alt="" draggable="false"></div>
-        <div class="fc-title">Dzikir & Doa</div>
-        <div class="fc-sub">Dzikir setelah sholat</div>
-      </div>
-    </div>
+      <div class="ph-bar" id="pathBar" aria-hidden="true"></div>
+      <ol class="step-path" id="homeStepPath"></ol>
+    </section>
 
-    <div class="section-title"><span class="ui-ic ui-ic-lg"><img src="icons/ui/sholat-guide.svg" alt="" draggable="false"></span>Langkah Sholat</div>
-    <div class="step-strip" id="homeStepStrip"></div>
+    <section class="more-wrap" aria-labelledby="moreTitle">
+      <h3 class="more-title" id="moreTitle">Lainnya</h3>
+      <div class="more-row">
+        <button type="button" class="more-tile" onclick="showView('progress')">
+          <span class="mt-ic"><img src="icons/ui/sholat-progress.svg" alt="" draggable="false"></span>
+          <span class="mt-text"><span class="mt-name">Lencana &amp; Bintang</span><span class="mt-sub">Lihat capaianmu</span></span>
+        </button>
+        <button type="button" class="more-tile" onclick="showView('dzikir')">
+          <span class="mt-ic"><img src="icons/ui/sholat-dzikir.svg" alt="" draggable="false"></span>
+          <span class="mt-text"><span class="mt-name">Dzikir Setelah Sholat</span><span class="mt-sub">Hitung tasbih bareng Mo</span></span>
+        </button>
+      </div>
+    </section>
   </div>
 
   <!-- GUIDE VIEW -->
@@ -1185,6 +1200,7 @@ function showView(name){
     if(viewHistory[viewHistory.length-1]!==name) viewHistory.push(name);
     topbar.classList.remove('on-hero');
   }
+  if(name==='home') renderHomeStepList();
   if(name==='guide') renderStep();
   if(name==='progress') renderProgress();
   if(name==='dzikir') renderDzikir();
@@ -1195,17 +1211,36 @@ function showView(name){
 function goBack(){viewHistory.pop();var prev=viewHistory.length>0?viewHistory[viewHistory.length-1]:'home';showView(prev)}
 function updateTopStars(){var s=loadStats();document.getElementById('topStars').textContent=s.stars}
 
-function renderHomeStepList(){
-  var html='';
-  STEPS.forEach(function(s,i){
-    if(i>0) html+='<div class="step-arrow">→</div>';
-    html+='<div class="step-chip" onclick="showView(\'guide\');goToStep('+i+')">'+
-      '<div class="sc-img"><img src="'+s.thumb+'" alt=""></div>'+
-      '<div class="sc-num">'+(i+1)+'</div>'+
-      '<div class="sc-name">'+s.name.split(' ')[0]+'</div></div>';
-  });
-  document.getElementById('homeStepStrip').innerHTML=html;
+/* A step counts as learned once Mo has read at least one of its recitations
+   to the child (renderRecitation stores mo_dua_<step>_<page>). */
+function stepLearned(i){
+  try{for(var k=0;k<localStorage.length;k++){var lk=localStorage.key(k);if(lk&&lk.indexOf('mo_dua_'+i+'_')===0)return true;}}catch(e){}
+  return false;
 }
+function renderHomeStepList(){
+  var html='',done=0,next=-1,bar='';
+  STEPS.forEach(function(s,i){var l=stepLearned(i);if(l)done++;else if(next<0)next=i;});
+  STEPS.forEach(function(s,i){
+    var l=stepLearned(i),cls='sp-step'+(l?' done':'')+(i===next?' next':'');
+    var tag=i===next?'<span class="sp-tag">'+(done?'Lanjut di sini':'Mulai di sini')+'</span>':'';
+    html+='<li class="'+cls+'" style="--i:'+i+'">'+
+      '<span class="sp-num" aria-hidden="true">'+(l?'✓':(i+1))+'</span>'+
+      '<button type="button" class="sp-card" onclick="openStep('+i+')" aria-label="Langkah '+(i+1)+': '+s.name+'">'+
+        '<span class="sp-pose"><img src="'+s.thumb+'" alt="" draggable="false"></span>'+
+        '<span class="sp-text">'+tag+'<span class="sp-name">'+s.name+'</span><span class="sp-desc">'+s.desc+'</span></span>'+
+        '<span class="sp-go" aria-hidden="true">›</span>'+
+      '</button></li>';
+    bar+='<span class="'+(l?'on':'')+'"></span>';
+  });
+  document.getElementById('homeStepPath').innerHTML=html;
+  document.getElementById('pathBar').innerHTML=bar;
+  var c=document.getElementById('pathCount');
+  c.textContent=done+'/'+STEPS.length+' langkah dipelajari';
+  c.classList.toggle('all',done===STEPS.length);
+}
+/* Set the step before showing the guide so only the tapped step is marked as heard */
+function openStep(i){currentStep=i;currentRecPage=0;showView('guide');goToStep(i)}
+function startPractice(){openStep(0)}
 
 function renderHomeGreeting(){
   var name=(localStorage.getItem(KEY_NAME)||'').trim();
@@ -1723,7 +1758,7 @@ function loadRealPrayerTimes(){
 </script>
 
 <div class="cta-bar" aria-hidden="false">
-  <a href="#" onclick="event.preventDefault();showView('guide');">🕌 Mulai Latihan Sholat</a>
+  <a href="#" onclick="event.preventDefault();startPractice();">🕌 Mulai Latihan Sholat</a>
 </div>
 
 <script src="/bm-kit.js" defer></script>

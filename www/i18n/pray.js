@@ -60,6 +60,9 @@
   "🌟 Masya Allah! Semua sholat sudah dilatih hari ini! ": "🌟 Masha Allah! You practiced every prayer today!", "🌟 Masya Allah! Semua sholat sudah dilatih hari ini!": "🌟 Masha Allah! You practiced every prayer today!",
   "Kerennn! Terus belajar ya 🌟": "Awesome! Keep learning 🌟", "Lanjut terus ya! 🌟": "Keep going! 🌟", "Terus semangat! ✨": "Keep it up! ✨", "Mo bangga sama kamu 💚": "Mo is proud of you 💚",
   "Mo excited banget! 🤩": "Mo is so excited! 🤩", "Mo sayang kamu 🌙💚": "Mo loves you 🌙💚", "Mashallah!": "Mashallah!", "Tutup": "Close",
+  "Langkah Sholat": "Prayer Steps", "Ketuk langkah untuk belajar bareng Mo": "Tap a step to learn it with Mo", "Mulai di sini": "Start here", "Lanjut di sini": "Continue here",
+  "Lainnya": "More", "Lencana & Bintang": "Badges & Stars", "Lihat capaianmu": "See what you've learned", "Dzikir Setelah Sholat": "Dhikr After Prayer", "Hitung tasbih bareng Mo": "Count tasbih with Mo",
+  "Lihat jadwal sholat": "See prayer times",
   "7 langkah ✓": "7 steps ✓", "3 dzikir ✓": "3 dhikr ✓", "Buka Panduan Sholat untuk mulai belajar": "Open the Prayer Guide to start learning", "Pray with Mo": "Pray with Mo"
 }, [
   [/^(.*?)\b(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|Jumadil Awwal|Jumadil Akhir|Rabiul Awwal|Rabiul Akhir|Ramadhan|Syawal|Dzulhijjah)\b(.*)$/, function (m, t) {
@@ -74,5 +77,7 @@
   [/^📍 Lokasi tersimpan \((.+)\)$/, "📍 Saved location ($1)"],
   [/^Bacaan ke-(\d+)$/, "Recitation $1"],
   [/^(Selamat (?:pagi|siang|sore|malam)), (.+)$/, "{1}, $2"],
-  [/^(\d+) menit lagi$/, "$1 min to go"]
+  [/^(\d+) menit lagi$/, "$1 min to go"],
+  [/^(\d+)\/(\d+) langkah dipelajari$/, "$1/$2 steps learned"],
+  [/^Langkah (\d+): (.+)$/, "Step $1: {2}"]
 ]]);
