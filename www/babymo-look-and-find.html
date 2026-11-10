@@ -578,6 +578,35 @@ html[data-bm-theme="classic"] .map-footer .dock-it.locked::after{background-colo
   #s-home:has(.map-mission:not([hidden])) .map-scroll{padding-top:46px;background-color:#9fdcff}
 }
 </style>
+<style id="bm-cari-inner">
+/* ── Game header: frosted glass instead of the flat green bar ── */
+#s-game .g-header{background:rgba(255,255,255,.80)!important;-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  border-bottom:1px solid rgba(21,34,48,.07);box-shadow:0 10px 24px -18px rgba(20,60,40,.45)!important;gap:10px}
+#s-game .g-title{color:#152230!important;text-shadow:none!important;font-size:17px!important;letter-spacing:-.01em}
+#s-game .gd{background:rgba(21,34,48,.14)!important;box-shadow:none}
+#s-game .gd.hit{background:#F5B400!important;box-shadow:0 0 0 3px rgba(245,180,0,.22)!important;transform:scale(1.25)}
+#s-game #game-back,#s-game #hint-btn{border-radius:50%!important;border:1px solid rgba(21,34,48,.08)!important;
+  background:rgba(255,255,255,.92)!important;color:#152230!important;box-shadow:inset 0 1px 0 #fff,0 6px 14px -8px rgba(20,50,40,.45)!important;
+  transition:transform .26s cubic-bezier(.34,1.56,.64,1)!important}
+#s-game #hint-btn{background:linear-gradient(180deg,#FFF3C4,#FFD86B)!important;border-color:rgba(200,140,0,.25)!important;color:#7A4A00!important}
+#s-game #game-back:active,#s-game #hint-btn:active{transform:scale(.9)!important}
+html[data-bm-theme="classic"] #s-game .g-header{background:rgba(16,34,26,.82)!important;border-bottom-color:rgba(255,255,255,.08)}
+html[data-bm-theme="classic"] #s-game .g-title{color:#EAF5EF!important}
+html[data-bm-theme="classic"] #s-game .gd{background:rgba(255,255,255,.22)!important}
+html[data-bm-theme="classic"] #s-game #game-back{background:rgba(255,255,255,.12)!important;color:#EAF5EF!important;border-color:rgba(255,255,255,.16)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)!important}
+/* ── Sticker Book / Torch sheets: app-style icons instead of emoji ── */
+.lf-head h2{display:flex;align-items:center;gap:10px}
+.lf-ic{width:34px;height:34px;border-radius:10px;flex:none;box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
+.lf-ic-s{width:20px;height:20px;border-radius:6px;vertical-align:-4px;margin-right:6px;box-shadow:0 2px 6px -2px rgba(0,0,0,.3)}
+.lf-sub .lf-ic-s{margin:0 3px 0 0}
+.stk .tq .tq-ic{width:20px;height:20px;border-radius:6px;display:block;box-shadow:0 0 0 2px #fff,0 3px 8px -3px rgba(0,0,0,.4)}
+.stk.lock.gift{display:grid;place-items:center}
+.stk.lock .lk-gift{width:34px;height:34px;border-radius:10px;filter:grayscale(1) brightness(1.15);opacity:.45}
+.lf-lock{width:18px;height:18px;vertical-align:-3px;margin-right:6px;fill:currentColor;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}
+.lf-lock rect{stroke:none}
+.lf-room .tq.tq-lock{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(21,34,48,.85);color:#fff;font-size:0}
+.lf-room .tq.tq-lock .lf-lock{width:14px;height:14px;margin:0}
+</style>
 </head>
 <body>
 <canvas id="cvs"></canvas>
@@ -895,28 +924,28 @@ function openSheet(html){const s=document.getElementById('lf-sheet');document.ge
 function closeSheet(){document.getElementById('lf-sheet').hidden=true;}
 function openBook(){
   const rooms=LEVELS.filter(lv=>prog[lv.id]>0).length,secs=Object.keys(X.secret).filter(k=>SECRETS[k]).length;
-  let h=`<div class="lf-head"><h2>📒 ${L('Buku Stiker','Sticker Book')}</h2><button class="lf-x" data-close aria-label="${L('Tutup','Close')}">✕</button></div>
-    <div class="lf-sub">${rooms+secs} / ${LEVELS.length*2} ${L('stiker','stickers')} · 🔦 ${Object.keys(X.torch).length} / ${LEVELS.length}</div>
-    <div class="lf-h3">🗺️ ${L('Stiker Tempat','Place Stickers')} · ${rooms}/${LEVELS.length}</div><div class="lf-grid">`;
+  let h=`<div class="lf-head"><h2><img class="lf-ic" src="icons/ui/sticker.svg" alt="">${L('Buku Stiker','Sticker Book')}</h2><button class="lf-x" data-close aria-label="${L('Tutup','Close')}">✕</button></div>
+    <div class="lf-sub">${rooms+secs} / ${LEVELS.length*2} ${L('stiker','stickers')} · <img class="lf-ic-s" src="icons/ui/torch.svg" alt=""> ${Object.keys(X.torch).length} / ${LEVELS.length}</div>
+    <div class="lf-h3"><img class="lf-ic-s" src="icons/ui/home.svg" alt="">${L('Stiker Tempat','Place Stickers')} · ${rooms}/${LEVELS.length}</div><div class="lf-grid">`;
   LEVELS.forEach(lv=>{const on=prog[lv.id]>0;
-    h+=on?`<div class="stk">${lv.sticker}<small>${lv.name.replace(/\s*\p{Extended_Pictographic}️?/gu,'')}</small>${X.torch[lv.id]?'<span class="tq">🔦</span>':''}</div>`:`<div class="stk lock">?</div>`;});
-  h+=`</div><div class="lf-h3">🎁 ${L('Stiker Rahasia','Secret Stickers')} · ${secs}/${LEVELS.length}</div><div class="lf-grid">`;
+    h+=on?`<div class="stk">${lv.sticker}<small>${lv.name.replace(/\s*\p{Extended_Pictographic}️?/gu,'')}</small>${X.torch[lv.id]?'<span class="tq"><img class="tq-ic" src="icons/ui/torch.svg" alt=""></span>':''}</div>`:`<div class="stk lock">?</div>`;});
+  h+=`</div><div class="lf-h3"><img class="lf-ic-s" src="icons/ui/gift.svg" alt="">${L('Stiker Rahasia','Secret Stickers')} · ${secs}/${LEVELS.length}</div><div class="lf-grid">`;
   LEVELS.forEach(lv=>{const sc=SECRETS[lv.id],on=X.secret[lv.id];
-    h+=on?`<div class="stk sec">${sc.e}<small>${EN?sc.en:sc.id}</small></div>`:`<div class="stk lock">🎁</div>`;});
+    h+=on?`<div class="stk sec">${sc.e}<small>${EN?sc.en:sc.id}</small></div>`:`<div class="stk lock gift"><img class="lk-gift" src="icons/ui/gift.svg" alt=""></div>`;});
   h+=`</div><div class="lf-msg">${L('Selesaikan Misi Harian untuk stiker rahasia baru setiap hari! 🎯','Finish the Daily Mission for a new secret sticker every day! 🎯')}</div>`;
   openSheet(h);
 }
 function openTorch(){
   const n=doneRooms();
-  let h=`<div class="lf-head"><h2>🔦 ${L('Mode Senter','Torch Mode')}</h2><button class="lf-x" data-close aria-label="${L('Tutup','Close')}">✕</button></div>`;
+  let h=`<div class="lf-head"><h2><img class="lf-ic" src="icons/ui/torch.svg" alt="">${L('Mode Senter','Torch Mode')}</h2><button class="lf-x" data-close aria-label="${L('Tutup','Close')}">✕</button></div>`;
   if(n<TORCH_UNLOCK){
-    h+=`<div class="lf-msg">🔒 ${L('Selesaikan '+TORCH_UNLOCK+' tempat dulu untuk membuka Mode Senter!','Finish '+TORCH_UNLOCK+' places to unlock Torch Mode!')}
+    h+=`<div class="lf-msg"><svg class="lf-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5.5" y="10.5" width="13" height="10" rx="2.5"/><path d="M8.3 10.5V8a3.7 3.7 0 0 1 7.4 0v2.5" fill="none"/></svg>${L('Selesaikan '+TORCH_UNLOCK+' tempat dulu untuk membuka Mode Senter!','Finish '+TORCH_UNLOCK+' places to unlock Torch Mode!')}
       <div class="lf-bar"><i style="width:${Math.round(100*n/TORCH_UNLOCK)}%"></i></div><div style="margin-top:6px">${n} / ${TORCH_UNLOCK}</div></div>`;
     openSheet(h);return;
   }
-  h+=`<div class="lf-sub">${L('Ruangan jadi gelap! Geser jarimu untuk menyinari dan cari semuanya. 🌙','The room goes dark! Slide your finger to shine the light and find everything. 🌙')} · 🔦 ${Object.keys(X.torch).length}/${LEVELS.length}</div><div class="lf-rooms">`;
+  h+=`<div class="lf-sub">${L('Ruangan jadi gelap! Geser jarimu untuk menyinari dan cari semuanya. 🌙','The room goes dark! Slide your finger to shine the light and find everything. 🌙')} · <img class="lf-ic-s" src="icons/ui/torch.svg" alt=""> ${Object.keys(X.torch).length}/${LEVELS.length}</div><div class="lf-rooms">`;
   LEVELS.forEach((lv,i)=>{const ok=prog[lv.id]>0;
-    h+=`<button class="lf-room" data-i="${i}" ${ok?'':'disabled'}><img src="${sceneThumb(lv.id)}" alt="">${X.torch[lv.id]?'<span class="tq">⭐</span>':ok?'':'<span class="tq">🔒</span>'}<b>${lv.name}</b></button>`;});
+    h+=`<button class="lf-room" data-i="${i}" ${ok?'':'disabled'}><img src="${sceneThumb(lv.id)}" alt="">${X.torch[lv.id]?'<span class="tq">⭐</span>':ok?'':'<span class="tq tq-lock"><svg class="lf-lock" viewBox="0 0 24 24" aria-hidden="true"><rect x="5.5" y="10.5" width="13" height="10" rx="2.5"/><path d="M8.3 10.5V8a3.7 3.7 0 0 1 7.4 0v2.5" fill="none"/></svg></span>'}<b>${lv.name}</b></button>`;});
   h+='</div>';
   openSheet(h);
   document.querySelectorAll('.lf-room[data-i]').forEach(b=>b.onclick=()=>{if(b.disabled)return;closeSheet();startLevel(+b.dataset.i,'torch');});
