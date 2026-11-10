@@ -2142,7 +2142,11 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
       var lg=en()?'en-US':'id-ID', mk=function(t){ var u=new SpeechSynthesisUtterance(t); u.lang=lg; u.pitch=1.4; return u; };
       speechSynthesis.cancel();
       // a recorded greeting ("Assalamu'alaikum" in Arabic, bm-voice.js) plays first, then the line in the phone's voice
-      if(window.BMVoice&&BMVoice.has(h,lg)){ speechSynthesis.speak(mk(h)); speechSynthesis.speak(mk(s2)); }
+      // with the child's name ("Halo, Aisyah!") the recorded "Halo!" / "Hi!" is said instead, so the whole greeting
+      // stays in the one recorded voice (the name is still on screen); no recording → as before, name included
+      var hi=en()?'Hi!':'Halo!';
+      if(childName()&&window.BMVoice&&BMVoice.has(hi,lg)&&BMVoice.has(s2,lg)){ speechSynthesis.speak(mk(hi)); speechSynthesis.speak(mk(s2)); }
+      else if(window.BMVoice&&BMVoice.has(h,lg)){ speechSynthesis.speak(mk(h)); speechSynthesis.speak(mk(s2)); }
       else speechSynthesis.speak(mk(h+'. '+s2));
     } }catch(e){}
     var im=mp.querySelector('img'); im.style.animation='none'; void im.offsetWidth; im.style.animation='';

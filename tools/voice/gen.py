@@ -6,6 +6,8 @@ Clip lists:
   tools/voice/clips.json      181 Arabic items: 167 hijaiyah sounds (sec "huruf") + 14 du'as (sec "doa")
   tools/voice/clips-app.json  every other Arabic string the games speak (sec "app") and every Cari Baby Mo
                               object name in Indonesian and English (sec "cari"); made by build-app-clips.js
+  tools/voice/clips-lines.json every Indonesian and English line the games speak (instructions, praise, tips,
+                              narration, greetings, story read-alouds; sec "lines"); made by build-lines-clips.js
   tools/voice/aliases.json    Latin transliterations the games speak ("Bismillah") -> the Arabic clip to play
 Output:
   www/hijaiyah-voice/<id>.mp3 + voice.js  -> window.HIJ_VOICE = {arabic text: file}
@@ -28,7 +30,9 @@ Usage:
   python3 tools/voice/gen.py --test                 # one clip per language, prints what came back
   python3 tools/voice/gen.py                        # all clips (resumes: existing files are kept)
   python3 tools/voice/gen.py --check                # all clips + speech-to-text check report
-  python3 tools/voice/gen.py --only hijaiyah,doa    # some sections: hijaiyah, doa, app, cari
+  python3 tools/voice/gen.py --only hijaiyah,doa    # some sections: hijaiyah, doa, app, cari, lines
+  python3 tools/voice/gen.py --check --only lines   # only the spoken lines; existing clips are kept, and only
+                                                    # the clips made in this run are checked (--recheck: all)
   python3 tools/voice/gen.py --force                # remake clips that already exist
   python3 tools/voice/gen.py --voice ar-XA-Chirp3-HD-Kore [--voice-en en-US-…] [--voice-id id-ID-…]
   python3 tools/voice/gen.py --manifest             # only rewrite www/voice/manifest.js (+ the listening page's data)
@@ -40,6 +44,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 HERE = os.path.join(ROOT, "tools", "voice")
 DATA = os.path.join(HERE, "clips.json")
 DATA_APP = os.path.join(HERE, "clips-app.json")
+DATA_LINES = os.path.join(HERE, "clips-lines.json")
 ALIASES = os.path.join(HERE, "aliases.json")
 KEY = os.environ.get("GOOGLE_TTS_API_KEY", "").strip()
 DEFAULT_VOICE = "ar-XA-Chirp3-HD-Algenib"
@@ -95,13 +100,13 @@ def call(url, body):
 
 # speaking rate per kind: natural speed (slowing voices down makes them warble); du'as only slightly slower.
 # Chirp voices take no speakingRate at all.
-RATE = {"syl": 1.0, "name": 1.0, "harakat": 1.0, "word": 1.0, "phrase": 0.95, "doa": 0.92}
+RATE = {"syl": 1.0, "name": 1.0, "harakat": 1.0, "word": 1.0, "phrase": 0.95, "doa": 0.92, "line": 1.0}
 
 def synth(text, kind, voice, lang="ar"):
     ac = {"audioEncoding": "MP3", "sampleRateHertz": 24000}
     r_ = RATE.get(kind, 1.0)
     if r_ != 1.0 and "Chirp" not in voice: ac["speakingRate"] = r_
-    body = {"input": {"text": text}, "voice": {"languageCode": LANG_CODE[lang], "name": voice}, "audioConfig": ac}
+    body = {"input": {"text": speakable(text)}, "voice": {"languageCode": LANG_CODE[lang], "name": voice}, "audioConfig": ac}
     r = call("https://texttospeech.googleapis.com/v1/text:synthesize", body)
     return base64.b64decode(r["audioContent"])
 
@@ -123,11 +128,24 @@ def heard_ok(text, alts, lang):
     t = f(text)
     return any(f(a) and (f(a) in t or t in f(a)) for a in alts)
 
-# --- keys: the same normalising as www/bm-voice.js -------------------------------------------------------
-TRAIL = re.compile(r"[\s.,!?;:…،؛؟۔。]+$")
+# --- keys: the same normalising as www/bm-voice.js and tools/voice/voicekey.js (tools/voice/test-keys.js) -----
+EMO = re.compile("[\U0001F000-\U0001FAFF\U000E0020-\U000E007F\u2190-\u21FF\u2300-\u23FF\u25A0-\u25FF"
+                 "\u2600-\u27BF\u2B00-\u2BFF\uFE00-\uFE0F\u200D\u20E3\u00A9\u00AE\u2122\u2139\u3030\u303D\u3297\u3299]")
+EDGE = "\\s.,!?;:…،؛؟۔。'\"()\\[\\]\\-—•·*~_"
+LEAD = re.compile("^[" + EDGE + "]+")
+TRAIL = re.compile("[" + EDGE + "]+$")
+
+def speakable(t):
+    """the text as it is sent to text-to-speech: no emoji, tidy spaces and punctuation (case kept)"""
+    s = EMO.sub("", unicodedata.normalize("NFC", str(t)))
+    s = re.sub("[‘’ʼ`´]", "'", s); s = re.sub("[“”„«»]", '"', s); s = re.sub("[‒–―]", "—", s)
+    s = re.sub(r"\s+", " ", s); s = re.sub(r" ([,.!?;:…])", r"\1", s); s = re.sub(r"\s*—\s*", " — ", s)
+    s = re.sub("([.!?…؟])[.!?…؟]+", r"\1", s)
+    return s.strip()
+
 def norm(t, lang):
-    s = unicodedata.normalize("NFC", str(t)).replace("ـ", "")
-    s = TRAIL.sub("", re.sub(r"\s+", " ", s).strip())
+    s = speakable(t).replace("ـ", "")
+    s = TRAIL.sub("", LEAD.sub("", s))
     return s if lang == "ar" else s.lower()
 
 def tr_key(t):
@@ -148,13 +166,16 @@ SECTIONS = {
     "doa":   ("www/doa-voice", "DOA_VOICE", "Recorded du'a clips for Doa Harian", DATA),
     "app":   ("www/voice", None, "", DATA_APP),
     "cari":  ("www/voice", None, "", DATA_APP),
+    "lines": ("www/voice", None, "", DATA_LINES),
 }
-ONLY = {"hijaiyah": "huruf", "huruf": "huruf", "doa": "doa", "app": "app", "cari": "cari"}
+ONLY = {"hijaiyah": "huruf", "huruf": "huruf", "doa": "doa", "app": "app", "cari": "cari", "lines": "lines"}
+BM_SECS = ("app", "cari", "lines")    # the sections whose clips live in www/voice/ (manifest.js)
 
 def load_items():
     items = json.load(open(DATA, encoding="utf-8"))
-    if os.path.exists(DATA_APP):
-        items += json.load(open(DATA_APP, encoding="utf-8"))
+    for extra in (DATA_APP, DATA_LINES):
+        if os.path.exists(extra):
+            items += json.load(open(extra, encoding="utf-8"))
     for x in items:
         x.setdefault("lang", "ar")
     return items
@@ -177,7 +198,7 @@ def write_manifest(items, voices):
             if f and os.path.exists(os.path.join(ROOT, folder, f.split("?")[0])):
                 man["ar|" + norm(t, "ar")] = rel + f
     for x in items:
-        if x["sec"] not in ("app", "cari"):
+        if x["sec"] not in BM_SECS:
             continue
         fn = x["id"] + ".mp3"
         fp = os.path.join(ROOT, "www", "voice", fn)
@@ -200,7 +221,7 @@ def write_listen_data(items):
     rows = [{"t": x["t"], "h": x.get("h", ""), "g": x.get("g", ""), "s": x["sec"], "l": x["lang"],
              "key": x["lang"] + "|" + norm(x["t"], x["lang"])} for x in items]
     with open(os.path.join(ROOT, "www", "tools", "dengar-data.js"), "w", encoding="utf-8") as f:
-        f.write("/* Clip lists for dengar-suara.html (generated by tools/voice/gen.py from clips.json + clips-app.json) */\n")
+        f.write("/* Clip lists for dengar-suara.html (generated by tools/voice/gen.py from clips.json + clips-app.json + clips-lines.json) */\n")
         f.write("window.DENGAR=[\n" + ",\n".join(json.dumps(r, ensure_ascii=False) for r in rows) + "\n];\n")
     print(f"wrote www/tools/dengar-data.js ({len(rows)} rows)")
 
@@ -209,8 +230,9 @@ def main():
     ap.add_argument("--voice", default=DEFAULT_VOICE, help="Arabic voice (default %(default)s)")
     ap.add_argument("--voice-en", help="English voice (default: the Arabic voice's family in en-US)")
     ap.add_argument("--voice-id", help="Indonesian voice (default: the Arabic voice's family in id-ID)")
-    ap.add_argument("--only", help="comma list of sections: hijaiyah, doa, app, cari")
-    ap.add_argument("--check", action="store_true")
+    ap.add_argument("--only", help="comma list of sections: hijaiyah, doa, app, cari, lines")
+    ap.add_argument("--check", action="store_true", help="speech-to-text check of the clips made in this run")
+    ap.add_argument("--recheck", action="store_true", help="with --check: also check clips that were already on disk")
     ap.add_argument("--test", action="store_true")
     ap.add_argument("--manifest", action="store_true", help="only rewrite www/voice/manifest.js from the files on disk")
     ap.add_argument("--compare", action="store_true", help="make one short sample per Arabic voice in tools/voice/compare/")
@@ -244,18 +266,19 @@ def main():
         secs = set()
         for s in a.only.split(","):
             s = s.strip()
-            if s not in ONLY: raise SystemExit(f"--only: unknown section {s!r} (hijaiyah, doa, app, cari)")
+            if s not in ONLY: raise SystemExit(f"--only: unknown section {s!r} (hijaiyah, doa, app, cari, lines)")
             secs.add(ONLY[s])
     if a.test:
-        langs = ["ar"] + [l for l in ("en", "id") if not secs or secs & {"app", "cari"}]
+        langs = ([] if secs == {"lines"} else ["ar"]) + [l for l in ("en", "id") if not secs or secs & set(BM_SECS)]
         sample = {"ar": "بَ", "en": "Teddy!", "id": "Beruang!"}
+        if secs == {"lines"}: sample.update({"en": "Good morning!", "id": "Selamat pagi!"})
         for l in langs:
             mp3 = synth(sample[l], "name", voices[l], l)
             print(f"OK — {voices[l]}: got {len(mp3)} bytes of audio for {sample[l]}")
         return
     if a.manifest:
         write_manifest(items, voices); write_listen_data(items); return
-    report = []
+    report, made = [], 0
     for sec, (folder, var, title, _) in SECTIONS.items():
         if secs and sec not in secs:
             continue
@@ -266,14 +289,15 @@ def main():
             lang = x["lang"]; voice = voices[lang]
             fn = x["id"] + ".mp3"
             fp = os.path.join(d, fn)
-            if os.path.exists(fp) and os.path.getsize(fp) > 500 and not a.force:
+            old = os.path.exists(fp) and os.path.getsize(fp) > 500 and not a.force
+            if old:
                 mp3 = open(fp, "rb").read()          # already made on an earlier run — resume
             else:
                 mp3 = synth(x["t"], x["k"], voice, lang)
-                open(fp, "wb").write(mp3)
+                open(fp, "wb").write(mp3); made += 1
             man[x["t"]] = fn + "?v=" + tag(voice)
             line = f"[{sec} {i}/{len(sel)}] {lang} {x['t']}  ({x.get('h','')})  {len(mp3)}B"
-            if a.check:
+            if a.check and (not old or a.recheck):
                 alts = transcribe(mp3, lang)
                 ok = heard_ok(x["t"], alts, lang)
                 line += f"  heard={alts[:2]}  {'OK' if ok else 'CHECK'}"
@@ -286,10 +310,18 @@ def main():
             print(f"wrote {folder}/voice.js ({len(man)} clips)")
     write_manifest(items, voices)
     write_listen_data(items)
+    print(f"made {made} new clips")
     if report:
         p = os.path.join(HERE, "check-report.json")
-        json.dump(report, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
+        # keep the earlier results of clips that were not checked this time
+        try:
+            prev = [r for r in json.load(open(p, encoding="utf-8")) if r.get("file") not in {x["file"] for x in report}]
+        except Exception:
+            prev = []
+        json.dump(prev + report, open(p, "w", encoding="utf-8"), ensure_ascii=False, indent=1)
         bad = [r for r in report if not r["ok"]]
+        for r in bad:
+            print(f"   CHECK {r['lang']} {r['text'][:70]}  heard={r['heard'][:1]}")
         print(f"\nspeech check: {len(report)-len(bad)} OK, {len(bad)} to listen to (see tools/voice/check-report.json)")
         print("Note: single syllables (بَ بِ بُ) and one-word names are often transcribed loosely; listen to the CHECK ones before shipping.")
 
