@@ -597,7 +597,7 @@ function say(text){
 }
 
 /* ───────── Adam sprite ───────── */
-var FR={}; [READY,"punch-1","punch-2","punch-3","punch-6","win-fist-r","oops-2","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
+var FR={}; [READY,"punch-1","punch-2","punch-3","punch-6","win-fist-r","oops-2b","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
   [3,4,5,6].map(function(n){return "backhand-two-"+n;}),
   [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
 ).forEach(function(n){ var im=new Image(); im.src="adam-tennis-v2/"+n+".webp"; FR[n]=im; });
@@ -757,7 +757,7 @@ function finishEndless(){
   stage.onclick=null;
   say(T(s>=1?"Alhamdulillah! Masya Allah!":"Alhamdulillah. Ayo coba lagi!"));
   $("resTitle").textContent = (isBest&&sc>0?"🏆 ":"")+sc+" "+L("pukulan berturut!","hits in the rally!");
-  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-2")+".webp";
+  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-2b")+".webp";
   var spans=$("resStars").children; for(var k3=0;k3<3;k3++) spans[k3].classList.remove("on");
   for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
   $("resLine").textContent = isBest&&sc>0 ? L("Rekor baru! Hebat sekali!","A new best! Amazing!") : L("Rekormu: ","Your best: ")+LOOP.best;
@@ -816,7 +816,7 @@ function hit(side){
 function missFly(msg){
   TS.hit(.7); setTimeout(function(){ sfx("wrong"); },150); pop(msg,"bad",1200);
   var from=G.o?G.o.x:G.hitX, o=G.o;
-  setTimeout(function(){ pose("oops-2"); },320);
+  setTimeout(function(){ pose("oops-2b"); },320);
   animate(.6,function(p){ var b=outgoing(Math.min(p,1),from,from,false,o); place(b.gx,b.gy,b.h,b.s); if(p>=1.15){ hideBall(); return false; } });
   done(false);
 }
@@ -957,7 +957,7 @@ function tapVoli(side){
   var p=G.p;
   if(p<.15) return; /* ignore taps right as the ball is fed */
   G.tapped=true; G.recover=false; $("laneTip").textContent="";
-  var whiff=function(msg){ G.whiff=true; swing(side); sfx("wrong"); pop(msg,"bad",1300); setTimeout(function(){ if(G&&G.volley) pose("oops-2"); },420); }; /* air swing: the ball flies on past him */
+  var whiff=function(msg){ G.whiff=true; swing(side); sfx("wrong"); pop(msg,"bad",1300); setTimeout(function(){ if(G&&G.volley) pose("oops-2b"); },420); }; /* air swing: the ball flies on past him */
   if(p>VPB){ G.flight.stop(); G.flight=null; G.o={x:G.b.gx,y:G.b.gy,h:G.b.h,s:G.b.s}; swing(side); missFly("Voli itu sebelum memantul!"); return; }
   if(p<VWIN[0]){ whiff("Terlalu cepat! Tunggu bola dekat."); return; }
   if(p>VWIN[1]){ whiff("Pukul di depan badan!"); return; }
@@ -1010,7 +1010,7 @@ function serveHit(){
 function serveResult(ok,msg){
   $("meterLvl").style.height="0%";
   if(ok){ G.hits++; pop(msg,"good",1000); setTimeout(function(){ pose("win-fist-r"); },300); dot(G.n,"ok"); G.n++; G.chance=1; }
-  else if(G.chance===1){ sfx("wrong"); pop("Fault! "+T(msg),"bad",1500); pose("oops-2"); G.chance=2; nextBall(toss,1700); return; }
+  else if(G.chance===1){ sfx("wrong"); pop("Fault! "+T(msg),"bad",1500); pose("oops-2b"); G.chance=2; nextBall(toss,1700); return; }
   else { sfx("wrong"); pop("Double fault!","bad",1300); pose("sad-miss"); dot(G.n,"no"); G.n++; G.chance=1; }
   count();
   if(G.n>=G.total){ G.over=true; finishAfter(1400); return; }
@@ -1083,7 +1083,7 @@ function finish(){
   if(s>prev){ DATA.stars[G.i]=s; save(DATA); try{ kit().addStars && kit().addStars(s-prev); }catch(e){} }
   stage.onclick=null;
   $("resTitle").textContent = s===3?"Masya Allah, sempurna!":s>=1?"Hebat, kamu berhasil!":"Ayo coba lagi!";
-  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-2")+".webp";
+  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-2b")+".webp";
   var spans=$("resStars").children; for(var k=0;k<3;k++){ spans[k].classList.remove("on"); }
   for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
   if(st.key==="tanding") $("resLine").textContent = G.won ? T("Kak Adam menang game!")+" "+label(G.a,G.r).join("–") : T("Raka menang kali ini. Pemain hebat tidak menyerah!");
