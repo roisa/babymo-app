@@ -714,7 +714,7 @@
       x.fillText("Baby Mo", 196, fy + 68);
       setFont(x, "800", 26, F_BODY);
       x.fillStyle = "rgba(255,255,255,0.85)";
-      x.fillText(m.en ? "Play & learn Islam for free" : "Main & belajar Islam gratis", 196, fy + 106);
+      x.fillText(m.en ? "Play & learn Islam with Baby Mo" : "Main & belajar Islam bareng Baby Mo", 196, fy + 106);
       var cta = "play.babymo.id";
       setFont(x, "900", 34, F_BODY);
       var ctaW = x.measureText(cta).width + 64, ctaX = W - 60 - ctaW, ctaY = fy + footH / 2 - 36;
