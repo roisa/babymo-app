@@ -1,1552 +1,3932 @@
 [
  {
-  "text": "بِسْمِ اللهِ",
-  "hint": "Bismillah",
+  "text": "اللَّهُ أَكْبَرُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Takbiratul Ihram — Allahu Akbar",
   "heard": [
-   "بسم الله"
+   "الله اكبر",
+   "و الله اكبر"
+  ],
+  "ok": false,
+  "file": "www/voice/app-fd448a74.mp3"
+ },
+ {
+  "text": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiyam — Bismillahir Rahmanir Raheem · Bismillahirrahmanirrahim",
+  "heard": [
+   "بسم الله الرحمن الرحيم"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/p1e53e20e.mp3"
+  "file": "www/voice/app-2cd8e7fd.mp3"
  },
  {
-  "text": "فَتْحَة",
-  "hint": "Fathah",
+  "text": "الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiyam — Alhamdu lillahi Rabbil aalameen",
   "heard": [
-   "سطحه",
-   "فقحه",
-   "فتحه"
+   "الحمد لله رب العالمين",
+   "الحمدلله رب العالمين"
+  ],
+  "ok": true,
+  "file": "www/voice/app-eec3a899.mp3"
+ },
+ {
+  "text": "الرَّحْمَٰنِ الرَّحِيمِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiyam — Ar-Rahmanir Raheem",
+  "heard": [
+   "الرحمن الرحيم",
+   "الرحمان الرحيم",
+   "عبد الرحمن الرحيم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-fbad4a40.mp3"
+ },
+ {
+  "text": "مَالِكِ يَوْمِ الدِّينِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiyam — Maliki yawmid deen",
+  "heard": [
+   "مالك يوم الدين"
+  ],
+  "ok": true,
+  "file": "www/voice/app-6fc45d12.mp3"
+ },
+ {
+  "text": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiyam — Iyyaka na'budu wa iyyaka nasta'een",
+  "heard": [
+   "اياك نعبد واياك نستعين",
+   "اياك نعبد و اياك نستعين",
+   "و اياك نعبد واياك نستعين"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/h670dd75d.mp3"
+  "file": "www/voice/app-e5dde88f.mp3"
  },
  {
-  "text": "كَسْرَة",
-  "hint": "Kasrah",
+  "text": "اهْدِنَا الصِّرَاطَ الْمُسْتَقِيمَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiyam — Ihdinas siratal mustaqeem",
   "heard": [
-   "اكسترا",
-   "كسره",
-   "شكرا"
+   "تيدي نصيرات المستقيمه",
+   "ايدي للسيارات المستقيمه",
+   "ايدي نصيرات المستقيمه"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/heb0a83e4.mp3"
+  "file": "www/voice/app-aaf37355.mp3"
  },
  {
-  "text": "ضَمَّة",
-  "hint": "Dhammah",
+  "text": "صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوبِ عَلَيْهِمْ وَلَا الضَّالِّينَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiyam — Siratal ladhina an'amta alayhim, ghayril maghdubi alayhim wa lad daalleen",
   "heard": [
-   "دمه",
-   "ضمه",
-   "دمى"
+   "صراط الذين انعمت عليهم غير المغضوب عليهم ولا الضالين",
+   "صراط الذين انعمت عليهم غير المغضوب عليهم و لا الضالين",
+   "صراط الذين انعمت عليهم غير المغضوب عليهم ولا الضالين امين"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/h03b63307.mp3"
+  "file": "www/voice/app-e33ff910.mp3"
  },
  {
-  "text": "أَلِف",
+  "text": "سُبْحَانَ رَبِّيَ الْعَظِيمِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ruku' — Subhana Rabbiyal Azeem",
+  "heard": [
+   "سبحان ربي العظيم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-83bed040.mp3"
+ },
+ {
+  "text": "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "I'tidal — Sami'allahu liman hamidah",
+  "heard": [
+   "سميع الله لمن حمده",
+   "سمع الله لمن حمده",
+   "يا سميع الله لمن حمده"
+  ],
+  "ok": true,
+  "file": "www/voice/app-27ca6582.mp3"
+ },
+ {
+  "text": "رَبَّنَا وَلَكَ الْحَمْدُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "I'tidal — Rabbana wa lakal hamd",
+  "heard": [
+   "ربنا ولك الحمد"
+  ],
+  "ok": true,
+  "file": "www/voice/app-5562108d.mp3"
+ },
+ {
+  "text": "سُبْحَانَ رَبِّيَ الأَعْلَى",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Sujud — Subhana Rabbiyal A'la",
+  "heard": [
+   "سبحان ربي الاعلى",
+   "سبحان ربي الاعلي",
+   "سبحانه ربي الاعلى"
+  ],
+  "ok": false,
+  "file": "www/voice/app-1e349fc5.mp3"
+ },
+ {
+  "text": "رَبِّ اغْفِرْ لِي وَارْحَمْنِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Duduk — Rabbighfir li warhamni",
+  "heard": [
+   "ربي اغفر لي وارحمني",
+   "ربي اغفرلي وارحمني",
+   "يا ربي اغفر لي وارحمني"
+  ],
+  "ok": false,
+  "file": "www/voice/app-6ddc301b.mp3"
+ },
+ {
+  "text": "التَّحِيَّاتُ الْمُبَارَكَاتُ الصَّلَوَاتُ الطَّيِّبَاتُ لِلَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tashahhud & Salam — At-tahiyyatul mubarakatush shalawatuth thayyibatu lillah",
+  "heard": [
+   "التحيات المباركات والصلوات الطيبات لله",
+   "التحيات المباركات الصلوات الطيبات لله",
+   "التحيات المباركات الصلوات الطيبات والله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-282e8763.mp3"
+ },
+ {
+  "text": "السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tashahhud & Salam — Assalamu alaika ayyuhan nabiyyu wa rahmatullahi wa barakatuh",
+  "heard": [
+   "السلام عليك ايها النبي ورحمه الله وبركاته",
+   "السلام عليك يا ايها النبي ورحمه الله وبركاته",
+   "السلام عليك ايها النبي ورحمه الله و بركاته"
+  ],
+  "ok": false,
+  "file": "www/voice/app-80721210.mp3"
+ },
+ {
+  "text": "السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tashahhud & Salam — Assalamu alaina wa ala ibadillahis shaliheen",
+  "heard": [
+   "السلام علينا وعلى عباد الله الصالحين",
+   "و السلام علينا وعلى عباد الله الصالحين",
+   "تسلموا علينا وعلى عباد الله الصالحين"
+  ],
+  "ok": true,
+  "file": "www/voice/app-f216c2ed.mp3"
+ },
+ {
+  "text": "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tashahhud & Salam — Assalamu alaikum wa rahmatullah",
+  "heard": [
+   "السلام عليكم ورحمه الله",
+   "السلام عليكم و رحمه الله",
+   "سلام عليكم ورحمه الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-965bf5ea.mp3"
+ },
+ {
+  "text": "أَسْتَغْفِرُ ٱللَّٰهَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Istighfar — Astaghfirullah",
+  "heard": [
+   "استغفر الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-0dbdaca9.mp3"
+ },
+ {
+  "text": "سُبْحَانَ ٱللَّٰهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Subhanallah — Subhanallah",
+  "heard": [
+   "سبحان الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-3fdc1478.mp3"
+ },
+ {
+  "text": "ٱلْحَمْدُ لِلَّٰهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Alhamdulillah — Alhamdulillah",
+  "heard": [
+   "الحمد لله",
+   "الحمدلله",
+   "و الحمد لله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-76294ab2.mp3"
+ },
+ {
+  "text": "ٱللَّٰهُ أَكْبَرُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Allahu Akbar — Allahu Akbar",
+  "heard": [
+   "الله اكبر",
+   "و الله اكبر",
+   "الله اكبر و"
+  ],
+  "ok": false,
+  "file": "www/voice/app-dab15217.mp3"
+ },
+ {
+  "text": "لَا إِلَٰهَ إِلَّا ٱللَّٰهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tahlil — La ilaha illallah",
+  "heard": [
+   "لا اله الا الله",
+   "و لا اله الا الله",
+   "لا لا اله الا الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-983ef9fc.mp3"
+ },
+ {
+  "text": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِٱللَّٰهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Dzikir Penutup — La hawla wa la quwwata illa billah",
+  "heard": [
+   "لا حول ولا قوه الا بالله",
+   "لاحول ولا قوه الا بالله",
+   "لاحول ولاقوه الا بالله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-958ef375.mp3"
+ },
+ {
+  "text": "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (1/9)",
+  "heard": [
+   "الله لا اله الا هو الحي القيوم",
+   "و الله لا اله الا هو الحي القيوم",
+   "الله لا اله الا هو الحى القيوم"
+  ],
+  "ok": false,
+  "file": "www/voice/app-7b099e90.mp3"
+ },
+ {
+  "text": "لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (2/9)",
+  "heard": [
+   "لا تاخذه سنه ولا نوم",
+   "زين تاخذه سنه ولا نوم",
+   "لا تاخذه سنه ولا نوم له"
+  ],
+  "ok": false,
+  "file": "www/voice/app-9dc8330a.mp3"
+ },
+ {
+  "text": "لَهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (3/9)",
+  "heard": [
+   "له ما في السماوات وما في الارض",
+   "له مافي السماوات ومافي الارض",
+   "لهم ما في السماوات وما في الارض"
+  ],
+  "ok": false,
+  "file": "www/voice/app-90cbd655.mp3"
+ },
+ {
+  "text": "مَنْ ذَا الَّذِي يَشْفَعُ عِنْدَهُ إِلَّا بِإِذْنِهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (4/9)",
+  "heard": [
+   "من ذا الذي يشفع عنده الا باذنه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-759fcabe.mp3"
+ },
+ {
+  "text": "يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (5/9)",
+  "heard": [
+   "يعلم ما بين ايديهم وما خلفهم",
+   "يعلم مابين ايديهم وما خلفهم"
+  ],
+  "ok": false,
+  "file": "www/voice/app-d87f9dbd.mp3"
+ },
+ {
+  "text": "وَلَا يُحِيطُونَ بِشَيْءٍ مِنْ عِلْمِهِ إِلَّا بِمَا شَاءَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (6/9)",
+  "heard": [
+   "ولا يحيطون بشيء من علمه الا بما شاء",
+   "ولا يحيطون بشيء من علمه الا بما شاء وسع",
+   "ولا يحيطون بشيء من علمه الا بما شاء الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-38392584.mp3"
+ },
+ {
+  "text": "وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (7/9)",
+  "heard": [
+   "وسع كرسيه السماوات والارض",
+   "وسع كرسيه السموات والارض",
+   "وسع كرسيه السماوات و الارض"
+  ],
+  "ok": false,
+  "file": "www/voice/app-b78a7be6.mp3"
+ },
+ {
+  "text": "وَلَا يَئُودُهُ حِفْظُهُمَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (8/9)",
+  "heard": [
+   "ولا يؤوده حفظهما",
+   "ولا يئوده حفظهما",
+   "ولا يؤده حفظهما"
+  ],
+  "ok": true,
+  "file": "www/voice/app-43f69207.mp3"
+ },
+ {
+  "text": "وَهُوَ الْعَلِيُّ الْعَظِيمُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ayat Kursi (9/9)",
+  "heard": [
+   "وهو العلي العظيم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-83ce4cca.mp3"
+ },
+ {
+  "text": "أَشْهَدُ أَنْ لَا إِلٰهَ إِلَّا اللّٰهُ وَحْدَهُ لَا شَرِيْكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُوْلُهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Doa Setelah Wudhu — Asyhadu an lā ilāha illallāh, wahdahū lā syarīka lah, wa asyhadu anna Muhammadan 'abduhū wa rasūluh",
+  "heard": [
+   "اشهد ان لا اله الا الله وحده لا شريك له واشهد ان محمدا عبده ورسوله",
+   "اشهد ان لا اله الا الله وحده لا شريك له واشهد ان محمد عبده ورسوله",
+   "اشهد ان لا اله الا الله وحده لا شريك له واشهد ان محمدا عبده و رسوله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-f11be212.mp3"
+ },
+ {
+  "text": "السَّلَامُ عَلَيْكُمْ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Assalamualaikum — Semoga keselamatan untukmu · Assalamu'alaikum",
+  "heard": [
+   "السلام عليكم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-c6c08f76.mp3"
+ },
+ {
+  "text": "الْحَمْدُ لِلَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Alhamdulillah — Segala puji bagi Allah",
+  "heard": [
+   "الحمد لله",
+   "الحمدلله",
+   "و الحمد لله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-b708ba54.mp3"
+ },
+ {
+  "text": "أَسْتَغْفِرُ اللَّهَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Astagfirullah — Aku memohon ampun kepada Allah · Astaghfirullah",
+  "heard": [
+   "استغفر الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-9e1d386f.mp3"
+ },
+ {
+  "text": "مَا شَاءَ اللَّهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "MasyaAllah — Allah Maha Sempurna · Masya Allah · Masha Allah",
+  "heard": [
+   "ما شاء الله",
+   "ماشاء الله",
+   "من شاء الله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-3a7ab974.mp3"
+ },
+ {
+  "text": "لَا إِلَهَ إِلَّا اللَّهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Lailahaillallah — Tiada Tuhan selain Allah",
+  "heard": [
+   "لا اله الا الله",
+   "و لا اله الا الله",
+   "لا لا اله الا الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-d2574b96.mp3"
+ },
+ {
+  "text": "سُبْحَانَ اللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "SubhanAllah — Maha Suci Allah · Subhanallah",
+  "heard": [
+   "سبحان الله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-765e5390.mp3"
+ },
+ {
+  "text": "جَزَاكَ اللَّهُ خَيْرًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "JazakAllah Khairan — Semoga Allah membalasmu dengan kebaikan",
+  "heard": [
+   "جزاك الله خيرا",
+   "جزاك الله خير"
+  ],
+  "ok": true,
+  "file": "www/voice/app-c935751e.mp3"
+ },
+ {
+  "text": "إِنْ شَاءَ اللَّهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "InsyaAllah — Jika Allah mengizinkan · Insya Allah · Insha Allah",
+  "heard": [
+   "ان شاء الله",
+   "طيب ان شاء الله",
+   "انشاء الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-5f546fa1.mp3"
+ },
+ {
+  "text": "إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Inna lillahi — Sesungguhnya kami milik Allah dan kepada-Nya kami kembali",
+  "heard": [
+   "انا لله وانا اليه راجعون",
+   "انا لله و انا اليه راجعون",
+   "و انا لله و انا اليه راجعون"
+  ],
+  "ok": false,
+  "file": "www/voice/app-08bd9a15.mp3"
+ },
+ {
+  "text": "بَارَكَ اللَّهُ فِيكَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Barakallahu fiik — Semoga Allah memberkahimu dengan kebaikan",
+  "heard": [
+   "بارك الله فيك",
+   "بارك الله فيكم",
+   "بارك الله فيكي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-50e7b75a.mp3"
+ },
+ {
+  "text": "أَلِفْ",
+  "lang": "ar",
+  "sec": "app",
   "hint": "Alif",
   "heard": [
-   "اليسا",
-   "اليس"
+   "الف",
+   "1,000",
+   "1000"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/nfddf097a.mp3"
+  "file": "www/voice/app-7ff48992.mp3"
  },
  {
-  "text": "أَ",
-  "hint": "a (alif)",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sefe4842c.mp3"
- },
- {
-  "text": "إِ",
-  "hint": "i (alif)",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s66b95b11.mp3"
- },
- {
-  "text": "أُ",
-  "hint": "u (alif)",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s1a73536b.mp3"
- },
- {
-  "text": "بَاء",
-  "hint": "Ba",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n76c0ac48.mp3"
- },
- {
-  "text": "بَ",
-  "hint": "ba",
-  "heard": [
-   "ب",
-   "ب ب ب"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/sd431deab.mp3"
- },
- {
-  "text": "بِ",
-  "hint": "bi",
-  "heard": [
-   "بي",
-   "دي"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/s3d7326a9.mp3"
- },
- {
-  "text": "بُ",
-  "hint": "bu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sdb369760.mp3"
- },
- {
-  "text": "تَاء",
-  "hint": "Ta",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/nc76a0eef.mp3"
- },
- {
-  "text": "تَ",
-  "hint": "ta",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s6670f319.mp3"
- },
- {
-  "text": "تِ",
-  "hint": "ti",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/secbc66cf.mp3"
- },
- {
-  "text": "تُ",
-  "hint": "tu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s7d3d3519.mp3"
- },
- {
-  "text": "ثَاء",
-  "hint": "Tsa",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/nca90c917.mp3"
- },
- {
-  "text": "ثَ",
-  "hint": "tsa",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s2d4d7a77.mp3"
- },
- {
-  "text": "ثِ",
-  "hint": "tsi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s1d95774d.mp3"
- },
- {
-  "text": "ثُ",
-  "hint": "tsu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sa18d3e54.mp3"
- },
- {
-  "text": "جِيم",
+  "text": "جِيمْ",
+  "lang": "ar",
+  "sec": "app",
   "hint": "Jim",
   "heard": [
    "جيم",
-   "جيميل",
-   "جيمز"
+   "جيب",
+   "جيميل"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/n13c9ccc9.mp3"
+  "file": "www/voice/app-4c031d2a.mp3"
  },
  {
-  "text": "جَ",
-  "hint": "ja",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s97593879.mp3"
- },
- {
-  "text": "جِ",
-  "hint": "ji",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s2c87e1b8.mp3"
- },
- {
-  "text": "جُ",
-  "hint": "ju",
-  "heard": [
-   "جيم",
-   "جيمي"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/s43abf3ef.mp3"
- },
- {
-  "text": "حَاء",
-  "hint": "Ha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n5c366638.mp3"
- },
- {
-  "text": "حَ",
-  "hint": "ha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s5f387e8e.mp3"
- },
- {
-  "text": "حِ",
-  "hint": "hi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s3aa0f2c8.mp3"
- },
- {
-  "text": "حُ",
-  "hint": "hu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s4e8278d7.mp3"
- },
- {
-  "text": "خَاء",
-  "hint": "Kha",
-  "heard": [
-   "خوخ",
-   "خوخه"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n42caf841.mp3"
- },
- {
-  "text": "خَ",
-  "hint": "kha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s314d2096.mp3"
- },
- {
-  "text": "خِ",
-  "hint": "khi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sb1c4627e.mp3"
- },
- {
-  "text": "خُ",
-  "hint": "khu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s7997846d.mp3"
- },
- {
-  "text": "دَال",
+  "text": "دَالْ",
+  "lang": "ar",
+  "sec": "app",
   "hint": "Dal",
   "heard": [
-   "دريل",
-   "ابريل",
-   "الدريل"
+   "تنزيل",
+   "زين",
+   "اديل"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/na679fba2.mp3"
+  "file": "www/voice/app-a51f53de.mp3"
  },
  {
-  "text": "دَ",
-  "hint": "da",
-  "heard": [
-   "جده",
-   "انت"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/sa3d77da2.mp3"
- },
- {
-  "text": "دِ",
-  "hint": "di",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s9f6c1f31.mp3"
- },
- {
-  "text": "دُ",
-  "hint": "du",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sd9b353b6.mp3"
- },
- {
-  "text": "ذَال",
+  "text": "ذَالْ",
+  "lang": "ar",
+  "sec": "app",
   "hint": "Dzal",
   "heard": [
    "زين",
-   "ذئب",
-   "ذهب"
+   "زينب",
+   "زينه"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/n61f1315e.mp3"
+  "file": "www/voice/app-cc43ffef.mp3"
  },
  {
-  "text": "ذَ",
-  "hint": "dza",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sf08e596e.mp3"
- },
- {
-  "text": "ذِ",
-  "hint": "dzi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s06d0f2d2.mp3"
- },
- {
-  "text": "ذُ",
-  "hint": "dzu",
-  "heard": [
-   "ذي",
-   "ذئب"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/scff38b65.mp3"
- },
- {
-  "text": "رَاء",
-  "hint": "Ra",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n56c906c7.mp3"
- },
- {
-  "text": "رَ",
-  "hint": "ra",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s191edc44.mp3"
- },
- {
-  "text": "رِ",
-  "hint": "ri",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s490c376a.mp3"
- },
- {
-  "text": "رُ",
-  "hint": "ru",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/se2a40595.mp3"
- },
- {
-  "text": "زَاي",
-  "hint": "Zai",
+  "text": "زَايْ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Zay",
   "heard": [
    "ازاي",
-   "زاي"
+   "زاي",
+   "زايد"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/n5463e58c.mp3"
+  "file": "www/voice/app-81b572a4.mp3"
  },
  {
-  "text": "زَ",
-  "hint": "za",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/se019f1bb.mp3"
- },
- {
-  "text": "زِ",
-  "hint": "zi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s59c2d7fe.mp3"
- },
- {
-  "text": "زُ",
-  "hint": "zu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s98f3b177.mp3"
- },
- {
-  "text": "سِين",
+  "text": "سِينْ",
+  "lang": "ar",
+  "sec": "app",
   "hint": "Sin",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/nbbeceabf.mp3"
+  "file": "www/voice/app-a814f37f.mp3"
  },
  {
-  "text": "سَ",
-  "hint": "sa",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s7fe1ea7b.mp3"
- },
- {
-  "text": "سِ",
-  "hint": "si",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s48428bcc.mp3"
- },
- {
-  "text": "سُ",
-  "hint": "su",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sf48613ac.mp3"
- },
- {
-  "text": "شِين",
-  "hint": "Syin",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n81a5af38.mp3"
- },
- {
-  "text": "شَ",
-  "hint": "sya",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s9a490665.mp3"
- },
- {
-  "text": "شِ",
-  "hint": "syi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sea70aacb.mp3"
- },
- {
-  "text": "شُ",
-  "hint": "syu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s0b4e8308.mp3"
- },
- {
-  "text": "صَاد",
-  "hint": "Shad",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n6c6589e0.mp3"
- },
- {
-  "text": "صَ",
-  "hint": "sha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s3aac02d5.mp3"
- },
- {
-  "text": "صِ",
-  "hint": "shi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sb7321073.mp3"
- },
- {
-  "text": "صُ",
-  "hint": "shu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s7811e9fc.mp3"
- },
- {
-  "text": "ضَاد",
-  "hint": "Dhad",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/nffddaefa.mp3"
- },
- {
-  "text": "ضَ",
-  "hint": "dha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s56659341.mp3"
- },
- {
-  "text": "ضِ",
-  "hint": "dhi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sdde84cf8.mp3"
- },
- {
-  "text": "ضُ",
-  "hint": "dhu",
+  "text": "هَمْزَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "nama huruf",
   "heard": [
-   "دو",
-   "دوم"
+   "حمزه",
+   "همزه",
+   "الهمزه"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/s2d126971.mp3"
+  "file": "www/voice/app-d13f50ee.mp3"
  },
  {
-  "text": "طَاء",
-  "hint": "Tha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n83a4591e.mp3"
- },
- {
-  "text": "طَ",
-  "hint": "tha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s539b0d0d.mp3"
- },
- {
-  "text": "طِ",
-  "hint": "thi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s55a140b9.mp3"
- },
- {
-  "text": "طُ",
-  "hint": "thu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s026a18ec.mp3"
- },
- {
-  "text": "ظَاء",
-  "hint": "Zha",
+  "text": "تَاء مَرْبُوطَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "nama huruf",
   "heard": [
-   "ضوء",
-   "ضب"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n5e7a7991.mp3"
- },
- {
-  "text": "ظَ",
-  "hint": "zha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/se8bbe8e8.mp3"
- },
- {
-  "text": "ظِ",
-  "hint": "zhi",
-  "heard": [
-   "دبي",
-   "حبي"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sae1f0fd0.mp3"
- },
- {
-  "text": "ظُ",
-  "hint": "zhu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s3030375c.mp3"
- },
- {
-  "text": "عَيْن",
-  "hint": "Ain",
-  "heard": [
-   "عين",
-   "عيني",
-   "عينه"
+   "مربوطه",
+   "مربوط"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/n51e37582.mp3"
+  "file": "www/voice/app-8af386cb.mp3"
  },
  {
-  "text": "عَ",
-  "hint": "‘a (‘ain)",
+  "text": "أُمِّي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ummi — ibu",
+  "heard": [
+   "امي",
+   "يا امي",
+   "امى"
+  ],
+  "ok": false,
+  "file": "www/voice/app-6707d0ab.mp3"
+ },
+ {
+  "text": "أَبِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Abbi — ayah",
+  "heard": [
+   "ابي",
+   "ابى",
+   "هبي"
+  ],
+  "ok": false,
+  "file": "www/voice/app-d1a5fbbb.mp3"
+ },
+ {
+  "text": "أَخِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Akhi — kakak laki-laki",
+  "heard": [
+   "اخي",
+   "يا اخي",
+   "اخى"
+  ],
+  "ok": false,
+  "file": "www/voice/app-bd1a32d4.mp3"
+ },
+ {
+  "text": "أُخْتِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ukhti — kakak perempuan",
+  "heard": [
+   "اختي",
+   "يا اختي",
+   "اختى"
+  ],
+  "ok": false,
+  "file": "www/voice/app-b33871c9.mp3"
+ },
+ {
+  "text": "بَيْت",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Bayt — rumah",
+  "heard": [
+   "بيت",
+   "بيتزا",
+   "بيج"
+  ],
+  "ok": true,
+  "file": "www/voice/app-8af01f58.mp3"
+ },
+ {
+  "text": "طَعَام",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tha'am — makanan",
+  "heard": [
+   "طعام",
+   "الطعام",
+   "اطعام"
+  ],
+  "ok": true,
+  "file": "www/voice/app-5e3d5a2d.mp3"
+ },
+ {
+  "text": "مَاء",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Maa' — air",
+  "heard": [
+   "مع",
+   "معك",
+   "مع مع"
+  ],
+  "ok": false,
+  "file": "www/voice/app-c3daec4c.mp3"
+ },
+ {
+  "text": "نَوْم",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Nawm — tidur",
+  "heard": [
+   "نوم",
+   "نومه",
+   "النوم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-66219004.mp3"
+ },
+ {
+  "text": "بِسْمِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Bism — dengan nama",
+  "heard": [
+   "اسمي",
+   "ما اسمي"
+  ],
+  "ok": false,
+  "file": "www/voice/app-175a5f32.mp3"
+ },
+ {
+  "text": "اللّٰه",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Allah — allah",
+  "heard": [
+   "الله",
+   "و الله",
+   "يا الله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-cb7662d5.mp3"
+ },
+ {
+  "text": "دُعَاء",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Du'a — doa",
+  "heard": [
+   "دوحه",
+   "دوها",
+   "دواء"
+  ],
+  "ok": false,
+  "file": "www/voice/app-1280cc88.mp3"
+ },
+ {
+  "text": "مَسْجِد",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Masjid — masjid",
+  "heard": [
+   "مسجد",
+   "المسجد",
+   "مسج"
+  ],
+  "ok": true,
+  "file": "www/voice/app-02634777.mp3"
+ },
+ {
+  "text": "سَلَام",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Salam — salam",
+  "heard": [
+   "سلام",
+   "سلامه",
+   "السلام"
+  ],
+  "ok": true,
+  "file": "www/voice/app-3dc971ab.mp3"
+ },
+ {
+  "text": "شُكْرًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Syukran — terima kasih",
+  "heard": [
+   "شكرا",
+   "شكر"
+  ],
+  "ok": true,
+  "file": "www/voice/app-7b1c8e52.mp3"
+ },
+ {
+  "text": "نَجْم",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Najm — bintang",
+  "heard": [
+   "نجم",
+   "نعم",
+   "نقش"
+  ],
+  "ok": true,
+  "file": "www/voice/app-3ab73e5e.mp3"
+ },
+ {
+  "text": "زَهْرَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Zahrah — bunga",
+  "heard": [
+   "زهره",
+   "زهراء",
+   "الزهره"
+  ],
+  "ok": false,
+  "file": "www/voice/app-43c8c1a2.mp3"
+ },
+ {
+  "text": "طَيْر",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Thayr — burung",
+  "heard": [
+   "طيب",
+   "طير"
+  ],
+  "ok": true,
+  "file": "www/voice/app-3f8abbd1.mp3"
+ },
+ {
+  "text": "الْحَمْدُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
+  "heard": [
+   "الحمد",
+   "الحمد لله",
+   "الحمدلله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-e06ecb8b.mp3"
+ },
+ {
+  "text": "لِلَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
+  "heard": [
+   "لها",
+   "لحظه",
+   "لحم"
+  ],
+  "ok": false,
+  "file": "www/voice/app-70813873.mp3"
+ },
+ {
+  "text": "الَّذِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/s40fa11ec.mp3"
+  "file": "www/voice/app-320b4c4b.mp3"
  },
  {
-  "text": "عِ",
-  "hint": "‘i (‘ain)",
+  "text": "أَحْيَانَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
+  "heard": [
+   "احيانا",
+   "احنا",
+   "احيان"
+  ],
+  "ok": false,
+  "file": "www/voice/app-8c2bcdb0.mp3"
+ },
+ {
+  "text": "بَعْدَمَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
+  "heard": [
+   "بعد ما",
+   "بعدما",
+   "بعد"
+  ],
+  "ok": true,
+  "file": "www/voice/app-9a9f18b7.mp3"
+ },
+ {
+  "text": "أَمَاتَنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
+  "heard": [
+   "عمتنا",
+   "اميرتنا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-bfda6cab.mp3"
+ },
+ {
+  "text": "وَإِلَيْهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
+  "heard": [
+   "وايليه",
+   "واليه",
+   "ويليه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-fa60795d.mp3"
+ },
+ {
+  "text": "النُّشُورُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Bangun Tidur",
+  "heard": [
+   "النصر",
+   "النسور",
+   "الناسور"
+  ],
+  "ok": false,
+  "file": "www/voice/app-0ec73a7e.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Masuk Kamar Mandi",
+  "heard": [
+   "اللهم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-07e252e5.mp3"
+ },
+ {
+  "text": "إِنِّي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Masuk Kamar Mandi",
+  "heard": [
+   "جنى",
+   "جني",
+   "يمه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-d8616e6f.mp3"
+ },
+ {
+  "text": "أَعُوذُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Masuk Kamar Mandi",
+  "heard": [
+   "اعوذ",
+   "اعود",
+   "تعوذ"
+  ],
+  "ok": false,
+  "file": "www/voice/app-b036b318.mp3"
+ },
+ {
+  "text": "بِكَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Masuk Kamar Mandi",
+  "heard": [
+   "بيك",
+   "بك",
+   "بيكي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-014eeb22.mp3"
+ },
+ {
+  "text": "مِنَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Masuk Kamar Mandi",
+  "heard": [
+   "من",
+   "منه",
+   "منى"
+  ],
+  "ok": true,
+  "file": "www/voice/app-8f3f4228.mp3"
+ },
+ {
+  "text": "الْخُبْثِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Masuk Kamar Mandi",
+  "heard": [
+   "الخبز",
+   "الخبزه",
+   "الخبزي"
+  ],
+  "ok": false,
+  "file": "www/voice/app-c2d938f3.mp3"
+ },
+ {
+  "text": "وَالْخَبَائِثِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Masuk Kamar Mandi",
+  "heard": [
+   "والخبائث",
+   "و الخبائث"
+  ],
+  "ok": true,
+  "file": "www/voice/app-102734a0.mp3"
+ },
+ {
+  "text": "اللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
+  "heard": [
+   "الله",
+   "والله",
+   "و الله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-0c56b66b.mp3"
+ },
+ {
+  "text": "تَوَكَّلْتُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
+  "heard": [
+   "توكلت",
+   "توكل"
+  ],
+  "ok": true,
+  "file": "www/voice/app-cfb5a6f7.mp3"
+ },
+ {
+  "text": "عَلَى",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
   "heard": [
    "علي",
    "على",
-   "علم"
+   "رد علي"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/s4eb20327.mp3"
+  "file": "www/voice/app-4c81e45a.mp3"
  },
  {
-  "text": "عُ",
-  "hint": "‘u (‘ain)",
+  "text": "لَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/s9ff8c5a5.mp3"
+  "file": "www/voice/app-90e245a5.mp3"
  },
  {
-  "text": "غَيْن",
-  "hint": "Ghain",
+  "text": "حَوْلَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
   "heard": [
-   "غين",
-   "غن",
-   "غيم"
+   "حول",
+   "حولي"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/nab126af9.mp3"
+  "file": "www/voice/app-40269d42.mp3"
  },
  {
-  "text": "غَ",
-  "hint": "gha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s9d91cae0.mp3"
- },
- {
-  "text": "غِ",
-  "hint": "ghi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sd8a82d80.mp3"
- },
- {
-  "text": "غُ",
-  "hint": "ghu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s60611110.mp3"
- },
- {
-  "text": "فَاء",
-  "hint": "Fa",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n9cb389b4.mp3"
- },
- {
-  "text": "فَ",
-  "hint": "fa",
+  "text": "وَلَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
   "heard": [
-   "صح",
-   "فهد"
+   "ولا",
+   "ولاء",
+   "و لا"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/s974f76d0.mp3"
+  "file": "www/voice/app-f1588cfc.mp3"
  },
  {
-  "text": "فِ",
-  "hint": "fi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sc7f392de.mp3"
- },
- {
-  "text": "فُ",
-  "hint": "fu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sa0b18472.mp3"
- },
- {
-  "text": "قَاف",
-  "hint": "Qaf",
+  "text": "قُوَّةَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
   "heard": [
-   "خوف",
-   "كوف"
+   "قوه",
+   "القوه",
+   "كوه"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/nada55116.mp3"
+  "file": "www/voice/app-57258818.mp3"
  },
  {
-  "text": "قَ",
-  "hint": "qa",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sb8ad739d.mp3"
- },
- {
-  "text": "قِ",
-  "hint": "qi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sa38e1b27.mp3"
- },
- {
-  "text": "قُ",
-  "hint": "qu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s7084c042.mp3"
- },
- {
-  "text": "كَاف",
-  "hint": "Kaf",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n9df47433.mp3"
- },
- {
-  "text": "كَ",
-  "hint": "ka",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s1b8031bb.mp3"
- },
- {
-  "text": "كِ",
-  "hint": "ki",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sd51eedf0.mp3"
- },
- {
-  "text": "كُ",
-  "hint": "ku",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s6f94d563.mp3"
- },
- {
-  "text": "لَام",
-  "hint": "Lam",
+  "text": "إِلَّا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
   "heard": [
-   "لا",
-   "لم",
-   "لن"
+   "الا",
+   "الان",
+   "الاء"
+  ],
+  "ok": false,
+  "file": "www/voice/app-1e303f4e.mp3"
+ },
+ {
+  "text": "بِاللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Keluar Rumah",
+  "heard": [
+   "بالله",
+   "بالليل",
+   "با لله"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/n2d379987.mp3"
+  "file": "www/voice/app-7f2204be.mp3"
  },
  {
-  "text": "لَ",
-  "hint": "la",
+  "text": "سُبْحَانَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
   "heard": [
-   "لا",
-   "لا لا",
-   "لا لا لا"
+   "سبحانه",
+   "سبحان الله",
+   "سبحان"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/sc4e931ac.mp3"
+  "file": "www/voice/app-5ae782f3.mp3"
  },
  {
-  "text": "لِ",
-  "hint": "li",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sdbb8df58.mp3"
- },
- {
-  "text": "لُ",
-  "hint": "lu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s4fa06a5a.mp3"
- },
- {
-  "text": "مِيم",
-  "hint": "Mim",
+  "text": "سَخَّرَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
   "heard": [
-   "مين",
-   "ميم"
+   "مسخره",
+   "مسخن"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/na3ebb01c.mp3"
+  "file": "www/voice/app-1c7670b1.mp3"
  },
  {
-  "text": "مَ",
-  "hint": "ma",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s377f54ce.mp3"
- },
- {
-  "text": "مِ",
-  "hint": "mi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/se43a63dd.mp3"
- },
- {
-  "text": "مُ",
-  "hint": "mu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sa41bdb0b.mp3"
- },
- {
-  "text": "نُون",
-  "hint": "Nun",
+  "text": "لَنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
   "heard": [
-   "نون",
-   "دون",
-   "دول"
+   "لنا",
+   "لمى",
+   "لا"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/na4647fa3.mp3"
+  "file": "www/voice/app-7537748c.mp3"
  },
  {
-  "text": "نَ",
-  "hint": "na",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s40c8cf0f.mp3"
- },
- {
-  "text": "نِ",
-  "hint": "ni",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s5405ba18.mp3"
- },
- {
-  "text": "نُ",
-  "hint": "nu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s35548ef6.mp3"
- },
- {
-  "text": "وَاو",
-  "hint": "Wau",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/n41a7badb.mp3"
- },
- {
-  "text": "وَ",
-  "hint": "wa",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sf847ca2b.mp3"
- },
- {
-  "text": "وِ",
-  "hint": "wi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sba8b0a81.mp3"
- },
- {
-  "text": "وُ",
-  "hint": "wu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s37fbe890.mp3"
- },
- {
-  "text": "هَاء",
-  "hint": "Ha",
+  "text": "هَذَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
   "heard": [
-   "ها",
-   "هاي"
+   "هذا",
+   "هذه",
+   "ما هذا"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/n35a49a7d.mp3"
+  "file": "www/voice/app-758edac1.mp3"
  },
  {
-  "text": "هَ",
-  "hint": "ha",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/sf27e4b76.mp3"
- },
- {
-  "text": "هِ",
-  "hint": "hi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s36869348.mp3"
- },
- {
-  "text": "هُ",
-  "hint": "hu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/se5003bc2.mp3"
- },
- {
-  "text": "يَاء",
-  "hint": "Ya",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/nb371622b.mp3"
- },
- {
-  "text": "يَ",
-  "hint": "ya",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s7ff1508c.mp3"
- },
- {
-  "text": "يِ",
-  "hint": "yi",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/s254b8c9d.mp3"
- },
- {
-  "text": "يُ",
-  "hint": "yu",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/seff307e0.mp3"
- },
- {
-  "text": "دٌ",
-  "hint": "dun",
+  "text": "وَمَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
   "heard": [
-   "دي",
-   "بي"
+   "وما",
+   "و ما"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/s2992554a.mp3"
+  "file": "www/voice/app-6c7b6c07.mp3"
  },
  {
-  "text": "كٌ",
-  "hint": "kun",
+  "text": "كُنَّا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
+  "heard": [
+   "كله",
+   "كل",
+   "كندا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-f69651a7.mp3"
+ },
+ {
+  "text": "لَهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/s51122c85.mp3"
+  "file": "www/voice/app-4a137d9f.mp3"
  },
  {
-  "text": "رٌ",
-  "hint": "run",
+  "text": "مُقْرِنِينَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
+  "heard": [
+   "مقرنين",
+   "مكرمين",
+   "مكرميه"
+  ],
+  "ok": true,
+  "file": "www/voice/app-b375bc04.mp3"
+ },
+ {
+  "text": "وَإِنَّا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
+  "heard": [
+   "وان",
+   "وانا",
+   "‏wayne"
+  ],
+  "ok": false,
+  "file": "www/voice/app-162fb2d3.mp3"
+ },
+ {
+  "text": "إِلَى",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/se99189e2.mp3"
+  "file": "www/voice/app-4cda1d0c.mp3"
  },
  {
-  "text": "مٌ",
-  "hint": "mun",
+  "text": "رَبِّنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
+  "heard": [
+   "ربنا",
+   "وربنا"
+  ],
+  "ok": true,
+  "file": "www/voice/app-2b4ada2c.mp3"
+ },
+ {
+  "text": "لَمُنْقَلِبُونَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Naik Kendaraan",
+  "heard": [
+   "لمنقلبون"
+  ],
+  "ok": true,
+  "file": "www/voice/app-d6eed5fe.mp3"
+ },
+ {
+  "text": "رَبِّ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Belajar",
+  "heard": [
+   "ربي",
+   "ربى",
+   "يا ربي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-9c9b9519.mp3"
+ },
+ {
+  "text": "زِدْنِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Belajar",
+  "heard": [
+   "زدني",
+   "جذبني",
+   "ديزني"
+  ],
+  "ok": true,
+  "file": "www/voice/app-4074c358.mp3"
+ },
+ {
+  "text": "عِلْمًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Belajar",
+  "heard": [
+   "علما",
+   "علم",
+   "علماء"
+  ],
+  "ok": true,
+  "file": "www/voice/app-80a01b03.mp3"
+ },
+ {
+  "text": "أَطْعَمَنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sesudah Makan",
+  "heard": [
+   "اطعمنا",
+   "اطعمني",
+   "مطعمنا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-5f212ce0.mp3"
+ },
+ {
+  "text": "وَسَقَانَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sesudah Makan",
+  "heard": [
+   "وسقانا",
+   "واثق انا",
+   "وثقال"
+  ],
+  "ok": true,
+  "file": "www/voice/app-4beb64a6.mp3"
+ },
+ {
+  "text": "وَجَعَلَنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sesudah Makan",
+  "heard": [
+   "وجعلنا",
+   "و جعلنا",
+   "وجعلناه"
+  ],
+  "ok": true,
+  "file": "www/voice/app-1ed24762.mp3"
+ },
+ {
+  "text": "مُسْلِمِينَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sesudah Makan",
+  "heard": [
+   "المسلمين",
+   "مسلمين",
+   "تسلمين"
+  ],
+  "ok": true,
+  "file": "www/voice/app-c3f154a7.mp3"
+ },
+ {
+  "text": "صَيِّبًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Ketika Hujan",
+  "heard": [
+   "طيب",
+   "طيبا",
+   "طيب ا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-7c1e4d50.mp3"
+ },
+ {
+  "text": "نَافِعًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Ketika Hujan",
+  "heard": [
+   "نفى عنه",
+   "ليش يعني",
+   "نفي عنه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-014c2470.mp3"
+ },
+ {
+  "text": "وَلَجْنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Masuk Rumah",
+  "heard": [
+   "ولا جنه",
+   "ولا الجنه",
+   "ولجنه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-f413c38f.mp3"
+ },
+ {
+  "text": "وَبِسْمِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Masuk Rumah",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/s536476d7.mp3"
+  "file": "www/voice/app-a4a41c95.mp3"
  },
  {
-  "text": "لٌ",
-  "hint": "lun",
+  "text": "خَرَجْنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Masuk Rumah",
   "heard": [
-   "لاي",
-   "لايك",
-   "لايف"
+   "خرجنا",
+   "خرجني",
+   "خارجنا"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/s84460944.mp3"
+  "file": "www/voice/app-ee71f990.mp3"
  },
  {
-  "text": "بَا",
-  "hint": "baa",
+  "text": "وَعَلَى",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Masuk Rumah",
   "heard": [
-   "باء",
-   "ب",
-   "باع"
+   "واحد",
+   "1"
+  ],
+  "ok": false,
+  "file": "www/voice/app-2c3b3a5c.mp3"
+ },
+ {
+  "text": "تَوَكَّلْنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Masuk Rumah",
+  "heard": [
+   "توكلنا",
+   "توك لنا"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/s52dff1df.mp3"
+  "file": "www/voice/app-974fb392.mp3"
  },
  {
-  "text": "بٌ",
-  "hint": "bun",
+  "text": "أَمْسَيْنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Dzikir Sore",
+  "heard": [
+   "امسينا",
+   "ام سينا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-a79c78b4.mp3"
+ },
+ {
+  "text": "وَأَمْسَى",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Dzikir Sore",
+  "heard": [
+   "وامسح",
+   "وامسى",
+   "وامسي"
+  ],
+  "ok": false,
+  "file": "www/voice/app-a5e2b42e.mp3"
+ },
+ {
+  "text": "الْمُلْكُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Dzikir Sore",
+  "heard": [
+   "الملك",
+   "الملكه",
+   "الملكي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-b08b77c2.mp3"
+ },
+ {
+  "text": "وَالْحَمْدُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Dzikir Sore",
+  "heard": [
+   "والحمد",
+   "والحمد لله",
+   "والحمدلله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-c83e2c83.mp3"
+ },
+ {
+  "text": "اغْفِرْ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa untuk Orang Tua",
+  "heard": [
+   "يغفر",
+   "استغفر",
+   "يخسر"
+  ],
+  "ok": false,
+  "file": "www/voice/app-9633042b.mp3"
+ },
+ {
+  "text": "لِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa untuk Orang Tua",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/s3216d1ef.mp3"
+  "file": "www/voice/app-1825874d.mp3"
  },
  {
-  "text": "فِي",
-  "hint": "fii",
+  "text": "وَلِوَالِدَيَّ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa untuk Orang Tua",
+  "heard": [
+   "ولوالدي",
+   "ولوالديه",
+   "و لوالدي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-3dc583f4.mp3"
+ },
+ {
+  "text": "وَارْحَمْهُمَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa untuk Orang Tua",
+  "heard": [
+   "وارحمهما",
+   "و ارحمهما",
+   "وارحمهم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-b9ccd451.mp3"
+ },
+ {
+  "text": "كَمَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa untuk Orang Tua",
+  "heard": [
+   "كما",
+   "كم",
+   "كمان"
+  ],
+  "ok": true,
+  "file": "www/voice/app-3d87b60d.mp3"
+ },
+ {
+  "text": "رَبَّيَانِي",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa untuk Orang Tua",
+  "heard": [
+   "ربياني",
+   "روبيان",
+   "ربيان"
+  ],
+  "ok": true,
+  "file": "www/voice/app-acb5fd3d.mp3"
+ },
+ {
+  "text": "صَغِيرًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa untuk Orang Tua",
+  "heard": [
+   "صغيرا",
+   "صغيرات",
+   "صغير"
+  ],
+  "ok": true,
+  "file": "www/voice/app-7a0514b4.mp3"
+ },
+ {
+  "text": "اللَّهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Tasbih Sebelum Tidur",
+  "heard": [
+   "الله",
+   "و الله",
+   "الو"
+  ],
+  "ok": true,
+  "file": "www/voice/app-76bf7183.mp3"
+ },
+ {
+  "text": "أَكْبَرُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Tasbih Sebelum Tidur",
+  "heard": [
+   "اكبر",
+   "اكبروا",
+   "اكبر و"
+  ],
+  "ok": false,
+  "file": "www/voice/app-a1b59d06.mp3"
+ },
+ {
+  "text": "بِاسْمِكَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sebelum Tidur",
+  "heard": [
+   "بسمك",
+   "باسمك",
+   "بس مكه"
+  ],
+  "ok": true,
+  "file": "www/voice/app-2e653adc.mp3"
+ },
+ {
+  "text": "أَحْيَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sebelum Tidur",
+  "heard": [
+   "احيه",
+   "احياء",
+   "احيا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-0e7f78a7.mp3"
+ },
+ {
+  "text": "وَبِاسْمِكَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sebelum Tidur",
+  "heard": [
+   "وايش اسمك",
+   "واسمك",
+   "شو اسمك"
+  ],
+  "ok": false,
+  "file": "www/voice/app-a73cc931.mp3"
+ },
+ {
+  "text": "أَمُوتُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "kata dari Doa Sebelum Tidur",
+  "heard": [
+   "اموت",
+   "حمود",
+   "موت"
+  ],
+  "ok": true,
+  "file": "www/voice/app-ee76cf46.mp3"
+ },
+ {
+  "text": "Beruang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Teddy",
+  "heard": [
+   "beruang"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-3a9c5ca2.mp3"
+ },
+ {
+  "text": "Sandal!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Sandals",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/seca34af7.mp3"
+  "file": "www/voice/cari-4d9a25fb.mp3"
  },
  {
-  "text": "بَيْ",
-  "hint": "bai",
+  "text": "Bantal!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Pillow",
   "heard": [
-   "باي",
-   "بيبي",
-   "باي باي"
+   "bantal",
+   "batal"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/s06550264.mp3"
+  "file": "www/voice/cari-74ac894e.mp3"
  },
  {
-  "text": "تٌ",
-  "hint": "tun",
+  "text": "Lentera!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Lantern",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/saa6bdd2c.mp3"
+  "file": "www/voice/cari-60f764fc.mp3"
  },
  {
-  "text": "شَمْ",
-  "hint": "syam",
+  "text": "Sikat!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Brush",
+  "heard": [
+   "tidak",
+   "cicak",
+   "ikan"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-a5baa591.mp3"
+ },
+ {
+  "text": "Baby Mo!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Baby Mo",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/sd5adfa4f.mp3"
+  "file": "www/voice/cari-05c2b7bc.mp3"
  },
  {
-  "text": "سٌ",
-  "hint": "sun",
+  "text": "Sajadah!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Prayer Mat",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/s9569d213.mp3"
+  "file": "www/voice/cari-d4b8e45d.mp3"
  },
  {
-  "text": "تَا",
-  "hint": "taa",
+  "text": "Kurma!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Dates",
+  "heard": [
+   "purba",
+   "kurban"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-613188d9.mp3"
+ },
+ {
+  "text": "Buku!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Book",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/s63a1e74a.mp3"
+  "file": "www/voice/cari-6b10a674.mp3"
  },
  {
-  "text": "أَسَدٌ",
-  "hint": "asadun (singa)",
-  "heard": [
-   "اسد",
-   "اسدد",
-   "حسدوه"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w2f146826.mp3"
- },
- {
-  "text": "سَمَكٌ",
-  "hint": "samakun (ikan)",
-  "heard": [
-   "سمك",
-   "سمعكم",
-   "سمكو"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/w85595fc6.mp3"
- },
- {
-  "text": "قَمَرٌ",
-  "hint": "qamarun (bulan)",
-  "heard": [
-   "قمر",
-   "خمر",
-   "قمرون"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/wd1bb9ee8.mp3"
- },
- {
-  "text": "قَلَمٌ",
-  "hint": "qalamun (pensil)",
-  "heard": [
-   "فيلم",
-   "قلم"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/wc5cd3bad.mp3"
- },
- {
-  "text": "جَمَلٌ",
-  "hint": "jamalun (unta)",
-  "heard": [
-   "جمل",
-   "جملون",
-   "جمال"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/w8e17efc8.mp3"
- },
- {
-  "text": "بَابٌ",
-  "hint": "baabun (pintu)",
-  "heard": [
-   "ايفون",
-   "تليفون",
-   "ليفربول"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/wb7831c1d.mp3"
- },
- {
-  "text": "فِيلٌ",
-  "hint": "fiilun (gajah)",
+  "text": "Susu!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Milk",
   "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/w94d5c87f.mp3"
+  "file": "www/voice/cari-393cec4b.mp3"
  },
  {
-  "text": "بَيْتٌ",
-  "hint": "baitun (rumah)",
-  "heard": [
-   "بيت",
-   "بيتنا",
-   "بن تن"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/wf681630e.mp3"
- },
- {
-  "text": "شَمْسٌ",
-  "hint": "syamsun (matahari)",
-  "heard": [
-   "شمس",
-   "الشمس",
-   "سمس"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/w90fac5bf.mp3"
- },
- {
-  "text": "كِتَابٌ",
-  "hint": "kitaabun (buku)",
-  "heard": [
-   "كتاب",
-   "كتابه"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/wedbacf7a.mp3"
- },
- {
-  "text": "أَسَد",
-  "hint": "Singa",
-  "heard": [
-   "حسن",
-   "حسد",
-   "اسد"
-  ],
+  "text": "Bulan!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Moon",
+  "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/w1c5e4187.mp3"
+  "file": "www/voice/cari-1f38e435.mp3"
  },
  {
-  "text": "بَطَّة",
-  "hint": "Bebek",
+  "text": "Bintang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Star",
   "heard": [
-   "بطه",
-   "قطه"
+   "Bintang"
   ],
+  "ok": true,
+  "file": "www/voice/cari-37b62fc9.mp3"
+ },
+ {
+  "text": "Awan!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cloud",
+  "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/w8e564662.mp3"
+  "file": "www/voice/cari-58524d95.mp3"
  },
  {
-  "text": "تُفَّاح",
-  "hint": "Apel",
-  "heard": [
-   "تفاح",
-   "تفاحه",
-   "كفاح"
-  ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/w18335806.mp3"
- },
- {
-  "text": "ثَعْلَب",
-  "hint": "Rubah",
-  "heard": [
-   "صالح",
-   "صار"
-  ],
+  "text": "Kunang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Firefly",
+  "heard": [],
   "ok": false,
-  "file": "www/hijaiyah-voice/w357b8e07.mp3"
+  "file": "www/voice/cari-8b3f1938.mp3"
  },
  {
-  "text": "جَمَل",
-  "hint": "Unta",
+  "text": "Bunga!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Flower",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-dacd72e9.mp3"
+ },
+ {
+  "text": "Balon!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Balloon",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-3d986b8b.mp3"
+ },
+ {
+  "text": "Samosa!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Samosa",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-2a5a9f05.mp3"
+ },
+ {
+  "text": "Kue!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cake",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-dae69a61.mp3"
+ },
+ {
+  "text": "Minum!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Drink",
   "heard": [
-   "جمل",
-   "جمله",
-   "جمال"
+   "minum",
+   "Mino",
+   "Dino"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/wa752b045.mp3"
+  "file": "www/voice/cari-88763583.mp3"
  },
  {
-  "text": "حِصَان",
-  "hint": "Kuda",
+  "text": "Bedug!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Drum",
   "heard": [
-   "حصان",
-   "خيطان",
-   "صيصان"
+   "biru",
+   "Bedu",
+   "aduh"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/w020df849.mp3"
+  "file": "www/voice/cari-e81cd815.mp3"
  },
  {
-  "text": "خُبْز",
-  "hint": "Roti",
+  "text": "Tasbih!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Prayer Beads",
   "heard": [
-   "خبز",
-   "خبزه",
-   "خبز بر"
+   "tasbih",
+   "FB"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/w50dfd99a.mp3"
+  "file": "www/voice/cari-e97f1e36.mp3"
  },
  {
-  "text": "دُبّ",
+  "text": "Kucing!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cat",
+  "heard": [
+   "kucing",
+   "Kuching"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-25e57214.mp3"
+ },
+ {
+  "text": "Rehal!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Quran Stand",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-68b538a7.mp3"
+ },
+ {
+  "text": "Teko!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Teapot",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ecf2ea40.mp3"
+ },
+ {
+  "text": "Panci!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Pot",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-4fa825b3.mp3"
+ },
+ {
+  "text": "Apel!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Apple",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-acaeb3e0.mp3"
+ },
+ {
+  "text": "Roti!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Bread",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-536a215e.mp3"
+ },
+ {
+  "text": "Sendok!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Spoon",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-c2e6650e.mp3"
+ },
+ {
+  "text": "Globe!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Globe",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-e58b59dd.mp3"
+ },
+ {
+  "text": "Krayon!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Crayons",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-c5e59435.mp3"
+ },
+ {
+  "text": "Penggaris!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Ruler",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-1f259a5b.mp3"
+ },
+ {
+  "text": "Gunting!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Scissors",
+  "heard": [
+   "gunting"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-eb0e9394.mp3"
+ },
+ {
+  "text": "Pensil!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Pencil",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-4457faa6.mp3"
+ },
+ {
+  "text": "Ikan!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Fish",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ce9a2303.mp3"
+ },
+ {
+  "text": "Bola!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Ball",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-680607cf.mp3"
+ },
+ {
+  "text": "Kerang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Shell",
+  "heard": [
+   "kerang",
+   "sekarang",
+   "perang"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-461ca794.mp3"
+ },
+ {
+  "text": "Kepiting!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Crab",
+  "heard": [
+   "kepiting"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-93737eb8.mp3"
+ },
+ {
+  "text": "Ember!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Bucket",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-2d10eadc.mp3"
+ },
+ {
+  "text": "Monyet!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Monkey",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-d79638c8.mp3"
+ },
+ {
+  "text": "Burung!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Bird",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-dc2ba83d.mp3"
+ },
+ {
+  "text": "Singa!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Lion",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-0c75c311.mp3"
+ },
+ {
+  "text": "Jerapah!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Giraffe",
+  "heard": [
+   "jerapah",
+   "jerapa"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-1c92d082.mp3"
+ },
+ {
+  "text": "Gajah!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Elephant",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-5cda70e8.mp3"
+ },
+ {
+  "text": "Layang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Kite",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-3f390091.mp3"
+ },
+ {
+  "text": "Sepeda!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Bike",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-b87943e9.mp3"
+ },
+ {
+  "text": "Es Krim!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Ice Cream",
+  "heard": [
+   "es krim",
+   "kirim",
+   "krim"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-cfab3a1e.mp3"
+ },
+ {
+  "text": "Jagung!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Corn",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-f6d994ae.mp3"
+ },
+ {
+  "text": "Telur!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Egg",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-889c2d8c.mp3"
+ },
+ {
+  "text": "Sapi!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cow",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-347d84f9.mp3"
+ },
+ {
+  "text": "Wortel!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Carrot",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-9682dec4.mp3"
+ },
+ {
+  "text": "Ayam!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Chicken",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-a1127632.mp3"
+ },
+ {
+  "text": "Kura-kura!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Turtle",
+  "heard": [
+   "kura-kura",
+   "kura kura"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-6d791c80.mp3"
+ },
+ {
+  "text": "Gurita!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Octopus",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-324e772e.mp3"
+ },
+ {
+  "text": "Bintang Laut!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Starfish",
+  "heard": [
+   "bintang laut"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-7928ee52.mp3"
+ },
+ {
+  "text": "Puzzle!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Puzzle",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-cc08b617.mp3"
+ },
+ {
+  "text": "Teropong!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Telescope",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-9b40ef45.mp3"
+ },
+ {
+  "text": "Kaca Pembesar!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Magnifier",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-4ad36a00.mp3"
+ },
+ {
+  "text": "Peta!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Map",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-8d1ad65d.mp3"
+ },
+ {
+  "text": "Tas!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Backpack",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-7d271332.mp3"
+ },
+ {
+  "text": "Tiket!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Ticket",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-0ee98cc3.mp3"
+ },
+ {
+  "text": "Topi!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cap",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-437d4262.mp3"
+ },
+ {
+  "text": "Payung!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Umbrella",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-d54b52dd.mp3"
+ },
+ {
+  "text": "Koper!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Suitcase",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-48e8a768.mp3"
+ },
+ {
+  "text": "Pisang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Banana",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-acd0c6c5.mp3"
+ },
+ {
+  "text": "Burung Hantu!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Owl",
+  "heard": [
+   "burung hantu"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-87a81689.mp3"
+ },
+ {
+  "text": "Senter!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Flashlight",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-4aa07477.mp3"
+ },
+ {
+  "text": "Kompas!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Compass",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-96124d05.mp3"
+ },
+ {
+  "text": "Sepatu Bot!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Boots",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-d8f083ea.mp3"
+ },
+ {
+  "text": "Katak!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Frog",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-de08585d.mp3"
+ },
+ {
+  "text": "Madu!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Honey",
+  "heard": [
+   "aduh",
+   "madu"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-30632d66.mp3"
+ },
+ {
+  "text": "Stroberi!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Strawberry",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-eba5fbbb.mp3"
+ },
+ {
+  "text": "Donat!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Donut",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-dd735b8f.mp3"
+ },
+ {
+  "text": "Kue Mangkok!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cupcake",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-3395ca0d.mp3"
+ },
+ {
+  "text": "Kue Kering!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cookie",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-8afd0db9.mp3"
+ },
+ {
+  "text": "Kepik!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Ladybug",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-28d93efa.mp3"
+ },
+ {
+  "text": "Siput!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Snail",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-83d11dfc.mp3"
+ },
+ {
+  "text": "Jamur!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Mushroom",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-7aa5036b.mp3"
+ },
+ {
+  "text": "Bebek!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Duck",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-309a23d0.mp3"
+ },
+ {
+  "text": "Perahu!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Boat",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-da8e5fc1.mp3"
+ },
+ {
+  "text": "Kelapa!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Coconut",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-c0fbd088.mp3"
+ },
+ {
+  "text": "Nanas!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Pineapple",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-6f1d6fe5.mp3"
+ },
+ {
+  "text": "Semangka!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Watermelon",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-1d3c025f.mp3"
+ },
+ {
+  "text": "Mangga!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Mango",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-68aad579.mp3"
+ },
+ {
+  "text": "Teratai!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Lotus",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-b55f8f96.mp3"
+ },
+ {
+  "text": "Kaus Kaki!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Sock",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-b5a48af8.mp3"
+ },
+ {
+  "text": "Tanaman!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Plant",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-1ea0f1c0.mp3"
+ },
+ {
+  "text": "Kupu-kupu!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Butterfly",
+  "heard": [
+   "kupu-kupu"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-0095ec18.mp3"
+ },
+ {
+  "text": "Permen!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Candy",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-d54e805b.mp3"
+ },
+ {
+  "text": "Merpati!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Dove",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-7cd80739.mp3"
+ },
+ {
+  "text": "Palet!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Paints",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-94bfc782.mp3"
+ },
+ {
+  "text": "Lumba-lumba!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Dolphin",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-af80b3cc.mp3"
+ },
+ {
+  "text": "Zebra!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Zebra",
+  "heard": [
+   "Libra",
+   "zebra",
+   "dibra"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-af8e5cc6.mp3"
+ },
+ {
+  "text": "Yoyo!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Yo-yo",
+  "heard": [
+   "Yoyo",
+   "oyo",
+   "yo yo"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-b9da8513.mp3"
+ },
+ {
+  "text": "Domba!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Sheep",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-100d9227.mp3"
+ },
+ {
+  "text": "Paus!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Whale",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-0e0e7ec9.mp3"
+ },
+ {
+  "text": "Buku Catatan!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Notebook",
+  "heard": [
+   "buku catatan",
+   "buku",
+   "buku catatannya"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-575cbac6.mp3"
+ },
+ {
+  "text": "Jus!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Juice",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-a3172060.mp3"
+ },
+ {
+  "text": "Landak!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Hedgehog",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-4a6493cc.mp3"
+ },
+ {
+  "text": "Lolipop!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Lollipop",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-e65057a6.mp3"
+ },
+ {
+  "text": "Bunga Matahari!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Sunflower",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-595bbb52.mp3"
+ },
+ {
+  "text": "Jeruk!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Orange",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-d1222f5b.mp3"
+ },
+ {
+  "text": "Teddy!",
+  "lang": "en",
+  "sec": "cari",
   "hint": "Beruang",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w610a6afa.mp3"
- },
- {
-  "text": "ذُرَة",
-  "hint": "Jagung",
   "heard": [
-   "ذره",
-   "زهره",
-   "ذرا"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w271bdfde.mp3"
- },
- {
-  "text": "رِيشَة",
-  "hint": "Bulu",
-  "heard": [
-   "ريشه",
-   "ريشي",
-   "ريشو"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w1fb7f9ad.mp3"
- },
- {
-  "text": "زَرَافَة",
-  "hint": "Jerapah",
-  "heard": [
-   "زرافه",
-   "زخرفه",
-   "الزرافه"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/wd1a7032b.mp3"
- },
- {
-  "text": "سَمَك",
-  "hint": "Ikan",
-  "heard": [
-   "سمك",
-   "السمك",
-   "اسمك"
+   "Teddy",
+   "teddi",
+   "Teddie"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/we952b04f.mp3"
+  "file": "www/voice/cari-4b39be9b.mp3"
  },
  {
-  "text": "شَمْس",
-  "hint": "Matahari",
+  "text": "Sandals!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sandal",
   "heard": [
-   "شمس",
-   "الشمس"
+   "sandals"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/wcf920f89.mp3"
+  "file": "www/voice/cari-43d5a0f1.mp3"
  },
  {
-  "text": "صَقْر",
-  "hint": "Elang",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w8a372803.mp3"
- },
- {
-  "text": "ضِفْدَع",
-  "hint": "Katak",
+  "text": "Pillow!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bantal",
   "heard": [
-   "بيتزا",
-   "دقدا",
-   "جده"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w09873334.mp3"
- },
- {
-  "text": "طَائِرَة",
-  "hint": "Pesawat",
-  "heard": [
-   "طائره",
-   "طاءره",
-   "الطائره"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/wa9ce5a6f.mp3"
- },
- {
-  "text": "ظَرْف",
-  "hint": "Amplop",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w310b4e96.mp3"
- },
- {
-  "text": "عِنَب",
-  "hint": "Anggur",
-  "heard": [
-   "عنب",
-   "عينك",
-   "عنك"
+   "pillow"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/w76e0e165.mp3"
+  "file": "www/voice/cari-f59bde38.mp3"
  },
  {
-  "text": "غَيْمَة",
-  "hint": "Awan",
+  "text": "Lantern!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Lentera",
   "heard": [
-   "غيمه",
-   "ريمي",
-   "خيمه"
+   "winter",
+   "Wintour",
+   "Wynter"
   ],
   "ok": false,
-  "file": "www/hijaiyah-voice/w25ea4038.mp3"
+  "file": "www/voice/cari-197e73a1.mp3"
  },
  {
-  "text": "فِيل",
-  "hint": "Gajah",
+  "text": "Brush!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sikat",
   "heard": [
-   "فيلم",
-   "فيل",
-   "فير"
+   "brush",
+   "brushx",
+   "brusch"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/wf4cac43d.mp3"
+  "file": "www/voice/cari-3e079f64.mp3"
  },
  {
-  "text": "قَمَر",
+  "text": "Baby Mo!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Baby Mo",
+  "heard": [
+   "Baby Mo",
+   "baby Moe",
+   "baby mow"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-aa33d684.mp3"
+ },
+ {
+  "text": "Prayer Mat!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sajadah",
+  "heard": [
+   "prayer mat",
+   "prayer Matt",
+   "prayer matte"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-edb41f85.mp3"
+ },
+ {
+  "text": "Dates!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kurma",
+  "heard": [
+   "dates",
+   "datayze",
+   "daitz"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f777ad6a.mp3"
+ },
+ {
+  "text": "Book!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Buku",
+  "heard": [
+   "book",
+   "booked",
+   "buk"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-a847cc9b.mp3"
+ },
+ {
+  "text": "Milk!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Susu",
+  "heard": [
+   "milk",
+   "mielke",
+   "milck"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-c216c84a.mp3"
+ },
+ {
+  "text": "Moon!",
+  "lang": "en",
+  "sec": "cari",
   "hint": "Bulan",
   "heard": [
-   "قمر",
-   "يا قمر",
-   "خمر"
+   "Moon",
+   "moong",
+   "Moone"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/wf921446b.mp3"
+  "file": "www/voice/cari-dc0f12bf.mp3"
  },
  {
-  "text": "كِتَاب",
-  "hint": "Buku",
-  "heard": [],
-  "ok": false,
-  "file": "www/hijaiyah-voice/w110b12ce.mp3"
- },
- {
-  "text": "لَيْمُون",
-  "hint": "Lemon",
+  "text": "Star!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bintang",
   "heard": [
-   "ليمون",
-   "ليمونه",
-   "ليمو"
+   ""
   ],
-  "ok": true,
-  "file": "www/hijaiyah-voice/w8465e9c8.mp3"
+  "ok": false,
+  "file": "www/voice/cari-7cc936bf.mp3"
  },
  {
-  "text": "مَوْز",
+  "text": "Cloud!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Awan",
+  "heard": [
+   "cloud",
+   "klaud",
+   "kloud"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-dbab2174.mp3"
+ },
+ {
+  "text": "Firefly!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kunang",
+  "heard": [
+   "Firefly",
+   "fyerfly",
+   "fyrefly"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-c3e71f0b.mp3"
+ },
+ {
+  "text": "Flower!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bunga",
+  "heard": [
+   "flower",
+   "flour",
+   "floer"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-4e391809.mp3"
+ },
+ {
+  "text": "Balloon!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Balon",
+  "heard": [
+   "balloon",
+   "baloon",
+   "baloun"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-457f109f.mp3"
+ },
+ {
+  "text": "Samosa!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Samosa",
+  "heard": [
+   "samosa",
+   "Somoza",
+   "samossa"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d3e6ffe2.mp3"
+ },
+ {
+  "text": "Cake!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kue",
+  "heard": [
+   "cake",
+   "Kake",
+   "kek"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-ca629d78.mp3"
+ },
+ {
+  "text": "Drink!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Minum",
+  "heard": [
+   "drink",
+   "dringk",
+   "drynk"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-ded480fe.mp3"
+ },
+ {
+  "text": "Drum!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bedug",
+  "heard": [
+   "Durham",
+   "dirham",
+   "durum"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-0eeb5f2c.mp3"
+ },
+ {
+  "text": "Prayer Beads!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Tasbih",
+  "heard": [
+   "prayer beads",
+   "preyer beads",
+   "prayer beeds"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-7700cda8.mp3"
+ },
+ {
+  "text": "Cat!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kucing",
+  "heard": [
+   "cat",
+   "Kat",
+   "Khat"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-df1d5c97.mp3"
+ },
+ {
+  "text": "Quran Stand!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Rehal",
+  "heard": [
+   "Quran stand",
+   "Kuran stand",
+   "Quran stanned"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-c0ad4cfa.mp3"
+ },
+ {
+  "text": "Teapot!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Teko",
+  "heard": [
+   "teapot"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-cb53b946.mp3"
+ },
+ {
+  "text": "Pot!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Panci",
+  "heard": [
+   "pot",
+   "Pott",
+   "paat"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-e66072e9.mp3"
+ },
+ {
+  "text": "Apple!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Apel",
+  "heard": [
+   "Apple",
+   "Appel",
+   "apal"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-a07ab697.mp3"
+ },
+ {
+  "text": "Bread!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Roti",
+  "heard": [
+   "bread",
+   "bred",
+   "breadt"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-33ad2b35.mp3"
+ },
+ {
+  "text": "Spoon!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sendok",
+  "heard": [
+   "spoon",
+   "tspoon",
+   "spoone"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-2577eb6c.mp3"
+ },
+ {
+  "text": "Globe!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Globe",
+  "heard": [
+   "globe",
+   "glowb"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f4385111.mp3"
+ },
+ {
+  "text": "Crayons!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Krayon",
+  "heard": [
+   "crayons",
+   "crayones",
+   "krayons"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-440e62e6.mp3"
+ },
+ {
+  "text": "Ruler!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Penggaris",
+  "heard": [
+   "ruler",
+   "rouleur",
+   "ruhlar"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f547269e.mp3"
+ },
+ {
+  "text": "Scissors!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Gunting",
+  "heard": [
+   "scissors",
+   "scissorss"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-9b1620b9.mp3"
+ },
+ {
+  "text": "Pencil!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Pensil",
+  "heard": [
+   "pencil"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-6053b06e.mp3"
+ },
+ {
+  "text": "Fish!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Ikan",
+  "heard": [
+   "fish",
+   "Phish",
+   "fisch"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f3c62702.mp3"
+ },
+ {
+  "text": "Ball!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bola",
+  "heard": [
+   "ball",
+   "Bal",
+   "Baal"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-282961f0.mp3"
+ },
+ {
+  "text": "Shell!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kerang",
+  "heard": [
+   "shell",
+   "shale",
+   "Schell"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-ee0930cf.mp3"
+ },
+ {
+  "text": "Crab!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kepiting",
+  "heard": [
+   "crab",
+   "Krab",
+   "Crabbe"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-505a7305.mp3"
+ },
+ {
+  "text": "Bucket!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Ember",
+  "heard": [
+   "bucket",
+   "Bukkit",
+   "buckett"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-21de7539.mp3"
+ },
+ {
+  "text": "Monkey!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Monyet",
+  "heard": [
+   "monkey",
+   "monkee",
+   "munki"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-2b798c24.mp3"
+ },
+ {
+  "text": "Bird!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Burung",
+  "heard": [
+   "bird",
+   "Byrd",
+   "berd"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-043e8d6f.mp3"
+ },
+ {
+  "text": "Lion!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Singa",
+  "heard": [
+   "lion",
+   "Lyon",
+   "Lian"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-2a7a4c14.mp3"
+ },
+ {
+  "text": "Giraffe!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Jerapah",
+  "heard": [
+   "giraffe"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-725128c1.mp3"
+ },
+ {
+  "text": "Elephant!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Gajah",
+  "heard": [
+   "elephant",
+   "elefant",
+   "elifant"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-cfd85e1f.mp3"
+ },
+ {
+  "text": "Kite!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Layang",
+  "heard": [
+   "kite",
+   "kyte",
+   "khaite"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-93f14760.mp3"
+ },
+ {
+  "text": "Bike!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sepeda",
+  "heard": [
+   "bike",
+   "buyk",
+   "biked"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-c28a2ec2.mp3"
+ },
+ {
+  "text": "Ice Cream!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Es Krim",
+  "heard": [
+   "ice cream",
+   "ice Kream",
+   "iced cream"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-9cf9f6c1.mp3"
+ },
+ {
+  "text": "Corn!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Jagung",
+  "heard": [
+   "corn",
+   "Korn",
+   "quorn"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-33e823df.mp3"
+ },
+ {
+  "text": "Egg!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Telur",
+  "heard": [
+   "egg",
+   "egg'",
+   "eghe"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-c21b1707.mp3"
+ },
+ {
+  "text": "Cow!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sapi",
+  "heard": [
+   "cow"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d3b80096.mp3"
+ },
+ {
+  "text": "Carrot!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Wortel",
+  "heard": [
+   "carrot"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d76df334.mp3"
+ },
+ {
+  "text": "Chicken!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Ayam",
+  "heard": [
+   "chicken",
+   "chikn",
+   "chikin"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-b1f6b638.mp3"
+ },
+ {
+  "text": "Turtle!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kura-kura",
+  "heard": [
+   "turtle",
+   "turtl",
+   "tirtyl"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-44270dc6.mp3"
+ },
+ {
+  "text": "Octopus!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Gurita",
+  "heard": [
+   "octopus",
+   "octupus",
+   "oktopus"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-bf3549aa.mp3"
+ },
+ {
+  "text": "Starfish!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bintang Laut",
+  "heard": [
+   "starfish",
+   "starfish'"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-493f7934.mp3"
+ },
+ {
+  "text": "Puzzle!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Puzzle",
+  "heard": [
+   "puzzle",
+   "puzzel"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-56a1a4a8.mp3"
+ },
+ {
+  "text": "Telescope!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Teropong",
+  "heard": [
+   "telescope",
+   "teleskope"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f1dbc168.mp3"
+ },
+ {
+  "text": "Magnifier!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kaca Pembesar",
+  "heard": [
+   "magnifier"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-cd907f91.mp3"
+ },
+ {
+  "text": "Map!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Peta",
+  "heard": [
+   "map",
+   "Mapp",
+   "mmap"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-a836b768.mp3"
+ },
+ {
+  "text": "Backpack!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Tas",
+  "heard": [
+   "backpack",
+   "bacpac",
+   "back-pack"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-74e3246a.mp3"
+ },
+ {
+  "text": "Ticket!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Tiket",
+  "heard": [
+   "ticket",
+   "tiket",
+   "tickit"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-b9330431.mp3"
+ },
+ {
+  "text": "Cap!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Topi",
+  "heard": [
+   "cap",
+   "Capp",
+   "Kap"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-08d82572.mp3"
+ },
+ {
+  "text": "Umbrella!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Payung",
+  "heard": [
+   "umbrella"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d0c10915.mp3"
+ },
+ {
+  "text": "Suitcase!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Koper",
+  "heard": [
+   "suitcase"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-76c50e82.mp3"
+ },
+ {
+  "text": "Banana!",
+  "lang": "en",
+  "sec": "cari",
   "hint": "Pisang",
   "heard": [
-   "موز",
-   "موزه",
-   "موزي"
+   "banana",
+   "buonanno",
+   "bananna"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/wb5add438.mp3"
+  "file": "www/voice/cari-9d9310ff.mp3"
  },
  {
-  "text": "نَحْلَة",
-  "hint": "Lebah",
+  "text": "Owl!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Burung Hantu",
   "heard": [
-   "نحله",
-   "نحل",
-   "رحله"
+   "owl",
+   "ow",
+   "oew"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/w5853d648.mp3"
+  "file": "www/voice/cari-72ea62f0.mp3"
  },
  {
-  "text": "وَرْدَة",
-  "hint": "Mawar",
+  "text": "Flashlight!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Senter",
   "heard": [
-   "ورده",
-   "وردات"
-  ],
-  "ok": false,
-  "file": "www/hijaiyah-voice/wdcd4460f.mp3"
- },
- {
-  "text": "هِلَال",
-  "hint": "Bulan sabit",
-  "heard": [
-   "هلال",
-   "الهلال",
-   "هلا"
+   "flashlight"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/wb703e647.mp3"
+  "file": "www/voice/cari-6e728220.mp3"
  },
  {
-  "text": "يَد",
-  "hint": "Tangan",
+  "text": "Compass!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kompas",
   "heard": [
-   "يب",
-   "يد",
-   "‏y"
+   "compass"
   ],
   "ok": true,
-  "file": "www/hijaiyah-voice/wd1a4397f.mp3"
+  "file": "www/voice/cari-c5bd3fdc.mp3"
  },
  {
-  "text": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
-  "hint": "Doa Bangun Tidur — Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr",
+  "text": "Boots!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sepatu Bot",
   "heard": [
-   "الحمد لله الذي احيانا بعدما اماتنا واليه النشور",
-   "الحمد لله الذي احيانا بعد ما اماتنا واليه النشور",
-   "الحمدلله الذي احيانا بعد ما اماتنا واليه النشور"
-  ],
-  "ok": false,
-  "file": "www/doa-voice/d-wakeup.mp3"
- },
- {
-  "text": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ",
-  "hint": "Masuk Kamar Mandi — Allāhumma innī a'ūdhu bika minal-khubthi wal-khabā'ith",
-  "heard": [
-   "اللهم اني اعوذ بك من الخبث والخبائث",
-   "اللهم اني اعوذ بك من الخبث و الخبائث",
-   "اللهم انى اعوذ بك من الخبث والخبائث"
-  ],
-  "ok": false,
-  "file": "www/doa-voice/d-bathroom_in.mp3"
- },
- {
-  "text": "غُفْرَانَكَ",
-  "hint": "Keluar Kamar Mandi — Ghufrānaka",
-  "heard": [
-   "غفرانك",
-   "غفران كيالي",
-   "غفرانك يا"
+   "boots",
+   "bootz",
+   "bouttes"
   ],
   "ok": true,
-  "file": "www/doa-voice/d-bathroom_out.mp3"
+  "file": "www/voice/cari-dc55b132.mp3"
  },
  {
-  "text": "بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
-  "hint": "Doa Keluar Rumah — Bismillāhi tawakkaltu 'alallāh, lā ḥaula wa lā quwwata illā billāh",
+  "text": "Frog!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Katak",
   "heard": [
-   "بسم الله توكلت على الله لا حول ولا قوه الا بالله",
-   "بسم الله توكلت على الله لا حول ولاقوه الا بالله"
-  ],
-  "ok": false,
-  "file": "www/doa-voice/d-leave_home.mp3"
- },
- {
-  "text": "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
-  "hint": "Doa Naik Kendaraan — Subḥānal-ladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn, wa innā ilā rabbinā lamunqalibūn",
-  "heard": [
-   "سبحان الذي سخر لنا هذا وما كنا له مقرنين وانا الى ربنا لمنقلبون",
-   "سبحان الذى سخر لنا هذا وما كنا له مقرنين وانا الى ربنا لمنقلبون"
-  ],
-  "ok": false,
-  "file": "www/doa-voice/d-vehicle.mp3"
- },
- {
-  "text": "رَبِّ زِدْنِي عِلْمًا",
-  "hint": "Doa Belajar — Rabbi zidnī 'ilmā",
-  "heard": [
-   "ربي زدني علما",
-   "يا ربي زدني علما"
-  ],
-  "ok": false,
-  "file": "www/doa-voice/d-study.mp3"
- },
- {
-  "text": "بِسْمِ اللَّهِ",
-  "hint": "Sebelum Makan — Bismillāh",
-  "heard": [
-   "بسم الله",
-   "بالله"
+   "frog",
+   "Frogg",
+   "phrog"
   ],
   "ok": true,
-  "file": "www/doa-voice/d-eating.mp3"
+  "file": "www/voice/cari-0cc123df.mp3"
  },
  {
-  "text": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
-  "hint": "Doa Sesudah Makan — Alhamdulillāhil-ladhī aṭ'amanā wa saqānā wa ja'alanā muslimīn",
+  "text": "Honey!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Madu",
   "heard": [
-   "الحمد لله الذي اطعمنا وسقانا وجعلنا مسلمين",
-   "الحمدلله الذي اطعمنا وسقانا وجعلنا مسلمين"
-  ],
-  "ok": false,
-  "file": "www/doa-voice/d-after_eat.mp3"
- },
- {
-  "text": "اللَّهُمَّ صَيِّبًا نَافِعًا",
-  "hint": "Doa Ketika Hujan — Allāhumma ṣayyiban nāfi'ā",
-  "heard": [
-   "اللهم صيبا نافعا"
+   "honey",
+   "Hunny",
+   "huni"
   ],
   "ok": true,
-  "file": "www/doa-voice/d-rain.mp3"
+  "file": "www/voice/cari-fb4a57ae.mp3"
  },
  {
-  "text": "بِسْمِ اللَّهِ وَلَجْنَا وَبِسْمِ اللَّهِ خَرَجْنَا وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا",
-  "hint": "Doa Masuk Rumah — Bismillāhi walajnā, wa bismillāhi kharajnā, wa 'alallāhi rabbinā tawakkalnā",
+  "text": "Strawberry!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Stroberi",
   "heard": [
-   "بسم الله ولجنا وبسم الله خرجنا وعلى الله ربنا توكلنا"
+   "strawberry",
+   "strobbery",
+   "strauberry"
   ],
   "ok": true,
-  "file": "www/doa-voice/d-enter_home.mp3"
+  "file": "www/voice/cari-c6f5a0cd.mp3"
  },
  {
-  "text": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ",
-  "hint": "Dzikir Sore — Amsainā wa amsal-mulku lillāh, walḥamdu lillāh",
+  "text": "Donut!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Donat",
   "heard": [
-   "امسينا وامسى الملك لله والحمد لله",
-   "امسينا وامسى الملك لله والحمدلله",
-   "امسينا وامسى الملك لله و الحمد لله"
+   "donut",
+   "doughnut",
+   "donat"
   ],
-  "ok": false,
-  "file": "www/doa-voice/d-evening_dhikr.mp3"
+  "ok": true,
+  "file": "www/voice/cari-b82f3edb.mp3"
  },
  {
-  "text": "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
-  "hint": "Doa untuk Orang Tua — Rabbighfir lī wa liwālidayya warḥamhumā kamā rabbayānī ṣaghīrā",
+  "text": "Cupcake!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kue Mangkok",
   "heard": [
-   "ربي اغفر لي ولوالدي وارحمهما كما ربياني صغيرا",
-   "ربي اغفر لي ولوالدي وارحمهما كما ربيانى صغيرا",
-   "ربي اغفر لي ولوالدي وارحمهما كما ربياني صغير"
+   "cupcake",
+   "cupcakke",
+   "kupcake"
   ],
-  "ok": false,
-  "file": "www/doa-voice/d-parents.mp3"
+  "ok": true,
+  "file": "www/voice/cari-539bc21b.mp3"
  },
  {
-  "text": "سُبْحَانَ اللَّهِ، الْحَمْدُ لِلَّهِ، اللَّهُ أَكْبَرُ",
-  "hint": "Tasbih Sebelum Tidur — Subḥānallāh (33×), Alḥamdulillāh (33×), Allāhu akbar (34×)",
+  "text": "Cookie!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kue Kering",
   "heard": [
-   "سبحان الله الحمدلله الله اكبر",
-   "سبحان الله الحمد لله الله اكبر",
-   "سبحان الله و الحمد لله الله اكبر"
+   "cookie",
+   "cookey",
+   "cookiee"
   ],
-  "ok": false,
-  "file": "www/doa-voice/d-bedtime_tasbih.mp3"
+  "ok": true,
+  "file": "www/voice/cari-126e7b79.mp3"
  },
  {
-  "text": "بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ",
-  "hint": "Doa Sebelum Tidur — Bismika Allāhumma aḥyā wa bismika amūtu",
+  "text": "Ladybug!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kepik",
   "heard": [
-   "باسمك اللهم احيا و باسمك اموت",
-   "باسمك اللهم احيا ومبسمك اموت",
-   "باسمك اللهم احيي وباسمك اموت"
+   "ladybug",
+   "lady-bug"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-8262f4e5.mp3"
+ },
+ {
+  "text": "Snail!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Siput",
+  "heard": [
+   "snail",
+   "snale",
+   "snaile"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-18a7dc01.mp3"
+ },
+ {
+  "text": "Mushroom!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Jamur",
+  "heard": [
+   "mushroom"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d0c2a073.mp3"
+ },
+ {
+  "text": "Duck!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bebek",
+  "heard": [
+   "duck",
+   "duct",
+   "Duc"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-be4ac8d4.mp3"
+ },
+ {
+  "text": "Boat!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Perahu",
+  "heard": [
+   "boat",
+   "bote",
+   "boate"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d2c44ae6.mp3"
+ },
+ {
+  "text": "Coconut!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kelapa",
+  "heard": [
+   "coconut",
+   "kokonut"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-dbda817a.mp3"
+ },
+ {
+  "text": "Pineapple!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Nanas",
+  "heard": [
+   "pineapple",
+   "pinapple",
+   "pynappel"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-92a79723.mp3"
+ },
+ {
+  "text": "Watermelon!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Semangka",
+  "heard": [
+   "watermelon",
+   "watermellon"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-20093742.mp3"
+ },
+ {
+  "text": "Mango!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Mangga",
+  "heard": [
+   "mango",
+   "mangeaux",
+   "mangoe"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-036a6b88.mp3"
+ },
+ {
+  "text": "Lotus!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Teratai",
+  "heard": [
+   "Lotus",
+   "lotos",
+   "lotuss"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-116f9b4c.mp3"
+ },
+ {
+  "text": "Sock!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kaus Kaki",
+  "heard": [
+   "sock",
+   "Sauk",
+   "Sawk"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f63c1884.mp3"
+ },
+ {
+  "text": "Plant!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Tanaman",
+  "heard": [
+   "plant",
+   "Plante",
+   "pl-t"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-addb2662.mp3"
+ },
+ {
+  "text": "Butterfly!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kupu-kupu",
+  "heard": [
+   "butterfly",
+   "butterfli",
+   "butterfleye"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-bf5fb20b.mp3"
+ },
+ {
+  "text": "Candy!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Permen",
+  "heard": [
+   "candy",
+   "Kandi",
+   "Kandy"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-93dfadbc.mp3"
+ },
+ {
+  "text": "Dove!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Merpati",
+  "heard": [
+   "dove",
+   "Dov",
+   "do"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-9802aa4f.mp3"
+ },
+ {
+  "text": "Paints!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Palet",
+  "heard": [
+   "paints",
+   "paintz",
+   "paint"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-fa7889cb.mp3"
+ },
+ {
+  "text": "Dolphin!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Lumba-lumba",
+  "heard": [
+   "dolphin",
+   "dolfen",
+   "dolphyn"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-c4ce66ea.mp3"
+ },
+ {
+  "text": "Zebra!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Zebra",
+  "heard": [
+   "zebra",
+   "zibra",
+   "zeebra"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-1a0379e4.mp3"
+ },
+ {
+  "text": "Yo-yo!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Yoyo",
+  "heard": [
+   "yo-yo",
+   "yoyo"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-3e739430.mp3"
+ },
+ {
+  "text": "Sheep!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Domba",
+  "heard": [
+   "sheep",
+   "shiip",
+   "sheap"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d844c423.mp3"
+ },
+ {
+  "text": "Whale!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Paus",
+  "heard": [
+   ""
   ],
   "ok": false,
-  "file": "www/doa-voice/d-sleep.mp3"
+  "file": "www/voice/cari-92edd606.mp3"
+ },
+ {
+  "text": "Notebook!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Buku Catatan",
+  "heard": [
+   "notebook",
+   "notebook'",
+   "notebeck"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-76d240e8.mp3"
+ },
+ {
+  "text": "Juice!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Jus",
+  "heard": [
+   "juice",
+   "guice",
+   "joos"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-2f6c522c.mp3"
+ },
+ {
+  "text": "Hedgehog!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Landak",
+  "heard": [
+   "Hedgehog",
+   "hedghog",
+   "hegehog"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-11d42ced.mp3"
+ },
+ {
+  "text": "Lollipop!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Lolipop",
+  "heard": [
+   "lollipop"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-1d66f0bd.mp3"
+ },
+ {
+  "text": "Sunflower!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bunga Matahari",
+  "heard": [
+   "sunflower",
+   "sunflour"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-6e3bea3c.mp3"
+ },
+ {
+  "text": "Orange!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Jeruk",
+  "heard": [
+   "Orange",
+   "ornge",
+   "uranj"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-a5b7ca95.mp3"
  }
 ]
