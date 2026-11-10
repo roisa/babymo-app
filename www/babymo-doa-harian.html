@@ -740,6 +740,7 @@ html[data-bm-theme="classic"] .tsb-btn{box-shadow:inset 0 1px 0 rgba(255,255,255
 </div>
 
 
+<script src="doa-voice/voice.js"></script>
 <script>
 // ═══════════════════════════════════════
 // DATA
@@ -846,8 +847,27 @@ function initVoices(){
   }
 }
 
-function speakDua(text, rate){
-  // On-device speech only (no third-party voice service): the phone's own Arabic voice.
+/* Recorded du'a clips (doa-voice/, read by a real voice with tartil) play first;
+   the phone's own Arabic voice is only a fallback for a du'a without a recording. */
+let duaAudio = null;
+function speakDua(text, rate, after){
+  const m = window.DOA_VOICE, f = m && m[text];
+  if(f){
+    try{
+      if(window.speechSynthesis) speechSynthesis.cancel();
+      if(duaAudio){ duaAudio.onended = duaAudio.onerror = null; duaAudio.pause(); }
+      const a = duaAudio = new Audio('doa-voice/' + f);
+      const slow = (rate !== undefined ? rate <= 0.45 : currentSpeed === 'slow');
+      a.preservesPitch = a.webkitPreservesPitch = a.mozPreservesPitch = true;
+      a.playbackRate = slow ? 0.75 : 1;
+      const end = () => { if(duaAudio !== a) return; isSpeaking = false; setSoundState('idle'); setQuizPlayState('idle'); if(after) after(); };
+      a.onended = end;
+      a.onerror = () => { if(duaAudio !== a) return; duaAudio = null; speakDuaFallback(text, rate); };
+      isSpeaking = true; setSoundState('playing'); setQuizPlayState('playing');
+      a.play().catch(() => { if(duaAudio === a){ duaAudio = null; speakDuaFallback(text, rate); } });
+      return;
+    }catch(e){}
+  }
   speakDuaFallback(text, rate);
 }
 
@@ -872,6 +892,7 @@ function speakDuaFallback(text, rate){
 }
 
 function stopSpeech(){
+  if(duaAudio){ duaAudio.onended = duaAudio.onerror = null; duaAudio.pause(); duaAudio = null; }
   if(window.speechSynthesis) speechSynthesis.cancel();
   isSpeaking = false; setSoundState('idle'); setQuizPlayState('idle');
 }
@@ -918,8 +939,10 @@ function repeatMode(){
   document.getElementById('speedNormal').classList.remove('active');
   document.getElementById('speedSlow').classList.remove('active');
   // First pass normal, second pass slow for memorisation
-  speakDua(DUAS[currentDuaIdx].arabic, 0.60);
   clearTimeout(repeatTimer);
+  const txt = DUAS[currentDuaIdx].arabic;
+  if(window.DOA_VOICE && window.DOA_VOICE[txt]){ speakDua(txt, 0.60, () => { repeatTimer = setTimeout(() => speakDua(txt, 0.40), 700); }); return; }
+  speakDua(DUAS[currentDuaIdx].arabic, 0.60);
   repeatTimer = setTimeout(() => {
     speakDua(DUAS[currentDuaIdx].arabic, 0.40);
   }, 5500);

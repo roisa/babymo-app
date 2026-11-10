@@ -347,6 +347,7 @@ body.wp-on #toast{top:184px}
 <div id="huntCard"><div class="hc" id="hcBox"></div></div>
 <div id="toast"></div>
 
+<script src="hijaiyah-voice/voice.js"></script>
 <script>
 /* ============================================================
    DATA — 28 huruf hijaiyah
@@ -386,7 +387,29 @@ const Speech = {
     setTimeout(load, 700);
   },
   isArabic(){ return this.chosen && /^ar/i.test(this.chosen.lang); },
-  stop(){ this.seq++; try{speechSynthesis.cancel();}catch(e){} },
+  /* recorded Arabic clips (hijaiyah-voice/) — correct pronunciation on every device;
+     device text-to-speech is only a fallback for text without a clip */
+  clips:{}, src:null,
+  clipFor(t){ const m=window.HIJ_VOICE; return m && m[t] ? 'hijaiyah-voice/'+m[t] : null; },
+  loadClip(url){
+    if(this.clips[url]) return this.clips[url];
+    const ctx=getAudioCtx(); if(!ctx) return Promise.reject();
+    return this.clips[url]=fetch(url).then(r=>{ if(!r.ok) throw 0; return r.arrayBuffer(); })
+      .then(b=>new Promise((ok,no)=>ctx.decodeAudioData(b,ok,no))).catch(e=>{ delete this.clips[url]; throw e; });
+  },
+  warm(list){ list.forEach(t=>{ const u=this.clipFor(t); if(u) this.loadClip(u).catch(()=>{}); }); },
+  stop(){ this.seq++; try{speechSynthesis.cancel();}catch(e){} try{ if(this.src){ this.src.onended=null; this.src.stop(); } }catch(e){} this.src=null; },
+  playClip(url, my, after, fail){
+    this.loadClip(url).then(buf=>{
+      if(my!==this.seq) return;
+      const ctx=getAudioCtx(); const s=ctx.createBufferSource(); s.buffer=buf;
+      const g=ctx.createGain(); g.gain.value=1; s.connect(g); g.connect(ctx.destination);
+      let fin=false; const end=()=>{ if(fin) return; fin=true; clearTimeout(wd); if(this.src===s) this.src=null; after(); };
+      // watchdog: if audio is still locked (no tap yet) 'ended' never fires — move on anyway
+      const wd=setTimeout(end, buf.duration*1000+900);
+      s.onended=end; this.src=s; s.start();
+    }).catch(()=>{ if(my===this.seq) fail(); });
+  },
   say(items, done){
     this.stop();
     const my = this.seq, useAr = this.isArabic();
@@ -396,6 +419,11 @@ const Speech = {
       if(i >= items.length){ done && done(); return; }
       const it = items[i++];
       if(it.on){ try{ it.on(); }catch(e){} }
+      const url = this.clipFor(it.ar);
+      if(url){ this.playClip(url, my, ()=>{ if(my===this.seq) setTimeout(next, it.gap!=null?it.gap:220); }, ()=>tts(it)); return; }
+      tts(it);
+    };
+    const tts = (it)=>{
       const u = new SpeechSynthesisUtterance(useAr ? it.ar : it.lat);
       u.lang = this.chosen ? this.chosen.lang : 'ar-SA';
       if(this.chosen) u.voice = this.chosen;
@@ -1723,7 +1751,8 @@ function buildJournal(){
       : '<div class="g">?</div>';
     c.onclick = ()=>{
       if(!collected.has(i)){ toast('Belum ditemukan — cari terus ya!'); return; }
-      Speech.say([{ar:letter.ar,lat:letter.name},{ar:letter.drill.join(' ، '),lat:letter.drillLat.join(', '),gap:150}]);
+      Speech.say(window.HIJ_VOICE ? [{ar:letter.ar,lat:letter.name,gap:320}].concat(letter.drill.map((d,k)=>({ar:d,lat:letter.drillLat[k],gap:260})))
+        : [{ar:letter.ar,lat:letter.name},{ar:letter.drill.join(' ، '),lat:letter.drillLat.join(', '),gap:150}]);
     };
     grid.appendChild(c);
   });
@@ -1913,6 +1942,7 @@ function fillVoices(sel){
 function syncVoiceUI(){
   fillVoices($('#selVoice')); fillVoices($('#selVoice2'));
   const w = $('#voiceWarn');
+  if(window.HIJ_VOICE){ w.style.display = 'none'; const f=$('#voiceFlag'); if(f) f.textContent='· Arab ✓'; return; }
   if(!Speech.ar){
     w.style.display = 'block';
     w.innerHTML = '<b>Suara Arab belum ada di HP ini.</b> Sementara Baby Mo membaca dengan ejaan latin (ba, bi, bu). Untuk suara Arab asli, tambahkan bahasa Arab di pengaturan HP (Android: Setelan → Bahasa; iPhone: Pengaturan → Aksesibilitas → Konten Lisan → Suara).';
@@ -1941,6 +1971,7 @@ function showCoach(go){
   $('#btnCoachGo').onclick=()=>{ v.classList.remove('on'); go(); };
 }
 $('#btnPlay').onclick = ()=>{
+  try{ getAudioCtx(); Speech.warm(['بِسْمِ اللهِ'].concat(L.map(l=>l.ar))); }catch(e){}
   if(isFirstTime && !window.__coached){ window.__coached=true; veil.start.classList.remove('on'); showCoach(()=>$('#btnPlay').onclick()); return; }
   veil.start.classList.remove('on');
   running = true;

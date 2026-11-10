@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex,nofollow">
+<title>Rekam Suara Baby Mo</title>
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+:root{--bg:#F3F7F5;--card:#fff;--ink:#12261F;--sub:#5B6B64;--line:#E1E9E5;--green:#12A150;--green2:#0E8A6E;--red:#E5484D;--gold:#F7C948;--chip:#EEF4F1}
+@media (prefers-color-scheme:dark){:root{--bg:#0F1A16;--card:#18261F;--ink:#EAF4EE;--sub:#9DB2A8;--line:#26372F;--chip:#20302A}}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:'Nunito',system-ui,sans-serif}
+.wrap{max-width:560px;margin:0 auto;padding:calc(env(safe-area-inset-top) + 14px) 16px calc(env(safe-area-inset-bottom) + 24px)}
+h1{font-family:'Fredoka','Nunito',sans-serif;font-size:24px;margin:4px 0 2px}
+.lead{color:var(--sub);font-size:14px;margin:0 0 12px;line-height:1.45}
+.tabs{display:flex;gap:8px;margin:10px 0}
+.tab{flex:1;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:10px 8px;font:800 14px 'Nunito',sans-serif}
+.tab.on{background:var(--green);border-color:var(--green);color:#fff}
+.tab small{display:block;font-weight:700;opacity:.8;font-size:12px}
+.bar{height:10px;border-radius:9px;background:var(--chip);overflow:hidden;margin:6px 0 2px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--green),#2BC4A0);width:0;transition:width .3s}
+.meta{display:flex;justify-content:space-between;color:var(--sub);font-size:13px;font-weight:700}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:16px 16px 18px;margin:12px 0;box-shadow:0 14px 30px -24px rgba(0,60,30,.5);text-align:center}
+.grp{display:inline-block;background:var(--chip);color:var(--green2);font-weight:800;font-size:12px;padding:5px 11px;border-radius:99px}
+.ar{font-family:'Scheherazade New','Amiri',serif;direction:rtl;line-height:1.9;margin:6px 0 0;word-wrap:break-word}
+.ar.big{font-size:96px;line-height:1.6}
+.ar.mid{font-size:56px}
+.ar.long{font-size:34px;line-height:2}
+.hint{color:var(--sub);font-weight:700;font-size:15px;margin:2px 0 6px;min-height:20px}
+.tip{font-size:13px;color:var(--sub);background:var(--chip);border-radius:12px;padding:7px 10px;margin:4px auto 0;max-width:420px}
+.ctrl{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:14px}
+.nav{width:54px;height:54px;border-radius:50%;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-size:22px}
+.rec{width:96px;height:96px;border-radius:50%;border:0;background:var(--red);color:#fff;font:900 15px 'Nunito',sans-serif;box-shadow:0 10px 24px -10px rgba(229,72,77,.8);position:relative}
+.rec .dot{display:block;font-size:30px;line-height:1}
+.rec.on{animation:pulse 1s infinite;background:#C92A2F}
+.rec.on::after{content:'';position:absolute;inset:-8px;border-radius:50%;border:4px solid rgba(229,72,77,.35);transform:scale(var(--lvl,1))}
+@keyframes pulse{50%{box-shadow:0 0 0 12px rgba(229,72,77,.15)}}
+.row2{display:flex;gap:8px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.btn{border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:9px 13px;font:800 14px 'Nunito',sans-serif}
+.btn:disabled{opacity:.4}
+.btn.g{background:var(--green);border-color:var(--green);color:#fff}
+.status{font-weight:800;font-size:14px;margin-top:8px;min-height:20px}
+.status.ok{color:var(--green)}
+.status.bad{color:var(--red)}
+label.auto{display:flex;gap:8px;align-items:center;justify-content:center;color:var(--sub);font-weight:700;font-size:13px;margin-top:10px}
+.grid{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{min-width:44px;height:44px;padding:0 8px;border-radius:12px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font:400 22px 'Scheherazade New','Amiri',serif;display:flex;align-items:center;justify-content:center;direction:rtl}
+.chip.done{background:#DDF6E6;border-color:#8CD9A8;color:#0B5A2D}
+.chip.cur{outline:3px solid var(--gold);outline-offset:1px}
+.chip.small{font-size:15px;font-family:'Nunito',sans-serif;font-weight:800;direction:ltr}
+@media (prefers-color-scheme:dark){.chip.done{background:#163E27;border-color:#2E7A4C;color:#BFF0D1}}
+h2{font-size:15px;margin:18px 0 4px;color:var(--sub)}
+.export{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px;margin-top:14px}
+.export p{margin:4px 0 10px;color:var(--sub);font-size:13px;line-height:1.45}
+.err{background:#FFF0F0;color:#A61E22;border-radius:12px;padding:10px;font-weight:700;font-size:14px;display:none;margin:10px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🎙️ Rekam Suara Baby Mo</h1>
+  <p class="lead">Bacakan tiap tulisan Arab dengan jelas dan pelan (tartil). Ketuk tombol merah, baca, lalu ketuk lagi untuk berhenti. Rekaman tersimpan otomatis di HP ini, jadi boleh dilanjut kapan saja.</p>
+
+  <div class="tabs">
+    <button class="tab on" data-sec="huruf">🔤 Huruf Hijaiyah<small id="cntHuruf"></small></button>
+    <button class="tab" data-sec="doa">🤲 Doa Harian<small id="cntDoa"></small></button>
+  </div>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="meta"><span id="pos"></span><span id="tot"></span></div>
+  <div class="err" id="err"></div>
+
+  <div class="card">
+    <span class="grp" id="grp"></span>
+    <div class="ar" id="ar"></div>
+    <div class="hint" id="hint"></div>
+    <div class="tip" id="tip"></div>
+    <div class="ctrl">
+      <button class="nav" id="prev" aria-label="Sebelumnya">◀</button>
+      <button class="rec" id="rec"><span class="dot">●</span><span id="recTxt">Rekam</span></button>
+      <button class="nav" id="next" aria-label="Berikutnya">▶</button>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="row2">
+      <button class="btn" id="play" disabled>▶ Dengar</button>
+      <button class="btn" id="del" disabled>🗑 Hapus</button>
+      <button class="btn" id="todo">⏭ Yang belum</button>
+    </div>
+    <label class="auto"><input type="checkbox" id="auto" checked> Lanjut otomatis setelah merekam</label>
+  </div>
+
+  <h2 id="listTitle">Semua rekaman</h2>
+  <div class="grid" id="grid"></div>
+
+  <div class="export">
+    <b>📦 Kirim rekaman</b>
+    <p>Kalau sudah selesai (atau sebagian dulu), ketuk tombol di bawah. Satu file ZIP berisi semua rekaman akan dibuat. Unggah ZIP itu ke Google Drive, lalu beri tahu Claude nama file-nya.</p>
+    <button class="btn g" id="zip">📦 Buat ZIP rekaman</button>
+    <span id="zipInfo" style="margin-left:8px;color:var(--sub);font-size:13px;font-weight:700"></span>
+  </div>
+  <p class="lead" style="margin-top:14px">Tips: ruangan sepi, HP sekitar 20 cm dari mulut, jangan terlalu dekat. Untuk suku kata (بَ بِ بُ) cukup bunyi pendek dan jelas: “ba”, bukan “baa”. Untuk nama huruf bacalah lengkap: “alif”, “baa’”.</p>
+</div>
+
+<script>
+const ITEMS = [{"id":"p1e53e20e","t":"بِسْمِ اللهِ","h":"Bismillah","k":"phrase","g":"Bismillah","sec":"huruf"},{"id":"h670dd75d","t":"فَتْحَة","h":"Fathah","k":"harakat","g":"Nama harakat","sec":"huruf"},{"id":"heb0a83e4","t":"كَسْرَة","h":"Kasrah","k":"harakat","g":"Nama harakat","sec":"huruf"},{"id":"h03b63307","t":"ضَمَّة","h":"Dhammah","k":"harakat","g":"Nama harakat","sec":"huruf"},{"id":"nfddf097a","t":"أَلِف","h":"Alif","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sefe4842c","t":"أَ","h":"a (alif)","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s66b95b11","t":"إِ","h":"i (alif)","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s1a73536b","t":"أُ","h":"u (alif)","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n76c0ac48","t":"بَاء","h":"Ba","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sd431deab","t":"بَ","h":"ba","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s3d7326a9","t":"بِ","h":"bi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sdb369760","t":"بُ","h":"bu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"nc76a0eef","t":"تَاء","h":"Ta","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s6670f319","t":"تَ","h":"ta","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"secbc66cf","t":"تِ","h":"ti","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s7d3d3519","t":"تُ","h":"tu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"nca90c917","t":"ثَاء","h":"Tsa","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s2d4d7a77","t":"ثَ","h":"tsa","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s1d95774d","t":"ثِ","h":"tsi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sa18d3e54","t":"ثُ","h":"tsu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n13c9ccc9","t":"جِيم","h":"Jim","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s97593879","t":"جَ","h":"ja","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s2c87e1b8","t":"جِ","h":"ji","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s43abf3ef","t":"جُ","h":"ju","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n5c366638","t":"حَاء","h":"Ha","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s5f387e8e","t":"حَ","h":"ha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s3aa0f2c8","t":"حِ","h":"hi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s4e8278d7","t":"حُ","h":"hu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n42caf841","t":"خَاء","h":"Kha","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s314d2096","t":"خَ","h":"kha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sb1c4627e","t":"خِ","h":"khi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s7997846d","t":"خُ","h":"khu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"na679fba2","t":"دَال","h":"Dal","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sa3d77da2","t":"دَ","h":"da","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s9f6c1f31","t":"دِ","h":"di","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sd9b353b6","t":"دُ","h":"du","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n61f1315e","t":"ذَال","h":"Dzal","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sf08e596e","t":"ذَ","h":"dza","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s06d0f2d2","t":"ذِ","h":"dzi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"scff38b65","t":"ذُ","h":"dzu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n56c906c7","t":"رَاء","h":"Ra","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s191edc44","t":"رَ","h":"ra","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s490c376a","t":"رِ","h":"ri","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"se2a40595","t":"رُ","h":"ru","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n5463e58c","t":"زَاي","h":"Zai","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"se019f1bb","t":"زَ","h":"za","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s59c2d7fe","t":"زِ","h":"zi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s98f3b177","t":"زُ","h":"zu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"nbbeceabf","t":"سِين","h":"Sin","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s7fe1ea7b","t":"سَ","h":"sa","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s48428bcc","t":"سِ","h":"si","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sf48613ac","t":"سُ","h":"su","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n81a5af38","t":"شِين","h":"Syin","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s9a490665","t":"شَ","h":"sya","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sea70aacb","t":"شِ","h":"syi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s0b4e8308","t":"شُ","h":"syu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n6c6589e0","t":"صَاد","h":"Shad","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s3aac02d5","t":"صَ","h":"sha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sb7321073","t":"صِ","h":"shi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s7811e9fc","t":"صُ","h":"shu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"nffddaefa","t":"ضَاد","h":"Dhad","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s56659341","t":"ضَ","h":"dha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sdde84cf8","t":"ضِ","h":"dhi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s2d126971","t":"ضُ","h":"dhu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n83a4591e","t":"طَاء","h":"Tha","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s539b0d0d","t":"طَ","h":"tha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s55a140b9","t":"طِ","h":"thi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s026a18ec","t":"طُ","h":"thu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n5e7a7991","t":"ظَاء","h":"Zha","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"se8bbe8e8","t":"ظَ","h":"zha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sae1f0fd0","t":"ظِ","h":"zhi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s3030375c","t":"ظُ","h":"zhu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n51e37582","t":"عَيْن","h":"Ain","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s40fa11ec","t":"عَ","h":"‘a (‘ain)","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s4eb20327","t":"عِ","h":"‘i (‘ain)","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s9ff8c5a5","t":"عُ","h":"‘u (‘ain)","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"nab126af9","t":"غَيْن","h":"Ghain","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s9d91cae0","t":"غَ","h":"gha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sd8a82d80","t":"غِ","h":"ghi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s60611110","t":"غُ","h":"ghu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n9cb389b4","t":"فَاء","h":"Fa","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s974f76d0","t":"فَ","h":"fa","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sc7f392de","t":"فِ","h":"fi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sa0b18472","t":"فُ","h":"fu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"nada55116","t":"قَاف","h":"Qaf","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sb8ad739d","t":"قَ","h":"qa","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sa38e1b27","t":"قِ","h":"qi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s7084c042","t":"قُ","h":"qu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n9df47433","t":"كَاف","h":"Kaf","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s1b8031bb","t":"كَ","h":"ka","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sd51eedf0","t":"كِ","h":"ki","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s6f94d563","t":"كُ","h":"ku","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n2d379987","t":"لَام","h":"Lam","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sc4e931ac","t":"لَ","h":"la","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sdbb8df58","t":"لِ","h":"li","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s4fa06a5a","t":"لُ","h":"lu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"na3ebb01c","t":"مِيم","h":"Mim","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s377f54ce","t":"مَ","h":"ma","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"se43a63dd","t":"مِ","h":"mi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sa41bdb0b","t":"مُ","h":"mu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"na4647fa3","t":"نُون","h":"Nun","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s40c8cf0f","t":"نَ","h":"na","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s5405ba18","t":"نِ","h":"ni","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s35548ef6","t":"نُ","h":"nu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n41a7badb","t":"وَاو","h":"Wau","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sf847ca2b","t":"وَ","h":"wa","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"sba8b0a81","t":"وِ","h":"wi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s37fbe890","t":"وُ","h":"wu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"n35a49a7d","t":"هَاء","h":"Ha","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"sf27e4b76","t":"هَ","h":"ha","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s36869348","t":"هِ","h":"hi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"se5003bc2","t":"هُ","h":"hu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"nb371622b","t":"يَاء","h":"Ya","k":"name","g":"Huruf & harakat","sec":"huruf"},{"id":"s7ff1508c","t":"يَ","h":"ya","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s254b8c9d","t":"يِ","h":"yi","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"seff307e0","t":"يُ","h":"yu","k":"syl","g":"Huruf & harakat","sec":"huruf"},{"id":"s2992554a","t":"دٌ","h":"dun","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s51122c85","t":"كٌ","h":"kun","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"se99189e2","t":"رٌ","h":"run","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s536476d7","t":"مٌ","h":"mun","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s84460944","t":"لٌ","h":"lun","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s52dff1df","t":"بَا","h":"baa","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s3216d1ef","t":"بٌ","h":"bun","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"seca34af7","t":"فِي","h":"fii","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s06550264","t":"بَيْ","h":"bai","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"saa6bdd2c","t":"تٌ","h":"tun","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"sd5adfa4f","t":"شَمْ","h":"syam","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s9569d213","t":"سٌ","h":"sun","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"s63a1e74a","t":"تَا","h":"taa","k":"syl","g":"Suku kata","sec":"huruf"},{"id":"w2f146826","t":"أَسَدٌ","h":"asadun (singa)","k":"word","g":"Kata","sec":"huruf"},{"id":"w85595fc6","t":"سَمَكٌ","h":"samakun (ikan)","k":"word","g":"Kata","sec":"huruf"},{"id":"wd1bb9ee8","t":"قَمَرٌ","h":"qamarun (bulan)","k":"word","g":"Kata","sec":"huruf"},{"id":"wc5cd3bad","t":"قَلَمٌ","h":"qalamun (pensil)","k":"word","g":"Kata","sec":"huruf"},{"id":"w8e17efc8","t":"جَمَلٌ","h":"jamalun (unta)","k":"word","g":"Kata","sec":"huruf"},{"id":"wb7831c1d","t":"بَابٌ","h":"baabun (pintu)","k":"word","g":"Kata","sec":"huruf"},{"id":"w94d5c87f","t":"فِيلٌ","h":"fiilun (gajah)","k":"word","g":"Kata","sec":"huruf"},{"id":"wf681630e","t":"بَيْتٌ","h":"baitun (rumah)","k":"word","g":"Kata","sec":"huruf"},{"id":"w90fac5bf","t":"شَمْسٌ","h":"syamsun (matahari)","k":"word","g":"Kata","sec":"huruf"},{"id":"wedbacf7a","t":"كِتَابٌ","h":"kitaabun (buku)","k":"word","g":"Kata","sec":"huruf"},{"id":"w1c5e4187","t":"أَسَد","h":"Singa","k":"word","g":"Kata","sec":"huruf"},{"id":"w8e564662","t":"بَطَّة","h":"Bebek","k":"word","g":"Kata","sec":"huruf"},{"id":"w18335806","t":"تُفَّاح","h":"Apel","k":"word","g":"Kata","sec":"huruf"},{"id":"w357b8e07","t":"ثَعْلَب","h":"Rubah","k":"word","g":"Kata","sec":"huruf"},{"id":"wa752b045","t":"جَمَل","h":"Unta","k":"word","g":"Kata","sec":"huruf"},{"id":"w020df849","t":"حِصَان","h":"Kuda","k":"word","g":"Kata","sec":"huruf"},{"id":"w50dfd99a","t":"خُبْز","h":"Roti","k":"word","g":"Kata","sec":"huruf"},{"id":"w610a6afa","t":"دُبّ","h":"Beruang","k":"word","g":"Kata","sec":"huruf"},{"id":"w271bdfde","t":"ذُرَة","h":"Jagung","k":"word","g":"Kata","sec":"huruf"},{"id":"w1fb7f9ad","t":"رِيشَة","h":"Bulu","k":"word","g":"Kata","sec":"huruf"},{"id":"wd1a7032b","t":"زَرَافَة","h":"Jerapah","k":"word","g":"Kata","sec":"huruf"},{"id":"we952b04f","t":"سَمَك","h":"Ikan","k":"word","g":"Kata","sec":"huruf"},{"id":"wcf920f89","t":"شَمْس","h":"Matahari","k":"word","g":"Kata","sec":"huruf"},{"id":"w8a372803","t":"صَقْر","h":"Elang","k":"word","g":"Kata","sec":"huruf"},{"id":"w09873334","t":"ضِفْدَع","h":"Katak","k":"word","g":"Kata","sec":"huruf"},{"id":"wa9ce5a6f","t":"طَائِرَة","h":"Pesawat","k":"word","g":"Kata","sec":"huruf"},{"id":"w310b4e96","t":"ظَرْف","h":"Amplop","k":"word","g":"Kata","sec":"huruf"},{"id":"w76e0e165","t":"عِنَب","h":"Anggur","k":"word","g":"Kata","sec":"huruf"},{"id":"w25ea4038","t":"غَيْمَة","h":"Awan","k":"word","g":"Kata","sec":"huruf"},{"id":"wf4cac43d","t":"فِيل","h":"Gajah","k":"word","g":"Kata","sec":"huruf"},{"id":"wf921446b","t":"قَمَر","h":"Bulan","k":"word","g":"Kata","sec":"huruf"},{"id":"w110b12ce","t":"كِتَاب","h":"Buku","k":"word","g":"Kata","sec":"huruf"},{"id":"w8465e9c8","t":"لَيْمُون","h":"Lemon","k":"word","g":"Kata","sec":"huruf"},{"id":"wb5add438","t":"مَوْز","h":"Pisang","k":"word","g":"Kata","sec":"huruf"},{"id":"w5853d648","t":"نَحْلَة","h":"Lebah","k":"word","g":"Kata","sec":"huruf"},{"id":"wdcd4460f","t":"وَرْدَة","h":"Mawar","k":"word","g":"Kata","sec":"huruf"},{"id":"wb703e647","t":"هِلَال","h":"Bulan sabit","k":"word","g":"Kata","sec":"huruf"},{"id":"wd1a4397f","t":"يَد","h":"Tangan","k":"word","g":"Kata","sec":"huruf"},{"id":"d-wakeup","t":"الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ","h":"Doa Bangun Tidur — Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-bathroom_in","t":"اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ","h":"Masuk Kamar Mandi — Allāhumma innī a'ūdhu bika minal-khubthi wal-khabā'ith","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-bathroom_out","t":"غُفْرَانَكَ","h":"Keluar Kamar Mandi — Ghufrānaka","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-leave_home","t":"بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ","h":"Doa Keluar Rumah — Bismillāhi tawakkaltu 'alallāh, lā ḥaula wa lā quwwata illā billāh","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-vehicle","t":"سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ","h":"Doa Naik Kendaraan — Subḥānal-ladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn, wa innā ilā rabbinā lamunqalibūn","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-study","t":"رَبِّ زِدْنِي عِلْمًا","h":"Doa Belajar — Rabbi zidnī 'ilmā","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-eating","t":"بِسْمِ اللَّهِ","h":"Sebelum Makan — Bismillāh","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-after_eat","t":"الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ","h":"Doa Sesudah Makan — Alhamdulillāhil-ladhī aṭ'amanā wa saqānā wa ja'alanā muslimīn","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-rain","t":"اللَّهُمَّ صَيِّبًا نَافِعًا","h":"Doa Ketika Hujan — Allāhumma ṣayyiban nāfi'ā","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-enter_home","t":"بِسْمِ اللَّهِ وَلَجْنَا وَبِسْمِ اللَّهِ خَرَجْنَا وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا","h":"Doa Masuk Rumah — Bismillāhi walajnā, wa bismillāhi kharajnā, wa 'alallāhi rabbinā tawakkalnā","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-evening_dhikr","t":"أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ","h":"Dzikir Sore — Amsainā wa amsal-mulku lillāh, walḥamdu lillāh","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-parents","t":"رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا","h":"Doa untuk Orang Tua — Rabbighfir lī wa liwālidayya warḥamhumā kamā rabbayānī ṣaghīrā","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-bedtime_tasbih","t":"سُبْحَانَ اللَّهِ، الْحَمْدُ لِلَّهِ، اللَّهُ أَكْبَرُ","h":"Tasbih Sebelum Tidur — Subḥānallāh (33×), Alḥamdulillāh (33×), Allāhu akbar (34×)","k":"doa","g":"Doa Harian","sec":"doa"},{"id":"d-sleep","t":"بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ","h":"Doa Sebelum Tidur — Bismika Allāhumma aḥyā wa bismika amūtu","k":"doa","g":"Doa Harian","sec":"doa"}];
+const TIPS = {
+  phrase:'Baca dengan tenang dan tartil.',
+  harakat:'Nama tanda baca: fathah / kasrah / dhammah.',
+  name:'Nama huruf, dibaca lengkap.',
+  syl:'Bunyi pendek saja — satu ketukan.',
+  word:'Baca utuh dan jelas, tidak terlalu cepat.',
+  doa:'Baca seluruh doa dengan tartil, tidak terburu-buru. Boleh ulang kalau keliru.'
+};
+const $ = id => document.getElementById(id);
+let sec = 'huruf', idx = 0, have = new Set(), stream = null, rec = null, chunks = [], recOn = false, player = null;
+
+/* ---------- storage (IndexedDB) ---------- */
+let dbp = null;
+function db(){ return dbp || (dbp = new Promise((ok,no)=>{ const r=indexedDB.open('bm-rekam',1); r.onupgradeneeded=()=>r.result.createObjectStore('clips',{keyPath:'id'}); r.onsuccess=()=>ok(r.result); r.onerror=()=>no(r.error); })); }
+async function tx(mode, fn){ const d=await db(); return new Promise((ok,no)=>{ const t=d.transaction('clips',mode); const s=t.objectStore('clips'); const r=fn(s); t.oncomplete=()=>ok(r&&r.result); t.onerror=()=>no(t.error); }); }
+const put = v => tx('readwrite', s=>s.put(v));
+const get = id => tx('readonly', s=>s.get(id));
+const del = id => tx('readwrite', s=>s.delete(id));
+const keys = () => tx('readonly', s=>s.getAllKeys());
+const all = () => tx('readonly', s=>s.getAll());
+
+/* ---------- view ---------- */
+const list = () => ITEMS.filter(x=>x.sec===sec);
+function render(){
+  const L = list(), it = L[idx];
+  $('grp').textContent = it.g;
+  const ar = $('ar'); ar.textContent = it.t;
+  ar.className = 'ar ' + (it.k==='doa' ? 'long' : it.t.replace(/[ً-ْ\s]/g,'').length<=2 ? 'big' : 'mid');
+  $('hint').textContent = it.h || '';
+  $('tip').textContent = TIPS[it.k] || '';
+  $('pos').textContent = (idx+1)+' / '+L.length;
+  const done = L.filter(x=>have.has(x.id)).length;
+  $('tot').textContent = done+' terekam';
+  $('bar').style.width = (done/L.length*100)+'%';
+  $('cntHuruf').textContent = ITEMS.filter(x=>x.sec==='huruf'&&have.has(x.id)).length+' / '+ITEMS.filter(x=>x.sec==='huruf').length;
+  $('cntDoa').textContent = ITEMS.filter(x=>x.sec==='doa'&&have.has(x.id)).length+' / '+ITEMS.filter(x=>x.sec==='doa').length;
+  $('play').disabled = $('del').disabled = !have.has(it.id);
+  $('status').textContent = have.has(it.id) ? '✓ Sudah direkam' : '';
+  $('status').className = 'status' + (have.has(it.id)?' ok':'');
+  $('prev').disabled = idx===0; $('next').disabled = idx===L.length-1;
+  const g = $('grid'); g.innerHTML = '';
+  L.forEach((x,i)=>{ const b=document.createElement('button'); b.className='chip'+(x.k==='doa'?' small':'')+(have.has(x.id)?' done':'')+(i===idx?' cur':'');
+    b.textContent = x.k==='doa' ? (i+1)+'. '+x.h.split(' — ')[0] : (x.t.length>8 ? x.t.slice(0,8)+'…' : x.t);
+    b.onclick=()=>{ if(recOn) return; idx=i; render(); window.scrollTo({top:0,behavior:'smooth'}); }; g.appendChild(b); });
+}
+document.querySelectorAll('.tab').forEach(t=>t.onclick=()=>{ if(recOn) return; document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===t)); sec=t.dataset.sec; idx=0; const L=list(); const f=L.findIndex(x=>!have.has(x.id)); if(f>=0) idx=f; render(); });
+$('prev').onclick = ()=>{ if(recOn||idx===0) return; idx--; render(); };
+$('next').onclick = ()=>{ if(recOn||idx>=list().length-1) return; idx++; render(); };
+$('todo').onclick = ()=>{ if(recOn) return; const L=list(); for(let k=1;k<=L.length;k++){ const j=(idx+k)%L.length; if(!have.has(L[j].id)){ idx=j; render(); return; } } $('status').textContent='🎉 Semua di bagian ini sudah direkam!'; };
+
+/* ---------- recording ---------- */
+function pickMime(){ const c=['audio/mp4','audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus']; for(const m of c){ try{ if(window.MediaRecorder && MediaRecorder.isTypeSupported(m)) return m; }catch(e){} } return ''; }
+function showErr(m){ const e=$('err'); e.textContent=m; e.style.display='block'; }
+let meterCtx=null, meterRAF=0;
+function meter(on){
+  cancelAnimationFrame(meterRAF); if(!on){ $('rec').style.removeProperty('--lvl'); return; }
+  try{ meterCtx = meterCtx || new (window.AudioContext||window.webkitAudioContext)(); const an=meterCtx.createAnalyser(); an.fftSize=512;
+    meterCtx.createMediaStreamSource(stream).connect(an); const a=new Uint8Array(an.fftSize);
+    const tick=()=>{ an.getByteTimeDomainData(a); let m=0; for(const v of a) m=Math.max(m,Math.abs(v-128)); $('rec').style.setProperty('--lvl',1+m/128*0.5); meterRAF=requestAnimationFrame(tick); }; tick(); }catch(e){}
+}
+async function start(){
+  try{
+    if(!stream) stream = await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:false,noiseSuppression:true,autoGainControl:true,channelCount:1}});
+  }catch(e){ showErr('Mikrofon tidak bisa dipakai. Izinkan akses mikrofon untuk halaman ini di pengaturan browser, lalu muat ulang.'); return; }
+  const mime = pickMime(); chunks = [];
+  try{ rec = mime ? new MediaRecorder(stream,{mimeType:mime,audioBitsPerSecond:128000}) : new MediaRecorder(stream); }catch(e){ showErr('Browser ini belum bisa merekam. Coba Safari (iPhone) atau Chrome (Android).'); return; }
+  rec.ondataavailable = e=>{ if(e.data && e.data.size) chunks.push(e.data); };
+  rec.onstop = save;
+  rec.start(); recOn = true; $('rec').classList.add('on'); $('recTxt').textContent='Stop'; $('status').textContent='🔴 Merekam… bacakan sekarang'; $('status').className='status bad'; meter(true);
+}
+function stop(){ if(rec && rec.state!=='inactive') rec.stop(); recOn=false; $('rec').classList.remove('on'); $('recTxt').textContent='Rekam'; meter(false); }
+async function save(){
+  const it = list()[idx]; const type = (rec && rec.mimeType) || (chunks[0] && chunks[0].type) || 'audio/webm';
+  const blob = new Blob(chunks,{type});
+  if(blob.size < 1500){ $('status').textContent='Terlalu pendek, coba lagi ya.'; $('status').className='status bad'; return; }
+  await put({id:it.id, t:it.t, mime:type, blob, at:Date.now()}); have.add(it.id);
+  playBlob(blob, ()=>{ if($('auto').checked && idx<list().length-1 && !recOn){ idx++; render(); } });
+  render(); $('status').textContent='✓ Tersimpan — mendengarkan…'; $('status').className='status ok';
+}
+function playBlob(blob, after){ try{ if(player){ player.pause(); } player = new Audio(URL.createObjectURL(blob)); player.onended=()=>after&&after(); player.play().catch(()=>after&&after()); }catch(e){ after&&after(); } }
+$('rec').onclick = ()=>{ if(player) player.pause(); recOn ? stop() : start(); };
+$('play').onclick = async()=>{ const v=await get(list()[idx].id); if(v) playBlob(v.blob); };
+$('del').onclick = async()=>{ const it=list()[idx]; if(!confirm('Hapus rekaman ini?')) return; await del(it.id); have.delete(it.id); render(); };
+document.addEventListener('keydown', e=>{ if(e.code==='Space'){ e.preventDefault(); $('rec').click(); } if(e.code==='ArrowRight') $('next').click(); if(e.code==='ArrowLeft') $('prev').click(); });
+
+/* ---------- ZIP export (stored, no compression) ---------- */
+const CRC = (()=>{ const t=new Uint32Array(256); for(let n=0;n<256;n++){ let c=n; for(let k=0;k<8;k++) c = c&1 ? 0xEDB88320^(c>>>1) : c>>>1; t[n]=c>>>0; } return t; })();
+function crc32(u8){ let c=0xFFFFFFFF; for(let i=0;i<u8.length;i++) c = CRC[(c^u8[i])&255]^(c>>>8); return (c^0xFFFFFFFF)>>>0; }
+function zip(files){
+  const enc=new TextEncoder(), parts=[], cen=[]; let off=0;
+  for(const f of files){
+    const name=enc.encode(f.name), d=f.data, crc=crc32(d);
+    const h=new DataView(new ArrayBuffer(30)); h.setUint32(0,0x04034b50,true); h.setUint16(4,20,true); h.setUint16(6,0x0800,true); h.setUint16(8,0,true);
+    h.setUint32(14,crc,true); h.setUint32(18,d.length,true); h.setUint32(22,d.length,true); h.setUint16(26,name.length,true);
+    parts.push(h.buffer,name,d);
+    const c=new DataView(new ArrayBuffer(46)); c.setUint32(0,0x02014b50,true); c.setUint16(4,20,true); c.setUint16(6,20,true); c.setUint16(8,0x0800,true);
+    c.setUint32(16,crc,true); c.setUint32(20,d.length,true); c.setUint32(24,d.length,true); c.setUint16(28,name.length,true); c.setUint32(42,off,true);
+    cen.push(c.buffer,name); off += 30+name.length+d.length;
+  }
+  const csz = cen.reduce((a,b)=>a+(b.byteLength||b.length),0);
+  const e=new DataView(new ArrayBuffer(22)); e.setUint32(0,0x06054b50,true); e.setUint16(8,files.length,true); e.setUint16(10,files.length,true); e.setUint32(12,csz,true); e.setUint32(16,off,true);
+  return new Blob([...parts,...cen,e.buffer],{type:'application/zip'});
+}
+const extOf = m => /mp4|aac|m4a/.test(m) ? 'm4a' : /ogg/.test(m) ? 'ogg' : /wav/.test(m) ? 'wav' : 'webm';
+$('zip').onclick = async()=>{
+  const rows = await all(); if(!rows.length){ $('zipInfo').textContent='Belum ada rekaman.'; return; }
+  $('zipInfo').textContent='Menyiapkan…';
+  const files = [];
+  for(const r of rows) files.push({name:r.id+'.'+extOf(r.mime), data:new Uint8Array(await r.blob.arrayBuffer())});
+  const manifest = rows.map(r=>({id:r.id, text:r.t, mime:r.mime, file:r.id+'.'+extOf(r.mime)}));
+  files.push({name:'manifest.json', data:new TextEncoder().encode(JSON.stringify(manifest,null,1))});
+  const d=new Date(), stamp=d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0')+'-'+String(d.getHours()).padStart(2,'0')+String(d.getMinutes()).padStart(2,'0');
+  const name='babymo-rekaman-'+stamp+'.zip', blob=zip(files), file=new File([blob],name,{type:'application/zip'});
+  $('zipInfo').textContent = rows.length+' rekaman · '+(blob.size/1048576).toFixed(1)+' MB';
+  try{ if(navigator.canShare && navigator.canShare({files:[file]})){ await navigator.share({files:[file], title:name}); return; } }catch(e){ if(e && e.name==='AbortError') return; }
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name; document.body.appendChild(a); a.click(); a.remove();
+};
+
+/* ---------- boot ---------- */
+(async()=>{ try{ (await keys()).forEach(k=>have.add(k)); }catch(e){ showErr('Penyimpanan di browser ini tidak tersedia (mode privat?). Rekaman tidak akan tersimpan.'); }
+  const f=list().findIndex(x=>!have.has(x.id)); if(f>0) idx=f; render();
+  if(!window.MediaRecorder) showErr('Browser ini belum bisa merekam. Pakai Safari terbaru (iPhone) atau Chrome (Android/laptop).');
+})();
+</script>
+</body>
+</html>
