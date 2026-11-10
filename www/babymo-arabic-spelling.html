@@ -98,7 +98,7 @@
     z-index: 1;
     max-width: 440px;
     margin: 0 auto;
-    padding: 14px 18px 160px;
+    padding: 14px 18px calc(160px + env(safe-area-inset-bottom));
     padding-top: calc(14px + env(safe-area-inset-top));
     min-height: 100vh;
   }
@@ -301,8 +301,9 @@
       linear-gradient(160deg, rgba(16,185,129,0.10) 0%, rgba(6,95,70,0.04) 60%, rgba(3,16,12,0.10) 100%);
     border: 1px solid rgba(16,185,129,0.20);
     border-radius: var(--r-card);
-    padding: 22px 14px 20px;
+    padding: 16px 10px 16px;
     text-align: center;
+    display: flex; flex-direction: column; align-items: center;
     cursor: pointer;
     overflow: hidden;
     backdrop-filter: blur(12px);
@@ -378,27 +379,35 @@
   }
   @keyframes sparkRotate { to { transform: rotate(360deg); } }
 
+  /* The picture sits in its own reserved row; it only floats upward, so it
+     can never drift into the Arabic word (or its harakat) below. */
   .card-emoji {
-    font-size: 36px; line-height: 1;
-    display: block; margin-bottom: 10px;
-    filter: drop-shadow(0 6px 14px rgba(0,0,0,0.45));
+    font-size: 34px; line-height: 1;
+    display: grid; place-items: center;
+    height: 42px; flex: 0 0 42px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
     animation: floatGentle 5s ease-in-out infinite;
   }
   .card:nth-child(2n) .card-emoji { animation-delay: -2.5s; }
   @keyframes floatGentle { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
 
+  /* Amiri's harakat (أُ أَ, kasra under ي) reach far outside a tight line box:
+     give the word a tall line so marks stay clear of the picture above and
+     the Latin line below. */
   .card-arabic {
     font-family: var(--f-arabic);
     font-weight: 700;
-    font-size: 52px;
-    line-height: 1.05;
+    font-size: 48px;
+    line-height: 1.95;
     color: var(--ivory);
-    margin: 6px 0 12px;
+    margin: 0 0 2px;
+    padding-top: 10px;
+    max-width: 100%;
+    white-space: nowrap;
     direction: rtl;
     text-shadow:
-      0 0 24px rgba(251,191,36,0.32),
-      0 0 14px rgba(16,185,129,0.35),
-      0 2px 8px rgba(0,0,0,0.40);
+      0 0 22px rgba(251,191,36,0.26),
+      0 0 12px rgba(16,185,129,0.28);
     letter-spacing: 0.01em;
   }
   .card-latin {
@@ -421,7 +430,7 @@
   /* ----- PINNED CTA (menu only — toggled via JS) ----- */
   .cta-wrap {
     position: fixed;
-    bottom: 14px;
+    bottom: calc(14px + env(safe-area-inset-bottom));
     left: 18px;
     right: 18px;
     max-width: 404px;
@@ -440,7 +449,7 @@
   .cta-backdrop {
     position: fixed;
     bottom: 0; left: 0; right: 0;
-    height: 130px;
+    height: calc(130px + env(safe-area-inset-bottom));
     background: linear-gradient(to top,
       var(--bg-deepest) 0%,
       rgba(3,16,12,0.85) 40%,
@@ -1027,8 +1036,8 @@
   }
 
   @media (max-width: 360px) {
-    .card-arabic { font-size: 46px; }
-    .card-emoji  { font-size: 32px; }
+    .card-arabic { font-size: 44px; }
+    .card-emoji  { font-size: 30px; height: 38px; flex-basis: 38px; }
     .hero h1     { font-size: 30px; }
     .mascot      { width: 120px; height: 140px; }
     .mascot-glow { height: 120px; }
@@ -1038,6 +1047,13 @@
     .slot-letter, .tile { font-size: 36px; }
     .slot-ghost { font-size: 32px; }
     .word-ghost { font-size: 38px; }
+  }
+  /* keep the pinned CTA on one line on small phones */
+  .cta { white-space: nowrap; }
+  @media (max-width: 380px) {
+    .cta { font-size: 15.5px; padding: 17px 14px; }
+    .cta .emoji-left  { margin-right: 6px; }
+    .cta .emoji-right { margin-left: 6px; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -1092,6 +1108,16 @@
 /* readable text: nothing under ~11.5px */
 .section-count,.stat-label,.cta-hint{font-size:11.5px!important;}
 </style>
+<style id="bm-bright-arabic">
+/* Light theme: no dark halo behind Arabic (or headings) — crisp ink with at
+   most a hairline white lift. Dark keeps its soft gold/emerald glow. */
+.card-arabic,.learned-arabic,.complete-arabic{text-shadow:none}
+.card-arabic{color:#13293D}
+.slot-letter,.tile,.flying-letter{text-shadow:0 1px 0 rgba(255,255,255,.55)}
+.hero h1,.complete-title{text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.word-card.speaking-word .word-ghost{color:#B45309;text-shadow:0 0 14px rgba(251,191,36,.35)}
+.card-emoji{filter:drop-shadow(0 3px 5px rgba(30,60,110,.18))}
+</style>
 <style id="bm-bright-fixes">
 /* contrast fixes after the bright theme */
 :root{--gold-soft:#C2560C;--text-faint:#6B7787;}
@@ -1107,16 +1133,30 @@
 .card-done{position:absolute;top:10px;left:10px;width:26px;height:26px;border-radius:50%;background:#10b981;color:#fff;font:800 14px/26px var(--f-body);text-align:center;box-shadow:0 3px 8px rgba(0,0,0,.25)}
 .sec-prog{font-size:12px;font-weight:800;color:var(--text-soft);white-space:nowrap}
 .sec-prog.done{color:#fff;background:#10b981;padding:3px 9px;border-radius:999px}
-.loop-card{position:relative;margin:18px 0 0;padding:14px;border-radius:24px;display:flex;align-items:center;gap:12px;text-align:left;
+.loop-card{position:relative;margin:18px 0 0;padding:12px 14px 14px;border-radius:24px;display:flex;flex-direction:column;align-items:stretch;gap:8px;text-align:left;
   background:linear-gradient(150deg,rgba(251,191,36,.16),rgba(16,185,129,.10));border:1.5px solid rgba(251,191,36,.45);box-shadow:0 14px 28px -18px rgba(0,0,0,.5)}
-.loop-card .lc-pic{flex:0 0 74px;height:74px;border-radius:20px;display:grid;place-items:center;font-size:42px;background:rgba(255,255,255,.10);position:relative}
+.loop-card .lc-k{align-self:flex-start;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11.5px;font-weight:800;line-height:1.5;letter-spacing:.07em;text-transform:uppercase;color:#5A3A00;background:#FCD34D;padding:2px 10px;border-radius:999px}
+.loop-card .lc-row{display:flex;align-items:center;gap:12px;min-width:0}
+.loop-card .lc-pic{flex:0 0 64px;height:64px;border-radius:18px;display:grid;place-items:center;font-size:36px;line-height:1;background:rgba(255,255,255,.10);position:relative}
 .loop-card .lc-tx{flex:1;min-width:0}
-.loop-card .lc-k{display:inline-block;font-size:11.5px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:#5A3A00;background:#FCD34D;padding:2px 9px;border-radius:999px}
-.loop-card .lc-ar{font-family:var(--f-arabic);font-size:30px;line-height:1.3;color:var(--gold);direction:rtl;margin-top:2px}
-.loop-card .lc-t{font-size:15px;font-weight:800;color:var(--text);line-height:1.25}
-.loop-card .lc-s{font-size:12.5px;font-weight:700;color:var(--text-soft);margin-top:2px;line-height:1.3}
-.loop-card .lc-go{flex:0 0 auto;min-width:64px;min-height:56px;padding:0 14px;border-radius:18px;border:none;cursor:pointer;font:800 15px/1.1 var(--f-body);color:#fff;
+/* Arabic gets real line room so harakat (kasra under, fatha/damma above) never touch the Latin line */
+.loop-card .lc-ar{font-family:var(--f-arabic);font-weight:700;font-size:34px;line-height:1.8;color:var(--gold);direction:rtl;text-align:left;margin:4px 0 0}
+.loop-card .lc-t{font-size:15px;font-weight:800;color:var(--text);line-height:1.25;overflow-wrap:anywhere}
+.loop-card .lc-ar + .lc-t{margin-top:4px}
+.loop-card .lc-m{font-size:13px;font-weight:700;color:var(--text-soft);line-height:1.3;margin-top:1px}
+.loop-card .lc-s{font-size:12.5px;font-weight:700;color:var(--text-soft);margin-top:3px;line-height:1.35}
+.loop-card .lc-foot{padding-left:76px}
+.loop-card .lc-foot .lc-s{margin-top:0}
+.loop-card .lc-go{flex:0 0 auto;align-self:center;min-width:64px;min-height:52px;padding:0 14px;border-radius:18px;border:none;cursor:pointer;font:800 15px/1.1 var(--f-body);white-space:nowrap;color:#fff;
   background:linear-gradient(135deg,#10b981,#047857);box-shadow:0 8px 18px -8px rgba(16,185,129,.7)}
+@media (max-width:370px){
+  .loop-card{padding:12px 12px 13px}
+  .loop-card .lc-row{gap:10px}
+  .loop-card .lc-pic{flex-basis:56px;height:56px;font-size:32px;border-radius:16px}
+  .loop-card .lc-foot{padding-left:66px}
+  .loop-card .lc-go{min-width:56px;padding:0 12px;font-size:14px}
+  .loop-card .lc-ar{font-size:31px}
+}
 .loop-card .lc-go:active{transform:scale(.95)}
 .loop-card.done .lc-go{background:linear-gradient(135deg,#FCD34D,#F59E0B);color:#4A2800}
 .loop-card.speed{background:linear-gradient(150deg,rgba(56,189,248,.16),rgba(16,185,129,.08));border-color:rgba(56,189,248,.45)}
@@ -1145,6 +1185,10 @@
 @keyframes slotNext{50%{transform:scale(1.07)}}
 .slot.nudge{animation:slotNudge .5s ease}
 @keyframes slotNudge{20%{transform:scale(1.2)}40%{transform:scale(.95)}60%{transform:scale(1.12)}}
+/* Status-bar scrim: content scrolling under the iOS notch/status bar
+   (e.g. the "Family · 8 words · 0/8" header) is covered, not overlapped. */
+.safe-top{position:fixed;top:0;left:0;right:0;height:env(safe-area-inset-top,0px);z-index:60;pointer-events:none;
+  background:var(--bg-deepest);box-shadow:0 6px 12px -2px var(--bg-deepest)}
 html[data-bm-theme="bright"] .slot.next .slot-ghost{color:rgba(217,119,6,.55)}
 .loop-card[hidden],.speed-head[hidden],.speed-bar[hidden]{display:none!important}
 html[data-bm-theme="bright"] .loop-card{background:linear-gradient(150deg,#FFF7DB,#EFFBF4);border-color:#FCD34D;box-shadow:0 14px 28px -20px rgba(30,60,110,.45)}
@@ -1158,6 +1202,7 @@ html[data-bm-theme="bright"] .card-stars{color:#F59E0B}
 </head>
 
 <body>
+<div class="safe-top" aria-hidden="true"></div>
 <div class="app">
 
   <!-- ===== MENU ===== -->
@@ -1487,22 +1532,24 @@ function decorateMenu() {
   // Kata Hari Ini
   const di = dailyWordIdx(), w = WORDS[di], done = dailyDone(), kc = document.getElementById('kotd');
   kc.className = 'loop-card' + (done ? ' done' : '');
-  kc.innerHTML = '<div class="lc-pic">' + w.emoji + (done ? '<span class="kw-bonus">⭐</span>' : '') + '</div>'
-    + '<div class="lc-tx"><span class="lc-k">✨ ' + L('Kata Hari Ini', 'Word of the Day') + '</span>'
-    + '<div class="lc-ar" lang="ar">' + w.arabic + '</div>'
-    + '<div class="lc-t">' + w.latin + ' · <span class="lc-m">' + w.meaning + '</span></div>'
-    + '<div class="lc-s">' + (done ? L('Sudah! Bintang bonus didapat ⭐', 'Done! Bonus star earned ⭐') : L('Susun kata ini untuk ⭐ bonus!', 'Build this word for a bonus ⭐!')) + '</div></div>'
-    + '<button class="lc-go" type="button" id="kotdGo">' + (done ? '🔄' : L('Susun ▶', 'Build ▶')) + '</button>';
+  // Layout: pill on top · [picture | Arabic, Latin, meaning | button] · bonus line
+  kc.innerHTML = '<span class="lc-k">✨ ' + L('Kata Hari Ini', 'Word of the Day') + '</span>'
+    + '<div class="lc-row"><div class="lc-pic">' + w.emoji + (done ? '<span class="kw-bonus">⭐</span>' : '') + '</div>'
+    + '<div class="lc-tx"><div class="lc-ar" lang="ar">' + w.arabic + '</div>'
+    + '<div class="lc-t">' + w.latin + '</div><div class="lc-m">' + w.meaning + '</div></div>'
+    + '<button class="lc-go" type="button" id="kotdGo">' + (done ? '🔄' : L('Susun ▶', 'Build ▶')) + '</button></div>'
+    + '<div class="lc-foot"><div class="lc-s">' + (done ? L('Sudah! Bintang bonus didapat ⭐', 'Done! Bonus star earned ⭐') : L('Susun kata ini untuk ⭐ bonus!', 'Build this word for a bonus ⭐!')) + '</div></div>';
   kc.hidden = false;
   document.getElementById('kotdGo').onclick = function (e) { spawnSparkles(e.currentTarget, 3); setTimeout(function () { startDaily(); }, 160); };
   // Speed round (unlocks after all 21 words)
   const n = doneCount(r), sc = document.getElementById('speedCard'), open = n >= WORDS.length;
   sc.className = 'loop-card speed' + (open ? '' : ' locked');
-  sc.innerHTML = '<div class="lc-pic">' + (open ? '⚡' : '🔒') + '</div><div class="lc-tx"><span class="lc-k">⚡ ' + L('Ronde Kilat', 'Speed Round') + '</span>'
+  sc.innerHTML = '<span class="lc-k">⚡ ' + L('Ronde Kilat', 'Speed Round') + '</span>'
+    + '<div class="lc-row"><div class="lc-pic">' + (open ? '⚡' : '🔒') + '</div><div class="lc-tx">'
     + '<div class="lc-t">' + (open ? L('Susun 5 kata sebelum waktunya habis!', 'Build 5 words before time runs out!') : L('Selesaikan semua 21 kata dulu', 'Finish all 21 words first')) + '</div>'
     + (open ? '<div class="lc-s">' + (r.speed.best ? '🏆 ' + L('Skor terbaik: ', 'Best score: ') + r.speed.best : L('Belum ada skor — ayo coba!', 'No score yet — give it a go!')) + '</div>'
             : '<div class="lc-bar"><i style="width:' + Math.round(100 * n / WORDS.length) + '%"></i></div><div class="lc-s">' + n + ' / ' + WORDS.length + ' ' + L('kata', 'words') + '</div>')
-    + '</div><button class="lc-go" type="button" id="speedGo"' + (open ? '' : ' aria-disabled="true"') + '>' + (open ? L('Main ▶', 'Play ▶') : '🔒') + '</button>';
+    + '</div><button class="lc-go" type="button" id="speedGo"' + (open ? '' : ' aria-disabled="true"') + '>' + (open ? L('Main ▶', 'Play ▶') : '🔒') + '</button></div>';
   sc.hidden = false;
   document.getElementById('speedGo').onclick = function (e) {
     if (!open) { showToast(L('Selesaikan 21 kata dulu ya!', 'Finish the 21 words first!'), '🔒'); return; }
