@@ -383,6 +383,10 @@ html[data-lang="en"] .meaning-en{display:none;}
 .arabic-text .w{display:inline-block;padding:0 .08em;border-radius:10px;cursor:pointer;transition:background .2s,transform .2s,color .2s}
 .arabic-text .w.on{background:#FFE066;color:#5A3A00;transform:scale(1.12)}
 .arabic-text .w.said{color:#12A15A}
+.arabic-text.full{animation:fullGlow 1.6s ease-in-out infinite}
+.arabic-text.full .w{color:#0E8A4A;text-shadow:0 0 14px rgba(255,214,90,.9)}
+@keyframes fullGlow{0%,100%{box-shadow:0 0 0 0 rgba(255,200,60,0)}50%{box-shadow:0 0 0 6px rgba(255,200,60,.35)}}
+@media (prefers-reduced-motion:reduce){.arabic-text.full{animation:none;box-shadow:0 0 0 4px rgba(255,200,60,.35)}}
 </style>
 <style id="dh-v3">
 /* ═════ Doa Harian v3 — readable titles, iOS-style du'a icons, stars & stickers.
@@ -1523,7 +1527,7 @@ function showToast(e, t){
   }
 
   /* ─── read along: word by word ─── */
-  var readSeq=0;
+  var readSeq=0, fullAudio=null;
   function wordsOf(t){ return t.split(/\s+/).filter(Boolean); }
   function renderArabic(d){
     var el=document.getElementById('arabicText');
@@ -1545,12 +1549,24 @@ function showToast(e, t){
     setSoundState('playing'); isSpeaking=true;
     (function next(){
       if(my!==readSeq) return;
-      if(i>=spans.length){ highlight(-1); spans.forEach(function(sp){ sp.classList.add('said'); }); isSpeaking=false; setSoundState('idle'); onDone&&onDone(); return; }
+      if(i>=spans.length){ highlight(-1); spans.forEach(function(sp){ sp.classList.add('said'); });
+        /* then the whole du'a once more, read naturally (recorded clip), all words glowing */
+        var box=document.getElementById('arabicText'), txt=DUAS[currentDuaIdx].arabic;
+        var finish=function(){ if(my!==readSeq) return; box.classList.remove('full'); isSpeaking=false; setSoundState('idle'); onDone&&onDone(); };
+        if(!(window.DOA_VOICE&&window.DOA_VOICE[txt])){ finish(); return; }
+        setTimeout(function(){ if(my!==readSeq) return; box.classList.add('full');
+          try{ if(fullAudio){ fullAudio.onended=fullAudio.onerror=null; fullAudio.pause(); }
+            var au=fullAudio=new Audio('doa-voice/'+window.DOA_VOICE[txt]); au.preservesPitch=au.webkitPreservesPitch=true;
+            au.playbackRate=currentSpeed==='slow'?0.8:1;
+            var wd=setTimeout(finish,20000), done=function(){ clearTimeout(wd); if(fullAudio===au) fullAudio=null; finish(); };
+            au.onended=done; au.onerror=done; au.play().catch(done);
+          }catch(e){ finish(); } },450);
+        return; }
       highlight(i); speakWord(spans[i].textContent,function(){ i++; next(); });
     })();
   }
   window.handleSoundClick=function(){ if(isSpeaking){ readSeq++; stopSpeech(); highlight(-1); return; } playTone(523,0.06); readAlong(function(){ earn(DUAS[currentDuaIdx]); }); };
-  var _stop=stopSpeech; window.stopSpeech=function(){ readSeq++; _stop(); };
+  var _stop=stopSpeech; window.stopSpeech=function(){ readSeq++; _stop(); if(fullAudio){ fullAudio.onended=fullAudio.onerror=null; fullAudio.pause(); fullAudio=null; } var b=document.getElementById('arabicText'); if(b) b.classList.remove('full'); };
 
   function earn(d){
     setSceneMoExpression('celebrate');
