@@ -1,0 +1,1635 @@
+[
+ {
+  "text": "بِسْمِ اللهِ",
+  "hint": "Bismillah",
+  "heard": [
+   "بسم الله"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/p1e53e20e.mp3"
+ },
+ {
+  "text": "فَتْحَة",
+  "hint": "Fathah",
+  "heard": [
+   "فتحه",
+   "فقحه",
+   "فتح"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/h670dd75d.mp3"
+ },
+ {
+  "text": "كَسْرَة",
+  "hint": "Kasrah",
+  "heard": [
+   "اكسترا",
+   "كسترا"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/heb0a83e4.mp3"
+ },
+ {
+  "text": "ضَمَّة",
+  "hint": "Dhammah",
+  "heard": [
+   "ضمه",
+   "ضمى",
+   "ضمي"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/h03b63307.mp3"
+ },
+ {
+  "text": "أَلِف",
+  "hint": "Alif",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/nfddf097a.mp3"
+ },
+ {
+  "text": "أَ",
+  "hint": "a (alif)",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sefe4842c.mp3"
+ },
+ {
+  "text": "إِ",
+  "hint": "i (alif)",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s66b95b11.mp3"
+ },
+ {
+  "text": "أُ",
+  "hint": "u (alif)",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s1a73536b.mp3"
+ },
+ {
+  "text": "بَاء",
+  "hint": "Ba",
+  "heard": [
+   "باء",
+   "ماء",
+   "مائه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n76c0ac48.mp3"
+ },
+ {
+  "text": "بَ",
+  "hint": "ba",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sd431deab.mp3"
+ },
+ {
+  "text": "بِ",
+  "hint": "bi",
+  "heard": [
+   "بي",
+   "بي بي",
+   "بيبي"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s3d7326a9.mp3"
+ },
+ {
+  "text": "بُ",
+  "hint": "bu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sdb369760.mp3"
+ },
+ {
+  "text": "تَاء",
+  "hint": "Ta",
+  "heard": [
+   "يا الله",
+   "ان شاء الله",
+   "ما شاء الله"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/nc76a0eef.mp3"
+ },
+ {
+  "text": "تَ",
+  "hint": "ta",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s6670f319.mp3"
+ },
+ {
+  "text": "تِ",
+  "hint": "ti",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/secbc66cf.mp3"
+ },
+ {
+  "text": "تُ",
+  "hint": "tu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s7d3d3519.mp3"
+ },
+ {
+  "text": "ثَاء",
+  "hint": "Tsa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/nca90c917.mp3"
+ },
+ {
+  "text": "ثَ",
+  "hint": "tsa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s2d4d7a77.mp3"
+ },
+ {
+  "text": "ثِ",
+  "hint": "tsi",
+  "heard": [
+   "في",
+   "في في",
+   "فى"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s1d95774d.mp3"
+ },
+ {
+  "text": "ثُ",
+  "hint": "tsu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sa18d3e54.mp3"
+ },
+ {
+  "text": "جِيم",
+  "hint": "Jim",
+  "heard": [
+   "جيم",
+   "جيميل",
+   "جين"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n13c9ccc9.mp3"
+ },
+ {
+  "text": "جَ",
+  "hint": "ja",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s97593879.mp3"
+ },
+ {
+  "text": "جِ",
+  "hint": "ji",
+  "heard": [
+   "زي",
+   "زين"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s2c87e1b8.mp3"
+ },
+ {
+  "text": "جُ",
+  "hint": "ju",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s43abf3ef.mp3"
+ },
+ {
+  "text": "حَاء",
+  "hint": "Ha",
+  "heard": [
+   "حاول",
+   "حامل",
+   "حامد"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n5c366638.mp3"
+ },
+ {
+  "text": "حَ",
+  "hint": "ha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s5f387e8e.mp3"
+ },
+ {
+  "text": "حِ",
+  "hint": "hi",
+  "heard": [
+   "حي",
+   "حيه",
+   "حياك"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s3aa0f2c8.mp3"
+ },
+ {
+  "text": "حُ",
+  "hint": "hu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s4e8278d7.mp3"
+ },
+ {
+  "text": "خَاء",
+  "hint": "Kha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n42caf841.mp3"
+ },
+ {
+  "text": "خَ",
+  "hint": "kha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s314d2096.mp3"
+ },
+ {
+  "text": "خِ",
+  "hint": "khi",
+  "heard": [
+   "اخي",
+   "خيل"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/sb1c4627e.mp3"
+ },
+ {
+  "text": "خُ",
+  "hint": "khu",
+  "heard": [
+   "هو",
+   "هو هو"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s7997846d.mp3"
+ },
+ {
+  "text": "دَال",
+  "hint": "Dal",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/na679fba2.mp3"
+ },
+ {
+  "text": "دَ",
+  "hint": "da",
+  "heard": [
+   "ذهب",
+   "ذا"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sa3d77da2.mp3"
+ },
+ {
+  "text": "دِ",
+  "hint": "di",
+  "heard": [
+   "دي",
+   "ذي",
+   "دي جي"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s9f6c1f31.mp3"
+ },
+ {
+  "text": "دُ",
+  "hint": "du",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sd9b353b6.mp3"
+ },
+ {
+  "text": "ذَال",
+  "hint": "Dzal",
+  "heard": [
+   "ذله",
+   "فالو",
+   "ذئب"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n61f1315e.mp3"
+ },
+ {
+  "text": "ذَ",
+  "hint": "dza",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sf08e596e.mp3"
+ },
+ {
+  "text": "ذِ",
+  "hint": "dzi",
+  "heard": [
+   "ذي",
+   "ذئب",
+   "ذيب"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s06d0f2d2.mp3"
+ },
+ {
+  "text": "ذُ",
+  "hint": "dzu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/scff38b65.mp3"
+ },
+ {
+  "text": "رَاء",
+  "hint": "Ra",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n56c906c7.mp3"
+ },
+ {
+  "text": "رَ",
+  "hint": "ra",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s191edc44.mp3"
+ },
+ {
+  "text": "رِ",
+  "hint": "ri",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s490c376a.mp3"
+ },
+ {
+  "text": "رُ",
+  "hint": "ru",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/se2a40595.mp3"
+ },
+ {
+  "text": "زَاي",
+  "hint": "Zai",
+  "heard": [
+   "ازاي",
+   "زاي",
+   "ازاى"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n5463e58c.mp3"
+ },
+ {
+  "text": "زَ",
+  "hint": "za",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/se019f1bb.mp3"
+ },
+ {
+  "text": "زِ",
+  "hint": "zi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s59c2d7fe.mp3"
+ },
+ {
+  "text": "زُ",
+  "hint": "zu",
+  "heard": [
+   "زو",
+   "زوزو"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s98f3b177.mp3"
+ },
+ {
+  "text": "سِين",
+  "hint": "Sin",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/nbbeceabf.mp3"
+ },
+ {
+  "text": "سَ",
+  "hint": "sa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s7fe1ea7b.mp3"
+ },
+ {
+  "text": "سِ",
+  "hint": "si",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s48428bcc.mp3"
+ },
+ {
+  "text": "سُ",
+  "hint": "su",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sf48613ac.mp3"
+ },
+ {
+  "text": "شِين",
+  "hint": "Syin",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n81a5af38.mp3"
+ },
+ {
+  "text": "شَ",
+  "hint": "sya",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s9a490665.mp3"
+ },
+ {
+  "text": "شِ",
+  "hint": "syi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sea70aacb.mp3"
+ },
+ {
+  "text": "شُ",
+  "hint": "syu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s0b4e8308.mp3"
+ },
+ {
+  "text": "صَاد",
+  "hint": "Shad",
+  "heard": [
+   "صادق",
+   "صادقه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n6c6589e0.mp3"
+ },
+ {
+  "text": "صَ",
+  "hint": "sha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s3aac02d5.mp3"
+ },
+ {
+  "text": "صِ",
+  "hint": "shi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sb7321073.mp3"
+ },
+ {
+  "text": "صُ",
+  "hint": "shu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s7811e9fc.mp3"
+ },
+ {
+  "text": "ضَاد",
+  "hint": "Dhad",
+  "heard": [
+   "جوجو",
+   "جوجل",
+   "جو جو"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/nffddaefa.mp3"
+ },
+ {
+  "text": "ضَ",
+  "hint": "dha",
+  "heard": [
+   "ضاع",
+   "باي"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s56659341.mp3"
+ },
+ {
+  "text": "ضِ",
+  "hint": "dhi",
+  "heard": [
+   "بي",
+   "بي بي"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sdde84cf8.mp3"
+ },
+ {
+  "text": "ضُ",
+  "hint": "dhu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s2d126971.mp3"
+ },
+ {
+  "text": "طَاء",
+  "hint": "Tha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n83a4591e.mp3"
+ },
+ {
+  "text": "طَ",
+  "hint": "tha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s539b0d0d.mp3"
+ },
+ {
+  "text": "طِ",
+  "hint": "thi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s55a140b9.mp3"
+ },
+ {
+  "text": "طُ",
+  "hint": "thu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s026a18ec.mp3"
+ },
+ {
+  "text": "ظَاء",
+  "hint": "Zha",
+  "heard": [
+   "غلط",
+   "غلا",
+   "غن"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n5e7a7991.mp3"
+ },
+ {
+  "text": "ظَ",
+  "hint": "zha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/se8bbe8e8.mp3"
+ },
+ {
+  "text": "ظِ",
+  "hint": "zhi",
+  "heard": [
+   "ضاري",
+   "ضروري"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sae1f0fd0.mp3"
+ },
+ {
+  "text": "ظُ",
+  "hint": "zhu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s3030375c.mp3"
+ },
+ {
+  "text": "عَيْن",
+  "hint": "Ain",
+  "heard": [
+   "عين",
+   "عيني",
+   "عينه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n51e37582.mp3"
+ },
+ {
+  "text": "عَ",
+  "hint": "‘a (‘ain)",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s40fa11ec.mp3"
+ },
+ {
+  "text": "عِ",
+  "hint": "‘i (‘ain)",
+  "heard": [
+   "عيب",
+   "عيد",
+   "عين"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s4eb20327.mp3"
+ },
+ {
+  "text": "عُ",
+  "hint": "‘u (‘ain)",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s9ff8c5a5.mp3"
+ },
+ {
+  "text": "غَيْن",
+  "hint": "Ghain",
+  "heard": [
+   "غيمه",
+   "غنوه",
+   "غنوا"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/nab126af9.mp3"
+ },
+ {
+  "text": "غَ",
+  "hint": "gha",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s9d91cae0.mp3"
+ },
+ {
+  "text": "غِ",
+  "hint": "ghi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sd8a82d80.mp3"
+ },
+ {
+  "text": "غُ",
+  "hint": "ghu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s60611110.mp3"
+ },
+ {
+  "text": "فَاء",
+  "hint": "Fa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/n9cb389b4.mp3"
+ },
+ {
+  "text": "فَ",
+  "hint": "fa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s974f76d0.mp3"
+ },
+ {
+  "text": "فِ",
+  "hint": "fi",
+  "heard": [
+   "في",
+   "في في"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/sc7f392de.mp3"
+ },
+ {
+  "text": "فُ",
+  "hint": "fu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sa0b18472.mp3"
+ },
+ {
+  "text": "قَاف",
+  "hint": "Qaf",
+  "heard": [
+   "قافل",
+   "قفل",
+   "غافل"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/nada55116.mp3"
+ },
+ {
+  "text": "قَ",
+  "hint": "qa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sb8ad739d.mp3"
+ },
+ {
+  "text": "قِ",
+  "hint": "qi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sa38e1b27.mp3"
+ },
+ {
+  "text": "قُ",
+  "hint": "qu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s7084c042.mp3"
+ },
+ {
+  "text": "كَاف",
+  "hint": "Kaf",
+  "heard": [
+   "كافه",
+   "كيف",
+   "تافه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n9df47433.mp3"
+ },
+ {
+  "text": "كَ",
+  "hint": "ka",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s1b8031bb.mp3"
+ },
+ {
+  "text": "كِ",
+  "hint": "ki",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sd51eedf0.mp3"
+ },
+ {
+  "text": "كُ",
+  "hint": "ku",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s6f94d563.mp3"
+ },
+ {
+  "text": "لَام",
+  "hint": "Lam",
+  "heard": [
+   "لا",
+   "لم",
+   "لن"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n2d379987.mp3"
+ },
+ {
+  "text": "لَ",
+  "hint": "la",
+  "heard": [
+   "لا",
+   "لا لا",
+   "لا لا لا"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/sc4e931ac.mp3"
+ },
+ {
+  "text": "لِ",
+  "hint": "li",
+  "heard": [
+   "لي",
+   "ليه",
+   "ليش"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/sdbb8df58.mp3"
+ },
+ {
+  "text": "لُ",
+  "hint": "lu",
+  "heard": [
+   "الو",
+   "لو"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s4fa06a5a.mp3"
+ },
+ {
+  "text": "مِيم",
+  "hint": "Mim",
+  "heard": [
+   "ميمون",
+   "مين",
+   "ميمونه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/na3ebb01c.mp3"
+ },
+ {
+  "text": "مَ",
+  "hint": "ma",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s377f54ce.mp3"
+ },
+ {
+  "text": "مِ",
+  "hint": "mi",
+  "heard": [
+   "ميمي",
+   "ميني",
+   "مين"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/se43a63dd.mp3"
+ },
+ {
+  "text": "مُ",
+  "hint": "mu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sa41bdb0b.mp3"
+ },
+ {
+  "text": "نُون",
+  "hint": "Nun",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/na4647fa3.mp3"
+ },
+ {
+  "text": "نَ",
+  "hint": "na",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s40c8cf0f.mp3"
+ },
+ {
+  "text": "نِ",
+  "hint": "ni",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s5405ba18.mp3"
+ },
+ {
+  "text": "نُ",
+  "hint": "nu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s35548ef6.mp3"
+ },
+ {
+  "text": "وَاو",
+  "hint": "Wau",
+  "heard": [
+   "واو",
+   "1",
+   "واون"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n41a7badb.mp3"
+ },
+ {
+  "text": "وَ",
+  "hint": "wa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sf847ca2b.mp3"
+ },
+ {
+  "text": "وِ",
+  "hint": "wi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sba8b0a81.mp3"
+ },
+ {
+  "text": "وُ",
+  "hint": "wu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s37fbe890.mp3"
+ },
+ {
+  "text": "هَاء",
+  "hint": "Ha",
+  "heard": [
+   "هاو",
+   "ها"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/n35a49a7d.mp3"
+ },
+ {
+  "text": "هَ",
+  "hint": "ha",
+  "heard": [
+   "ها",
+   "هاي"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/sf27e4b76.mp3"
+ },
+ {
+  "text": "هِ",
+  "hint": "hi",
+  "heard": [
+   "هي",
+   "هي هي"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s36869348.mp3"
+ },
+ {
+  "text": "هُ",
+  "hint": "hu",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/se5003bc2.mp3"
+ },
+ {
+  "text": "يَاء",
+  "hint": "Ya",
+  "heard": [
+   "ياهو",
+   "يا",
+   "ياو"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/nb371622b.mp3"
+ },
+ {
+  "text": "يَ",
+  "hint": "ya",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s7ff1508c.mp3"
+ },
+ {
+  "text": "يِ",
+  "hint": "yi",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s254b8c9d.mp3"
+ },
+ {
+  "text": "يُ",
+  "hint": "yu",
+  "heard": [
+   "يو",
+   "ايوه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/seff307e0.mp3"
+ },
+ {
+  "text": "دٌ",
+  "hint": "dun",
+  "heard": [
+   "دون",
+   "دندن"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s2992554a.mp3"
+ },
+ {
+  "text": "كٌ",
+  "hint": "kun",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s51122c85.mp3"
+ },
+ {
+  "text": "رٌ",
+  "hint": "run",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/se99189e2.mp3"
+ },
+ {
+  "text": "مٌ",
+  "hint": "mun",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s536476d7.mp3"
+ },
+ {
+  "text": "لٌ",
+  "hint": "lun",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s84460944.mp3"
+ },
+ {
+  "text": "بَا",
+  "hint": "baa",
+  "heard": [
+   "ما",
+   "ماء",
+   "ماما"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s52dff1df.mp3"
+ },
+ {
+  "text": "بٌ",
+  "hint": "bun",
+  "heard": [
+   "بن",
+   "بن تن"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s3216d1ef.mp3"
+ },
+ {
+  "text": "فِي",
+  "hint": "fii",
+  "heard": [
+   "في",
+   "في في",
+   "فيه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/seca34af7.mp3"
+ },
+ {
+  "text": "بَيْ",
+  "hint": "bai",
+  "heard": [
+   "بيع",
+   "باي",
+   "بايع"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/s06550264.mp3"
+ },
+ {
+  "text": "تٌ",
+  "hint": "tun",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/saa6bdd2c.mp3"
+ },
+ {
+  "text": "شَمْ",
+  "hint": "syam",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/sd5adfa4f.mp3"
+ },
+ {
+  "text": "سٌ",
+  "hint": "sun",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s9569d213.mp3"
+ },
+ {
+  "text": "تَا",
+  "hint": "taa",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/s63a1e74a.mp3"
+ },
+ {
+  "text": "أَسَدٌ",
+  "hint": "asadun (singa)",
+  "heard": [
+   "اسد",
+   "عسى دوم",
+   "اسدد"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w2f146826.mp3"
+ },
+ {
+  "text": "سَمَكٌ",
+  "hint": "samakun (ikan)",
+  "heard": [
+   "سمك",
+   "سمكو",
+   "سمكه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w85595fc6.mp3"
+ },
+ {
+  "text": "قَمَرٌ",
+  "hint": "qamarun (bulan)",
+  "heard": [
+   "قمر",
+   "خمر",
+   "قمرون"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wd1bb9ee8.mp3"
+ },
+ {
+  "text": "قَلَمٌ",
+  "hint": "qalamun (pensil)",
+  "heard": [
+   "قلم",
+   "بقلم",
+   "قلم قلم"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wc5cd3bad.mp3"
+ },
+ {
+  "text": "جَمَلٌ",
+  "hint": "jamalun (unta)",
+  "heard": [
+   "جمل",
+   "زمل",
+   "زامل"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w8e17efc8.mp3"
+ },
+ {
+  "text": "بَابٌ",
+  "hint": "baabun (pintu)",
+  "heard": [
+   "باب",
+   "بابا",
+   "‏bab"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wb7831c1d.mp3"
+ },
+ {
+  "text": "فِيلٌ",
+  "hint": "fiilun (gajah)",
+  "heard": [
+   "فيلم",
+   "فيل",
+   "فيلون"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w94d5c87f.mp3"
+ },
+ {
+  "text": "بَيْتٌ",
+  "hint": "baitun (rumah)",
+  "heard": [
+   "بيت",
+   "بيتا",
+   "بيت بيت"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wf681630e.mp3"
+ },
+ {
+  "text": "شَمْسٌ",
+  "hint": "syamsun (matahari)",
+  "heard": [
+   "سامسونج",
+   "شمسون",
+   "شمس"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w90fac5bf.mp3"
+ },
+ {
+  "text": "كِتَابٌ",
+  "hint": "kitaabun (buku)",
+  "heard": [
+   "كتاب"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wedbacf7a.mp3"
+ },
+ {
+  "text": "أَسَد",
+  "hint": "Singa",
+  "heard": [
+   "اسد",
+   "عسى دوم",
+   "اسدد"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w1c5e4187.mp3"
+ },
+ {
+  "text": "بَطَّة",
+  "hint": "Bebek",
+  "heard": [
+   "ضاغطه",
+   "بطه",
+   "ضغطه"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w8e564662.mp3"
+ },
+ {
+  "text": "تُفَّاح",
+  "hint": "Apel",
+  "heard": [
+   "تفاحه",
+   "تفاح",
+   "تفاحا"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w18335806.mp3"
+ },
+ {
+  "text": "ثَعْلَب",
+  "hint": "Rubah",
+  "heard": [
+   "سالب",
+   "ثعلب",
+   "سحلب"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w357b8e07.mp3"
+ },
+ {
+  "text": "جَمَل",
+  "hint": "Unta",
+  "heard": [
+   "جمل",
+   "زمل",
+   "زامل"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wa752b045.mp3"
+ },
+ {
+  "text": "حِصَان",
+  "hint": "Kuda",
+  "heard": [
+   "حصان",
+   "صيصان",
+   "الحصان"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w020df849.mp3"
+ },
+ {
+  "text": "خُبْز",
+  "hint": "Roti",
+  "heard": [
+   "خبز"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w50dfd99a.mp3"
+ },
+ {
+  "text": "دُبّ",
+  "hint": "Beruang",
+  "heard": [],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w610a6afa.mp3"
+ },
+ {
+  "text": "ذُرَة",
+  "hint": "Jagung",
+  "heard": [
+   "ذره",
+   "زهره",
+   "الذره"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w271bdfde.mp3"
+ },
+ {
+  "text": "رِيشَة",
+  "hint": "Bulu",
+  "heard": [
+   "ريشه",
+   "ريشي",
+   "ريشا"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w1fb7f9ad.mp3"
+ },
+ {
+  "text": "زَرَافَة",
+  "hint": "Jerapah",
+  "heard": [
+   "زرافه",
+   "الزرافه"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/wd1a7032b.mp3"
+ },
+ {
+  "text": "سَمَك",
+  "hint": "Ikan",
+  "heard": [
+   "سمك",
+   "سمكو",
+   "سمكه"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/we952b04f.mp3"
+ },
+ {
+  "text": "شَمْس",
+  "hint": "Matahari",
+  "heard": [
+   "شمس",
+   "شمسو",
+   "الشمس"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wcf920f89.mp3"
+ },
+ {
+  "text": "صَقْر",
+  "hint": "Elang",
+  "heard": [
+   "فكره",
+   "فكروا",
+   "صقر"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w8a372803.mp3"
+ },
+ {
+  "text": "ضِفْدَع",
+  "hint": "Katak",
+  "heard": [
+   "ضفدع",
+   "ضفدعه",
+   "ضفدع و"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w09873334.mp3"
+ },
+ {
+  "text": "طَائِرَة",
+  "hint": "Pesawat",
+  "heard": [
+   "طائره",
+   "طاءره",
+   "الطائره"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/wa9ce5a6f.mp3"
+ },
+ {
+  "text": "ظَرْف",
+  "hint": "Amplop",
+  "heard": [
+   "غرفه",
+   "غرف",
+   "غرفه نوم"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w310b4e96.mp3"
+ },
+ {
+  "text": "عِنَب",
+  "hint": "Anggur",
+  "heard": [
+   "عنب",
+   "عنبه",
+   "العنب"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w76e0e165.mp3"
+ },
+ {
+  "text": "غَيْمَة",
+  "hint": "Awan",
+  "heard": [
+   "غيمه",
+   "ريمي",
+   "ريمه"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w25ea4038.mp3"
+ },
+ {
+  "text": "فِيل",
+  "hint": "Gajah",
+  "heard": [
+   "فيلو",
+   "سيلو",
+   "فيروز"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wf4cac43d.mp3"
+ },
+ {
+  "text": "قَمَر",
+  "hint": "Bulan",
+  "heard": [
+   "قمر",
+   "خمر",
+   "قمرون"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wf921446b.mp3"
+ },
+ {
+  "text": "كِتَاب",
+  "hint": "Buku",
+  "heard": [
+   "كتاب",
+   "كتابه",
+   "حل كتاب"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w110b12ce.mp3"
+ },
+ {
+  "text": "لَيْمُون",
+  "hint": "Lemon",
+  "heard": [
+   "ليمون",
+   "ليمونه",
+   "ليمو"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/w8465e9c8.mp3"
+ },
+ {
+  "text": "مَوْز",
+  "hint": "Pisang",
+  "heard": [
+   "موز",
+   "موزه",
+   "موزو"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wb5add438.mp3"
+ },
+ {
+  "text": "نَحْلَة",
+  "hint": "Lebah",
+  "heard": [
+   "نحله",
+   "محله",
+   "محلى"
+  ],
+  "ok": false,
+  "file": "www/hijaiyah-voice/w5853d648.mp3"
+ },
+ {
+  "text": "وَرْدَة",
+  "hint": "Mawar",
+  "heard": [
+   "ورده",
+   "ورد"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wdcd4460f.mp3"
+ },
+ {
+  "text": "هِلَال",
+  "hint": "Bulan sabit",
+  "heard": [
+   "هلال",
+   "الهلال",
+   "هلالي"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wb703e647.mp3"
+ },
+ {
+  "text": "يَد",
+  "hint": "Tangan",
+  "heard": [
+   "اياد",
+   "يد"
+  ],
+  "ok": true,
+  "file": "www/hijaiyah-voice/wd1a4397f.mp3"
+ },
+ {
+  "text": "الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ",
+  "hint": "Doa Bangun Tidur — Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr",
+  "heard": [
+   "الحمد لله الذي احيانا بعدما اماتنا واليه النشور",
+   "الحمد لله الذي احيانا بعد ما اماتنا واليه النشور",
+   "الحمدلله الذي احيانا بعد ما اماتنا واليه النشور"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-wakeup.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْخُبْثِ وَالْخَبَائِثِ",
+  "hint": "Masuk Kamar Mandi — Allāhumma innī a'ūdhu bika minal-khubthi wal-khabā'ith",
+  "heard": [
+   "اللهم اني اعوذ بك من الخبث والخبائث",
+   "اللهم اني اعوذ بك من الخبث و الخبائث",
+   "اللهم اني اعوذ بك من الخبث والخبائث فيه"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-bathroom_in.mp3"
+ },
+ {
+  "text": "غُفْرَانَكَ",
+  "hint": "Keluar Kamar Mandi — Ghufrānaka",
+  "heard": [
+   "غفرانك",
+   "غفران"
+  ],
+  "ok": true,
+  "file": "www/doa-voice/d-bathroom_out.mp3"
+ },
+ {
+  "text": "بِسْمِ اللَّهِ تَوَكَّلْتُ عَلَى اللَّهِ لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+  "hint": "Doa Keluar Rumah — Bismillāhi tawakkaltu 'alallāh, lā ḥaula wa lā quwwata illā billāh",
+  "heard": [
+   "بسم الله توكلت على الله لا حول ولا قوه الا بالله",
+   "بسم الله توكلت على الله لا حول ولاقوه الا بالله"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-leave_home.mp3"
+ },
+ {
+  "text": "سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَى رَبِّنَا لَمُنْقَلِبُونَ",
+  "hint": "Doa Naik Kendaraan — Subḥānal-ladhī sakhkhara lanā hādhā wa mā kunnā lahu muqrinīn, wa innā ilā rabbinā lamunqalibūn",
+  "heard": [
+   "سبحان الذي سخر لنا هذا وما كنا له مقرنين وانا الى ربنا لمنقلبون",
+   "سبحان الذي سخر لنا هذا وما كنا له مقرنين وانا الى ربنا لمنقلبون انا",
+   "سبحان الذى سخر لنا هذا وما كنا له مقرنين وانا الى ربنا لمنقلبون"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-vehicle.mp3"
+ },
+ {
+  "text": "رَبِّ زِدْنِي عِلْمًا",
+  "hint": "Doa Belajar — Rabbi zidnī 'ilmā",
+  "heard": [
+   "ربي زدني علما",
+   "يا ربي زدني علما",
+   "ربى زدنى علما"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-study.mp3"
+ },
+ {
+  "text": "بِسْمِ اللَّهِ",
+  "hint": "Sebelum Makan — Bismillāh",
+  "heard": [
+   "بسم الله",
+   "باسم الله"
+  ],
+  "ok": true,
+  "file": "www/doa-voice/d-eating.mp3"
+ },
+ {
+  "text": "الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ",
+  "hint": "Doa Sesudah Makan — Alhamdulillāhil-ladhī aṭ'amanā wa saqānā wa ja'alanā muslimīn",
+  "heard": [
+   "الحمد لله الذي اطعمنا وسقانا وجعلنا من المسلمين",
+   "الحمد لله الذي اطعمنا وسقانا وجعلنا مسلمين",
+   "الحمدلله الذي اطعمنا وسقانا وجعلنا من المسلمين"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-after_eat.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ صَيِّبًا نَافِعًا",
+  "hint": "Doa Ketika Hujan — Allāhumma ṣayyiban nāfi'ā",
+  "heard": [
+   "اللهم صيبا نافعا"
+  ],
+  "ok": true,
+  "file": "www/doa-voice/d-rain.mp3"
+ },
+ {
+  "text": "بِسْمِ اللَّهِ وَلَجْنَا وَبِسْمِ اللَّهِ خَرَجْنَا وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا",
+  "hint": "Doa Masuk Rumah — Bismillāhi walajnā, wa bismillāhi kharajnā, wa 'alallāhi rabbinā tawakkalnā",
+  "heard": [
+   "بسم الله ولجنا وبسم الله خرجنا وعلى الله ربنا توكلنا"
+  ],
+  "ok": true,
+  "file": "www/doa-voice/d-enter_home.mp3"
+ },
+ {
+  "text": "أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ",
+  "hint": "Dzikir Sore — Amsainā wa amsal-mulku lillāh, walḥamdu lillāh",
+  "heard": [
+   "امسينا وامسى الملك لله والحمد لله",
+   "امسينا وامسى الملك لله والحمدلله",
+   "امسينا وامسى الملك لله و الحمد لله"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-evening_dhikr.mp3"
+ },
+ {
+  "text": "رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا",
+  "hint": "Doa untuk Orang Tua — Rabbighfir lī wa liwālidayya warḥamhumā kamā rabbayānī ṣaghīrā",
+  "heard": [
+   "ربي اغفر لي ولوالدي وارحمهما كما ربياني صغيرا",
+   "ربي اغفر لي ولوالدي وارحمهما كما ربيانى صغيرا",
+   "ربي اغفر لي و لوالدي وارحمهما كما ربياني صغيرا"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-parents.mp3"
+ },
+ {
+  "text": "سُبْحَانَ اللَّهِ، الْحَمْدُ لِلَّهِ، اللَّهُ أَكْبَرُ",
+  "hint": "Tasbih Sebelum Tidur — Subḥānallāh (33×), Alḥamdulillāh (33×), Allāhu akbar (34×)",
+  "heard": [
+   "سبحان الله الحمدلله الله اكبر",
+   "سبحان الله الحمد لله الله اكبر",
+   "سبحان الله و الحمد لله الله اكبر"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-bedtime_tasbih.mp3"
+ },
+ {
+  "text": "بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ",
+  "hint": "Doa Sebelum Tidur — Bismika Allāhumma aḥyā wa bismika amūtu",
+  "heard": [
+   "باسمك اللهم احيا وباسمك اموت",
+   "باسمك اللهم احيا و باسمك اموت",
+   "بسمك اللهم احيا وباسمك اموت"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-sleep.mp3"
+ }
+]
