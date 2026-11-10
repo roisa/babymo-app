@@ -17,6 +17,14 @@
   var KEYS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
   var NAMES = { id: ["Subuh", "Dzuhur", "Ashar", "Maghrib", "Isya"], en: ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] };
   var ICONS = ["🌅", "☀️", "🌤️", "🌇", "🌙"];
+  /* drawn prayer-time icons (no emoji) */
+  var PIC = [
+    '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 28a12 12 0 0 1 24 0z" fill="#FF9E5E"/><path d="M12.5 28a7.5 7.5 0 0 1 15 0z" fill="#FFC27A"/><path d="M20 6v5M8.5 11.5l3.2 3.2M31.5 11.5l-3.2 3.2" stroke="#FF9E5E" stroke-width="3" stroke-linecap="round"/><path d="M4 31h32" stroke="#E88A5A" stroke-width="3" stroke-linecap="round"/></svg>',
+    '<svg viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FFC93D" stroke-width="3" stroke-linecap="round"><path d="M20 3v5M20 32v5M3 20h5M32 20h5M8 8l3.5 3.5M28.5 28.5 32 32M32 8l-3.5 3.5M11.5 28.5 8 32"/></g><circle cx="20" cy="20" r="9" fill="#FFD54A"/><circle cx="20" cy="20" r="5.5" fill="#FFE68A"/></svg>',
+    '<svg viewBox="0 0 40 40" aria-hidden="true"><g stroke="#FFC93D" stroke-width="3" stroke-linecap="round"><path d="M16 3v4M5 14h4M7.5 6.5l2.8 2.8M24.5 6.5l-2.8 2.8"/></g><circle cx="16" cy="16" r="7.5" fill="#FFD54A"/><path d="M14 33a6 6 0 0 1 .8-11.9A8 8 0 0 1 30 21a6 6 0 0 1 1 12z" fill="#fff" stroke="#BFD9F2" stroke-width="1.5"/></svg>',
+    '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M7 28a13 13 0 0 1 26 0z" fill="#FF8A5B"/><path d="M12 28a8 8 0 0 1 16 0z" fill="#FFB36B"/><path d="M3 29h34" stroke="#E5648A" stroke-width="3" stroke-linecap="round"/><path d="M8 34h24" stroke="#F29BB2" stroke-width="3" stroke-linecap="round"/><path d="M6 12h9M26 9h9" stroke="#FFC2A6" stroke-width="2.6" stroke-linecap="round"/></svg>',
+    '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M22 5a14 14 0 1 0 12 22 11.5 11.5 0 0 1-12-22z" fill="#8C7CF2" stroke="#6A55D8" stroke-width="1.5"/><path d="M31 6l1.4 3 3.2.5-2.3 2.2.6 3.2-2.9-1.5-2.9 1.5.6-3.2-2.3-2.2 3.2-.5z" fill="#FFC93D"/><circle cx="35" cy="20" r="1.6" fill="#FFC93D"/></svg>'
+  ];
   var KAABA = { lat: 21.4225, lng: 39.8262 };
   var CITIES = [
     { n: "Jakarta", i: "🏙️", lat: -6.2088, lng: 106.8456 }, { n: "Bandung", i: "🌋", lat: -6.9175, lng: 107.6191 },
@@ -245,14 +253,14 @@
     var prev = nx === 0 ? 4 : nx - 1, pm = mins[prev]; if (pm >= nmin) pm -= 1440; var n2 = nm < pm ? nm + 1440 : nm;
     var pct = Math.max(0, Math.min(100, 100 * (n2 - pm) / Math.max(1, nmin - pm)));
     card += '<div class="ph-next"><img src="baby-mo-poses/' + (isNight() ? "baby-mo-pose-05" : "baby-mo-idea") + '.webp" alt=""><div style="flex:1;min-width:0">' +
-      '<div class="lbl">' + T("Sholat berikutnya", "Next prayer") + '</div><div class="nm">' + ICONS[nx] + " " + names[nx] + " · " + times[KEYS[nx]].slice(0, 5) + "</div>" +
+      '<div class="lbl">' + T("Sholat berikutnya", "Next prayer") + '</div><div class="nm">' + PIC[nx] + "<span>" + names[nx] + " · " + times[KEYS[nx]].slice(0, 5) + "</span></div>" +
       '<div class="cd">' + T("dalam ", "in ") + (hh > 0 ? hh + T(" jam ", "h ") : "") + mm + T(" menit", " min") + '</div><div class="ph-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div></div></div>';
     card += '<div class="ph-cells">';
     KEYS.forEach(function (k, i) {
       var r = s.s[k] || {}, done = r.lastDate === t, cls = "ph-cell";
       if (done) cls += " done";
       if (i === ci) cls += " current"; else if (mins[i] <= nm || after) cls += " passed";
-      card += '<button class="' + cls + '" data-act="cell" data-i="' + i + '"><span class="e">' + ICONS[i] + '</span><span class="n">' + names[i] + '</span><span class="t">' + times[k].slice(0, 5) +
+      card += '<button class="' + cls + '" data-act="cell" data-i="' + i + '"><span class="e">' + PIC[i] + '</span><span class="n">' + names[i] + '</span><span class="t">' + times[k].slice(0, 5) +
         '</span><span class="s">' + (r.count > 0 ? "🔥" + r.count : "") + "</span></button>";
     });
     card += "</div>";
@@ -389,9 +397,9 @@
   function renderTools() {
     if (!tools) return;
     tools.innerHTML =
-      '<button class="ph-tool" data-act="qibla"><div class="ic"><img src="icons/ui/qibla.svg" alt="" draggable="false"></div><b>' + T("Kiblat", "Qibla") + "</b><span>" + T("Arah Ka'bah", "Ka'bah direction") + "</span></button>" +
-      '<button class="ph-tool" data-act="quote"><div class="ic"><img src="icons/ui/pearl.svg" alt="" draggable="false"></div><b>' + T("Mutiara", "Pearls") + "</b><span>" + T("Ayat & hadis", "Verses & hadith") + "</span></button>" +
-      '<button class="ph-tool" data-act="cal"><div class="ic"><img src="icons/ui/calendar.svg" alt="" draggable="false"></div><b>' + T("Kalender", "Calendar") + "</b><span>" + T("Hari besar Islam", "Islamic holidays") + "</span></button>";
+      '<button class="ph-tool" data-act="qibla"><div class="ic"><svg viewBox="0 0 100 80" aria-hidden="true"><ellipse cx="50" cy="75" rx="30" ry="4" fill="rgba(30,60,120,.16)"/><circle cx="50" cy="38" r="33" fill="#F2B33D"/><circle cx="50" cy="38" r="28" fill="#fff"/><circle cx="50" cy="38" r="28" fill="none" stroke="#DCE8F5" stroke-width="2"/><g fill="#9AA8BC"><circle cx="50" cy="14" r="2"/><circle cx="74" cy="38" r="2"/><circle cx="50" cy="62" r="2"/><circle cx="26" cy="38" r="2"/></g><path d="M47 36 L60 22 L53 40z" fill="#FF5A5F"/><path d="M53 40 L40 54 L47 36z" fill="#C3CEDD"/><rect x="58" y="14" width="11" height="10" rx="1.6" fill="#1F2937"/><rect x="58" y="16.4" width="11" height="2.2" fill="#F2B33D"/><circle cx="50" cy="38" r="4.5" fill="#2A2F7A"/></svg></div><b>' + T("Kiblat", "Qibla") + "</b><span>" + T("Arah Ka'bah", "Ka'bah direction") + "</span></button>" +
+      '<button class="ph-tool" data-act="quote"><div class="ic"><svg viewBox="0 0 100 80" aria-hidden="true"><defs><radialGradient id="phPrl" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#F3EEFF"/><stop offset="1" stop-color="#C9BDF0"/></radialGradient></defs><ellipse cx="50" cy="75" rx="32" ry="4" fill="rgba(0,80,60,.16)"/><path d="M14 46 Q50 76 86 46 Q80 70 50 72 Q20 70 14 46z" fill="#3FBFA0"/><path d="M14 46 Q50 66 86 46" fill="none" stroke="#2A9C82" stroke-width="2"/><path d="M18 40 Q20 10 50 8 Q80 10 82 40 Q50 30 18 40z" fill="#7FDCC4"/><g stroke="#4FC4A8" stroke-width="2" fill="none"><path d="M50 10v24M34 13l6 22M66 13l-6 22"/></g><circle cx="50" cy="48" r="13" fill="url(#phPrl)"/><circle cx="45" cy="43" r="3.4" fill="#fff"/><path d="M80 10l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z" fill="#FFC93D"/></svg></div><b>' + T("Mutiara", "Pearls") + "</b><span>" + T("Ayat & hadis", "Verses & hadith") + "</span></button>" +
+      '<button class="ph-tool" data-act="cal"><div class="ic"><svg viewBox="0 0 100 80" aria-hidden="true"><ellipse cx="50" cy="75" rx="30" ry="4" fill="rgba(80,40,160,.16)"/><rect x="18" y="12" width="64" height="58" rx="13" fill="#8C6CF2"/><rect x="18" y="24" width="64" height="46" rx="12" fill="#FFFDF8"/><rect x="18" y="24" width="64" height="9" fill="#EEE7FF"/><rect x="31" y="5" width="8" height="15" rx="4" fill="#5B4AB8"/><rect x="61" y="5" width="8" height="15" rx="4" fill="#5B4AB8"/><path d="M53 36a12 12 0 1 0 11 17 9.5 9.5 0 0 1-11-17z" fill="#FFC93D"/><path d="M64 38l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" fill="#8C6CF2"/></svg></div><b>' + T("Kalender", "Calendar") + "</b><span>" + T("Hari besar Islam", "Islamic holidays") + "</span></button>";
   }
   function onClick(e) {
     var b = e.target.closest("[data-act]"); if (!b) return;
