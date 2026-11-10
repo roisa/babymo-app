@@ -655,6 +655,7 @@ function renderMap(){
 }
 function drawRoad(){
   const j=$('journey'), svg=$('road'); if(!svg) return;
+  if(!j.clientWidth) return; /* hidden (map not on screen) — show('mapScreen') redraws it */
   const W=j.clientWidth, H=j.clientHeight, P=STOPS.map((s,i)=>[XS[i]/100*W, TOP+GAP*i]);
   svg.setAttribute('viewBox','0 0 '+W+' '+H);
   const seg=(a,b)=>' C'+a[0]+' '+(a[1]+GAP*.6)+' '+b[0]+' '+(b[1]-GAP*.6)+' '+b[0]+' '+b[1];
@@ -890,10 +891,12 @@ function finish(){
 }
 
 // ════════════ NAV ════════════
-function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id)); $(id).scrollTop=0; }
+function show(id){ document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id)); $(id).scrollTop=0; if(id==='mapScreen') drawRoad(); /* the road is measured from the map's width — draw it once the map is visible */ }
 function goMap(){ clearInterval(ticker); hush(); if(G) G.rvOpen=false; $('rv').classList.remove('on'); G=null; renderMap(); show('mapScreen'); scrollToCur(); }
 function scrollToCur(){ const n=document.querySelector('.node.cur')||[...document.querySelectorAll('.node:not(.locked)')].pop(); if(n){ const sc=$('mapScreen'), y=n.offsetTop+$('journey').offsetTop; if(y+150>sc.clientHeight) sc.scrollTop=Math.max(0,y-sc.clientHeight*.45); } }
 $('gBack').addEventListener('click',goMap);
+/* redraw the road when the map changes size (rotation, iPad split view) */
+try{ let rw=0; new ResizeObserver(()=>{ const w=$('journey').clientWidth; if(w&&w!==rw){ rw=w; drawRoad(); } }).observe($('journey')); }catch(e){}
 
 renderMap();
 requestAnimationFrame(()=>{ drawRoad(); scrollToCur(); });
