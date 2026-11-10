@@ -565,7 +565,7 @@ html[data-bm-theme="classic"] .hp-ov{background:linear-gradient(180deg,#123222,#
     <button class="res-btn-pri btn-pri" id="resNextBtn" onclick="goNextLesson()">Pelajaran Berikutnya →</button>
   </div>
   <div class="res-btns" style="margin-top:10px;">
-    <button class="res-btn-sec btn-sec" style="flex:1;" onclick="window.BabyMo&&BabyMo.share({title:'Huruf Hijaiyah — Baby Mo',message:'Aku belajar huruf hijaiyah bareng Baby Mo! Yuk coba juga 🌙'})">📤 Bagikan</button>
+    <button class="res-btn-sec btn-sec" style="flex:1;" onclick="shareLesson()">📤 Bagikan</button>
   </div>
 </div>
 
@@ -1159,6 +1159,23 @@ function setMoExpr(expr){
 // ═══════════════════════════════════════════════
 // FINISH LESSON
 // ═══════════════════════════════════════════════
+// Rich share card: letters mastered so far, lesson score + stars
+let lastLesson=null;
+function shareLesson(){
+  try{
+    if(!window.BabyMo||!BabyMo.share)return;
+    const l=lastLesson||{}, set={};
+    (userData.completed||[]).forEach(id=>{ const ls=LESSONS.find(x=>x.id===id); if(ls) ls.letters.forEach(x=>{ set[x]=1; }); });
+    const n=Object.keys(set).length;
+    BabyMo.share({
+      title:'Huruf Hijaiyah — Baby Mo',
+      headline:n>=28?['Semua 28 huruf!','All 28 letters!']:l.count?['+'+l.count+' huruf baru!','+'+l.count+' new letters!']:undefined,
+      stars:l.stars||0,
+      stats:[[['Huruf','Letters'],n+' / 28']].concat(l.pct!=null?[[['Skor','Score'],l.pct+'%']]:[]),
+      message:['Aku belajar huruf hijaiyah bareng Baby Mo! Yuk coba juga 🌙','I learned the hijaiyah letters with Baby Mo! Come try it 🌙']
+    });
+  }catch(e){}
+}
 function finishLesson(){
   const total=questions.length;
   const pct=Math.round((correct/Math.max(1,total))*100);
@@ -1182,6 +1199,7 @@ function finishLesson(){
   document.getElementById('resXP').textContent   ='+'+earnedXP;
   document.getElementById('resStreak').textContent=(userData.streak||0)+'🔥';
 
+  lastLesson={pct,stars,count:lessonLetters.length};
   // Recap letters
   const rg=document.getElementById('resLetterGrid');
   rg.innerHTML='';

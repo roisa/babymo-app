@@ -363,6 +363,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
       <div id="bdKind"><span>🐛</span>Sayang makhluk Allah</div>
       <div id="bdShare"><span>🎁</span>Suka berbagi</div>
     </div>
+    <button class="btn-pri" id="bookShare" type="button" style="display:none;width:100%;flex:none;margin-top:14px">📤 Bagikan Kebunku</button>
     <button class="linkbtn" id="resetBtn">Mulai kebun baru</button>
   </div>
 </section>
@@ -973,6 +974,7 @@ function renderBook(){
   $("bdKind").classList.toggle("lock",!D.stars.kind);
   $("bdShare").classList.toggle("lock",!D.stars.share);
   $("master").classList.toggle("on",Object.keys(D.book).length===ORDER.length);
+  var bs=$("bookShare"); bs.style.display=Object.keys(D.book).length?"":"none"; bs.textContent="📤 "+L("Bagikan Kebunku","Share my garden");
   renderStars();
 }
 
@@ -993,6 +995,16 @@ function homeLabel(){ var started=D.day>1||D.beds.some(function(b){ return b.cro
 }
 $("goGarden").addEventListener("click",function(){ sfx("tap"); enterGarden(); });
 $("goBook").addEventListener("click",function(){ sfx("tap"); renderBook(); show("s-book"); });
+// Share card: crops harvested into the Garden Book + stars, with Ais
+$("bookShare").addEventListener("click",function(){ try{
+  if(!kit().share) return;
+  var n=Object.keys(D.book).length, all=n===ORDER.length;
+  kit().share({
+    headline: all?["Petani Cilik!","Little Farmer!"]:[n+" tanaman dipanen!",n+" plant"+(n>1?"s":"")+" harvested!"],
+    stats:[[["Buku Kebun","Garden Book"],n+" / "+ORDER.length],[["Bintang","Stars"],starCount()+" / 8"]],
+    message:["Aku menanam & memanen sayur bareng Kak Ais! 🥕","I grew & harvested veggies with Ais! 🥕"]
+  });
+}catch(e){} });
 $("bookBack").addEventListener("click",function(){ homeLabel(); renderStars(); show("s-home"); });
 $("gardenX").addEventListener("click",function(){ if(busy) return; homeLabel(); renderStars(); show("s-home"); });
 $("resetBtn").addEventListener("click",function(){

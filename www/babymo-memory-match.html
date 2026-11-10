@@ -582,7 +582,7 @@ a[href="index.html"]{color:#5A6878!important;}
 
       <button class="btn-primary" id="btn-again">Main Lagi 🎮</button>
       <button class="btn-sec" id="btn-to-home">Kembali ke Menu 📋</button>
-      <button class="btn-sec" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('win-moves-txt')||{}).textContent||'',(document.getElementById('earn-name')||{}).textContent||'','I matched all the cards with Baby Mo! 🎴')">📤 Bagikan</button>
+      <button class="btn-sec" onclick="shareWin()">📤 Bagikan</button>
     </div>
   </div>
 
@@ -1224,6 +1224,8 @@ function showWin() {
     featured = ALL_STICKERS.find(s => s.id === randId) || ALL_STICKERS[0];
   }
 
+  lastWin = { moves: G.moves, pairs: (MODES[G.mode] || {}).pairs || 0, level: (MODES[G.mode] || {}).name || '',
+    badge: featured.name, newBadge: newlyEarned.length > 0, dailyBest: daily && daily.isNew && !daily.first };
   document.getElementById('earn-icon').textContent = featured.icon;
   document.getElementById('earn-name').textContent = featured.name;
 
@@ -1256,6 +1258,20 @@ function showWin() {
   renderThemes(); renderDailyCard();
   spawnParticles();
   goTo('s-success');
+}
+
+// Rich share card for the win screen: pairs matched, moves, badge, level
+let lastWin = null;
+function shareWin() {
+  try {
+    if (!window.BabyMo || !BabyMo.shareScore) return;
+    const w = lastWin || {};
+    BabyMo.shareScore('', '', ['Aku mencocokkan semua kartu bareng Baby Mo! 🎴', 'I matched all the cards with Baby Mo! 🎴'], {
+      headline: w.dailyBest ? ['Rekor baru hari ini!', 'New best today!']
+        : w.pairs ? ['Semua ' + w.pairs + ' pasang cocok!', 'All ' + w.pairs + ' pairs matched!'] : undefined,
+      stats: [[['Langkah', 'Moves'], w.moves], [w.newBadge ? ['Lencana baru', 'New badge'] : ['Lencana', 'Badge'], w.badge], [['Level', 'Level'], w.level]]
+    });
+  } catch (e) {}
 }
 
 function spawnParticles() {

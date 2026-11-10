@@ -1123,7 +1123,7 @@ body{
 
   <div class="celebration-actions">
     <button class="btn btn-secondary" id="replayBtn">🔊 Dengar</button>
-    <button class="btn btn-secondary" onclick="window.BabyMo&&BabyMo.share({title:'Kata Baik — Baby Mo',message:'Aku belajar kata-kata baik & akhlak mulia bareng Baby Mo! 💖'})">📤 Bagikan</button>
+    <button class="btn btn-secondary" onclick="shareKata()">📤 Bagikan</button>
     <button class="btn btn-secondary" id="celebCollBtn">📚 Koleksi</button>
     <button class="btn btn-gold" id="celebNewBtn">🎮 Lagi!</button>
   </div>
@@ -1680,6 +1680,7 @@ function showCelebration(){
   // restart animations by reflow
   void themeEmoji.offsetWidth;
 
+  lastPhrase = p;
   document.getElementById('celebNum').textContent = p.num;
   document.getElementById('celebTitle').textContent = p.title;
   document.getElementById('celebArabic').textContent = p.arabic;
@@ -1694,6 +1695,21 @@ function showCelebration(){
   spawnConfetti(40);
   // Play voice after short delay (so fanfare doesn't overlap)
   setTimeout(() => audio.playPhrase(p), 450);
+}
+
+// Rich share card: the phrase just completed + collection progress
+let lastPhrase = null;
+function shareKata(){
+  try{
+    if(!window.BabyMo || !BabyMo.share) return;
+    const p = lastPhrase;
+    BabyMo.share({
+      title: 'Kata Baik — Baby Mo',
+      headline: p ? p.title + '!' : undefined,
+      stats: [[['Koleksi', 'Collection'], state.seen.size + ' / ' + PHRASES.length]],
+      message: ['Aku belajar kata-kata baik & akhlak mulia bareng Baby Mo! 💖', 'I learned kind words & good manners with Baby Mo! 💖']
+    });
+  }catch(e){}
 }
 
 function hideCelebration(){
