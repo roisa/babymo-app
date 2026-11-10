@@ -452,6 +452,18 @@
     document.head.appendChild(st);
   }
 
+  /* A still picture of a du'a's scene (sky + Baby Mo) for cards on the home screen.
+     No motion (calm for small children); gradient ids get a per-card suffix so
+     several scenes can share the page with the big one on the learn screen. */
+  window.doaSceneArt = function (id, sfx) {
+    var s = SCENES[id]; if (!s) return "";
+    var k = "_" + (sfx || "c") + "_" + id;
+    var svg = s.svg.replace(/(id="|url\(#)(ds[A-Za-z0-9]+)/g, "$1$2" + k);
+    var night = id === "sleep" || id === "parents" || id === "bedtime_tasbih";
+    return '<span class="dsa' + (night ? " night" : "") + '"><svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + svg +
+      '</svg><img src="baby-mo-poses/' + s.pose + '.webp" alt="" loading="lazy" decoding="async"></span>';
+  };
+
   /* Render the scene for a du'a id into the header card. */
   window.renderDoaScene = function (id) {
     var s = SCENES[id]; var card = document.getElementById("sceneCard"); if (!s || !card) return false;
