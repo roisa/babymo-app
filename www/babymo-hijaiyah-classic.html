@@ -417,6 +417,7 @@ html[data-bm-theme="classic"] .hp-ov{background:linear-gradient(180deg,#123222,#
 .play-row .p2{background:linear-gradient(135deg,#FF8A5B,#F2547D)}
 .tk-target{display:flex;align-items:center;gap:12px;background:#fff;border-radius:22px;padding:6px 16px;margin:8px 0;box-shadow:0 10px 22px -14px rgba(30,60,110,.45)}
 .tk-target b{font-family:'Scheherazade New',serif;font-size:52px;line-height:1.5;color:#E8590C}
+.tk-target b{display:inline-flex;align-items:center;justify-content:center;width:66px;height:66px;line-height:66px;font-weight:400}
 .tk-target span{font-weight:900;font-size:16px;color:#1E2B3A}
 .tk-field{position:relative;width:100%;max-width:440px;flex:1;min-height:0;border-radius:26px;overflow:hidden;background:linear-gradient(180deg,#BFE7FF,#E8F7FF 60%,#D9F5D0);box-shadow:inset 0 0 0 2px rgba(255,255,255,.6)}
 .tk-b{position:absolute;width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-family:'Scheherazade New',serif;font-size:40px;line-height:1;color:#fff;cursor:pointer;
@@ -1525,12 +1526,29 @@ function showToast(e,t){
   window.addEventListener('resize',function(){ if(ov.classList.contains('on')) setup(); });
 
   /* ── 3. Tangkap Huruf (pop the letter bubbles) ── */
+  /* draw the target letter centred on its actual ink — Arabic fonts sit unevenly in their line box (ح looked low) */
+  function tkGlyph(g){
+    var el=document.getElementById('tkAr'); el.setAttribute('aria-label',g); el.dataset.g=g;
+    var go=function(){ if(el.dataset.g!==g) return; try{
+      var W=66,H=66,dpr=Math.min(window.devicePixelRatio||1,3),cv=document.createElement('canvas');
+      cv.width=W*dpr; cv.height=H*dpr; cv.style.cssText='width:'+W+'px;height:'+H+'px;display:block';
+      var x=cv.getContext('2d'); x.scale(dpr,dpr); var size=56, fam='"Scheherazade New","Amiri",serif';
+      x.font=size+'px '+fam; x.textAlign='center'; x.textBaseline='alphabetic';
+      var m=x.measureText(g), iw=m.actualBoundingBoxLeft+m.actualBoundingBoxRight, ih=m.actualBoundingBoxAscent+m.actualBoundingBoxDescent;
+      var fit=Math.min(1,(W*.86)/iw,(H*.86)/ih); if(fit<1){ size=Math.floor(size*fit); x.font=size+'px '+fam; m=x.measureText(g); }
+      var cx=W/2+(m.actualBoundingBoxLeft-m.actualBoundingBoxRight)/2, cy=H/2+(m.actualBoundingBoxAscent-m.actualBoundingBoxDescent)/2;
+      x.fillStyle=getComputedStyle(el).color; x.fillText(g,cx,cy); el.textContent=''; el.appendChild(cv);
+    }catch(e){ el.textContent=g; } };
+    el.textContent=g;
+    (document.fonts&&document.fonts.load ? document.fonts.load('56px "Scheherazade New"',g).then(go,go) : go());
+  }
+
   var tk={on:false,raf:0,score:0,time:40,target:null,pool:[],bubbles:[],t0:0,spawnAt:0,hits:0};
   var COLS=['#FF6B6B','#4DABF7','#51CF66','#FCC419','#CC5DE8','#FF922B','#20C997'];
   function learnedLetters(){ var set={}; userData.completed.forEach(function(id){ var l=LESSONS.find(function(x){return x.id===id;}); if(l) l.letters.forEach(function(x){ set[x]=1; }); });
     var arr=LETTERS.filter(function(l){ return set[l.id]; }); return arr.length>=4?arr:LETTERS.slice(0,6); }
   function newTarget(){ var t; do{ t=tk.pool[Math.floor(Math.random()*tk.pool.length)]; }while(tk.target&&t.id===tk.target.id&&tk.pool.length>1); tk.target=t;
-    document.getElementById('tkAr').textContent=base(t); document.getElementById('tkName').textContent=t.name; sayAr(t.arName||t.speak); }
+    tkGlyph(base(t)); document.getElementById('tkName').textContent=t.name; sayAr(t.arName||t.speak); }
   function spawn(field){
     var W=field.clientWidth, H=field.clientHeight, isT=Math.random()<0.42, lt=isT?tk.target:tk.pool[Math.floor(Math.random()*tk.pool.length)];
     var b=document.createElement('div'); b.className='tk-b'; b.textContent=base(lt); b.style.setProperty('--c',COLS[Math.floor(Math.random()*COLS.length)]);
