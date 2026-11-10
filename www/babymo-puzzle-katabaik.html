@@ -7,6 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/kbaik.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta name="theme-color" content="#07200E">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -2065,7 +2067,8 @@ document.addEventListener('click', () => audio.ensureCtx(), { once: true });
     try{ synth.cancel(); }catch(e){}
     var meaning=EN?(window.BM_T?BM_T(p.indo):p.indo):p.indo;
     synth.speak(utter(p.arabic,'ar-SA',0.82,1.1));
-    synth.speak(utter(clean(p.title)+'.', EN?'en-US':'id-ID', 0.95, 1.15));
+    var tu=utter(clean(p.title)+'.', EN?'en-US':'id-ID', 0.95, 1.15); tu.bmRaw=true;   // the Latin name, not the Arabic clip again
+    synth.speak(tu);
     synth.speak(utter(clean(meaning), EN?'en-US':'id-ID', 0.95, 1.15));
   };
   // a short spoken cheer now and then while opening tiles

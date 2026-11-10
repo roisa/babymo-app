@@ -4,6 +4,8 @@
 <script src="bm-theme.js"></script>
 <script src="i18n/huruf.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <script src="bm-fit.js"></script>
@@ -711,6 +713,8 @@ function initAudio(){
   if(speechSynthesis.onvoiceschanged !== undefined) speechSynthesis.onvoiceschanged = load;
 }
 
+// a recorded clip (bm-voice.js) speaks Arabic on every device, with or without a phone Arabic voice
+function arOK(t){ try{ return !!(arabicVoice || (window.BMVoice && BMVoice.has(t))); }catch(e){ return !!arabicVoice; } }
 function speak(text, lang){
   if(!window.speechSynthesis) return;
   speechSynthesis.cancel();
@@ -742,8 +746,8 @@ function speakCurrentLetter(){
   if(!lt) return;
   // Use Arabic script letter name (arName) for Arabic TTS — this gives natural, correct pronunciation.
   // Fall back to English romanization for non-Arabic voices.
-  const text = arabicVoice ? lt.arName : lt.speak;
-  speak(text, arabicVoice ? 'ar-SA' : 'id-ID');
+  const text = arOK(lt.arName) ? lt.arName : lt.speak;
+  speak(text, arOK(lt.arName) ? 'ar-SA' : 'id-ID');
   playTone(523,.08,'sine',.2);
 }
 
@@ -974,7 +978,7 @@ function loadCard(idx){
 
   // Auto-speak after short delay
   clearTimeout(speakTimer);
-  speakTimer = setTimeout(()=>speak(arabicVoice ? lt.arName : lt.speak, arabicVoice?'ar-SA':'id-ID'), 700);
+  speakTimer = setTimeout(()=>speak(arOK(lt.arName) ? lt.arName : lt.speak, arOK(lt.arName)?'ar-SA':'id-ID'), 700);
 }
 
 function prevCard(){
@@ -1806,7 +1810,7 @@ html[data-bm-theme="classic"]{
   /* ── the session: 5 × (hear → pick the letter), then trace one ── */
   var ov=document.getElementById('rvOv'), rv=null;
   function bub(h,pose){ document.getElementById('rvBub').innerHTML=h; if(pose) document.getElementById('rvMo').src=P(pose); }
-  function sayLt(l){ try{ speak(arabicVoice?l.arName:l.speak, arabicVoice?'ar-SA':'id-ID'); }catch(e){} }
+  function sayLt(l){ try{ speak(arOK(l.arName)?l.arName:l.speak, arOK(l.arName)?'ar-SA':'id-ID'); }catch(e){} }
   function shuffleR(a){ return a.map(function(x){ return [Math.random(),x]; }).sort(function(p,q){ return p[0]-q[0]; }).map(function(p){ return p[1]; }); }
   function bumpStreak(){
     var t=new Date().toDateString();

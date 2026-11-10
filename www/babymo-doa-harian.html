@@ -7,6 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/doa.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta name="description" content="Belajar 14 doa sehari-hari dengan suara Arab asli, animasi, dan kuis seru bersama Baby Mo.">
 <title>Doa Harian Anak — 14 Doa Sehari-hari + Audio Arab | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
@@ -1497,6 +1499,7 @@ function showToast(e, t){
   function speakWord(text,done){
     try{ if(!window.speechSynthesis){ setTimeout(done,500); return; }
       var u=new SpeechSynthesisUtterance(text); u.lang='ar-SA'; u.rate=currentSpeed==='slow'?0.5:0.7; if(wsArabicVoice) u.voice=wsArabicVoice;
+      u.bmSlow=currentSpeed==='slow';   // a recorded word clip plays a little slower (bm-voice.js)
       var t=setTimeout(function(){ done&&done(); done=null; },2600); u.onend=u.onerror=function(){ clearTimeout(t); if(done){ var f=done; done=null; setTimeout(f,120);} };
       speechSynthesis.cancel(); speechSynthesis.speak(u);
     }catch(e){ setTimeout(done,500); }
