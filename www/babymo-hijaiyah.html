@@ -295,6 +295,12 @@ html[data-bm-theme="classic"] .coach-step small{color:var(--cream-dim);}
 html[data-bm-theme="classic"] .coach-ico{background:rgba(255,255,255,.10);box-shadow:none;}
 .coach-step{border-radius:18px;}
 </style>
+<style id="bm-pause-toast">
+/* Pause panel ("Jeda") open: game toasts (weather, tips) wait behind it instead of
+   covering its title; a toast from a tap in the panel shows at the bottom */
+#vMenu.on ~ #toast:not(.menu){opacity:0!important;visibility:hidden;transition:none}
+#vMenu.on ~ #toast.menu{top:auto;bottom:calc(12px + env(safe-area-inset-bottom))}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -1745,8 +1751,11 @@ function loadWorld(){
    ============================================================ */
 const $ = s=>document.querySelector(s);
 const veil = { start:$('#vStart'), journal:$('#vJournal'), menu:$('#vMenu') };
+var menuTapAt = 0;
+veil.menu.addEventListener('click', ()=>{ menuTapAt = Date.now(); }, true);
 function toast(msg, ms){
   const t = $('#toast'); t.textContent = msg; t.classList.add('on');
+  t.classList.toggle('menu', veil.menu.classList.contains('on') && Date.now()-menuTapAt < 2000);
   clearTimeout(t._h); t._h = setTimeout(()=>t.classList.remove('on'), ms||2000);
 }
 function updateJournalBadge(){ $('#jCount').textContent = collected.size+' / '+L.length; }
@@ -1834,7 +1843,26 @@ function buildShareCardDataURL(){
   x.fillText('play.babymo.id', W/2, H-38);
   return c.toDataURL('image/png');
 }
+// Share with the themed Baby Mo card from bm-kit.js (loaded quietly below);
+// falls back to the island-snapshot card if the kit is not there.
 function shareBuild(){
+  try{
+    if(window.BabyMo && BabyMo.shareScore){
+      const n = collected.size, total = L.length, Z = window.Seasons || {};
+      const sn = Z.s1Done && Z.s1Done() ? (Z.s2AllDone && Z.s2AllDone() ? 3 : 2) : 1;
+      const SN = [null, ['Huruf','Letters'], ['Harakat','Harakat'], ['Kata','Words']][sn];
+      BabyMo.shareScore('', '', ['Aku menemukan '+n+' huruf hijaiyah sambil membangun pulau sendiri! 🏝️',
+          'I found '+n+' hijaiyah letters while building an island! 🏝️'], {
+        headline: [n+'/'+total+' huruf!', n+'/'+total+' letters!'],
+        stats: [[['Huruf ditemukan','Letters found'], n+'/'+total],
+                [['Musim','Season'], [sn+' · '+SN[0], sn+' · '+SN[1]]]]
+      });
+      return;
+    }
+  }catch(e){}
+  shareBuildLegacy();
+}
+function shareBuildLegacy(){
   try{
     const url = 'https://play.babymo.id/babymo-hijaiyah.html';
     const text = '🌙 Pulau Hijaiyah — Baby Mo\nIbra sudah temukan '+collected.size+'/'+L.length+' huruf hijaiyah sambil membangun pulaunya sendiri!\n'+url+'\n#BabyMo #BelajarIslam';
@@ -4156,5 +4184,9 @@ tick();
   Z.fontReady.then(()=>{ refresh(); applyPin(); updateJournalBadge(); });
 })();
 </script>
+<!-- Shared kit for the themed share card only: quiet mode = no Baby Mo greeting
+     bubble or win watcher over the 3D island -->
+<script>window.BM_KIT_QUIET = true;</script>
+<script src="/bm-kit.js" defer></script>
 </body>
 </html>
