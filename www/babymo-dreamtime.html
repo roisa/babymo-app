@@ -551,7 +551,7 @@ function show(id){
 }
 
 document.getElementById('btn-start').addEventListener('click',function(){vib(60);show('steps');runStep(0);});
-document.getElementById('btn-home').addEventListener('click',function(){vib(40);speechSynthesis.cancel();show('home');});
+document.getElementById('btn-home').addEventListener('click',function(){vib(40);speechSynthesis.cancel();try{if(window.__dreamAu)window.__dreamAu.pause();}catch(e){}show('home');});
 
 function setP(idx){document.getElementById('pfill').style.width=(idx/4*100)+'%';}
 
@@ -839,10 +839,10 @@ function buildPajamas(wrap,done){
 function buildDoa(wrap,done){
 
   var PARTS=[
-    {ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا', lat:'Bismika Allāhumma aḥyā', mean:'Dengan nama-Mu ya Allah aku hidup', sAr:'باسمك اللهم أحيا', sId:'Bismika Allāhumma ahyā'},
-    {ar:'وَبِاسْمِكَ أَمُوتُ',   lat:'wa bismika amūtu',     mean:'dan dengan nama-Mu aku mati',     sAr:'وباسمك أموت', sId:'wa bismika amūt'}
+    {ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا', lat:'Bismika Allāhumma aḥyā', mean:'Dengan nama-Mu ya Allah aku hidup', sAr:'باسمك اللهم أحيا', sId:'Bismika Allāhumma ahyā', clip:'doa-voice/d-sleep-1.mp3?v=algenib'},
+    {ar:'وَبِاسْمِكَ أَمُوتُ',   lat:'wa bismika amūtu',     mean:'dan dengan nama-Mu aku mati',     sAr:'وباسمك أموت', sId:'wa bismika amūt', clip:'doa-voice/d-sleep-2.mp3?v=algenib'}
   ];
-  var FULL={ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', lat:'Bismika Allāhumma aḥyā wa bismika amūtu', mean:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati', sAr:'باسمك اللهم أحيا وباسمك أموت', sId:'Bismika Allāhumma ahyā wa bismika amūt'};
+  var FULL={ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', lat:'Bismika Allāhumma aḥyā wa bismika amūtu', mean:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati', sAr:'باسمك اللهم أحيا وباسمك أموت', sId:'Bismika Allāhumma ahyā wa bismika amūt', clip:'doa-voice/d-sleep.mp3?v=algenib'};
   var STEPS=[PARTS[0],PARTS[1],FULL];
   var doneAll=false, playing=false;
 
@@ -897,6 +897,17 @@ function buildDoa(wrap,done){
 
   function speakStep(s,cb){
     playing=true; wave(true); arHL(true);
+    /* one voice only: the recorded Arabic du'a (same voice as Doa Harian). Device speech is just a fallback. */
+    if(s.clip){
+      var fin=false, end=function(){ if(fin) return; fin=true; clearTimeout(sf); playing=false; wave(false); arHL(false); if(cb)cb(); };
+      var sf=setTimeout(end,9000);
+      try{ speechSynthesis.cancel(); }catch(e){}
+      try{ if(window.__dreamAu) window.__dreamAu.pause(); }catch(e){}
+      var au=window.__dreamAu=new Audio(s.clip); au.onended=end;
+      var fb=function(){ if(fin) return; fin=true; clearTimeout(sf); playing=false; wave(false); arHL(false); s.clip=null; speakStep(s,cb); };
+      au.onerror=fb; au.play().catch(fb);
+      return;
+    }
     var safety=setTimeout(function(){playing=false;wave(false);arHL(false);if(cb)cb();},13000);
     speakMom(s.sId,function(){
       setTimeout(function(){
