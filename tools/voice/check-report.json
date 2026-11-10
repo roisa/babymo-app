@@ -3928,5 +3928,6308 @@
   ],
   "ok": true,
   "file": "www/voice/cari-a5b7ca95.mp3"
+ },
+ {
+  "text": "Niat & Bismillah. Niatkan wudhu dalam hati, lalu ucapkan Bismillah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5fe43633.mp3"
+ },
+ {
+  "text": "Membasuh Kedua Telapak Tangan. Basuh kedua telapak tangan sampai ke sela-sela jari.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-4e1335f4.mp3"
+ },
+ {
+  "text": "Berkumur. Masukkan air ke mulut, kumur-kumur, lalu buang airnya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "berkumur memasukkan air ke mulut",
+   "berkumur masukkan air ke mulut",
+   "berkumur memasukkan air ke"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e49a22e6.mp3"
+ },
+ {
+  "text": "Membersihkan Hidung. Hirup sedikit air ke hidung pelan-pelan, lalu keluarkan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "membersihkan",
+   "membersihkan hidung",
+   "membersihkan luka"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d867e794.mp3"
+ },
+ {
+  "text": "Membasuh Wajah. Basuh seluruh wajah, dari dahi sampai dagu dan dari telinga ke telinga.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e7fae184.mp3"
+ },
+ {
+  "text": "Membasuh Tangan sampai Siku. Basuh tangan kanan sampai siku, lalu tangan kiri.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-28f1971e.mp3"
+ },
+ {
+  "text": "Mengusap Kepala. Basahi tangan, lalu usap sebagian kepala.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-6fda1f8a.mp3"
+ },
+ {
+  "text": "Membersihkan Telinga. Usap bagian dalam dan belakang kedua telinga.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "membersihkan telinga bagian dalam dan belakang kedua telinga",
+   "membersihkan telinga pusat bagian dalam dan belakang kedua telinga",
+   "membersihkan telinga Ustad bagian dalam dan belakang kedua telinga"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-b2d2cf4f.mp3"
+ },
+ {
+  "text": "Membasuh Kaki sampai Mata Kaki. Basuh kaki kanan sampai mata kaki, lalu kaki kiri.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "kaki kaki kaki kaki kiri",
+   "kaki kaki kaki kiri",
+   "kaki-kaki lalu kaki kiri"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-2fcfc974.mp3"
+ },
+ {
+  "text": "Doa Setelah Wudhu. Selesai wudhu, angkat tangan dan baca doa.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5e24fdef.mp3"
+ },
+ {
+  "text": "Niat",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2d5993eb.mp3"
+ },
+ {
+  "text": "Telapak tangan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-1c264fac.mp3"
+ },
+ {
+  "text": "Berkumur",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "berkumur",
+   "berkumpul"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e76b3ad4.mp3"
+ },
+ {
+  "text": "Hidung",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "hidung",
+   "kidung"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d1022435.mp3"
+ },
+ {
+  "text": "Wajah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-78943bed.mp3"
+ },
+ {
+  "text": "Tangan sampai siku",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-da67d476.mp3"
+ },
+ {
+  "text": "Kepala",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d1b31bd2.mp3"
+ },
+ {
+  "text": "Telinga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "telinga",
+   "Kalingga"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b067922c.mp3"
+ },
+ {
+  "text": "Kaki",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "kaki",
+   "Chucky"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a420c3ec.mp3"
+ },
+ {
+  "text": "Doa",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "doa",
+   "doa-doa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0c756657.mp3"
+ },
+ {
+  "text": "1",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "hitungan / counting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-69cffe9c.mp3"
+ },
+ {
+  "text": "2",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "hitungan / counting",
+  "heard": [
+   "dua",
+   "2",
+   "jua"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-687567fa.mp3"
+ },
+ {
+  "text": "3",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "hitungan / counting",
+  "heard": [
+   "tiga",
+   "3"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5e1bde83.mp3"
+ },
+ {
+  "text": "MasyaAllah, wudhumu selesai! Sekarang siap sholat.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "selesai / done",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-957c5b88.mp3"
+ },
+ {
+  "text": "MasyaAllah, sudah wudhu!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "check-in",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-25b76972.mp3"
+ },
+ {
+  "text": "Intention & Bismillah. Make the intention for wudu in your heart, then say Bismillah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "intention and Bismillah make the intention for wudu in your heart then say Bismillah",
+   "intention and Bismillah make the intention for wudhu in your heart then say Bismillah",
+   "intention and Bismillah make the intention for woodoo in your heart then say Bismillah"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-7382b111.mp3"
+ },
+ {
+  "text": "Wash Both Hands. Wash both hands, between the fingers too.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "wash both hands wash both hands between the fingers too",
+   "warsh both hands wash both hands between the fingers too",
+   "wasche both hands wash both hands between the fingers too"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-dc4b7d38.mp3"
+ },
+ {
+  "text": "Rinse mouth. Put water in your mouth, swish it around, then spit it out.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "rinse mouth put water in your mouth swish it around then spit it out",
+   "rinse mouths put water in your mouth swish it around then spit it out",
+   "rinse mouth put water in your mouth swoosh it around then spit it out"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e1f673d7.mp3"
+ },
+ {
+  "text": "Clean the Nose. Gently sniff a little water into your nose, then blow it out.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "clean the nose gently sniff a little water into your nose then blow it out",
+   "Klean the nose gently sniff a little water into your nose then blow it out",
+   "Kleen the nose gently sniff a little water into your nose then blow it out"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-40174bbb.mp3"
+ },
+ {
+  "text": "Wash the Face. Wash your whole face, from forehead to chin and ear to ear.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "wash the face wash your whole face from forehead to chin and ear to ear",
+   "wash the face wash your hole face from forehead to chin and ear to ear",
+   "wash the face wash your whole faced from forehead to chin and ear to ear"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a2687a91.mp3"
+ },
+ {
+  "text": "Wash the Arms to the Elbows. Wash your right arm up to the elbow, then your left.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "wash the arms to the elbows wash your right arm up to the Elbow then your left",
+   "wash the arms to the elbows wash your right arm up to the Elbow then you're left",
+   "warsh the arms to the elbows wash your right arm up to the Elbow then your left"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3ab42a4c.mp3"
+ },
+ {
+  "text": "Wipe the Head. Wet your hands, then wipe over your head.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "wipe the head",
+   "wyep the head",
+   "whipe the head",
+   " wet your hands then wipe over your head",
+   " wet your hands then wyep over your head",
+   " awet your hands then wipe over your head"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-124d9ab9.mp3"
+ },
+ {
+  "text": "Clean the Ears. Wipe the inside and back of both ears.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "clean the ears wipe the inside and back of both ears",
+   "Queen the ears wipe the inside and back of both ears",
+   "quynh the ears wipe the inside and back of both ears"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ffc315cb.mp3"
+ },
+ {
+  "text": "Wash the Feet to the Ankles. Wash your right foot up to the ankle, then your left.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "wash the feet to the ankles",
+   "warsh the feet to the ankles",
+   "wasche the feet to the ankles",
+   " wash your right foot up to the ankle then your left",
+   " wasch your right foot up to the ankle then your left",
+   " warsh your right foot up to the ankle then your left"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b884ff94.mp3"
+ },
+ {
+  "text": "Du'a After Wudu. After wudu, raise your hands and say the du'a.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "langkah / steps",
+  "heard": [
+   "Dua after wudu after wudu raise your hands and say the Dua",
+   "Dua after wudu after Wu raise your hands and say the Dua",
+   "Dua after wudu after woo raise your hands and say the Dua"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bf8e3bdf.mp3"
+ },
+ {
+  "text": "Intention",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "intention",
+   "intension"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8e5e6f73.mp3"
+ },
+ {
+  "text": "Hands",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "hand",
+   "hands",
+   "hande"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-652b88e9.mp3"
+ },
+ {
+  "text": "Rinse mouth",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "rinse mouth",
+   "rinse mouths",
+   "rinse mouthed"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4b5190d0.mp3"
+ },
+ {
+  "text": "Nose",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/lines-99931ca9.mp3"
+ },
+ {
+  "text": "Face",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "face",
+   "faced",
+   "fase"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-def1a486.mp3"
+ },
+ {
+  "text": "Arms to elbows",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "arms to elbows",
+   "arms the elbows",
+   "Armes to elbows"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b7da4301.mp3"
+ },
+ {
+  "text": "Head",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "head",
+   "HED",
+   "headd"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c9a337c5.mp3"
+ },
+ {
+  "text": "Ears",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "ears",
+   "eers",
+   "earz"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c698e86d.mp3"
+ },
+ {
+  "text": "Feet",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "feet"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-29c8abce.mp3"
+ },
+ {
+  "text": "Du'a",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "urutkan / order game",
+  "heard": [
+   "Dura",
+   "Dua",
+   "Dira"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c4a5e08d.mp3"
+ },
+ {
+  "text": "MashaAllah, your wudu is done! Now you're ready to pray.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "selesai / done",
+  "heard": [
+   "mashallah you will do is done now you're ready to pray",
+   "mashallah your will do is done now you're ready to pray",
+   "mashallah you will do is done now you're ready to prey"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-77a634c9.mp3"
+ },
+ {
+  "text": "MashaAllah, wudu done!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "check-in",
+  "heard": [
+   "mashallah",
+   "mashallah wudan",
+   "mashallah wooin"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-52eeef13.mp3"
+ },
+ {
+  "text": "Ups! Sudah basah!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "siram / watering",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b2fa5dbc.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Panen Tomat",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "Alhamdulillah",
+   "alhamdulilah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7a077053.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Panen Wortel",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-78a05e9a.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Panen Stroberi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-31137224.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Panen Jagung",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ee967cf7.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Panen Bunga Matahari",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "Alhamdulillah",
+   "Alhamdulillah hari",
+   "alhamdulilah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3aa49db6.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Panen Semangka",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f7bdab2f.mp3"
+ },
+ {
+  "text": "Ulat juga makhluk Allah. Kita pindahkan ke pohon, ya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "ulat / caterpillar",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e1ddab0e.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomatmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ed40283b.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan wortelmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-57c15a3e.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan stroberimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a87f85e0.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan jagungmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "jagung",
+   "jagung musik",
+   "jagung muda"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a96acedf.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan bunga mataharimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a9a622bd.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan semangkamu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b8bc66bf.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortelmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-17994327.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan tomatmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e8ae1df8.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan stroberimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "siap dipanen",
+   "siap di panen"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5613b5e0.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan jagungmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-81c6a2d8.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan bunga mataharimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-41e8c315.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan semangkamu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ab55bdce.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-640618d9.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan tomatmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "siap dipanen",
+   "siap di panen",
+   "setiap dipanen"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2d52d5da.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan wortelmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "strawberry",
+   "strawberry dan wortel"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-97084f60.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan jagungmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e4b29e2f.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan bunga mataharimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "siap dipanen",
+   "siap di panen"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e982010a.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan semangkamu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-dd219271.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagungmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "Selamat pagi jagung"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-64443eb0.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan tomatmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "Selamat pagi jagung",
+   "Selamat pagi jagung dan musik"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0d2e736d.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan wortelmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cd53d537.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan stroberimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "strawberry",
+   "stroberi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-006a7886.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan bunga mataharimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "jagung",
+   "jagung dan bunga matahari"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6f1ed56a.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan semangkamu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Emang kamu siap dipanen",
+   "kamu siap dipanen",
+   "kamu siap di panen"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cc291384.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga mataharimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-1a5d19bd.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan tomatmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5a539665.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan wortelmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-145ea75d.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan stroberimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "bunga matahari dan strawberry",
+   "bunga matahari",
+   "bunga matahari dan stroberi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b1f71d8d.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan jagungmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "siap dipanen",
+   "siap di panen"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-dbc02812.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan semangkamu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-044e5eda.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangkamu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi teman kamu siapa",
+   "Selamat pagi kamu siap dipanen",
+   "Selamat pagi kamu siapa"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-3af03f02.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan tomatmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-4d314855.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan wortelmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "dipanen",
+   "panen"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-467d24d0.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan stroberimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b4ca98d3.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan jagungmu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-15404181.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan bunga mataharimu siap dipanen!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "siap dipanen",
+   "dipanen"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d12a4503.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomatmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-3fb38b07.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan wortelmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-36c6f529.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan stroberimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a64e77aa.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan jagungmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "pagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2c2e42fa.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan bunga mataharimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-078fa10e.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tomat dan semangkamu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e79cc06f.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortelmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9cdf5406.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan tomatmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b732d13a.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan stroberimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "Selamat pagi Bu",
+   "Selamat pagi strawberry"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-886c6e7b.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan jagungmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-4b6a8bcd.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan bunga mataharimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi tumbuh",
+   "Selamat pagi subuh",
+   "Selamat pagi tubuh"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-27dc1cdd.mp3"
+ },
+ {
+  "text": "Selamat pagi! Wortel dan semangkamu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "tumbuh",
+   "kamu tumbuh"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b7c5475d.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "strawberry",
+   "stroberi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3ed4c18d.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan tomatmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "strawberry dan tomat mau tumbuh",
+   "strawberry dan tomat mu tumbuh",
+   "stroberi dan tomat mau tumbuh"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-260c5b68.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan wortelmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cc0ce712.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan jagungmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9283be4c.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan bunga mataharimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a043db53.mp3"
+ },
+ {
+  "text": "Selamat pagi! Stroberi dan semangkamu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "strawberry dan semangka tumbuh",
+   "strawberry dan semangka mau tumbuh",
+   "strawberry dan semangka mutombo"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-76539455.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagungmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "jagung",
+   "jagung tumbuh"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8e3d2f21.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan tomatmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi jagung dan tomat tumbuh",
+   "Selamat pagi jagung dan tomat mu tumbuh",
+   "Selamat pagi jagung dan tomat mau tumbuh"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-64c74784.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan wortelmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "jagung",
+   "jagung dan",
+   "jagung dan wortel"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a61c0911.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan stroberimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "Selamat pagi jagung tumbuh",
+   "Selamat pagi jagung"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ea7669ae.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan bunga mataharimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0d294057.mp3"
+ },
+ {
+  "text": "Selamat pagi! Jagung dan semangkamu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c74ecdb8.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga mataharimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "bunga matahari tumbuh",
+   "bunga matahari mau tumbuh",
+   "bunga matahari mu tumbuh"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0f9581ad.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan tomatmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e15639ce.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan wortelmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi bunga matahari",
+   "Selamat pagi",
+   "Selamat pagi matahari"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2c57ef8a.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan stroberimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f601d0d1.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan jagungmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi Bunga matahari tumbuh",
+   "Selamat pagi",
+   "Selamat pagi aku mau tumbuh"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-72519626.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bunga matahari dan semangkamu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "kamu tumbuh",
+   "kamu tubuh"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ebb473b9.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangkamu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi kamu tumbuh",
+   "Selamat pagi semoga kamu tumbuh",
+   "Selamat pagi teman kamu tumbuh"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-f9cf064a.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan tomatmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-33cb9685.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan wortelmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-7504040d.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan stroberimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "tumbuh",
+   "tubuh"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-766a1936.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan jagungmu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cf29d649.mp3"
+ },
+ {
+  "text": "Selamat pagi! Semangka dan bunga mataharimu tumbuh!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi semangka dan bunga matahari mau tumbuh",
+   "Selamat pagi semangka dan bunga matahari tumbuh",
+   "Selamat pagi semangka.dan Bunga matahari tumbuh"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-67333948.mp3"
+ },
+ {
+  "text": "Selamat pagi! Tanaman haus. Ayo siram!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e6512d7b.mp3"
+ },
+ {
+  "text": "Selamat pagi! Ayo tanam benih hari ini!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-402b1a14.mp3"
+ },
+ {
+  "text": "Selamat pagi! Ayo rawat kebun hari ini!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "pagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c5ada69f.mp3"
+ },
+ {
+  "text": "Ais memberi Tomat untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-8f6caa2f.mp3"
+ },
+ {
+  "text": "Ais memberi Tomat untuk Abi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5a7fdd2c.mp3"
+ },
+ {
+  "text": "Ais memberi Tomat untuk Mo",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2956f2bd.mp3"
+ },
+ {
+  "text": "Ais memberi Tomat untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cca27829.mp3"
+ },
+ {
+  "text": "Ais memberi Tomat untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cbe3e388.mp3"
+ },
+ {
+  "text": "Ais memberi Tomat untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-eca049e2.mp3"
+ },
+ {
+  "text": "Ais memberi Wortel untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e5595d72.mp3"
+ },
+ {
+  "text": "Ais memberi Wortel untuk Abi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-bff70998.mp3"
+ },
+ {
+  "text": "Ais memberi Wortel untuk Mo",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d8a9a9ed.mp3"
+ },
+ {
+  "text": "Ais memberi Wortel untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b4812e5c.mp3"
+ },
+ {
+  "text": "Ais memberi Wortel untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-7179596e.mp3"
+ },
+ {
+  "text": "Ais memberi Wortel untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-39bf9164.mp3"
+ },
+ {
+  "text": "Ais memberi Stroberi untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-01ec51ad.mp3"
+ },
+ {
+  "text": "Ais memberi Stroberi untuk Abi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cbb8522b.mp3"
+ },
+ {
+  "text": "Ais memberi Stroberi untuk Mo",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-4a931224.mp3"
+ },
+ {
+  "text": "Ais memberi Stroberi untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-85f4cde8.mp3"
+ },
+ {
+  "text": "Ais memberi Stroberi untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-18c36e64.mp3"
+ },
+ {
+  "text": "Ais memberi Stroberi untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-bb846bad.mp3"
+ },
+ {
+  "text": "Ais memberi Jagung untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-1a4dd9a4.mp3"
+ },
+ {
+  "text": "Ais memberi Jagung untuk Abi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c94d458c.mp3"
+ },
+ {
+  "text": "Ais memberi Jagung untuk Mo",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "jagung untuk",
+   "jagung untukmu",
+   "jagung untuk mu"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-25bbe537.mp3"
+ },
+ {
+  "text": "Ais memberi Jagung untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-942d2dc8.mp3"
+ },
+ {
+  "text": "Ais memberi Jagung untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-67e31677.mp3"
+ },
+ {
+  "text": "Ais memberi Jagung untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-111f4ae6.mp3"
+ },
+ {
+  "text": "Ais memberi Bunga Matahari untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-72ffeabc.mp3"
+ },
+ {
+  "text": "Ais memberi Bunga Matahari untuk Abi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-14bf614d.mp3"
+ },
+ {
+  "text": "Ais memberi Bunga Matahari untuk Mo",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "memberi bunga matahari untukmu",
+   "memberi bunga matahari untuk",
+   "memberi bunga matahari untuk mu"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-848839c7.mp3"
+ },
+ {
+  "text": "Ais memberi Bunga Matahari untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "untuk",
+   "cari untuk"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b2a5f8e8.mp3"
+ },
+ {
+  "text": "Ais memberi Bunga Matahari untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "memberi bunga matahari untuk",
+   "memberi bunga matahari untuk nenek",
+   "membeli bunga matahari untuk"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ed94cfa5.mp3"
+ },
+ {
+  "text": "Ais memberi Bunga Matahari untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "bunga matahari untuk",
+   "memberi bunga matahari untuk",
+   "matahari untuk"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2e14029a.mp3"
+ },
+ {
+  "text": "Ais memberi Semangka untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b5370cde.mp3"
+ },
+ {
+  "text": "Ais memberi Semangka untuk Abi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2f466741.mp3"
+ },
+ {
+  "text": "Ais memberi Semangka untuk Mo",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d6d818b6.mp3"
+ },
+ {
+  "text": "Ais memberi Semangka untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e320d102.mp3"
+ },
+ {
+  "text": "Ais memberi Semangka untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-fe2bd71b.mp3"
+ },
+ {
+  "text": "Ais memberi Semangka untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9885c267.mp3"
+ },
+ {
+  "text": "Assalamu'alaikum! Ayo berkebun bersama Ais!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-26e02ee5.mp3"
+ },
+ {
+  "text": "Hihi!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-597b6808.mp3"
+ },
+ {
+  "text": "Oops! It's already wet!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "siram / watering",
+  "heard": [
+   "oops it's already wet",
+   "ooops it's already wet",
+   "oooops it's already wet"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4b359682.mp3"
+ },
+ {
+  "text": "Alhamdulillah! We picked Tomato",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "alhamdulillah we picked tomato",
+   "alhamdulillah we picked Tomatoe",
+   "alhamdulillah we picked tumatoe"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-80f3ac52.mp3"
+ },
+ {
+  "text": "Alhamdulillah! We picked Carrot",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "alhamdulillah we picked carrot",
+   "alhamdulillah we pict carrot",
+   "alhamdulillah we picht carrot"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-93c9f27c.mp3"
+ },
+ {
+  "text": "Alhamdulillah! We picked Strawberry",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "alhamdulillah we picked strawberry",
+   "alhamdulillah we picked strauberry",
+   "alhamdulillah we picked strobbery"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-92a48789.mp3"
+ },
+ {
+  "text": "Alhamdulillah! We picked Corn",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "alhamdulillah we picked corn",
+   "alhamdulillah we picked Korn",
+   "alhamdulillah we picked corned"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-65d649e2.mp3"
+ },
+ {
+  "text": "Alhamdulillah! We picked Sunflower",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "alhamdulillah we picked sunflower",
+   "alhamdulillah we picked sunflour",
+   "alhamdulillah we pict sunflower"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-15eb04ea.mp3"
+ },
+ {
+  "text": "Alhamdulillah! We picked Watermelon",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "panen / harvest",
+  "heard": [
+   "alhamdulillah we picked watermelon",
+   "alhamdulillah we picked watermellon",
+   "alhamdulillah we pict watermelon"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8b6c9d67.mp3"
+ },
+ {
+  "text": "Caterpillars are Allah's creatures too. Let's move it to the tree.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "ulat / caterpillar",
+  "heard": [
+   "caterpillars are a lost creatures too",
+   "caterpillars are ah lost creatures too",
+   "caterpillars are a lost kreatures too",
+   " let's move it to the tree",
+   " let's move it to the tri",
+   " let's move it to the trie"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-73b77b3d.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato is ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato is ready to pick",
+   "good mourning your tomato is ready to pick",
+   "gooood morning your tomato is ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9ca75268.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and carrot are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and carrot are ready to pick",
+   "good mourning your tomato and carrot are ready to pick",
+   "gooood morning your tomato and carrot are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d07adc34.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and strawberry are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and strawberry are ready to pick",
+   "good mourning your tomato and strawberry are ready to pick",
+   "gooood morning your tomato and strawberry are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0e2019f0.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and corn are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and corn are ready to pick",
+   "good mourning your tomato and corn are ready to pick",
+   "gooood morning your tomato and corn are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8b49ba88.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and sunflower are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and sunflower are ready to pick",
+   "good mourning your tomato and sunflower are ready to pick",
+   "good morning your tomato and sunflour are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1b8b32a8.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and watermelon are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and watermelon are ready to pick",
+   "good mourning your tomato and watermelon are ready to pick",
+   "gooood morning your tomato and watermelon are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-13b50db8.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot is ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot is ready to pick",
+   "good mourning your carrot is ready to pick",
+   "gooood morning your carrot is ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-65c4e4b2.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and tomato are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your cared and tomato are ready to pick",
+   "good morning your cared and Tomatoe are ready to pick",
+   "good morning your caird and tomato are ready to pick"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-3e592a02.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and strawberry are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and strawberry are ready to pick",
+   "good mourning your carrot and strawberry are ready to pick",
+   "gooood morning your carrot and strawberry are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-12538679.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and corn are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and corn are ready to pick",
+   "good morning your carrot and Korn are ready to pick",
+   "good morning your carrot and corned are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a45c26d0.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and sunflower are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and sunflower are ready to pick",
+   "good mourning your carrot and sunflower are ready to pick",
+   "good morning your carrot and sunflour are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8d2aab7c.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and watermelon are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and watermelon are ready to pick",
+   "good mourning your carrot and watermelon are ready to pick",
+   "gooood morning your carrot and watermelon are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-da94bec1.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry is ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning",
+   "good Mourning",
+   "gooood morning",
+   " your strawberry is ready to pick",
+   " your strauberry is ready to pick",
+   " yor strawberry is ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d3abb9cf.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and tomato are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and tomato are ready to pick",
+   "good morning your strawberry and Tomatoe are ready to pick",
+   "good mourning your strawberry and tomato are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c38f2ce0.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and carrot are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and carrot are ready to pick",
+   "good mourning your strawberry and carrot are ready to pick",
+   "gooood morning your strawberry and carrot are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1782616e.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and corn are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and corn are ready to pick",
+   "good morning your strawberry and Korn are ready to pick",
+   "good morning your strawberry and corned are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4fbee9b1.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and sunflower are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and sunflower are ready to pick",
+   "good mourning your strawberry and sunflower are ready to pick",
+   "good morning your strawberry and sunflour are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cee04d2a.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and watermelon are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning",
+   "good Mourning",
+   "gooood morning",
+   " your strawberry and watermelon are ready to pick",
+   " yor strawberry and watermelon are ready to pick",
+   " EUR strawberry and watermelon are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-14f1eaa4.mp3"
+ },
+ {
+  "text": "Good morning! Your corn is ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn is ready to pick",
+   "good mourning your corn is ready to pick",
+   "gooood morning your corn is ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4253ff4f.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and tomato are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and tomato are ready to pick",
+   "good morning your court and tomato are ready to pick",
+   "good morning your core and tomato are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fb073604.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and carrot are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and carrot are ready to pick",
+   "good mourning your corn and carrot are ready to pick",
+   "gooood morning your corn and carrot are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cff4e040.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and strawberry are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning",
+   "good Mourning",
+   "gooood morning",
+   " your corn and strawberry are ready to pick",
+   " your corned and strawberry are ready to pick",
+   " your corne and strawberry are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-eda42dd6.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and sunflower are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your court and sunflower are ready to pick",
+   "good morning your court in sunflower are ready to pick",
+   "good morning your quart and sunflower are ready to pick"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4a070db2.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and watermelon are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and watermelon are ready to pick",
+   "good mourning your corn and watermelon are ready to pick",
+   "gooood morning your corn and watermelon are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2bb428f4.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower is ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower is ready to pick",
+   "good mourning your sunflower is ready to pick",
+   "good morning your sunflour is ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0d02b612.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and tomato are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and tomato are ready to pick",
+   "good morning your sunflower and Tomatoe are ready to pick",
+   "good mourning your sunflower and tomato are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fcc46b36.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and carrot are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and carrot are ready to pick",
+   "good mourning your sunflower and carrot are ready to pick",
+   "gooood morning your sunflower and carrot are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1f548fde.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and strawberry are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and strawberry are ready to pick",
+   "good mourning your sunflower and strawberry are ready to pick",
+   "good morning your sunflower and strauberry are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f820a5fd.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and corn are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and corn are ready to pick",
+   "good morning your sunflower and Korn are ready to pick",
+   "good morning your sunflower and corned are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-989b8888.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and watermelon are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and watermelon are ready to pick",
+   "good mourning your sunflower and watermelon are ready to pick",
+   "gooood morning your sunflower and watermelon are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-086134a4.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon is ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon is ready to pick",
+   "good mourning your watermelon is ready to pick",
+   "gooood morning your watermelon is ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-00b1489c.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and tomato are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and tomato are ready to pick",
+   "good mourning your watermelon and tomato are ready to pick",
+   "gooood morning your watermelon and tomato are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-25c39288.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and carrot are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and carrot are ready to pick",
+   "good mourning your watermelon and carrot are ready to pick",
+   "gooood morning your watermelon and carrot are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3b9614ab.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and strawberry are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and strawberry are ready to pick",
+   "good mourning your watermelon and strawberry are ready to pick",
+   "gooood morning your watermelon and strawberry are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5b9b43f0.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and corn are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and corn are ready to pick",
+   "good mourning your watermelon and corn are ready to pick",
+   "gooood morning your watermelon and corn are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d568264a.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and sunflower are ready to pick!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and sunflower are ready to pick",
+   "good mourning your watermelon and sunflower are ready to pick",
+   "good morning your watermelon and sunflour are ready to pick"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2ff8d740.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato has grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato has grown",
+   "good mourning your tomato has grown",
+   "gooood morning your tomato has grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b610dbff.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and carrot have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and carrot have grown",
+   "good mourning your tomato and carrot have grown",
+   "gooood morning your tomato and carrot have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7154bd3a.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and strawberry have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and strawberry have grown",
+   "good mourning your tomato and strawberry have grown",
+   "good morning your tomato and strauberry have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bcd85bef.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and corn have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and corn have grown",
+   "good mourning your tomato and corn have grown",
+   "gooood morning your tomato and corn have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-99644e1d.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and sunflower have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and sunflower have grown",
+   "good mourning your tomato and sunflower have grown",
+   "good morning your tomato and sunflour have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b4a03139.mp3"
+ },
+ {
+  "text": "Good morning! Your tomato and watermelon have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your tomato and watermelon have grown",
+   "good mourning your tomato and watermelon have grown",
+   "gooood morning your tomato and watermelon have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b91eafaf.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot has grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot has grown",
+   "good morning your carrot is grown",
+   "good mourning your carrot has grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cedff2b7.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and tomato have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and tomato have grown",
+   "good mourning your carrot and tomato have grown",
+   "gooood morning your carrot and tomato have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7ca31ae3.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and strawberry have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and strawberry have grown",
+   "good mourning your carrot and strawberry have grown",
+   "gooood morning your carrot and strawberry have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-25cce185.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and corn have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and corn have grown",
+   "good morning your carrot and Korn have grown",
+   "good morning your carrot and corned have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-329cb170.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and sunflower have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your carrot and sunflower have grown",
+   "good mourning your carrot and sunflower have grown",
+   "good morning your carrot and sunflour have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fa9385c6.mp3"
+ },
+ {
+  "text": "Good morning! Your carrot and watermelon have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your cared and watermelon have grown",
+   "good morning your caird and watermelon have grown",
+   "good mourning your cared and watermelon have grown"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-3903d085.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry has grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry has grown",
+   "good mourning your strawberry has grown",
+   "gooood morning your strawberry has grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ada8b02e.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and tomato have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and tomato have grown",
+   "good morning your strawberry and Tomatoe have grown",
+   "good mourning your strawberry and tomato have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b5fb1d58.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and carrot have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and carrot have grown",
+   "good mourning your strawberry and carrot have grown",
+   "gooood morning your strawberry and carrot have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5f12f73d.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and corn have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and corn have grown",
+   "good morning your strawberry and Korn have grown",
+   "good morning your strawberry and corned have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-890ee0d9.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and sunflower have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and sunflower have grown",
+   "good mourning your strawberry and sunflower have grown",
+   "good morning your strawberry and sunflour have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-73b0b265.mp3"
+ },
+ {
+  "text": "Good morning! Your strawberry and watermelon have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your strawberry and watermelon have grown",
+   "good mourning your strawberry and watermelon have grown",
+   "gooood morning your strawberry and watermelon have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fe8b94d3.mp3"
+ },
+ {
+  "text": "Good morning! Your corn has grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn has grown",
+   "good morning your corned has grown",
+   "good morning your corne has grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-490e831b.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and tomato have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and tomato have grown",
+   "good mourning your corn and tomato have grown",
+   "gooood morning your corn and tomato have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5bb498b6.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and carrot have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and carrot have grown",
+   "good mourning your corn and carrot have grown",
+   "gooood morning your corn and carrot have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d954c940.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and strawberry have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and strawberry have grown",
+   "good morning your corned and strawberry have grown",
+   "good mourning your corn and strawberry have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8904e876.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and sunflower have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and sunflower have grown",
+   "good mourning your corn and sunflower have grown",
+   "gooood morning your corn and sunflower have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-19733e19.mp3"
+ },
+ {
+  "text": "Good morning! Your corn and watermelon have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your corn and watermelon have grown",
+   "good mourning your corn and watermelon have grown",
+   "gooood morning your corn and watermelon have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f8fccccf.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower has grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower has grown",
+   "good mourning your sunflower has grown",
+   "good morning your sunflour has grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3977e924.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and tomato have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and tomato have grown",
+   "good morning your sunflower and Tomatoe have grown",
+   "good mourning your sunflower and tomato have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1b83dbad.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and carrot have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and carrot have grown",
+   "good mourning your sunflower and carrot have grown",
+   "gooood morning your sunflower and carrot have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3bafd3b4.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and strawberry have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and strawberry have grown",
+   "good mourning your sunflower and strawberry have grown",
+   "gooood morning your sunflower and strawberry have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3d5ac40e.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and corn have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and corn have grown",
+   "good morning your sunflower and Korn have grown",
+   "good morning your sunflower and corned have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-16acf02a.mp3"
+ },
+ {
+  "text": "Good morning! Your sunflower and watermelon have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your sunflower and watermelon have grown",
+   "good mourning your sunflower and watermelon have grown",
+   "gooood morning your sunflower and watermelon have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a74a22bd.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon has grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon has grown",
+   "good mourning your watermelon has grown",
+   "gooood morning your watermelon has grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8f2985f8.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and tomato have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and tomato have grown",
+   "good mourning your watermelon and tomato have grown",
+   "gooood morning your watermelon and tomato have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-653afc54.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and carrot have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and carrot have grown",
+   "good mourning your watermelon and carrot have grown",
+   "gooood morning your watermelon and carrot have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8579cae0.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and strawberry have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and strawberry have grown",
+   "good mourning your watermelon and strawberry have grown",
+   "gooood morning your watermelon and strawberry have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-acc6cd9e.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and corn have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and corn have grown",
+   "good mourning your watermelon and corn have grown",
+   "gooood morning your watermelon and corn have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a090dcf7.mp3"
+ },
+ {
+  "text": "Good morning! Your watermelon and sunflower have grown!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning your watermelon and sunflower have grown",
+   "good mourning your watermelon and sunflower have grown",
+   "good morning your watermelon and sunflour have grown"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b1ada509.mp3"
+ },
+ {
+  "text": "Good morning! The plants are thirsty. Let's water them!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning the plants are thirsty let's water them",
+   "good mourning the plants are thirsty let's water them",
+   "gooood morning the plants are thirsty let's water them"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-02285ff6.mp3"
+ },
+ {
+  "text": "Good morning! Let's plant a seed today!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning let's plant a seed today",
+   "good morning let's plan to seed today",
+   "good morning let's plan a seed today"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2aaba1d8.mp3"
+ },
+ {
+  "text": "Good morning! Let's look after the garden today!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning let's look after the Garden today",
+   "good mourning let's look after the Garden today",
+   "good morning let's look after the Garten today"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d40ca5e9.mp3"
+ },
+ {
+  "text": "Ais gives a Tomato to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a tomato to Umi",
+   "AIS gives a tomato to oomi",
+   "AIS gives a tomato to oumi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e83ba157.mp3"
+ },
+ {
+  "text": "Ais gives a Tomato to Abi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a tomato to Abby",
+   "AIS gives a tomato to Abi",
+   "AIS gives a tomato to Abbey"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5ccf082c.mp3"
+ },
+ {
+  "text": "Ais gives a Tomato to Mo",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a tomato to mow",
+   "AIS gives a tomato to Moe",
+   "ai-s gives a tomato to mow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cdb6c77c.mp3"
+ },
+ {
+  "text": "Ais gives a Tomato to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a tomato to CAC atom",
+   "AIS gives a tomato to CAC Adam",
+   "AIS gives a tomato to CAC atem"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-65df229f.mp3"
+ },
+ {
+  "text": "Ais gives a Tomato to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a tomato to Grandma",
+   "AIS gives a Tomatoe to Grandma",
+   "AIS gives ah tomato to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-499acefb.mp3"
+ },
+ {
+  "text": "Ais gives a Tomato to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "es gives a tomato to the neighbors",
+   "es gives a Tomatoe to the neighbors",
+   "es gives ah tomato to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-64bdb226.mp3"
+ },
+ {
+  "text": "Ais gives a Carrot to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a carrot to Umi",
+   "AIS gives a carrot to oomi",
+   "AIS gives a carrot to oumi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-42ef9ab8.mp3"
+ },
+ {
+  "text": "Ais gives a Carrot to Abi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "as gives a carrot to Abby",
+   "as gives a carrot to Abbey",
+   "as gives a carrot to Abi"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-43f1cab6.mp3"
+ },
+ {
+  "text": "Ais gives a Carrot to Mo",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a carrot to Moe",
+   "AIS gives a carrot to Mo",
+   "AIS gives a carrot to mow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-509052f5.mp3"
+ },
+ {
+  "text": "Ais gives a Carrot to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "as gives a carrot to CAC atom",
+   "as gives a carrot to CAC Adam",
+   "AZ gives a carrot to CAC atom"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-07dbbfa7.mp3"
+ },
+ {
+  "text": "Ais gives a Carrot to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a carrot to Grandma",
+   "AIS gives a carrot to grammar",
+   "ai-s gives a carrot to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-badb0094.mp3"
+ },
+ {
+  "text": "Ais gives a Carrot to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Eis gives a carrot to the neighbors",
+   "Eis givez a carrot to the neighbors",
+   "Eis gives a carrot Tio The Neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-79f5f31e.mp3"
+ },
+ {
+  "text": "Ais gives a Strawberry to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a strawberry to Umi",
+   "AIS gives a strawberry to I",
+   "AIS gives a strawberry to oomi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-74999369.mp3"
+ },
+ {
+  "text": "Ais gives a Strawberry to Abi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a strawberry to Abby",
+   "AIS gives a strawberry to Abbey",
+   "AIS gives a strawberry to Abi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-43b17928.mp3"
+ },
+ {
+  "text": "Ais gives a Strawberry to Mo",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a strawberry to mow",
+   "AIS gives a strobbery to mow",
+   "ai-s gives a strawberry to mow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1cd010d6.mp3"
+ },
+ {
+  "text": "Ais gives a Strawberry to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a strawberry to CAC atom",
+   "AIS gives a strawberry to cacom",
+   "AIS gives a strawberry to CAC atem"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-09ecd3e0.mp3"
+ },
+ {
+  "text": "Ais gives a Strawberry to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a strawberry to Grandma",
+   "Eis gives a strawberry to Grandma",
+   "AIS gives a strobbery to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a5f95003.mp3"
+ },
+ {
+  "text": "Ais gives a Strawberry to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a strawberry to the neighbors",
+   "Eis gives a strawberry to the neighbors",
+   "AIS gives a strobbery to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-9e0ab6b6.mp3"
+ },
+ {
+  "text": "Ais gives a Corn to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "as gives a corn to Umi",
+   "as gives a corned to Umi",
+   "as gives a corn to umei"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-b16e6807.mp3"
+ },
+ {
+  "text": "Ais gives a Corn to Abi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a corn to Abby",
+   "AIS gives a corn to Abbey",
+   "AIS gives a corn to Abi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7f99292d.mp3"
+ },
+ {
+  "text": "Ais gives a Corn to Mo",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "as gives a corn to mow",
+   "as gives a corn to Mo",
+   "as gives a corn to Moe"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-979c801a.mp3"
+ },
+ {
+  "text": "Ais gives a Corn to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a corn to Cock atom",
+   "AIS gives a corned to Cock atom",
+   "AIS gives a Korn to Cock atom"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4123ffdd.mp3"
+ },
+ {
+  "text": "Ais gives a Corn to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a corn to Grandma",
+   "AIS gives a corned to Grandma",
+   "AIS gives a Korn to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b62d8c9b.mp3"
+ },
+ {
+  "text": "Ais gives a Corn to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "as gives a corn to the neighbors",
+   "as gives a corned to the neighbors",
+   "as gives a Korn to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-dd2448ac.mp3"
+ },
+ {
+  "text": "Ais gives a Sunflower to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a sunflower to Umi",
+   "AIS gives a sunflower to umei",
+   "AIS gives a sunflower to ume"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7c21ac42.mp3"
+ },
+ {
+  "text": "Ais gives a Sunflower to Abi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "8 gives a sunflower to Abby",
+   "8 gives a sunflower to Abbey",
+   "8 gives a sunflower to Abi"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-56421032.mp3"
+ },
+ {
+  "text": "Ais gives a Sunflower to Mo",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a sunflower to mow",
+   "ai-s gives a sunflower to mow",
+   "AIS gives a sunflour to mow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4d9a0453.mp3"
+ },
+ {
+  "text": "Ais gives a Sunflower to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a sunflower to Cock atom",
+   "AIS gives a sunflower to cock atem",
+   "AIS gives a sunflower to kok atom"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-53172655.mp3"
+ },
+ {
+  "text": "Ais gives a Sunflower to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "8 s gives a sunflower to Grandma",
+   "8s gives a sunflower to Grandma",
+   "8 es gives a sunflower to Grandma"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-8563931f.mp3"
+ },
+ {
+  "text": "Ais gives a Sunflower to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a sunflower to the neighbors",
+   "AIS gives ah sunflower to the neighbors",
+   "a ice gives a sunflower to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-cffd91a5.mp3"
+ },
+ {
+  "text": "Ais gives a Watermelon to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a watermelon to umei",
+   "AIS gives a watermelon to Umi",
+   "AIS gives a watermelon to ume"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-888867d1.mp3"
+ },
+ {
+  "text": "Ais gives a Watermelon to Abi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Eis gives a watermelon to Abby",
+   "Eis gives a watermelon to Abbey",
+   "AIS gives a watermelon to Abby"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-34f2d054.mp3"
+ },
+ {
+  "text": "Ais gives a Watermelon to Mo",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a watermelon to mow",
+   "AIS gives a watermelon to Moe",
+   "ai-s gives a watermelon to mow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8e8e9d90.mp3"
+ },
+ {
+  "text": "Ais gives a Watermelon to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a watermelon to Cock Adam",
+   "AIS gives a watermelon to Cock atom",
+   "AIS gives a watermelon to kok Adam"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-078fe0d6.mp3"
+ },
+ {
+  "text": "Ais gives a Watermelon to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a watermelon to Grandma",
+   "ai-s gives a watermelon to Grandma",
+   "AIS givez a watermelon to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bbe2a837.mp3"
+ },
+ {
+  "text": "Ais gives a Watermelon to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "AIS gives a watermelon to the neighbors",
+   "ai-s gives a watermelon to the neighbors",
+   "AIS gives ah watermelon to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-1ca4dc2a.mp3"
+ },
+ {
+  "text": "Assalamu'alaikum! Let's do some gardening with Ais!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "assalamu alaykum let's do some gardening with eyes",
+   "assalamu alaykum let's do some gardening with Eis",
+   "assalamu alaykum let's do some gardening with ize"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-0e9b504d.mp3"
+ },
+ {
+  "text": "Hehe!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/lines-b3a1141d.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Masya Allah!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "hasil / result",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-1834c257.mp3"
+ },
+ {
+  "text": "Alhamdulillah. Ayo coba lagi!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "hasil / result",
+  "heard": [
+   "Alhamdulillah",
+   "alhamdulilah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-067ed8aa.mp3"
+ },
+ {
+  "text": "Tunggu Pantulannya! Bola merah itu besar dan pelan. Tunggu bola memantul sekali di depan Kakak, baru pukul! Ketuk tombol PUKUL saat bola sudah memantul dan sampai di dekat Kak Adam.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "tunggu pantulannya",
+   "tunggu pantulan ya",
+   "tunggu bantuannya"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c8b802d9.mp3"
+ },
+ {
+  "text": "Backhand Dua Tangan. Sekarang backhand! Kalau bola datang ke sisi tanpa tangan raket, pegang raket dengan dua tangan, putar badan, lalu ayun! Semua bola datang ke kanan layar. Ketuk BACKHAND saat bola sampai di dekat Kak Adam.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c674616b.mp3"
+ },
+ {
+  "text": "Forehand & Backhand. Kalau bola datang ke sisi tangan raket, pakai forehand. Kalau ke sisi satunya, pakai backhand dua tangan — kedua tangan memegang raket supaya kuat! Kak Adam menghadap kamu. Bola ke kiri layar? Forehand. Ke kanan layar? Backhand.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "pakai kamu",
+   "kamu",
+   "paket kamu"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d81f54c4.mp3"
+ },
+ {
+  "text": "Voli di Net. Sekarang Kakak berdiri dekat net. Voli artinya memukul bola sebelum memantul! Raket di depan wajah seperti tanda STOP, lalu pukul pendek seperti meninju — jangan ayun besar. Jangan tunggu memantul! Ketuk VOLI saat bola terbang sampai di depan Kak Adam — sebelum memantul! Mulai sisi forehand, lalu backhand, lalu campur.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "sekarang kakak berdiri dekat net voli artinya memukul bola",
+   "sekarang kakak berdiri dekat net voli artinya",
+   "berdiri dekat net voli artinya memukul bola"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d6a0b4dc.mp3"
+ },
+ {
+  "text": "Kaki Lincah. Bola oranye lebih cepat! Lihat tanda lingkaran tempat bola akan mendarat, lalu geser kakimu ke sana sebelum bola sampai. Ketuk Kiri, Tengah, atau Kanan untuk menggeser Kak Adam ke arah bola.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-377425e6.mp3"
+ },
+ {
+  "text": "Servis Roket. Setiap poin dimulai dengan servis. Lempar bola ke atas, lalu pukul saat bola di titik paling tinggi! Ketuk SERVIS saat bola ada di zona hijau, paling atas.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "servis-servis",
+   "service service",
+   "servis servis"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-6af980a5.mp3"
+ },
+ {
+  "text": "Pertandingan Pertama. Waktunya bertanding melawan Raka! Kamu melihat dari sisi Raka. Kembalikan setiap bola dengan forehand atau backhand. Menangkan satu game. Skor tenis: Love (0), 15, 30, 40, lalu Game!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "pertandingan pertama waktunya bertanding melawan kamu melihat kembalikan setiap 30 40",
+   "pertandingan pertama waktunya bertanding melawan kamu melihat kembali 30-40",
+   "pertandingan pertama waktunya bertanding melawan kembali ke 30 40"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-04d8ea98.mp3"
+ },
+ {
+  "text": "Forehand dua tangan: lebih kuat dan stabil!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "gaya forehand / forehand style",
+  "heard": [
+   "lebih kuat dan stabil",
+   "lebih kuat",
+   "lebih kuat dan"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d37211e4.mp3"
+ },
+ {
+  "text": "Forehand satu tangan: jangkauan lebih panjang!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "gaya forehand / forehand style",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b970f036.mp3"
+ },
+ {
+  "text": "Acak: gaya forehand Kak Adam ganti-ganti!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "gaya forehand / forehand style",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-7072ed89.mp3"
+ },
+ {
+  "text": "Alhamdulillah! Masha Allah!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "hasil / result",
+  "heard": [
+   "alhamdulillah mashallah",
+   "alhamdulillah",
+   "alhamdulillah mallah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-22d6d64a.mp3"
+ },
+ {
+  "text": "Alhamdulillah. Let's try again!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "hasil / result",
+  "heard": [
+   "alhamdulillah let's try again",
+   "alhamdulillah let's try againt"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a95fa1d4.mp3"
+ },
+ {
+  "text": "Wait for the Bounce! The red ball is big and slow. Wait for it to bounce once in front of me, then hit! Tap HIT once the ball has bounced and reached Kak Adam.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "wait for the bounce the red ball is big and slow wait for it to bounce once in front of me then hit tap hit once the ball has bounced and reached CAC atom",
+   "wait for the bounced the red ball is big and slow wait for it to bounce once in front of me then hit tap hit once the ball has bounced and reached CAC atom",
+   "wait for the bounce the red ball is big and slow wait for it to bounce once in front of me then hit tap hit once the ball has bounced and reached CAC atem"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4607b795.mp3"
+ },
+ {
+  "text": "Two-Handed Backhand. Now the backhand! When the ball comes to the side without my racket hand, hold the racket with both hands, turn, and swing! Every ball comes to the right of the screen. Tap BACKHAND when the ball reaches Kak Adam.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "2-handed backhand now the backhand when the ball comes to the side without my racket hand hold the racket with both hands turn and swing",
+   "2-handed backhand now the backhand when the ball comes to the side without my racket hand hold the racquet with both hands turn and swing",
+   "2-handed backhand now the backhand when the ball comes to the side without my racquet hand hold the racket with both hands turn and swing",
+   " every ball comes to the right of the screen",
+   " every Bal comes to the right of the screen",
+   " every Baal comes to the right of the screen",
+   " tap backhand when the ball reaches KAC atom",
+   " tap backhand when the ball reaches KAC Adam",
+   " tap backhand when the ball reaches KAC atem"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c20e8cc2.mp3"
+ },
+ {
+  "text": "Forehand & Backhand. If the ball comes to my racket-hand side, use a forehand. If it comes to the other side, use a two-handed backhand — both hands on the racket for power! Kak Adam is facing you. Ball on the left of the screen? Forehand. On the right? Backhand.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "forehand and backhand if the ball comes to my racket hand side use a forehand if it comes to the other side use a 2-handed backhand both hands on the racket for power",
+   "forehand and backhand if the ball comes to my racket hand side use a forehand if it comes to the other side use a 2-handed backhand both hands on the racquet for power",
+   "forehand and backhand if the ball comes to my racquet hand side use a forehand if it comes to the other side use a 2-handed backhand both hands on the racket for power",
+   " CAC atom is facing you ball on the left of the screen forehand on the right backhand",
+   " CAC atom is facing you ball on the left of the screen forehand on the write backhand",
+   " CAC atom is facing you ball on the left of the screen forehand on the Wright backhand"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-e49e9577.mp3"
+ },
+ {
+  "text": "Net Volley. Now I stand close to the net. A volley means hitting the ball before it bounces! Hold the racket in front of your face like a STOP sign, then punch it short — no big swing. Don't wait for the bounce! Tap VOLLEY when the flying ball reaches the front of Kak Adam — before it bounces! First the forehand side, then the backhand side, then mixed.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "net Vale now I stand close to the net avali means hitting the ball before it bounces hold the racket in front of your face like a stop sign then punch it short no big swing don't wait for the bounce",
+   "net volley now I stand close to the net avali means hitting the ball before it bounces hold the racket in front of your face like a stop sign then punch it short no big swing don't wait for the bounce",
+   "net Vale now I stand close to the net avali means hitting the ball before it bounces hold the racket in front of your face like a stop sign then punch it short no big swing don't wait for the bounced",
+   " tap Vale when the flying ball reaches the front of kak Adam before it bounces first the forehand side then the backhand side then mixed",
+   " tap Vale when the flying ball reaches the front of CAC atom before it bounces first the forehand side then the backhand side then mixed",
+   " tap Vale when the flying ball reaches the front of cack Adam before it bounces first the forehand side then the backhand side then mixed"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-15dc076d.mp3"
+ },
+ {
+  "text": "Quick Feet. The orange ball is faster! Look for the circle where the ball will land, then move your feet there before it arrives. Tap Left, Middle or Right to move Kak Adam to the ball.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "quick feet the orange ball is faster look for the circle where the ball will land then move your feet there before it arrives tap left middle or right to move CAC atom to the ball",
+   "quick feet the orange ball is faster look for the circle where the ball will land then move your feet there before it arrives tap left middle or right to move CAC atom to the Bal",
+   "quick feet the orange ball is faster look for the circle where the ball will land then move your feet there before it arrives tap left middle or right to move CAC atem to the ball"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-0f8377b7.mp3"
+ },
+ {
+  "text": "Rocket Serve. Every point starts with a serve. Toss the ball up, then hit it at the very highest point! Tap SERVE when the ball is in the green zone, right at the top.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "rocket serve every Point starts with a serve toss the ball up then hit it at the very highest point tap serve when the ball is in the green zone right at the top",
+   "rocket serve every Point starts with a serve toss the ball up then hid it at the very highest point tap serve when the ball is in the green zone right at the top",
+   "Rockit serve every Point starts with a serve toss the ball up then hit it at the very highest point tap serve when the ball is in the green zone right at the top"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-af8b5704.mp3"
+ },
+ {
+  "text": "First Match. Time for a match against Raka! You're watching from Raka's side. Return every ball with a forehand or backhand. Win one game. Tennis scoring: Love (0), 15, 30, 40, then Game!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "first match time for a match against raqqa you're watching from raqqa side return every ball with a forehand or backhand win 1 game",
+   "first match time for a match against raqqa you're watching from raqqa side returned every ball with a forehand or backhand win 1 game",
+   "first match time for a match against raqqa you're watching from raqqa side return every ball with a forehand or backhand Wynn 1 game",
+   " tennis scoring",
+   " tennis scouring",
+   " tennis skoring",
+   " love zero 15 340 then game",
+   " loved zero 15 340 then game",
+   " love xero 15 340 then game"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-76062762.mp3"
+ },
+ {
+  "text": "Two-handed forehand: strong and steady!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "gaya forehand / forehand style",
+  "heard": [
+   "2-handed forehand strong and steady",
+   "2-handed forehand strong and steddie",
+   "2-handed forehand stronge and steady"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-ab4308b5.mp3"
+ },
+ {
+  "text": "One-handed forehand: longer reach!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "gaya forehand / forehand style",
+  "heard": [
+   "1-hand forehand longer reach",
+   "1-hand forehand longueur reach",
+   "1-hand forehand longar reach"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-167f231c.mp3"
+ },
+ {
+  "text": "Mix: Kak Adam switches his forehand style!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "gaya forehand / forehand style",
+  "heard": [
+   "mix KAG atoms which is his forehand Style",
+   "mix CAG atoms which is his forehand Style",
+   "mix cagg atoms which is his forehand Style"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4891c8ca.mp3"
+ },
+ {
+  "text": "Assalamu'alaikum! Ayo rawat sahabat-sahabat kita!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-504c50ab.mp3"
+ },
+ {
+  "text": "Assalamu'alaikum, teman-teman!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a3800688.mp3"
+ },
+ {
+  "text": "Selamat pagi! Mimi lapar, ayo beri makan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Ayo Beri makan",
+   "ayo"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8c71e73a.mp3"
+ },
+ {
+  "text": "Selamat pagi! Ciko lapar, ayo beri makan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-426f944c.mp3"
+ },
+ {
+  "text": "Selamat pagi! Bubu lapar, ayo beri makan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "lapar",
+   "bubu lapar",
+   "google lapar"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d6c351f1.mp3"
+ },
+ {
+  "text": "Selamat pagi! Kapas lapar, ayo beri makan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b3520bb1.mp3"
+ },
+ {
+  "text": "Selamat pagi! Embe lapar, ayo beri makan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "Selamat pagi",
+   "pagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a65a14ea.mp3"
+ },
+ {
+  "text": "Selamat pagi! Moli lapar, ayo beri makan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-95004a2d.mp3"
+ },
+ {
+  "text": "Mo memberi telur untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "mau memberi telur untuk Umi",
+   "mau membeli telur untuk Umi",
+   "mau memberi telur untuk bumi"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-3b9c640a.mp3"
+ },
+ {
+  "text": "Mo memberi telur untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-810d3646.mp3"
+ },
+ {
+  "text": "Mo memberi telur untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "mau memberi telur untuk tetangga",
+   "mau membeli telur untuk tetangga",
+   "membeli telur untuk tetangga"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a138517b.mp3"
+ },
+ {
+  "text": "Mo memberi telur untuk Bu Siti",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-3cd0fb4a.mp3"
+ },
+ {
+  "text": "Mo memberi telur untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "memberi",
+   "mau memberi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a1d8a930.mp3"
+ },
+ {
+  "text": "Mo memberi telur untuk Ais",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "mau memberi telur untuk",
+   "membeli telur untuk",
+   "mau membeli telur untuk"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-34a09e36.mp3"
+ },
+ {
+  "text": "Mo memberi susu untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-42fd7e6b.mp3"
+ },
+ {
+  "text": "Mo memberi susu untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f28a448b.mp3"
+ },
+ {
+  "text": "Mo memberi susu untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "mau memberi susu untuk tetangga",
+   "mau membeli susu untuk tetangga",
+   "memberi susu untuk tetangga"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3d865295.mp3"
+ },
+ {
+  "text": "Mo memberi susu untuk Bu Siti",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-93044063.mp3"
+ },
+ {
+  "text": "Mo memberi susu untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "mau memberi susu untuk Adam",
+   "mau membeli susu untuk Adam",
+   "mau memberi susu untuk ke Adam"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-103899b6.mp3"
+ },
+ {
+  "text": "Mo memberi susu untuk Ais",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c07c8313.mp3"
+ },
+ {
+  "text": "Mo memberi wol untuk Umi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "mau memberi",
+   "memberi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d465abf6.mp3"
+ },
+ {
+  "text": "Mo memberi wol untuk Nenek",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9e14644e.mp3"
+ },
+ {
+  "text": "Mo memberi wol untuk tetangga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a19e45cf.mp3"
+ },
+ {
+  "text": "Mo memberi wol untuk Bu Siti",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "mau memberi",
+   "mau memberi uang"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-9b498a8c.mp3"
+ },
+ {
+  "text": "Mo memberi wol untuk Kak Adam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9dfdaeb4.mp3"
+ },
+ {
+  "text": "Mo memberi wol untuk Ais",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "memberi untuk",
+   "mau memberi untuk",
+   "mau memberi uang untuk"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-1f8b1e88.mp3"
+ },
+ {
+  "text": "Assalamu'alaikum! Let's look after our animal friends!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "assalamu alaykum let's look after our animal friends",
+   "assalamu alaykum let's look after our Animalia friends",
+   "assalamu alaykum let's look after our animal friendz"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-e09d60a5.mp3"
+ },
+ {
+  "text": "Assalamu'alaikum, friends!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "alemu alaykum friends",
+   "alamu alaykum friends",
+   "um friends"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ad027e70.mp3"
+ },
+ {
+  "text": "Good morning! Mimi is hungry — time for breakfast!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning Mimi is hungry time for breakfast",
+   "good morning mimie is hungry time for breakfast",
+   "good morning Meemee is hungry time for breakfast"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9e0ab589.mp3"
+ },
+ {
+  "text": "Good morning! Ciko is hungry — time for breakfast!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning Chico is hungry time for breakfast",
+   "good morning Chicot is hungry time for breakfast",
+   "good mourning Chico is hungry time for breakfast"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-c1c0e90b.mp3"
+ },
+ {
+  "text": "Good morning! Bubu is hungry — time for breakfast!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning boo boo is hungry time for breakfast",
+   "good morning boo booo is hungry time for breakfast",
+   "good morning boo boo is hungry thyme for breakfast"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-15d440c0.mp3"
+ },
+ {
+  "text": "Good morning! Fluffy is hungry — time for breakfast!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning",
+   "good Mourning",
+   "gooood morning",
+   " fluffy is hungry time for breakfast",
+   " fluffy is hungry thyme for breakfast",
+   " fluffy is hyungry time for breakfast"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6d388726.mp3"
+ },
+ {
+  "text": "Good morning! Billy is hungry — time for breakfast!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning Billy is hungry time for breakfast",
+   "good morning Billie is hungry time for breakfast",
+   "good morning bili is hungry time for breakfast"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3d515e2a.mp3"
+ },
+ {
+  "text": "Good morning! Molly is hungry — time for breakfast!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pagi / morning",
+  "heard": [
+   "good morning Molly is hungry time for breakfast",
+   "good mourning Molly is hungry time for breakfast",
+   "good morning Molly is hungry thyme for breakfast"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6300eb7d.mp3"
+ },
+ {
+  "text": "Mo gives eggs to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives eggs to Umi",
+   "Moe gives eggs to Umi",
+   "mow gives eggs to Umi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-dd30991c.mp3"
+ },
+ {
+  "text": "Mo gives eggs to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives eggs to Grandma",
+   "Moe gives eggs to Grandma",
+   "mow gives eggs to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cc511ecd.mp3"
+ },
+ {
+  "text": "Mo gives eggs to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives eggs to the neighbors",
+   "Moe gives eggs to the neighbors",
+   "mow gives eggs to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-8160e4bd.mp3"
+ },
+ {
+  "text": "Mo gives eggs to Bu Siti",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives eggs to BU City",
+   "Moe gives eggs to BU City",
+   "mow gives eggs to BU City"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-80cbb0ef.mp3"
+ },
+ {
+  "text": "Mo gives eggs to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives eggs to CAC atom",
+   "Mo gives eggs to CAC Adam",
+   "Moe gives eggs to CAC atom"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-bdf07068.mp3"
+ },
+ {
+  "text": "Mo gives eggs to Ais",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives eggs to a ice",
+   "Moe gives eggs to a ice",
+   "mow gives eggs to a ice"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-c5e78aa1.mp3"
+ },
+ {
+  "text": "Mo gives milk to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Moe Gibbs milk to Umi",
+   "Mo gives milk to Umi",
+   "Moe gives milk to Umi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-47a46d1d.mp3"
+ },
+ {
+  "text": "Mo gives milk to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives milk to Grandma",
+   "Moe gives milk to Grandma",
+   "mow gives milk to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-28ad22dd.mp3"
+ },
+ {
+  "text": "Mo gives milk to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives milk to the neighbors",
+   "Moe gives milk to the neighbors",
+   "mow gives milk to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-71aebf00.mp3"
+ },
+ {
+  "text": "Mo gives milk to Bu Siti",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives milk to be you City",
+   "Moe gives milk to be you City",
+   "mow gives milk to be you City"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a3ef7158.mp3"
+ },
+ {
+  "text": "Mo gives milk to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives milk to CAC Adam",
+   "Mo gives milk to CAC atom",
+   "Moe gives milk to CAC Adam"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-36960643.mp3"
+ },
+ {
+  "text": "Mo gives milk to Ais",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives milk to AI",
+   "Moe gives milk to AI",
+   "mow gives milk to AI"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-42fa97ff.mp3"
+ },
+ {
+  "text": "Mo gives wool to Umi",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives wool to Umi",
+   "Moe gives wool to Umi",
+   "mow gives wool to Umi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-58f7444c.mp3"
+ },
+ {
+  "text": "Mo gives wool to Grandma",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives wool to Grandma",
+   "Moe gives wool to Grandma",
+   "mow gives wool to Grandma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e74bd3d8.mp3"
+ },
+ {
+  "text": "Mo gives wool to the neighbours",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives wool to the neighbors",
+   "Moe gives wool to the neighbors",
+   "mow gives wool to the neighbors"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-cb2731a2.mp3"
+ },
+ {
+  "text": "Mo gives wool to Bu Siti",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives wool to BU City",
+   "Moe gives wool to BU City",
+   "mow gives wool to BU City"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-c776a7e8.mp3"
+ },
+ {
+  "text": "Mo gives wool to Kak Adam",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives wool to kak Adam",
+   "Mo gives wool to kak atom",
+   "Mo gives wool to cack Adam"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e4f0ad2f.mp3"
+ },
+ {
+  "text": "Mo gives wool to Ais",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "berbagi / sharing",
+  "heard": [
+   "Mo gives wool to as",
+   "Moe gives wool to as",
+   "mow gives wool to as"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4bec0f4a.mp3"
+ },
+ {
+  "text": "Siapkan sikat gigi dan pasta gigi, ya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "sikat gigi dan pasta gigi",
+   "sikat gigi dan pasta gigi ya",
+   "gigi dan pasta gigi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-baba197c.mp3"
+ },
+ {
+  "text": "Tekan pasta gigi, sebesar biji kacang saja.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "tekan pasta gigi saja",
+   "tekan pasta gigi biji kacang saja",
+   "tekan pasta gigi aja"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-6ee9146a.mp3"
+ },
+ {
+  "text": "Bismillah. Sikat ke kiri dan ke kanan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-35762004.mp3"
+ },
+ {
+  "text": "Sekarang sikat ke atas dan ke bawah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "sekarang ke atas dan ke bawah",
+   "sekarang atas dan ke bawah",
+   "sekarang di atas dan ke bawah"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4d08e156.mp3"
+ },
+ {
+  "text": "Kumur-kumur, lalu buang airnya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b65ef7a9.mp3"
+ },
+ {
+  "text": "Alhamdulillah, gigi bersih dan putih!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "gigi bersih dan putih"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7369601a.mp3"
+ },
+ {
+  "text": "Kucing Kecil Kedinginan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "kucing kecil kedinginan"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-83e71731.mp3"
+ },
+ {
+  "text": "Malam itu hujan turun pelan-pelan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "turun pelan-pelan",
+   "turun",
+   "turun-turun"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6e2e09ad.mp3"
+ },
+ {
+  "text": "Baby Mo melihat seekor kucing kecil menggigil di teras.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-439e6f87.mp3"
+ },
+ {
+  "text": "Ia mengambil handuk lembut dan menyelimutinya sambil berbisik, \"Bismillah, kamu aman sekarang.\"",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-174f80cf.mp3"
+ },
+ {
+  "text": "Kucing kecil itu mendengkur hangat, dan Baby Mo tersenyum senang.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "kucing kecil itu mendengkur",
+   "kucing kecil",
+   "kucing kecil hidup"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-41759254.mp3"
+ },
+ {
+  "text": "Bintang yang Malu.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "bintang yang",
+   "bintang yang malu",
+   "bintang yang baru"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8cc12e2b.mp3"
+ },
+ {
+  "text": "Di langit ada bintang kecil yang malu untuk bersinar.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "untuk bersinar",
+   "bersinar"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-749a981d.mp3"
+ },
+ {
+  "text": "Bulan berkata lembut, \"Cahayamu kecil, tapi tetap indah.\"",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "bulan berkata lembut cahayamu kecil",
+   "bulan berkata lembut cahaya Mu kecil",
+   "Wulan berkata lembut cahayamu kecil"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4ab0d4aa.mp3"
+ },
+ {
+  "text": "Bintang kecil pun mencoba bersinar, sedikit demi sedikit.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "bintang kecil pun mencoba bersinar sedikit demi sedikit",
+   "bintang kecil pun mencoba bersinar sedikit-demi sedikit"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6ef67b8e.mp3"
+ },
+ {
+  "text": "Dari jendela, Baby Mo berbisik, \"MasyaAllah, cantik sekali!\" lalu menutup mata.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "berbisik Masya Allah",
+   "berbisik Allah",
+   "berbisik adalah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e30f741f.mp3"
+ },
+ {
+  "text": "Tiga Butir Kurma.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "3 butir kurma",
+   "butir kurma",
+   "sebutir kurma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9743d748.mp3"
+ },
+ {
+  "text": "Sore itu Baby Mo punya tiga butir kurma manis.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "3 butir kurma manis",
+   "3 butir kurma",
+   "punya 3 butir kurma manis"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4f29641c.mp3"
+ },
+ {
+  "text": "Adiknya memandang dengan mata berbinar.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0131187d.mp3"
+ },
+ {
+  "text": "Baby Mo memberikan satu kurma sambil tersenyum.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d2211c20.mp3"
+ },
+ {
+  "text": "\"Berbagi membuat hati hangat,\" kata Bunda, dan Baby Mo tidur dengan hati senang.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "berbagi",
+   "berbagi membuat hati",
+   "berbagi membuat"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fec4608e.mp3"
+ },
+ {
+  "text": "Kata Maaf.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-93c262b4.mp3"
+ },
+ {
+  "text": "Siang tadi Baby Mo tidak sengaja menjatuhkan menara balok temannya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [
+   "yang tadi",
+   "tadi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a7ff787c.mp3"
+ },
+ {
+  "text": "Temannya jadi sedih.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f2686f15.mp3"
+ },
+ {
+  "text": "Baby Mo berkata, \"Maaf ya, ayo kita bangun lagi bersama.\"",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-421b22eb.mp3"
+ },
+ {
+  "text": "Menara barunya malah lebih tinggi! Sebelum tidur, Baby Mo bersyukur punya teman yang baik.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [
+   "lebih tinggi sebelum tidur baby mau bersyukur punya teman yang baik",
+   "lebih tinggi sebelum tidur mau bersyukur punya teman yang baik",
+   "lebih tinggi sebelum tidur Beby mau bersyukur punya teman yang baik"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a002b676.mp3"
+ },
+ {
+  "text": "Burung Pulang ke Sarang.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "burung pulang ke sarang",
+   "burung pulang ke Karang",
+   "burung pulang sekarang"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e557bc7b.mp3"
+ },
+ {
+  "text": "Matahari terbenam dengan warna jingga.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2cac0dc4.mp3"
+ },
+ {
+  "text": "Burung-burung kecil terbang pulang ke sarangnya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "burung-burung kecil terbang pulang ke sarangnya",
+   "burung-burung kecil terbang pulang ke sarang nya",
+   "burung-burung kecil terbang pulang ke sarang ya"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-70c6e716.mp3"
+ },
+ {
+  "text": "Induk burung menunggu dengan sabar dan memeluk mereka dengan sayapnya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "induk burung menunggu dengan sabar dan memeluk mereka dengan sayapnya",
+   "induk burung menunggu dengan sabar dan memeluk mereka dengan kayaknya",
+   "induk burung menunggu dengan sabar dan membunuh mereka dengan sayapnya"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b35c59e4.mp3"
+ },
+ {
+  "text": "Baby Mo memeluk bonekanya dan berbisik, \"Alhamdulillah, semua sudah di rumah.\"",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "Dedi mau memeluk boneka nya dan berbisik Alhamdulillah semua sudah di rumah",
+   "Dedy mau memeluk bonekanya dan berbisik Alhamdulillah semua sudah di rumah",
+   "Dedi mau memeluk bonekanya dan berbisik Alhamdulillah semua sudah di rumah"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-35162a08.mp3"
+ },
+ {
+  "text": "Tanaman Kecil.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-3cdc0209.mp3"
+ },
+ {
+  "text": "Baby Mo menanam sebutir biji di dalam pot.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "sebutir biji di dalam",
+   "baby sebutir biji di dalam",
+   "sebutir biji"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-48485469.mp3"
+ },
+ {
+  "text": "Setiap pagi ia menyiramnya dengan sabar.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c09f6701.mp3"
+ },
+ {
+  "text": "Hari ini muncul daun hijau yang mungil!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "hari ini"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8e26dfd9.mp3"
+ },
+ {
+  "text": "\"SubhanAllah, tumbuh!\" serunya gembira. Malam ini ia bermimpi tentang kebun penuh bunga.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "Subhanallah tumbuh bermimpi tentang kebun penuh bunga",
+   "alah tumbuh bermimpi tentang kebun penuh bunga",
+   "Subhana Allah tumbuh bermimpi tentang kebun penuh bunga"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-665f753c.mp3"
+ },
+ {
+  "text": "Menolong Nenek.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-3aadc9b6.mp3"
+ },
+ {
+  "text": "Nenek membawa belanjaan yang berat.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-96bd1b24.mp3"
+ },
+ {
+  "text": "Baby Mo berlari kecil dan membantu membawa kantong yang ringan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [
+   "Dede mau berlari kecil dan membantu",
+   "Dedi mobil lari kecil dan membantu",
+   "Dedy mobil lari kecil dan membantu"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-de25b22c.mp3"
+ },
+ {
+  "text": "Nenek tersenyum, \"JazakAllah khairan, cucuku.\"",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-72dac5d0.mp3"
+ },
+ {
+  "text": "Hati Baby Mo terasa hangat seperti selimut, dan ia tidur dengan senyum.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [
+   "tidur dengan senyum",
+   "tidur senyum",
+   "senyum"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bbfac848.mp3"
+ },
+ {
+  "text": "Bulan Menemani.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "bulan menemani",
+   "bulan minuman",
+   "bulan mendeman"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b8a0c956.mp3"
+ },
+ {
+  "text": "Lampu kamar sudah redup.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-095c8320.mp3"
+ },
+ {
+  "text": "Baby Mo melihat bulan bulat di luar jendela.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "baby mau melihat bulan bulat di luar jendela",
+   "Bibi mau melihat bulan bulat di luar jendela",
+   "baby mau melihat bulan bulat di jendela"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-fec5e7e1.mp3"
+ },
+ {
+  "text": "\"Bulan, kamu tidak tidur?\" tanyanya, dan cahaya bulan terasa lembut.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "kamu tidak tidur"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ec996d82.mp3"
+ },
+ {
+  "text": "Baby Mo membaca doa tidur, lalu terlelap dengan tenang.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "Dedi membaca doa tidur",
+   "Dede membaca doa tidur",
+   "membaca doa tidur"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3a3af760.mp3"
+ },
+ {
+  "text": "Semut yang Rajin.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-1d16756b.mp3"
+ },
+ {
+  "text": "Di taman, Baby Mo melihat barisan semut kecil.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [
+   "di taman baby mau melihat dari kecil",
+   "di taman baby mau melihat barisan Semut Kecil",
+   "di taman eden mau melihat dari"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a4d287d1.mp3"
+ },
+ {
+  "text": "Mereka membawa remah roti bersama-sama, saling menolong.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c69d4c4c.mp3"
+ },
+ {
+  "text": "\"Kalau bekerja sama, yang berat jadi ringan,\" pikir Baby Mo.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [
+   "Kalau bekerja sama",
+   "kalau bekerjasama",
+   "Kalau bekerja sama yang"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-280fad18.mp3"
+ },
+ {
+  "text": "Malam ini ia berjanji membantu Bunda merapikan mainan besok.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e639384b.mp3"
+ },
+ {
+  "text": "Get your toothbrush and toothpaste ready.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "get your toothbrush and toothpaste ready",
+   "gett your toothbrush and toothpaste ready",
+   "geht your toothbrush and toothpaste ready"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ccd86ef3.mp3"
+ },
+ {
+  "text": "Squeeze the toothpaste — just a pea-sized blob.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "squeeze the toothpaste just a p sized blob",
+   "squeeze the toothpaste just ah P sized blob",
+   "squeeze the toothpaste just ahh P sized blob"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-765660f5.mp3"
+ },
+ {
+  "text": "Bismillah. Brush left and right.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "brush left and right",
+   "Rush left and right",
+   "a brush left and right"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cc4f17f9.mp3"
+ },
+ {
+  "text": "Now brush up and down.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "now brush up and down",
+   "now brusch up and down",
+   "now brushe up and down"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d40be320.mp3"
+ },
+ {
+  "text": "Swish, swish, then spit the water out.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "swish swish then spit the water out",
+   "swish swoosh then spit the water out",
+   "swoosh swoosh then spit the water out"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-05f78ca5.mp3"
+ },
+ {
+  "text": "Alhamdulillah, clean and white teeth!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sikat gigi / brushing",
+  "heard": [
+   "alhamdulillah clean and white teeth",
+   "alhamdulillah clean and Wight teeth",
+   "alhamdulillah clean and Whyte teeth"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-429bf5e5.mp3"
+ },
+ {
+  "text": "The Cold Little Kitten.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "the cold little kitten",
+   "the kold little kitten",
+   "the cold Lytle kitten"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bfaa3ecc.mp3"
+ },
+ {
+  "text": "That night the rain fell softly.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "that night the rain fell Softly",
+   "that Knight the rain fell Softly",
+   "that Nite the rain fell Softly"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7132ca4c.mp3"
+ },
+ {
+  "text": "Baby Mo saw a little kitten shivering on the porch.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "Baby Mo saw a little kitten shivering on the porch",
+   "baby Moe saw a little kitten shivering on the porch",
+   "baby mow saw a little kitten shivering on the porch"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c17b3c35.mp3"
+ },
+ {
+  "text": "He fetched a soft towel, wrapped it gently and whispered, \"Bismillah, you are safe now.\"",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "the fetched a soft towel wrapped it gently and whispered",
+   "be fetched a soft towel wrapped it gently and whispered",
+   "he fetched a soft towel wrapped it gently and whispered",
+   " you are safe now",
+   " Bismillah you are safe now",
+   " you are Saif now"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2d65e6c6.mp3"
+ },
+ {
+  "text": "The kitten purred, warm and cosy, and Baby Mo smiled.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kucing Kecil Kedinginan",
+  "heard": [
+   "the kitten purr warm and cozy and Baby Mo smiled",
+   "the kitten purr warm and cozy and baby Moe smiled",
+   "the kitten purr warm and cozy and baby mow smiled"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-b83a26a7.mp3"
+ },
+ {
+  "text": "The Shy Little Star.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "the shy Little Star",
+   "the Shai Little Star",
+   "the shy little Starr"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0276458f.mp3"
+ },
+ {
+  "text": "High in the sky lived a little star who was too shy to shine.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "high in the sky lived a little star who was too shy to shine",
+   "high in the sky lived a little star who was too shy to shein",
+   "hi in the sky lived a little star who was too shy to shine"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-39d2be6e.mp3"
+ },
+ {
+  "text": "The moon said gently, \"Your light is small, but it is lovely.\"",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "the moon said gently",
+   "the muun said gently",
+   "the moong said gently",
+   " your light is small but it is lovely",
+   " your light is small but it is lovey",
+   " your Lite is small but it is lovely"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8f7c6ca8.mp3"
+ },
+ {
+  "text": "So the little star tried to shine, a tiny bit at a time.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "so the little star tried to shine a tiny bit at a time",
+   "so the little Starr tried to shine a tiny bit at a time",
+   "so the little star tried to shein a tiny bit at a time"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-25081437.mp3"
+ },
+ {
+  "text": "From his window Baby Mo whispered, \"MasyaAllah, how pretty!\" and closed his eyes.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bintang yang Malu",
+  "heard": [
+   "from his window Baby Mo whispered mashallah how pretty and closed his eyes",
+   "from his window baby Moe whispered mashallah how pretty and closed his eyes",
+   "from his window baby mow whispered mashallah how pretty and closed his eyes"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4818ea4e.mp3"
+ },
+ {
+  "text": "Three Sweet Dates.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "3 sweet dates",
+   "3 Suite dates",
+   "3 sweete dates"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-d81e8967.mp3"
+ },
+ {
+  "text": "That afternoon Baby Mo had three sweet dates.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "that afternoon baby Mo had 3 sweet dates",
+   "that afternoon baby Moe had 3 sweet dates",
+   "that afternoon baby Mo had 3 Suite dates"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-938306a2.mp3"
+ },
+ {
+  "text": "His little sister looked at them with shining eyes.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "his little sister looked at them with shining eyes",
+   "his little sister looked at them with shining Eis",
+   "his little sister looked at them with shining ize"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-277adc8f.mp3"
+ },
+ {
+  "text": "Baby Mo gave her one, with a big smile.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "Baby Mo gave her 1 with a big smile",
+   "baby Moe gave her 1 with a big smile",
+   "baby mow gave her 1 with a big smile"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-70506ef0.mp3"
+ },
+ {
+  "text": "\"Sharing makes hearts warm,\" said Mum, and Baby Mo went to sleep feeling happy.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tiga Butir Kurma",
+  "heard": [
+   "sharing makes Hearts warm said Mom and Baby Mo went to sleep feeling happy",
+   "sharing makes Hearts warm said mom and baby mow went to sleep feeling happy",
+   "sharing makes Hearts warm said mom and baby Moe went to sleep feeling happy"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-b874cb80.mp3"
+ },
+ {
+  "text": "The Sorry Word.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [
+   "the sorry word",
+   "the sorry woord",
+   "the sorry wird"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a0e3ff29.mp3"
+ },
+ {
+  "text": "Today Baby Mo knocked over his friend's block tower by accident.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [
+   "today Baby Mo knocked over his friend's block tower by accident",
+   "today baby Moe knocked over his friend's block tower by accident",
+   "today baby mow knocked over his friend's block tower by accident"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-16107dc9.mp3"
+ },
+ {
+  "text": "His friend felt sad.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [
+   "his friend felt sad",
+   "his friend felt sadd",
+   "his friend felt sadderday"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-034dd163.mp3"
+ },
+ {
+  "text": "Baby Mo said, \"I'm sorry. Let's build it again together.\"",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [
+   "baby Moe said I'm sorry let's build it again together",
+   "Baby Mo said I'm sorry let's build it again together",
+   "baby mow said I'm sorry let's build it again together"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8c51f3bb.mp3"
+ },
+ {
+  "text": "The new tower was even taller! At bedtime Baby Mo was thankful for his kind friend.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Kata Maaf",
+  "heard": [
+   "the new tower was even taller at bedtime Baby Mo was thankful for his kind friend",
+   "the new tower was even taller at bedtime baby Moe was thankful for his kind friend",
+   "the new tower was even taller at bedtime baby mou was thankful for his kind friend"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d6e0e000.mp3"
+ },
+ {
+  "text": "Birds Fly Home.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "birds fly home",
+   "birds fly Homme",
+   "birds fly Holm"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ce8167f9.mp3"
+ },
+ {
+  "text": "The sun set, all orange and gold.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "the sunset all orange and gold",
+   "the sunset awl orange and gold",
+   "the sunset all orange and Gould"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bffb53ad.mp3"
+ },
+ {
+  "text": "The little birds flew home to their nest.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "the little birds flew home to their nest",
+   "the Lytle birds flew home to their nest",
+   "the littl birds flew home to their nest"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5eb3f5f0.mp3"
+ },
+ {
+  "text": "Mother bird waited patiently and tucked them under her wings.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "mother bird waited patiently and tucked them under her wings",
+   "mother Byrd waited patiently and tucked them under her wings",
+   "mother byrde waited patiently and tucked them under her wings"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-87d51b34.mp3"
+ },
+ {
+  "text": "Baby Mo hugged his teddy and whispered, \"Alhamdulillah, everyone is home.\"",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Burung Pulang ke Sarang",
+  "heard": [
+   "Baby Mo hugged his Teddy and whispered alhamdulillah everyone is home",
+   "baby Moe hugged his Teddy and whispered alhamdulillah everyone is home",
+   "baby mow hugged his Teddy and whispered alhamdulillah everyone is home"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8454d8e0.mp3"
+ },
+ {
+  "text": "The Little Plant.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "the little plant",
+   "the Lytle plant",
+   "the little Plante"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f4f7203e.mp3"
+ },
+ {
+  "text": "Baby Mo planted one tiny seed in a pot.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "Baby Mo planted 1 Tiny Seed in a pot",
+   "baby Moe planted 1 Tiny Seed in a pot",
+   "baby mow planted 1 Tiny Seed in a pot"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-0f3353e0.mp3"
+ },
+ {
+  "text": "Every morning he watered it patiently.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "every morning he watered it patiently",
+   "every mourning he watered it patiently",
+   "every morning he waterd it patiently"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5f2f7294.mp3"
+ },
+ {
+  "text": "Today a teeny green leaf popped up!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "today a teeny Green Leaf popped up",
+   "today a teeny green leafe popped up",
+   "today a teeny green leef popped up"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1511c029.mp3"
+ },
+ {
+  "text": "\"SubhanAllah, it's growing!\" he cheered. Tonight he dreams of a garden full of flowers.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Tanaman Kecil",
+  "heard": [
+   "Subhan Allah it's growing he cheered tonight he dreams of a garden full of flowers",
+   "Subhan Allah it's growing he cheered tonight he dreams of a garden full of flours",
+   "Subhan Allah its growin' he cheered tonight he dreams of a garden full of flowers"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5ef29923.mp3"
+ },
+ {
+  "text": "Helping Grandma.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [
+   "helping grandma",
+   "helping Rama",
+   "helping granmamare"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e793f024.mp3"
+ },
+ {
+  "text": "Grandma was carrying heavy shopping.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [
+   "grandma was carrying heavy shopping",
+   "granmamare was carrying heavy shopping",
+   "grandma was carrying heavy shoping"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6c7b5006.mp3"
+ },
+ {
+  "text": "Baby Mo trotted over and carried a light bag for her.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [
+   "Baby Mo trotted over and carried a light bag for her",
+   "baby Moe trotted over and carried a light bag for her",
+   "baby mow trotted over and carried a light bag for her"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-825de3df.mp3"
+ },
+ {
+  "text": "Grandma smiled, \"JazakAllah khairan, my dear.\"",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [
+   "Grandma smiled and my dear",
+   "grandma smilde and my dear",
+   "granmamare smiled and my dear"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-41a252bf.mp3"
+ },
+ {
+  "text": "Baby Mo's heart felt warm like a blanket, and he fell asleep smiling.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Menolong Nenek",
+  "heard": [
+   "baby Moe's heart felt warm like a blanket and he fell asleep smiling",
+   "baby Mo's heart felt warm like a blanket and he fell asleep smiling",
+   "baby Mose heart felt warm like a blanket and he fell asleep smiling"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2ce89b11.mp3"
+ },
+ {
+  "text": "The Moon Keeps Watch.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "the moon keeps watch",
+   "the moon keeps wach",
+   "the moon keeps wath"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-52cf08bc.mp3"
+ },
+ {
+  "text": "The bedroom light was low.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "the bedroom light was low",
+   "the bedroom light was Lowe",
+   "the bedroom light was Lo"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2f38fdbf.mp3"
+ },
+ {
+  "text": "Baby Mo saw a round moon outside the window.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "Baby Mo saw a round Moon outside the window",
+   "baby Moe saw a round Moon outside the window",
+   "baby mow saw a round Moon outside the window"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-08ac80e1.mp3"
+ },
+ {
+  "text": "\"Moon, aren't you sleepy?\" he asked, and the moonlight felt soft and gentle.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "Moon aren't you sleepy he asked and the Moonlight felt soft and gentle",
+   "Moon aren't you sleepy he asked and the Moonlite felt soft and gentle",
+   "Moone aren't you sleepy he asked and the Moonlight felt soft and gentle"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9795a93a.mp3"
+ },
+ {
+  "text": "Baby Mo said his bedtime du'a and drifted off peacefully.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Bulan Menemani",
+  "heard": [
+   "baby Moe said his bedtime Dua and drifted off peacefully",
+   "Baby Mo said his bedtime Dua and drifted off peacefully",
+   "baby mow said his bedtime Dua and drifted off peacefully"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fbf2cfde.mp3"
+ },
+ {
+  "text": "The Busy Ants.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [
+   "the busy ants",
+   "the Boosie ants",
+   "the busy aunts"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6cb0812e.mp3"
+ },
+ {
+  "text": "In the garden Baby Mo saw a line of tiny ants.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [
+   "in the garden Baby Mo saw a line of tiny ants",
+   "in the garden baby Moe saw a line of tiny ants",
+   "in the garden baby mow saw a line of tiny ants"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b89b8243.mp3"
+ },
+ {
+  "text": "They carried a breadcrumb together, helping one another.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [
+   "They Carried a breadcrumb together helping 1 another"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-63053187.mp3"
+ },
+ {
+  "text": "\"When we work together, heavy things feel light,\" thought Baby Mo.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [
+   "when we work together heavy things feel light fought Baby Mo",
+   "when we work together heavy things feel Lite fought Baby Mo",
+   "when we work together heavy things feel light faught Baby Mo"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-3d1843d3.mp3"
+ },
+ {
+  "text": "Tonight he promised to help Mum tidy the toys tomorrow.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "cerita / story: Semut yang Rajin",
+  "heard": [
+   "tonight he promised to help Mom tidy the toys tomorrow",
+   "tonight he promised to help Mom Tiede the toys tomorrow",
+   "tonight he promised to help Mom tydi the toys tomorrow"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4a846bb3.mp3"
+ },
+ {
+  "text": "Assalamualaikum.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-01ebb48f.mp3"
+ },
+ {
+  "text": "Semoga keselamatan untukmu",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "semoga untukmu",
+   "semoga",
+   "semoga untuk"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d6fb1a5a.mp3"
+ },
+ {
+  "text": "Alhamdulillah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5dcf0b1a.mp3"
+ },
+ {
+  "text": "Segala puji bagi Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "segala puji",
+   "segala puji bagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2fe40edb.mp3"
+ },
+ {
+  "text": "Astagfirullah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-23a3f8c5.mp3"
+ },
+ {
+  "text": "Aku memohon ampun kepada Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e8eaf19e.mp3"
+ },
+ {
+  "text": "MasyaAllah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2c389687.mp3"
+ },
+ {
+  "text": "Allah Maha Sempurna",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-dd3bf0ac.mp3"
+ },
+ {
+  "text": "Lailahaillallah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-8beba20f.mp3"
+ },
+ {
+  "text": "Tiada Tuhan selain Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5095f2e3.mp3"
+ },
+ {
+  "text": "SubhanAllah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-1821e62f.mp3"
+ },
+ {
+  "text": "Maha Suci Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0c0993a6.mp3"
+ },
+ {
+  "text": "JazakAllah Khairan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b27f2f6c.mp3"
+ },
+ {
+  "text": "Semoga Allah membalasmu dengan kebaikan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Semoga Allah membalasmu dengan kebaikan"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-93e54554.mp3"
+ },
+ {
+  "text": "InsyaAllah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-bc91acfc.mp3"
+ },
+ {
+  "text": "Jika Allah mengizinkan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-93aa9c63.mp3"
+ },
+ {
+  "text": "Inna lillahi.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ff9de6a0.mp3"
+ },
+ {
+  "text": "Sesungguhnya kami milik Allah dan kepada-Nya kami kembali",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Sesungguhnya kami milik",
+   "Sesungguhnya kami milik Allah",
+   "Sesungguhnya kami"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-81ee1f64.mp3"
+ },
+ {
+  "text": "Barakallahu fiik.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-607b3bad.mp3"
+ },
+ {
+  "text": "Semoga Allah memberkahimu dengan kebaikan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-4b19e4a7.mp3"
+ },
+ {
+  "text": "Bagus sekali!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-7b3f0bff.mp3"
+ },
+ {
+  "text": "Hebat!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-7cee703a.mp3"
+ },
+ {
+  "text": "Keren!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5891aebd.mp3"
+ },
+ {
+  "text": "Pintar!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c63e8c3d.mp3"
+ },
+ {
+  "text": "Wow!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-fe37876a.mp3"
+ },
+ {
+  "text": "Mantap!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9c5901c5.mp3"
+ },
+ {
+  "text": "Lanjut yuk!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d38e427f.mp3"
+ },
+ {
+  "text": "Assalamualaikum.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "alemu alaykum",
+   "alamu alaykum",
+   "alamoo alaykum"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-0854f485.mp3"
+ },
+ {
+  "text": "Peace be upon you",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "peace be upon you",
+   "piece be upon you",
+   "Pease be upon you"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-561b92e9.mp3"
+ },
+ {
+  "text": "Alhamdulillah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "alhamdulillah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-515a5cc5.mp3"
+ },
+ {
+  "text": "All praise is for Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "all Praises for Allah",
+   "all praise is for Allah",
+   "awl Praises for Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d1e2f851.mp3"
+ },
+ {
+  "text": "Astagfirullah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "stuff for the love",
+   "stuff it all",
+   "stuff for the loved"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-5ab21d78.mp3"
+ },
+ {
+  "text": "I ask Allah for forgiveness",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "I asked a love for forgiveness",
+   "I ask a love for forgiveness",
+   "I ask a loved for forgiveness"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-f5152b10.mp3"
+ },
+ {
+  "text": "MasyaAllah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "mashallah",
+   "mallah",
+   "mashaallah"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-67b137f3.mp3"
+ },
+ {
+  "text": "Allah is Perfect",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Allah is perfect",
+   "Allah is Purrfect",
+   "Allah is perfekt"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-38b861b8.mp3"
+ },
+ {
+  "text": "Lailahaillallah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "all",
+   "Allah",
+   "awl"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6b299e7c.mp3"
+ },
+ {
+  "text": "There is no god but Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "there is no God but Allah",
+   "their is no God but Allah",
+   "ther is no God but Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2d723c8a.mp3"
+ },
+ {
+  "text": "SubhanAllah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Subhan Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-135825a3.mp3"
+ },
+ {
+  "text": "Glory be to Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "glory be to Allah",
+   "Glory bee to Allah",
+   "Glory B to Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-efb99f1a.mp3"
+ },
+ {
+  "text": "JazakAllah Khairan.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "for",
+   "four",
+   "fore"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-90a6ba93.mp3"
+ },
+ {
+  "text": "May Allah reward you with goodness",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Miller reward you with goodness",
+   "Mueller reward you with goodness",
+   "male I reward you with goodness"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-3894fa64.mp3"
+ },
+ {
+  "text": "InsyaAllah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "inshallah"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-029ab261.mp3"
+ },
+ {
+  "text": "If Allah wills",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "if Allah Wills",
+   "if Allah wils",
+   "if Allah whills"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-088fbd7f.mp3"
+ },
+ {
+  "text": "Inna lillahi.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/lines-ab34f617.mp3"
+ },
+ {
+  "text": "Truly we belong to Allah and to Him we return",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "truly we belong to Allah and to whom we return",
+   "truly we belong to Allah and to whom we returned",
+   "truely we belong to Allah and to whom we return"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-e5cf69ff.mp3"
+ },
+ {
+  "text": "Barakallahu fiik.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "for",
+   "four",
+   "fore"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-cb59bafe.mp3"
+ },
+ {
+  "text": "May Allah bless you with goodness",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "may Allah bless you with goodness",
+   "may Allah bless you with goodnes",
+   "met Allah bless you with goodness"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-86dc1ee9.mp3"
+ },
+ {
+  "text": "Very nice!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [
+   "very nice",
+   "very niece",
+   "very niiiice"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c6f6475e.mp3"
+ },
+ {
+  "text": "Great!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [
+   "great"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-56ad6e41.mp3"
+ },
+ {
+  "text": "Cool!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [
+   "cool",
+   "Kuhl",
+   "Kool"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8116c713.mp3"
+ },
+ {
+  "text": "Smart!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [
+   "smart",
+   "smaart",
+   "smartt"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-94745b2d.mp3"
+ },
+ {
+  "text": "Wow!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [
+   "well",
+   "welle",
+   "wehl"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4f15b358.mp3"
+ },
+ {
+  "text": "Awesome!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [
+   "awesome",
+   "awsome",
+   "awsom"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-89198630.mp3"
+ },
+ {
+  "text": "Keep going!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian / praise",
+  "heard": [
+   "keep going",
+   "keep Goin",
+   "keap going"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-afa4a834.mp3"
+ },
+ {
+  "text": "Halo!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan dengan nama anak / greeting with the child's name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-555aa575.mp3"
+ },
+ {
+  "text": "Bismillah, yuk mulai belajar!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "Bismillah",
+   "bismillah yuk",
+   "Bismilah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a7c0556c.mp3"
+ },
+ {
+  "text": "Sudah malam, jangan lupa doa tidur",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "udah malam jangan lupa doa tidur",
+   "sudah malam jangan lupa doa tidur"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-90839c74.mp3"
+ },
+ {
+  "text": "Selamat pagi! Yuk mulai dengan doa pagi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f813863a.mp3"
+ },
+ {
+  "text": "Selamat siang! Tetap semangat ya",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-fe75da33.mp3"
+ },
+ {
+  "text": "Selamat sore! Mau main game apa?",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-8639db6a.mp3"
+ },
+ {
+  "text": "Selamat malam! Yuk belajar doa malam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0b4bda55.mp3"
+ },
+ {
+  "text": "Hi!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan dengan nama anak / greeting with the child's name",
+  "heard": [
+   "hi",
+   "him-"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-53ef3658.mp3"
+ },
+ {
+  "text": "Bismillah, let's start learning!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "Bismillah let's start learning",
+   "let's start learning",
+   "Bismillah let's start learning'"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c33433a1.mp3"
+ },
+ {
+  "text": "It's late, don't forget your bedtime dua",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "it's late don't forget your bedtime duh",
+   "it's latte don't forget your bedtime duh",
+   "its late don't forget your bedtime duh"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-496a611d.mp3"
+ },
+ {
+  "text": "Good morning! Start with your morning dua",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "good morning start with your morning Dua",
+   "good mourning start with your morning Dua",
+   "gooood morning start with your morning Dua"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-033cda7f.mp3"
+ },
+ {
+  "text": "Good afternoon! Keep up the spirit",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "good afternoon keep up the spirit",
+   "good afternoon keep up the spearritt",
+   "good afternoon keep oop the spirit"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2efc516b.mp3"
+ },
+ {
+  "text": "Good evening! Which game shall we play?",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "good evening which game shall we play",
+   "Goode evening which game shall we play",
+   "gud evening which game shall we play"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-02e9a6e4.mp3"
+ },
+ {
+  "text": "Good night! Let's learn the night dua",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "sapaan / greeting",
+  "heard": [
+   "good night let's learn the night Dua",
+   "good night let's learn the Knight Dua",
+   "good night let's learn the night dewa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-738922e2.mp3"
  }
 ]
