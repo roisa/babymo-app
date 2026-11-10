@@ -607,6 +607,68 @@ html[data-bm-theme="classic"] #s-game #game-back{background:rgba(255,255,255,.12
 .lf-room .tq.tq-lock{display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:rgba(21,34,48,.85);color:#fff;font-size:0}
 .lf-room .tq.tq-lock .lf-lock{width:14px;height:14px;margin:0}
 </style>
+<style id="bm-find-layout">
+/* ── Game screen, kid-first: WHAT TO FIND on top (big cards), the room in the middle,
+      a progress track at the bottom with Baby Mo running to the gift ── */
+#s-game .g-dots{display:none!important}
+.find-strip{width:100%;flex:none;padding:8px 10px 10px;box-sizing:border-box;position:relative;z-index:3}
+.fs-head{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 0 8px}
+.fs-k{font:600 18px/1 'Fredoka','Nunito',sans-serif;color:#152230;letter-spacing:-.01em;display:inline-flex;align-items:center;gap:7px}
+.fs-k svg{width:22px;height:22px;stroke:#E8590C;fill:none;stroke-width:2.6;stroke-linecap:round}
+.fs-n{font:800 13px/1 'Nunito',sans-serif;color:#7A4A00;background:linear-gradient(180deg,#FFF3C4,#FFD86B);padding:5px 10px;border-radius:999px;font-variant-numeric:tabular-nums}
+.find-strip .tray-items{display:flex!important;flex-wrap:nowrap!important;justify-content:center!important;gap:7px!important;overflow:visible!important;padding:0!important}
+.find-strip .ti{flex:1 1 0;max-width:84px;min-width:0;width:auto!important;height:98px;padding:6px 3px 7px!important;gap:4px!important;box-sizing:border-box;
+  justify-content:center;border-radius:20px!important;border:1px solid rgba(21,34,48,.07)!important;background:rgba(255,255,255,.9)!important;
+  box-shadow:inset 0 1px 0 #fff,0 8px 18px -12px rgba(20,50,90,.45);position:relative;cursor:pointer;opacity:1!important;
+  transition:transform .26s cubic-bezier(.34,1.56,.64,1),background .25s,box-shadow .25s}
+.find-strip .ti .ti-icon{font-size:38px!important;height:44px!important;filter:none!important}
+.find-strip .ti .ti-img{width:44px!important;height:44px!important;object-fit:contain}
+.find-strip .ti .ti-lbl{font-size:11.5px!important;color:#152230!important;letter-spacing:0;text-transform:none!important;font-weight:800!important;line-height:1.1!important;max-width:100%;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;white-space:normal;word-break:break-word;min-height:2.2em}
+.find-strip .ti.wig{animation:tiWig .5s ease}
+@keyframes tiWig{20%{transform:rotate(-8deg) scale(1.08)}50%{transform:rotate(7deg) scale(1.08)}80%{transform:rotate(-3deg)}}
+/* found: stays colourful, green card + tick (no greying out) */
+.find-strip .ti.found{background:linear-gradient(180deg,#E3F9EA,#C9F0D6)!important;border-color:rgba(33,179,95,.45)!important;animation:tiFound .55s cubic-bezier(.34,1.56,.64,1)}
+.find-strip .ti.found::after{content:'';position:absolute;top:-6px;right:-6px;width:24px;height:24px;border-radius:50%;
+  background:#21B35F url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 12.5l4 4 8-9' fill='none' stroke='%23fff' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/16px no-repeat;
+  box-shadow:0 0 0 2.5px #fff,0 4px 10px -3px rgba(0,0,0,.35)}
+.find-strip .ti.found .ti-lbl{color:#0B6B35!important}
+@keyframes tiFound{0%{transform:scale(1)}40%{transform:scale(1.18)}100%{transform:scale(1)}}
+.find-strip .ti.ti-secret:not(.found){background:linear-gradient(180deg,#FFF8DC,#FFE9A6)!important;border-color:rgba(245,180,0,.5)!important}
+/* the room: fits between the list and the track on every phone */
+#s-game .scene-wrap{width:min(100%, calc((100dvh - 316px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) * 375 / 420))!important;margin:auto!important;flex:none!important}
+/* bottom: progress track */
+#s-game .tray{background:transparent!important;border:none!important;box-shadow:none!important;flex-direction:column;align-items:stretch!important;gap:6px;
+  padding:6px 18px calc(12px + env(safe-area-inset-bottom))!important;flex:none}
+.fp-txt{text-align:center;font:800 14px/1 'Nunito',sans-serif;color:#33475B}
+.fp-txt b{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;color:#0B6B35;font-size:16px}
+.fp-track{position:relative;height:56px;margin:0 30px 0 6px}
+.fp-rail{position:absolute;left:0;right:0;top:50%;height:16px;margin-top:-8px;border-radius:99px;background:rgba(21,34,48,.10);overflow:hidden;box-shadow:inset 0 2px 4px rgba(0,0,0,.08)}
+.fp-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:99px;background:linear-gradient(90deg,#34C77B,#21B35F);transition:width .6s cubic-bezier(.3,1.2,.5,1)}
+.fp-rail i{position:absolute;top:50%;width:6px;height:6px;margin:-3px 0 0 -3px;border-radius:50%;background:rgba(255,255,255,.85)}
+.fp-goal{position:absolute;right:-34px;top:50%;width:46px;height:46px;margin-top:-23px;border-radius:14px;box-shadow:0 6px 14px -6px rgba(200,20,60,.6);transition:transform .3s}
+.fp-goal.near{animation:fpGoal 1s ease-in-out infinite}
+@keyframes fpGoal{50%{transform:scale(1.12) rotate(6deg)}}
+#s-game .fp-track .bmo-face{position:absolute!important;top:50%;left:0;width:52px!important;height:52px!important;margin:-26px 0 0 -10px;
+  border:3px solid #fff!important;box-shadow:0 6px 14px -6px rgba(0,0,0,.45);transition:left .6s cubic-bezier(.3,1.2,.5,1);z-index:2}
+html[data-bm-theme="classic"] .fs-k,html[data-bm-theme="classic"] .fp-txt{color:#EAF5EF}
+html[data-bm-theme="classic"] .fp-txt b{color:#7BE29B}
+html[data-bm-theme="classic"] .find-strip .ti:not(.found):not(.ti-secret){background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.14)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+html[data-bm-theme="classic"] .find-strip .ti:not(.found) .ti-lbl{color:#EAF5EF!important}
+html[data-bm-theme="classic"] .fp-rail{background:rgba(255,255,255,.12)}
+@media (min-width:760px){.find-strip .ti{max-width:92px;height:96px}.find-strip .ti .ti-icon{font-size:40px!important;height:46px!important}.find-strip .ti .ti-img{width:46px!important;height:46px!important}.find-strip .ti .ti-lbl{font-size:12px!important}
+  #s-game .scene-wrap{width:min(100%, calc((100dvh - 340px) * 375 / 420))!important}}
+/* phone landscape: room on the left, list + track stacked on the right */
+@media (orientation:landscape) and (max-height:520px){
+  #s-game{grid-template-columns:auto minmax(0,1fr)!important;grid-template-rows:auto auto minmax(0,1fr) auto!important}
+  #s-game .scene-wrap{grid-row:2 / 5!important;grid-column:1!important;width:auto!important;height:calc(100% - 20px)!important}
+  .find-strip{grid-column:2;grid-row:2;align-self:start}
+  .find-strip .tray-items{flex-wrap:wrap!important}
+  .find-strip .ti{flex:0 0 64px;height:74px}
+  .find-strip .ti .ti-icon{font-size:28px!important;height:32px!important}
+  #s-game .tray{grid-column:2!important;grid-row:4!important;width:100%!important;max-width:none!important;margin:0!important;align-self:end}
+}
+@media (prefers-reduced-motion:reduce){.find-strip .ti,.fp-fill,#s-game .fp-track .bmo-face{transition:none!important;animation:none!important}}
+</style>
 </head>
 <body>
 <canvas id="cvs"></canvas>
@@ -1164,6 +1226,34 @@ function buildTray(lv){
     return `<div class="ti ${found.has(o.id)?'found':''}${o.secret?' ti-secret':''}" data-id="${o.id}">${icon}<span class="ti-lbl">${o.label}</span></div>`;
   }).join('');
 }
+
+// ── kid-first game layout: the find-list moves to the top, a progress track replaces the tray ──
+(function(){
+  const g=document.getElementById('s-game'), hdr=g.querySelector('.g-header'), items=document.getElementById('tray-items'),
+        tray=g.querySelector('.tray'), face=document.getElementById('bmo-face');
+  const strip=document.createElement('div'); strip.className='find-strip'; strip.id='find-strip';
+  strip.innerHTML='<div class="fs-head"><span class="fs-k"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.5 15.5 20 20"/></svg><span id="fs-k-t"></span></span><span class="fs-n" id="fs-n">0/0</span></div>';
+  strip.appendChild(items); hdr.after(strip);
+  tray.innerHTML='<div class="fp-txt" id="fp-txt"></div><div class="fp-track"><div class="fp-rail"><div class="fp-fill" id="fp-fill"></div></div><img class="fp-goal" id="fp-goal" src="icons/ui/gift.svg" alt=""></div>';
+  tray.querySelector('.fp-track').appendChild(face);
+  function prog(){
+    const n=OBJS.length, f=OBJS.filter(o=>found.has(o.id)).length, p=n?f/n:0;
+    document.getElementById('fs-k-t').textContent=L('Cari ini!','Find these!');
+    document.getElementById('fs-n').textContent=f+'/'+n;
+    document.getElementById('fp-fill').style.width=(p*100)+'%';
+    face.style.left='calc('+(p*100)+'% - '+(p*36)+'px)';
+    document.getElementById('fp-txt').innerHTML=f>=n&&n?L('<b>Semua ketemu!</b> 🎉','<b>Found them all!</b> 🎉'):
+      L('<b>'+f+'</b> dari '+n+' ketemu','<b>'+f+'</b> of '+n+' found');
+    document.getElementById('fp-goal').classList.toggle('near',n-f===1);
+    const rail=document.querySelector('.fp-rail'); rail.querySelectorAll('i').forEach(x=>x.remove());
+    for(let k=1;k<n;k++){ const d=document.createElement('i'); d.style.left=(k/n*100)+'%'; rail.appendChild(d); }
+  }
+  const _bt=buildTray, _ut=updateTrayItem;
+  buildTray=function(lv){ _bt(lv); prog();
+    items.querySelectorAll('.ti').forEach((t,i)=>{ t.style.animation='tiFound .5s '+(.15+i*.08)+'s both';
+      t.addEventListener('click',()=>{ t.classList.remove('wig'); void t.offsetWidth; t.classList.add('wig'); sfx(t.classList.contains('found')?1180:700,.05,.12); }); }); };
+  updateTrayItem=function(id){ _ut(id); prog(); };
+})();
 
 // =============================================
 // HINT
