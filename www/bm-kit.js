@@ -16,6 +16,10 @@
      6. Daily missions + app-wide streak     → BabyMo.daily.*  (see the
         "Daily system" block below and /docs/daily-api.md)
 
+   Quiet mode: set window.BM_KIT_QUIET = true before this script to get
+   the helpers without the greeting bubble or the win watcher (used by
+   the 3D Pulau Hijaiyah for its share card).
+
    Everything is wrapped in try/catch so a kit failure can never
    break a game.
    ============================================================ */
@@ -859,7 +863,12 @@
         "transform:translateX(-50%);z-index:99999;background:#1A2519;color:#E8B060;" +
         "font:800 14px/1 'Nunito',system-ui,sans-serif;padding:12px 20px;border-radius:999px;" +
         "box-shadow:0 8px 28px rgba(0,0,0,.45);border:.5px solid rgba(240,232,216,.18);";
+      el.className = "bm-toast";
       document.body.appendChild(el);
+      keepOffCard(el);
+      placeMo();
+      // the win screen may still be sliding in: check again once it has settled
+      setTimeout(function () { keepOffCard(el); placeMo(); }, 450);
       setTimeout(function () {
         el.remove();
       }, 1800);
@@ -1007,6 +1016,119 @@
     } catch (e) {}
     return false;
   }
+  // ---- Keep Baby Mo and the toasts off the "Coba juga" card ----
+  // The cheer bubble, the kit toasts and the daily-mission toast are all
+  // position:fixed, so on a win screen they can land on the suggestion
+  // card. Each one checks the others and moves out of the way.
+  function visRect(el) {
+    try {
+      if (!el) return null;
+      var cs = getComputedStyle(el);
+      if (cs.display === "none" || cs.visibility === "hidden") return null;
+      var r = el.getBoundingClientRect();
+      if (!r.width || !r.height || r.bottom <= 0 || r.top >= innerHeight) return null;
+      return r;
+    } catch (e) { return null; }
+  }
+  function hits(a, b, pad) {
+    pad = pad || 0;
+    return a.left < b.right + pad && b.left < a.right + pad && a.top < b.bottom + pad && b.top < a.bottom + pad;
+  }
+  function moObstacles(except) {
+    var out = [];
+    try {
+      var els = document.querySelectorAll(".bm-next, #bm-daily-toast.show, .bm-toast");
+      for (var i = 0; i < els.length; i++) {
+        if (els[i] === except) continue;
+        var r = visRect(els[i]);
+        if (r) out.push(r);
+      }
+    } catch (e) {}
+    return out;
+  }
+  // Is a tappable control under this rectangle? (Baby Mo is pointer-events:none,
+  // so elementFromPoint sees through him.)
+  function rectCoversControl(r) {
+    try {
+      for (var y = r.top + 8; y < r.bottom - 4; y += 16) {
+        for (var x = r.left + 8; x < r.right - 4; x += 32) {
+          var el = document.elementFromPoint(x, y);
+          if (el && el.closest && el.closest('button,a[href],[role="button"],input,select,.btn,.btn-pri,.btn-sec')) return true;
+        }
+      }
+    } catch (e) {}
+    return false;
+  }
+  // Put the bubble where it touches neither the card nor a toast: its usual
+  // spot, else just under / just above the thing in the way, else the
+  // other edge of the screen. If nowhere is free, hide it this time.
+  function placeMo() {
+    try {
+      var box = document.getElementById("bm-mo");
+      if (!box || !box.classList.contains("show")) return;
+      var obs = moObstacles();
+      var wantTop = !!box._bmTop, lift = box._bmLift || 0;
+      var set = function (top, px, lf) {
+        box.classList.toggle("top", top);
+        box.style.top = top && px != null ? Math.round(px) + "px" : "";
+        box.style.setProperty("--bm-mo-lift", (top ? 0 : lf) + "px");
+      };
+      set(wantTop, null, lift);
+      if (!obs.length) return;
+      // offset* ignore the slide-in transform, so this is where he will rest
+      var rectNow = function () {
+        var l = box.offsetLeft, t = box.offsetTop;
+        return { left: l, top: t, right: l + box.offsetWidth, bottom: t + box.offsetHeight };
+      };
+      var h = box.offsetHeight, minTop = Math.max(8, rectNow().top - (wantTop ? 56 : 0));
+      if (!wantTop) { set(true, null, 0); minTop = Math.max(8, rectNow().top - 56); }
+      var cands = [[wantTop, null, lift]];
+      obs.slice().sort(function (a, b) { return a.top - b.top; }).forEach(function (o) {
+        cands.push([true, o.bottom + 10, 0]);
+        cands.push([true, o.top - h - 10, 0]);
+      });
+      cands.push([false, null, bottomBarHeight(box)]);
+      cands.push([true, null, 0]);
+      var best = null;
+      for (var i = 0; i < cands.length; i++) {
+        var c = cands[i];
+        if (c[0] && c[1] != null && (c[1] < minTop || c[1] + h > innerHeight - 8)) continue;
+        set(c[0], c[1], c[2]);
+        var r = rectNow(), clash = false;
+        if (r.top < 0 || r.bottom > innerHeight) continue;
+        for (var j = 0; j < obs.length; j++) if (hits(r, obs[j], 6)) { clash = true; break; }
+        if (clash) continue;
+        if (!rectCoversControl(r)) { best = c; break; }
+        if (!best) best = c;
+      }
+      if (best) set(best[0], best[1], best[2]);
+      else { set(wantTop, null, lift); box.classList.remove("show"); }
+    } catch (e) {}
+  }
+  // Move a toast off the suggestion card (above it, or below if no room).
+  function keepOffCard(el) {
+    try {
+      var cards = document.querySelectorAll(".bm-next");
+      for (var i = 0; i < cards.length; i++) {
+        var c = visRect(cards[i]), r = el.getBoundingClientRect();
+        if (!c || !hits(r, c, 6)) continue;
+        if (c.top - r.height - 12 > 8) { el.style.top = "auto"; el.style.bottom = Math.round(innerHeight - c.top + 10) + "px"; }
+        else { el.style.bottom = "auto"; el.style.top = Math.round(c.bottom + 10) + "px"; }
+      }
+    } catch (e) {}
+  }
+  function keepToastsOffCard() {
+    try {
+      var ts = document.querySelectorAll(".bm-toast, #bm-daily-toast.show");
+      for (var i = 0; i < ts.length; i++) keepOffCard(ts[i]);
+    } catch (e) {}
+  }
+  var _placeRaf = 0;
+  function placeMoSoon() {
+    if (_placeRaf) return;
+    _placeRaf = (window.requestAnimationFrame || setTimeout)(function () { _placeRaf = 0; keepToastsOffCard(); placeMo(); });
+  }
+
   var moTimer = null;
   function react(type, opts) {
     try {
@@ -1031,9 +1153,12 @@
       if (!atTop && coversButton(box, lift)) atTop = true;
       box.classList.remove("show");
       box.classList.toggle("top", atTop);
+      box.style.top = "";
       box.style.setProperty("--bm-mo-lift", atTop ? "0px" : lift + "px");
+      box._bmTop = atTop; box._bmLift = lift;
       void box.offsetWidth;
       box.classList.add("show");
+      placeMo();
       // Matching sound (silent if muted); win also drops a star in the jar
       // unless the caller opts out (opts.star === false).
       if (opts.sound !== false) playSfx(type === "greet" ? null : type);
@@ -1085,7 +1210,14 @@
           ".bm-next img{width:48px;height:48px;border-radius:12px;flex:0 0 48px;box-shadow:0 6px 12px -6px rgba(0,0,0,.4)}" +
           ".bm-next .t{flex:1;min-width:0}.bm-next .e{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#E8590C}" +
           ".bm-next .n{display:block;font-size:16px;font-weight:900;line-height:1.2}.bm-next .h{display:block;font-size:13px;font-weight:700;color:#5A6878}" +
-          ".bm-next .c{font-size:22px;color:#8A97A6;font-weight:700}";
+          ".bm-next .c{font-size:22px;color:#8A97A6;font-weight:700}" +
+          // Dark ("classic") theme: dark green glass instead of the white card
+          "html[data-bm-theme=classic] .bm-next{background:rgba(24,52,34,.72);border-color:rgba(255,255,255,.12);color:#FFF7E6;" +
+          "-webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);" +
+          "box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 14px 30px -16px rgba(0,0,0,.75)}" +
+          "html[data-bm-theme=classic] .bm-next .e{color:#FFB547}" +
+          "html[data-bm-theme=classic] .bm-next .h{color:rgba(255,247,230,.72)}" +
+          "html[data-bm-theme=classic] .bm-next .c{color:rgba(255,247,230,.55)}";
         document.head.appendChild(st);
       }
       var a = document.createElement("a");
@@ -1094,6 +1226,9 @@
         '<span class="n">' + n[2] + '</span><span class="h">' + n[3] + '</span></span><span class="c">›</span>';
       a.addEventListener("click", function () { track("next_game", { to: n[0] }); });
       winEl.appendChild(a);
+      keepToastsOffCard();
+      placeMo();
+      setTimeout(function () { keepToastsOffCard(); placeMo(); }, 700); // after the card's slide-in
     } catch (e) {}
   }
 
@@ -1114,10 +1249,16 @@
         if (fired) return;
         var els = document.querySelectorAll(WIN_SEL);
         for (var i = 0; i < els.length; i++) {
-          if (vis(els[i])) { fired = true; react("win"); addNextGame(els[i]); if (obs) obs.disconnect(); return; }
+          if (vis(els[i])) { fired = true; addNextGame(els[i]); react("win"); if (obs) obs.disconnect(); return; }
         }
       }
-      obs = new MutationObserver(check);
+      // A win screen that fades in is still at opacity 0 when its class
+      // flips, so look again once the fade has had time to run.
+      var later = null;
+      obs = new MutationObserver(function () {
+        check();
+        if (!fired) { clearTimeout(later); later = setTimeout(check, 500); }
+      });
       obs.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ["class", "style"] });
       check();
     } catch (e) {}
@@ -1456,7 +1597,10 @@
       el.querySelector(".i").textContent = all ? "🏆" : "✓";
       el.querySelector("b").textContent = title;
       el.querySelector("small").textContent = sub || "";
+      el.style.top = ""; el.style.bottom = "";
       el.classList.remove("show"); void el.offsetWidth; el.classList.add("show");
+      keepOffCard(el);
+      placeMo();
       clearTimeout(_dtTimer);
       _dtTimer = setTimeout(function () { el.classList.remove("show"); }, all ? 3400 : 2600);
     } catch (e) {}
@@ -1638,8 +1782,21 @@
   window.BabyMo.prepareShare = prepareShare;
 
   function initCompanion() {
+    // Pages that only want the kit's helpers (share card, daily API) and no
+    // Baby Mo pop-ups over their own scene set window.BM_KIT_QUIET = true
+    // before loading the kit: no greeting bubble, no win watcher.
+    if (window.BM_KIT_QUIET) {
+      var warmQ = function () { prepareShare(); };
+      if (window.requestIdleCallback) requestIdleCallback(warmQ, { timeout: 3000 });
+      else setTimeout(warmQ, 1800);
+      return;
+    }
     maybeGreet();
     watchWin();
+    // A win screen can scroll the card under Baby Mo: keep them apart
+    document.addEventListener("scroll", function () {
+      if (document.querySelector(".bm-next")) placeMoSoon();
+    }, { capture: true, passive: true });
     // Unlock WebAudio on the first user gesture (iOS/Safari requirement).
     var unlock = function () {
       var ac = audioCtx();
