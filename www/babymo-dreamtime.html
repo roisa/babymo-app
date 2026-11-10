@@ -290,6 +290,8 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .moonbox{border-radius:24px;}
 .storychip{background-color:rgba(185,140,240,.16)!important;border-color:rgba(185,140,240,.34)!important;}
 .pjitem,.btool,.bcup,.bhold{border-radius:24px;}
+/* the label wraps inside the button instead of running past its border */
+.bhold{min-width:170px;padding:10px 16px!important;white-space:normal!important;text-align:center;line-height:1.15;box-sizing:border-box;overflow-wrap:anywhere}
 .btool.ok,.bcup.ok,.bhold.ok,.bzone.ok{border-color:#3ECFB8!important;background-color:rgba(62,207,184,.18)!important;}
 .doa-card{border-radius:24px;}
 .doa-card.now-playing{border-color:var(--gold-lt)!important;}
