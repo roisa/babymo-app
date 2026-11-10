@@ -8,7 +8,9 @@ Output:
   www/doa-voice/<id>.mp3      + voice.js  -> window.DOA_VOICE = {arabic text: file}
 The games already play these clips when the manifests are filled (device TTS is only a fallback).
 
-Auth (either):
+Auth (any one):
+  - Google Cloud Shell / a signed-in gcloud: nothing to set (uses `gcloud auth print-access-token`
+    and the current project for quota), or
   - GOOGLE_TTS_API_KEY environment variable (sent as ?key=), or
   - a network secret on the cloud environment that injects X-Goog-Api-Key for texttospeech/speech.googleapis.com.
 
@@ -25,10 +27,30 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 DATA = os.path.join(ROOT, "tools", "voice", "clips.json")
 KEY = os.environ.get("GOOGLE_TTS_API_KEY", "").strip()
 
+def _gcloud(*args):
+    import subprocess
+    try:
+        return subprocess.run(["gcloud", *args], capture_output=True, text=True, timeout=60).stdout.strip()
+    except Exception:
+        return ""
+
+# In Google Cloud Shell (or anywhere gcloud is signed in) no key is needed: use the signed-in account's token.
+TOKEN = os.environ.get("GOOGLE_ACCESS_TOKEN", "").strip()
+PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "").strip() or os.environ.get("DEVSHELL_PROJECT_ID", "").strip()
+if not KEY and not TOKEN and os.environ.get("NO_GCLOUD") != "1":
+    TOKEN = _gcloud("auth", "print-access-token")
+    if TOKEN and not PROJECT:
+        PROJECT = _gcloud("config", "get-value", "project")
+
 def call(url, body):
+    headers = {"Content-Type": "application/json"}
     if KEY:
         url += ("&" if "?" in url else "?") + "key=" + KEY
-    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers={"Content-Type": "application/json"})
+    elif TOKEN:
+        headers["Authorization"] = "Bearer " + TOKEN
+        if PROJECT:
+            headers["x-goog-user-project"] = PROJECT
+    req = urllib.request.Request(url, data=json.dumps(body).encode(), headers=headers)
     for attempt in range(4):
         try:
             return json.load(urllib.request.urlopen(req, timeout=40))
