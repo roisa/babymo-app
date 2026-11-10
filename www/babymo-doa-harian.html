@@ -1218,7 +1218,14 @@ function restartGame(){
 function shareResult(){
   const stars = document.getElementById('cStarsDisp').textContent;
   const score = document.getElementById('cQuizScore').textContent;
-  if(window.BabyMo && BabyMo.shareScore){ BabyMo.shareScore(score, stars, 'Aku belajar doa harian bersama Baby Mo! Yuk coba juga 🌙'); return; }
+  if(window.BabyMo && BabyMo.shareScore){
+    const n = DUAS.length;
+    BabyMo.shareScore(score, stars, ['Aku belajar doa harian bersama Baby Mo! Yuk coba juga 🌙', "I learned daily du'as with Baby Mo! Come try it 🌙"], {
+      headline: [n + ' doa harian!', n + " daily du'as!"],
+      stats: [[['Kuis', 'Quiz'], score]]
+    });
+    return;
+  }
   const text  = `🌙 Doa Harian — Baby Mo\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama Baby Mo!\nhttps://play.babymo.id/babymo-doa-harian.html\n#BabyMo #DoaHarian`;
   if(navigator.share){ navigator.share({title:'Baby Mo — Doa Harian', text, url:'https://play.babymo.id/babymo-doa-harian.html'}).catch(()=>{}); }
   else{ navigator.clipboard?.writeText(text).then(() => showToast('📤','Disalin!')); }

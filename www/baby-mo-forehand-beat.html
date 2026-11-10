@@ -566,7 +566,7 @@ html[data-bm-theme="classic"] #frame .big-btn.secondary { color: #152230 !import
         </div>
         <div class="panel-btns">
           <button class="big-btn" id="replay-btn">Main Lagi</button>
-          <button class="big-btn secondary" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('go-score')||{}).textContent||'',(document.getElementById('go-stars')||{}).textContent||'','I played Forehand Beat with Baby Mo! 🎵')">📤 Bagikan</button>
+          <button class="big-btn secondary" onclick="shareBeat()">📤 Bagikan</button>
           <button class="big-btn secondary" id="home-btn">Menu</button>
         </div>
         <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
@@ -2385,6 +2385,7 @@ function gameOver() {
   try {
     const prev = parseInt(localStorage.getItem('babymo_best') || '0', 10);
     if (state.score > prev) localStorage.setItem('babymo_best', state.score);
+    state.newBest = prev > 0 && state.score > prev;
     state.bestScore = Math.max(prev, state.score);
   } catch(e) { state.bestScore = Math.max(state.bestScore, state.score); }
   // populate panel
@@ -2403,6 +2404,20 @@ function gameOver() {
   document.getElementById('go-title').textContent = m[0];
   document.getElementById('go-sub').textContent = m[1];
   setTimeout(() => show('gameover'), 700);
+}
+
+// Rich share card: score headline (or "new record"), stars, best score
+function shareBeat() {
+  try {
+    if (!window.BabyMo || !BabyMo.shareScore) return;
+    const sc = state.score;
+    BabyMo.shareScore(sc, state.stars,
+      ['Aku main Forehand Beat bareng Baby Mo! 🎵', 'I played Forehand Beat with Baby Mo! 🎵'],
+      {
+        headline: state.newBest ? ['Rekor baru ' + sc + '!', 'New record ' + sc + '!'] : undefined,
+        stats: [[['Terbaik', 'Best'], state.bestScore]]
+      });
+  } catch (e) {}
 }
 
 function pauseGame() {

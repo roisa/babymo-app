@@ -94,8 +94,23 @@
     }
   }
 
-  function buildMessage(opts) {
+  // Text fields may be given as [indonesian, english]; pick by bm_lang.
+  function localize(opts) {
     opts = opts || {};
+    var en = moLang() === "en", o = {};
+    var pickL = function (v) { return Array.isArray(v) ? v[en ? 1 : 0] : v; };
+    for (var k in opts) if (Object.prototype.hasOwnProperty.call(opts, k)) o[k] = opts[k];
+    ["title", "game", "headline", "sub", "message", "cheer"].forEach(function (k) {
+      if (o[k] != null) o[k] = pickL(o[k]);
+    });
+    if (Array.isArray(o.stats)) {
+      o.stats = o.stats.map(function (st) { return st ? [pickL(st[0]), pickL(st[1])] : st; });
+    }
+    return o;
+  }
+
+  function buildMessage(opts) {
+    opts = localize(opts);
     var en = moLang() === "en";
     var g = shareGame();
     var name = opts.title || (g.icon && g.n[en ? 1 : 0]) || gameName();
@@ -442,10 +457,15 @@
       ? ["MashaAllah", "Alhamdulillah", "Barakallah"]
       : ["MasyaAllah", "Alhamdulillah", "Barakallah"];
     var r = rng(title + headline);
+    var bare = function (t) { return String(t).toLowerCase().replace(/[^a-z]/g, ""); };
+    var hb = bare(headline);
+    if (hb.length > 2) cheers = cheers.filter(function (c) { return hb.indexOf(bare(c)) < 0 && bare(c).indexOf(hb) < 0; });
+    if (!cheers.length) cheers = [en ? "Great job" : "Hebat"];
     var cheer = noEmoji(cheers[Math.floor(r() * cheers.length)]);
     cheer = name ? cheer + ", " + name + "!" : cheer + "!";
-    var stats = (opts.stats || []).filter(function (s) { return s && s[1] !== "" && s[1] != null; }).slice(0, 3)
-      .map(function (s) { return [noEmoji(s[0]), noEmoji(s[1])]; });
+    var stats = (opts.stats || []).filter(function (s) { return s && s[1] != null; })
+      .map(function (s) { return [noEmoji(s[0]), noEmoji(s[1])]; })
+      .filter(function (s) { return s[1] !== ""; }).slice(0, 3);
     return {
       g: g, en: en, title: title, headline: headline, sub: sub, cheer: cheer,
       stars: stars, starsMax: starsMax, stats: stats,
@@ -458,7 +478,7 @@
   // Returns a PNG dataURL string, or null. Fully synchronous.
   function buildResultDataURL(opts) {
     try {
-      opts = opts || {};
+      opts = localize(opts);
       if (!prepared) prepareShare(); // too late for this share, ready next time
       var m = cardModel(opts);
       var W = CARD_W, H = CARD_H, cx = W / 2;
@@ -664,7 +684,9 @@
           var t = st[0] + " " + st[1];
           return { t: st, w: x.measureText(t).width + 52 };
         });
-        var total = chips.reduce(function (a, ch) { return a + ch.w; }, 0) + (chips.length - 1) * 16;
+        var sumW = function () { return chips.reduce(function (a, ch) { return a + ch.w; }, 0) + (chips.length - 1) * 16; };
+        while (chips.length > 1 && sumW() > inner) chips.pop();
+        var total = sumW();
         var chx = cx - total / 2;
         chips.forEach(function (ch) {
           roundRect(x, chx, y, ch.w, 60, 30);
@@ -747,7 +769,7 @@
 
   // ---- Share -------------------------------------------------
   function share(opts) {
-    opts = opts || {};
+    opts = localize(opts);
     var text = buildMessage(opts);
     var url = opts.url || gameUrl();
     var en = moLang() === "en";
@@ -819,7 +841,8 @@
 
   // shareScore(score, stars, message[, extra]) — extra may carry any of
   // the richer card fields: headline, sub, stats [[label, value]…],
-  // starsMax, game, cheer, hero.
+  // starsMax, game, cheer, hero. Any text (incl. stat labels/values) may
+  // be an [indonesian, english] pair; the kit picks one by bm_lang.
   function shareScore(score, stars, message, extra) {
     var o = { score: score, stars: stars, message: message };
     if (extra) for (var k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) o[k] = extra[k];

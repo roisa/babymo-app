@@ -1120,7 +1120,13 @@ function openCert(){
 $("certBtn").addEventListener("click",function(){ sfx("tap"); openCert(); });
 $("certBack").addEventListener("click",function(){ renderMap(); show("s-map"); });
 $("certMap").addEventListener("click",function(){ renderMap(); show("s-map"); });
-$("certShare").addEventListener("click",function(){ try{ kit().shareScore ? kit().shareScore(STATIONS.length*3,3,T("Aku lulus Akademi Tenis Kak Adam! 🎾")) : kit().share && kit().share({}); }catch(e){} });
+$("certShare").addEventListener("click",function(){ try{
+  var got=0; for(var i=0;i<STATIONS.length;i++) got+=DATA.stars[i]||0;
+  if(kit().shareScore) kit().shareScore("", got, ["Aku lulus Akademi Tenis Kak Adam! 🎾","I graduated from Kak Adam's Tennis Academy! 🎾"], {
+    headline:["Lulus Akademi Tenis!","Tennis Academy graduate!"], starsMax:0,
+    stats:[[["Pos latihan","Stations"],STATIONS.length+" / "+STATIONS.length]] });
+  else kit().share && kit().share({});
+}catch(e){} });
 
 /* ───────── wiring ───────── */
 $("introBack").addEventListener("click",function(){ renderMap(); show("s-map"); });

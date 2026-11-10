@@ -880,7 +880,9 @@ function finish(){
   if(nx) $('bNext').onclick=()=>startStop(G.i+1);
   const again=$('bAgain')||$('bAgain1'); again.onclick=()=>startStop(G.i);
   $('bMap').onclick=goMap;
-  $('bShare').onclick=()=>{ try{ BabyMo.shareScore('⭐'.repeat(stars),'',L('Aku menyelesaikan ','I finished ')+T2(s.name)+L(' di Dua Journey bareng Baby Mo! 🌟',' in Dua Journey with Baby Mo! 🌟')); }catch(e){} };
+  $('bShare').onclick=()=>{ try{ BabyMo.shareScore('',stars,L('Aku menyelesaikan ','I finished ')+T2(s.name)+L(' di Dua Journey bareng Baby Mo! 🌟',' in Dua Journey with Baby Mo! 🌟'),{
+    headline: last?L('Juara Doa Sehari!','Du\'a Champion!'):perfect?L('Tanpa salah!','No misses!'):T2(s.name),
+    stats:[[L('Langkah','Moves'),G.moves],[L('Waktu','Time'),fmtT(G.secs)]] }); }catch(e){} };
   $('recap').innerHTML=G.ids.map(id=>{ const d=DUA[id]; return '<div class="rc">'+duaIcon(d)+'<div class="rc-t">'+esc(T2(d.title))+'</div><button class="rc-say" type="button" data-id="'+id+'" aria-label="'+L('Dengar','Listen')+'">🔊</button>'
     +'<div class="rc-a ar" lang="ar">'+d.arabic+'</div><div class="rc-m">'+esc(meaning(d))+'</div></div>'; }).join('');
   $('recap').querySelectorAll('.rc-say').forEach(x=>x.addEventListener('click',()=>{ const was=R.sound; R.sound=true; say(DUA[x.dataset.id].arabic); R.sound=was; }));

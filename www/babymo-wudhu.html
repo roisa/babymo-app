@@ -326,6 +326,7 @@ html[data-bm-theme="classic"] #checkin .ci-btn.ok{background:rgba(110,231,183,.1
           <button class="btn-sec" id="oAgainBtn">🔄 Main Lagi</button>
           <button class="btn-sec" onclick="startGuide()">💧 Panduan</button>
         </div>
+        <button class="btn-sec" onclick="shareOrder()">📤 Bagikan</button>
         <a class="btn-sec" href="./index.html">🏠 Game Hub</a>
       </div>
     </div>
@@ -511,6 +512,7 @@ function orderDone(){
   r.order[level] = {stars: Math.max(stars, prev ? prev.stars : 0), best: prev ? Math.min(prev.best, ms) : ms,
     fewest: prev ? Math.min(prev.fewest, mistakes) : mistakes, plays: (prev ? prev.plays : 0) + 1};
   wSave(r); renderRecords();
+  lastOrder = {kilat: false, level: level, stars: stars, time: fmt(ms), record: newBest && !!prev};
   document.getElementById('oWhy').textContent = mistakes === 0 && slow ? L('Tanpa salah! Lebih cepat lagi untuk ⭐⭐⭐', 'No mistakes! A bit faster for ⭐⭐⭐')
     : mistakes ? L(mistakes + ' kali salah · ⏱ ' + fmt(ms), mistakes + ' mistake' + (mistakes > 1 ? 's' : '') + ' · ⏱ ' + fmt(ms)) : L('Tanpa salah & cepat!', 'No mistakes & quick!');
   document.getElementById('oRec').innerHTML = '<span>⏱ ' + fmt(ms) + '</span>' + (newBest && prev ? '<span class="new">🎉 ' + L('Rekor baru!', 'New record!') + '</span>' : prev ? '<span>🏆 ' + fmt(r.order[level].best) + '</span>' : '');
@@ -530,6 +532,7 @@ function kilatDone(ms){
   var r = wLoad(), prev = r.kilat.best, isNew = !prev || ms < prev;
   r.kilat = {best: prev ? Math.min(prev, ms) : ms, plays: (r.kilat.plays || 0) + 1, last: ms};
   wSave(r); renderRecords();
+  lastOrder = {kilat: true, level: 10, stars: 0, time: fmt1(ms), record: isNew && !!prev};
   document.getElementById('oStars').textContent = '⚡ ' + fmt1(ms);
   document.getElementById('oDoneTitle').textContent = isNew ? L('Rekor baru! Secepat kilat! ⚡', 'New record! Lightning fast! ⚡') : L('MasyaAllah, cepat sekali! ⚡', 'MashaAllah, so fast! ⚡');
   document.getElementById('oDoneSub').textContent = L('Kamu mengurutkan 10 langkah wudhu.', 'You put all 10 wudu steps in order.');
@@ -629,7 +632,22 @@ document.addEventListener('DOMContentLoaded', function(){ renderCheckin(); rende
 document.addEventListener('visibilitychange', function(){ if(!document.hidden) renderCheckin(); });
 
 function share(){
-  try{ if(window.BabyMo && BabyMo.share) BabyMo.share({title:'Wudhu Bareng Mo', message:'Aku sudah belajar wudhu bareng Baby Mo! 💧 Yuk coba juga'}); }catch(e){}
+  try{ if(window.BabyMo && BabyMo.share) BabyMo.share({title:'Wudhu Bareng Mo', headline:['Wudhuku selesai!', 'My wudu is done!'], stars:3,
+    stats:[[['Langkah', 'Steps'], STEPS.length]],
+    message:['Aku sudah belajar wudhu bareng Baby Mo! 💧 Yuk coba juga', 'I learned how to do wudu with Baby Mo! 💧 Come try it']}); }catch(e){}
+}
+// Share card for the order game / Tantangan Kilat result
+var lastOrder = null;
+function shareOrder(){
+  try{
+    if(!window.BabyMo || !BabyMo.share) return;
+    var o = lastOrder || {};
+    BabyMo.share({title:'Wudhu Bareng Mo',
+      headline: o.kilat ? ['Secepat kilat!', 'Lightning fast!'] : [(o.level || 5) + ' langkah urut!', (o.level || 5) + ' steps in order!'],
+      stars: o.stars || 0,
+      stats: [[o.record ? ['Rekor baru', 'New record'] : ['Waktu', 'Time'], o.time]],
+      message:['Aku hafal urutan wudhu bareng Baby Mo! 💧', 'I know the wudu steps in order with Baby Mo! 💧']});
+  }catch(e){}
 }
 </script>
 <script src="/bm-kit.js" defer></script>

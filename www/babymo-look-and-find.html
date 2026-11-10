@@ -574,7 +574,7 @@ html[data-bm-theme="bright"] .comp-why{color:#5A3A00;}
   <p class="comp-msg" id="comp-msg">Kamu luar biasa!</p>
   <div class="act-btns">
     <button class="abtn abtn-main" id="btn-next">Lanjut ▶</button>
-    <button class="abtn abtn-sec" onclick="window.BabyMo&&BabyMo.share({message:'Aku menemukan semua Baby Mo yang tersembunyi! 🔍'})">📤 Bagikan</button>
+    <button class="abtn abtn-sec" onclick="shareFind()">📤 Bagikan</button>
     <button class="abtn abtn-sec" id="btn-menu">🗺️ Menu</button>
   </div>
   <a href="index.html" style="margin-top:10px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:rgba(255,255,255,0.55);text-decoration:none;padding:8px 14px;">🏠 Game Hub</a>
@@ -1100,7 +1100,20 @@ function clearHint(){
 // =============================================
 // COMPLETE
 // =============================================
-let doneShown=false;
+let doneShown=false, lastFind=null;
+// Rich share card: room name + stars (or the torch challenge)
+function shareFind(){
+  try{
+    if(!window.BabyMo||!BabyMo.share)return;
+    const f=lastFind||{};
+    BabyMo.share({
+      headline:f.torch?['Ketemu dalam gelap!','Found in the dark!']:['Semua ketemu!','Found them all!'],
+      stars:f.torch?0:f.stars,
+      stats:f.room?[[['Ruang','Room'],f.room]].concat(f.secret?[[['Misi rahasia','Secret mission'],['selesai','done']]]:[]):[],
+      message:['Aku menemukan semua Baby Mo yang tersembunyi! 🔍','I found all the hidden Baby Mos! 🔍']
+    });
+  }catch(e){}
+}
 function showComplete(){
   if(doneShown)return;doneShown=true;   // two quick last finds both schedule this
   completeSnd();
@@ -1113,6 +1126,7 @@ function showComplete(){
   if(secretNow){const pl=document.createElement('span');pl.className='stk-plus';pl.textContent=SECRETS[lv.id].e;stk.appendChild(pl);}
   document.getElementById('comp-msg').textContent=lv.msg;
   const cs=document.getElementById('comp-stars'),why=document.getElementById('comp-why');
+  lastFind={room:lv.name,torch:mode==='torch',stars:0,secret:!!secretNow};
   if(mode==='torch'){
     const first=!X.torch[lv.id];X.torch[lv.id]=1;saveX();
     try{window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('look-and-find','torch-'+lv.id,1);}catch(e){}
@@ -1120,7 +1134,7 @@ function showComplete(){
     why.innerHTML=(first?L('Bintang senter baru! ✨','New torch star! ✨'):L('Hebat, semua ketemu dalam gelap!','Great, you found them all in the dark!'))+'<small>🔦 '+Object.keys(X.torch).length+' / '+LEVELS.length+'</small>';
   }else{
     const ms=Date.now()-t0,[st,txt,tip]=earnStars(ms,hintsUsed),prev=prog[lv.id]||0;
-    prog[lv.id]=Math.max(prev,st);saveProg();
+    prog[lv.id]=Math.max(prev,st);saveProg();lastFind.stars=st;
     cs.innerHTML=[1,2,3].map(k=>`<span class="cstar${k<=st?'':' off'}">⭐</span>`).join('');
     why.innerHTML=txt+(secretNow?' · 🎁 '+L('Misi selesai!','Mission done!'):'')+(tip?'<small>'+tip+'</small>':'')+(prev>st?'<small>'+L('Rekormu tetap ','Your best stays ')+'⭐'.repeat(prev)+'</small>':'');
   }
