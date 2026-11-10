@@ -75,13 +75,14 @@ def call(url, body):
             raise SystemExit(f"Network error: {e}")
 
 # speaking rate per kind: syllables short and clear, du'as slow (tartil)
-RATE = {"syl": 0.8, "name": 0.85, "harakat": 0.85, "word": 0.8, "phrase": 0.8, "doa": 0.72}
+# natural speed: slowing WaveNet voices down makes them warble ("vibrate"); du'as only slightly slower
+RATE = {"syl": 1.0, "name": 1.0, "harakat": 1.0, "word": 1.0, "phrase": 0.95, "doa": 0.92}
 
 def synth(text, kind, voice):
-    body = {"input": {"text": text},
-            "voice": {"languageCode": "ar-XA", "name": voice},
-            "audioConfig": {"audioEncoding": "MP3", "speakingRate": RATE.get(kind, 0.85), "sampleRateHertz": 24000,
-                            "effectsProfileId": ["handset-class-device"]}}
+    ac = {"audioEncoding": "MP3", "sampleRateHertz": 24000}
+    r_ = RATE.get(kind, 1.0)
+    if r_ != 1.0 and "Chirp" not in voice: ac["speakingRate"] = r_
+    body = {"input": {"text": text}, "voice": {"languageCode": "ar-XA", "name": voice}, "audioConfig": ac}
     r = call("https://texttospeech.googleapis.com/v1/text:synthesize", body)
     return base64.b64decode(r["audioContent"])
 
@@ -102,9 +103,31 @@ def main():
     ap.add_argument("--only", choices=["hijaiyah", "doa"])
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--test", action="store_true")
+    ap.add_argument("--compare", action="store_true", help="make one short sample per Arabic voice in tools/voice/compare/")
     ap.add_argument("--force", action="store_true", help="remake clips that already exist")
     a = ap.parse_args()
     items = json.load(open(DATA, encoding="utf-8"))
+    if a.compare:
+        req = urllib.request.Request("https://texttospeech.googleapis.com/v1/voices?languageCode=ar-XA" + ("&key=" + KEY if KEY else ""),
+                                     headers=({"Authorization": "Bearer " + TOKEN, "x-goog-user-project": PROJECT} if TOKEN and not KEY else {}))
+        allv = json.load(urllib.request.urlopen(req, timeout=40)).get("voices", [])
+        names = [v["name"] for v in allv]
+        pick = [n for n in names if "Wavenet" in n] + [n for n in names if "Neural2" in n]
+        chirp = [v for v in allv if "Chirp3-HD" in v["name"] or "Chirp-HD" in v["name"]]
+        fem = [v["name"] for v in chirp if v.get("ssmlGender") == "FEMALE"][:3]
+        mal = [v["name"] for v in chirp if v.get("ssmlGender") == "MALE"][:3]
+        pick += fem + mal
+        d = os.path.join(ROOT, "tools", "voice", "compare"); os.makedirs(d, exist_ok=True)
+        lines = [("بَاء", "name"), ("بَ", "syl"), ("بِ", "syl"), ("بُ", "syl"), ("ضَاد", "name"), ("رَبِّ زِدْنِي عِلْمًا", "word")]
+        print("voices:", ", ".join(pick))
+        for v in pick:
+            try:
+                audio = b"".join(synth(t, k, v) for t, k in lines)
+            except SystemExit as e:
+                print("skip", v, str(e)[:120]); continue
+            open(os.path.join(d, v + ".mp3"), "wb").write(audio)
+            print("sample", v)
+        return
     if a.test:
         mp3 = synth("بَ", "syl", a.voice)
         print("OK — got", len(mp3), "bytes of audio for بَ"); return
