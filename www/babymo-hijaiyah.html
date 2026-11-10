@@ -404,7 +404,10 @@ const Speech = {
       if(my!==this.seq) return;
       const ctx=getAudioCtx(); const s=ctx.createBufferSource(); s.buffer=buf;
       const g=ctx.createGain(); g.gain.value=1; s.connect(g); g.connect(ctx.destination);
-      s.onended=()=>{ if(this.src===s) this.src=null; after(); }; this.src=s; s.start();
+      let fin=false; const end=()=>{ if(fin) return; fin=true; clearTimeout(wd); if(this.src===s) this.src=null; after(); };
+      // watchdog: if audio is still locked (no tap yet) 'ended' never fires — move on anyway
+      const wd=setTimeout(end, buf.duration*1000+900);
+      s.onended=end; this.src=s; s.start();
     }).catch(()=>{ if(my===this.seq) fail(); });
   },
   say(items, done){
