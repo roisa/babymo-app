@@ -63,7 +63,9 @@
   "Langkah Sholat": "Prayer Steps", "Ketuk langkah untuk belajar bareng Mo": "Tap a step to learn it with Mo", "Mulai di sini": "Start here", "Lanjut di sini": "Continue here",
   "Lainnya": "More", "Lencana & Bintang": "Badges & Stars", "Lihat capaianmu": "See what you've learned", "Dzikir Setelah Sholat": "Dhikr After Prayer", "Hitung tasbih bareng Mo": "Count tasbih with Mo",
   "Lihat jadwal sholat": "See prayer times",
-  "7 langkah ✓": "7 steps ✓", "3 dzikir ✓": "3 dhikr ✓", "Buka Panduan Sholat untuk mulai belajar": "Open the Prayer Guide to start learning", "Pray with Mo": "Pray with Mo"
+  "7 langkah ✓": "7 steps ✓", "3 dzikir ✓": "3 dhikr ✓", "Buka Panduan Sholat untuk mulai belajar": "Open the Prayer Guide to start learning", "Pray with Mo": "Pray with Mo",
+  "Bacaan sebelumnya": "Previous recitation", "Bacaan berikutnya": "Next recitation", "Dengarkan bacaan": "Listen to the recitation",
+  "Ulang hitungan": "Reset the count", "Dengarkan dzikir": "Listen to the dhikr", "Tambah satu hitungan": "Add one to the count"
 }, [
   [/^(.*?)\b(Januari|Februari|Maret|April|Mei|Juni|Juli|Agustus|September|Oktober|November|Desember|Jumadil Awwal|Jumadil Akhir|Rabiul Awwal|Rabiul Akhir|Ramadhan|Syawal|Dzulhijjah)\b(.*)$/, function (m, t) {
     var map = { Januari: "January", Februari: "February", Maret: "March", April: "April", Mei: "May", Juni: "June", Juli: "July", Agustus: "August", September: "September", Oktober: "October", November: "November", Desember: "December",
