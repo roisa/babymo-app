@@ -1338,10 +1338,13 @@ html[data-theme="dark"] .wv .wv-sh{fill:#000;stroke:#000;opacity:.35}
 html[data-theme="dark"] .wv .wv-hi{stroke:rgba(255,255,255,.35)}
 /* ===== title lettering v3 (reference): puffy letters, white sticker outline, 3D yellow banner ===== */
 .wv{--shc:rgba(30,40,90,.22);--rim:#DDE5F2;--oc:#fff;--dp:#1E2470;--dpe:#0B6A33}
-.wv .g1{stop-color:#525CC9}.wv .g2{stop-color:#353DA0}.wv .g3{stop-color:#2A3088}
+.wv .g1{stop-color:#5862D0}.wv .g2{stop-color:#3D47B3}.wv .g3{stop-color:#343DA4}
 
-.wv .e1{stop-color:#5EDB8C}.wv .e2{stop-color:#1FA455}.wv .e3{stop-color:#15893F}
+.wv .e1{stop-color:#5FD98C}.wv .e2{stop-color:#2DB463}.wv .e3{stop-color:#25A659}
 .wv .wv-sh{filter:blur(3px)}
+.wv{--soft:rgba(40,48,140,.35);--softe:rgba(20,110,60,.35)}
+.wv .wv-soft{filter:blur(1.2px)}
+html[data-theme="dark"] .wv{--soft:rgba(150,100,20,.4);--softe:rgba(20,110,60,.4)}
 .wv .spk{stroke:#FFD21F;stroke-width:7px;stroke-linecap:round;fill:none;filter:drop-shadow(0 1.5px 0 #E5A900)}
 .wv .r1{stop-color:#FFEFA8}.wv .r2{stop-color:#FFD866}.wv .r3{stop-color:#F5BC3A}
 .wv .rb{stroke:#E8AE2C;stroke-width:1.2}
@@ -2695,7 +2698,7 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     var d=el('defs',{},svg);
     function lg(i,stops,x2,y2){ var g=el('linearGradient',{id:id+i,x1:0,y1:0,x2:x2||0,y2:y2==null?1:y2},d); stops.forEach(function(s){ el('stop',{offset:s[0],'class':s[1]},g); }); }
     lg('g',[[0,'g1'],[.55,'g2'],[1,'g3']]); lg('e',[[0,'e1'],[.55,'e2'],[1,'e3']]);
-    var gl=el('linearGradient',{id:id+'s',x1:0,y1:0,x2:0,y2:1},d); [[0,.85],[.32,.22],[.45,0]].forEach(function(s){ el('stop',{offset:s[0],'stop-color':'#fff','stop-opacity':s[1]},gl); });
+    var gl=el('linearGradient',{id:id+'s',x1:0,y1:0,x2:0,y2:1},d); [[0,.5],[.28,.14],[.42,0]].forEach(function(s){ el('stop',{offset:s[0],'stop-color':'#fff','stop-opacity':s[1]},gl); });
     lg('rb',[[0,'r1'],[.5,'r2'],[1,'r3']]);
     el('path',{id:id+'r',d:'M40 141 Q190 107 340 141',fill:'none'},d);
     var list=parts(src), two=src.classList.contains('two');
@@ -2716,10 +2719,10 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
       t.textContent=ch.c; });
     function use(cls,st,dx,dy){ var u=el('use',{href:'#'+id+'t','class':cls},svg); u.setAttribute('style',st); if(dx||dy) u.setAttribute('transform','translate('+(dx||0)+' '+(dy||0)+')'); return u; }
     /* white sticker outline with a soft shadow, then the puffy letters */
-    use('wv-sh','--f:var(--shc);--fe:var(--shc);--s:var(--shc);--se:var(--shc);--sw:26px',0,6);
-    use('wv-rim','--f:var(--rim);--fe:var(--rim);--s:var(--rim);--se:var(--rim);--sw:25px');
-    use('wv-out','--f:var(--oc);--fe:var(--oc);--s:var(--oc);--se:var(--oc);--sw:22px');
-    use('wv-dp','--f:var(--dp);--fe:var(--dpe);--s:var(--dp);--se:var(--dpe);--sw:2px',0,2.6);
+    use('wv-sh','--f:var(--shc);--fe:var(--shc);--s:var(--shc);--se:var(--shc);--sw:32px',0,6);
+    use('wv-rim','--f:var(--rim);--fe:var(--rim);--s:var(--rim);--se:var(--rim);--sw:31px');
+    use('wv-out','--f:var(--oc);--fe:var(--oc);--s:var(--oc);--se:var(--oc);--sw:28px');
+    use('wv-soft','--f:var(--soft);--fe:var(--softe)',0,1.6);
     use('wv-fill','--f:url(#'+id+'g);--fe:url(#'+id+'e)');
     use('wv-gloss','--f:url(#'+id+'s);--fe:url(#'+id+'s)',0,-.5);
     /* two little sparks over the last letter */
