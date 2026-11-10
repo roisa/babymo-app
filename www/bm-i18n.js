@@ -139,6 +139,31 @@
   }
 
   // Indonesian speech -> English speech
+  // Best natural English voice on this device (enhanced/premium iOS & macOS voices, Google, Microsoft neural)
+  var _enV = null, _enVn = -1;
+  function enVoice() {
+    try {
+      var vs = window.speechSynthesis.getVoices() || [];
+      if (_enV && vs.length === _enVn) return _enV;
+      _enVn = vs.length;
+      var en = vs.filter(function (v) { return /^en[-_]/i.test(v.lang || "") || /^en$/i.test(v.lang || ""); });
+      if (!en.length) return (_enV = null);
+      var score = function (v) {
+        var n = (v.name || "") + " " + (v.voiceURI || ""), sc = 0;
+        if (/premium/i.test(n)) sc += 60; else if (/enhanced|neural|natural/i.test(n)) sc += 50;
+        if (/Samantha|Ava|Allison|Susan|Zoe|Nicky|Joelle|Evan|Nathan|Tom|Karen|Serena|Daniel|Moira|Tessa|Kate|Martha|Aria|Jenny|Guy|Libby|Sonia/i.test(n)) sc += 25;
+        if (/Google US English|Google UK English Female/i.test(n)) sc += 30;
+        if (/en[-_]US/i.test(v.lang)) sc += 12; else if (/en[-_](GB|AU|IE|CA)/i.test(v.lang)) sc += 8;
+        if (v.localService) sc += 3;
+        // novelty / robotic voices sound wrong for a children's story
+        if (/Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Deranged|Good News|Hysterical|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Ralph|Kathy|Princess|Grandma|Grandpa|Rocko|Shelley|Flo|Eddy|Reed|Sandy/i.test(n)) sc -= 80;
+        return sc;
+      };
+      en.sort(function (a, b) { return score(b) - score(a); });
+      return (_enV = en[0]);
+    } catch (e) { return null; }
+  }
+  window.BM_enVoice = enVoice;
   try {
     var ss = window.speechSynthesis;
     if (ss && ss.speak) {
@@ -147,7 +172,15 @@
         try {
           if (u && /^(id|ms)/i.test(u.lang || "") ) {
             var tx = t(u.text);
-            if (tx !== u.text) { u.text = tx; u.lang = "en-US"; try { u.voice = null; } catch (e) {} }
+            if (tx !== u.text) {
+              u.text = tx; u.lang = "en-US";
+              var ev = enVoice();
+              try { u.voice = ev || null; } catch (e) {}
+              if (ev) u.lang = ev.lang;
+              // pitch/rate were tuned for the Indonesian voice (often high and slow) — keep English natural
+              if (u.pitch > 1.12) u.pitch = 1.08;
+              if (u.rate < 0.82) u.rate = 0.88;
+            }
           }
         } catch (e) {}
         return orig(u);

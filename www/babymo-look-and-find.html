@@ -526,6 +526,58 @@ html[data-bm-theme="bright"] .comp-why{color:#5A3A00;}
 }
 </style>
 <script src="bm-icons.js" defer></script>
+<style id="bm-cari-chrome">
+/* ── Map chrome, iOS glass: top bar + one bottom dock (both themes) ── */
+.map-header{padding-top:calc(env(safe-area-inset-top) + 10px)!important}
+.map-title,.map-stars{pointer-events:auto;background:rgba(255,255,255,.74)!important;border:1px solid rgba(255,255,255,.9)!important;
+  -webkit-backdrop-filter:blur(22px) saturate(180%)!important;backdrop-filter:blur(22px) saturate(180%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 12px 26px -16px rgba(20,60,30,.55)!important;text-shadow:none!important}
+.map-title{display:inline-flex!important;align-items:center;gap:8px;min-height:46px;padding:0 16px 0 9px!important;font:600 20px/1 'Fredoka','Nunito',sans-serif!important;color:#C2410C!important;letter-spacing:-.01em}
+.map-title .mt-ic{width:30px;height:30px;border-radius:9px;flex:none;box-shadow:0 3px 8px -3px rgba(150,60,0,.5)}
+.map-stars{min-height:46px;padding:0 14px!important;gap:6px!important;color:#152230!important;font:700 17px/1 'Fredoka','Nunito',sans-serif!important;font-variant-numeric:tabular-nums}
+.map-stars .ms-star{width:20px;height:20px;fill:#F5B400;filter:drop-shadow(0 1px 1px rgba(160,100,0,.35))}
+.map-stars .ms-of{opacity:.55!important;font-size:14px!important}
+.map-mission{background:rgba(255,255,255,.80)!important;border:1px solid rgba(255,255,255,.95)!important;border-radius:24px!important;
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 16px 30px -18px rgba(20,60,30,.6)!important}
+.map-mission.done{border-color:rgba(33,179,95,.55)!important}
+.map-mission .mm-go{border-radius:999px!important;box-shadow:inset 0 10px 10px -8px rgba(255,255,255,.6),0 8px 16px -10px rgba(200,120,0,.8)!important}
+/* the dock */
+.map-footer{left:50%!important;right:auto!important;transform:translateX(-50%);width:auto!important;padding:0!important;
+  bottom:calc(12px + env(safe-area-inset-bottom))!important;gap:2px!important;pointer-events:auto;
+  background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);border-radius:30px;
+  -webkit-backdrop-filter:blur(24px) saturate(180%);backdrop-filter:blur(24px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 18px 34px -18px rgba(20,60,30,.65)}
+#s-home .map-footer .map-hub-btn.dock-it{display:flex!important;flex-direction:column;align-items:center;justify-content:center;gap:3px;min-width:76px;min-height:60px!important;
+  padding:7px 12px 6px!important;margin:5px!important;border:none!important;border-radius:22px!important;background:transparent!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;
+  color:#152230!important;font:800 12.5px/1 'Nunito',sans-serif!important;text-decoration:none;position:relative;
+  transition:transform .26s cubic-bezier(.34,1.56,.64,1),background .2s}
+#s-home .map-footer .map-hub-btn.dock-it:active{transform:scale(.92)!important;background:rgba(118,118,128,.14)!important}
+.map-footer .dk-ic{width:30px;height:30px;border-radius:9px;box-shadow:0 4px 10px -4px rgba(0,0,0,.35)}
+.map-footer .dock-it.locked .dk-ic{filter:grayscale(.65) brightness(.95);opacity:.75}
+.map-footer .dock-it.locked::after{content:'';position:absolute;top:4px;right:16px;width:16px;height:16px;border-radius:50%;
+  background:#152230 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect x='6' y='11' width='12' height='9' rx='2' fill='%23fff'/%3E%3Cpath d='M8.5 11V8.5a3.5 3.5 0 0 1 7 0V11' fill='none' stroke='%23fff' stroke-width='2.4'/%3E%3C/svg%3E") center/11px no-repeat;
+  box-shadow:0 0 0 2px rgba(255,255,255,.9)}
+/* dark ("classic") */
+html[data-bm-theme="classic"] .map-title,html[data-bm-theme="classic"] .map-stars,html[data-bm-theme="classic"] .map-mission,html[data-bm-theme="classic"] .map-footer{
+  background:rgba(16,34,26,.72)!important;border-color:rgba(255,255,255,.14)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 16px 30px -16px rgba(0,0,0,.75)!important}
+html[data-bm-theme="classic"] .map-title{color:#FFD23F!important}
+html[data-bm-theme="classic"] .map-stars,html[data-bm-theme="classic"] .map-footer .dock-it,html[data-bm-theme="classic"] .map-mission{color:#EAF5EF!important}
+html[data-bm-theme="classic"] .map-footer .dock-it.locked::after{background-color:#0b1712;box-shadow:0 0 0 2px rgba(255,255,255,.25)}
+/* landscape phones: dock sits bottom-right, mission card bottom-left (existing layout) */
+@media (orientation:landscape) and (max-height:500px){
+  .map-title{min-height:40px;font-size:17px!important}.map-title .mt-ic{width:26px;height:26px}
+  .map-stars{min-height:40px}
+  .map-footer{left:auto!important;right:max(12px,env(safe-area-inset-right))!important;transform:none}
+  #s-home .map-footer .map-hub-btn.dock-it{min-width:64px;min-height:52px!important;padding:5px 8px 4px!important;margin:4px!important}
+  .map-footer .dk-ic{width:26px;height:26px}
+}
+@media (prefers-reduced-motion:reduce){.map-footer .dock-it{transition:none}}
+/* the daily-mission card sits over the top of the map in portrait — start the map just below it */
+@media not all and (orientation:landscape) and (max-height:500px){
+  #s-home:has(.map-mission:not([hidden])) .map-scroll{padding-top:46px;background-color:#9fdcff}
+}
+</style>
 </head>
 <body>
 <canvas id="cvs"></canvas>
@@ -536,14 +588,14 @@ html[data-bm-theme="bright"] .comp-why{color:#5A3A00;}
     <div class="map-wrap" id="map-wrap"><div class="map-world" id="map-world"></div></div>
   </div>
   <div class="map-header">
-    <div class="map-title">🔍 Cari Baby Mo</div>
-    <div class="map-stars"><span class="ms-star">★</span><span id="map-star-n">0</span><span class="ms-of" id="map-star-of">/54</span></div>
+    <div class="map-title"><img class="mt-ic" src="icons/games/cari-baby-mo.svg" alt="" width="28" height="28">Cari Baby Mo</div>
+    <div class="map-stars"><svg class="ms-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg><span id="map-star-n">0</span><span class="ms-of" id="map-star-of">/54</span></div>
   </div>
   <button class="map-mission" id="map-mission" type="button" hidden></button>
   <div class="map-footer">
-    <a href="index.html" class="map-hub-btn"><img src="icons/ui/home.svg" alt="" width="20" height="20" style="width:20px;height:20px;border-radius:6px;vertical-align:-4px;margin-right:7px;box-shadow:0 2px 6px -2px rgba(150,80,0,.5)">Hub</a>
-    <button class="map-hub-btn" id="btn-book" type="button">📒 <span id="btn-book-t">Stiker</span></button>
-    <button class="map-hub-btn" id="btn-torch" type="button">🔦 <span id="btn-torch-t">Senter</span></button>
+    <a href="index.html" class="map-hub-btn dock-it"><img class="dk-ic" src="icons/ui/home.svg" alt="" width="30" height="30"><span>Hub</span></a>
+    <button class="map-hub-btn dock-it" id="btn-book" type="button"><img class="dk-ic" src="icons/ui/sticker.svg" alt="" width="30" height="30"><span id="btn-book-t">Stiker</span></button>
+    <button class="map-hub-btn dock-it" id="btn-torch" type="button"><img class="dk-ic" src="icons/ui/torch.svg" alt="" width="30" height="30"><span id="btn-torch-t">Senter</span></button>
   </div>
 </div>
 
@@ -871,7 +923,7 @@ function openTorch(){
 }
 function renderFooter(){
   const n=doneRooms(),t=document.getElementById('btn-torch-t');
-  if(t)t.innerHTML=n>=TORCH_UNLOCK?L('Senter','Torch'):L('Senter','Torch')+'<span class="mf-lock">🔒</span>';
+  if(t)t.innerHTML=L('Senter','Torch'); const tb=document.getElementById('btn-torch'); if(tb) tb.classList.toggle('locked',n<TORCH_UNLOCK);
   const b=document.getElementById('btn-book-t');if(b)b.textContent=L('Stiker','Stickers');
 }
 

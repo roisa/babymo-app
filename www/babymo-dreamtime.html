@@ -1173,10 +1173,11 @@ function startSleep(){
     reading = true; document.getElementById('sRead').textContent = '⏸ ' + L('Berhenti', 'Stop');
     try{ speechSynthesis.cancel(); }catch(e){}
     var lang = EN ? 'en-US' : 'id-ID', vs = speechSynthesis.getVoices() || [];
-    var v = vs.find(function(x){ return x.lang === lang && /female|Damayanti|Samantha|Karen|Google/i.test(x.name); }) || vs.find(function(x){ return x.lang && x.lang.indexOf(lang.slice(0,2)) === 0; }) || null;
+    var v = (EN && window.BM_enVoice && window.BM_enVoice()) || vs.find(function(x){ return x.lang === lang && /female|Damayanti|Samantha|Karen|Google/i.test(x.name); }) || vs.find(function(x){ return x.lang && x.lang.indexOf(lang.slice(0,2)) === 0; }) || null;
+    if (v && EN) lang = v.lang;
     var all = [st.t[EN ? 1 : 0] + '.'].concat(lines);
     all.forEach(function(text, i){
-      var u = new SpeechSynthesisUtterance(text); u.lang = lang; u.rate = .82; u.pitch = 1.3; if (v) u.voice = v;
+      var u = new SpeechSynthesisUtterance(text); u.lang = lang; u.rate = EN ? .9 : .82; u.pitch = EN ? 1.05 : 1.3; if (v) u.voice = v;
       u.onstart = function(){ ps.forEach(function(p){ p.classList.remove('read'); }); if (i > 0 && ps[i-1]) ps[i-1].classList.add('read'); };
       if (i === all.length - 1) u.onend = u.onerror = function(){ if (reading) stopRead(); };
       speechSynthesis.speak(u);
