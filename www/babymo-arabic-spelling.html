@@ -1353,7 +1353,7 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
     <div class="learned-list" id="learnedList"></div>
 
     <div class="actions">
-      <button class="btn-secondary" type="button" onclick="window.BabyMo&&BabyMo.shareScore((document.getElementById('completeStars')||{}).textContent||'',' ','Aku belajar kata-kata Islam bareng Baby Mo! 🔤')">📤 Bagikan</button>
+      <button class="btn-secondary" type="button" onclick="shareWords()">📤 Bagikan</button>
       <button class="btn-secondary" type="button" id="btnReplay">🔄 Main Lagi</button>
       <button class="btn-primary" type="button" id="btnNext">🌙 Lanjut</button>
     </div>
@@ -2058,6 +2058,23 @@ function onWordComplete() {
   }, 700);
 }
 
+/* ----- Share: rich Baby Mo card (bm-kit.js) ----- */
+let lastResult = null;
+function shareWords() {
+  try {
+    if (!window.BabyMo || !BabyMo.shareScore) return;
+    const r = lastResult || { n: state.completedWords.length, total: state.completedWords.length, stars: 0, wrong: 0, section: '' };
+    const T = window.BM_T || function (x) { return x; }; // section name in English (EN only)
+    const stats = [[['Kata', 'Words'], r.n + '/' + r.total], [['Salah', 'Mistakes'], String(r.wrong)]];
+    if (r.section) stats.push([['Bagian', 'Section'], [r.section, T(r.section)]]);
+    BabyMo.shareScore('', r.stars, ['Aku belajar kata-kata Islam bareng Baby Mo! 🔤', 'I learned Islamic words with Baby Mo! 🔤'], {
+      headline: [r.n + ' kata!', r.n + (r.n === 1 ? ' word!' : ' words!')],
+      starsMax: 3,
+      stats: stats
+    });
+  } catch (e) {}
+}
+
 /* ----- Completion ----- */
 function showCompletion() {
   cancelSpeech();
@@ -2084,6 +2101,8 @@ function showCompletion() {
   document.getElementById('completeStars').textContent = Array(sst).fill('⭐').join(' ') + (sst < 3 ? ' ' + Array(3 - sst).fill('☆').join(' ') : '');
   document.getElementById('statStars').textContent = '⭐'.repeat(sst);
   document.getElementById('completeInfoText').textContent = state.completedWords.length + '/' + getSectionWords(completedSectionId).length + ' Kata';
+  lastResult = { n: state.completedWords.length, total: getSectionWords(completedSectionId).length, stars: sst,
+    wrong: state.wrongCount, section: sec.name };
 
   const list = document.getElementById('learnedList');
   list.innerHTML = state.completedWords.map(function (w) {

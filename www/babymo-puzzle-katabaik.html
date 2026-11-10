@@ -994,6 +994,13 @@ body{
 <style id="bm-layout">
 /* bm-fit: keep the whole card on screen on short screens (iPhone SE, iPad landscape) */
 .puzzle-frame{width:min(100%,max(240px,calc(100dvh - 360px)));margin-left:auto;margin-right:auto;}
+/* short landscape (phone on its side): the page scrolls instead of cutting the puzzle off */
+@media (orientation: landscape) and (max-height: 520px){
+  .app{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;}
+  .app>*{flex-shrink:0;}
+  .title-wrap{padding:4px 0 8px;}
+  .puzzle-frame{width:min(100%,max(200px,calc(100dvh - 172px)));}
+}
 </style>
 <style id="bm-kb-loop">
 /* Kalimat Hari Ini + Praktik di rumah — base look (dark) */

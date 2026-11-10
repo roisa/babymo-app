@@ -403,6 +403,12 @@ html[data-bm-theme="classic"] .map-node.is-locked .mp-disc{background:#b9c2bd;}
 #s-complete a[href="index.html"]{color:#5A6878!important;}
 html[data-bm-theme="bright"] #s-game{background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(91,198,232,.22),transparent 70%),linear-gradient(180deg,#EEF5FF 0%,#F7F1FF 100%)!important;}
 </style>
+<style id="bm-tap">
+/* Kid-sized taps: 48px, so they stay over 44px even while a screen scales in (.screen.off is scale .95) */
+#game-back,#hint-btn{width:48px;height:48px;min-width:48px!important;min-height:48px!important;box-sizing:border-box;font-size:20px;}
+.map-hub-btn{min-height:48px!important;}
+#s-complete a[href="index.html"]{min-height:48px;display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;}
+</style>
 <style id="bm-layout">
 /* bm-fit: show the whole room on every screen (no side cropping); centre it between the header and the tray */
 .scene-wrap{flex:0 1 auto!important;width:100%;aspect-ratio:375/420!important;max-height:none!important;margin-top:auto;margin-bottom:auto;border-radius:22px;}

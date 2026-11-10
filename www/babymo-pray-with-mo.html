@@ -447,7 +447,8 @@ html[data-bm-theme="classic"] .modal-card{box-shadow:var(--rim),0 30px 60px -20p
   font:900 17px/1.1 'Nunito',sans-serif!important}
 @media (max-height:520px){.modal-mo{width:92px;height:92px}.dc-mo{width:100px;height:100px}.modal-card{padding-top:16px}#timesOverlay .modal-emoji{display:none}}
 @media (max-height:520px) and (min-width:600px){.modal-overlay .modal-card{max-width:540px}
-  #prayerTimesList{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px 4px}.times-row + .times-row{box-shadow:none}}
+  #prayerTimesList{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:2px 4px}.times-row + .times-row{box-shadow:none}
+  #prayerTimesList .times-row{gap:8px;padding:0 10px}#prayerTimesList .tr-badge{font-size:10px;padding:5px 6px;letter-spacing:.2px}}
 /* prayer times list — inset grouped */
 #prayerTimesCity{font-size:13px!important;font-weight:700!important;line-height:1.4;color:var(--ink-3)!important}
 #prayerTimesList{padding:4px;border-radius:22px;background:var(--glass-2);border:1px solid var(--hair);box-shadow:var(--rim)}
@@ -1085,7 +1086,7 @@ function showPrayerTimes(){
   var idx=getCurrentPrayer(),html='';
   PRAYERS.forEach(function(p,i){
     var t=String(p.h).padStart(2,'0')+':'+String(p.m).padStart(2,'0'),n=i===idx;
-    html+='<div class="times-row'+(n?' is-next':'')+'"><span class="tr-icon">'+p.icon+'</span><span class="tr-name">'+p.name+'</span><span class="tr-time">'+t+'</span>'+(n?'<span class="tr-badge">NEXT</span>':'')+'</div>';
+    html+='<div class="times-row'+(n?' is-next':'')+'"><span class="tr-icon">'+p.icon+'</span><span class="tr-name">'+p.name+'</span><span class="tr-time">'+t+'</span>'+(n?'<span class="tr-badge">BERIKUT</span>':'')+'</div>';
   });
   document.getElementById('prayerTimesList').innerHTML=html;
   document.getElementById('timesOverlay').classList.add('open');
