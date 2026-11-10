@@ -761,6 +761,7 @@ html[data-bm-theme="classic"] .tr-badge{color:#06311A}
   </div>
 </div>
 
+<script src="/bm-prayertimes.js"></script>
 <script>
 var STEPS=[
   {id:1,name:'Takbiratul Ihram',nameAr:'تَكْبِيرَةُ الإِحْرَام',desc:'Angkat kedua tangan sejajar telinga dan ucapkan takbir',image:'mo-pray-assets/mo-takbir.webp',imageGuide:'mo-pray-assets/mo-takbir-mat.webp',thumb:'mo-pray-assets/mo-takbir.webp',recitations:[{arabic:'اللَّهُ أَكْبَرُ',latin:'Allahu Akbar',meaning:'Allah Maha Besar'}],tip:'Niatkan sholat dalam hati, lalu angkat tangan dan ucapkan takbir dengan tenang 🤲'},
@@ -1076,10 +1077,12 @@ function getPrayerCityLabel(){
   try{
     const m=JSON.parse(localStorage.getItem('mo_manual_city')||'null');
     if(m&&m.n)return '📍 '+m.n+' · pilihan manual';
-    const r=JSON.parse(localStorage.getItem('mo_reverse_city')||'null');
-    if(r&&r.n)return '📍 '+r.n+' · otomatis dari lokasimu';
     const loc=JSON.parse(localStorage.getItem('mo_cached_loc')||'null');
-    if(loc&&typeof loc.lat==='number')return '📍 Lokasi tersimpan ('+loc.lat.toFixed(2)+', '+loc.lng.toFixed(2)+')';
+    if(loc&&typeof loc.lat==='number'){
+      /* no reverse geocoding: label by the device time zone (WIB/WITA/WIT) */
+      const z=window.BMPrayerTimes?BMPrayerTimes.zoneLabel():'';
+      return '📍 '+(z||'Lokasimu')+' · otomatis dari lokasimu';
+    }
   }catch(e){}
   return '🌐 Jadwal default · aktifkan lokasi di Sholat Bareng Mo untuk waktu akurat';
 }
@@ -1359,28 +1362,21 @@ function stopDzikirPlay(){
 }
 
 
-/* Fetch real prayer times for cached location (set by Companion) so this page shares the
-   same numbers as the Companion's Sholat tab instead of hardcoded defaults. */
+/* Real prayer times for the cached location (set on the hub's Sholat tab),
+   computed on the device (bm-prayertimes.js, Kemenag RI) — no network. */
 function loadRealPrayerTimes(){
   var raw;try{raw=localStorage.getItem('mo_cached_loc');}catch(e){return;}
   if(!raw)return;
   var loc;try{loc=JSON.parse(raw);}catch(e){return;}
-  if(!loc||typeof loc.lat!=='number')return;
-  var d=new Date();
-  var ds=String(d.getDate()).padStart(2,'0')+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+d.getFullYear();
-  fetch('https://api.aladhan.com/v1/timings/'+ds+'?latitude='+(+loc.lat).toFixed(2)+'&longitude='+(+loc.lng).toFixed(2)+'&method=20')
-    .then(function(r){return r.json();})
-    .then(function(data){
-      var t=data&&data.data&&data.data.timings;if(!t)return;
-      var map={Subuh:t.Fajr,Dzuhur:t.Dhuhr,Ashar:t.Asr,Maghrib:t.Maghrib,Isya:t.Isha};
-      PRAYERS.forEach(function(p){
-        var v=map[p.name];if(!v)return;
-        var parts=v.slice(0,5).split(':');
-        p.h=parseInt(parts[0],10);p.m=parseInt(parts[1],10);
-      });
-      renderPrayerNow();
-    })
-    .catch(function(){});
+  if(!loc||typeof loc.lat!=='number'||!window.BMPrayerTimes)return;
+  var t;try{t=BMPrayerTimes.timings(new Date(),loc.lat,loc.lng);}catch(e){return;}
+  var map={Subuh:t.Fajr,Dzuhur:t.Dhuhr,Ashar:t.Asr,Maghrib:t.Maghrib,Isya:t.Isha};
+  PRAYERS.forEach(function(p){
+    var v=map[p.name];if(!v)return;
+    var parts=v.slice(0,5).split(':');
+    p.h=parseInt(parts[0],10);p.m=parseInt(parts[1],10);
+  });
+  renderPrayerNow();
 }
 
 (function init(){

@@ -1867,6 +1867,7 @@ function shareBuild(){
   shareBuildLegacy();
 }
 function shareBuildLegacy(){
+  if(window.Capacitor) return; // iOS app: shares only via the kit's parental gate
   try{
     const url = 'https://play.babymo.id/babymo-hijaiyah.html';
     const text = '🌙 Pulau Hijaiyah — Baby Mo\nIbra sudah temukan '+collected.size+'/'+L.length+' huruf hijaiyah sambil membangun pulaunya sendiri!\n'+url+'\n#BabyMo #BelajarIslam';

@@ -1251,6 +1251,7 @@ function shareResult(){
     });
     return;
   }
+  if(window.Capacitor) return; // iOS app: shares only via the kit's parental gate
   const text  = `🌙 Doa Harian — Baby Mo\nHasil Quiz: ${score} ${stars}\n\nYuk belajar doa bersama Baby Mo!\nhttps://play.babymo.id/babymo-doa-harian.html\n#BabyMo #DoaHarian`;
   if(navigator.share){ navigator.share({title:'Baby Mo — Doa Harian', text, url:'https://play.babymo.id/babymo-doa-harian.html'}).catch(()=>{}); }
   else{ navigator.clipboard?.writeText(text).then(() => showToast('📤','Disalin!')); }
