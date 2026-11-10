@@ -1314,6 +1314,9 @@ html[data-theme="dark"] #pane-doa .pd-door.d-tasbih{background:linear-gradient(1
 html[data-theme="dark"] #pane-doa .pd-dl{color:#F2F5FA}
 @media(min-width:700px){#pane-doa .pd{max-width:640px;margin:0 auto}#pane-doa .pd-mo{height:290px;left:-20px}#pane-doa .pd-now{min-height:240px}#pane-doa .pd-door{min-height:180px}}
 
+.wv{--shc:rgba(27,33,96,.18);--dpc:#2E3590;--dpe:#118043;--dpo:#A9BEE4;--oc:#fff}
+.wv .wv-dp{opacity:1}
+html[data-theme="dark"] .wv{--shc:rgba(0,0,0,.35);--dpc:#B8862A;--dpe:#1F8F52;--dpo:#141A4E;--oc:#262C6E}
 /* ===== wavy title lettering ===== */
 .pd-logo .wv{display:block;width:100%;max-width:420px;height:auto;margin:-10px auto -14px;overflow:visible}
 .pd-logo.wv-on .pd-logo-t,.pd-logo.wv-on .pd-ribbon{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -2675,11 +2678,29 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     var g2=el('linearGradient',{id:id+'e',x1:0,y1:0,x2:0,y2:1},d); el('stop',{offset:0,'class':'e1'},g2); el('stop',{offset:1,'class':'e2'},g2);
     el('path',{id:id+'p',d:'M10 84 C 100 66, 160 90, 240 76 S 340 62, 372 68',fill:'none'},d);
     el('path',{id:id+'r',d:'M44 134 Q190 110 336 134',fill:'none'},d);
-    var list=parts(src), size=fit(svg,id+'p',list,60,340);
-    textOn(svg,id+'p',list,size,'wv-sh',5);
-    textOn(svg,id+'p',list,size,'wv-out');
-    var f=textOn(svg,id+'p',list,size,'wv-fill'); f.style.fill='url(#'+id+'g)';
-    if(src.classList.contains('two')) f.querySelectorAll('.em').forEach(function(s){ s.style.fill='url(#'+id+'e)'; });
+    var list=parts(src), two=src.classList.contains('two');
+    var gl=el('linearGradient',{id:id+'s',x1:0,y1:0,x2:0,y2:1},d); el('stop',{offset:0,'stop-color':'#fff','stop-opacity':.75},gl); el('stop',{offset:.42,'stop-color':'#fff','stop-opacity':.08},gl); el('stop',{offset:.5,'stop-color':'#fff','stop-opacity':0},gl);
+    /* measure each letter */
+    var chars=[]; list.forEach(function(p){ for(var i=0;i<p.t.length;i++) chars.push({c:p.t[i],em:p.em&&two}); });
+    var str=chars.map(function(c){return c.c;}).join(''), S=64;
+    var pr=el('text',{'class':'wv-probe','font-size':S,'font-family':"Fredoka, Nunito, sans-serif",'font-weight':700,'letter-spacing':1,x:0,y:0},svg); pr.textContent=str;
+    var xs=[],ws=[],W=0; try{ for(var i=0;i<str.length;i++){ var e=pr.getExtentOfChar(i); xs.push(e.x); ws.push(e.width); } W=pr.getComputedTextLength(); }catch(e){}
+    pr.remove();
+    if(!W){ W=str.length*S*.56; xs=[];ws=[]; for(var i=0;i<str.length;i++){ xs.push(i*S*.56); ws.push(S*.56); } }
+    var k=Math.min(1,345/W), size=S*k, x0=190-W*k/2, A=8*k+3, L=W*k;
+    var gg=el('g',{id:id+'t'},d);
+    chars.forEach(function(ch,i){ if(ch.c===' ') return;
+      var cx=x0+(xs[i]+ws[i]/2)*k, u=(cx-x0)/L, ph=u*Math.PI*2*1.15-0.6;
+      var y=84+A*Math.sin(ph) + (i%2?1.6:-1.6)*k, ang=Math.atan(A*Math.cos(ph)*Math.PI*2*1.15/L)*180/Math.PI + (i%2?3:-3);
+      var t=el('text',{'font-size':size*(i%3===1?1.04:1),'font-family':"Fredoka, Nunito, sans-serif",'font-weight':700,'text-anchor':'middle',x:0,y:0,transform:'translate('+cx.toFixed(1)+' '+y.toFixed(1)+') rotate('+ang.toFixed(1)+')',
+        style:'fill:var('+(ch.em?'--fe':'--f')+');stroke:var(--s,none);stroke-width:var(--sw,0);stroke-linejoin:round;paint-order:stroke'},gg);
+      t.textContent=ch.c; });
+    function use(cls,st,dy){ var u=el('use',{href:'#'+id+'t','class':cls},svg); u.setAttribute('style',st); if(dy) u.setAttribute('transform','translate(0 '+dy+')'); return u; }
+    use('wv-sh','--f:var(--shc);--fe:var(--shc);--s:var(--shc);--sw:14px',9);
+    for(var j=7;j>=1;j--) use('wv-dp','--f:var(--dpc);--fe:var(--dpe);--s:var(--dpo);--sw:11px',j);
+    use('wv-out','--f:var(--oc);--fe:var(--oc);--s:var(--oc);--sw:11px');
+    use('wv-fill','--f:url(#'+id+'g);--fe:url(#'+id+'e)');
+    use('wv-gloss','--f:url(#'+id+'s);--fe:url(#'+id+'s)');
     if(rib){
       /* curved banner with folded tails */
       el('path',{'class':'rb-tail',d:'M16 128 L42 124 L46 154 L20 158 L30 142 Z'},svg);
