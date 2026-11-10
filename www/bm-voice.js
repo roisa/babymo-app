@@ -12,8 +12,12 @@
    Key = language + "|" + normalised text. Language is "ar" when the text has Arabic
    letters, otherwise the utterance's language (en / id). "tr|" keys are Latin
    transliterations ("Bismillah") that play the Arabic clip.
-   Normalising: Unicode NFC, tatweel removed, whitespace collapsed, trailing
-   punctuation trimmed, Latin lower-cased. Harakat are KEPT (different sounds).
+   Normalising (the same in tools/voice/gen.py and tools/voice/voicekey.js; tools/voice/test-keys.js checks
+   it): Unicode NFC, emoji / pictographs / arrows removed, curly quotes straightened, dashes unified,
+   whitespace collapsed, no space before punctuation, repeated end marks folded, leading and trailing
+   punctuation trimmed, tatweel removed, Latin lower-cased. Harakat are KEPT (different sounds). So a line a
+   page decorates ("☀️ Selamat pagi! Ayo siram! 💧") finds the same clip as its plain text, whatever voice,
+   pitch or rate the page picked.
 
    Works with bm-i18n.js in either load order. Exposes window.BMVoice. */
 (function () {
@@ -22,11 +26,17 @@
   var ss = window.speechSynthesis;
 
   var AR = /[؀-ۿݐ-ݿࢠ-ࣿﭐ-﷿ﹰ-﻿]/;
-  var TRAIL = /[\s.,!?;:…،؛؟۔。]+$/;
+  // emoji, pictographs, arrows, variation selectors, joiners (pages decorate spoken lines with them)
+  var EMO = /\uD83C[\uDC00-\uDFFF]|\uD83D[\uDC00-\uDFFF]|\uD83E[\uDC00-\uDEFF]|\uDB40[\uDC20-\uDC7F]|[\u2190-\u21FF\u2300-\u23FF\u25A0-\u25FF\u2600-\u27BF\u2B00-\u2BFF\uFE00-\uFE0F\u200D\u20E3\u00A9\u00AE\u2122\u2139\u3030\u303D\u3297\u3299]/g;
+  var EDGE = "\\s.,!?;:\u2026\u060C\u061B\u061F\u06D4\u3002'\"()\\[\\]\\-\u2014\u2022\u00B7*~_";
+  var LEAD = new RegExp("^[" + EDGE + "]+"), TRAIL = new RegExp("[" + EDGE + "]+$");
   function norm(t, lang) {
     var s = String(t == null ? "" : t);
     try { s = s.normalize("NFC"); } catch (e) {}
-    s = s.replace(/ـ/g, "").replace(/\s+/g, " ").trim().replace(TRAIL, "");
+    s = s.replace(EMO, "").replace(/[\u2018\u2019\u02BC`\u00B4]/g, "'").replace(/[\u201C\u201D\u201E\u00AB\u00BB]/g, '"').replace(/[\u2012\u2013\u2015]/g, "\u2014")
+         .replace(/\s+/g, " ").replace(/ ([,.!?;:\u2026])/g, "$1").replace(/\s*\u2014\s*/g, " \u2014 ")
+         .replace(/([.!?\u2026\u061F])[.!?\u2026\u061F]+/g, "$1").trim()
+         .replace(/\u0640/g, "").replace(LEAD, "").replace(TRAIL, "");
     if (lang !== "ar") s = s.toLowerCase();
     return s;
   }
@@ -89,7 +99,7 @@
     }
     var one = urlFor(text, lang, noAlias);
     if (one) return [one];
-    var parts = (String(text).match(/[^.!?…؟]+[.!?…؟]*/g) || []).filter(function (p) { return p.trim(); });
+    var parts = (String(text).match(/[^.!?…؟]+[.!?…؟]*/g) || []).filter(function (p) { return norm(p, "id"); });
     if (parts.length < 2) return null;
     var out = [];
     for (var i = 0; i < parts.length; i++) { var x = urlFor(parts[i], lang, noAlias); if (!x) return null; out.push(x); }

@@ -50,6 +50,10 @@ h2{font:800 13px 'Nunito',sans-serif;color:var(--ink3);margin:16px 4px 8px}
 .c.flag::after{content:'⚑';position:absolute;top:4px;left:7px;color:#E5484D;font-size:15px}
 .note{color:var(--ink3);font-size:13px;line-height:1.45;margin-top:16px}
 .seg button small{display:block;font-size:11px;font-weight:800;color:var(--ink3)}
+.seg button{padding:9px 3px;font-size:13px;line-height:1.2;overflow-wrap:anywhere}
+.grid.lines{grid-template-columns:1fr}
+.lines .c{text-align:left;padding:10px 12px 8px}
+.lines .c .a.lat{font-family:'Nunito',sans-serif;font-size:16px;font-weight:700;line-height:1.35;padding:2px 0 3px}
 .c .a.lat{font-family:'Fredoka','Nunito',sans-serif;direction:ltr;font-size:20px;line-height:1.4;padding:6px 0 2px}
 .c.none{opacity:.45;cursor:default}
 .c .h{overflow-wrap:anywhere}
@@ -76,7 +80,7 @@ let EN=false; try{ EN=(new URLSearchParams(location.search).get('lang')||localSt
 document.documentElement.lang=EN?'en':'id';
 const L=(id,en)=>EN?en:id;
 const D=window.DENGAR||[];
-const SECS=[['huruf','🔤',L('Huruf','Letters')],['doa','🤲',L('Doa','Du\'a')],['app','🕌',L('Arab di game','Game Arabic')],['cari','🔍','Cari Baby Mo']];
+const SECS=[['huruf','🔤',L('Huruf','Letters')],['doa','🤲',L('Doa','Du\'a')],['app','🕌',L('Arab di game','Game Arabic')],['cari','🔍','Cari Baby Mo'],['lines','💬',L('Kalimat','Lines')]];
 function fileOf(x){
   if(x.s==='huruf'){ const m=window.HIJ_VOICE; return m&&m[x.t]?'../hijaiyah-voice/'+m[x.t]:null; }
   if(x.s==='doa'){ const m=window.DOA_VOICE; return m&&m[x.t]?'../doa-voice/'+m[x.t]:null; }
@@ -99,9 +103,9 @@ function render(){const Lst=document.getElementById('list');Lst.innerHTML='';let
  document.querySelectorAll('.seg button').forEach(x=>x.classList.toggle('on',x.dataset.s===sec));
  const rows=D.filter(x=>x.s===sec);
  if(!rows.some(x=>x.f)){ const p=document.createElement('p'); p.className='empty';
-   p.textContent=L('Belum ada rekaman di bagian ini. Buat dengan: bash tools/voice/cloudshell.sh ar-XA-Chirp3-HD-Algenib (di Google Cloud Shell).',
-     'No clips in this section yet. Make them with: bash tools/voice/cloudshell.sh ar-XA-Chirp3-HD-Algenib (in Google Cloud Shell).'); Lst.appendChild(p); }
- rows.forEach(x=>{if(x.g!==g){g=x.g;const h=document.createElement('h2');h.textContent=g;Lst.appendChild(h);grid=document.createElement('div');grid.className='grid'+(rows.some(y=>y.g===g&&y.l==='ar'&&y.t.length>14)?' doa':'');Lst.appendChild(grid);}
+   p.textContent=L(sec==='lines'?'Belum ada rekaman kalimat. Buat dengan: bash tools/voice/cloudshell.sh lines (di Google Cloud Shell).':'Belum ada rekaman di bagian ini. Buat dengan: bash tools/voice/cloudshell.sh ar-XA-Chirp3-HD-Algenib (di Google Cloud Shell).',
+     sec==='lines'?'No line clips yet. Make them with: bash tools/voice/cloudshell.sh lines (in Google Cloud Shell).':'No clips in this section yet. Make them with: bash tools/voice/cloudshell.sh ar-XA-Chirp3-HD-Algenib (in Google Cloud Shell).'); Lst.appendChild(p); }
+ rows.forEach(x=>{if(x.g!==g){g=x.g;const h=document.createElement('h2');h.textContent=g;Lst.appendChild(h);grid=document.createElement('div');grid.className='grid'+(x.s==='lines'?' lines':rows.some(y=>y.g===g&&y.l==='ar'&&y.t.length>14)?' doa':'');Lst.appendChild(grid);}
   const b=document.createElement('button');b.className='c'+(flags.has(x.id)?' flag':'')+(x.f?'':' none');b.dataset.id=x.id;if(x.f)b.dataset.f=x.f;else b.dataset.none=L('belum ada','not yet');
   b.innerHTML='<div class="a"></div><div class="h"></div>';if(x.l!=='ar')b.firstChild.className='a lat';b.firstChild.textContent=x.t;b.lastChild.textContent=x.h;
   b.onclick=()=>{if(!x.f)return;seq++;play(b)};let t;b.oncontextmenu=e=>{e.preventDefault();flag(b)};b.ontouchstart=()=>{t=setTimeout(()=>flag(b),550)};b.ontouchend=b.ontouchmove=()=>clearTimeout(t);grid.appendChild(b);});
