@@ -488,6 +488,15 @@ html[data-bm-theme="classic"] .stk-sticky-hdr{background:rgba(7,25,18,.82);}
 .stk-slot{border-radius:16px;}
 </style>
 <script src="bm-icons.js" defer></script>
+<style id="bm-win-scroll">
+/* Win screen: centre when it fits, scroll from the top when it doesn't (short landscape / small phones).
+   justify-content:center on an overflowing flex column clips the top and bottom out of reach. */
+#s-success{justify-content:flex-start!important;padding-top:calc(20px + env(safe-area-inset-top))!important;padding-bottom:calc(28px + env(safe-area-inset-bottom))!important}
+#s-success > :first-child{margin-top:auto}
+#s-success > :last-child{margin-bottom:auto}
+/* '+N lencana lagi!' was white-on-cream in the light theme */
+html:not([data-bm-theme="classic"]) #earn-extra{color:#B4690E!important;font-size:12px!important}
+</style>
 </head>
 <body>
 <div id="app">
