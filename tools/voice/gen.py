@@ -148,7 +148,7 @@ def main():
             else:
                 mp3 = synth(x["t"], x["k"], a.voice)
                 open(fp, "wb").write(mp3)
-            man[x["t"]] = fn
+            man[x["t"]] = fn + "?v=" + a.voice.split("-")[-1].lower()  # new voice -> new URL (no stale cached audio)
             line = f"[{sec} {i}/{len(sel)}] {x['t']}  ({x.get('h','')})  {len(mp3)}B"
             if a.check:
                 alts = transcribe(mp3)
