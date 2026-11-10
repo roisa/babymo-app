@@ -46,13 +46,13 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   padding:calc(env(safe-area-inset-top) + 10px) max(12px,env(safe-area-inset-right)) 8px max(12px,env(safe-area-inset-left));
 }
 .map-title{
-  font-family:'Fredoka One',cursive;font-size:22px;line-height:1;color:#FFD23F;
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:22px;line-height:1;color:#FFD23F;
   background:rgba(12,40,26,.82);border:2px solid rgba(255,255,255,.18);border-radius:40px;
   padding:9px 16px 10px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5);white-space:nowrap;
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
 }
 .map-stars{
-  font-family:'Fredoka One',cursive;font-size:18px;line-height:1;color:#fff;white-space:nowrap;
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:18px;line-height:1;color:#fff;white-space:nowrap;
   background:rgba(12,40,26,.82);border:2px solid rgba(255,210,63,.55);border-radius:40px;
   padding:9px 14px 10px;box-shadow:0 6px 16px -8px rgba(0,0,0,.5);display:flex;align-items:center;gap:6px;
   backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
@@ -69,7 +69,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   padding:10px 20px calc(12px + env(safe-area-inset-bottom));
 }
 .map-hub-btn{
-  pointer-events:auto;font-family:'Fredoka One',cursive;font-size:15px;color:#fff;text-decoration:none;
+  pointer-events:auto;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:15px;color:#fff;text-decoration:none;
   background:rgba(12,40,26,.82);border:1.5px solid rgba(255,255,255,.22);
   border-radius:40px;padding:12px 30px;box-shadow:0 8px 20px -10px rgba(0,0,0,.6);
   transition:transform .15s;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
@@ -83,7 +83,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
   box-shadow:0 0 0 3px rgba(40,90,50,.25),0 10px 0 -2px rgba(30,70,40,.28),0 14px 22px -8px rgba(0,0,0,.45);}
 .mp-thumb{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;pointer-events:none;background:#e9f6ec;}
 .mp-num{position:absolute;left:-6px;top:-4px;min-width:30px;height:30px;padding:0 6px;border-radius:15px;
-  background:#2f7de1;color:#fff;font-family:'Fredoka One',cursive;font-size:16px;line-height:30px;text-align:center;
+  background:#2f7de1;color:#fff;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:16px;line-height:30px;text-align:center;
   border:2.5px solid #fff;box-shadow:0 3px 6px rgba(0,0,0,.25);}
 .mp-ok{position:absolute;right:-6px;top:-4px;width:32px;height:32px;border-radius:50%;
   background:#21b35f;color:#fff;font:900 19px/28px 'Nunito',sans-serif;text-align:center;
@@ -95,7 +95,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .mp-stars i{font-style:normal;font-size:15px;line-height:19px;color:#d5dde4;}
 .mp-stars i.on{color:#FFB81C;text-shadow:0 0 1px #E09400;}
 .mp-label{position:absolute;left:50%;top:104px;transform:translateX(-50%);white-space:nowrap;
-  font-family:'Fredoka One',cursive;font-size:15px;line-height:1.15;color:#17321f;
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:15px;line-height:1.15;color:#17321f;
   background:#FFF8E6;border:2.5px solid #E7C98A;border-radius:12px;padding:4px 11px 5px;
   box-shadow:0 4px 0 -1px rgba(120,80,20,.28),0 6px 12px -6px rgba(0,0,0,.4);}
 .map-node.is-locked .mp-disc{background:#e4e9e6;}
@@ -116,7 +116,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .mp-shadow{position:absolute;left:50%;top:-12px;width:46px;height:10px;margin-left:-23px;border-radius:50%;background:rgba(0,0,0,.18);
   animation:mpShadow 1.6s ease-in-out infinite;pointer-events:none;}
 @keyframes mpShadow{0%,100%{transform:scale(1)}50%{transform:scale(.75);opacity:.6}}
-.mp-play{position:absolute;top:30px;white-space:nowrap;font-family:'Fredoka One',cursive;font-size:15px;color:#3a2600;
+.mp-play{position:absolute;top:30px;white-space:nowrap;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:15px;color:#3a2600;
   background:linear-gradient(180deg,#FFE070,#FFC21A);border:2.5px solid #fff;border-radius:20px;padding:6px 12px;
   box-shadow:0 4px 0 #D99400,0 8px 16px -6px rgba(0,0,0,.4);animation:mpPlay 1.2s ease-in-out infinite;}
 .mp-play.r{left:100px;}
@@ -125,7 +125,7 @@ html,body{width:100%;height:100%;overflow:hidden;background:#1a3a20;font-family:
 .map-node.shake .mp-disc{animation:mpShake .4s ease;}
 @keyframes mpShake{20%{transform:translateX(-6px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
 /* start (Baby Mo's house) and finish (trophy) */
-.mp-sign{position:absolute;transform:translateX(-50%);white-space:nowrap;font-family:'Fredoka One',cursive;font-size:14px;color:#fff;
+.mp-sign{position:absolute;transform:translateX(-50%);white-space:nowrap;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:14px;color:#fff;
   background:#E8590C;border:2.5px solid #fff;border-radius:12px;padding:3px 10px 4px;box-shadow:0 4px 10px -4px rgba(0,0,0,.45);pointer-events:none;}
 .mp-finish{position:absolute;width:110px;height:110px;margin:-55px 0 0 -55px;border-radius:50%;
   background:radial-gradient(circle at 50% 40%,#FFF6C8,#FFD23F 70%,#F0A500);border:5px solid #fff;
@@ -171,7 +171,7 @@ html[data-bm-theme="classic"] .map-node.is-locked .mp-disc{background:#b9c2bd;}
   background:linear-gradient(135deg,var(--green-glow),var(--green));
   box-shadow:0 4px 14px -4px rgba(31,169,113,.5);
 }
-.g-title{font-family:'Fredoka One',cursive;font-size:15px;color:#fff;flex:1;text-align:center;text-shadow:0 1px 0 rgba(0,0,0,0.2);}
+.g-title{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:15px;color:#fff;flex:1;text-align:center;text-shadow:0 1px 0 rgba(0,0,0,0.2);}
 .g-dots{display:flex;gap:5px;}
 .gd{width:11px;height:11px;border-radius:50%;background:rgba(255,255,255,0.3);transition:all .3s;}
 .gd.hit{background:#FFD23F;transform:scale(1.4);box-shadow:0 0 8px #FFD23F;}
@@ -241,7 +241,7 @@ html[data-bm-theme="classic"] .map-node.is-locked .mp-disc{background:#b9c2bd;}
 .fx-wrap{position:absolute;inset:0;pointer-events:none;z-index:30;}
 .sp{position:absolute;border-radius:50%;animation:spA .9s ease-out forwards;}
 @keyframes spA{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(var(--tx),var(--ty)) translate(-50%,-50%) scale(0);opacity:0}}
-.found-txt{position:absolute;transform:translate(-50%,-50%);font-family:'Fredoka One',cursive;font-size:22px;color:#FFD23F;text-shadow:0 0 12px rgba(255,210,63,.7);white-space:nowrap;pointer-events:none;z-index:40;animation:ftA 1.5s ease-out forwards;}
+.found-txt{position:absolute;transform:translate(-50%,-50%);font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:22px;color:#FFD23F;text-shadow:0 0 12px rgba(255,210,63,.7);white-space:nowrap;pointer-events:none;z-index:40;animation:ftA 1.5s ease-out forwards;}
 @keyframes ftA{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}20%{transform:translate(-50%,-90%) scale(1.25);opacity:1}70%{transform:translate(-50%,-140%) scale(1);opacity:1}100%{transform:translate(-50%,-190%) scale(.8);opacity:0}}
 .wrong-sp{position:absolute;transform:translate(-50%,-50%);font-size:20px;pointer-events:none;z-index:35;animation:wsA .7s ease-out forwards;}
 @keyframes wsA{0%{transform:translate(-50%,-50%);opacity:1}100%{transform:translate(-50%,-150%);opacity:0}}
@@ -276,7 +276,7 @@ html[data-bm-theme="classic"] .map-node.is-locked .mp-disc{background:#b9c2bd;}
 }
 .comp-baby{width:160px;animation:cbA 1.1s ease-in-out infinite;filter:drop-shadow(0 10px 28px rgba(0,0,0,.5));}
 @keyframes cbA{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-18px) rotate(3deg)}}
-.comp-title{font-family:'Fredoka One',cursive;font-size:28px;color:#FFD23F;text-align:center;text-shadow:0 0 28px rgba(255,210,63,.5);animation:titleP .5s cubic-bezier(.175,.885,.32,1.275);line-height:1.4;}
+.comp-title{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:28px;color:#FFD23F;text-align:center;text-shadow:0 0 28px rgba(255,210,63,.5);animation:titleP .5s cubic-bezier(.175,.885,.32,1.275);line-height:1.4;}
 @keyframes titleP{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
 .comp-stars{display:flex;gap:10px;}
 .cstar{font-size:40px;animation:csA .55s cubic-bezier(.175,.885,.32,1.275) both;}
@@ -286,7 +286,7 @@ html[data-bm-theme="classic"] .map-node.is-locked .mp-disc{background:#b9c2bd;}
 @keyframes stkA{0%{transform:rotate(-15deg) scale(0);opacity:0}100%{transform:rotate(0) scale(1);opacity:1}}
 .comp-msg{font-size:13px;color:rgba(255,248,231,.65);font-weight:800;letter-spacing:1.5px;text-transform:uppercase;text-align:center;}
 .act-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;}
-.abtn{padding:14px 36px;border-radius:60px;border:none;font-family:'Fredoka One',cursive;font-size:21px;cursor:pointer;transition:transform .12s,box-shadow .12s;}
+.abtn{padding:14px 36px;border-radius:60px;border:none;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:21px;cursor:pointer;transition:transform .12s,box-shadow .12s;}
 .abtn-main{background:linear-gradient(160deg,#3CB54A,#2a8435);color:#fff;box-shadow:0 6px 0 #1e5c26,0 8px 22px rgba(60,181,74,.38);}
 .abtn-main:active{transform:translateY(6px);box-shadow:0 0px 0 #1e5c26,0 3px 10px rgba(60,181,74,.2);}
 .abtn-sec{background:rgba(255,255,255,.12);color:var(--cream);border:2px solid rgba(255,255,255,.2);}
@@ -425,7 +425,7 @@ html[data-bm-theme="bright"] #s-game{background:radial-gradient(ellipse 80% 40% 
 /* Replay loops: earned stars, Misi Harian (secret object), Mode Senter,
    Buku Stiker. Not a bm-bright block: both themes, dark overrides below. */
 .map-footer{gap:8px;}
-.map-footer .map-hub-btn{padding:12px 16px;border:none;cursor:pointer;font-family:'Fredoka One',cursive;font-size:15px;}
+.map-footer .map-hub-btn{padding:12px 16px;border:none;cursor:pointer;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:15px;}
 .map-footer .mf-lock{font-size:12px;opacity:.85;margin-left:2px;}
 .map-mission{position:absolute;z-index:6;left:50%;transform:translateX(-50%);top:calc(env(safe-area-inset-top) + 64px);
   width:calc(100% - 24px);max-width:440px;display:flex;align-items:center;gap:10px;padding:8px 10px 8px 8px;border-radius:22px;cursor:pointer;
@@ -438,9 +438,9 @@ html[data-bm-theme="bright"] #s-game{background:radial-gradient(ellipse 80% 40% 
 .mm-pic b{position:absolute;right:-2px;bottom:-2px;font-size:22px;line-height:1;filter:drop-shadow(0 2px 2px rgba(0,0,0,.4));}
 .mm-tx{flex:1;min-width:0;}
 .mm-k,.mm-t{display:block;}
-.mm-k{font-family:'Fredoka One',cursive;font-size:13px;color:#FFD23F;letter-spacing:.3px;}
+.mm-k{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:13px;color:#FFD23F;letter-spacing:.3px;}
 .mm-t{font-weight:900;font-size:14px;line-height:1.25;}
-.mm-go{flex:0 0 auto;font-family:'Fredoka One',cursive;font-size:15px;color:#3a2600;background:linear-gradient(180deg,#FFE070,#FFC21A);border-radius:16px;padding:10px 12px;box-shadow:0 3px 0 #D99400;}
+.mm-go{flex:0 0 auto;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:15px;color:#3a2600;background:linear-gradient(180deg,#FFE070,#FFC21A);border-radius:16px;padding:10px 12px;box-shadow:0 3px 0 #D99400;}
 .map-mission.done{border-color:#21b35f;}
 .map-mission.done .mm-go{background:linear-gradient(180deg,#7BE3A2,#21b35f);color:#06301a;box-shadow:0 3px 0 #168a48;}
 .mp-gift{position:absolute;right:-12px;bottom:4px;font-size:30px;z-index:3;animation:mpPlay 1.2s ease-in-out infinite;filter:drop-shadow(0 3px 3px rgba(0,0,0,.35));pointer-events:none;}
@@ -457,7 +457,7 @@ html[data-bm-theme="bright"] #s-game{background:radial-gradient(ellipse 80% 40% 
 #s-game.torch .torch-dark{display:block;}
 #s-game.torch .scene-wrap::after{display:none;}
 .torch-tip{position:absolute;left:50%;top:12px;transform:translateX(-50%);z-index:26;pointer-events:none;white-space:nowrap;
-  font-family:'Fredoka One',cursive;font-size:15px;color:#FFE9A8;background:rgba(0,0,0,.45);padding:6px 14px;border-radius:999px;transition:opacity .6s;}
+  font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:15px;color:#FFE9A8;background:rgba(0,0,0,.45);padding:6px 14px;border-radius:999px;transition:opacity .6s;}
 /* win screen */
 .cstar.off{filter:grayscale(1);opacity:.28;}
 .comp-why{font-size:15px;font-weight:900;color:#FFE9A8;text-align:center;max-width:320px;line-height:1.3;padding:0 10px;}
@@ -471,10 +471,10 @@ html[data-bm-theme="bright"] #s-game{background:radial-gradient(ellipse 80% 40% 
   padding:16px 16px calc(18px + env(safe-area-inset-bottom));background:#14301f;color:#fff;font-family:'Nunito',sans-serif;animation:lfUp .3s cubic-bezier(.2,.9,.3,1.1);}
 @keyframes lfUp{from{transform:translateY(40px);opacity:0}to{transform:none;opacity:1}}
 .lf-head{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
-.lf-head h2{flex:1;font-family:'Fredoka One',cursive;font-weight:400;font-size:22px;color:#FFD23F;}
+.lf-head h2{flex:1;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:22px;color:#FFD23F;}
 .lf-x{width:46px;height:46px;border-radius:50%;border:none;background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer;}
 .lf-sub{font-weight:800;font-size:14px;opacity:.85;margin-bottom:12px;}
-.lf-h3{font-family:'Fredoka One',cursive;font-weight:400;font-size:16px;margin:14px 0 8px;color:#BFF0CF;}
+.lf-h3{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:16px;margin:14px 0 8px;color:#BFF0CF;}
 .lf-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:10px;}
 .stk{position:relative;aspect-ratio:1;border-radius:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;
   background:linear-gradient(135deg,rgba(60,181,74,.22),rgba(255,140,66,.22));border:2.5px solid #FFD23F;font-size:36px;line-height:1;}
@@ -1474,7 +1474,7 @@ function bedroomSVG(){return`<defs>
 <ellipse cx="150" cy="374" rx="92" ry="22" fill="#e6b85c"/><ellipse cx="150" cy="374" rx="74" ry="16" fill="#f3d488"/><ellipse cx="150" cy="374" rx="50" ry="10" fill="#e6b85c" opacity=".55"/>
 <g fill="#fff7da" opacity=".5"><text x="150" y="205" font-size="10">✦</text><text x="120" y="252" font-size="8">⋆</text><text x="222" y="150" font-size="9">✦</text></g>
 <!-- toys on the floor: blocks + ball -->
-<g transform="translate(300 374)"><ellipse cx="6" cy="16" rx="30" ry="5" fill="#000" opacity=".15"/><rect x="-18" y="-2" width="18" height="18" rx="3" fill="#ff6b5c"/><rect x="2" y="-2" width="18" height="18" rx="3" fill="#4ec5b0"/><rect x="-8" y="-20" width="18" height="18" rx="3" fill="#ffd166"/><text x="1" y="-6" font-size="11" text-anchor="middle" fill="#fff" font-family="'Fredoka One',cursive">A</text><text x="-9" y="12" font-size="11" text-anchor="middle" fill="#fff" font-family="'Fredoka One',cursive">B</text><text x="11" y="12" font-size="11" text-anchor="middle" fill="#fff" font-family="'Fredoka One',cursive">C</text></g>
+<g transform="translate(300 374)"><ellipse cx="6" cy="16" rx="30" ry="5" fill="#000" opacity=".15"/><rect x="-18" y="-2" width="18" height="18" rx="3" fill="#ff6b5c"/><rect x="2" y="-2" width="18" height="18" rx="3" fill="#4ec5b0"/><rect x="-8" y="-20" width="18" height="18" rx="3" fill="#ffd166"/><text x="1" y="-6" font-size="11" text-anchor="middle" fill="#fff" font-family="Fredoka,Nunito,sans-serif" font-weight="600">A</text><text x="-9" y="12" font-size="11" text-anchor="middle" fill="#fff" font-family="Fredoka,Nunito,sans-serif" font-weight="600">B</text><text x="11" y="12" font-size="11" text-anchor="middle" fill="#fff" font-family="Fredoka,Nunito,sans-serif" font-weight="600">C</text></g>
 <g transform="translate(236 396)"><ellipse cx="0" cy="10" rx="14" ry="3.5" fill="#000" opacity=".15"/><circle r="11" fill="#5aa9e0"/><path d="M-11 0 a11 11 0 0 0 22 0" fill="#ffd166"/><path d="M-11 0 h22" stroke="#fff" stroke-width="2"/></g>
 <!-- night light by the bed -->
 <circle class="amb-glow" style="--d:3s" cx="24" cy="263" r="18" fill="url(#bdLampGlow)"/>
@@ -1786,7 +1786,7 @@ ${_rep(11,i=>{const x=12+i*34,y=18+Math.sin(i/10*Math.PI)*24;return`<path class=
 <rect x="0" y="0" width="375" height="420" fill="url(#clLight)"/>
 <!-- chalkboard -->
 <rect x="128" y="62" width="168" height="104" rx="8" fill="#b8763e"/><rect x="135" y="69" width="154" height="90" rx="4" fill="url(#clBoard)"/>
-<g font-family="'Fredoka One',cursive" text-anchor="middle"><text x="182" y="100" font-size="22" fill="#fff6c8">A B C</text><text x="182" y="126" font-size="16" fill="#bfe6ff">1 2 3</text></g>
+<g font-family="Fredoka,Nunito,sans-serif" font-weight="600" text-anchor="middle"><text x="182" y="100" font-size="22" fill="#fff6c8">A B C</text><text x="182" y="126" font-size="16" fill="#bfe6ff">1 2 3</text></g>
 <g fill="none" stroke-width="2.4" stroke-linecap="round"><path d="M240 96 l6 -12 l6 12 h-12" stroke="#ffd166"/><circle cx="262" cy="122" r="9" stroke="#ff8fb3"/><path d="M224 138 q10 -10 20 0 q10 10 20 0" stroke="#bfe6ff"/><path d="M150 146 h60" stroke="#fff" opacity=".6"/></g>
 <rect x="150" y="158" width="124" height="6" rx="2" fill="#a86a34"/><rect x="170" y="154" width="14" height="5" rx="1.5" fill="#fff"/><rect x="190" y="154" width="10" height="5" rx="1.5" fill="#ffd166"/>
 <!-- clock + drawings -->
