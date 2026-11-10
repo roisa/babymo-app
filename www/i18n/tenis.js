@@ -45,7 +45,7 @@
   "VOLI!": "VOLLEY!", "Raket di depan wajah!": "Racket in front of your face!", "Pukul pendek seperti meninju!": "Short punch, like a boxer!", "Jangan tunggu memantul!": "Don't wait for the bounce!",
   "Sekarang sisi backhand!": "Now the backhand side!", "Campur! Kiri atau kanan?": "Mixed! Left or right?",
   "Pok! Voli bagus!": "Pok! Great volley!", "Pukulan pendek, mantap!": "Short and sharp, awesome!",
-  "Voli itu sebelum memantul!": "A volley is before the bounce!", "Terlalu cepat! Tunggu bola dekat.": "Too early! Wait until the ball is close.", "Pukul di depan badan!": "Hit it in front of your body!",
+  "Voli itu sebelum memantul!": "A volley is before the bounce!", "Terlalu cepat! Tunggu bola dekat.": "Too early! Wait until the ball is close.", "Pukul di depan badan!": "Hit it in front of your body!", "Sekarang! Pukul!": "Now! Hit it!",
   "Bola di kiri — voli forehand!": "Ball on the left — forehand volley!", "Bola di kanan — voli backhand!": "Ball on the right — backhand volley!",
   "PUKUL!": "HIT!", "SERVIS!": "SERVE!", "Kiri": "Left", "Tengah": "Middle", "Kanan": "Right",
   "bola di kiri": "ball on the left", "bola di kanan": "ball on the right",

@@ -106,9 +106,11 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .marker.on{opacity:1;animation:mk .6s ease-in-out infinite alternate}
 @keyframes mk{to{transform:scale(1.15)}}
 .pop{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.6);z-index:8;opacity:0;pointer-events:none;
-  font-family:'Fredoka','Nunito',sans-serif;font-size:28px;font-weight:700;color:#fff;text-align:center;white-space:nowrap;
+  font-family:'Fredoka','Nunito',sans-serif;font-size:clamp(19px,5.6vw,27px);line-height:1.2;font-weight:700;color:#fff;text-align:center;white-space:normal;width:max-content;max-width:86%;box-sizing:border-box;
   padding:8px 16px;border-radius:18px;background:rgba(0,0,0,.45);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:all .25s cubic-bezier(.3,1.5,.5,1)}
 .pop.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+/* volley: the ball glows green while it is the right moment to hit */
+.ball.vnow{box-shadow:inset -3px -4px 0 rgba(0,0,0,.15),0 0 0 4px rgba(52,199,123,.9),0 0 18px 6px rgba(52,199,123,.75)!important}
 .pop.good{background:rgba(18,161,90,.85)}.pop.bad{background:rgba(226,80,60,.85)}.pop.tip{background:rgba(30,60,110,.8);font-size:19px;white-space:normal;width:86%}
 .score{position:absolute;left:8px;right:8px;top:8px;z-index:7;display:none;justify-content:space-between;gap:6px}
 .score.on{display:flex}
@@ -906,10 +908,10 @@ var VOLI_PLAN=["fh","fh","fh","bh","bh","mix","mix","mix"];
 var NETY=290;                       /* Adam's feet when he plays at the net (the net tape is at ~299) */
 var VHIT={ fh:{x:178,y:223}, bh:{x:233,y:179} }; /* racket strings at contact in fh-one-4 / punch-6, stage units */
 var VPB=1.2;                        /* if nobody hits it, the ball bounces just behind him at this point of the flight */
-var VWIN=[.8,1.08];                 /* the volley window: the ball is in front of him, still in the air */
+var VWIN=[.66,1.1];                 /* the volley window: the ball is close in front of him, still in the air (matched to what kids see) */
 function volleyFlight(p,side){
   var c=VHIT[side], gy0=NETY+2, s1=.56, hc=(gy0-c.y)/s1, sx=side==="fh"?232:168, gx, gy, s, h;
-  if(p<=1){ var f=1-Math.pow(1-p,1.6); gx=lerp(sx,c.x,f); gy=lerp(540,gy0,f); s=lerp(1,s1,f); h=lerp(26,hc,p)+4*40*p*(1-p); }
+  if(p<=1){ var f=1-Math.pow(1-p,1.25); gx=lerp(sx,c.x,f); gy=lerp(540,gy0,f); s=lerp(1,s1,f); h=lerp(26,hc,p)+4*40*p*(1-p); }
   else { var e=p-1; gx=c.x+(c.x-200)*e*.8; gy=gy0-e*80; s=s1-e*.12;
     if(p<=VPB){ var r=e/(VPB-1); h=hc*(1-r*r); } else { var r2=(p-VPB)/.4; h=46*r2*(2-r2); } }
   return {gx:gx,gy:gy,h:Math.max(0,h),s:s};
@@ -943,11 +945,12 @@ function feedVoli(){
 function feedVoli2(){
   if(!G||G.over) return;
   var side=G.phase==="mix" ? (Math.random()<.5?"fh":"bh") : G.phase;
-  G.side=side; G.tapped=false; G.whiff=false; G.p=0; G.pb=VPB; G.o=null; G.hitX=VHIT[side].x;
+  G.side=side; G.tapped=false; G.whiff=false; G.saidNow=false; ballEl.classList.remove("vnow"); G.p=0; G.pb=VPB; G.o=null; G.hitX=VHIT[side].x;
   pose(VREADY); TS.feed(); lastH=null; ballEl.style.zIndex="";
   $("laneTip").textContent=T(G.n%2?"Jangan tunggu memantul!":"Pukul pendek seperti meninju!");
   G.flight=animate(1.7,function(p){
     G.p=p; var b=volleyFlight(p,side); G.b=b; place(b.gx,b.gy,b.h,b.s);
+    var inWin=p>=VWIN[0]&&p<=VWIN[1]&&!G.tapped; ballEl.classList.toggle("vnow",inWin); if(inWin&&!G.saidNow){ G.saidNow=true; $("laneTip").textContent=T("Sekarang! Pukul!"); }
     if(p>1.03) ballEl.style.zIndex="2"; /* it has passed him: draw it behind Kak Adam */
     if(p>1.6){ G.flight=null; $("laneTip").textContent=""; if(G.whiff){ hideBall(); done(false); } else miss("Voli itu sebelum memantul!"); return false; }
   });
@@ -956,7 +959,7 @@ function tapVoli(side){
   if(!G||G.over||!G.flight||G.tapped) return;
   var p=G.p;
   if(p<.15) return; /* ignore taps right as the ball is fed */
-  G.tapped=true; G.recover=false; $("laneTip").textContent="";
+  G.tapped=true; G.recover=false; $("laneTip").textContent=""; ballEl.classList.remove("vnow");
   var whiff=function(msg){ G.whiff=true; swing(side); sfx("wrong"); pop(msg,"bad",1300); setTimeout(function(){ if(G&&G.volley) pose("oops-2b"); },420); }; /* air swing: the ball flies on past him */
   if(p>VPB){ G.flight.stop(); G.flight=null; G.o={x:G.b.gx,y:G.b.gy,h:G.b.h,s:G.b.s}; swing(side); missFly("Voli itu sebelum memantul!"); return; }
   if(p<VWIN[0]){ whiff("Terlalu cepat! Tunggu bola dekat."); return; }
