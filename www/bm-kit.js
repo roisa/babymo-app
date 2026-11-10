@@ -5,9 +5,12 @@
    Provides:
      1. Privacy-friendly analytics (no cookies, no PII)
      2. A branded Web-Share helper          → BabyMo.share(opts)
-     3. A score/result share helper          → BabyMo.shareScore(score, stars, message)
-        ...which attaches a generated branded result IMAGE so the share
-        carries a rich card on WhatsApp / Instagram, not just text.
+     3. A score/result share helper          → BabyMo.shareScore(score, stars, message, extra)
+        ...which attaches a generated branded 1080×1350 result IMAGE
+        (per-game theme + icon, celebrating character, headline, stars,
+        optional child name) so the share carries a rich card on
+        WhatsApp / Instagram, not just text. BabyMo.prepareShare()
+        warms its images/fonts (done automatically on idle).
      4. A tiny toast fallback                → BabyMo.toast(msg)
      5. Shared star jar                      → BabyMo.getStars() / addStars(n)
      6. Daily missions + app-wide streak     → BabyMo.daily.*  (see the
@@ -93,32 +96,132 @@
 
   function buildMessage(opts) {
     opts = opts || {};
-    var name = opts.title || gameName();
-    var lines = ["🌙 " + name + " — Baby Mo"];
-    if (opts.score != null && opts.score !== "") {
-      lines.push("Skorku: " + opts.score + (opts.stars ? " " + opts.stars : ""));
+    var en = moLang() === "en";
+    var g = shareGame();
+    var name = opts.title || (g.icon && g.n[en ? 1 : 0]) || gameName();
+    var lines = ["🌙 " + (/baby mo$/i.test(name) ? name : name + " — Baby Mo")];
+    var n = starCount(opts.stars);
+    var starTxt = n ? (n <= 5 ? " " + new Array(n + 1).join("⭐") : " ⭐ " + n) : "";
+    if (opts.headline) {
+      lines.push("🏆 " + opts.headline + starTxt);
+    } else if (opts.score != null && opts.score !== "") {
+      lines.push((en ? "My score: " : "Skorku: ") + opts.score + starTxt);
     }
-    lines.push(opts.message || "Yuk main & belajar Islam bareng Baby Mo!");
+    lines.push(opts.message || (en ? "Let's play & learn Islam with Baby Mo!" : "Yuk main & belajar Islam bareng Baby Mo!"));
     lines.push("");
     lines.push(opts.url || gameUrl());
     lines.push("#BabyMo #BelajarIslam");
     return lines.join("\n");
   }
 
-  // ---- Result image -----------------------------------------
-  // Mascot is preloaded at init so the whole image build stays
-  // synchronous at share time — iOS Safari requires navigator.share()
-  // to run inside the user gesture, so we cannot await anything.
-  var mascotImg = null;
-  function preloadMascot() {
+  // ---- Result image (share card v2) --------------------------
+  // A 1080×1350 (4:5) portrait card — the size WhatsApp, Instagram feed
+  // and stories all show nicely. Per-game theme colour + the game's icon,
+  // a big celebrating character, the headline achievement, stars, an
+  // optional first name the parent entered, and a branded footer.
+  //
+  // Every image is preloaded ahead of time (prepareShare) so the build at
+  // share time stays fully synchronous — iOS Safari requires
+  // navigator.share() to run inside the user gesture, so we cannot await.
+  var CARD_W = 1080, CARD_H = 1350;
+  var MO_HEROES = ["baby-mo-pose-41", "baby-mo-yeyy", "baby-mo-wow", "baby-mo-pose-01"];
+  // page file → icon, theme gradient (taken from the icon's own art),
+  // display names [id, en] and hero character.
+  var SHARE_GAMES = {
+    "baby-mo-forehand-beat": { icon: "forehand-beat", c: ["#BEF264", "#3F6212"], n: ["Forehand Beat", "Forehand Beat"] },
+    "babymo-tenis-adam": { icon: "tenis-adam", c: ["#60A5FA", "#1D4ED8"], n: ["Akademi Tenis Kak Adam", "Kak Adam's Tennis Academy"], hero: ["/adam-tennis-v2/celebrate-3.webp", "/adam-tennis-v2/win-fist-r.webp"] },
+    "babymo-kebun-ais": { icon: "kebun-ais", c: ["#86EFAC", "#16A34A"], n: ["Kebun Kecil Ais", "Ais's Little Garden"], hero: ["/ais-garden/arms-wide-joy.webp", "/ais-garden/jump-joy.webp"] },
+    "babymo-memory-match": { icon: "memory-match", c: ["#FCD34D", "#B45309"], n: ["Memory Match", "Memory Match"] },
+    "babymo-look-and-find": { icon: "cari-baby-mo", c: ["#FDBA74", "#C2410C"], n: ["Cari Baby Mo", "Find Baby Mo"] },
+    "babymo-doa-harian": { icon: "doa-harian", c: ["#6EE7B7", "#047857"], n: ["Doa Harian", "Daily Du'as"] },
+    "babymo-dua-game": { icon: "dua-journey", c: ["#93C5FD", "#1D4ED8"], n: ["Dua Journey", "Dua Journey"] },
+    "babymo-arabic-spelling": { icon: "kata-islam", c: ["#67E8F9", "#0E7490"], n: ["Kata Islam", "Islamic Words"] },
+    "babymo-hijaiyah": { icon: "hijaiyah", c: ["#5EEAD4", "#0F766E"], n: ["Pulau Hijaiyah", "Hijaiyah Island"] },
+    "babymo-hijaiyah-classic": { icon: "huruf-hijaiyah", c: ["#34D399", "#065F46"], n: ["Huruf Hijaiyah", "Hijaiyah Letters"] },
+    "babymo-puzzle-katabaik": { icon: "kata-baik", c: ["#F9A8D4", "#BE185D"], n: ["Kata Baik", "Kind Words"] },
+    "babymo-puzzle": { icon: "puzzle", c: ["#C4B5FD", "#6D28D9"], n: ["Kenalan dengan Baby Mo", "Meet Baby Mo"] },
+    "babymo-wudhu": { icon: "wudhu", c: ["#7DD3FC", "#0369A1"], n: ["Wudhu Bareng Mo", "Wudhu with Mo"] },
+    "babymo-dreamtime": { icon: "dreamtime", c: ["#A5B4FC", "#312E81"], n: ["Dreamtime", "Dreamtime"] },
+    "babymo-sahabat-hewan": { icon: "sahabat-hewan", c: ["#FDBA74", "#EA580C"], n: ["Sahabat Hewan Mo", "Mo's Animal Friends"] },
+    "babymo-pray-with-mo": { icon: "pray-with-mo", c: ["#4FA877", "#0B2A1B"], n: ["Pray with Mo", "Pray with Mo"] },
+  };
+  var BRAND_THEME = { c: ["#4FA877", "#0B2A1B"], n: ["Baby Mo", "Baby Mo"] };
+
+  function pageKey() {
     try {
-      var i = new Image();
-      i.crossOrigin = "anonymous";
-      i.onload = function () {
-        mascotImg = i;
-      };
-      i.src = MASCOT_SRC;
+      return (location.pathname.split("/").pop() || "").replace(/\.html?$/, "");
+    } catch (e) { return ""; }
+  }
+  function shareGame() { return SHARE_GAMES[pageKey()] || BRAND_THEME; }
+  function L2(id, en) { return moLang() === "en" ? en : id; }
+
+  var mascotImg = null; // Baby Mo logo head (footer)
+  var shareImgs = {};   // src → loaded HTMLImageElement
+  var heroSrc = null;   // the hero picked for this page
+  var prepared = null;  // Promise from prepareShare()
+
+  function loadImg(src) {
+    return new Promise(function (res) {
+      if (!src) return res(null);
+      if (shareImgs[src]) return res(shareImgs[src]);
+      try {
+        var i = new Image();
+        i.crossOrigin = "anonymous";
+        i.onload = function () { shareImgs[src] = i; res(i); };
+        i.onerror = function () { res(null); };
+        i.src = src;
+      } catch (e) { res(null); }
+    });
+  }
+  function preloadMascot() {
+    loadImg(MASCOT_SRC).then(function (i) { if (i) mascotImg = i; });
+  }
+  // Bounding box of the opaque pixels, so every character fills the card
+  // the same way however much empty margin its artwork has.
+  var trimBox = {};
+  function trimImg(src) {
+    var i = shareImgs[src];
+    if (!i || trimBox[src]) return;
+    try {
+      var w = i.naturalWidth, h = i.naturalHeight;
+      var cv = document.createElement("canvas");
+      cv.width = w; cv.height = h;
+      var cx2 = cv.getContext("2d");
+      cx2.drawImage(i, 0, 0);
+      var d = cx2.getImageData(0, 0, w, h).data;
+      var x0 = w, y0 = h, x1 = -1, y1 = -1;
+      for (var yy = 0; yy < h; yy++) {
+        for (var xx = 0; xx < w; xx++) {
+          if (d[(yy * w + xx) * 4 + 3] > 24) {
+            if (xx < x0) x0 = xx; if (xx > x1) x1 = xx;
+            if (yy < y0) y0 = yy; if (yy > y1) y1 = yy;
+          }
+        }
+      }
+      if (x1 > x0 && y1 > y0) trimBox[src] = { x: x0, y: y0, w: x1 - x0 + 1, h: y1 - y0 + 1 };
     } catch (e) {}
+  }
+  function pickHeroSrc(g) {
+    var list = g.hero || MO_HEROES.map(function (p) { return POSE + p + ".webp"; });
+    return list[Math.floor(Math.random() * list.length)];
+  }
+  // Warm everything the card needs. Safe to call many times; games may
+  // call it when their result screen opens. Resolves when ready.
+  function prepareShare() {
+    if (prepared) return prepared;
+    var g = shareGame();
+    heroSrc = heroSrc || pickHeroSrc(g);
+    var jobs = [loadImg(MASCOT_SRC).then(function (i) { if (i) mascotImg = i; }), loadImg(heroSrc).then(function () { trimImg(heroSrc); })];
+    if (g.icon) jobs.push(loadImg("/icons/games/" + g.icon + ".svg"));
+    try {
+      if (document.fonts && document.fonts.load) {
+        jobs.push(document.fonts.load('700 100px "Fredoka"').catch(function () {}));
+        jobs.push(document.fonts.load('900 40px "Nunito"').catch(function () {}));
+        jobs.push(document.fonts.load('800 30px "Nunito"').catch(function () {}));
+      }
+    } catch (e) {}
+    prepared = Promise.all(jobs).then(function () { return true; }, function () { return true; });
+    return prepared;
   }
 
   function roundRect(x, rx, ry, w, h, r) {
@@ -131,104 +234,500 @@
     x.closePath();
   }
 
+  // Canvas text should not depend on an emoji font being present.
+  function noEmoji(s) {
+    s = String(s == null ? "" : s);
+    try {
+      // built at runtime so old engines without the "u" flag still parse the kit
+      s = s.replace(new RegExp("[\\u{1F000}-\\u{1FAFF}\\u{2600}-\\u{27BF}\\u{2B00}-\\u{2BFF}\\u{FE0F}\\u{200D}\\u{20E3}]", "gu"), "");
+    } catch (e) {}
+    return s.replace(/\s{2,}/g, " ").trim();
+  }
+
+  // stars can be 3, "3", "⭐⭐⭐", "⭐ 8" or "★★☆" → a number (or 0)
+  function starCount(s) {
+    if (s == null || s === "") return 0;
+    if (typeof s === "number") return Math.max(0, Math.round(s));
+    s = String(s);
+    var digits = s.match(/\d+/);
+    if (digits) return parseInt(digits[0], 10) || 0;
+    var m = s.match(/⭐|★|🌟/g);
+    return m ? m.length : 0;
+  }
+
+  function hexRgb(h) {
+    h = h.replace("#", "");
+    return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+  }
+  function mix(a, b, t) {
+    var A = hexRgb(a), B = hexRgb(b);
+    return "rgb(" + [0, 1, 2].map(function (i) { return Math.round(A[i] + (B[i] - A[i]) * t); }).join(",") + ")";
+  }
+  function rng(seedStr) {
+    var s = 2166136261;
+    for (var i = 0; i < seedStr.length; i++) { s ^= seedStr.charCodeAt(i); s = Math.imul(s, 16777619); }
+    return function () {
+      s += 0x6d2b79f5;
+      var t = s;
+      t = Math.imul(t ^ (t >>> 15), t | 1);
+      t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function starPath(x, cx, cy, r, inner, rot) {
+    x.beginPath();
+    for (var i = 0; i < 10; i++) {
+      var a = (rot || 0) - Math.PI / 2 + (i * Math.PI) / 5;
+      var rr = i % 2 ? r * (inner || 0.5) : r;
+      x[i ? "lineTo" : "moveTo"](cx + Math.cos(a) * rr, cy + Math.sin(a) * rr);
+    }
+    x.closePath();
+  }
+  function sparkle(x, cx, cy, r, color) {
+    x.beginPath();
+    x.moveTo(cx, cy - r);
+    x.quadraticCurveTo(cx, cy, cx + r, cy);
+    x.quadraticCurveTo(cx, cy, cx, cy + r);
+    x.quadraticCurveTo(cx, cy, cx - r, cy);
+    x.quadraticCurveTo(cx, cy, cx, cy - r);
+    x.fillStyle = color;
+    x.fill();
+  }
+  function goldStar(x, cx, cy, r, on) {
+    x.save();
+    starPath(x, cx, cy, r, 0.52);
+    x.lineJoin = "round";
+    if (on) {
+      var g = x.createLinearGradient(cx, cy - r, cx, cy + r);
+      g.addColorStop(0, "#FFE27A");
+      g.addColorStop(1, "#FFB31F");
+      x.fillStyle = g;
+      x.shadowColor = "rgba(230,140,0,.45)";
+      x.shadowBlur = 14;
+      x.shadowOffsetY = 4;
+      x.fill();
+      x.shadowColor = "transparent";
+      x.lineWidth = 5;
+      x.strokeStyle = "#E08A00";
+      x.stroke();
+      // glossy dot
+      x.beginPath();
+      x.ellipse(cx - r * 0.18, cy - r * 0.22, r * 0.16, r * 0.09, -0.6, 0, Math.PI * 2);
+      x.fillStyle = "rgba(255,255,255,.75)";
+      x.fill();
+    } else {
+      x.fillStyle = "#ECE7DC";
+      x.fill();
+      x.lineWidth = 5;
+      x.strokeStyle = "#D6CFC0";
+      x.stroke();
+    }
+    x.restore();
+  }
+  // 8-point Islamic star (two rotated squares), outline only.
+  function rubElHizb(x, cx, cy, r) {
+    x.beginPath();
+    for (var k = 0; k < 2; k++) {
+      for (var i = 0; i < 4; i++) {
+        var a = k * Math.PI / 4 + i * Math.PI / 2;
+        x[i ? "lineTo" : "moveTo"](cx + Math.cos(a) * r, cy + Math.sin(a) * r);
+      }
+      x.closePath();
+    }
+    x.stroke();
+  }
+  function crescent(x, cx, cy, r, color) {
+    var cv = document.createElement("canvas");
+    var S = Math.ceil(r * 2 + 80);
+    cv.width = cv.height = S;
+    var o = cv.getContext("2d");
+    o.beginPath();
+    o.arc(S / 2, S / 2, r, 0, Math.PI * 2);
+    o.fillStyle = color;
+    o.fill();
+    o.globalCompositeOperation = "destination-out";
+    o.beginPath();
+    o.arc(S / 2 + r * 0.45, S / 2 - r * 0.25, r * 0.82, 0, Math.PI * 2);
+    o.fill();
+    x.save();
+    x.shadowColor = "rgba(255,226,140,.75)";
+    x.shadowBlur = 34;
+    x.drawImage(cv, cx - S / 2, cy - S / 2);
+    x.restore();
+  }
+  // Character with a thick white "sticker" outline so it pops off any theme.
+  function drawSticker(x, img, box, dx, dy, dw, dh, pad) {
+    var cv = document.createElement("canvas");
+    cv.width = Math.ceil(dw + pad * 2);
+    cv.height = Math.ceil(dh + pad * 2);
+    var o = cv.getContext("2d");
+    for (var a = 0; a < 24; a++) {
+      var t = (a / 24) * Math.PI * 2;
+      o.drawImage(img, box.x, box.y, box.w, box.h, pad + Math.cos(t) * pad, pad + Math.sin(t) * pad, dw, dh);
+    }
+    o.globalCompositeOperation = "source-in";
+    o.fillStyle = "#FFFFFF";
+    o.fillRect(0, 0, cv.width, cv.height);
+    o.globalCompositeOperation = "source-over";
+    o.drawImage(img, box.x, box.y, box.w, box.h, pad, pad, dw, dh);
+    x.drawImage(cv, dx - pad, dy - pad);
+  }
+
+  function setFont(x, weight, size, fam) {
+    x.font = weight + " " + size + "px " + fam;
+  }
+  var F_HEAD = '"Fredoka", "Nunito", system-ui, sans-serif';
+  var F_BODY = '"Nunito", system-ui, sans-serif';
+  function fitFont(x, text, weight, size, fam, maxW, minSize) {
+    setFont(x, weight, size, fam);
+    while (size > (minSize || 20) && x.measureText(text).width > maxW) {
+      size -= 2;
+      setFont(x, weight, size, fam);
+    }
+    return size;
+  }
+  function wrapLines(x, text, maxW, maxLines) {
+    var words = String(text).split(" ");
+    var lines = [], line = "";
+    for (var i = 0; i < words.length; i++) {
+      var t = line ? line + " " + words[i] : words[i];
+      if (x.measureText(t).width > maxW && line) { lines.push(line); line = words[i]; }
+      else line = t;
+    }
+    if (line) lines.push(line);
+    if (lines.length === 2) {
+      // balance two lines so we never leave a lonely last word
+      var best = null;
+      for (var b = 1; b < words.length; b++) {
+        var l1 = words.slice(0, b).join(" "), l2 = words.slice(b).join(" ");
+        var w1 = x.measureText(l1).width, w2 = x.measureText(l2).width;
+        if (w1 > maxW || w2 > maxW) continue;
+        var score = Math.max(w1, w2);
+        if (!best || score < best.s) best = { s: score, l: [l1, l2] };
+      }
+      if (best) lines = best.l;
+    }
+    if (maxLines && lines.length > maxLines) {
+      lines = lines.slice(0, maxLines);
+      var last = lines[maxLines - 1];
+      while (last.length > 1 && x.measureText(last + "…").width > maxW) last = last.slice(0, -1);
+      lines[maxLines - 1] = last.replace(/[\s,.;:!-]+$/, "") + "…";
+    }
+    return lines;
+  }
+
+  // Normalise the share options into what the card shows.
+  function cardModel(opts) {
+    var g = shareGame();
+    var en = moLang() === "en";
+    var name = noEmoji(childName()).split(/\s+/)[0] || "";
+    if (name.length > 14) name = name.slice(0, 13) + "…";
+    var title = noEmoji(opts.game || (g.n && g.n[en ? 1 : 0]) || opts.title || gameName());
+    title = title.replace(/\s*[—|-]\s*Baby Mo$/i, "");
+    var hasScore = opts.score != null && opts.score !== "" && noEmoji(opts.score) !== "";
+    var stars = starCount(opts.stars);
+    var starsMax = opts.starsMax || (stars > 0 && stars <= 3 ? 3 : stars <= 5 ? 5 : 0);
+    if (stars > starsMax) starsMax = 0;
+    var headline = noEmoji(opts.headline || "");
+    if (!headline) {
+      if (hasScore && /^\d+$/.test(noEmoji(opts.score))) headline = (en ? "My score: " : "Skorku ") + noEmoji(opts.score) + "!";
+      else if (hasScore) headline = noEmoji(opts.score);
+      else if (stars) headline = stars + (en ? (stars === 1 ? " star!" : " stars!") : " bintang!");
+      else headline = en ? "I did it!" : "Aku berhasil!";
+    }
+    var sub = noEmoji(opts.sub || opts.message || "");
+    if (name && sub) sub = sub.replace(/^(Aku|I)\s/, name + " ");
+    var cheers = opts.cheer ? [opts.cheer] : en
+      ? ["MashaAllah", "Alhamdulillah", "Barakallah"]
+      : ["MasyaAllah", "Alhamdulillah", "Barakallah"];
+    var r = rng(title + headline);
+    var cheer = noEmoji(cheers[Math.floor(r() * cheers.length)]);
+    cheer = name ? cheer + ", " + name + "!" : cheer + "!";
+    var stats = (opts.stats || []).filter(function (s) { return s && s[1] !== "" && s[1] != null; }).slice(0, 3)
+      .map(function (s) { return [noEmoji(s[0]), noEmoji(s[1])]; });
+    return {
+      g: g, en: en, title: title, headline: headline, sub: sub, cheer: cheer,
+      stars: stars, starsMax: starsMax, stats: stats,
+      hero: opts.hero ? shareImgs[opts.hero] : shareImgs[heroSrc],
+      heroBox: trimBox[opts.hero || heroSrc],
+      icon: g.icon ? shareImgs["/icons/games/" + g.icon + ".svg"] : null,
+    };
+  }
+
   // Returns a PNG dataURL string, or null. Fully synchronous.
   function buildResultDataURL(opts) {
     try {
       opts = opts || {};
-      var W = 1080, H = 1080;
+      if (!prepared) prepareShare(); // too late for this share, ready next time
+      var m = cardModel(opts);
+      var W = CARD_W, H = CARD_H, cx = W / 2;
+      var c0 = m.g.c[0], c1 = m.g.c[1];
       var c = document.createElement("canvas");
       c.width = W;
       c.height = H;
       var x = c.getContext("2d");
+      var R = rng(m.title + "|" + m.headline);
 
-      // Background gradient (brand deep green)
-      var g = x.createLinearGradient(0, 0, W, H);
-      g.addColorStop(0, "#0B1C12");
-      g.addColorStop(1, "#1E3F2A");
-      x.fillStyle = g;
+      // Layout first: the card hugs its content, the hero stands on it
+      var cardX = 60, cardW = W - 120, inner = cardW - 110;
+      var footH = 150;
+      var subLines = [];
+      if (m.sub) { setFont(x, "800", 38, F_BODY); subLines = wrapLines(x, m.sub, inner, 2); }
+      var hasStars = m.stars > 0;
+      var blocks = 46 /*cheer*/ + 118 /*headline*/ + (hasStars ? 104 : 0) + (m.stats.length ? 86 : 0) + subLines.length * 50 + (subLines.length && !hasStars && !m.stats.length ? 16 : 0);
+      var cardH = blocks + 96;
+      var cardY = H - footH - 40 - cardH;
+
+      var feet = cardY + 16;
+      var heroTop = 205;
+      var sunY = Math.round((heroTop + feet) / 2);
+
+      // 1. Background: theme gradient, sunburst, glow, pattern
+      var bg = x.createLinearGradient(0, 0, W * 0.3, H);
+      bg.addColorStop(0, mix(c0, "#FFFFFF", 0.12));
+      bg.addColorStop(0.5, mix(c0, c1, 0.55));
+      bg.addColorStop(1, mix(c1, "#000000", 0.25));
+      x.fillStyle = bg;
       x.fillRect(0, 0, W, H);
 
-      // Soft gold glow top-right
-      var rg = x.createRadialGradient(W * 0.82, H * 0.16, 0, W * 0.82, H * 0.16, 520);
-      rg.addColorStop(0, "rgba(200,144,64,0.28)");
-      rg.addColorStop(1, "rgba(200,144,64,0)");
-      x.fillStyle = rg;
-      x.fillRect(0, 0, W, H);
-
-      // Inner card
-      x.fillStyle = "rgba(240,232,216,0.05)";
-      roundRect(x, 70, 70, W - 140, H - 140, 56);
-      x.fill();
-      x.lineWidth = 2;
-      x.strokeStyle = "rgba(200,144,64,0.35)";
-      x.stroke();
-
-      var cx = W / 2;
-      x.textAlign = "center";
-
-      // Eyebrow
-      x.fillStyle = "#E8B060";
-      x.font = "800 34px Nunito, system-ui, sans-serif";
-      x.fillText("🌙  BABY MO", cx, 190);
-
-      // Game name
-      x.fillStyle = "#F0E8D8";
-      x.font = "900 66px Nunito, system-ui, sans-serif";
-      wrapText(x, opts.title || gameName(), cx, 280, W - 260, 74);
-
-      // Mascot
-      if (mascotImg) {
-        var mw = 340, mh = 340;
-        x.drawImage(mascotImg, cx - mw / 2, 360, mw, mh);
+      x.save();
+      x.translate(cx, sunY);
+      for (var i = 0; i < 18; i++) {
+        x.rotate((Math.PI * 2) / 18);
+        x.beginPath();
+        x.moveTo(0, 0);
+        x.lineTo(-90, -1000);
+        x.lineTo(90, -1000);
+        x.closePath();
+        x.fillStyle = "rgba(255,255,255,0.07)";
+        x.fill();
       }
+      x.restore();
 
-      // Score — tightened so the stars line never collides with the footer
-      var baseY = mascotImg ? 752 : 560;
-      if (opts.score != null && opts.score !== "") {
-        x.fillStyle = "#9EA89C";
-        x.font = "800 34px Nunito, system-ui, sans-serif";
-        x.fillText("SKORKU", cx, baseY);
-        x.fillStyle = "#6DB882";
-        x.font = "900 82px Nunito, system-ui, sans-serif";
-        x.fillText(String(opts.score), cx, baseY + 84);
-        if (opts.stars) {
-          x.fillStyle = "#E8B060";
-          x.font = "900 42px Nunito, system-ui, sans-serif";
-          x.fillText(String(opts.stars), cx, baseY + 142);
+      var glow = x.createRadialGradient(cx, sunY, 0, cx, sunY, 420);
+      glow.addColorStop(0, "rgba(255,255,255,0.55)");
+      glow.addColorStop(0.45, "rgba(255,255,255,0.18)");
+      glow.addColorStop(1, "rgba(255,255,255,0)");
+      x.fillStyle = glow;
+      x.fillRect(0, 0, W, H);
+
+      x.save();
+      x.strokeStyle = "rgba(255,255,255,0.10)";
+      x.lineWidth = 3;
+      for (var py = 60; py < 820; py += 180) {
+        for (var px = (py / 180) % 2 ? 90 : 0; px < W + 90; px += 180) {
+          var dx = px - cx, dy = py - sunY;
+          if (dx * dx + dy * dy < 330 * 330) continue; // keep the hero area clean
+          if (px > 820 && py < 380) continue; // and the moon
+          rubElHizb(x, px, py, 34);
         }
-      } else if (opts.message) {
-        x.fillStyle = "#F0E8D8";
-        x.font = "800 42px Nunito, system-ui, sans-serif";
-        wrapText(x, opts.message, cx, baseY + 20, W - 280, 56);
+      }
+      x.restore();
+
+      // 2. Moon + sparkles + confetti
+      crescent(x, 950, 250, 56, "#FFE7A3");
+      starPath(x, 880, 205, 14, 0.45);
+      x.fillStyle = "#FFF4CC";
+      x.fill();
+      var confetti = ["#FFD54F", "#FF8A80", "#80D8FF", "#B9F6CA", "#FFFFFF", "#EA80FC", "#FFAB40"];
+      for (var k = 0; k < 46; k++) {
+        var qx = R() * W, qy = 210 + R() * 640;
+        var ddx = qx - cx, ddy = qy - sunY;
+        if (Math.abs(ddx) < 230 && ddy > -260) continue; // not on the hero
+        x.save();
+        x.translate(qx, qy);
+        x.rotate(R() * Math.PI);
+        x.fillStyle = confetti[k % confetti.length];
+        x.globalAlpha = 0.9;
+        var kind = k % 3;
+        if (kind === 0) x.fillRect(-9, -4, 18, 8);
+        else if (kind === 1) { x.beginPath(); x.arc(0, 0, 6, 0, Math.PI * 2); x.fill(); }
+        else { starPath(x, 0, 0, 10, 0.5); x.fill(); }
+        x.restore();
+      }
+      [[150, 420, 26], [930, 470, 30], [205, 720, 18], [875, 690, 22], [300, 300, 14], [790, 330, 16]].forEach(function (s) {
+        sparkle(x, s[0], s[1], s[2], "rgba(255,255,255,0.95)");
+      });
+
+      // 3. Title pill: game icon + game name
+      var pillH = 116, iconS = 88;
+      var tSize = fitFont(x, m.title, "600", 50, F_HEAD, W - 330, 30);
+      var tW = x.measureText(m.title).width;
+      var pillW = (m.icon ? iconS + 26 : 0) + tW + 70;
+      var pillX = cx - pillW / 2, pillY = 54;
+      x.save();
+      x.shadowColor = "rgba(0,0,0,.18)";
+      x.shadowBlur = 24;
+      x.shadowOffsetY = 8;
+      roundRect(x, pillX, pillY, pillW, pillH, pillH / 2);
+      x.fillStyle = "#FFFFFF";
+      x.fill();
+      x.restore();
+      var tx = pillX + 35;
+      if (m.icon) {
+        x.save();
+        roundRect(x, pillX + 14, pillY + (pillH - iconS) / 2, iconS, iconS, 26);
+        x.clip();
+        x.drawImage(m.icon, pillX + 14, pillY + (pillH - iconS) / 2, iconS, iconS);
+        x.restore();
+        tx = pillX + 14 + iconS + 22;
+      }
+      x.textAlign = "left";
+      x.textBaseline = "middle";
+      setFont(x, "600", tSize, F_HEAD);
+      x.fillStyle = mix(c1, "#000000", 0.35);
+      x.fillText(m.title, tx, pillY + pillH / 2 + 2);
+
+      // 5. Hero character, feet resting on the card
+      var hero = m.hero || mascotImg;
+      if (hero) {
+        var box = (m.hero && m.heroBox) || { x: 0, y: 0, w: hero.naturalWidth || hero.width, h: hero.naturalHeight || hero.height };
+        var maxH = feet - heroTop, maxW = 700;
+        var sc = Math.min(maxH / box.h, maxW / box.w, 2.1);
+        var hw = box.w * sc, hh = box.h * sc;
+        x.save();
+        x.beginPath();
+        x.ellipse(cx, feet - 6, Math.min(hw * 0.42, 220), 24, 0, 0, Math.PI * 2);
+        x.fillStyle = "rgba(0,0,0,0.20)";
+        x.fill();
+        x.shadowColor = "rgba(0,0,0,0.30)";
+        x.shadowBlur = 40;
+        x.shadowOffsetY = 16;
+        drawSticker(x, hero, box, cx - hw / 2, feet - hh, hw, hh, 10);
+        x.restore();
       }
 
-      // Footer
-      x.fillStyle = "#C89040";
-      x.font = "900 40px Nunito, system-ui, sans-serif";
-      x.fillText("play.babymo.id", cx, H - 130);
+      // 6. Achievement card
+      x.save();
+      x.shadowColor = "rgba(0,0,0,.25)";
+      x.shadowBlur = 40;
+      x.shadowOffsetY = 14;
+      roundRect(x, cardX, cardY, cardW, cardH, 56);
+      x.fillStyle = "#FFFDF6";
+      x.fill();
+      x.restore();
+      roundRect(x, cardX + 14, cardY + 14, cardW - 28, cardH - 28, 44);
+      x.lineWidth = 3;
+      x.setLineDash([2, 12]);
+      x.lineCap = "round";
+      x.strokeStyle = mix(c0, "#FFFFFF", 0.2);
+      x.stroke();
+      x.setLineDash([]);
+
+      x.textAlign = "center";
+      x.textBaseline = "alphabetic";
+      var y = cardY + 48 + 38;
+      // cheer
+      var cheerSize = fitFont(x, m.cheer, "900", 40, F_BODY, inner, 26);
+      x.fillStyle = mix(c1, "#000000", 0.05);
+      x.fillText(m.cheer, cx, y);
+      // headline
+      y += 118;
+      var hSize = fitFont(x, m.headline, "700", 108, F_HEAD, inner, 50);
+      x.lineJoin = "round";
+      x.lineWidth = 6;
+      x.strokeStyle = "#FFFFFF";
+      x.fillStyle = "#2A2338";
+      x.fillText(m.headline, cx, y - (108 - hSize) / 3);
+      // stars
+      if (hasStars) {
+        y += 22;
+        if (m.starsMax) {
+          var sr = m.starsMax > 3 ? 36 : 44, gap = sr * 2.5;
+          for (var s = 0; s < m.starsMax; s++) {
+            var sx = cx + (s - (m.starsMax - 1) / 2) * gap;
+            var lift = m.starsMax === 3 && s === 1 ? -10 : 0;
+            goldStar(x, sx, y + 46 + lift, s === 1 && m.starsMax === 3 ? sr + 6 : sr, s < m.stars);
+          }
+        } else {
+          var label = "× " + m.stars;
+          setFont(x, "700", 64, F_HEAD);
+          var lw = x.measureText(label).width;
+          var chipW = lw + 120, chipX = cx - chipW / 2;
+          roundRect(x, chipX, y + 4, chipW, 86, 43);
+          x.fillStyle = "#FFF1C9";
+          x.fill();
+          goldStar(x, chipX + 50, y + 47, 30, true);
+          x.textAlign = "left";
+          x.fillStyle = "#8A5300";
+          x.fillText(label, chipX + 92, y + 70);
+          x.textAlign = "center";
+        }
+        y += 82;
+      }
+      // stats chips
+      if (m.stats.length) {
+        y += 18;
+        setFont(x, "800", 30, F_BODY);
+        var chips = m.stats.map(function (st) {
+          var t = st[0] + " " + st[1];
+          return { t: st, w: x.measureText(t).width + 52 };
+        });
+        var total = chips.reduce(function (a, ch) { return a + ch.w; }, 0) + (chips.length - 1) * 16;
+        var chx = cx - total / 2;
+        chips.forEach(function (ch) {
+          roundRect(x, chx, y, ch.w, 60, 30);
+          x.fillStyle = mix(c0, "#FFFFFF", 0.72);
+          x.fill();
+          x.textAlign = "left";
+          setFont(x, "700", 30, F_BODY);
+          x.fillStyle = mix(c1, "#000000", 0.2);
+          x.fillText(ch.t[0], chx + 26, y + 41);
+          var lw2 = x.measureText(ch.t[0] + " ").width;
+          setFont(x, "900", 30, F_BODY);
+          x.fillStyle = "#2A2338";
+          x.fillText(ch.t[1], chx + 26 + lw2, y + 41);
+          chx += ch.w + 16;
+        });
+        x.textAlign = "center";
+        y += 68;
+      }
+      // sub line
+      if (subLines.length) {
+        setFont(x, "800", 38, F_BODY);
+        x.fillStyle = "#6B6478";
+        y += hasStars || m.stats.length ? 14 : 30;
+        for (var l = 0; l < subLines.length; l++) {
+          y += 50;
+          x.fillText(subLines[l], cx, y - 8);
+        }
+      }
+
+      // 7. Footer: logo + brand + CTA
+      var fy = H - footH;
+      x.fillStyle = "rgba(0,0,0,0.20)";
+      x.fillRect(0, fy, W, footH);
+      if (mascotImg) {
+        x.save();
+        x.beginPath();
+        x.arc(122, fy + footH / 2, 52, 0, Math.PI * 2);
+        x.fillStyle = "#FFFFFF";
+        x.fill();
+        x.clip();
+        x.drawImage(mascotImg, 74, fy + footH / 2 - 48, 96, 96);
+        x.restore();
+      }
+      x.textAlign = "left";
+      x.fillStyle = "#FFFFFF";
+      setFont(x, "700", 46, F_HEAD);
+      x.fillText("Baby Mo", 196, fy + 68);
+      setFont(x, "800", 26, F_BODY);
+      x.fillStyle = "rgba(255,255,255,0.85)";
+      x.fillText(m.en ? "Play & learn Islam for free" : "Main & belajar Islam gratis", 196, fy + 106);
+      var cta = "play.babymo.id";
+      setFont(x, "900", 34, F_BODY);
+      var ctaW = x.measureText(cta).width + 64, ctaX = W - 60 - ctaW, ctaY = fy + footH / 2 - 36;
+      roundRect(x, ctaX, ctaY, ctaW, 72, 36);
+      x.fillStyle = "#FFD45C";
+      x.fill();
+      x.fillStyle = "#4A2E00";
+      x.textAlign = "center";
+      x.fillText(cta, ctaX + ctaW / 2, ctaY + 48);
 
       return c.toDataURL("image/png");
     } catch (e) {
       return null;
-    }
-  }
-
-  function wrapText(x, text, cx, y, maxW, lh) {
-    var words = String(text).split(" ");
-    var line = "";
-    var lines = [];
-    for (var i = 0; i < words.length; i++) {
-      var test = line ? line + " " + words[i] : words[i];
-      if (x.measureText(test).width > maxW && line) {
-        lines.push(line);
-        line = words[i];
-      } else {
-        line = test;
-      }
-    }
-    if (line) lines.push(line);
-    for (var j = 0; j < lines.length; j++) {
-      x.fillText(lines[j], cx, y + j * lh);
     }
   }
 
@@ -251,13 +750,15 @@
     opts = opts || {};
     var text = buildMessage(opts);
     var url = opts.url || gameUrl();
+    var en = moLang() === "en";
+    var title = opts.title || (shareGame().n || [])[en ? 1 : 0] || gameName();
     track("Share", { game: gameName() });
 
     // Try to attach a branded image (kept synchronous for the gesture).
-    var file = null;
+    var file = null, dataURL = null;
     if (opts.image !== false) {
-      var dataURL = buildResultDataURL(opts);
-      if (dataURL) file = dataURLtoFile(dataURL, "babymo.png");
+      dataURL = buildResultDataURL(opts);
+      if (dataURL) file = dataURLtoFile(dataURL, "babymo-" + (pageKey().replace(/^baby-?mo-/, "") || "share") + ".png");
     }
 
     try {
@@ -268,22 +769,43 @@
         navigator.share
       ) {
         navigator
-          .share({ files: [file], text: text, title: opts.title || gameName() })
+          .share({ files: [file], text: text, title: title })
           .catch(function () {});
         return;
       }
       if (navigator.share) {
         navigator
-          .share({ title: opts.title || gameName(), text: text, url: url })
+          .share({ title: title, text: text, url: url })
           .catch(function () {});
         return;
       }
+      // No Web Share (most desktops): save the picture and copy the text,
+      // so the parent can paste both into WhatsApp / Instagram.
+      var saved = false;
+      if (dataURL) {
+        try {
+          var a = document.createElement("a");
+          a.href = dataURL;
+          a.download = file ? file.name : "babymo.png";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          setTimeout(function () { a.remove(); }, 0);
+          saved = true;
+        } catch (e) {}
+      }
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(text).then(function () {
-          toast("📋 Tautan disalin!");
+          toast(saved
+            ? (en ? "🖼️ Picture saved & link copied!" : "🖼️ Gambar disimpan & tautan disalin!")
+            : (en ? "📋 Link copied!" : "📋 Tautan disalin!"));
+        }, function () {
+          if (saved) toast(en ? "🖼️ Picture saved!" : "🖼️ Gambar disimpan!");
+          else window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
         });
         return;
       }
+      if (saved) { toast(en ? "🖼️ Picture saved!" : "🖼️ Gambar disimpan!"); return; }
       window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank");
     } catch (e) {
       try {
@@ -295,8 +817,13 @@
     }
   }
 
-  function shareScore(score, stars, message) {
-    share({ score: score, stars: stars, message: message });
+  // shareScore(score, stars, message[, extra]) — extra may carry any of
+  // the richer card fields: headline, sub, stats [[label, value]…],
+  // starsMax, game, cheer, hero.
+  function shareScore(score, stars, message, extra) {
+    var o = { score: score, stars: stars, message: message };
+    if (extra) for (var k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) o[k] = extra[k];
+    share(o);
   }
 
   // ---- Minimal toast (fallback only) ------------------------
@@ -1085,6 +1612,7 @@
   window.BabyMo.daily = daily;
   // Exposed for the verification harness / previews.
   window.BabyMo._resultDataURL = buildResultDataURL;
+  window.BabyMo.prepareShare = prepareShare;
 
   function initCompanion() {
     maybeGreet();
@@ -1100,7 +1628,7 @@
     document.addEventListener("touchstart", unlock, { passive: true });
     // Warm the reaction-pose cache without competing with the game's own
     // loading: wait for idle (or a short delay as a fallback).
-    var warm = function () { preloadPoses(); };
+    var warm = function () { preloadPoses(); prepareShare(); };
     if (window.requestIdleCallback) requestIdleCallback(warm, { timeout: 3000 });
     else setTimeout(warm, 1800);
   }
