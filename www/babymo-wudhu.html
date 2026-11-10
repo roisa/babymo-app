@@ -7,6 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/wudhu.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <title>Wudhu Bareng Mo — Belajar Wudhu untuk Anak | Baby Mo</title>
 <meta name="description" content="Belajar wudhu langkah demi langkah bersama Baby Mo: niat, membasuh tangan, berkumur, sampai doa setelah wudhu. Ada game urutkan langkah wudhu. Gratis & ramah anak.">
 <meta name="theme-color" content="#E6F6FF">
@@ -377,6 +379,8 @@ function speak(text, lang){
   }catch(e){}
 }
 function hasArabicVoice(){ try{ return speechSynthesis.getVoices().some(function(v){ return /^ar/i.test(v.lang); }); }catch(e){ return false; } }
+// a recorded clip (bm-voice.js) speaks Arabic on every device
+function hasClip(t){ try{ return !!(window.BMVoice && BMVoice.has(t)); }catch(e){ return false; } }
 function sfx(t){ try{ if(window.BabyMo && BabyMo.sfx) BabyMo.sfx(t); }catch(e){} }
 
 /* ── GUIDE ── */
@@ -433,8 +437,8 @@ function wash(){
   }
 }
 function sayArabic(s){
-  if(s.say){ speak(s.say, hasArabicVoice() ? 'ar-SA' : 'id-ID'); return; }
-  if(hasArabicVoice()) speak(s.ar, 'ar-SA'); else speak(s.lat, 'id-ID');
+  if(s.say){ speak(s.say, (hasArabicVoice() || hasClip(s.say)) ? 'ar-SA' : 'id-ID'); return; }
+  if(hasArabicVoice() || hasClip(s.ar)) speak(s.ar, 'ar-SA'); else speak(s.lat, 'id-ID');
 }
 function next(){
   if(cur < STEPS.length - 1){ go(cur + 1); return; }

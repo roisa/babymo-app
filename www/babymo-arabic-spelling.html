@@ -7,6 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/kata.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta name="theme-color" content="#03100c" />
 <meta name="description" content="Susun huruf untuk mengeja kosakata islami dalam bahasa Arab.">
 <title>Kata Islam — Belajar Menyusun Kata Arab untuk Anak | Baby Mo</title>
@@ -1481,11 +1483,13 @@ function speakArabic(text, opts, onEnd) {
     if (onEnd) setTimeout(onEnd, 80); return;
   }
   const voice = getArabicVoice();
-  if (!voice) { if (onEnd) setTimeout(onEnd, 80); return; }
+  // a recorded clip (bm-voice.js) speaks even when the phone has no Arabic voice
+  const clip = !!(window.BMVoice && BMVoice.has(text));
+  if (!voice && !clip) { if (onEnd) setTimeout(onEnd, 80); return; }
   try {
     const u = new SpeechSynthesisUtterance(text);
-    u.voice = voice;
-    u.lang  = voice.lang;
+    if (voice) u.voice = voice;
+    u.lang  = voice ? voice.lang : 'ar-SA';
     u.rate  = opts.rate  || 0.85;
     u.pitch = opts.pitch || 1.0;
     u.volume = 1.0;

@@ -7,6 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/find.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Cari Baby Mo — Game Look &amp; Find Anak (Cari Objek) | Baby Mo</title>
@@ -1122,8 +1124,11 @@ function positionBubbles(){
 // =============================================
 // GAME LOGIC
 // =============================================
+let ttsPrimed=false;
 function doFound(id,div){
   found.add(id);
+  // iPhone: start speech inside the tap so the name said a moment later is allowed
+  if(!ttsPrimed&&!(window.BabyMo&&BabyMo.isMuted&&BabyMo.isMuted())){ ttsPrimed=true; try{ const p=new SpeechSynthesisUtterance(' '); p.volume=0; speechSynthesis.speak(p); }catch(e){} }
   chime([523,659,784]);
   
   // Get center position of div for effects
@@ -1157,8 +1162,27 @@ function doFound(id,div){
   updateTrayItem(id);
   updateDots();
   setTimeout(()=>babyReact(isMo?(obj.img.split('/').pop().replace(/\.(png|webp)$/,'')):null),380);
+  setTimeout(()=>sayName(obj),isMo?720:430);   // after the chime
   setTimeout(()=>{if(found.size>=OBJS.length)setTimeout(showComplete,600);},700);
   clearHint();
+}
+
+// Say the thing's name ("Beruang!" / "Teddy!"): a recorded clip when there is one
+// (bm-voice.js, voice/manifest.js), else the phone's voice. Silent when the app is muted.
+function foundName(o){
+  if(!o) return '';
+  if(o.secret||!EN) return o.label;                       // the secret's label is already in the page language
+  return (typeof window.BM_T==='function')?BM_T(o.label):o.label;
+}
+function sayName(o){
+  try{
+    if(!o||!window.speechSynthesis||(window.BabyMo&&BabyMo.isMuted&&BabyMo.isMuted())) return;
+    if(doneShown) return;
+    const u=new SpeechSynthesisUtterance(foundName(o)+'!');
+    u.lang=EN?'en-US':'id-ID'; u.rate=1; u.pitch=1.15;
+    if(EN&&window.BM_enVoice){ const v=BM_enVoice(); if(v){ u.voice=v; u.lang=v.lang; } }
+    speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
 }
 
 function wrongTap(x,y){

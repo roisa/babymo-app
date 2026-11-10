@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <script src="bm-fit.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta name="description" content="Kumpulan game &amp; aktivitas islami untuk anak: panduan sholat, doa harian, hijaiyah, kata baik &amp; puzzle seru bersama Baby Mo. Gratis &amp; ramah anak.">
 <title>Baby Mo — Game Islami &amp; Belajar Sholat, Doa, Hijaiyah untuk Anak</title>
 
@@ -2135,7 +2137,13 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
   var mp=document.getElementById('moPic');
   if(mp) mp.addEventListener('click',function(){
     var h=document.getElementById('moHello').textContent.replace(/[^\p{L}\p{N}\s',!?]/gu,''), s2=document.getElementById('greetSub').textContent.replace(/[^\p{L}\p{N}\s',!?]/gu,'');
-    try{ BabyMo.sfx('tap'); if(!BabyMo.isMuted()&&window.speechSynthesis){ var u=new SpeechSynthesisUtterance(h+'. '+s2); u.lang=en()?'en-US':'id-ID'; u.pitch=1.4; speechSynthesis.cancel(); speechSynthesis.speak(u);} }catch(e){}
+    try{ BabyMo.sfx('tap'); if(!BabyMo.isMuted()&&window.speechSynthesis){
+      var lg=en()?'en-US':'id-ID', mk=function(t){ var u=new SpeechSynthesisUtterance(t); u.lang=lg; u.pitch=1.4; return u; };
+      speechSynthesis.cancel();
+      // a recorded greeting ("Assalamu'alaikum" in Arabic, bm-voice.js) plays first, then the line in the phone's voice
+      if(window.BMVoice&&BMVoice.has(h,lg)){ speechSynthesis.speak(mk(h)); speechSynthesis.speak(mk(s2)); }
+      else speechSynthesis.speak(mk(h+'. '+s2));
+    } }catch(e){}
     var im=mp.querySelector('img'); im.style.animation='none'; void im.offsetWidth; im.style.animation='';
   });
 })();

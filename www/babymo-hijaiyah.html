@@ -7,6 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/hijaiyah.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta name="description" content="Jelajahi Pulau Hijaiyah bersama Baby Mo: gali, bangun, dan temukan 28 huruf hijaiyah tersembunyi di pulau voxel yang bisa dijelajahi bebas.">
 <title>Pulau Hijaiyah — Petualangan Ibra bersama Baby Mo | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
@@ -461,7 +463,9 @@ const Speech = {
       tts(it);
     };
     const tts = (it)=>{
-      const u = new SpeechSynthesisUtterance(useAr ? it.ar : it.lat);
+      // a recorded clip for the Arabic (bm-voice.js, voice/manifest.js) beats the Latin spelling
+      const ar = useAr || !!(window.BMVoice && BMVoice.has(it.ar));
+      const u = new SpeechSynthesisUtterance(ar ? it.ar : it.lat);
       u.lang = this.chosen ? this.chosen.lang : 'ar-SA';
       if(this.chosen) u.voice = this.chosen;
       u.rate = this.rate*(it.slow||1); u.pitch = 1.05;
