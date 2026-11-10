@@ -1649,6 +1649,33 @@ html[data-bm-theme="classic"] .rv-end .rv-weak b{color:var(--gold-lt)}
   .rv-end h3{width:calc(100% - 110px);text-align:left}
 }
 </style>
+<style id="bm-fresh">
+/* Fresh iOS polish (both themes): Fredoka display type, frosted-glass
+   cards, capsule buttons. Layout and colours unchanged. */
+:root{
+  --fx-glass:rgba(255,255,255,.72); --fx-hair:rgba(21,34,48,.08);
+  --fx-rim:inset 0 1px 0 rgba(255,255,255,.9), inset 0 -1px 0 rgba(21,34,48,.04);
+  --fx-shadow:0 18px 40px -26px rgba(30,60,110,.5);
+}
+html[data-bm-theme="classic"]{
+  --fx-glass:rgba(22,52,36,.6); --fx-hair:rgba(255,255,255,.10);
+  --fx-rim:inset 0 1px 0 rgba(255,255,255,.08), inset 0 -1px 0 rgba(0,0,0,.2);
+  --fx-shadow:0 18px 40px -22px rgba(0,0,0,.7);
+}
+.w-title,.lc-name,.q-name-big,.res-title,.fb-title,.about-title,.tk-end h3,.rv-end h3,.hp-title{font-family:'Fredoka','Nunito',sans-serif!important;font-weight:600!important;letter-spacing:-.02em;}
+.w-title{font-size:clamp(28px,8vw,34px);text-shadow:none;}
+.rss-n{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;}
+.letter-card,.q-card,.res-card,.w-strip-letter{
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  border-width:1px!important;box-shadow:var(--fx-rim),var(--fx-shadow)!important;}
+.letter-card,.res-card{border-radius:30px;}
+.q-card{border-radius:26px;}
+.w-strip-letter{border-radius:14px;}
+.choice-btn:not(.balloon-field .choice-btn){border-radius:20px;}
+.w-start,.nav-pri,.nav-sec,.res-btn-pri,.res-btn-sec{border-radius:999px!important;min-height:50px;}
+.w-start{min-height:58px;}
+.w-back{display:inline-flex;align-items:center;min-height:44px;}
+</style>
 <!-- ═══ Ulasan Harian (daily review) ═══ -->
 <div class="hp-ov" id="rvOv">
   <div class="hp-top"><button class="hp-x" id="rvX" type="button" aria-label="Keluar">✕</button><div class="hp-title" id="rvTitle">🔁 Ulasan Harian</div><span class="hp-pill" id="rvPill">1 / 5</span></div>
