@@ -448,6 +448,7 @@ const SFX = (function(){
   return {
     warm,
     mine(){ try{ noiseBurst(0.12,0.22); }catch(e){} },
+    splash(){ try{ noiseBurst(0.34,0.12); tone(620,0.16,'sine',0.05,0.04); tone(410,0.2,'sine',0.04,0.12); }catch(e){} },
     place(){ try{ tone(320,0.08,'square',0.14); tone(480,0.06,'square',0.1,0.03); }catch(e){} },
     jump(){ try{ tone(440,0.12,'triangle',0.14); }catch(e){} },
     critterPop(){ try{ tone(660,0.1,'sine',0.2); tone(880,0.12,'sine',0.17,0.06); tone(1100,0.14,'sine',0.14,0.12); }catch(e){} },
@@ -504,7 +505,8 @@ const Music = (function(){
 /* ============================================================
    THREE — dunia voxel
    ============================================================ */
-const SIZE = 44, HALF = SIZE/2, MAXH = 24;
+const SIZE = 44, HALF = SIZE/2, MAXH = 24;   // HALF: the old island square (hideouts, NPCs, seasons stay inside it)
+const ISLE_KEEP = 21.5, ISLE_R = 27.2, SEA_RING = 4.5, WHALF = 37;   // terrain kept as-is inside ISLE_KEEP; coast at ~ISLE_R
 const PEAK = {x:13, z:-12, r:6, h:13};
 const CAVE_HILL = {x:-13, z:9, r:4.5, h:6};
 function bump(x,z,b){
@@ -664,8 +666,25 @@ function heightAt(x,z){
     + 1.1*Math.sin((x+z)*0.11)
     + 0.8*Math.cos(x*0.07 - z*0.09);
   h += bump(x,z,PEAK) + bump(x,z,CAVE_HILL);
-  return Math.max(1, Math.min(MAXH, Math.round(h)));
+  h = Math.max(1, Math.min(MAXH, Math.round(h)));
+  // the island edge: hills ease down to a sand beach, then shallow water, then the open sea
+  const cx = Math.floor(x)+0.5, cz = Math.floor(z)+0.5;
+  if(isleNorm(cx,cz) <= ISLE_KEEP) return h;          // the old island (letters, village, hideouts) never changes
+  const s = shoreS(cx,cz);
+  if(s >= SEA_RING) return -1;                         // open sea: no ground at all
+  if(s >= 0) return 0;                                 // shallow turquoise water over a sandy floor
+  return Math.max(1, Math.min(h, 1 + Math.floor(Math.pow(Math.max(0,-s-1.2),1.3)/1.4)));   // eases down: steeper under the mountain, gentle at the sand
 }
+/* rounded-square island with a wobbly coastline; shoreS < 0 on land, 0 at the waterline */
+function isleNorm(x,z){ const ax=Math.abs(x), az=Math.abs(z); return Math.pow(ax*ax*ax*ax*ax*ax + az*az*az*az*az*az, 1/6); }
+function shoreR(x,z){
+  const a=Math.atan2(z,x); let da=a+0.745; da=Math.atan2(Math.sin(da),Math.cos(da));   // a headland under the mountain
+  return ISLE_R + 0.9*Math.sin(3*a+0.7) + 0.6*Math.sin(5*a+2.1) + 0.35*Math.sin(9*a+0.3) + 4*Math.exp(-da*da/0.25);
+}
+function shoreS(x,z){ return isleNorm(x,z) - shoreR(x,z); }
+const BEACH_S = -3.4;      // cells with shoreS above this are sand
+const WALK_S = -0.75;      // the player's centre never goes past this: they stay on the dry sand
+const isBeach = (x,z)=> shoreS(Math.floor(x)+0.5, Math.floor(z)+0.5) > BEACH_S;
 
 const letterBlocks = [];
 const spots = [];
@@ -696,18 +715,20 @@ function caveCarveSet(){
 }
 let caveInfo = null;
 function buildWorld(){
-  const cells = {grassTop:[],dirt:[],stone:[],sand:[],wood:[],leaf:[]};
+  const cells = {grassTop:[],dirt:[],stone:[],sand:[],wood:[],leaf:[],seabed:[]};
   caveInfo = caveCarveSet();
   const carved = caveInfo.carved;
-  for(let x=-HALF;x<HALF;x++){
-    for(let z=-HALF;z<HALF;z++){
-      const edge = Math.max(Math.abs(x),Math.abs(z)) >= HALF-1;
-      const h = edge ? heightAt(x,z)+2 : heightAt(x,z);
+  for(let x=-WHALF;x<WHALF;x++){
+    for(let z=-WHALF;z<WHALF;z++){
+      const h = heightAt(x,z);
+      if(h < 0) continue;                       // open sea
+      const beach = h === 0 || isBeach(x,z);
       for(let y=0;y<=h;y++){
         const k = key(x,y,z);
         if(carved.has(k)) continue;
         solids.add(k);
-        if(edge && y>h-2) cells.stone.push([x,y,z]);
+        if(h === 0) cells.seabed.push([x,y,z]);   // pale sand under the shallows: reads as turquoise water
+        else if(beach && y>h-3) cells.sand.push([x,y,z]);
         else if(y===h) cells.grassTop.push([x,y,z]);
         else if(y>h-3) cells.dirt.push([x,y,z]);
         else cells.stone.push([x,y,z]);
@@ -754,7 +775,8 @@ function buildWorld(){
     stone: new THREE.MeshLambertMaterial({map:T.stone}),
     sand : new THREE.MeshLambertMaterial({map:T.sand}),
     wood : new THREE.MeshLambertMaterial({map:T.wood}),
-    leaf : new THREE.MeshLambertMaterial({map:T.leaf})
+    leaf : new THREE.MeshLambertMaterial({map:T.leaf}),
+    seabed: new THREE.MeshLambertMaterial({map:T.sand, color:0xC8FFF2})
   };
   LEGO_COLORS.forEach(([key])=>{ mats[key] = new THREE.MeshLambertMaterial({map:T[key]}); });
   MATS = mats;
@@ -863,7 +885,7 @@ function buildDistantIslands(){
 const fishes = [];
 function buildFish(){
   for(let i=0;i<10;i++){
-    const a = Math.random()*Math.PI*2, r = HALF+4+Math.random()*20;
+    const a = Math.random()*Math.PI*2, r = shoreR(Math.cos(a),Math.sin(a))+2.5+Math.random()*14;
     const home = {x:Math.cos(a)*r, z:Math.sin(a)*r};
     const mat = new THREE.SpriteMaterial({map:T.fish, transparent:true, depthWrite:false});
     const spr = new THREE.Sprite(mat);
@@ -1316,7 +1338,6 @@ let lastSpeed = 0;
 let visY = P.y;
 let flyMode = false;
 let landKick = 0;
-let edgeNotified = false;
 function step(dt){
   const wasGrounded = P.ground;
   const sp = flyMode ? 5.6 : 4.4;
@@ -1370,16 +1391,36 @@ function step(dt){
     if(P.y < -8){ P.x=0.5; P.z=5.5; P.y=heightAt(0,0)+2; P.vy=0; }
   }
 
-  const lim = HALF - 2.4;
-  const cx = Math.max(-lim, Math.min(lim, P.x));
-  const cz = Math.max(-lim, Math.min(lim, P.z));
-  if((cx !== P.x || cz !== P.z) && !edgeNotified){
-    edgeNotified = true;
-    toast('🏝️ Ini ujung pulaunya! Baliklah ke tengah yuk~', 2600);
-  } else if(Math.abs(P.x) < lim-1.5 && Math.abs(P.z) < lim-1.5){
-    edgeNotified = false;
+  shoreClamp(ox, oz, dx, dz);
+}
+/* The sea is a soft wall: the player slides along the dry sand and is never trapped.
+   Purely horizontal, so digging, building or flying can't get past it either. */
+let lastSplashAt = -99;
+function shoreClamp(ox, oz, dx, dz){
+  if(shoreS(P.x,P.z) <= WALK_S) return;
+  if(shoreS(ox,oz) <= WALK_S){
+    // keep whichever axis still stays on land, so walking along the beach feels smooth
+    if(shoreS(ox,P.z) <= WALK_S) P.x = ox;
+    else if(shoreS(P.x,oz) <= WALK_S) P.z = oz;
+    else { P.x = ox; P.z = oz; }
+    if(hits(P.x,P.y,P.z)){ P.x = ox; P.z = oz; }
+  } else {
+    // already outside (old save, teleport): pull gently back towards the middle of the island
+    let lo = 0, hi = 1;
+    for(let i=0;i<14;i++){ const m=(lo+hi)/2; if(shoreS(P.x*m,P.z*m) <= WALK_S) lo=m; else hi=m; }
+    P.x *= lo; P.z *= lo;
+    const g = heightAt(Math.floor(P.x),Math.floor(P.z))+1;
+    if(P.y < g) { P.y = g; P.vy = 0; }
+    while(hits(P.x,P.y,P.z) && P.y < MAXH+4) P.y = Math.floor(P.y)+1;
   }
-  P.x = cx; P.z = cz;
+  const now = performance.now()/1000;
+  if(now - lastSplashAt > 7 && Math.hypot(dx,dz) > 0.001){
+    lastSplashAt = now;
+    toast(tr('Airnya dalam, kembali ke pantai ya! 🌊', 'The water is deep — back to the beach! 🌊'), 2600);
+    SFX.splash(); haptic(10);
+    const l = Math.hypot(dx,dz)||1;
+    spawnDust(P.x+dx/l*0.9, 1.75, P.z+dz/l*0.9, 0xCFF3FF);
+  }
 }
 function jump(){
   if(flyMode) return;
@@ -1393,7 +1434,7 @@ function updateCamera(){
   const camX = P.x + Math.sin(P.yaw)*horiz;
   const camZ = P.z + Math.cos(P.yaw)*horiz;
   let camY = visY + height + dist*Math.sin(P.pitch) - landKick;
-  const floorY = heightAt(camX,camZ)+0.7;
+  const floorY = Math.max(heightAt(camX,camZ)+0.7, 2.1);   // never dip under the sea surface
   if(camY < floorY) camY = floorY;
   // keep the camera out of houses and walls: pull it in towards the player
   const hx=P.x, hy=visY+1.15, hz=P.z;
@@ -1507,7 +1548,8 @@ function placeTarget(){
   const hit = raycastVoxel(cam.position, dir, 6);
   if(!hit || !hit.before){ toast('Arahkan ke tempat kosong'); return; }
   const {x,y,z} = hit.before;
-  if(y<0 || y>MAXH+3 || Math.abs(x)>=HALF || Math.abs(z)>=HALF) return;
+  if(y<0 || y>MAXH+3) return;
+  if(shoreS(x+0.5,z+0.5) > -0.3){ toast(tr('Di laut tidak bisa membangun — bangun di pulau ya! 🏝️','You can\'t build in the sea — build on the island! 🏝️')); return; }
   const k = key(x,y,z);
   if(solidAt(x,y,z) || playerOccupies(x,y,z)) return;
   const type = HOTBAR[selectedSlot];
@@ -1617,7 +1659,7 @@ function loadWorld(){
       const [k,type] = entry.split('|');
       if(!MATS[type]) return;
       const [x,y,z] = k.split(',').map(Number);
-      if(solidAt(x,y,z)) return;
+      if(solidAt(x,y,z) || shoreS(x+0.5,z+0.5) > -0.3) return;   // blocks that would now stand in the sea are dropped
       const mesh = new THREE.Mesh(blockGeo, MATS[type]);
       mesh.position.set(x+0.5,y+0.5,z+0.5);
       scene.add(mesh);
@@ -1760,7 +1802,7 @@ function shareBuild(){
 const BUILD_PROMPTS = [
   '🏠 Baby Mo: "Yuk coba bangun rumah kecil!"',
   '🕌 Baby Mo: "Bangun masjid mini, gimana?"',
-  '🌉 Baby Mo: "Bikin jembatan di atas air, yuk!"',
+  '🏖️ Baby Mo: "Bikin istana pasir di pantai, yuk!"',
   '🗼 Baby Mo: "Coba bangun menara paling tinggi!"',
   '🌳 Baby Mo: "Tanam \'taman\' kecil di sekitar sini!"',
   '🚧 Baby Mo: "Buat pagar sekeliling rumahmu!"',
@@ -2218,14 +2260,83 @@ function buildPathAndLamps(){
   [[2,8],[6,9],[9,12],[12,16],[3,14]].forEach(([x,z])=>{ const g=gTop(x+0.5,z+0.5); Batch.add(lampPost,0.12,1.7,0.12,x+0.5,g+0.85,z+0.5); Batch.add(lamp,0.3,0.32,0.3,x+0.5,g+1.86,z+0.5); Batch.add(lampPost,0.36,0.08,0.36,x+0.5,g+2.06,z+0.5); });
   // welcome sign at the village gate, facing the start point
   const sx=2.5, sz=8.3, g=gTop(sx,sz);
-  Batch.add(lampPost,0.12,1.6,0.12,sx-0.9,g+0.8,sz); Batch.add(lampPost,0.12,1.6,0.12,sx+0.9,g+0.8,sz);
+  // posts stand just behind the board (the start point is on its -z side): never in the same plane as its face (that z-fought = the blinking)
+  Batch.add(lampPost,0.13,1.7,0.13,sx-0.86,g+0.85,sz+0.17); Batch.add(lampPost,0.13,1.7,0.13,sx+0.86,g+0.85,sz+0.17);
   const signTex = tex((x,s)=>{ x.fillStyle='#8B5A33'; x.fillRect(0,0,s,s); x.fillStyle='#FFF3D6'; x.fillRect(6,s*0.22,s-12,s*0.56);
     x.fillStyle='#5A3A1E'; x.font='900 30px Nunito, sans-serif'; x.textAlign='center'; x.textBaseline='middle';
     x.fillText(tr('Kampung','Hijaiyah'), s/2, s*0.4); x.font='900 26px Nunito, sans-serif'; x.fillText(tr('Hijaiyah','Village'), s/2, s*0.62); },256,true);
   const sm = new THREE.MeshLambertMaterial({map:signTex});
   const wood = vmat(0x8B5A33);
-  const sign = new THREE.Mesh(new THREE.BoxGeometry(2.0,1.0,0.12), [wood,wood,wood,wood,sm,sm]);
+  const sign = new THREE.Mesh(new THREE.BoxGeometry(2.0,1.0,0.14), [wood,wood,wood,wood,sm,sm]);
   sign.position.set(sx, g+1.35, sz); scene.add(sign);
+}
+/* ---------- the shore: palms, shells, rocks, a little pier and a boat (all batched, no lights) ---------- */
+const PIER_A = 1.99;   // direction of the pier from the island centre (seen from the start point)
+function shorePoint(a, target){
+  const ux=Math.cos(a), uz=Math.sin(a);
+  for(let r=18;r<42;r+=0.2){ const x=ux*r, z=uz*r; if(shoreS(Math.floor(x)+0.5,Math.floor(z)+0.5) > target) return {x, z, ux, uz, h:heightAt(Math.floor(x),Math.floor(z))}; }
+  return null;
+}
+function buildShore(){
+  let seed = 913; const rnd = ()=> (seed = (seed*16807) % 2147483647) / 2147483647;
+  const trunkA = vmat(0x9C7A4E), trunkB = vmat(0x86663F), leafA = vmat(0x3E9B47), leafB = vmat(0x5BB653), nut = vmat(0x6B4A2B);
+  const wood = vmat(0xA27449, VT.plank), postM = vmat(0x6E4A2E);
+  const angDist = (a,b)=>Math.abs(Math.atan2(Math.sin(a-b),Math.cos(a-b)));
+  // palms on the sand, leaning out to sea
+  for(let i=0;i<16;i++){
+    const a = i/16*Math.PI*2 + (rnd()-0.5)*0.25;
+    if(angDist(a,PIER_A) < 0.22) continue;
+    const sp = shorePoint(a, -2.3 + rnd()*0.6); if(!sp || sp.h < 1) continue;
+    const cx = Math.floor(sp.x), cz = Math.floor(sp.z), px = cx+0.5, pz = cz+0.5, g = sp.h+1;
+    const segs = 6 + ((rnd()*2)|0), lean = 0.03 + rnd()*0.02;
+    let tx = px, tz = pz, ty = g;
+    for(let k=0;k<segs;k++){
+      tx = px + sp.ux*lean*k*k; tz = pz + sp.uz*lean*k*k; ty = g + 0.27 + k*0.5;
+      Batch.add(k%2?trunkA:trunkB, 0.32-k*0.012, 0.52, 0.32-k*0.012, tx, ty, tz);
+    }
+    const topY = ty + 0.3, rot0 = rnd()*Math.PI;
+    for(let f=0;f<7;f++){
+      const fr = new THREE.BoxGeometry(1.7, 0.07, 0.42);
+      fr.translate(0.85, 0, 0); fr.rotateZ(-0.32 - (f%2)*0.16); fr.rotateY(rot0 + f/7*Math.PI*2);
+      fr.translate(tx, topY + (f%2)*0.03, tz);
+      Batch.addGeo(f%2?leafA:leafB, fr);
+    }
+    for(let c=0;c<3;c++){ const ca = rot0 + c*2.1; Batch.add(nut, 0.2,0.2,0.2, tx+Math.cos(ca)*0.2, topY-0.22, tz+Math.sin(ca)*0.2); }
+    for(let y=g;y<g+3;y++) solids.add(key(cx,y,cz));   // bump into the trunk like any tree
+  }
+  // shells & starfish on the sand
+  const shellC = [0xF7B5C4, 0xFFF4E6, 0xF9C89B, 0xE9A3D0];
+  for(let i=0;i<46;i++){
+    const sp = shorePoint(rnd()*Math.PI*2, -2.4 + rnd()*1.7); if(!sp || sp.h < 1) continue;
+    const x = sp.x + (rnd()-0.5)*0.6, z = sp.z + (rnd()-0.5)*0.6, g = heightAt(Math.floor(x),Math.floor(z))+1;
+    if(g < 2) continue;
+    if(i%6===0){ const r=rnd()*3; Batch.add(vmat(0xF28A3A), 0.4,0.05,0.1, x,g+0.035,z, r); Batch.add(vmat(0xF28A3A), 0.4,0.07,0.1, x,g+0.045,z, r+Math.PI/2); }
+    else Batch.add(vmat(shellC[i%4]), 0.2,0.07,0.16, x,g+0.045,z, rnd()*3);
+  }
+  // rocks along the waterline, some poking out of the shallows
+  const rockA = vmat(0x9AA0A6, VT.stone), rockB = vmat(0x80878E, VT.stone);
+  for(let i=0;i<22;i++){
+    const a = rnd()*Math.PI*2; if(angDist(a,PIER_A) < 0.15) continue;
+    const sp = shorePoint(a, 0.2 + rnd()*2.4); if(!sp) continue;
+    const hgt = 0.6 + rnd()*0.6, w = 0.5 + rnd()*0.6, base = Math.max(1, sp.h+1);
+    Batch.add(i%2?rockA:rockB, w, hgt, w*(0.7+rnd()*0.5), sp.x, base+hgt/2-0.05, sp.z, rnd()*3);
+    if(i%3===0) Batch.add(i%2?rockB:rockA, w*0.55, hgt*0.6, w*0.5, sp.x+0.4*sp.uz, base+hgt*0.3-0.05, sp.z-0.4*sp.ux, rnd()*3);
+  }
+  // a little wooden pier with a boat tied at the end
+  const pp = shorePoint(PIER_A, -1.25);
+  if(pp){
+    const th = Math.atan2(pp.ux, pp.uz), len = 5.2, sx2 = -pp.uz, sz2 = pp.ux;   // (sx2,sz2): sideways
+    for(let d=0; d<len; d+=0.5){ Batch.add(wood, 1.4, 0.1, 0.42, pp.x+pp.ux*d, 2.11, pp.z+pp.uz*d, th); }
+    for(let d=0.6; d<=len; d+=1.5) [-0.62,0.62].forEach(o=>Batch.add(postM, 0.16, 1.5, 0.16, pp.x+pp.ux*d+sx2*o, 1.4, pp.z+pp.uz*d+sz2*o));
+    [-0.62,0.62].forEach(o=>Batch.add(postM, 0.16, 0.7, 0.16, pp.x+pp.ux*(len-0.2)+sx2*o, 2.5, pp.z+pp.uz*(len-0.2)+sz2*o));
+    const bx = pp.x+pp.ux*(len-1.2)+sx2*1.45, bz = pp.z+pp.uz*(len-1.2)+sz2*1.45;
+    Batch.add(vmat(0xD0583F), 0.95, 0.42, 2.1, bx, 1.62, bz, th);
+    Batch.add(vmat(0xF6E7C8), 1.0, 0.08, 2.16, bx, 1.87, bz, th);
+    Batch.add(vmat(0xD0583F), 0.55, 0.36, 0.5, bx+pp.ux*1.2, 1.66, bz+pp.uz*1.2, th);
+    Batch.add(wood, 1.02, 0.06, 0.26, bx, 1.94, bz, th);
+    Batch.add(postM, 0.07, 1.5, 0.07, bx-pp.ux*0.2, 2.65, bz-pp.uz*0.2);
+    Batch.add(vmat(0xFFFFFF), 0.04, 1.0, 0.75, bx-pp.ux*0.6, 2.7, bz-pp.uz*0.6, th);
+  }
 }
 function buildVillage(){
   villageTextures();
@@ -2235,7 +2346,7 @@ function buildVillage(){
     else if(b.t==='well') buildWell(b);
     else if(b.t==='stall') buildStall(b);
   });
-  buildPen(VILLAGE.pen); buildField(VILLAGE.field); buildPathAndLamps();
+  buildPen(VILLAGE.pen); buildField(VILLAGE.field); buildPathAndLamps(); buildShore();
   Batch.flush();
 }
 
