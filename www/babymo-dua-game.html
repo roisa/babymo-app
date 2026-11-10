@@ -314,13 +314,19 @@ html[data-bm-theme="bright"] .b1{color:#fff;text-shadow:0 1px 1px rgba(0,60,30,.
 <link rel="stylesheet" href="bm-bright.css">
 <script src="bm-icons.js" defer></script>
 <script src="doa-scenes.js"></script>
+<style id="bm-hub-chip">
+.hub-chip{min-height:44px!important;padding:0 14px 0 8px!important;gap:6px!important;font:800 15px/1 'Nunito',sans-serif!important;transition:transform .26s cubic-bezier(.34,1.56,.64,1)}
+.hub-chip:active{transform:scale(.94)}
+.hub-chip img{width:26px;height:26px;border-radius:8px;box-shadow:0 3px 8px -3px rgba(150,80,0,.55);flex:none}
+.hub-chip .hub-chev{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;opacity:.85}
+</style>
 </head>
 <body>
 
 <!-- ════ JOURNEY MAP ════ -->
 <div class="screen active" id="mapScreen">
   <div class="m-top">
-    <a class="chip" href="./index.html">🏠 Hub</a>
+    <a class="chip hub-chip" href="./index.html" aria-label="Game Hub"><svg class="hub-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><img src="icons/ui/home.svg" alt="" width="26" height="26">Hub</a>
     <span class="chip" id="totStars">⭐ 0/21</span>
   </div>
   <div class="hero">
