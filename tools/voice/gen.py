@@ -58,6 +58,16 @@ def call(url, body):
             msg = e.read().decode(errors="replace")[:400]
             if e.code in (429, 500, 503) and attempt < 3:
                 time.sleep(2 ** attempt); continue
+            # an API that was *just* enabled answers 403 for a few minutes while it switches on — wait and retry
+            if e.code == 403 and ("has not been used" in msg or "disabled" in msg or "SERVICE_DISABLED" in msg) and attempt < 3:
+                for w in range(12):
+                    print(f"   …Google is still switching the API on, waiting ({(w+1)*15}s)", flush=True)
+                    time.sleep(15)
+                    try:
+                        return json.load(urllib.request.urlopen(req, timeout=40))
+                    except urllib.error.HTTPError as e2:
+                        if e2.code != 403: raise
+                continue
             raise SystemExit(f"HTTP {e.code} from {url.split('?')[0]}:\n{msg}")
         except urllib.error.URLError as e:
             if attempt < 3:
@@ -92,6 +102,7 @@ def main():
     ap.add_argument("--only", choices=["hijaiyah", "doa"])
     ap.add_argument("--check", action="store_true")
     ap.add_argument("--test", action="store_true")
+    ap.add_argument("--force", action="store_true", help="remake clips that already exist")
     a = ap.parse_args()
     items = json.load(open(DATA, encoding="utf-8"))
     if a.test:
@@ -108,8 +119,12 @@ def main():
         sel = [x for x in items if x["sec"] == sec]
         for i, x in enumerate(sel, 1):
             fn = x["id"] + ".mp3"
-            mp3 = synth(x["t"], x["k"], a.voice)
-            open(os.path.join(d, fn), "wb").write(mp3)
+            fp = os.path.join(d, fn)
+            if os.path.exists(fp) and os.path.getsize(fp) > 1000 and not a.force:
+                mp3 = open(fp, "rb").read()          # already made on an earlier run — resume
+            else:
+                mp3 = synth(x["t"], x["k"], a.voice)
+                open(fp, "wb").write(mp3)
             man[x["t"]] = fn
             line = f"[{sec} {i}/{len(sel)}] {x['t']}  ({x.get('h','')})  {len(mp3)}B"
             if a.check:
