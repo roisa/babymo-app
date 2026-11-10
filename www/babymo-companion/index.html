@@ -1245,6 +1245,7 @@ em{color:#B45309!important;}
 
 <div class="toast" id="toast"></div>
 
+<script src="/bm-prayertimes.js"></script>
 <script>
 const KAABA={lat:21.4225,lng:39.8262};
 const PRAYER_NAMES=['Subuh','Dzuhur','Ashar','Magrib','Isya'];
@@ -1344,44 +1345,18 @@ function ptApply(t){
 }
 function ptPrune(c){const ks=Object.keys(c.days||{}).sort();while(ks.length>7)delete c.days[ks.shift()];}
 
-async function fetchPrayer(lat,lng){
-  const d=new Date(),today=ptDayKey(d),ds=`${String(d.getDate()).padStart(2,'0')}-${String(d.getMonth()+1).padStart(2,'0')}-${d.getFullYear()}`;
-  const cache=ptLoadCache();
-  if(cache.days&&cache.days[today]){ptApply(cache.days[today]);scheduleNotifications();}
-  try{
-    const r=await fetch(`https://api.aladhan.com/v1/timings/${ds}?latitude=${(+lat).toFixed(2)}&longitude=${(+lng).toFixed(2)}&method=20`);
-    if(!r.ok)throw new Error('http '+r.status);
-    const data=await r.json();
-    ptApply(data.data.timings);
-    cache.days=cache.days||{};cache.days[today]=data.data.timings;cache.loc={lat,lng};
-    ptPrune(cache);ptSaveCache(cache);
-    reverseGeo(lat,lng);
-    scheduleNotifications();
-  }catch(e){
-    if(!cache.days||!cache.days[today]){
-      const recent=Object.keys(cache.days||{}).sort().pop();
-      if(recent){
-        ptApply(cache.days[recent]);
-        document.getElementById('locLabel').textContent='📍 Mode offline · perkiraan ('+recent+')';
-        scheduleNotifications();
-        return;
-      }
-      document.getElementById('locLabel').textContent='⚠️ Gagal memuat. Coba lagi saat online.';
-    }else{
-      const lbl=document.getElementById('locLabel');
-      if(!/offline/i.test(lbl.textContent))lbl.textContent='📍 Lokasi tersimpan · mode offline';
-    }
-  }
-}
-async function reverseGeo(lat,lng){
-  try{
-    const r=await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${(+lat).toFixed(2)}&longitude=${(+lng).toFixed(2)}&localityLanguage=id`);
-    const d=await r.json();
-    const city=d.city||d.locality||d.principalSubdivision||'Lokasi aktif';
-    document.getElementById('locLabel').textContent=`📍 ${city}`;
-    /* Persist so other pages (Pray-with-Mo prayer-times popup) can show it */
-    try{localStorage.setItem('mo_reverse_city',JSON.stringify({n:city,lat:lat,lng:lng,at:Date.now()}));}catch(e){}
-  }catch(e){document.getElementById('locLabel').textContent='📍 Lokasi aktif';}
+/* Prayer times are computed on the device (bm-prayertimes.js, Kemenag RI
+   parameters) and the place is labelled by the device time zone — the
+   location never leaves the phone. */
+function fetchPrayer(lat,lng){
+  try{ptApply(BMPrayerTimes.timings(new Date(),lat,lng));}catch(e){return;}
+  try{localStorage.removeItem(PT_CACHE_KEY);localStorage.removeItem('mo_reverse_city');}catch(e){}
+  const en=(()=>{try{return localStorage.getItem('bm_lang')==='en';}catch(e){return false;}})();
+  const m=(()=>{try{return JSON.parse(localStorage.getItem('mo_manual_city')||'null');}catch(e){return null;}})();
+  const lbl=document.getElementById('locLabel');
+  if(m&&Math.abs(m.lat-lat)<.01)lbl.textContent=`📍 ${m.n} (manual)`;
+  else lbl.textContent='📍 '+(en?'Your location':'Lokasimu')+' · '+BMPrayerTimes.zoneLabel();
+  scheduleNotifications();
 }
 function curPrayerIdx(){
   if(!prayerMinutes)return-1;
@@ -1934,10 +1909,14 @@ document.getElementById('qNext').addEventListener('click',()=>{currentQuoteIdx=(
     if(window.navigator.vibrate)window.navigator.vibrate(8);
   }
 })();
-document.getElementById('qShare').addEventListener('click',async()=>{
+document.getElementById('qShare').addEventListener('click',()=>{
   const q=Q[currentQuoteIdx],tx=`${q.a}\n\n"${q.t}"\n— ${q.s}\n\nvia Baby Mo`;
-  if(navigator.share){try{await navigator.share({text:tx});}catch(e){}}
-  else{try{await navigator.clipboard.writeText(tx);const b=document.getElementById('qShare');const o=b.textContent;b.textContent='✓ Tersalin';setTimeout(()=>b.textContent=o,1500);}catch(e){}}
+  const go=async()=>{
+    if(navigator.share){try{await navigator.share({text:tx});}catch(e){}}
+    else{try{await navigator.clipboard.writeText(tx);const b=document.getElementById('qShare');const o=b.textContent;b.textContent='✓ Tersalin';setTimeout(()=>b.textContent=o,1500);}catch(e){}}
+  };
+  /* iOS app: a grown-up answers the parental gate first */
+  if(window.BabyMo&&BabyMo.parentGate)BabyMo.parentGate(go);else if(!window.Capacitor)go();
 });
 
 /* The child's name is set on the hub, not here */

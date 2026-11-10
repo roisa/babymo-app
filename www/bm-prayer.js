@@ -3,8 +3,9 @@
    Kiblat / Mutiara / Kalender as bottom sheets — no separate page.
    Shares storage with the old companion page (babymo-companion/), so a
    child's location, cached times and streak carry over:
-     mo_cached_loc, mo_manual_city, mo_reverse_city,
-     mo_prayer_cache_v1, mo_prayer_streaks_v1 */
+     mo_cached_loc, mo_manual_city, mo_prayer_streaks_v1
+   Prayer times and the qibla are computed ON THE DEVICE
+   (bm-prayertimes.js, Kemenag RI parameters) — nothing is sent anywhere. */
 (function () {
   "use strict";
   var root = document.getElementById("prayerHub"); if (!root) return;
@@ -90,10 +91,12 @@
   /* ── prayer times ── */
   var times = null, mins = null, loc = get("mo_cached_loc", null), qibla = null, heading = null;
   function locName() {
-    var m = get("mo_manual_city", null), r = get("mo_reverse_city", null);
+    var m = get("mo_manual_city", null);
     if (m && loc && Math.abs(m.lat - loc.lat) < .01) return m.n;
-    if (r && loc && Math.abs(r.lat - loc.lat) < .05) return r.n;
-    return loc ? T("Lokasimu", "Your location") : null;
+    /* no reverse geocoding (that would send the location off the device):
+       label GPS spots by the device's time zone instead — WIB/WITA/WIT. */
+    var z = ""; try { z = window.BMPrayerTimes ? BMPrayerTimes.zoneLabel() : ""; } catch (e) {}
+    return loc ? T("Lokasimu", "Your location") + (z ? " · " + z : "") : null;
   }
   function apply(t) {
     times = t; mins = KEYS.map(function (k) { var p = t[k].slice(0, 5).split(":"); return +p[0] * 60 + +p[1]; });
@@ -101,32 +104,16 @@
   }
   function fetchTimes() {
     if (!loc) { render(); return; }
-    var d = new Date(), key = dkey(d), cache = get("mo_prayer_cache_v1", {});
-    if (cache.days && cache.days[key]) apply(cache.days[key]);
-    var ds = String(d.getDate()).padStart(2, "0") + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + d.getFullYear();
-    fetch("https://api.aladhan.com/v1/timings/" + ds + "?latitude=" + (+loc.lat).toFixed(2) + "&longitude=" + (+loc.lng).toFixed(2) + "&method=20")
-      .then(function (r) { if (!r.ok) throw 0; return r.json(); })
-      .then(function (j) {
-        var tm = j.data.timings; cache.days = cache.days || {}; cache.days[key] = tm; cache.loc = loc;
-        var ks = Object.keys(cache.days).sort(); while (ks.length > 7) delete cache.days[ks.shift()];
-        put("mo_prayer_cache_v1", cache); apply(tm);
-      })
-      .catch(function () {
-        if (!times) { var ks = Object.keys(cache.days || {}).sort(); if (ks.length) apply(cache.days[ks.pop()]); else render(); }
-      });
+    try { apply(BMPrayerTimes.timings(new Date(), loc.lat, loc.lng)); } catch (e) { render(); }
+    render._d = dkey(new Date());
     computeQibla();
-  }
-  function reverseCity() {
-    if (!loc) return;
-    fetch("https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=" + (+loc.lat).toFixed(2) + "&longitude=" + (+loc.lng).toFixed(2) + "&localityLanguage=id")
-      .then(function (r) { return r.json(); })
-      .then(function (d) { var n = d.city || d.locality || d.principalSubdivision; if (n) { put("mo_reverse_city", { n: n, lat: loc.lat, lng: loc.lng, at: Date.now() }); render(); } })
-      .catch(function () {});
   }
   function setLoc(l, name) {
     loc = { lat: l.lat, lng: l.lng }; put("mo_cached_loc", loc);
     if (name) put("mo_manual_city", { n: name, lat: l.lat, lng: l.lng });
-    times = null; fetchTimes(); if (!name) reverseCity();
+    if (!name) { try { localStorage.removeItem("mo_manual_city"); } catch (e) {} }
+    try { localStorage.removeItem("mo_reverse_city"); localStorage.removeItem("mo_prayer_cache_v1"); } catch (e) {}
+    times = null; fetchTimes();
   }
   function useMyLocation() {
     if (!navigator.geolocation) { toast(T("Lokasi tidak didukung di perangkat ini", "Location isn't supported on this device")); openCities(); return; }
@@ -422,7 +409,8 @@
     else if (a === "qnext" || a === "qprev") { qi = (qi + (a === "qnext" ? 1 : Q.length - 1)) % Q.length; document.getElementById("phQ").innerHTML = quoteHtml(); }
     else if (a === "qshare") {
       var q = Q[qi], tx = q[0] + '\n\n"' + (L() === "en" ? q[2] : q[1]) + '"\n— ' + q[3] + "\n\nvia Baby Mo · play.babymo.id";
-      if (navigator.share) navigator.share({ text: tx }).catch(function () {}); else if (navigator.clipboard) navigator.clipboard.writeText(tx).then(function () { toast(T("✓ Tersalin", "✓ Copied")); });
+      var doShare = function () { if (navigator.share) navigator.share({ text: tx }).catch(function () {}); else if (navigator.clipboard) navigator.clipboard.writeText(tx).then(function () { toast(T("✓ Tersalin", "✓ Copied")); }); };
+      if (window.BabyMo && BabyMo.parentGate) BabyMo.parentGate(doShare); else if (!window.Capacitor) doShare();
     }
   }
   root.addEventListener("click", onClick); sh.addEventListener("click", onClick); if (tools) tools.addEventListener("click", onClick);

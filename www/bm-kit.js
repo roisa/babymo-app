@@ -3,7 +3,8 @@
    Add once per page:  <script src="/bm-kit.js" defer></script>
 
    Provides:
-     1. Privacy-friendly analytics (no cookies, no PII)
+     1. NO analytics — nothing is ever sent anywhere (Kids Category).
+        BabyMo.track() is kept as a no-op so existing calls stay harmless.
      2. A branded Web-Share helper          → BabyMo.share(opts)
      3. A score/result share helper          → BabyMo.shareScore(score, stars, message, extra)
         ...which attaches a generated branded 1080×1350 result IMAGE
@@ -15,6 +16,9 @@
      5. Shared star jar                      → BabyMo.getStars() / addStars(n)
      6. Daily missions + app-wide streak     → BabyMo.daily.*  (see the
         "Daily system" block below and /docs/daily-api.md)
+     7. Parental gate (iOS app only)         → BabyMo.parentGate(onPass[, onCancel])
+        Every share, external link, window.open, mailto/tel in the app asks
+        a grown-up a sum first. On the website it passes straight through.
 
    Quiet mode: set window.BM_KIT_QUIET = true before this script to get
    the helpers without the greeting bubble or the win watcher (used by
@@ -29,40 +33,10 @@
   var PLAY_ORIGIN = "https://play.babymo.id";
   var MASCOT_SRC = "/Logo_Baby_Mo_Transparant.webp";
 
-  // ---- CONFIG ------------------------------------------------
-  // Privacy-first analytics via Cloudflare Web Analytics — free, no
-  // cookies, no PII, GDPR-friendly. It only loads on the real domain, so
-  // local/in-app opens never pollute the numbers.
-  //
-  // To turn analytics ON: create a free site for "play.babymo.id" at
-  //   Cloudflare dashboard → Web Analytics → add a site → copy the token,
-  // then paste it below. No other change needed. Leave "" to keep it off.
-  var CF_BEACON_TOKEN = ""; // e.g. "abc123...". Empty = analytics disabled.
-
-  function isProd() {
-    return location.hostname === "play.babymo.id";
-  }
-
-  // ---- Analytics --------------------------------------------
-  function initAnalytics() {
-    try {
-      if (!CF_BEACON_TOKEN || !isProd()) return;
-      var s = document.createElement("script");
-      s.defer = true;
-      s.src = "https://static.cloudflareinsights.com/beacon.min.js";
-      s.setAttribute("data-cf-beacon", '{"token":"' + CF_BEACON_TOKEN + '"}');
-      document.head.appendChild(s);
-    } catch (e) {}
-  }
-
-  // Lightweight custom-event hook. Cloudflare Web Analytics is page-view
-  // based (no custom events on the free tier), so this is a safe no-op
-  // that still works if you later swap in an events-capable provider.
-  function track(event, props) {
-    try {
-      if (typeof window.bmTrack === "function") window.bmTrack(event, props);
-    } catch (e) {}
-  }
+  // ---- Analytics: none -------------------------------------
+  // Baby Mo collects nothing: no analytics, no beacons, no custom events.
+  // track() stays as a no-op only so older calls in the games are harmless.
+  function track() {}
 
   // ---- Offline support --------------------------------------
   // Registers the service worker so games load fast and work without
@@ -773,12 +747,14 @@
 
   // ---- Share -------------------------------------------------
   function share(opts) {
+    // In the iOS app a grown-up answers the parental gate first; the share
+    // itself then runs inside the gate's button tap (a fresh user gesture).
+    if (isApp() && !gateOpen) { parentGate(function () { share(opts); }); return; }
     opts = localize(opts);
     var text = buildMessage(opts);
     var url = opts.url || gameUrl();
     var en = moLang() === "en";
     var title = opts.title || (shareGame().n || [])[en ? 1 : 0] || gameName();
-    track("Share", { game: gameName() });
 
     // Try to attach a branded image (kept synchronous for the gesture).
     var file = null, dataURL = null;
@@ -1224,7 +1200,6 @@
       a.className = "bm-next"; a.href = "/" + n[1];
       a.innerHTML = '<img alt="" src="/icons/games/' + n[0] + '.svg"><span class="t"><span class="e">Coba juga</span>' +
         '<span class="n">' + n[2] + '</span><span class="h">' + n[3] + '</span></span><span class="c">›</span>';
-      a.addEventListener("click", function () { track("next_game", { to: n[0] }); });
       winEl.appendChild(a);
       keepToastsOffCard();
       placeMo();
@@ -1635,7 +1610,7 @@
         var res = settle(s, ds);
         saveDaily(s);
         emitDaily({ type: "mark", gameId: gameId, taskId: taskId, isNew: isNew, missions: res.fresh.map(function (m) { return m.id; }), done: res.done, bonus: res.bonus });
-        if (res.fresh.length) { track("daily_mission", { id: res.fresh[0].id, done: res.done }); announce(res); }
+        if (res.fresh.length) announce(res);
         return isNew;
       } catch (e) { return false; }
     },
@@ -1763,6 +1738,183 @@
     return true;
   }
 
+  // ---- Parental gate (iOS app only) -------------------------
+  // Apple Kids Category (1.3 / 5.1.4): anything that leaves the app or
+  // shares content sits behind a grown-up question. Only inside the
+  // Capacitor app; on the website everything behaves exactly as before.
+  //   BabyMo.parentGate(onPass[, onCancel])  — onPass runs inside the
+  //   tap on the right answer, so navigator.share() still has a gesture.
+  // Also guarded automatically in the app: navigator.share(), window.open()
+  // to another host, and taps on <a> links that leave the app (other
+  // hosts, target=_blank, mailto:, tel:, sms:, …).
+  var gateOpen = false;   // true while onPass runs → nested calls go through
+  var gateEl = null;
+  function isApp() {
+    try {
+      var C = window.Capacitor;
+      if (C) return typeof C.isNativePlatform === "function" ? !!C.isNativePlatform() : true;
+      return location.protocol === "capacitor:";
+    } catch (e) { return false; }
+  }
+  function isExternalUrl(u) {
+    try {
+      var x = new URL(String(u), location.href), p = x.protocol;
+      if (p === "http:" || p === "https:") return x.origin !== location.origin;
+      return !/^(data|blob|about|javascript|capacitor|file):$/.test(p);
+    } catch (e) { return false; }
+  }
+  function gateCss() {
+    if (document.getElementById("bm-gate-css")) return;
+    var st = document.createElement("style"); st.id = "bm-gate-css";
+    st.textContent =
+      ".bm-gate-bg{position:fixed;inset:0;z-index:2147483000;background:rgba(20,30,50,.34);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);opacity:0;transition:opacity .22s}" +
+      ".bm-gate-bg.open{opacity:1}" +
+      ".bm-gate{position:fixed;left:0;right:0;bottom:0;z-index:2147483001;max-width:520px;margin:0 auto;box-sizing:border-box;padding:10px 20px calc(20px + env(safe-area-inset-bottom));" +
+        "border-radius:30px 30px 0 0;font-family:'Nunito',system-ui,-apple-system,sans-serif;color:#152230;text-align:center;" +
+        "background:rgba(255,255,255,.84);-webkit-backdrop-filter:saturate(180%) blur(28px);backdrop-filter:saturate(180%) blur(28px);" +
+        "box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 -18px 48px -18px rgba(20,40,80,.45);border-top:.5px solid rgba(255,255,255,.9);" +
+        "transform:translateY(105%);transition:transform .36s cubic-bezier(.2,.9,.25,1)}" +
+      ".bm-gate.open{transform:none}.bm-gate:focus{outline:none}" +
+      ".bm-gate *{box-sizing:border-box}" +
+      ".bm-gate-grab{width:40px;height:5px;border-radius:3px;background:rgba(21,34,48,.18);margin:0 auto 14px}" +
+      ".bm-gate-ic{width:52px;height:52px;margin:0 auto 8px;border-radius:16px;display:grid;place-items:center;font-size:26px;background:linear-gradient(135deg,#FFE8B8,#FFD0DE);box-shadow:0 8px 18px -10px rgba(180,90,40,.6)}" +
+      ".bm-gate-k{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#E8590C}" +
+      ".bm-gate h2{margin:6px 0 4px;font-family:'Fredoka','Nunito',sans-serif;font-size:22px;font-weight:700;line-height:1.25}" +
+      ".bm-gate-sub{margin:0 0 14px;font-size:14px;font-weight:700;color:#5A6878;line-height:1.35}" +
+      ".bm-gate-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}" +
+      ".bm-gate-opts button{min-height:56px;border:none;border-radius:18px;cursor:pointer;font:800 22px/1 'Nunito',system-ui,sans-serif;color:#152230;" +
+        "background:rgba(255,255,255,.92);box-shadow:0 0 0 .5px rgba(21,34,48,.1),0 8px 18px -12px rgba(30,60,110,.45);-webkit-tap-highlight-color:transparent;touch-action:manipulation}" +
+      ".bm-gate-opts button:active{transform:scale(.96)}" +
+      ".bm-gate-opts button.no{background:#FFE1E1;color:#B42318}" +
+      ".bm-gate-err{min-height:20px;margin:10px 0 2px;font-size:14px;font-weight:800;color:#B42318}" +
+      ".bm-gate-x{width:100%;min-height:50px;margin-top:4px;border:none;border-radius:16px;cursor:pointer;font:800 16px/1 'Nunito',system-ui,sans-serif;color:#0A7FB0;background:transparent}" +
+      ".bm-gate.shake{animation:bmGateShake .4s}" +
+      "@keyframes bmGateShake{20%,60%{margin-left:-8px}40%,80%{margin-left:8px}}" +
+      "html[data-theme=dark] .bm-gate,html[data-bm-theme=classic] .bm-gate{color:#F2F5FA;background:rgba(30,36,48,.82);border-top-color:rgba(255,255,255,.12);box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 -18px 48px -18px rgba(0,0,0,.7)}" +
+      "html[data-theme=dark] .bm-gate-grab,html[data-bm-theme=classic] .bm-gate-grab{background:rgba(255,255,255,.25)}" +
+      "html[data-theme=dark] .bm-gate-k,html[data-bm-theme=classic] .bm-gate-k{color:#FFB547}" +
+      "html[data-theme=dark] .bm-gate-sub,html[data-bm-theme=classic] .bm-gate-sub{color:rgba(242,245,250,.72)}" +
+      "html[data-theme=dark] .bm-gate-opts button,html[data-bm-theme=classic] .bm-gate-opts button{color:#F2F5FA;background:rgba(255,255,255,.12);box-shadow:0 0 0 .5px rgba(255,255,255,.12)}" +
+      "html[data-theme=dark] .bm-gate-opts button.no,html[data-bm-theme=classic] .bm-gate-opts button.no{background:rgba(255,90,90,.25);color:#FFB4B4}" +
+      "html[data-theme=dark] .bm-gate-err,html[data-bm-theme=classic] .bm-gate-err{color:#FF9B9B}" +
+      "html[data-theme=dark] .bm-gate-x,html[data-bm-theme=classic] .bm-gate-x{color:#7CC8FF}" +
+      "@media (prefers-reduced-motion:reduce){.bm-gate,.bm-gate-bg{transition:none}.bm-gate.shake{animation:none}}";
+    document.head.appendChild(st);
+  }
+  function rnd(a, b) { return a + Math.floor(Math.random() * (b - a + 1)); }
+  function gateQuestion() {
+    var a, b, ans, op;
+    if (Math.random() < 0.5) { a = rnd(6, 9); b = rnd(6, 9); ans = a * b; op = " × "; }
+    else { a = rnd(14, 48); b = rnd(13, 39); ans = a + b; op = " + "; }
+    var opts = [ans];
+    while (opts.length < 4) {
+      var c = ans + (Math.random() < 0.5 ? -1 : 1) * rnd(1, 12);
+      if (c > 0 && opts.indexOf(c) < 0) opts.push(c);
+    }
+    for (var i = opts.length - 1; i > 0; i--) { var j = rnd(0, i), t = opts[i]; opts[i] = opts[j]; opts[j] = t; }
+    return { q: a + op + b, ans: ans, opts: opts };
+  }
+  function closeGate(cb) {
+    var g = gateEl; gateEl = null;
+    if (!g) return;
+    document.removeEventListener("keydown", g.key, true);
+    g.bg.classList.remove("open"); g.sheet.classList.remove("open");
+    g.bg.style.pointerEvents = g.sheet.style.pointerEvents = "none";
+    var h = g.sheet.querySelector("#bmGateQ"); if (h) h.removeAttribute("id");
+    setTimeout(function () { g.bg.remove(); g.sheet.remove(); }, 380);
+    if (cb) cb();
+  }
+  function parentGate(onPass, onCancel) {
+    if (typeof onPass !== "function") onPass = function () {};
+    if (!isApp() || gateOpen) { onPass(); return; }
+    try {
+      if (gateEl) closeGate();
+      gateCss();
+      var en = moLang() === "en", Q = gateQuestion();
+      var bg = document.createElement("div"); bg.className = "bm-gate-bg";
+      var sh = document.createElement("div"); sh.className = "bm-gate";
+      sh.setAttribute("role", "dialog"); sh.setAttribute("aria-modal", "true"); sh.setAttribute("aria-labelledby", "bmGateQ"); sh.tabIndex = -1;
+      sh.innerHTML = '<div class="bm-gate-grab"></div><div class="bm-gate-ic" aria-hidden="true">🔒</div>' +
+        '<div class="bm-gate-k">' + (en ? "For grown-ups" : "Khusus orang tua") + "</div>" +
+        '<h2 id="bmGateQ">' + (en ? "Ask a grown-up: what is " : "Tanya Ayah/Bunda: berapa ") + Q.q + "?</h2>" +
+        '<p class="bm-gate-sub">' + (en ? "Answer to open the link or share." : "Jawab dulu untuk membuka tautan atau berbagi.") + "</p>" +
+        '<div class="bm-gate-opts">' + Q.opts.map(function (o) { return '<button type="button" data-v="' + o + '">' + o + "</button>"; }).join("") + "</div>" +
+        '<p class="bm-gate-err" aria-live="polite"></p>' +
+        '<button type="button" class="bm-gate-x">' + (en ? "Cancel" : "Batal") + "</button>";
+      document.body.appendChild(bg); document.body.appendChild(sh);
+      var cancel = function () { closeGate(function () { if (onCancel) try { onCancel(); } catch (e) {} }); };
+      var g = gateEl = { bg: bg, sheet: sh, key: function (e) { if (e.key === "Escape") { e.preventDefault(); cancel(); } } };
+      document.addEventListener("keydown", g.key, true);
+      bg.addEventListener("click", cancel);
+      sh.querySelector(".bm-gate-x").addEventListener("click", cancel);
+      var done = false;
+      sh.querySelector(".bm-gate-opts").addEventListener("click", function (e) {
+        var b = e.target.closest("button[data-v]"); if (!b || done) return;
+        done = true;
+        if (+b.getAttribute("data-v") === Q.ans) {
+          closeGate();
+          gateOpen = true;
+          try { onPass(); } catch (er) {} finally { gateOpen = false; }
+        } else {
+          // Wrong answer: blocked. Close after a moment; nothing happens.
+          b.classList.add("no"); sh.classList.add("shake");
+          sh.querySelector(".bm-gate-err").textContent = en ? "Not quite — please ask a grown-up." : "Belum tepat — minta bantuan Ayah/Bunda ya.";
+          Array.prototype.forEach.call(sh.querySelectorAll(".bm-gate-opts button"), function (x) { x.disabled = true; });
+          setTimeout(function () { if (gateEl === g) cancel(); }, 1300);
+        }
+      });
+      requestAnimationFrame(function () { bg.classList.add("open"); sh.classList.add("open"); try { sh.focus({ preventScroll: true }); } catch (e) {} });
+    } catch (e) { if (onCancel) try { onCancel(); } catch (e2) {} }
+  }
+  // App only: route every way out of the app through the gate.
+  function installGateGuards() {
+    if (!isApp()) return;
+    try {
+      var origOpen = window.open;
+      window.open = function (url) {
+        var args = arguments;
+        if (gateOpen || !url || !isExternalUrl(url)) return origOpen.apply(window, args);
+        parentGate(function () { origOpen.apply(window, args); });
+        return null;
+      };
+    } catch (e) {}
+    try {
+      var origShare = navigator.share;
+      if (typeof origShare === "function") {
+        var gatedShare = function (data) {
+          if (gateOpen) return origShare.call(navigator, data);
+          return new Promise(function (res, rej) {
+            parentGate(function () {
+              try { origShare.call(navigator, data).then(res, rej); } catch (e) { rej(e); }
+            }, function () {
+              var err; try { err = new DOMException("Cancelled by the parental gate", "AbortError"); } catch (e) { err = new Error("AbortError"); }
+              rej(err);
+            });
+          });
+        };
+        try { Object.defineProperty(navigator, "share", { value: gatedShare, configurable: true, writable: true }); }
+        catch (e) { Navigator.prototype.share = gatedShare; }
+      }
+    } catch (e) {}
+    // Links that leave the app: other hosts, new windows, mailto/tel/sms…
+    document.addEventListener("click", function (e) {
+      try {
+        if (gateOpen || e.defaultPrevented) return;
+        var a = e.target && e.target.closest && e.target.closest("a[href]");
+        if (!a) return;
+        var raw = a.getAttribute("href") || "";
+        if (!raw || raw.charAt(0) === "#" || /^javascript:/i.test(raw)) return;
+        var url = a.href, blank = (a.getAttribute("target") || "").toLowerCase() === "_blank";
+        if (!isExternalUrl(url) && !(blank && !a.hasAttribute("download"))) return;
+        e.preventDefault(); e.stopImmediatePropagation();
+        parentGate(function () {
+          if (blank) window.open(url, "_blank", "noopener"); else location.href = url;
+        });
+      } catch (er) {}
+    }, true);
+  }
+  installGateGuards();
+
   // ---- Expose + init ----------------------------------------
   window.BabyMo = window.BabyMo || {};
   window.BabyMo.share = share;
@@ -1777,6 +1929,8 @@
   window.BabyMo.getStars = getStars;
   window.BabyMo.addStars = addStars;
   window.BabyMo.daily = daily;
+  window.BabyMo.parentGate = parentGate;
+  window.BabyMo.isApp = isApp;
   // Exposed for the verification harness / previews.
   window.BabyMo._resultDataURL = buildResultDataURL;
   window.BabyMo.prepareShare = prepareShare;
@@ -1816,12 +1970,10 @@
   preloadMascot();
   if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function () {
-      initAnalytics();
       initSW();
       initCompanion();
     });
   } else {
-    initAnalytics();
     initSW();
     initCompanion();
   }
