@@ -264,6 +264,37 @@ body.wp-on #toast{top:184px}
 .hc .row2 button{flex:1}
 .hc button.alt{background:#EEF1F6;color:#152230}
 </style>
+<style id="bm-fresh">
+/* Fresh iOS look for the HTML overlays (both themes; the 3D world is
+   untouched): glass panels, Fredoka headings, capsule buttons, and dark
+   colours for the voice settings and first-time guide, which used to keep
+   light-theme ink in dark mode. */
+.panel{border-radius:32px;border:1px solid rgba(240,232,216,.12);
+  background:linear-gradient(180deg,rgba(20,44,32,.86),rgba(12,32,22,.9));
+  -webkit-backdrop-filter:blur(28px) saturate(170%);backdrop-filter:blur(28px) saturate(170%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 30px 60px -24px rgba(0,0,0,.6);}
+html:not([data-bm-theme="classic"]) .panel{background:rgba(255,255,255,.86);border-color:rgba(255,255,255,.95);
+  box-shadow:inset 0 1px 0 #fff,0 30px 60px -24px rgba(30,60,110,.5);}
+.panel h1,.panel h2,.hc h3{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;letter-spacing:-.02em;}
+.panel h1{font-size:28px;}
+.panel h2{font-size:22px;}
+.btn,.hc button{border-radius:999px!important;min-height:50px;}
+.btn.ghost{min-height:46px;}
+.veil{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+#btnBack,#btnMenu{border-radius:50%;width:44px;height:44px;flex-basis:44px;}
+#btnJournal{border-radius:22px;}
+.card,.abtn,.slot{border-width:1px;}
+#toast{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;}
+.hc{border-radius:32px;}
+/* dark theme: readable voice settings + guide */
+html[data-bm-theme="classic"] .voice-set{background:rgba(255,255,255,.06);}
+html[data-bm-theme="classic"] .voice-set summary,html[data-bm-theme="classic"] .coach h2{color:var(--cream);}
+html[data-bm-theme="classic"] #voiceFlag{color:var(--cream-dim);}
+html[data-bm-theme="classic"] .coach-step{background:rgba(255,255,255,.07);color:var(--cream);box-shadow:inset 0 1px 0 rgba(255,255,255,.06);}
+html[data-bm-theme="classic"] .coach-step small{color:var(--cream-dim);}
+html[data-bm-theme="classic"] .coach-ico{background:rgba(255,255,255,.10);box-shadow:none;}
+.coach-step{border-radius:18px;}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
