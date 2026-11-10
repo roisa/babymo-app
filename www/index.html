@@ -551,6 +551,8 @@ body::before{
 .trust-row{display:flex;flex-wrap:wrap;gap:7px;padding:0 16px;margin:-6px 0 22px;}
 .trust-pill{font-size:11px;font-weight:800;letter-spacing:.2px;color:var(--green-lt,#6DB882);
   background:rgba(109,184,130,.10);border:.5px solid rgba(109,184,130,.22);padding:6px 11px;border-radius:999px;}
+.trust-row{flex-wrap:nowrap;gap:6px;}
+.trust-row .trust-pill{flex:1 1 auto;min-width:0;text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:clamp(11px,3.1vw,13.5px);padding:7px 6px;}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
 
 /* Large phones / small tablets — keep the cozy phone-frame look, centered */
@@ -1522,10 +1524,9 @@ html[data-theme="dark"] .pd-book-go{color:#E8B04A}
 
       <!-- Parent-trust signals -->
       <div class="trust-row" aria-label="Kenapa orang tua tenang">
-        <span class="trust-pill" data-i18n="trust_noacct">✓ Tanpa Akun</span>
         <span class="trust-pill" data-i18n="trust_noads">✓ Tanpa Iklan</span>
-        <span class="trust-pill" data-i18n="trust_offline">✓ Main Tanpa Internet</span>
-        <span class="trust-pill" data-i18n="trust_safe">✓ Aman untuk Anak</span>
+        <span class="trust-pill" data-i18n="trust_offline">✓ Bisa Offline</span>
+        <span class="trust-pill" data-i18n="trust_safe">✓ Ramah Anak</span>
       </div>
 
       <!-- Categories list -->
@@ -1743,8 +1744,8 @@ const I18N={
   name_chip:{id:'Siapa nama si kecil?',en:"What's your little one's name?"},name_group:{id:'Si Kecil',en:'Your Child'},name_row:{id:'Nama si kecil',en:"Child's name"},
   trust_noacct:{id:'✓ Tanpa Akun',en:'✓ No Account'},
   trust_noads:{id:'✓ Tanpa Iklan',en:'✓ No Ads'},
-  trust_offline:{id:'✓ Main Tanpa Internet',en:'✓ Works Offline'},
-  trust_safe:{id:'✓ Aman untuk Anak',en:'✓ Kid-Safe'},
+  trust_offline:{id:'✓ Bisa Offline',en:'✓ Works Offline'},
+  trust_safe:{id:'✓ Ramah Anak',en:'✓ Kid-Safe'},
   home_title:{id:'Halo, <em>Baby Mo</em><br>Sahabat Kecilmu! 🌙',en:'Hello, <em>Baby Mo</em><br>Your Little Friend! 🌙'},
   hero_eyebrow:{id:'Featured Hari Ini',en:'Featured Today'},
   hero_msg:{id:'Ayo belajar 14 doa harian dengan suara Arab asli bersama Baby Mo.',en:'Learn 14 daily duas with authentic Arabic voice with Baby Mo.'},
