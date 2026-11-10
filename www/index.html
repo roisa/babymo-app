@@ -1275,6 +1275,8 @@ html[data-theme="dark"] #pane-doa .pd-dl{color:#F2F5FA}
 
 /* ===== Play + Prayer tabs v3 — same little world as the Duas tab ===== */
 .pd-logo-t.sm{font-size:clamp(34px,10vw,46px)}
+.pd-logo-t.two em{color:#22A653}html[data-theme="dark"] .pd-logo-t.two em{color:#7BE3A0}
+.pd-ribbon.sm{font-size:clamp(12px,3.4vw,15px);padding:7px 16px;max-width:calc(100% - 24px)}
 .pd-ribbon.g{background:linear-gradient(180deg,#D7F5E1,#A9E6BF);color:#0B4D2A;box-shadow:0 6px 12px -6px rgba(0,110,50,.45)}
 /* greeting: bigger Mo + cloud bubble */
 #pane-home .mo-greet{padding:4px 12px 0;gap:6px;align-items:flex-end}
@@ -1324,50 +1326,65 @@ html[data-theme="dark"] #pane-home .dm-row:nth-child(3n+2){background:linear-gra
 html[data-theme="dark"] #pane-home .dm-row:nth-child(3n+3){background:linear-gradient(90deg,#1F4A40,#183A33)}
 html[data-theme="dark"] #pane-home .dm-row.done{background:linear-gradient(90deg,#1F4A32,#183A28)}
 html[data-theme="dark"] #pane-home .dm-row{box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
-/* prayer card: cream, pastel prayer cells with drawn icons */
-#prayerHub .ph-card{margin-top:18px;background:linear-gradient(180deg,#FFFBF3,#FBF2E4);color:#2A2F7A;box-shadow:0 18px 32px -22px rgba(80,60,20,.55),inset 0 0 0 2px rgba(255,255,255,.9)}
+/* ===== Prayer tab v4 (mockup): pills above, big kneeling Mo, cream card ===== */
+#prayerHub .ph-top{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin:14px 0 0}
+#prayerHub .ph-loc,#prayerHub .ph-hijri{display:inline-flex;align-items:center;gap:7px;min-height:40px;padding:0 14px;border-radius:999px;border:none;background:rgba(255,255,255,.88);color:#2A2F7A;
+  font:700 14px 'Nunito',sans-serif;opacity:1;box-shadow:0 6px 14px -8px rgba(30,60,110,.45);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+#prayerHub .ph-loc{cursor:pointer}#prayerHub .ph-loc .car{font-size:11px;opacity:.7}
+#prayerHub .ph-loc svg,#prayerHub .ph-hijri svg{width:18px;height:18px;flex:0 0 auto}
+html[data-theme="dark"] #prayerHub .ph-loc,html[data-theme="dark"] #prayerHub .ph-hijri{background:rgba(40,48,90,.85);color:#F2F5FA;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+#prayerHub .ph-card{margin:34px 0 0;padding:14px 14px 14px;overflow:visible;border-radius:30px;background:linear-gradient(180deg,#FFFBF3,#FBF2E4);color:#2A2F7A;
+  box-shadow:0 18px 32px -22px rgba(80,60,20,.55),inset 0 0 0 2px rgba(255,255,255,.9)}
 #prayerHub .ph-card.night,html[data-theme="dark"] #prayerHub .ph-card{background:linear-gradient(180deg,#2A3158,#20264A);color:#F2F5FA;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 18px 32px -22px rgba(0,0,0,.8)}
-#prayerHub .ph-loc{background:#fff;box-shadow:0 4px 10px -6px rgba(40,40,90,.4)}
-#prayerHub .ph-card.night .ph-loc,html[data-theme="dark"] #prayerHub .ph-card .ph-loc{background:rgba(255,255,255,.14);box-shadow:none}
-#prayerHub .ph-next .nm{display:flex;align-items:center;gap:6px;color:inherit}
-#prayerHub .ph-next .nm svg{width:34px;height:34px;flex:0 0 auto}
-#prayerHub .ph-next img{width:92px;height:92px;flex-basis:92px}
-#prayerHub .ph-cell{padding:8px 2px 7px;border-radius:18px;box-shadow:inset 0 0 0 1.5px rgba(255,255,255,.8)}
-#prayerHub .ph-cell .e{display:block;height:30px}#prayerHub .ph-cell .e svg{width:30px;height:30px}
+#prayerHub .ph-next{position:relative;display:block;margin:0;min-height:104px;padding-left:33%}
+#prayerHub .ph-next .ph-mo{position:absolute;left:-30px;bottom:-10px;width:52%;height:auto;max-width:230px;flex:none;object-fit:contain;filter:drop-shadow(0 10px 12px rgba(30,40,70,.28))}
+#prayerHub .ph-nxr{display:flex;align-items:center;gap:6px}
+#prayerHub .ph-dome{flex:0 0 auto;width:48px;height:40px}#prayerHub .ph-dome svg{width:100%;height:100%;display:block}
+#prayerHub .ph-nxt{min-width:0}
+#prayerHub .ph-next .lbl{font:700 13px 'Fredoka','Nunito',sans-serif;letter-spacing:.02em;text-transform:none;opacity:.85}
+#prayerHub .ph-next .nm{font-family:'Fredoka','Nunito',sans-serif;font-weight:700;font-size:clamp(19px,5.4vw,30px);line-height:1.05;white-space:nowrap;color:inherit}
+#prayerHub .ph-next .cd{font-size:14px;font-weight:800;opacity:.85}
+#prayerHub .ph-bar{height:9px;margin-top:10px;background:rgba(42,47,122,.1)}
+#prayerHub .ph-bar i{background:linear-gradient(90deg,#4FD07A,#1E9E4E)}
+#prayerHub .ph-card.night .ph-bar,html[data-theme="dark"] #prayerHub .ph-card .ph-bar{background:rgba(255,255,255,.15)}
+#prayerHub .ph-cells{gap:6px;margin-top:18px}
+#prayerHub .ph-cell{padding:8px 2px 7px;border-radius:18px;background:#fff;box-shadow:0 6px 12px -10px rgba(40,40,90,.6),inset 0 0 0 1px rgba(42,47,122,.06)}
+#prayerHub .ph-card.night .ph-cell,html[data-theme="dark"] #prayerHub .ph-card .ph-cell{background:rgba(255,255,255,.08);box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+#prayerHub .ph-cell .e{display:block;height:28px}#prayerHub .ph-cell .e svg{width:28px;height:28px}
 #prayerHub .ph-cell .n{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:12.5px}
-#prayerHub .ph-cell:nth-child(1){background:#FFE9D6}#prayerHub .ph-cell:nth-child(2){background:#FFF3C4}#prayerHub .ph-cell:nth-child(3){background:#DDF0FF}
-#prayerHub .ph-cell:nth-child(4){background:#FFDDE6}#prayerHub .ph-cell:nth-child(5){background:#E6DEFF}
-#prayerHub .ph-card.night .ph-cell:nth-child(1),html[data-theme="dark"] #prayerHub .ph-card .ph-cell:nth-child(1){background:rgba(255,160,90,.18)}#prayerHub .ph-card.night .ph-cell:nth-child(2),html[data-theme="dark"] #prayerHub .ph-card .ph-cell:nth-child(2){background:rgba(255,210,80,.16)}
-#prayerHub .ph-card.night .ph-cell:nth-child(3),html[data-theme="dark"] #prayerHub .ph-card .ph-cell:nth-child(3){background:rgba(110,180,255,.18)}#prayerHub .ph-card.night .ph-cell:nth-child(4),html[data-theme="dark"] #prayerHub .ph-card .ph-cell:nth-child(4){background:rgba(255,120,150,.18)}#prayerHub .ph-card.night .ph-cell:nth-child(5),html[data-theme="dark"] #prayerHub .ph-card .ph-cell:nth-child(5){background:rgba(160,130,255,.2)}
-#prayerHub .ph-cell.passed{opacity:.55}
-#prayerHub .ph-cell.current{opacity:1;box-shadow:0 0 0 3px #22A653,0 10px 18px -10px rgba(16,167,101,.7)}
-#prayerHub .ph-check:not([disabled]){background:linear-gradient(180deg,#4FD07A,#1E9E4E);font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:18px}
-#prayerHub .ph-check[disabled]{background:#fff}
-#prayerHub .ph-card.night .ph-check[disabled],html[data-theme="dark"] #prayerHub .ph-card .ph-check[disabled]{background:rgba(255,255,255,.12)}
-#prayerHub .ph-streak div{background:#fff;box-shadow:0 6px 12px -10px rgba(40,40,90,.5)}
-#prayerHub .ph-card.night .ph-streak div,html[data-theme="dark"] #prayerHub .ph-card .ph-streak div{background:rgba(255,255,255,.1);box-shadow:none}
-#prayerHub .ph-empty .pri{background:linear-gradient(180deg,#4FD07A,#1E9E4E)}
-#prayerHub .ph-next .nm{font-size:clamp(22px,6.4vw,28px);white-space:nowrap}
-html[data-theme="dark"] #prayerHub .ph-card .ph-bar{background:rgba(255,255,255,.15)}
+#prayerHub .ph-cell .t{font-weight:700}
+#prayerHub .ph-cell.passed{opacity:.6}
+#prayerHub .ph-cell.current{opacity:1;background:#F2FBF5;box-shadow:0 0 0 2.5px #22A653,0 10px 18px -10px rgba(16,167,101,.7)}
+#prayerHub .ph-card.night .ph-cell.current,html[data-theme="dark"] #prayerHub .ph-card .ph-cell.current{background:rgba(34,166,83,.18);box-shadow:0 0 0 2.5px #22A653}
+#prayerHub .ph-cell.done{opacity:1;background:#F2FBF5;box-shadow:0 0 0 2.5px #22A653}
+#prayerHub .ph-cell.done::after{top:-8px;right:-6px;width:22px;height:22px;line-height:22px;background:#22A653;box-shadow:0 2px 6px rgba(0,80,30,.4)}
 html[data-theme="dark"] #prayerHub .ph-card .ph-cell .s{color:#FDBA74}
+#prayerHub .ph-check{display:flex;align-items:center;justify-content:center;gap:8px;min-height:52px;border-radius:999px;font-family:'Fredoka','Nunito',sans-serif;font-weight:600;font-size:17px}
+#prayerHub .ph-check:not([disabled]){background:linear-gradient(180deg,#4FD07A,#1E9E4E)}
+#prayerHub .ph-check svg{width:22px;height:22px;flex:0 0 auto}
+#prayerHub .ph-check[disabled]{background:#fff;color:#4A5578}
+#prayerHub .ph-check.ok[disabled]{background:#DDF5E4;color:#1F5C38}
+#prayerHub .ph-card.night .ph-check[disabled],html[data-theme="dark"] #prayerHub .ph-card .ph-check[disabled]{background:rgba(255,255,255,.12);color:#D7DCEB}
+#prayerHub .ph-card.night .ph-check.ok[disabled],html[data-theme="dark"] #prayerHub .ph-card .ph-check.ok[disabled]{background:rgba(34,166,83,.2);color:#BDF0CF}
+#prayerHub .ph-streak{gap:8px}
+#prayerHub .ph-streak div{display:flex;align-items:center;justify-content:center;gap:5px;padding:10px 5px;border-radius:20px;text-align:left;background:#fff;box-shadow:0 6px 12px -10px rgba(40,40,90,.6)}
+#prayerHub .ph-card.night .ph-streak div,html[data-theme="dark"] #prayerHub .ph-card .ph-streak div{background:rgba(255,255,255,.08);box-shadow:none}
+#prayerHub .ph-streak svg{width:26px;height:26px;flex:0 0 auto}
+#prayerHub .ph-streak p{margin:0;min-width:0}
+#prayerHub .ph-streak b{font-size:20px}#prayerHub .ph-streak span{display:block;font-size:11px;line-height:1.15}
+#prayerHub .ph-empty img{width:150px;height:auto;margin-top:-70px}
+#prayerHub .ph-empty .pri{background:linear-gradient(180deg,#4FD07A,#1E9E4E)}
 html[data-theme="dark"] #prayerHub .ph-empty .sec{background:rgba(255,255,255,.12);color:#F2F5FA}
-html[data-theme="dark"] #prayerHub .ph-cell,#prayerHub .ph-card.night .ph-cell{box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
-html[data-theme="dark"] #prayerHub .ph-cell.current,#prayerHub .ph-card.night .ph-cell.current{box-shadow:0 0 0 3px #22A653}
-/* prayer tools: pastel tiles with illustrations */
+/* tools: bold gradient tiles, white text */
 #prayerTools{margin-top:16px}
-#prayerTools .ph-tool{border-radius:26px;padding:12px 6px 14px;color:#2A2F7A;box-shadow:0 14px 24px -18px rgba(40,40,90,.6),inset 0 0 0 2px rgba(255,255,255,.7),inset 0 -6px 0 rgba(0,0,0,.05)}
-#prayerTools .ph-tool:nth-child(1){background:linear-gradient(180deg,#D8EEFF,#B9DEFF)}
-#prayerTools .ph-tool:nth-child(2){background:linear-gradient(180deg,#D3F4EC,#ACE6D6)}
-#prayerTools .ph-tool:nth-child(3){background:linear-gradient(180deg,#E6DAFF,#CDB8FF)}
-#prayerTools .ph-tool .ic{width:84px;height:68px;border-radius:0;overflow:visible;box-shadow:none;margin-bottom:4px}
+#prayerTools .ph-tool{border-radius:26px;padding:12px 6px 14px;color:#fff;box-shadow:0 14px 24px -14px rgba(40,40,90,.7),inset 0 2px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.12)}
+#prayerTools .ph-tool:nth-child(1){background:linear-gradient(180deg,#5CA8FF,#3466E8)}
+#prayerTools .ph-tool:nth-child(2){background:linear-gradient(180deg,#56D08A,#1F9D58)}
+#prayerTools .ph-tool:nth-child(3){background:linear-gradient(180deg,#B48CFF,#7A4CE0)}
+#prayerTools .ph-tool .ic{width:84px;height:64px;border-radius:0;overflow:visible;box-shadow:none;margin-bottom:4px}
 #prayerTools .ph-tool .ic svg{width:100%;height:100%;display:block}
-#prayerTools .ph-tool b{font-family:'Fredoka','Nunito',sans-serif;font-weight:700;font-size:18px;color:#2A2F7A}
-#prayerTools .ph-tool span{color:#4A5578;font-size:12px}
-html[data-theme="dark"] #prayerTools .ph-tool{box-shadow:inset 0 0 0 1px rgba(255,255,255,.12),0 14px 24px -18px rgba(0,0,0,.8)}
-html[data-theme="dark"] #prayerTools .ph-tool:nth-child(1){background:linear-gradient(180deg,#1E3358,#1A2B4C)}
-html[data-theme="dark"] #prayerTools .ph-tool:nth-child(2){background:linear-gradient(180deg,#1F4A40,#183A33)}
-html[data-theme="dark"] #prayerTools .ph-tool:nth-child(3){background:linear-gradient(180deg,#3A2E66,#2D2452)}
-html[data-theme="dark"] #prayerTools .ph-tool b{color:#F2F5FA}html[data-theme="dark"] #prayerTools .ph-tool span{color:#B9C4D4}
+#prayerTools .ph-tool b{font-family:'Fredoka','Nunito',sans-serif;font-weight:700;font-size:19px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.18)}
+#prayerTools .ph-tool span{color:rgba(255,255,255,.92);font-size:12px}
 </style>
 <script>
 (function(){
@@ -1564,8 +1581,8 @@ html[data-theme="dark"] #prayerTools .ph-tool b{color:#F2F5FA}html[data-theme="d
     <!-- ============= TAB 3: COMPANION ============= -->
     <section class="tab-pane has-scene" id="pane-companion" data-title="Sholat">
       <div class="pd-logo">
-        <div class="pd-logo-t sm" data-i18n-html="comp_title">Sholat <em>Bareng Mo</em></div>
-        <div class="pd-ribbon g"><span data-i18n="comp_rib">Waktu sholat &amp; kiblat</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20.6S3 15.2 3 9.1A4.9 4.9 0 0 1 12 6.4a4.9 4.9 0 0 1 9 2.7c0 6.1-9 11.5-9 11.5z"/></svg></div>
+        <div class="pd-logo-t sm two" data-i18n-html="comp_title">Sholat Bareng <em>Mo</em></div>
+        <div class="pd-ribbon sm"><span data-i18n="comp_sub">Waktu sholat, streak &amp; kiblat — semua di sini</span></div>
       </div>
 
       <div id="prayerHub"></div>
@@ -1997,7 +2014,7 @@ const I18N={
   g_huruf:{id:'Huruf Hijaiyah',en:'Hijaiyah Letters'},g_huruf_sub:{id:'Huruf Arab',en:'Arabic letters'},
   about_brand:{id:'Brand',en:'Brand'},about_mission:{id:'Misi',en:'Mission'},
   about_mission_s:{id:'Belajar Islam sambil bermain',en:'Learn Islam through play'},
-  comp_title:{id:'Sholat <em>Bareng Mo</em>',en:'Pray <em>with Mo</em>'},
+  comp_title:{id:'Sholat Bareng <em>Mo</em>',en:'Pray with <em>Mo</em>'},
   comp_sub:{id:'Waktu sholat, streak & kiblat — semua di sini',en:'Prayer times, streak & qibla — all in one place'},
   comp_eyebrow:{id:'Panduan Interaktif',en:'Interactive Guide'},
   comp_greet:{id:'Yuk Sholat Bareng Baby Mo!',en:"Let's Pray with Baby Mo!"},

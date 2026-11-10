@@ -17,6 +17,15 @@
   var KEYS = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
   var NAMES = { id: ["Subuh", "Dzuhur", "Ashar", "Maghrib", "Isya"], en: ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"] };
   var ICONS = ["🌅", "☀️", "🌤️", "🌇", "🌙"];
+  var SV = {
+    pin: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5a7 7 0 0 0-7 7c0 5.2 7 12 7 12s7-6.8 7-12a7 7 0 0 0-7-7z" fill="none" stroke="currentColor" stroke-width="2.2"/><circle cx="12" cy="9.5" r="2.6" fill="none" stroke="currentColor" stroke-width="2.2"/></svg>',
+    cal: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="3.5" fill="none" stroke="currentColor" stroke-width="2.2"/><path d="M3.5 10h17M8 3v4M16 3v4" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    ok: '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="#22A653"/><path d="M7.5 12.5l3 3 6-6.5" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    dome: '<svg viewBox="0 0 80 64" aria-hidden="true"><g stroke="#FFC93D" stroke-width="4" stroke-linecap="round"><path d="M10 14l7 5M6 28h8M20 4l3 8"/></g><path d="M52 6a6 6 0 1 0 5 9 4.6 4.6 0 0 1-5-9z" fill="#FFC93D"/><rect x="47.8" y="15" width="2.6" height="8" fill="#E8B030"/><path d="M26 44 Q26 22 49 20 Q72 22 72 44z" fill="#FFD25A"/><path d="M33 40 Q34 27 49 24" fill="none" stroke="#FFF1B8" stroke-width="3" stroke-linecap="round"/><rect x="22" y="42" width="54" height="20" rx="4" fill="#FFF8E8"/><rect x="22" y="42" width="54" height="5" fill="#F0E2C0"/><path d="M42 62V54a7 7 0 0 1 14 0v8z" fill="#5DBB8A"/><path d="M28 62v-8a4 4 0 0 1 8 0v8zM62 62v-8a4 4 0 0 1 8 0v8z" fill="#8FD3B0"/></svg>',
+    today: '<svg viewBox="0 0 48 48" aria-hidden="true"><rect x="5" y="9" width="38" height="34" rx="9" fill="#FF6B6B"/><rect x="5" y="17" width="38" height="26" rx="8" fill="#FFF8F0"/><rect x="13" y="4" width="5" height="10" rx="2.5" fill="#7A8AA6"/><rect x="30" y="4" width="5" height="10" rx="2.5" fill="#7A8AA6"/><path d="M16 30l5.5 5.5L33 24" fill="none" stroke="#FF7A45" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    fire: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4c2 8 12 12 12 24a12 12 0 0 1-24 0c0-6 3-9 5-12 1 4 3 6 5 6-1-7 0-13 2-18z" fill="#FF7A1A"/><path d="M24 22c1 5 7 7 7 13a7 7 0 0 1-14 0c0-3 1.6-5 3-6.5.6 2 1.6 3 3 3-.4-3.6 0-6.4 1-9.5z" fill="#FFC93D"/></svg>',
+    cup: '<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M14 6h20v12a10 10 0 0 1-20 0z" fill="#FFC93D"/><path d="M14 10H7a7 7 0 0 0 7 9M34 10h7a7 7 0 0 1-7 9" fill="none" stroke="#F2A900" stroke-width="3.4" stroke-linecap="round"/><path d="M20 9v9" stroke="#FFF1B8" stroke-width="3" stroke-linecap="round"/><rect x="21" y="27" width="6" height="8" fill="#F2A900"/><rect x="14" y="35" width="20" height="7" rx="2.5" fill="#E89A10"/></svg>'
+  };
   /* drawn prayer-time icons (no emoji) */
   var PIC = [
     '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 28a12 12 0 0 1 24 0z" fill="#FF9E5E"/><path d="M12.5 28a7.5 7.5 0 0 1 15 0z" fill="#FFC27A"/><path d="M20 6v5M8.5 11.5l3.2 3.2M31.5 11.5l-3.2 3.2" stroke="#FF9E5E" stroke-width="3" stroke-linecap="round"/><path d="M4 31h32" stroke="#E88A5A" stroke-width="3" stroke-linecap="round"/></svg>',
@@ -235,11 +244,11 @@
 
   function render() {
     refreshStreaks();
-    var names = NAMES[L()], card = '<div class="ph-card' + (isNight() ? " night" : "") + '">';
-    var name = locName();
-    card += '<div class="ph-top"><button class="ph-loc" data-act="city">📍 ' + esc(name || T("Pilih kota", "Choose city")) + ' ▾</button><div class="ph-hijri">' + esc(hijri(new Date())) + "</div></div>";
+    var names = NAMES[L()], name = locName();
+    var card = '<div class="ph-top"><button class="ph-loc" data-act="city">' + SV.pin + '<span>' + esc(name || T("Pilih kota", "Choose city")) + '</span><span class="car">▾</span></button><div class="ph-hijri">' + SV.cal + '<span>' + esc(hijri(new Date())) + "</span></div></div>";
+    card += '<div class="ph-card' + (isNight() ? " night" : "") + '">';
     if (!loc || !times) {
-      card += '<div class="ph-empty"><img src="baby-mo-poses/baby-mo-pose-05.webp" alt=""><h3>' +
+      card += '<div class="ph-empty"><img src="mo-pray-assets/mo-doa.webp" alt=""><h3>' +
         (loc ? T("Memuat waktu sholat…", "Loading prayer times…") : T("Kapan waktu sholat?", "When is it time to pray?")) + "</h3><p>" +
         T("Aktifkan lokasi atau pilih kota, biar Mo tahu waktu sholatmu 🕌", "Turn on location or pick a city so Mo knows your prayer times 🕌") +
         '</p><div class="row"><button class="pri" data-act="gps">📍 ' + T("Pakai lokasiku", "Use my location") + '</button><button class="sec" data-act="city">🏙️ ' + T("Pilih kota", "Pick a city") + "</button></div></div></div>";
@@ -252,9 +261,9 @@
     var diff = nmin - nm, hh = Math.floor(diff / 60), mm = diff % 60;
     var prev = nx === 0 ? 4 : nx - 1, pm = mins[prev]; if (pm >= nmin) pm -= 1440; var n2 = nm < pm ? nm + 1440 : nm;
     var pct = Math.max(0, Math.min(100, 100 * (n2 - pm) / Math.max(1, nmin - pm)));
-    card += '<div class="ph-next"><img src="baby-mo-poses/' + (isNight() ? "baby-mo-pose-05" : "baby-mo-idea") + '.webp" alt=""><div style="flex:1;min-width:0">' +
-      '<div class="lbl">' + T("Sholat berikutnya", "Next prayer") + '</div><div class="nm">' + PIC[nx] + "<span>" + names[nx] + " · " + times[KEYS[nx]].slice(0, 5) + "</span></div>" +
-      '<div class="cd">' + T("dalam ", "in ") + (hh > 0 ? hh + T(" jam ", "h ") : "") + mm + T(" menit", " min") + '</div><div class="ph-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div></div></div>';
+    card += '<div class="ph-next"><img class="ph-mo" src="mo-pray-assets/mo-doa.webp" alt=""><div class="ph-nx"><div class="ph-nxr"><span class="ph-dome">' + SV.dome + '</span><div class="ph-nxt">' +
+      '<div class="lbl">' + T("Sholat berikutnya", "Next prayer") + '</div><div class="nm"><span>' + names[nx] + " · " + times[KEYS[nx]].slice(0, 5) + "</span></div>" +
+      '<div class="cd">' + T("dalam ", "in ") + (hh > 0 ? hh + T(" jam ", "h ") : "") + mm + T(" menit", " min") + '</div></div></div><div class="ph-bar"><i style="width:' + pct.toFixed(1) + '%"></i></div></div></div>';
     card += '<div class="ph-cells">';
     KEYS.forEach(function (k, i) {
       var r = s.s[k] || {}, done = r.lastDate === t, cls = "ph-cell";
@@ -265,10 +274,10 @@
     });
     card += "</div>";
     if (ci === -1) card += '<button class="ph-check" disabled>⏳ ' + T("Tunggu waktu Subuh", "Wait for Fajr time") + "</button>";
-    else if ((s.s[KEYS[ci]] || {}).lastDate === t) card += '<button class="ph-check" disabled>✓ ' + names[ci] + T(" sudah dicentang — MasyaAllah!", " checked — MashaAllah!") + "</button>";
+    else if ((s.s[KEYS[ci]] || {}).lastDate === t) card += '<button class="ph-check ok" disabled>' + SV.ok + names[ci] + T(" sudah dicentang — MasyaAllah!", " checked — MashaAllah!") + "</button>";
     else card += '<button class="ph-check" data-act="check">✦ ' + T("Aku sudah sholat ", "I prayed ") + names[ci] + "</button>";
-    card += '<div class="ph-streak"><div><b>' + s.td + '/5</b><span>' + T("Hari ini", "Today") + '</span></div><div><b>🔥 ' + s.cur + '</b><span>' + T("Streak (hari)", "Streak (days)") +
-      '</span></div><div><b>' + s.tot + '</b><span>' + T("Total sholat", "Total prayers") + "</span></div></div></div>";
+    card += '<div class="ph-streak"><div>' + SV.today + '<p><b>' + s.td + '/5</b><span>' + T("Hari ini", "Today") + '</span></p></div><div>' + SV.fire + '<p><b>' + s.cur + '</b><span>' + T("Streak (hari)", "Streak (days)") +
+      '</span></p></div><div>' + SV.cup + '<p><b>' + s.tot + '</b><span>' + T("Total sholat", "Total prayers") + "</span></p></div></div></div>";
     root.innerHTML = card;
   }
 
@@ -398,7 +407,7 @@
     if (!tools) return;
     tools.innerHTML =
       '<button class="ph-tool" data-act="qibla"><div class="ic"><svg viewBox="0 0 100 80" aria-hidden="true"><ellipse cx="50" cy="75" rx="30" ry="4" fill="rgba(30,60,120,.16)"/><circle cx="50" cy="38" r="33" fill="#F2B33D"/><circle cx="50" cy="38" r="28" fill="#fff"/><circle cx="50" cy="38" r="28" fill="none" stroke="#DCE8F5" stroke-width="2"/><g fill="#9AA8BC"><circle cx="50" cy="14" r="2"/><circle cx="74" cy="38" r="2"/><circle cx="50" cy="62" r="2"/><circle cx="26" cy="38" r="2"/></g><path d="M47 36 L60 22 L53 40z" fill="#FF5A5F"/><path d="M53 40 L40 54 L47 36z" fill="#C3CEDD"/><rect x="58" y="14" width="11" height="10" rx="1.6" fill="#1F2937"/><rect x="58" y="16.4" width="11" height="2.2" fill="#F2B33D"/><circle cx="50" cy="38" r="4.5" fill="#2A2F7A"/></svg></div><b>' + T("Kiblat", "Qibla") + "</b><span>" + T("Arah Ka'bah", "Ka'bah direction") + "</span></button>" +
-      '<button class="ph-tool" data-act="quote"><div class="ic"><svg viewBox="0 0 100 80" aria-hidden="true"><defs><radialGradient id="phPrl" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#F3EEFF"/><stop offset="1" stop-color="#C9BDF0"/></radialGradient></defs><ellipse cx="50" cy="75" rx="32" ry="4" fill="rgba(0,80,60,.16)"/><path d="M14 46 Q50 76 86 46 Q80 70 50 72 Q20 70 14 46z" fill="#3FBFA0"/><path d="M14 46 Q50 66 86 46" fill="none" stroke="#2A9C82" stroke-width="2"/><path d="M18 40 Q20 10 50 8 Q80 10 82 40 Q50 30 18 40z" fill="#7FDCC4"/><g stroke="#4FC4A8" stroke-width="2" fill="none"><path d="M50 10v24M34 13l6 22M66 13l-6 22"/></g><circle cx="50" cy="48" r="13" fill="url(#phPrl)"/><circle cx="45" cy="43" r="3.4" fill="#fff"/><path d="M80 10l1.8 4.6 4.6 1.8-4.6 1.8-1.8 4.6-1.8-4.6-4.6-1.8 4.6-1.8z" fill="#FFC93D"/></svg></div><b>' + T("Mutiara", "Pearls") + "</b><span>" + T("Ayat & hadis", "Verses & hadith") + "</span></button>" +
+      '<button class="ph-tool" data-act="quote"><div class="ic"><svg viewBox="0 0 100 80" aria-hidden="true"><ellipse cx="50" cy="74" rx="34" ry="4" fill="rgba(0,60,30,.2)"/><path d="M8 30 Q30 22 50 31 Q70 22 92 30 V68 Q70 61 50 70 Q30 61 8 68z" fill="#C9A06A"/><path d="M12 25 Q31 16 48 27 V65 Q31 56 12 63z" fill="#FFFDF4"/><path d="M88 25 Q69 16 52 27 V65 Q69 56 88 63z" fill="#FFF6E2"/><path d="M50 27v40" stroke="#E3D3B4" stroke-width="2"/><path d="M76 4l2.4 6 6 2.4-6 2.4-2.4 6-2.4-6-6-2.4 6-2.4z" fill="#FFE27A"/><path d="M62 10l1.4 3.4 3.4 1.4-3.4 1.4-1.4 3.4-1.4-3.4-3.4-1.4 3.4-1.4z" fill="#FFE27A"/><path d="M90 16l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#FFE27A"/></svg></div><b>' + T("Mutiara", "Pearls") + "</b><span>" + T("Ayat & hadis", "Verses & hadith") + "</span></button>" +
       '<button class="ph-tool" data-act="cal"><div class="ic"><svg viewBox="0 0 100 80" aria-hidden="true"><ellipse cx="50" cy="75" rx="30" ry="4" fill="rgba(80,40,160,.16)"/><rect x="18" y="12" width="64" height="58" rx="13" fill="#8C6CF2"/><rect x="18" y="24" width="64" height="46" rx="12" fill="#FFFDF8"/><rect x="18" y="24" width="64" height="9" fill="#EEE7FF"/><rect x="31" y="5" width="8" height="15" rx="4" fill="#5B4AB8"/><rect x="61" y="5" width="8" height="15" rx="4" fill="#5B4AB8"/><path d="M53 36a12 12 0 1 0 11 17 9.5 9.5 0 0 1-11-17z" fill="#FFC93D"/><path d="M64 38l1.3 2.7 3 .4-2.2 2.1.5 3-2.6-1.4-2.6 1.4.5-3-2.2-2.1 3-.4z" fill="#8C6CF2"/></svg></div><b>' + T("Kalender", "Calendar") + "</b><span>" + T("Hari besar Islam", "Islamic holidays") + "</span></button>";
   }
   function onClick(e) {
