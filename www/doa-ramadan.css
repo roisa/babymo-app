@@ -1,0 +1,108 @@
+/* Baby Mo — Doa Ramadan look (babymo-doa-harian.html?series=ramadan; loaded after the page's own styles).
+   Night purple + teal with gold. Both themes here; dark ("classic") tweaks under html[data-bm-theme="classic"]. */
+
+/* ── du'a icon tiles, tabs, start button and quiz tags per group ── */
+.di-puasa{--c1:#5FD8C8;--c2:#3A56C8;--k:#23408E}
+.di-buka{--c1:#FFB66B;--c2:#E2557E;--k:#9A2448}
+.di-rmalam{--c1:#A497FF;--c2:#4A30B8;--k:#2E1F8A}
+.di-lebaran{--c1:#8EE68E;--c2:#16A06A;--k:#0E6A44}
+#dhDay .t-puasa{--tc:rgba(40,120,200,.8)}#dhDay .t-puasa.on{background:linear-gradient(180deg,#4FC9D8,#3A62D0)}
+#dhDay .t-buka{--tc:rgba(230,90,110,.8)}#dhDay .t-buka.on{background:linear-gradient(180deg,#FFAA6B,#E8577A)}
+#dhDay .t-rmalam{--tc:rgba(100,70,220,.8)}#dhDay .t-rmalam.on{background:linear-gradient(180deg,#9A86FF,#5A3AD0)}
+#dhDay .t-lebaran{--tc:rgba(20,150,100,.8)}#dhDay .t-lebaran.on{background:linear-gradient(180deg,#5FD88A,#17A06A)}
+#dhDay #dhNow.s-puasa{background:linear-gradient(180deg,#4FC9D8,#3A62D0)!important}
+#dhDay #dhNow.s-buka{background:linear-gradient(180deg,#FFAA6B,#E8577A)!important}
+#dhDay #dhNow.s-rmalam{background:linear-gradient(180deg,#9A86FF,#5A3AD0)!important}
+#dhDay #dhNow.s-lebaran{background:linear-gradient(180deg,#5FD88A,#17A06A)!important}
+#quizScreen .q-choice.qc-w-puasa{--tg:#DDF3FF;--tgi:#0B4A80}
+#quizScreen .q-choice.qc-w-buka{--tg:#FFE6DE;--tgi:#8A2A3A}
+#quizScreen .q-choice.qc-w-rmalam{--tg:#ECE5FF;--tgi:#4A2C96}
+#quizScreen .q-choice.qc-w-lebaran{--tg:#DDF7E4;--tgi:#0E6A44}
+html[data-bm-theme="classic"] #quizScreen .q-choice[class*="qc-w-"]{--tg:rgba(255,255,255,.08);--tgi:#F2F5FA}
+
+/* ── start screen: a Ramadan night over the hills ── */
+html.doa-rm #welcomeScreen{--tt:#FFE08A;--ta:#EDE7FF}
+html.doa-rm #welcomeScreen .pd-scene .s1{stop-color:#2A2272}html.doa-rm #welcomeScreen .pd-scene .s2{stop-color:#5A45AE}
+html.doa-rm #welcomeScreen .pd-scene .s3{stop-color:#7C68C8}html.doa-rm #welcomeScreen .pd-scene .s4{stop-color:#C9BEF0}
+html.doa-rm #welcomeScreen .pd-scene .h1a{stop-color:#5A9BB8}html.doa-rm #welcomeScreen .pd-scene .h1b{stop-color:#47819E}
+html.doa-rm #welcomeScreen .pd-scene .h2a{stop-color:#3DA59A}html.doa-rm #welcomeScreen .pd-scene .h2b{stop-color:#2B8A82}
+html.doa-rm #welcomeScreen .pd-scene .h3a{stop-color:#4FBF94}html.doa-rm #welcomeScreen .pd-scene .h3b{stop-color:#2F9A72}
+html.doa-rm #welcomeScreen .pd-scene .w1{stop-color:#FFFFFF}html.doa-rm #welcomeScreen .pd-scene .w2{stop-color:#E6DEF7}
+html.doa-rm #welcomeScreen .pd-scene .rm-win{fill:#FFD86B}
+html.doa-rm #welcomeScreen .pd-scene .rm-stars{fill:#fff}html.doa-rm #welcomeScreen .pd-scene .rm-stars .b{fill:#FFE9A6}
+html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .s1{stop-color:#0C0A2C}html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .s2{stop-color:#1E1A5A}
+html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .s3{stop-color:#2A2470}html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .s4{stop-color:#1A1A48}
+html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .h1a{stop-color:#1F3E62}html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .h1b{stop-color:#1A3354}
+html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .h2a{stop-color:#174A50}html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .h2b{stop-color:#123C42}
+html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .h3a{stop-color:#165446}html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .h3b{stop-color:#0F3F35}
+html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .w1{stop-color:#D6DAF0}html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .w2{stop-color:#A9B0D6}
+.pd-scene .rm-sw{animation:rmSwing 3.6s ease-in-out infinite;transform-origin:50% -8px}
+.pd-scene g:nth-of-type(odd) .rm-sw{animation-delay:-1.2s}
+.pd-scene .rm-sw2{animation:rmSwing2 6s ease-in-out infinite;transform-origin:50% 0}
+@keyframes rmSwing{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}
+@keyframes rmSwing2{0%,100%{transform:rotate(-.6deg)}50%{transform:rotate(.6deg)}}
+.pd-scene .rm-gl{animation:pdGlow 3.4s ease-in-out infinite}
+.pd-scene .rm-tw,.pd-scene .rm-tw2 circle{animation:pdTw 2.6s ease-in-out infinite;transform-origin:center}
+.pd-scene .rm-stars circle{animation:pdTw 3.2s ease-in-out infinite}.pd-scene .rm-stars circle:nth-child(3n){animation-delay:-1.1s}.pd-scene .rm-stars circle:nth-child(3n+1){animation-delay:-2.2s}
+@media (prefers-reduced-motion:reduce){.pd-scene .rm-sw,.pd-scene .rm-sw2,.pd-scene .rm-gl,.pd-scene .rm-tw,.pd-scene .rm-tw2 circle,.pd-scene .rm-stars circle{animation:none!important}}
+
+/* Mo sits on the hill under the lanterns; the title and the journey follow */
+html.doa-rm #welcomeScreen .dh-hero{margin-bottom:-4px}
+.rm-head{width:100%;max-width:440px;display:flex;justify-content:center;margin:0 0 10px;z-index:1}
+.rm-title{display:inline-flex;flex-direction:column;align-items:center;gap:2px;padding:9px 22px 10px;border-radius:22px;
+  background:linear-gradient(180deg,rgba(42,34,114,.92),rgba(30,24,88,.92));box-shadow:inset 0 0 0 1.5px rgba(255,216,116,.55),0 14px 26px -16px rgba(20,10,60,.8);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.rm-t1{font:700 clamp(25px,7vw,30px)/1.05 'Fredoka','Nunito',sans-serif;color:#FFE08A;letter-spacing:-.01em;text-shadow:0 2px 0 #7A4A10}
+.rm-t2{font:800 13px/1.3 'Nunito',sans-serif;color:#E9E2FF}
+
+/* the Ramadan journey: eight stops that slide sideways */
+.rm-jr{width:100%;max-width:440px;margin:0 0 6px;padding:10px 0 4px;border-radius:26px;background:var(--card);box-shadow:0 12px 24px -18px rgba(30,20,80,.6);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px)}
+html[data-bm-theme="classic"] .rm-jr{box-shadow:inset 0 0 0 1px var(--line),0 14px 28px -18px rgba(0,0,0,.7)}
+.rm-jr-h{display:flex;align-items:center;justify-content:space-between;padding:0 16px 2px;font-family:'Fredoka','Nunito',sans-serif;color:var(--ink)}
+.rm-jr-h b{font-weight:700;font-size:17px}
+.rm-jr-h span{font:900 12.5px 'Nunito',sans-serif;padding:3px 10px;border-radius:999px;background:#FFE58A;color:#6A4200}
+html[data-bm-theme="classic"] .rm-jr-h span{background:rgba(255,216,116,.18);color:#FFE08A}
+.rm-jr-row{position:relative;display:flex;gap:2px;overflow-x:auto;overflow-y:hidden;padding:26px 12px 8px;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch;overscroll-behavior-x:contain}
+.rm-jr-row::-webkit-scrollbar{display:none}
+.rm-st{position:relative;flex:0 0 auto;width:86px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:0 2px 4px;border:none;background:none;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--ink);scroll-snap-align:center;-webkit-tap-highlight-color:transparent}
+/* the dotted road between the stops */
+.rm-st::before{content:'';position:absolute;top:29px;left:50%;width:100%;height:0;border-top:3px dotted rgba(120,100,200,.45);z-index:0}
+.rm-st:last-child::before{display:none}
+.rm-st.done::before{border-top-style:solid;border-color:#FFC83D}
+.rm-st-ic{position:relative;z-index:1;display:grid;place-items:center;width:58px;height:58px}
+.rm-st-ic .di{--s:56px;transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.rm-st:not(.done):not(.now) .rm-st-ic .di{filter:saturate(.55);opacity:.82}
+.rm-st.now .rm-st-ic .di{box-shadow:0 0 0 3px #fff,0 0 0 6px #FFC83D,0 10px 18px -8px rgba(200,120,0,.8);animation:rmNow 2s ease-in-out infinite}
+@keyframes rmNow{50%{transform:scale(1.07)}}
+.rm-st.pop .rm-st-ic .di{animation:diPop .42s cubic-bezier(.34,1.7,.5,1)}
+.rm-ck{position:absolute;right:-3px;bottom:-3px;width:22px;height:22px;border-radius:50%;background:#22C06E;display:grid;place-items:center;box-shadow:0 0 0 2px #fff}
+.rm-ck svg{width:14px;height:14px;fill:#fff}
+.rm-st b{font-size:12.5px;font-weight:900;line-height:1.1;text-align:center;min-height:28px;display:flex;align-items:center}
+.rm-st small{font-size:10.5px;font-weight:800;color:var(--ink2);margin-top:-2px}
+.rm-st .pips{height:12px}.rm-st .pips svg{width:12px;height:12px}
+.rm-me{position:absolute;z-index:2;top:-26px;left:50%;width:34px;height:auto;transform:translateX(-26%);filter:drop-shadow(0 3px 3px rgba(30,20,80,.35));animation:rmHop 1.8s ease-in-out infinite;pointer-events:none}
+@keyframes rmHop{0%,60%,100%{transform:translateX(-26%) translateY(0)}75%{transform:translateX(-26%) translateY(-5px)}}
+@media (prefers-reduced-motion:reduce){.rm-st.now .rm-st-ic .di,.rm-me{animation:none!important}}
+@media(min-width:600px){.rm-head,.rm-jr{max-width:680px}.rm-st{width:96px}}
+
+/* ── du'a page: Mo's speaking wave (as in Sholat Bareng Mo) ── */
+#sceneCard .scene-mo-wrap .mo-talk{position:absolute;z-index:2;width:17%;aspect-ratio:40/48;transform:translateY(-50%) scale(.6);transform-origin:0 50%;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .3s cubic-bezier(.34,1.56,.64,1)}
+#sceneCard .scene-mo-wrap .mo-talk.flip{transform:translate(-100%,-50%) scale(-.6,.6);transform-origin:100% 50%}
+#sceneCard .mo-talk svg{display:block;width:100%;height:100%;overflow:visible}
+#sceneCard .mo-talk path{fill:none;stroke:#13A35A;stroke-width:4.6;stroke-linecap:round;filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1.5px #fff) drop-shadow(0 2px 3px rgba(0,80,40,.25))}
+html[data-bm-theme="classic"] #sceneCard .mo-talk path{stroke:#7CF0AE;filter:drop-shadow(0 0 4px rgba(124,240,174,.55))}
+#sceneCard.night .mo-talk path{stroke:#7CF0AE}
+#sceneCard.mo-speaking .mo-talk{opacity:1;transform:translateY(-50%) scale(1)}
+#sceneCard.mo-speaking .mo-talk.flip{transform:translate(-100%,-50%) scale(-1,1)}
+#sceneCard.mo-speaking .mo-talk path{animation:rmTalk 1.05s ease-in-out infinite}
+#sceneCard.mo-speaking .mo-talk .mt2{animation-delay:.16s}#sceneCard.mo-speaking .mo-talk .mt3{animation-delay:.32s}
+@keyframes rmTalk{0%,100%{opacity:.25}35%{opacity:1}}
+@media (prefers-reduced-motion:reduce){#sceneCard.mo-speaking .mo-talk path{animation:none;opacity:1}}
+
+/* ── finish: a lantern banner on the card ── */
+.rm-banner{position:relative;margin:-6px -6px 6px;height:64px}
+.rm-banner svg{display:block;width:100%;height:56px;overflow:visible}
+.rm-banner .rm-sw{animation:rmSwing 3.4s ease-in-out infinite}
+.rm-banner g:nth-of-type(even) .rm-sw{animation-delay:-1.4s}
+.rm-rib{position:absolute;left:50%;bottom:-4px;transform:translateX(-50%);white-space:nowrap;padding:4px 14px;border-radius:999px;background:linear-gradient(180deg,#3A2E8E,#2A2272);color:#FFE08A;font:700 15px 'Fredoka','Nunito',sans-serif;box-shadow:0 6px 12px -6px rgba(30,20,80,.7)}
+@media (prefers-reduced-motion:reduce){.rm-banner .rm-sw{animation:none}}

@@ -7,16 +7,18 @@
 #   bash tools/voice/cloudshell.sh app [voice]     -> only the app Arabic + Cari name clips (keeps the 181 existing ones)
 #   bash tools/voice/cloudshell.sh lines [voice]   -> only the Indonesian + English spoken lines (clips-lines.json) that
 #                                                     are not made yet; everything already made is kept
+#   bash tools/voice/cloudshell.sh ramadan [voice] -> only the Doa Ramadan du'a clips (doa-voice/d-r_*.mp3) and the spoken
+#                                                     lines that are not made yet; everything already made is kept
 #   bash tools/voice/cloudshell.sh compare         -> one short sample per Arabic voice (to choose a voice)
 # Optional: VOICE_EN=en-US-… VOICE_ID=id-ID-… to pick other English / Indonesian voices; BASE=<branch> to start
 # from a branch other than main.
 set -euo pipefail
 MODE="${1:-}"; VOICE="${2:-}"
-case "$MODE" in all|app|lines|compare|"") ;; *) VOICE="$MODE"; MODE="all" ;; esac
+case "$MODE" in all|app|lines|ramadan|compare|"") ;; *) VOICE="$MODE"; MODE="all" ;; esac
 [ -z "$MODE" ] && MODE="all"
 echo "▶ Project: $(gcloud config get-value project 2>/dev/null)"
 gcloud services enable texttospeech.googleapis.com speech.googleapis.com >/dev/null
-git checkout -q "${BASE:-main}" && git pull -q
+git fetch -q origin && git checkout -q "${BASE:-main}" && git pull -q
 LOGIN="$(gh api user -q .login 2>/dev/null || echo babymo)"; UID_="$(gh api user -q .id 2>/dev/null || echo 0)"
 G=(-c user.name="$LOGIN" -c user.email="${UID_}+${LOGIN}@users.noreply.github.com")
 if [ "$MODE" = "compare" ]; then
@@ -31,7 +33,12 @@ else
   N_ALL="$(python3 -c 'import json;print(sum(len(json.load(open("tools/voice/"+f))) for f in ("clips.json","clips-app.json","clips-lines.json")))')"
   N_APP="$(python3 -c 'import json;print(len(json.load(open("tools/voice/clips-app.json"))))')"
   N_LINES="$(python3 -c 'import json,os;print(sum(1 for x in json.load(open("tools/voice/clips-lines.json")) if not os.path.exists("www/voice/"+x["id"]+".mp3")))')"
-  if [ "$MODE" = "lines" ]; then
+  if [ "$MODE" = "ramadan" ]; then
+    python3 tools/voice/gen.py --dry-run --only doa,lines "${ARGS[@]}"
+    python3 tools/voice/gen.py --test --only doa,lines "${ARGS[@]}"
+    echo "▶ Making the missing Doa Ramadan du'a clips + spoken lines (a few minutes)…"
+    python3 tools/voice/gen.py --check --only doa,lines "${ARGS[@]}"
+  elif [ "$MODE" = "lines" ]; then
     python3 tools/voice/gen.py --test --only lines "${ARGS[@]}"
     echo "▶ Making the $N_LINES missing Indonesian + English line clips (about $(( N_LINES / 90 + 1 )) minutes)…"
     python3 tools/voice/gen.py --check --only lines "${ARGS[@]}"

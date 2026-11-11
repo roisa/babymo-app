@@ -37,6 +37,7 @@ Usage:
   python3 tools/voice/gen.py --voice ar-XA-Chirp3-HD-Kore [--voice-en en-US-…] [--voice-id id-ID-…]
   python3 tools/voice/gen.py --manifest             # only rewrite www/voice/manifest.js (+ the listening page's data)
   python3 tools/voice/gen.py --compare              # one short sample per Arabic voice (tools/voice/compare/)
+  python3 tools/voice/gen.py --dry-run --only doa,lines   # list the clips a run would make (missing files), no API calls
 """
 import argparse, base64, json, os, re, sys, time, unicodedata, urllib.request, urllib.error
 
@@ -61,7 +62,7 @@ def _gcloud(*args):
 # In Google Cloud Shell (or anywhere gcloud is signed in) no key is needed: use the signed-in account's token.
 TOKEN = os.environ.get("GOOGLE_ACCESS_TOKEN", "").strip()
 PROJECT = os.environ.get("GOOGLE_CLOUD_PROJECT", "").strip() or os.environ.get("DEVSHELL_PROJECT_ID", "").strip()
-if not KEY and not TOKEN and os.environ.get("NO_GCLOUD") != "1":
+if not KEY and not TOKEN and os.environ.get("NO_GCLOUD") != "1" and "--dry-run" not in sys.argv:
     TOKEN = _gcloud("auth", "print-access-token")
     if TOKEN and not PROJECT:
         PROJECT = _gcloud("config", "get-value", "project")
@@ -237,6 +238,7 @@ def main():
     ap.add_argument("--manifest", action="store_true", help="only rewrite www/voice/manifest.js from the files on disk")
     ap.add_argument("--compare", action="store_true", help="make one short sample per Arabic voice in tools/voice/compare/")
     ap.add_argument("--force", action="store_true", help="remake clips that already exist")
+    ap.add_argument("--dry-run", action="store_true", help="only list the clips that would be made (no API key needed)")
     a = ap.parse_args()
     voices = {"ar": a.voice, "en": a.voice_en or family(a.voice, "en"), "id": a.voice_id or family(a.voice, "id")}
     items = load_items()
@@ -268,6 +270,19 @@ def main():
             s = s.strip()
             if s not in ONLY: raise SystemExit(f"--only: unknown section {s!r} (hijaiyah, doa, app, cari, lines)")
             secs.add(ONLY[s])
+    if a.dry_run:
+        n = 0
+        for sec, (folder, var, title, _) in SECTIONS.items():
+            if secs and sec not in secs:
+                continue
+            sel = [x for x in items if x["sec"] == sec]
+            todo = [x for x in sel if a.force or not (os.path.exists(os.path.join(ROOT, folder, x["id"] + ".mp3")) and os.path.getsize(os.path.join(ROOT, folder, x["id"] + ".mp3")) > 500)]
+            print(f"[{sec}] {len(sel)} clips, {len(sel) - len(todo)} already made, {len(todo)} to make")
+            for x in todo:
+                print(f"   + {folder}/{x['id']}.mp3  {x['lang']}  {voices[x['lang']]}  {x['t'][:70]}  ({x.get('h','')[:50]})")
+            n += len(todo)
+        print(f"dry run: {n} clips would be made (nothing was sent)")
+        return
     if a.test:
         langs = ([] if secs == {"lines"} else ["ar"]) + [l for l in ("en", "id") if not secs or secs & set(BM_SECS)]
         sample = {"ar": "بَ", "en": "Teddy!", "id": "Beruang!"}
