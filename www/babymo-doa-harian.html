@@ -2255,5 +2255,47 @@ function showToast(e, t){
 <div id="cele" role="dialog" aria-modal="true"><div class="ce-card" id="ceCard"></div></div>
 <div id="book" role="dialog" aria-modal="true"><div class="bk-sheet" id="bkSheet"></div></div>
 <script src="/bm-kit.js" defer></script>
+<script>
+/* Du'a quiz sound effects: soft "pop" on every press, a whoosh as each question arrives,
+   a sparkly chime for the right picture, a gentle "boing" for a wrong one, a little tick when
+   the "listen again" button is pressed, and a fanfare + star twinkles on the results.
+   WebAudio only; silent when the app is muted. */
+(function(){
+  var AC=null;
+  function ac(){ if(!AC){ try{ AC=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(AC&&AC.state==='suspended'){ try{AC.resume();}catch(e){} } return AC; }
+  function mute(){ try{ return (window.BabyMo&&BabyMo.isMuted&&BabyMo.isMuted())||localStorage.getItem('bm_muted')==='1'; }catch(e){ return false; } }
+  function tone(t,f,d,o){ o=o||{}; var c=ac(); if(!c||mute()) return; try{
+    var s=c.currentTime+(t||0), os=c.createOscillator(), g=c.createGain();
+    os.type=o.type||'sine'; os.frequency.setValueAtTime(f,s); if(o.f2) os.frequency.exponentialRampToValueAtTime(o.f2,s+d);
+    var v=o.vol||.18; g.gain.setValueAtTime(0.0001,s); g.gain.exponentialRampToValueAtTime(v,s+(o.a||.008)); g.gain.exponentialRampToValueAtTime(0.0001,s+d);
+    os.connect(g); g.connect(c.destination); os.start(s); os.stop(s+d+.02); }catch(e){} }
+  function noise(t,d,o){ o=o||{}; var c=ac(); if(!c||mute()) return; try{
+    var s=c.currentTime+(t||0), n=Math.floor(c.sampleRate*d), b=c.createBuffer(1,n,c.sampleRate), x=b.getChannelData(0);
+    for(var i=0;i<n;i++) x[i]=(Math.random()*2-1)*(1-i/n);
+    var src=c.createBufferSource(); src.buffer=b; var fl=c.createBiquadFilter(); fl.type='bandpass'; fl.frequency.setValueAtTime(o.f||900,s); if(o.f2) fl.frequency.exponentialRampToValueAtTime(o.f2,s+d); fl.Q.value=o.q||1.2;
+    var g=c.createGain(); g.gain.setValueAtTime(o.vol||.12,s); g.gain.exponentialRampToValueAtTime(0.0001,s+d);
+    src.connect(fl); fl.connect(g); g.connect(c.destination); src.start(s); src.stop(s+d+.02); }catch(e){} }
+  var Q={
+    press:function(){ tone(0,520,.09,{f2:760,vol:.16,type:'triangle'}); },
+    pop:function(){ tone(0,880,.06,{f2:1320,vol:.12,type:'sine'}); noise(0,.05,{f:2400,vol:.05}); },
+    whoosh:function(){ noise(0,.32,{f:500,f2:2600,vol:.07,q:.8}); tone(.18,1046,.12,{vol:.06}); },
+    right:function(){ [784,988,1175,1568].forEach(function(f,i){ tone(i*.07,f,.22,{vol:.14}); }); [2093,2637,3136].forEach(function(f,i){ tone(.32+i*.06,f,.18,{vol:.05}); }); },
+    wrong:function(){ tone(0,330,.16,{f2:220,vol:.14,type:'triangle'}); tone(.15,260,.22,{f2:180,vol:.11,type:'triangle'}); },
+    win:function(){ [523,659,784,1047].forEach(function(f,i){ tone(i*.13,f,.28,{vol:.15,type:'triangle'}); }); tone(.55,1319,.5,{vol:.1}); [2637,3136,2794,3520].forEach(function(f,i){ tone(.8+i*.12,f,.2,{vol:.05}); }); }
+  };
+  window.qSfx=Q;
+  var scr=document.getElementById('quizScreen'); if(!scr) return;
+  // presses: every button / picture answer on the quiz screen
+  scr.addEventListener('pointerdown',function(e){ var b=e.target.closest&&e.target.closest('button'); if(!b||b.disabled||b.classList.contains('disabled')) return;
+    if(b.classList.contains('q-choice')) Q.pop(); else Q.press(); },true);
+  // answer feedback (the page's own tones are replaced by these livelier ones)
+  window.playCorrect=function(){ Q.right(); };
+  window.playWrong=function(){ Q.wrong(); };
+  // a whoosh as each new question slides in
+  var _lq=window.loadQuestion; if(_lq) window.loadQuestion=function(qi){ var r=_lq.apply(this,arguments); Q.whoosh(); return r; };
+  // fanfare on the results card
+  var _sc=window.showComplete; if(_sc) window.showComplete=function(){ var r=_sc.apply(this,arguments); setTimeout(Q.win,250); return r; };
+})();
+</script>
 </body>
 </html>
