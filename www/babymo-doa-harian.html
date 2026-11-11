@@ -628,11 +628,11 @@ html[data-bm-theme="classic"] #dhDay .dh-tab:not(.on){background:rgba(255,255,25
 #welcomeScreen .w-title,#welcomeScreen .w-arabic{display:none!important}
 #welcomeScreen>.dh-scene{position:absolute!important;z-index:0!important;left:0;right:0;top:0;height:480px;flex:none;pointer-events:none;overflow:hidden;
   -webkit-mask-image:linear-gradient(180deg,#000 74%,transparent);mask-image:linear-gradient(180deg,#000 74%,transparent)}
-#welcomeScreen .dh-hero{flex:0 0 auto;width:100%;max-width:440px;height:200px;margin:-8px 0 2px;position:relative;pointer-events:none}
+#welcomeScreen .dh-hero{flex:0 0 auto;width:100%;max-width:440px;height:200px;margin:-8px 0 -96px;z-index:0!important;position:relative;pointer-events:none}
 #welcomeScreen .dh-hero img{position:absolute;left:8%;bottom:-22px;height:190px;width:auto;filter:drop-shadow(0 10px 10px rgba(30,60,40,.28));animation:dhBob 3.4s ease-in-out infinite}
 @keyframes dhBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
 @media (prefers-reduced-motion:reduce){#welcomeScreen .dh-hero img{animation:none}}
-@media(min-width:600px){#welcomeScreen .dh-hero{height:230px}#welcomeScreen .dh-hero img{height:220px}}
+@media(min-width:600px){#welcomeScreen .dh-hero{height:230px;margin-bottom:-112px}#welcomeScreen .dh-hero img{height:220px}}
 .pd-scene svg{width:100%;height:100%;display:block}
 .pd-scene svg *{transform-box:fill-box}
 /* day */
@@ -945,7 +945,7 @@ const DUAS = [
     meaningId:'Kami memasuki waktu sore dan kerajaan hanya milik Allah, segala puji bagi Allah.', meaningEn:'We have entered the evening and the whole kingdom belongs to Allah; all praise is for Allah.',
     quizPrompt:'Dzikir ini dibaca saat...?', quizEmoji:'🌇', quizLabel:'Sore Hari', act:['Lihat, matahari terbenam! 🌇','Look, the sun is setting! 🌇'], short:['Dzikir sore','Evening'],
     src:['HR. Muslim no. 2723 · bagian awal dzikir sore','Sahih Muslim no. 2723 · the opening of the evening dhikr'] },
-  { id:'parents', waktu:'malam', timeCode:'night', time:'Malam 🌙', icon:'👪', prop:'💗', bg:'linear-gradient(160deg,#C9B6F2 0%,#6E54C8 100%)', pose:'pose-05',
+  { id:'parents', waktu:'malam', timeCode:'night', time:'Malam 🌙', icon:'👪', prop:'💗', bg:'linear-gradient(160deg,#C9B6F2 0%,#6E54C8 100%)', pose:'dua-smile',
     title:'Doa untuk Orang Tua', desc:'Mo sayang Abi dan Umi. Doakan mereka setiap hari!',
     arabic:'رَبِّ اغْفِرْ لِي وَلِوَالِدَيَّ وَارْحَمْهُمَا كَمَا رَبَّيَانِي صَغِيرًا', latin:"Rabbighfir lī wa liwālidayya warḥamhumā kamā rabbayānī ṣaghīrā",
     meaningId:'Ya Allah, ampunilah aku dan kedua orang tuaku, dan sayangilah mereka sebagaimana mereka menyayangiku di waktu kecil.', meaningEn:'My Lord, forgive me and my parents, and have mercy on them as they cared for me when I was little.',
