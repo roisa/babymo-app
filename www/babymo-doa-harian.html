@@ -2193,7 +2193,7 @@ function showToast(e, t){
       if(!t){ if(!muted()) playTone(784,.12,'triangle',.2); spawnParticles(6); setSceneMoExpression('celebrate'); t=350; }
       setTimeout(function(){ if(pos!==p0 || PLAY[pos]!==idx || !document.getElementById('learnScreen').classList.contains('active')) return;
         // after the motion, glide down to what the child reads next: the tasbih counter, else the Arabic
-        var tg=(d.tasbih&&!document.getElementById('tsb').hidden)?document.getElementById('tsb'):document.querySelector('#learnScreen .dua-card');
+        var tg=document.querySelector('#learnScreen .dua-card');
         if(tg){ var r=tg.getBoundingClientRect(), vh=window.innerHeight||document.documentElement.clientHeight;
           if(r.top>24||r.top<-4){ var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
             // the learn screen scrolls inside its own box; fall back to the window
