@@ -67,68 +67,135 @@ html[data-bm-theme="bright"] body{background:#F2F6FC;}
 .di-juara{--c1:#FFE066;--c2:#F59E0B;--k:#9A5B00}
 
 /* ════ JOURNEY MAP ════ */
-.m-top{width:100%;max-width:460px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
-.chip{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:0 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line);font-size:14px;font-weight:900;color:var(--ink);text-decoration:none;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);cursor:pointer;white-space:nowrap;}
+/* scene colours: default = dark ("classic") night look, bright = sunny day */
+:root{
+  --sky-a:#0B2436;--sky-b:#0F2E2A;--sky-c:rgba(10,33,24,0);
+  --cloud:rgba(255,255,255,.10);--cloud-sh:rgba(255,255,255,0);
+  --hill1:#17402F;--hill2:#1D5038;--hill3:#123526;
+  --dome1:#2E6F8F;--dome2:#18465E;--wall1:#2A3B44;--wall2:#1C2A31;--win:#FFD35C;
+  --card:rgba(255,255,255,.08);--card-bd:rgba(255,255,255,.14);--card-sh:0 14px 30px -18px rgba(0,0,0,.8);
+  --ttl1:#FFE58A;--ttl2:#FFC23A;--ttl3:#F59E0B;--ttl-ex:#9A5200;--ttl-ol:#FFF8E6;
+  --rib1:#FFE795;--rib2:#F6C445;--rib-ink:#4A2E00;
+  --gr0:#245A3E;--gr1:#1F4F37;--gr2:#1B4632;--gr3:#2B3C43;--gr4:#212A4C;--gr5:#151A3E;
+  --hl:rgba(255,255,255,.06);--tr1:#4E9A57;--tr2:#24603A;--trunk:#6B4A2E;
+  --road-e:rgba(255,236,196,.20);--road:rgba(255,240,210,.26);--road-d:rgba(255,255,255,.75);
+  --sun:#FFD25A;--sun2:#FFB21E;--house:#E9DCC4;--house2:#CDBB9C;--roof1:#F2836B;--roof2:#C94F3D;--hwin:#FFD35C;
+  --pill:rgba(10,30,22,.78);--pill-ink:#F2F7F2;--pip-bg:rgba(10,30,22,.55);
+}
+html[data-bm-theme="bright"]{
+  --sky-a:#9FD6FF;--sky-b:#D4EEFF;--sky-c:rgba(242,246,252,0);
+  --cloud:#fff;--cloud-sh:rgba(120,170,220,.25);
+  --hill1:#A9DE7C;--hill2:#7FCB5B;--hill3:#5DB646;
+  --dome1:#5BB4FF;--dome2:#1F6FD8;--wall1:#FFFDF6;--wall2:#E8DCC4;--win:#2F6FB8;
+  --card:#fff;--card-bd:rgba(21,34,48,.06);--card-sh:0 14px 30px -16px rgba(40,80,140,.45);
+  --ttl1:#FFB43C;--ttl2:#FF7F14;--ttl3:#F05A06;--ttl-ex:#B84500;--ttl-ol:#FFFFFF;
+  --gr0:#D7F0A4;--gr1:#BDE68A;--gr2:#A5DA72;--gr3:#BCD58A;--gr4:#7C86C8;--gr5:#3E3F94;
+  --hl:rgba(255,255,255,.22);--tr1:#8EE05A;--tr2:#3DA845;--trunk:#9A6A40;
+  --road-e:#EAD3A1;--road:#FFF2D4;--road-d:#fff;
+  --sun:#FFE15A;--sun2:#FFB21E;--house:#FFF6E6;--house2:#F0DFC2;--roof1:#FF8F73;--roof2:#E0583F;--hwin:#69B6FF;
+  --pill:#fff;--pill-ink:#152230;--pip-bg:rgba(255,255,255,.75);
+}
+@media(min-width:760px){#mapScreen{max-width:none!important;}}
+.top-scene{position:relative;isolation:isolate;width:calc(100% + 32px);margin:calc(-12px - env(safe-area-inset-top)) -16px 0;padding:calc(12px + env(safe-area-inset-top)) 16px 58px;display:flex;flex-direction:column;align-items:center;flex:0 0 auto;}
+.sky{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:linear-gradient(180deg,var(--sky-a) 0%,var(--sky-b) 70%);-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent 100%);mask-image:linear-gradient(180deg,#000 80%,transparent 100%);}
+.sky svg{position:absolute;display:block;}
+.sky .cl{fill:var(--cloud);filter:drop-shadow(0 4px 4px var(--cloud-sh));}
+.sky .c1{left:3%;top:calc(34% + env(safe-area-inset-top));width:58px;animation:drift 14s ease-in-out infinite alternate;}
+.sky .c2{left:34%;top:calc(4px + env(safe-area-inset-top));width:74px;opacity:.9;animation:drift 18s ease-in-out infinite alternate-reverse;}
+.sky .c3{right:3%;top:calc(31% + env(safe-area-inset-top));width:50px;opacity:.85;animation:drift 16s ease-in-out infinite alternate;}
+@keyframes drift{to{transform:translateX(14px)}}
+.sky .stz{left:0;top:0;width:100%;height:70%;}
+html[data-bm-theme="bright"] .sky .stz{display:none;}
+.sky .hills{left:0;right:0;bottom:8px;width:100%;height:78px;}
+.sky .mosque{right:max(12px,calc(50% - 290px));bottom:26px;width:44px;height:52px;filter:drop-shadow(0 4px 4px rgba(0,40,0,.18));}
+.m-top{flex:0 0 auto;width:100%;max-width:460px;display:flex;align-items:center;justify-content:space-between;gap:8px;}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;background:var(--glass);border:1px solid var(--line);font-size:16px;font-weight:900;color:var(--ink);text-decoration:none;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);cursor:pointer;white-space:nowrap;box-shadow:0 8px 18px -12px rgba(0,0,0,.6);}
+html[data-bm-theme="bright"] .chip{background:rgba(255,255,255,.92);border-color:rgba(255,255,255,.9);box-shadow:0 8px 18px -10px rgba(40,90,150,.45);}
 .chip:active{transform:scale(.96);}
 .chip b{color:var(--gold-ink);}
-.hero{width:100%;max-width:460px;display:flex;align-items:center;gap:12px;margin:10px 0 12px;}
-.hero img{width:86px;height:86px;object-fit:contain;flex:0 0 auto;filter:drop-shadow(0 6px 12px rgba(0,0,0,.3));animation:bob 3.4s ease-in-out infinite;}
+.hero{position:relative;flex:0 0 auto;width:100%;max-width:460px;display:flex;align-items:center;margin:4px 0 0;min-height:128px;}
+.hero>img{width:clamp(94px,27vw,124px);height:auto;max-height:144px;object-fit:contain;flex:0 0 auto;margin:0 -8px 0 -6px;filter:drop-shadow(0 8px 10px rgba(0,40,80,.28));animation:bob 3.4s ease-in-out infinite;transform-origin:50% 100%;}
 @keyframes bob{50%{transform:translateY(-5px) rotate(2deg)}}
-.hero-t{font-size:clamp(26px,7.4vw,32px);font-weight:900;color:var(--gold);letter-spacing:-.5px;line-height:1.05;}
-.hero-s{font-size:14px;font-weight:800;color:var(--ink2);margin-top:4px;line-height:1.3;}
+.hero-tx{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;text-align:center;}
+.hero-t{position:relative;z-index:0;isolation:isolate;display:inline-block;padding-right:.62em;font-size:clamp(33px,9.6vw,48px);font-weight:900;line-height:1.08;letter-spacing:-.025em;white-space:nowrap;}
+.hero-t .tt{position:relative;z-index:0;display:inline-block;background:linear-gradient(180deg,var(--ttl1) 8%,var(--ttl2) 52%,var(--ttl3) 92%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent;filter:drop-shadow(0 1.5px 0 rgba(255,255,255,.35));}
+.hero-t::before{content:attr(data-t);position:absolute;left:0;top:0;z-index:-1;-webkit-text-fill-color:var(--ttl-ol);color:var(--ttl-ol);-webkit-text-stroke:.2em var(--ttl-ol);paint-order:stroke fill;filter:drop-shadow(0 .06em 0 var(--ttl-ex)) drop-shadow(0 .1em .12em rgba(80,30,0,.35));}
+.hero-t .moon{position:absolute;right:-.06em;top:-.18em;width:.84em;height:.84em;filter:drop-shadow(0 3px 3px rgba(150,90,0,.35));animation:twk 3.2s ease-in-out infinite;}
+.hero-s{display:inline-block;margin-top:6px;padding:6px 16px;border-radius:999px;background:linear-gradient(180deg,var(--rib1),var(--rib2));color:var(--rib-ink);font-size:clamp(12.5px,3.5vw,16px);font-weight:900;line-height:1.25;max-width:100%;box-shadow:inset 0 1.5px 0 rgba(255,255,255,.75),inset 0 -2px 0 rgba(190,120,0,.25),0 8px 14px -8px rgba(190,120,0,.7);}
 
-.mode{width:100%;max-width:460px;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:5px;border-radius:22px;background:var(--glass);border:1px solid var(--line);margin-bottom:12px;}
-.mode button{border:0;background:transparent;border-radius:17px;padding:9px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:56px;transition:background .2s;}
-.mode b{font-size:15px;font-weight:900;white-space:nowrap;}
-.mode small{font-size:12px;font-weight:800;color:var(--ink2);white-space:nowrap;}
-.mode button.on{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;box-shadow:0 8px 18px -10px rgba(31,169,113,.9);}
-.mode button.on small{color:#0A3A26;}
-html[data-bm-theme="bright"] .mode button.on{color:#fff;}
-html[data-bm-theme="bright"] .mode button.on small{color:#E9FFF3;}
+.mode{position:relative;z-index:1;flex:0 0 auto;width:100%;max-width:460px;display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:6px;border-radius:26px;background:var(--card);border:1px solid var(--card-bd);box-shadow:var(--card-sh);margin:-14px 0 14px;-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
+.mode button{border:0;background:transparent;border-radius:20px;padding:10px 6px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;min-height:64px;transition:background .2s,transform .15s;}
+.mode button:active{transform:scale(.97);}
+.mode b{font-size:17px;font-weight:900;white-space:nowrap;}
+.mode small{font-size:12.5px;font-weight:800;color:var(--ink2);white-space:nowrap;}
+.mode button.on{background:linear-gradient(180deg,#3FD88A 0%,#1FB46A 55%,#14975A 100%);color:#fff;box-shadow:inset 0 2px 0 rgba(255,255,255,.4),inset 0 -3px 0 rgba(0,70,35,.25),0 10px 18px -10px rgba(20,150,90,.95);text-shadow:0 1px 1px rgba(0,60,30,.35);}
+.mode button.on small{color:#EAFFF3;}
+@media(max-width:380px){.mode b{font-size:15.5px}.mode small{font-size:11.5px}}
 
-/* Du'a of the day — two rows so nothing is squeezed */
-.dod{width:100%;max-width:460px;margin:0 0 14px;padding:12px 14px;border-radius:22px;background:var(--glass);border:1.5px solid rgba(255,216,116,.4);box-shadow:0 12px 26px -18px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);}
-html[data-bm-theme="bright"] .dod{border-color:#FFD15C;box-shadow:0 12px 26px -18px rgba(30,60,110,.5);}
-.dod-r1{display:flex;align-items:center;gap:12px;}
-.dod .di{--s:56px;}
+/* Du'a of the day */
+.dod{position:relative;flex:0 0 auto;width:100%;max-width:460px;margin:0 0 16px;padding:14px 14px 14px;border-radius:26px;background:var(--card);border:2px solid rgba(255,216,116,.45);box-shadow:var(--card-sh);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);overflow:hidden;}
+html[data-bm-theme="bright"] .dod{border-color:#FFD45C;background:linear-gradient(180deg,#fff,#FFFCF2);}
+.dod-r1{display:flex;align-items:center;gap:11px;}
+.dod .di{--s:50px;align-self:center;}
 .dod-tx{flex:1;min-width:0;}
-.dod-k{display:inline-block;white-space:nowrap;font-size:11.5px;font-weight:900;letter-spacing:.06em;text-transform:uppercase;color:var(--pill-ink);background:var(--pill-bg);padding:3px 10px;border-radius:999px;}
-.dod-t{font-size:17px;font-weight:900;line-height:1.2;margin-top:5px;}
-.dod-p{font-size:13px;font-weight:800;color:var(--ink2);margin-top:3px;line-height:1.3;}
-.dod-p b{color:var(--gold-ink);}
-.dod-r2{display:flex;gap:8px;margin-top:10px;}
-.dod-r2 a,.dod-r2 button{flex:1;min-height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:14px;font-weight:900;text-decoration:none;cursor:pointer;border:0;white-space:nowrap;}
-.dod-play{background:linear-gradient(135deg,var(--green-lt),var(--green));color:#06231A;}
-html[data-bm-theme="bright"] .dod-play{color:#fff;}
-.dod-read{background:var(--glass2);color:var(--ink);box-shadow:inset 0 0 0 1px var(--line);}
+.dod-k{display:inline-flex;align-items:center;gap:5px;white-space:nowrap;font-size:11.5px;font-weight:900;letter-spacing:.05em;text-transform:uppercase;color:var(--pill-ink);background:linear-gradient(180deg,#FFEDA0,#FFD45C);color:#5A3800;padding:4px 11px;border-radius:999px;box-shadow:inset 0 1px 0 rgba(255,255,255,.7);}
+.dod-t{font-size:17px;font-weight:900;line-height:1.15;margin-top:6px;}
+html[data-bm-theme="bright"] .dod-t{color:#3B1F8C;}
+.dod-p{font-size:12.5px;font-weight:800;color:var(--ink2);margin-top:4px;line-height:1.5;}
+.dod-p b{color:#5A3800;background:linear-gradient(180deg,#FFEDA0,#FFD45C);padding:1px 7px;border-radius:8px;white-space:nowrap;-webkit-box-decoration-break:clone;box-decoration-break:clone;}
+.dod-art{position:relative;flex:0 0 auto;width:74px;height:74px;border-radius:20px;overflow:hidden;box-shadow:inset 0 0 0 2px rgba(255,255,255,.6),0 8px 16px -10px rgba(0,0,0,.5);}
+.dod-art svg.sc{position:absolute;inset:0;width:100%;height:100%;}
+.dod-art img{position:absolute;right:-4%;bottom:0;height:82%;object-fit:contain;filter:drop-shadow(0 3px 4px rgba(30,40,70,.3));}
+.dod-art.fam{overflow:visible;box-shadow:none;width:86px;}
+.dod-art.fam img{height:100%;bottom:-6px;}
+.dod-art.fam img.u{left:-2px;right:auto;height:92%;}
+.dod-art.fam img.a{right:-6px;}
+.dod-art.fam i{position:absolute;left:50%;top:-4px;margin-left:-9px;font-style:normal;font-size:18px;animation:twk 2s ease-in-out infinite;}
+.dod-r2{display:flex;gap:8px;margin-top:12px;}
+.dod-r2 a,.dod-r2 button{flex:1;min-height:48px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:15px;font-weight:900;text-decoration:none;cursor:pointer;border:0;white-space:nowrap;padding:0 14px;}
+.dod-r2 a:active,.dod-r2 button:active{transform:scale(.97);}
+.dod-play{background:linear-gradient(180deg,#3FD88A 0%,#1FB46A 55%,#14975A 100%);color:#fff;text-shadow:0 1px 1px rgba(0,60,30,.35);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),inset 0 -3px 0 rgba(0,70,35,.25),0 8px 16px -10px rgba(20,150,90,.9);}
+.dod-read{background:rgba(63,208,140,.10);color:var(--ink);box-shadow:inset 0 0 0 2px rgba(63,208,140,.75);}
+html[data-bm-theme="bright"] .dod-read{background:linear-gradient(180deg,#fff,#F0FBF4);color:#0E3B26;box-shadow:inset 0 0 0 2px #2DBE74,0 6px 12px -8px rgba(20,150,90,.5);}
+.dod-read .chev{margin-left:auto;font-size:20px;line-height:1;color:#2DBE74;}
+.dod-read .bk{font-size:18px;}
+.dod-r2.solo{justify-content:center;}
+.dod-r2.solo a{flex:0 1 82%;}
+.dod-r2.solo a .chev{margin-left:auto;}
+.dod-r2:not(.solo) .chev{display:none;}
 
-/* the path through the day */
-.journey{position:relative;width:100%;max-width:460px;border-radius:30px;overflow:hidden;flex:0 0 auto;
-  background:linear-gradient(180deg,#4A3420 0%,#5A3A22 10%,#163B57 30%,#16405A 48%,#4A2A45 64%,#2A2458 80%,#141A3D 100%);
+/* the path through the day — a landscape from sunrise to night */
+.journey{position:relative;width:100%;max-width:460px;border-radius:32px;overflow:hidden;flex:0 0 auto;background:linear-gradient(180deg,var(--sky-a),var(--gr1));
   box-shadow:inset 0 0 0 1px var(--line),0 18px 36px -24px rgba(0,0,0,.7);}
-html[data-bm-theme="bright"] .journey{background:linear-gradient(180deg,#FFE3C2 0%,#FFEBC9 10%,#CDEBFF 30%,#D6F0FF 48%,#FFD6CC 64%,#B7B2F0 80%,#3E3F94 100%);box-shadow:0 18px 36px -24px rgba(30,60,110,.6);}
-.journey svg.road{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
-.jr-dec{position:absolute;pointer-events:none;}
-.node{position:absolute;width:132px;margin-left:-66px;display:flex;flex-direction:column;align-items:center;gap:4px;border:0;background:none;cursor:pointer;z-index:2;}
+html[data-bm-theme="bright"] .journey{box-shadow:inset 0 0 0 3px rgba(255,255,255,.75),0 18px 36px -20px rgba(40,90,150,.55);}
+.journey svg.land,.journey svg.road{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
+.node{position:absolute;width:140px;margin-left:-70px;display:flex;flex-direction:column;align-items:center;gap:5px;border:0;background:none;cursor:pointer;z-index:2;}
 .node .ic{position:relative;}
-.node .di{--s:68px;transition:transform .2s;}
+.node .di{--s:76px;transition:transform .2s;box-shadow:inset 0 2px 0 rgba(255,255,255,.55),inset 0 -4px 6px rgba(0,0,0,.14),0 10px 18px -8px var(--c2),0 3px 5px -2px rgba(20,30,60,.35);}
 .node:active .di{transform:scale(.92);}
-.node .num{position:absolute;left:-6px;top:-6px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-size:13px;font-weight:900;background:#fff;color:#152230;box-shadow:0 3px 8px -2px rgba(0,0,0,.35);z-index:2;}
-.node .lock{position:absolute;inset:0;display:grid;place-items:center;font-size:26px;z-index:3;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));}
-.node .tod{position:absolute;right:-8px;top:-8px;font-size:20px;z-index:3;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));animation:twk 1.8s ease-in-out infinite;}
+.node .num{position:absolute;left:-10px;top:-10px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font-size:16px;font-weight:900;background:#fff;color:#152230;box-shadow:0 0 0 2.5px rgba(255,255,255,.6),0 4px 8px -2px rgba(0,0,0,.35);z-index:2;}
+.node .lock{position:absolute;inset:0;display:grid;place-items:center;z-index:3;}
+.node .lock svg{width:46%;height:auto;filter:drop-shadow(0 3px 3px rgba(0,0,0,.3));}
+.node .tod{position:absolute;right:-10px;top:-10px;font-size:22px;z-index:3;filter:drop-shadow(0 2px 3px rgba(0,0,0,.35));animation:twk 1.8s ease-in-out infinite;}
 @keyframes twk{50%{transform:scale(1.18) rotate(10deg)}}
-.node .lab{max-width:132px;padding:4px 10px;border-radius:12px;background:var(--lab-bg);color:var(--lab-ink);font-size:13.5px;font-weight:900;line-height:1.15;text-align:center;box-shadow:0 6px 14px -8px rgba(0,0,0,.5);}
-.node .pips{display:flex;gap:1px;height:16px;}
+.node .lab{max-width:140px;padding:5px 13px;border-radius:999px;background:var(--pill);color:var(--pill-ink);font-size:14px;font-weight:900;line-height:1.15;text-align:center;box-shadow:0 6px 14px -6px rgba(0,0,0,.45);margin-top:-12px;position:relative;z-index:2;}
+.node .pips{display:flex;gap:1px;height:auto;padding:2px 8px;border-radius:999px;background:var(--pip-bg);box-shadow:0 4px 8px -6px rgba(0,0,0,.4);}
 .pips svg{width:16px;height:16px;fill:rgba(255,255,255,.35);filter:drop-shadow(0 1px 1px rgba(0,0,0,.25));}
 .pips svg.on{fill:#FFC21A;}
-html[data-bm-theme="bright"] .node .pips svg:not(.on){fill:rgba(21,34,48,.2);filter:none;}
-.node.locked .di{filter:grayscale(1) brightness(.85);opacity:.6;}
-.node.locked .lab{opacity:.75;}
+html[data-bm-theme="bright"] .node .pips svg:not(.on){fill:rgba(21,34,48,.22);filter:none;}
+.node.locked .di{--c1:#5E6874;--c2:#363E49;--k:#222;}
+html[data-bm-theme="bright"] .node.locked .di{--c1:#D5DAE2;--c2:#8E98A6;}
+.node.locked .di svg{opacity:0;}
+.node.locked .lab{opacity:.9;}
 .node.cur .di{animation:pulse 1.8s ease-in-out infinite;}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,216,116,.85),0 8px 16px -9px var(--c2)}60%{box-shadow:0 0 0 12px rgba(255,216,116,0),0 8px 16px -9px var(--c2)}}
-.mo-here{position:absolute;width:70px;height:84px;object-fit:contain;z-index:3;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(0,0,0,.35));animation:bob 2.2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(255,216,116,.85),0 10px 18px -8px var(--c2)}60%{box-shadow:0 0 0 13px rgba(255,216,116,0),0 10px 18px -8px var(--c2)}}
+.mo-here{position:absolute;width:80px;height:96px;object-fit:contain;z-index:3;pointer-events:none;filter:drop-shadow(0 8px 6px rgba(0,30,0,.35));animation:bob 2.2s ease-in-out infinite;}
 .brand{margin-top:16px;font-size:12px;color:var(--ink2);text-align:center;}
 .brand b{color:var(--gold-ink);}
+@media(min-width:760px){
+  .m-top,.hero,.mode,.dod,.journey{max-width:540px;}
+  .sky .hills{height:84px;}
+}
 
 /* stop sheet */
 .sheet-wrap{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(5,15,10,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
@@ -297,7 +364,7 @@ html[data-bm-theme="bright"] .b1{color:#fff;text-shadow:0 1px 1px rgba(0,60,30,.
 .rc-say{grid-row:span 2;width:44px;height:44px;border-radius:50%;border:0;background:var(--glass2);box-shadow:inset 0 0 0 1px var(--line);font-size:18px;cursor:pointer;}
 .rc-a{grid-column:2/3;font-size:20px;color:var(--arabic);line-height:1.6;text-align:right;}
 .rc-m{grid-column:1/-1;font-size:13px;font-weight:700;color:var(--ink2);line-height:1.35;}
-@media(prefers-reduced-motion:reduce){.hero img,.mo-here,.dn img,.node.cur .di,.back::after,.node .tod{animation:none!important}}
+@media(prefers-reduced-motion:reduce){.sky svg,.hero-t .moon,.dod-art.fam i,.hero img,.mo-here,.dn img,.node.cur .di,.back::after,.node .tod{animation:none!important}}
 </style>
 <link rel="canonical" href="https://play.babymo.id/babymo-dua-game.html">
 <meta name="robots" content="index,follow">
@@ -327,16 +394,39 @@ html[data-bm-theme="bright"] .b1{color:#fff;text-shadow:0 1px 1px rgba(0,60,30,.
 
 <!-- ════ JOURNEY MAP ════ -->
 <div class="screen active" id="mapScreen">
+  <div class="top-scene">
+    <div class="sky" aria-hidden="true">
+      <svg class="stz" viewBox="0 0 400 200" preserveAspectRatio="xMidYMid slice"><g fill="#FFF3B0"><circle cx="30" cy="40" r="1.6"/><circle cx="96" cy="22" r="1.2"/><circle cx="150" cy="70" r="1.4"/><circle cx="214" cy="30" r="1.8"/><circle cx="268" cy="88" r="1.2"/><circle cx="318" cy="46" r="1.5"/><circle cx="372" cy="20" r="1.3"/><circle cx="60" cy="118" r="1.1"/><circle cx="356" cy="120" r="1.2"/></g></svg>
+      <svg class="cl c1" viewBox="0 0 80 44"><path d="M14 40a12 12 0 0 1 3-23.6A16 16 0 0 1 47 11a13 13 0 0 1 23 8.4A10.5 10.5 0 0 1 72 40z"/></svg>
+      <svg class="cl c2" viewBox="0 0 80 44"><path d="M14 40a12 12 0 0 1 3-23.6A16 16 0 0 1 47 11a13 13 0 0 1 23 8.4A10.5 10.5 0 0 1 72 40z"/></svg>
+      <svg class="cl c3" viewBox="0 0 80 44"><path d="M14 40a12 12 0 0 1 3-23.6A16 16 0 0 1 47 11a13 13 0 0 1 23 8.4A10.5 10.5 0 0 1 72 40z"/></svg>
+      <svg class="hills" viewBox="0 0 800 64" preserveAspectRatio="xMidYMax slice">
+        <path d="M0 30C90 6 170 10 260 26S420 44 520 22 700 4 800 20V64H0z" style="fill:var(--hill1)"/>
+        <path d="M0 44C70 28 150 30 230 42S380 58 470 40 640 26 800 40V64H0z" style="fill:var(--hill2)"/>
+        <g style="fill:var(--hill3)"><circle cx="40" cy="44" r="13"/><circle cx="60" cy="47" r="10"/><circle cx="210" cy="46" r="9"/><circle cx="600" cy="44" r="10"/><circle cx="618" cy="47" r="8"/></g>
+      </svg>
+      <svg class="mosque" viewBox="0 0 64 76">
+        <defs><linearGradient id="mqD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--dome1)"/><stop offset="1" style="stop-color:var(--dome2)"/></linearGradient>
+        <linearGradient id="mqW" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--wall1)"/><stop offset="1" style="stop-color:var(--wall2)"/></linearGradient></defs>
+        <rect x="47" y="14" width="9" height="60" rx="2" fill="url(#mqW)"/><path d="M45.5 16h12l-6-11z" fill="url(#mqD)"/><path d="M51.5 2v4" stroke="#F5B82E" stroke-width="1.6" stroke-linecap="round"/><rect x="49.5" y="24" width="4" height="7" rx="2" style="fill:var(--win)"/>
+        <rect x="6" y="40" width="42" height="34" rx="3" fill="url(#mqW)"/>
+        <path d="M9 41a18 17 0 0 1 36 0z" fill="url(#mqD)"/><ellipse cx="21" cy="30" rx="5" ry="6" fill="#fff" opacity=".35"/>
+        <path d="M27 18.5v5.5" stroke="#F5B82E" stroke-width="1.8" stroke-linecap="round"/><path d="M29.4 15.2a2.6 2.6 0 1 0 0 3.6 2 2 0 1 1 0-3.6z" fill="#F5B82E"/>
+        <path d="M22 74V58a5 5 0 0 1 10 0v16z" style="fill:var(--win)"/><rect x="11" y="52" width="6" height="9" rx="3" style="fill:var(--win)"/><rect x="37" y="52" width="6" height="9" rx="3" style="fill:var(--win)"/>
+        <g style="fill:var(--hill3)"><ellipse cx="4" cy="74" rx="10" ry="7"/><ellipse cx="60" cy="75" rx="10" ry="6"/></g>
+      </svg>
+    </div>
   <div class="m-top">
     <a class="chip hub-chip" href="./index.html" aria-label="Game Hub"><svg class="hub-chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg><img src="icons/ui/home.svg" alt="" width="26" height="26">Hub</a>
     <span class="chip" id="totStars">⭐ 0/21</span>
   </div>
   <div class="hero">
     <img src="baby-mo-poses/baby-mo-yes.webp" alt="Baby Mo">
-    <div>
-      <div class="hero-t">Dua Journey 🌙</div>
+    <div class="hero-tx">
+      <h1 class="hero-t" data-t="Dua Journey"><span class="tt">Dua Journey</span><svg class="moon" viewBox="0 0 48 48" aria-hidden="true"><defs><linearGradient id="mnG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF1A0"/><stop offset=".55" stop-color="#FFD03A"/><stop offset="1" stop-color="#F29D0C"/></linearGradient></defs><path d="M30 4A20 20 0 1 0 46 32 16 16 0 0 1 30 4z" fill="url(#mnG)" stroke="#fff" stroke-width="2.4" stroke-linejoin="round"/><path d="M16 14a14 14 0 0 1 6-4" stroke="#fff" stroke-width="2.6" stroke-linecap="round" opacity=".8" fill="none"/></svg></h1>
       <div class="hero-s">Perjalanan doa sehari bersama Baby Mo</div>
     </div>
+  </div>
   </div>
   <div class="mode" role="radiogroup">
     <button type="button" data-mode="little" role="radio"><b>🧸 Si Kecil</b><small>Gambar kembar · 3–5 th</small></button>
@@ -634,7 +724,11 @@ function setFor(i){
 }
 
 // ════════════ MAP ════════════
-const XS=[28,72,30,70,28,72,50], GAP=128, TOP=86, BOT=96;
+const XS=[28,72,30,70,28,72,50], GAP=132, TOP=112, BOT=100;
+const LOCK_SVG='<svg viewBox="0 0 40 46" aria-hidden="true"><defs><linearGradient id="lkB" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE36A"/><stop offset="1" stop-color="#F2A50C"/></linearGradient></defs>'
+  +'<path d="M10 21v-6a10 10 0 0 1 20 0v6" fill="none" stroke="#EEF1F5" stroke-width="5.5" stroke-linecap="round"/><path d="M10 21v-6a10 10 0 0 1 20 0v6" fill="none" stroke="#B9C1CC" stroke-width="2" stroke-linecap="round" transform="translate(0 1.4)" opacity=".7"/>'
+  +'<rect x="3" y="19" width="34" height="25" rx="7" fill="url(#lkB)"/><rect x="6" y="21.5" width="28" height="7" rx="3.5" fill="#fff" opacity=".35"/>'
+  +'<circle cx="20" cy="30.5" r="3.6" fill="#7A4A00"/><path d="M18.4 31.5h3.2l.8 6h-4.8z" fill="#7A4A00"/></svg>';
 function renderMap(){
   R=load();
   const tot=STOPS.reduce((a,s)=>a+bestStars(s.id),0);
@@ -643,49 +737,102 @@ function renderMap(){
   renderDod();
   const j=$('journey'), f=furthest(), cur=Math.min(f+1,STOPS.length-1);
   j.style.height=(TOP+GAP*(STOPS.length-1)+BOT)+'px';
-  let h='<svg class="road" id="road"></svg>'
-    +'<svg class="jr-dec" style="right:18px;top:14px;width:58px;height:58px" viewBox="0 0 60 60"><circle cx="30" cy="30" r="15" fill="#FFC94A"/><g stroke="#FFC94A" stroke-width="3.5" stroke-linecap="round"><path d="M30 4v7M30 49v7M4 30h7M49 30h7M11.6 11.6l5 5M43.4 43.4l5 5M48.4 11.6l-5 5M16.6 43.4l-5 5"/></g></svg>'
-    +'<svg class="jr-dec" style="left:16px;top:22px;width:70px;height:34px;opacity:.9" viewBox="0 0 70 34"><g fill="#fff"><ellipse cx="34" cy="22" rx="30" ry="11"/><ellipse cx="22" cy="16" rx="13" ry="11"/><ellipse cx="42" cy="13" rx="15" ry="12"/></g></svg>'
-    +'<svg class="jr-dec" style="right:22px;top:'+(TOP+GAP*2.4)+'px;width:60px;height:30px;opacity:.85" viewBox="0 0 70 34"><g fill="#fff"><ellipse cx="34" cy="22" rx="30" ry="11"/><ellipse cx="22" cy="16" rx="13" ry="11"/><ellipse cx="42" cy="13" rx="15" ry="12"/></g></svg>'
-    +'<svg class="jr-dec" style="left:18px;bottom:22px;width:46px;height:46px" viewBox="0 0 48 48"><path d="M27 7.5A16 16 0 1 0 40.6 31 13 13 0 0 1 27 7.5z" fill="#FFE27A"/></svg>'
-    +'<svg class="jr-dec" style="right:16px;bottom:16px;width:120px;height:70px" viewBox="0 0 120 70"><g fill="#FFF3B0"><circle cx="20" cy="18" r="2.2"/><circle cx="64" cy="8" r="1.6"/><circle cx="100" cy="26" r="2.4"/><circle cx="44" cy="44" r="1.5"/><circle cx="86" cy="58" r="1.8"/></g></svg>';
+  let h='<svg class="land" id="land" aria-hidden="true"></svg><svg class="road" id="road" aria-hidden="true"></svg>';
   STOPS.forEach((s,i)=>{
     const lock=!unlocked(i), st=bestStars(s.id), y=TOP+GAP*i;
-    h+='<button class="node'+(lock?' locked':'')+(i===cur&&!lock&&!st?' cur':'')+'" data-i="'+i+'" style="left:'+XS[i]+'%;top:'+(y-34)+'px" aria-label="'+esc(T2(s.name))+'">'
-      +'<span class="ic">'+stopIcon(s)+'<span class="num">'+(i+1)+'</span>'+(lock?'<span class="lock">🔒</span>':'')+(hasToday(i)&&!lock?'<span class="tod">⭐</span>':'')+'</span>'
+    h+='<button class="node'+(lock?' locked':'')+(i===cur&&!lock&&!st?' cur':'')+'" data-i="'+i+'" style="left:'+XS[i]+'%;top:'+(y-38)+'px" aria-label="'+esc(T2(s.name))+'">'
+      +'<span class="ic">'+stopIcon(s)+'<span class="num">'+(i+1)+'</span>'+(lock?'<span class="lock">'+LOCK_SVG+'</span>':'')+(hasToday(i)&&!lock?'<span class="tod">⭐</span>':'')+'</span>'
       +'<span class="lab">'+esc(T2(s.name))+'</span>'+pips(st)+'</button>';
   });
-  // Baby Mo stands at the stop to play next
+  // Baby Mo walks the path toward the stop to play next
   const left=XS[cur]<50;
-  h+='<img class="mo-here" src="baby-mo-poses/baby-mo-run.webp" alt="" style="top:'+(TOP+GAP*cur-50)+'px;'+(left?'left:calc('+XS[cur]+'% + 40px)':'right:calc('+(100-XS[cur])+'% + 40px)')+(left?'':';transform:scaleX(-1)')+'">';
+  h+='<img class="mo-here" src="baby-mo-poses/baby-mo-run.webp" alt="" style="top:'+(TOP+GAP*cur-62)+'px;'+(left?'left:calc('+XS[cur]+'% + 46px)':'right:calc('+(100-XS[cur])+'% + 46px)')+(left?'':';transform:scaleX(-1)')+'">';
   j.innerHTML=h;
   j.querySelectorAll('.node').forEach(n=>n.addEventListener('click',()=>tapStop(+n.dataset.i)));
   drawRoad();
+}
+// the landscape behind the path: sunrise sky and hills on top, then grass that
+// warms to dusk and ends under the night stars (colours come from CSS vars)
+function drawLand(W,H){
+  const svg=$('land'); if(!svg) return;
+  const yy=i=>TOP+GAP*i, fr=y=>(y/H).toFixed(3);
+  const tree=(x,y,s)=>'<g transform="translate('+x+' '+y+') scale('+s+')"><ellipse cx="0" cy="26" rx="18" ry="4" fill="#000" opacity=".12"/><rect x="-3.5" y="4" width="7" height="22" rx="3" style="fill:var(--trunk)"/><circle cx="-10" cy="-2" r="13" fill="url(#lTr)"/><circle cx="10" cy="-1" r="12" fill="url(#lTr)"/><circle cx="0" cy="-14" r="15" fill="url(#lTr)"/><ellipse cx="-5" cy="-20" rx="6" ry="4" fill="#fff" opacity=".28"/></g>';
+  const bush=(x,y,s)=>'<g transform="translate('+x+' '+y+') scale('+s+')"><circle cx="-9" cy="0" r="9" fill="url(#lTr)"/><circle cx="8" cy="1" r="8" fill="url(#lTr)"/><circle cx="0" cy="-5" r="10" fill="url(#lTr)"/><ellipse cx="-3" cy="-10" rx="4" ry="2.5" fill="#fff" opacity=".28"/></g>';
+  const flower=(x,y,c,s)=>'<g transform="translate('+x+' '+y+') scale('+(s||1)+')"><path d="M0 0v9" stroke="#3E9C3A" stroke-width="1.6"/><g fill="'+c+'"><circle cx="0" cy="-4" r="3"/><circle cx="3.8" cy="-1.2" r="3"/><circle cx="2.4" cy="3.2" r="3"/><circle cx="-2.4" cy="3.2" r="3"/><circle cx="-3.8" cy="-1.2" r="3"/></g><circle r="2.2" fill="#FFC21A"/></g>';
+  const house=(x,y,s,lit)=>'<g transform="translate('+x+' '+y+') scale('+s+')"><ellipse cx="0" cy="30" rx="34" ry="5" fill="#000" opacity=".12"/><rect x="-24" y="-4" width="48" height="34" rx="4" fill="url(#lHs)"/><path d="M-31 0L0-26 31 0" fill="url(#lRf)" stroke="url(#lRf)" stroke-width="5" stroke-linejoin="round"/><rect x="12" y="-22" width="7" height="12" rx="1.5" style="fill:var(--roof2)"/>'
+    +'<rect x="-17" y="5" width="15" height="13" rx="3" style="fill:'+(lit?'#FFD35C':'var(--hwin)')+'"/><path d="M-9.5 5v13M-17 11.5h15" stroke="#fff" stroke-width="1.8" opacity=".9"/><path d="M6 30V14a6 6 0 0 1 12 0v16z" style="fill:var(--roof2)"/><circle cx="15" cy="23" r="1.2" fill="#FFE08A"/></g>';
+  const cloud=(x,y,s,o)=>'<path transform="translate('+x+' '+y+') scale('+s+')" d="M14 40a12 12 0 0 1 3-23.6A16 16 0 0 1 47 11a13 13 0 0 1 23 8.4A10.5 10.5 0 0 1 72 40z" style="fill:var(--cloud)" opacity="'+o+'"/>';
+  const spark=(x,y,r)=>'<path d="M'+x+' '+(y-r)+'Q'+x+' '+y+' '+(x+r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y+r)+'Q'+x+' '+y+' '+(x-r)+' '+y+'Q'+x+' '+y+' '+x+' '+(y-r)+'z" fill="#FFF3B0"/>';
+  const g0=yy(0)-30;
+  let o='<defs><linearGradient id="lGr" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0" style="stop-color:var(--sky-a)"/><stop offset="'+fr(g0-10)+'" style="stop-color:var(--sky-b)"/><stop offset="'+fr(g0)+'" style="stop-color:var(--gr0)"/>'
+    +'<stop offset="'+fr(yy(2))+'" style="stop-color:var(--gr1)"/><stop offset="'+fr(yy(3.4))+'" style="stop-color:var(--gr2)"/><stop offset="'+fr(yy(4.3))+'" style="stop-color:var(--gr3)"/>'
+    +'<stop offset="'+fr(yy(5.2))+'" style="stop-color:var(--gr4)"/><stop offset="1" style="stop-color:var(--gr5)"/></linearGradient>'
+    +'<radialGradient id="lTr" cx=".35" cy=".3" r=".75"><stop offset="0" style="stop-color:var(--tr1)"/><stop offset="1" style="stop-color:var(--tr2)"/></radialGradient>'
+    +'<radialGradient id="lSun" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#FFF6B8"/><stop offset=".5" style="stop-color:var(--sun)"/><stop offset="1" style="stop-color:var(--sun2)"/></radialGradient>'
+    +'<linearGradient id="lHs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--house)"/><stop offset="1" style="stop-color:var(--house2)"/></linearGradient>'
+    +'<linearGradient id="lRf" x1="0" y1="0" x2="0" y2="1"><stop offset="0" style="stop-color:var(--roof1)"/><stop offset="1" style="stop-color:var(--roof2)"/></linearGradient>'
+    +'<linearGradient id="lDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9A6B" stop-opacity="0"/><stop offset=".5" stop-color="#FF9A6B" stop-opacity=".16"/><stop offset="1" stop-color="#B45CDB" stop-opacity="0"/></linearGradient></defs>'
+    +'<rect width="'+W+'" height="'+H+'" fill="url(#lGr)"/>';
+  // morning sky: sun rising behind the far hill, a cloud
+  o+='<g transform="translate('+(W-62)+' '+(g0-6)+')"><g style="stroke:var(--sun2)" stroke-width="4" stroke-linecap="round" opacity=".9"><path d="M0-48v-9M-34-34l-6-6M34-34l6-6M-48 0h-9M48 0h9"/></g><circle r="34" fill="url(#lSun)"/></g>'
+    +cloud(18,12,.95,.95)+cloud(W*.5-20,30,.6,.7);
+  // far hills under the sky
+  o+='<path d="M0 '+(g0+6)+'C'+W*.2+' '+(g0-30)+' '+W*.42+' '+(g0-22)+' '+W*.6+' '+(g0-4)+'S'+W*.9+' '+(g0-34)+' '+W+' '+(g0-14)+'V'+(g0+40)+'H0z" style="fill:var(--hill2)"/>'
+    +'<path d="M0 '+(g0+18)+'C'+W*.3+' '+(g0-4)+' '+W*.55+' '+(g0+2)+' '+W*.75+' '+(g0+14)+'S'+W*.95+' '+(g0+4)+' '+W+' '+(g0+10)+'V'+(g0+60)+'H0z" style="fill:var(--gr0)"/>';
+  // rolling hills down the whole day + a dusk glow
+  for(let i=0;i<STOPS.length;i++){
+    const y=yy(i)+GAP*.55, R=XS[i]<50;
+    o+='<ellipse cx="'+(R?W+30:-30)+'" cy="'+y+'" rx="'+(W*.48)+'" ry="'+(GAP*.42)+'" style="fill:var(--hl)"/>';
+  }
+  o+='<rect y="'+yy(3.3)+'" width="'+W+'" height="'+(GAP*2.2)+'" fill="url(#lDusk)"/>';
+  // things beside the path, on the side away from each stop
+  o+=house(W-50,yy(0)+42,.95,false)+bush(W-92,yy(0)+70,.8)
+    +tree(34,yy(1)-4,1)+bush(70,yy(1)+30,.75)
+    +tree(W-36,yy(2)-6,.95)+tree(W-74,yy(2)+18,.7)
+    +tree(32,yy(3)-8,.9)+bush(64,yy(3)+26,.8)
+    +house(W-50,yy(4)+6,.9,true)+tree(W-30,yy(4)+60,.65)
+    +tree(30,yy(5)-6,.85);
+  // flowers in the grass
+  const FL=['#fff','#FF9EC4','#FFE36A','#fff','#C9A6FF'];
+  [[.07,.62],[.9,1.62],[.12,1.58],[.86,2.62],[.08,2.66],[.92,3.6],[.1,3.62],[.88,.88]].forEach((p,k)=>{
+    if(p[1]<4.2) o+=flower(W*p[0],yy(p[1]),FL[k%FL.length],k%3?1:1.2);
+  });
+  // night: moon and stars around the last stops
+  o+='<path transform="translate(26 '+(H-82)+') scale(1.1)" d="M27 7.5A16 16 0 1 0 40.6 31 13 13 0 0 1 27 7.5z" fill="#FFE27A"/>';
+  [[.82,5.5,4],[.9,5.9,3],[.18,5.7,3],[.7,6.25,3.5],[.86,6.55,4.5],[.32,6.45,3],[.62,5.75,2.5],[.12,6.1,2.5]].forEach(p=>{ o+=spark(W*p[0],yy(p[1]),p[2]); });
+  svg.setAttribute('viewBox','0 0 '+W+' '+H);
+  svg.innerHTML=o;
 }
 function drawRoad(){
   const j=$('journey'), svg=$('road'); if(!svg) return;
   if(!j.clientWidth) return; /* hidden (map not on screen) — show('mapScreen') redraws it */
   const W=j.clientWidth, H=j.clientHeight, P=STOPS.map((s,i)=>[XS[i]/100*W, TOP+GAP*i]);
+  drawLand(W,H);
   svg.setAttribute('viewBox','0 0 '+W+' '+H);
   const seg=(a,b)=>' C'+a[0]+' '+(a[1]+GAP*.6)+' '+b[0]+' '+(b[1]-GAP*.6)+' '+b[0]+' '+b[1];
-  let d='M'+P[0][0]+' '+(P[0][1]-60)+' L'+P[0][0]+' '+P[0][1]; for(let i=1;i<P.length;i++) d+=seg(P[i-1],P[i]);
+  let d='M'+P[0][0]+' '+(TOP-22)+' L'+P[0][0]+' '+P[0][1]; for(let i=1;i<P.length;i++) d+=seg(P[i-1],P[i]);
   const f=furthest(); let dd='';
-  if(f>=0){ dd='M'+P[0][0]+' '+(P[0][1]-60)+' L'+P[0][0]+' '+P[0][1]; for(let i=1;i<=Math.min(f+1,P.length-1);i++) dd+=seg(P[i-1],P[i]); }
-  svg.innerHTML='<path d="'+d+'" fill="none" stroke="rgba(255,255,255,.55)" stroke-width="22" stroke-linecap="round"/>'
-    +'<path d="'+d+'" fill="none" stroke="rgba(255,255,255,.9)" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>'
-    +(dd?'<path d="'+dd+'" fill="none" stroke="#FFC94A" stroke-width="8" stroke-linecap="round" opacity=".95"/>':'');
+  if(f>=0){ dd='M'+P[0][0]+' '+(TOP-22)+' L'+P[0][0]+' '+P[0][1]; for(let i=1;i<=Math.min(f+1,P.length-1);i++) dd+=seg(P[i-1],P[i]); }
+  svg.innerHTML='<path d="'+d+'" fill="none" style="stroke:var(--road-e)" stroke-width="32" stroke-linecap="round"/>'
+    +'<path d="'+d+'" fill="none" style="stroke:var(--road)" stroke-width="25" stroke-linecap="round"/>'
+    +(dd?'<path d="'+dd+'" fill="none" stroke="#FFC94A" stroke-width="9" stroke-linecap="round" opacity=".9"/>':'')
+    +'<path d="'+d+'" fill="none" style="stroke:var(--road-d)" stroke-width="3.5" stroke-dasharray="9 11" stroke-linecap="round"/>';
 }
 function renderDod(){
   const d=todayDua(), el=$('dod'); if(!d){ el.hidden=true; return; }
   let where=-1; for(let i=0;i<STOPS.length;i++) if(hasToday(i)&&unlocked(i)){ where=i; break; }
   const first=STOPS.findIndex((s,i)=>hasToday(i));
+  const art=d.id==='parents'
+    ? '<div class="dod-art fam" aria-hidden="true"><img class="u" src="family/umi-welcome.webp" alt=""><img class="a" src="family/abi-wave.webp" alt=""><i>💗</i></div>'
+    : '<div class="dod-art" aria-hidden="true">'+sceneSvg(d,cropFor(d,1))+'<img src="'+poseOf(d)+'" alt=""></div>';
   el.innerHTML='<div class="dod-r1">'+duaIcon(d)+'<div class="dod-tx"><span class="dod-k">📖 '+L('Doa Hari Ini',"Du'a of the Day")+'</span>'
     +'<div class="dod-t">'+esc(T2(d.title))+'</div>'
     +'<div class="dod-p">'+(where>=0
       ? L('Temukan kartu ⭐-nya di ','Find its ⭐ card at ')+'<b>'+esc(T2(STOPS[where].name))+'</b>'+L(' untuk bonus bintang!',' for a bonus star!')
-      : L('Kartu ⭐-nya ada di ','Its ⭐ card waits at ')+'<b>'+esc(T2(STOPS[Math.max(0,first)].name))+'</b>')+'</div></div></div>'
-    +'<div class="dod-r2">'+(where>=0?'<button type="button" class="dod-play" data-i="'+where+'">▶ '+L('Main','Play')+'</button>':'')
-    +'<a class="dod-read" href="babymo-doa-harian.html?doa='+encodeURIComponent(d.id)+'">📖 '+L('Baca doanya','Read the du\'a')+'</a></div>';
+      : L('Kartu ⭐-nya ada di ','Its ⭐ card waits at ')+'<b>'+esc(T2(STOPS[Math.max(0,first)].name))+'</b>')+'</div></div>'+art+'</div>'
+    +'<div class="dod-r2'+(where>=0?'':' solo')+'">'+(where>=0?'<button type="button" class="dod-play" data-i="'+where+'">▶ '+L('Main','Play')+'</button>':'')
+    +'<a class="dod-read" href="babymo-doa-harian.html?doa='+encodeURIComponent(d.id)+'"><span class="bk">📖</span>'+L('Baca doanya','Read the du\'a')+'<span class="chev">›</span></a></div>';
   const p=el.querySelector('.dod-play'); if(p) p.addEventListener('click',()=>tapStop(+p.dataset.i));
   el.hidden=false;
 }
