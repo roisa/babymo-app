@@ -47,8 +47,8 @@ html[data-bm-theme="classic"].doa-rm #welcomeScreen .pd-scene .w1{stop-color:#D6
 @media (prefers-reduced-motion:reduce){.pd-scene .rm-sw,.pd-scene .rm-sw2,.pd-scene .rm-gl,.pd-scene .rm-tw,.pd-scene .rm-tw2 circle,.pd-scene .rm-stars circle{animation:none!important}}
 
 /* Mo sits on the hill under the lanterns; the title and the journey follow */
-html.doa-rm #welcomeScreen .dh-hero{margin-bottom:-4px}
-.rm-head{width:100%;max-width:440px;display:flex;justify-content:center;margin:0 0 10px;z-index:1}
+html.doa-rm #welcomeScreen .dh-hero{margin-bottom:-40px;position:relative;z-index:1}
+.rm-head{position:relative;width:100%;max-width:440px;display:flex;justify-content:center;margin:0 0 10px;z-index:3}
 .rm-title{display:inline-flex;flex-direction:column;align-items:center;gap:2px;padding:9px 22px 10px;border-radius:22px;
   background:linear-gradient(180deg,rgba(42,34,114,.92),rgba(30,24,88,.92));box-shadow:inset 0 0 0 1.5px rgba(255,216,116,.55),0 14px 26px -16px rgba(20,10,60,.8);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
