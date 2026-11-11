@@ -75,7 +75,7 @@ const SHELL = [
   "/i18n/huruf.js",
   "/icons/games/huruf-hijaiyah.svg",
   "/babymo-puzzle-katabaik.html",
-  // Kata Baik: Render 2 Baby Mo poses (play screen + per-kalimat celebration)
+  // Render 2 Baby Mo poses: Kata Baik, Doa Harian / Ramadan scenes + finish card, companion
   "/baby-mo-render2/mo2-dua-kneel.webp",
   "/baby-mo-render2/mo2-arms-wide.webp",
   "/baby-mo-render2/mo2-hand-chest.webp",
@@ -86,6 +86,8 @@ const SHELL = [
   "/baby-mo-render2/mo2-hands-clasped.webp",
   "/baby-mo-render2/mo2-think-mosque.webp",
   "/baby-mo-render2/mo2-dua-stand.webp",
+  "/baby-mo-render2/mo2-cheer-both.webp",
+  "/baby-mo-render2/mo2-excited.webp",
   "/babymo-look-and-find.html",
   "/babymo-memory-match.html",
   "/baby-mo-forehand-beat.html",

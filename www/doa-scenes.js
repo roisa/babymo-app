@@ -1046,7 +1046,7 @@
        Abi's waist), heads kept low enough to stay clear of the page's top pills, Mo on the right so the
        tap button (lower left) never covers him; hearts float in the gap between the parents' faces. */
     parents: {
-      pose: "baby-mo-dua-smile", mo: { x: 312, y: 129, h: 100 },
+      pose: "mo2-dua-stand-eyes-closed", mo: { x: 312, y: 129, h: 100 },
       svg: function () {
         return "<defs>" + rg("dsWarm", ["#FFF6DC", "#FFE6E8@.6", "#F2E2FF"], 0.55, 0.45, 0.85) + lg("dsSkyP", ["#5D62C8", "#9A8EEA"]) + lg("dsFl", ["#F4D9BC", "#E6BF98"]) +
           rg("dsLampP", ["#FFF3B0~.85", "#FFF3B0~0"]) + lg("dsFrame", ["#E2A26C", "#B9794A"], "d") +
@@ -1086,7 +1086,7 @@
 
     /* 13 · Dzikir sore — the sun sinking behind the hills, birds flying home, the first star */
     evening_dhikr: {
-      pose: "baby-mo-dua-smile", mo: { x: 318, y: 130, h: 196 },
+      pose: "mo2-hand-chest", mo: { x: 318, y: 130, h: 196 },
       svg: function () {
         return "<defs>" + lg("dsSky", ["#8A6AD8", "#E98AB0@.45", "#FFB27A@.8", "#FFD9A0"]) + rg("dsSunS", ["#FFF6C8", "#FFC94A@.6", "#FF8A3D"], 0.4, 0.35, 0.7) +
           lg("dsH1", ["#D68AB4", "#B66A9E"]) + lg("dsDusk", ["#3E2A8A~.55", "#8A4AA8@.5~.25", "#FF8A6A~0"]) + lg("dsH2", ["#A86AAE", "#8A5098"]) + lg("dsH3", ["#8BC27A", "#6AA866"]) + rg("dsWarm", ["#FFF0A8", "#FFC94A"], 0.5, 0.4, 0.8) + "</defs>" +
@@ -1161,9 +1161,16 @@
     "baby-mo-run": [0.302, 0.152, 0.731, 0.894, 1], "baby-mo-pose-15": [0.181, 0.146, 0.715, 0.908, 1],
     "baby-mo-thank-you": [0.267, 0.150, 0.662, 0.908, 1], "baby-mo-wow": [0.331, 0.150, 0.683, 0.906, 1],
     "baby-mo-pose-08": [0.263, 0.179, 0.773, 0.906, 1], "baby-mo-pose-12": [0.300, 0.315, 0.685, 0.915, 1],
-    "baby-mo-dua-smile": [0, 0, 1, 1, 0.5], "baby-mo-pose-06": [0.273, 0.319, 0.675, 0.923, 1]
+    "baby-mo-dua-smile": [0, 0, 1, 1, 0.5], "baby-mo-pose-06": [0.273, 0.319, 0.675, 0.923, 1],
+    // render 2 (baby-mo-render2/, same 480×480 framing, feet on y≈0.915)
+    "mo2-hand-chest": [0.277, 0.144, 0.725, 0.915, 1], "mo2-dua-stand-eyes-closed": [0.271, 0.129, 0.731, 0.915, 1],
+    "mo2-dua-stand": [0.279, 0.125, 0.723, 0.915, 1], "mo2-hands-clasped": [0.300, 0.160, 0.700, 0.915, 1],
+    "mo2-dua-kneel": [0.277, 0.171, 0.725, 0.915, 1]
   };
   function boxOf(pose) { return POSE[pose] || [0.27, 0.15, 0.7, 0.91, 1]; }
+  // image file of a pose: "mo2-…" poses are the render-2 library, the rest the first pose library
+  function poseSrc(pose) { return (/^mo2-/.test(pose) ? "baby-mo-render2/" : "baby-mo-poses/") + pose + ".webp"; }
+  window.doaPoseSrc = poseSrc;
   var NIGHT = { sleep: 1, parents: 1, bedtime_tasbih: 1 };
   function isNight(id) { return !!NIGHT[id]; }
 
@@ -1195,7 +1202,7 @@
     var bottom = (CARD_VB[1] + CARD_VB[3] - m.y) * u - (1 - b[3]) * ih, left = ox + m.x * u - (b[0] + b[2]) / 2 * iw;
     var st = "left:" + f(left / 4) + "%;right:auto;bottom:" + f(bottom / 1.8) + "%;height:" + f(ih / 1.8) + "%;width:auto;transform:none";
     return '<span class="dsa' + (night ? " night" : "") + '"><svg viewBox="' + CARD_VB.join(" ") + '" preserveAspectRatio="xMidYMax meet" overflow="visible" aria-hidden="true" focusable="false">' + svg +
-      '</svg><img src="baby-mo-poses/' + s.pose + '.webp" alt="" loading="lazy" decoding="async" style="' + st + '">' +
+      '</svg><img src="' + poseSrc(s.pose) + '" alt="" loading="lazy" decoding="async" style="' + st + '">' +
       (fx ? '<svg viewBox="' + CARD_VB.join(" ") + '" preserveAspectRatio="xMidYMax meet" overflow="visible" aria-hidden="true" focusable="false" style="pointer-events:none">' + fx + "</svg>" : "") + "</span>";
   };
 
@@ -1207,7 +1214,7 @@
     wakeup: [-4, -92, 236, 236], bathroom_in: [-10, -104, 210, 200], bathroom_out: [20, -104, 230, 210],
     leave_home: [25, -112, 230, 220], vehicle: [30, -90, 240, 220], study: [5, -112, 240, 225],
     eating: [28, -80, 240, 220], after_eat: [5, -82, 240, 220], rain: [130, -122, 250, 250],
-    enter_home: [10, -118, 250, 230], evening_dhikr: [10, -100, 240, 210], parents: [118, -82, 236, 226],
+    enter_home: [10, -118, 250, 230], evening_dhikr: [10, -100, 240, 210], parents: [128, -82, 236, 226],
     bedtime_tasbih: [84, -66, 290, 250], sleep: [-30, -115, 260, 240]
   };
   window.doaSceneThumb = function (id, sfx) {
@@ -1219,7 +1226,7 @@
     var night = isNight(id);
     return '<span class="dst' + (night ? " night" : "") + '"><svg viewBox="' + (THUMB[id] || [0, -110, 400, 250]).join(" ") + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + svg +
       shadow(f(m.x), m.y, f(sw * 0.46), f(sw * 0.1)).replace("url(#dsSh)", "url(#dsSh" + k + ")") +
-      '<image href="baby-mo-poses/' + s.pose + '.webp" x="' + f(ix) + '" y="' + f(iy) + '" width="' + f(iw) + '" height="' + f(ih) + '" preserveAspectRatio="none"/>' + fx + "</svg></span>";
+      '<image href="' + poseSrc(s.pose) + '" x="' + f(ix) + '" y="' + f(iy) + '" width="' + f(iw) + '" height="' + f(ih) + '" preserveAspectRatio="none"/>' + fx + "</svg></span>";
   };
 
   /* Place Baby Mo on the scene's ground: the picture is drawn with "meet",
@@ -1266,7 +1273,7 @@
     }
     var mo = document.getElementById("sceneMo");
     if (mo) {
-      mo.src = "baby-mo-poses/" + s.pose + ".webp";
+      mo.src = poseSrc(s.pose);
       layout(card);
       var wrap = mo.parentElement; wrap.style.animation = "none"; void wrap.offsetWidth; wrap.style.animation = "";
     }

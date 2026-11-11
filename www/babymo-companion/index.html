@@ -1251,13 +1251,13 @@ const KAABA={lat:21.4225,lng:39.8262};
 const PRAYER_NAMES=['Subuh','Dzuhur','Ashar','Magrib','Isya'];
 const PRAYER_KEYS=['Fajr','Dhuhr','Asr','Maghrib','Isha'];
 const MO={
-  /* Generic moods use the rich 3D pose set; prayer-specific poses
-     (praying/sujood/astagfirullah) stay on the dedicated mo-assets. */
-  waving:'../baby-mo-poses/baby-mo-pose-05.webp',praying:'mo-assets/mo-praying.png',
+  /* Generic moods use the rich 3D pose set; the prayer moods
+     (praying/sujood/astagfirullah) use the render-2 du'a poses. */
+  waving:'../baby-mo-poses/baby-mo-pose-05.webp',praying:'../baby-mo-render2/mo2-dua-stand-eyes-closed.webp',
   hopeful:'../baby-mo-poses/baby-mo-idea.webp',surprised:'../baby-mo-poses/baby-mo-wow.webp',
   thankful:'../baby-mo-poses/baby-mo-thank-you.webp',grateful:'../baby-mo-poses/baby-mo-yes.webp',
-  excited:'../baby-mo-poses/baby-mo-yeyy.webp',sujood:'mo-assets/mo-sujood.png',
-  astagfirullah:'mo-assets/mo-astagfirullah.png',sad:'../baby-mo-poses/baby-mo-pose-15.webp',
+  excited:'../baby-mo-poses/baby-mo-yeyy.webp',sujood:'../baby-mo-render2/mo2-dua-kneel.webp',
+  astagfirullah:'../baby-mo-render2/mo2-hand-chest.webp',sad:'../baby-mo-poses/baby-mo-pose-15.webp',
 };
 
 let userLoc=null,prayerTimes=null,prayerMinutes=null;

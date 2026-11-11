@@ -199,7 +199,8 @@
   var MOUTH = {
     "baby-mo-pose-15": [0.67, 0.33, 1], "baby-mo-pose-06": [0.66, 0.45, 1], "baby-mo-pose-14": [0.64, 0.31, 1], "baby-mo-pose-12": [0.66, 0.47, 1],
     "baby-mo-pose-36": [0.68, 0.46, 1], "baby-mo-thank-you": [0.64, 0.32, 1], "baby-mo-dua-smile": [0.97, 0.25, 1], "baby-mo-yes": [0.68, 0.32, 1],
-    "baby-mo-pose-41": [0.66, 0.33, 1]
+    "baby-mo-pose-41": [0.66, 0.33, 1],
+    "mo2-hand-chest": [0.70, 0.45, 1], "mo2-dua-stand-eyes-closed": [0.71, 0.44, 1]
   };
   var WAVE = '<svg viewBox="0 0 40 48"><path class="mt1" d="M6 17.5a8.5 8.5 0 0 1 0 13"/><path class="mt2" d="M13 11a17 17 0 0 1 0 26"/><path class="mt3" d="M20 4.5a26 26 0 0 1 0 39"/></svg>';
 
@@ -264,7 +265,7 @@
     var row = document.getElementById("rmJrRow"), stops = row.querySelectorAll(".rm-st");
     if (cur < 0) cur = STAGE_ORDER.length - 1;
     var me = stops[cur]; me.classList.add("now");
-    me.insertAdjacentHTML("afterbegin", '<img class="rm-me" src="baby-mo-poses/baby-mo-dua-smile.webp" alt="" aria-hidden="true">');
+    me.insertAdjacentHTML("afterbegin", '<img class="rm-me" src="baby-mo-render2/mo2-dua-stand.webp" alt="" aria-hidden="true">');
     stops.forEach(function (b) {
       b.onclick = function () {
         var k = b.dataset.k, ix = DUAS.map(function (d, j) { return d.stage === k ? j : -1; }).filter(function (j) { return j >= 0; });

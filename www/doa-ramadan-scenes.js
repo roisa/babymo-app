@@ -382,7 +382,7 @@
 
     /* 7 · Dzikir sesudah witir — the mosque at night: three lanterns light up, one for each dhikr */
     S.r_witr = {
-      pose: "baby-mo-dua-smile", mo: { x: 322, y: 130, h: 190 },
+      pose: "mo2-hand-chest", mo: { x: 322, y: 130, h: 190 },
       svg: function () {
         return "<defs>" + DEFS + ramadanSky("dsRwSky", "#10154A", "#2A2E7E", "#4A3E9A") + lg("dsRwYard", ["#4B4796", "#37337A"]) + lg("dsRwTile", ["#5A56A8", "#433F8E"]) + "</defs>" +
           bg("url(#dsRwSky)") +
@@ -607,7 +607,7 @@
       },
       thumb: {
         r_hilal: [40, -104, 290, 250], r_niat: [20, -110, 300, 250], r_shaim: [90, -100, 300, 250], r_buka: [10, -110, 290, 250],
-        r_after: [120, -50, 230, 200], r_host: [40, -110, 320, 250], r_witr: [100, -110, 300, 260], r_qadr: [150, -70, 250, 214],
+        r_after: [120, -50, 230, 200], r_host: [40, -110, 320, 250], r_witr: [116, -110, 300, 260], r_qadr: [150, -70, 250, 214],
         r_zakat: [10, -110, 320, 260], r_eid_greet: [186, -44, 212, 190], r_takbir: [60, -100, 320, 250]
       },
       actMs: { r_hilal: 1700, r_niat: 1500, r_shaim: 1500, r_buka: 2000, r_after: 2200, r_host: 1700, r_witr: 2300, r_qadr: 1700, r_zakat: 1700, r_eid_greet: 2000, r_takbir: 2000 },
