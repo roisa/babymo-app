@@ -23,11 +23,15 @@
     ".scene-card.has-scene .scene-bg{background:none!important}",
     ".scene-card.has-scene .scene-bg svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}",
     ".scene-card.has-scene .scene-mo-wrap{position:absolute;right:auto;z-index:2;animation:dsMoIn .6s cubic-bezier(.34,1.56,.64,1)}",
-    ".scene-card.has-scene .scene-mo-wrap img{display:block;width:100%;height:100%;object-fit:contain;transform-origin:50% 92%;filter:drop-shadow(0 10px 12px rgba(40,30,80,.28));animation:dsMoBob 3.8s ease-in-out infinite}",
+    // Mo stands on the floor: a soft contact shadow under his feet, a tight drop shadow,
+    // and a calm breathe-and-sway pivoting on his feet (no floating bob)
+    ".scene-card.has-scene .scene-mo-wrap img{position:relative;z-index:1;display:block;width:100%;height:100%;object-fit:contain;transform-origin:50% 92%;filter:drop-shadow(0 4px 5px rgba(40,30,80,.22));animation:dsMoBreathe 4.4s ease-in-out infinite}",
+    ".scene-card.has-scene .scene-mo-sh{position:absolute;z-index:0;border-radius:50%;pointer-events:none;background:radial-gradient(closest-side,rgba(38,28,70,.42),rgba(38,28,70,.22) 55%,rgba(38,28,70,0))}",
+    ".scene-card.has-scene .scene-bg svg,.scene-card.has-scene .scene-fx svg{transform:translateY(calc(-1 * var(--sy,0px)))}",
     ".scene-card.has-scene .scene-mo-wrap img.celebrate{animation:moCelebrate .5s cubic-bezier(.34,1.56,.64,1)}",
     ".scene-card.has-scene .scene-mo-wrap img.wrong{animation:moWrong .4s ease}",
     "@keyframes dsMoIn{from{transform:translateY(30px) scale(.9);opacity:0}to{transform:none;opacity:1}}",
-    "@keyframes dsMoBob{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-4px) rotate(1.2deg)}}",
+    "@keyframes dsMoBreathe{0%,100%{transform:none}25%{transform:rotate(-.7deg) scaleY(1.008)}50%{transform:scale(1.006,1.02)}75%{transform:rotate(.7deg) scaleY(1.008)}}",
     // shared motion
     ".ds svg *{transform-box:fill-box;transform-origin:center}",
     ".ds .float{animation:dsFloat 4s ease-in-out infinite}",
@@ -332,7 +336,7 @@
     run(".w-ring", "animation:wRing .95s ease-out both"),
     "@keyframes wRing{0%{opacity:0;transform:scale(.6)}15%,75%{opacity:1;transform:scale(1.08)}100%{opacity:0;transform:scale(1.25)}}",
     "#sceneCard.ds[data-scene=wakeup] .scene-mo-wrap img{transition:filter 1s ease .55s}",
-    "#sceneCard.ds:not(.acted)[data-scene=wakeup] .scene-mo-wrap img{filter:brightness(.8) drop-shadow(0 10px 12px rgba(40,30,80,.28))}",
+    "#sceneCard.ds:not(.acted)[data-scene=wakeup] .scene-mo-wrap img{filter:brightness(.8) drop-shadow(0 4px 5px rgba(40,30,80,.22))}",
     mo("wakeup", "animation:wStretch 1s cubic-bezier(.3,1.3,.5,1) 1s both"),
     "@keyframes wStretch{0%,100%{transform:none}30%{transform:scale(1.05,.93)}62%{transform:translateY(calc(var(--u,1px)*-14)) scale(.97,1.06)}}",
 
@@ -440,7 +444,7 @@
     pre(".s-sw", "transform:translateY(-5px)"), run(".s-sw", "animation:sSw .14s ease-out .05s both"),
     "@keyframes sSw{from{transform:translateY(-5px)}to{transform:none}}",
     "#sceneCard.ds[data-scene=sleep] .scene-mo-wrap img{transition:filter .7s ease .2s}",
-    "#sceneCard.ds.acted[data-scene=sleep] .scene-mo-wrap img{filter:brightness(.8) saturate(.9) drop-shadow(0 10px 12px rgba(10,10,40,.35))}",
+    "#sceneCard.ds.acted[data-scene=sleep] .scene-mo-wrap img{filter:brightness(.8) saturate(.9) drop-shadow(0 4px 5px rgba(10,10,40,.3))}",
     "@media (prefers-reduced-motion:reduce){#sceneCard.ds .scene-fx,#sceneCard.ds .scene-mo-wrap img{transition:none!important}}"
   ].join("\n");
 
@@ -1183,16 +1187,51 @@
       (fx ? '<svg viewBox="' + CARD_VB.join(" ") + '" preserveAspectRatio="xMidYMax meet" overflow="visible" aria-hidden="true" focusable="false" style="pointer-events:none">' + fx + "</svg>" : "") + "</span>";
   };
 
+  /* A still crop of a du'a's own page picture (scene + Baby Mo + front layer, the
+     same drawing the child sees on that du'a's page) framed on its key subject —
+     the bed, the bathroom door, the car, the plate… For the quiz answer pictures.
+     Focus box in frame units [x, y, w, h]; "slice" fills any card shape. */
+  var THUMB = {
+    wakeup: [-4, -92, 236, 236], bathroom_in: [-10, -104, 210, 200], bathroom_out: [20, -104, 230, 210],
+    leave_home: [25, -112, 230, 220], vehicle: [30, -90, 240, 220], study: [5, -112, 240, 225],
+    eating: [28, -80, 240, 220], after_eat: [5, -82, 240, 220], rain: [130, -122, 250, 250],
+    enter_home: [10, -118, 250, 230], evening_dhikr: [10, -100, 240, 210], parents: [110, -112, 290, 260],
+    bedtime_tasbih: [84, -66, 290, 250], sleep: [-30, -115, 260, 240]
+  };
+  window.doaSceneThumb = function (id, sfx) {
+    var s = SCENES[id]; if (!s) return "";
+    var k = "_" + (sfx || "t") + "_" + id, re = /(id="|url\(#)(ds[A-Za-z0-9]+)/g;
+    var svg = svgOf(id).replace(re, "$1$2" + k), fx = fxOf(id, true).replace(re, "$1$2" + k);
+    var b = boxOf(s.pose), m = s.mo, ih = m.h / (b[3] - b[1]), iw = ih * b[4];
+    var ix = m.x - (b[0] + b[2]) / 2 * iw, iy = m.y - b[3] * ih, sw = (b[2] - b[0]) * iw;
+    var night = id === "sleep" || id === "parents" || id === "bedtime_tasbih";
+    return '<span class="dst' + (night ? " night" : "") + '"><svg viewBox="' + (THUMB[id] || [0, -110, 400, 250]).join(" ") + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + svg +
+      shadow(f(m.x), m.y, f(sw * 0.46), f(sw * 0.1)).replace("url(#dsSh)", "url(#dsSh" + k + ")") +
+      '<image href="baby-mo-poses/' + s.pose + '.webp" x="' + f(ix) + '" y="' + f(iy) + '" width="' + f(iw) + '" height="' + f(ih) + '" preserveAspectRatio="none"/>' + fx + "</svg></span>";
+  };
+
   /* Place Baby Mo on the scene's ground: the picture is drawn with "meet",
-     bottom-anchored, so frame unit u = min(W/400, H/300). */
+     bottom-anchored, so frame unit u = min(W/400, H/300). The du'a card overlaps
+     the bottom of the picture (--ov), so when there is spare sky above the frame
+     the whole picture (scene, front layer and Mo together) is lifted (--sy) to
+     keep the floor under Mo's feet in view; a soft contact shadow sits at his feet. */
   function layout(card) {
     var mo = document.getElementById("sceneMo"), s = SCENES[card.getAttribute("data-scene")];
     if (!mo || !s || !mo.parentElement || !mo.parentElement.classList.contains("scene-mo-wrap")) return;
     var W = card.clientWidth, H = card.clientHeight; if (!W || !H) return;
     var u = Math.min(W / 400, H / FH), ox = (W - 400 * u) / 2, b = boxOf(s.pose), m = s.mo;
     var ih = m.h * u / (b[3] - b[1]), iw = ih * b[4], wrap = mo.parentElement;
+    var ov = parseFloat(getComputedStyle(card).getPropertyValue("--ov")) || 0, feet = (FY - m.y) * u;
+    var sy = Math.max(0, Math.min(H - FH * u, ov + H * 0.08 - feet));
+    card.style.setProperty("--sy", f(sy) + "px");
     wrap.style.left = f(ox + m.x * u - (b[0] + b[2]) / 2 * iw) + "px";
-    wrap.style.bottom = f((FY - m.y) * u - (1 - b[3]) * ih) + "px";
+    wrap.style.bottom = f(feet + sy - (1 - b[3]) * ih) + "px";
+    var sh = wrap.querySelector(".scene-mo-sh");
+    if (!sh) { sh = document.createElement("span"); sh.className = "scene-mo-sh"; sh.setAttribute("aria-hidden", "true"); wrap.insertBefore(sh, mo); }
+    var sw = (b[2] - b[0]) * iw, shw = sw * 0.92, shh = Math.max(6, sw * 0.16);
+    sh.style.width = f(shw) + "px"; sh.style.height = f(shh) + "px";
+    sh.style.left = f((b[0] + b[2]) / 2 * iw - shw / 2) + "px"; sh.style.top = f(b[3] * ih - shh * 0.55) + "px";
+    mo.style.transformOrigin = "50% " + f(b[3] * 100) + "%";
     wrap.style.width = f(iw) + "px"; wrap.style.height = f(ih) + "px"; wrap.style.right = "auto";
     mo.style.height = ""; mo.style.width = "";
     card.style.setProperty("--u", Math.round(u * 1000) / 1000 + "px");
