@@ -376,23 +376,23 @@
         '<circle cx="92" cy="36" r="9" fill="#FFE29A"/><circle cx="97" cy="33" r="8" fill="#2E3A78"/>' + star(40, 32, 3, "twinkle", "#fff") + star(48, 70, 2.4, "twinkle t2", "#fff") + star(88, 68, 2, "twinkle t3", "#fff") +
         /* warm lamp glow behind the family */
         '<circle class="glow" cx="210" cy="78" r="96" fill="url(#dsLampP)"/>' +
-        /* family photo frame on the wall: five hearts */
-        '<g class="swing"><rect x="296" y="16" width="74" height="50" rx="6" fill="#C98A5B"/><rect x="301" y="21" width="64" height="40" rx="4" fill="#FFF6E8"/>' +
-        '<path d="M318 40 c-3 -5 -10 -2.5 -9 2.5 c.8 3.4 9 9 9 9 s8.2 -5.6 9 -9 c1 -5 -6 -7.5 -9 -2.5z" fill="#5A80E8"/>' +
-        '<path d="M348 40 c-3 -5 -10 -2.5 -9 2.5 c.8 3.4 9 9 9 9 s8.2 -5.6 9 -9 c1 -5 -6 -7.5 -9 -2.5z" fill="#E86FA0"/>' +
-        '<path d="M326 52 c-1.8 -3 -6 -1.5 -5.4 1.6 c.5 2 5.4 5.4 5.4 5.4 s5 -3.4 5.4 -5.4 c.6 -3 -3.6 -4.6 -5.4 -1.6z" fill="#3FB67A"/>' +
-        '<path d="M333 54 c-1.6 -2.6 -5.2 -1.3 -4.7 1.4 c.4 1.8 4.7 4.7 4.7 4.7 s4.3 -2.9 4.7 -4.7 c.5 -2.7 -3.1 -4 -4.7 -1.4z" fill="#FFB547"/>' +
-        '<path d="M340 52 c-1.8 -3 -6 -1.5 -5.4 1.6 c.5 2 5.4 5.4 5.4 5.4 s5 -3.4 5.4 -5.4 c.6 -3 -3.6 -4.6 -5.4 -1.6z" fill="#B48CFF"/></g>' +
+        /* family photo on the wall: Abi, Umi, Kak Adam, Ais and Mo */
+        '<g class="swing"><rect x="256" y="28" width="90" height="68" rx="-27" fill="#B9794A"/><rect x="259" y="31" width="84" height="62" rx="-29" fill="#D9A06C"/>' +
+        '<rect x="263" y="35" width="76" height="54" rx="-31" fill="#FFF6E8"/>' +
+        '<image href="family/family-photo.webp" x="263" y="35" width="76" height="54" preserveAspectRatio="xMidYMid slice"/>' +
+        '<rect x="263" y="35" width="76" height="54" rx="-31" fill="none" stroke="rgba(120,70,30,.35)" stroke-width="1"/>' +
+        '<path d="M266 38 l14 0 l-14 10z" fill="#fff" opacity=".35"/>' +
+        '<path d="M301 22 l-12 7 M301 22 l12 7" stroke="#8A5A3A" stroke-width="1.4"/><circle cx="301" cy="22" r="2" fill="#8A5A3A"/></g>' +
         floor("#E8D2B8", "#D9BE9E") +
         /* soft rug */
         '<ellipse cx="236" cy="166" rx="150" ry="13" fill="#F3B8CF" opacity=".55"/><ellipse cx="236" cy="166" rx="128" ry="9" fill="#FFD6E4" opacity=".6"/>' +
         /* Abi and Umi, smiling at Mo */
-        '<ellipse cx="160" cy="168" rx="26" ry="5" fill="rgba(60,40,30,.18)"/><ellipse cx="226" cy="168" rx="22" ry="5" fill="rgba(60,40,30,.18)"/>' +
+        '<ellipse cx="160" cy="168" rx="26" ry="5" fill="rgba(60,40,30,.18)"/><ellipse cx="222" cy="168" rx="21" ry="5" fill="rgba(60,40,30,.18)"/>' +
         '<image href="family/abi-wave.webp" x="122" y="12" width="78" height="164"/>' +
-        '<image href="family/umi-welcome.webp" x="192" y="14" width="68" height="162"/>' +
+        '<image href="family/umi-welcome.webp" x="191" y="30" width="61" height="146"/>' +
         /* floating hearts rising toward the parents */
-        '<g class="beat"><path d="M282 70 c-5 -7 -15 -3 -13 4 c1 5 13 13 13 13 s12 -8 13 -13 c2 -7 -8 -11 -13 -4z" fill="#FF7A9A"/></g>' +
-        '<g class="float"><path d="M262 44 c-3 -4.6 -9.6 -2 -8.6 2.6 c.7 3.2 8.6 8.6 8.6 8.6 s7.9 -5.4 8.6 -8.6 c1 -4.6 -5.6 -7.2 -8.6 -2.6z" fill="#FFB0C4"/></g>' +
+        '<g class="beat"><path d="M352 92 c-5 -7 -15 -3 -13 4 c1 5 13 13 13 13 s12 -8 13 -13 c2 -7 -8 -11 -13 -4z" fill="#FF7A9A"/></g>' +
+        '<g class="float"><path d="M372 70 c-3 -4.6 -9.6 -2 -8.6 2.6 c.7 3.2 8.6 8.6 8.6 8.6 s7.9 -5.4 8.6 -8.6 c1 -4.6 -5.6 -7.2 -8.6 -2.6z" fill="#FFB0C4"/></g>' +
         sparkle(112, 100, .6, "twinkle t3", "#FFC94A") + sparkle(276, 112, .5, "twinkle", "#FFC94A")
     },
 
