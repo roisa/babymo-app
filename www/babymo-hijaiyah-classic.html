@@ -393,6 +393,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .hp-ov{position:fixed;inset:0;z-index:600;display:none;flex-direction:column;align-items:center;padding:calc(14px + env(safe-area-inset-top)) 16px calc(16px + env(safe-area-inset-bottom));background:linear-gradient(180deg,#FFF6E4,#FFE9F1 60%,#E8F1FF)}
 .hp-ov.on{display:flex}
 html[data-bm-theme="classic"] .hp-ov{background:linear-gradient(180deg,#123222,#0E2A1C)}
+html[data-bm-theme="classic"] .hp-ov .hp-title{color:#F2F7F2}
 .hp-top{width:100%;max-width:440px;display:flex;align-items:center;gap:10px}
 .hp-x{width:44px;height:44px;border-radius:14px;border:none;background:rgba(255,255,255,.9);font-size:18px;font-weight:900;cursor:pointer;box-shadow:0 6px 14px -10px rgba(0,0,0,.4)}
 .hp-title{flex:1;text-align:center;font-weight:900;font-size:17px;color:var(--cream)}
@@ -402,8 +403,39 @@ html[data-bm-theme="classic"] .hp-ov{background:linear-gradient(180deg,#123222,#
 .hp-say .bub{flex:1;background:#fff;border-radius:18px 18px 18px 6px;padding:10px 13px;font-weight:800;font-size:15px;color:#1E2B3A;margin-bottom:12px;box-shadow:0 10px 22px -14px rgba(30,60,110,.45)}
 .tr-wrap{position:relative;width:min(88vw,380px,52vh);aspect-ratio:1;border-radius:28px;background:#fff;box-shadow:0 18px 36px -18px rgba(30,60,110,.45);touch-action:none;overflow:hidden}
 .tr-wrap canvas{position:absolute;inset:0;width:100%;height:100%}
-.tr-bar{width:min(88vw,380px);height:12px;border-radius:99px;background:rgba(0,0,0,.08);margin:12px 0 4px;overflow:hidden}
-.tr-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#FFC83D,#3FD08C);transition:width .15s}
+/* tracing v2: glowing "still to do" layer + one progress chip per part (pill = stroke, dot = dot) */
+#trHint{opacity:0;pointer-events:none}
+#trDone{pointer-events:none}
+.tr-wrap.hint-soft #trHint{animation:trSoft 2.4s ease-in-out infinite}
+.tr-wrap.hint-strong #trHint{animation:trStrong .8s ease-in-out infinite}
+.tr-wrap.all-ok #trHint{display:none}
+@keyframes trSoft{0%,100%{opacity:.06}50%{opacity:.38}}
+@keyframes trStrong{0%,100%{opacity:.35}50%{opacity:1}}
+.tr-parts{--pc:#3FD08C;display:flex;align-items:center;justify-content:center;gap:9px;width:min(88vw,380px);min-height:22px;margin:12px 0 4px}
+.tr-parts i{flex:0 0 auto;display:block;background:rgba(0,0,0,.10);transition:background .2s,transform .2s}
+.tr-parts .pb{position:relative;flex:0 1 170px;height:14px;border-radius:99px;overflow:hidden}
+.tr-parts.nodots .pb{flex-basis:100%}
+.tr-parts .pb b{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:99px;background:linear-gradient(90deg,#FFC83D,#3FD08C);transition:width .15s}
+.tr-parts .pb.ok b{background:var(--pc)}
+.tr-parts .pd{width:18px;height:18px;border-radius:50%;box-shadow:inset 0 0 0 2px rgba(0,0,0,.08)}
+.tr-parts .pd.ok{background:var(--pc);box-shadow:0 0 0 3px rgba(255,255,255,.9),0 2px 6px rgba(0,0,0,.25)}
+.tr-parts .pop{animation:trPop .4s cubic-bezier(.3,1.7,.5,1)}
+.tr-parts .want{animation:trWant .8s ease-in-out 4}
+@keyframes trPop{0%{transform:scale(.4)}100%{transform:none}}
+@keyframes trWant{50%{transform:scale(1.35);box-shadow:0 0 0 4px #FFC83D,0 0 14px #FFB020}}
+.tr-row .ok.go{animation:trGo 1.3s ease-in-out infinite}
+@keyframes trGo{50%{transform:scale(1.05);box-shadow:0 0 0 4px rgba(63,208,140,.35)}}
+.tr-row .clr.nudge{box-shadow:0 0 0 3px #FFC83D}
+html[data-bm-theme="classic"] .tr-parts i{background:rgba(255,255,255,.16)}
+html[data-bm-theme="classic"] .tr-parts .pd.ok{background:var(--pc);box-shadow:0 0 0 3px rgba(255,255,255,.55)}
+html[data-bm-theme="classic"] .tr-parts .pb.ok b{background:var(--pc)}
+@media (prefers-reduced-motion:reduce){
+  .tr-wrap.hint-soft #trHint,.tr-wrap.hint-strong #trHint{animation:none}
+  .tr-wrap.hint-soft #trHint{opacity:.3}
+  .tr-wrap.hint-strong #trHint{opacity:.9}
+  .tr-parts .pop,.tr-parts .want,.tr-row .ok.go,.tr-wrap.win{animation:none}
+  .tr-parts .want{box-shadow:0 0 0 4px #FFC83D}
+}
 .tr-row{display:flex;gap:10px;width:min(88vw,380px);margin-top:10px}
 .tr-row button{flex:1;min-height:52px;border-radius:18px;border:none;font:900 16px 'Nunito',sans-serif;cursor:pointer}
 .tr-row .clr{background:rgba(255,255,255,.9);color:#152230;box-shadow:0 0 0 1px rgba(0,0,0,.08)}
@@ -1459,8 +1491,8 @@ function showToast(e,t){
 <div class="hp-ov" id="trOv">
   <div class="hp-top"><button class="hp-x" id="trX" type="button" aria-label="Keluar"><span class="hj-ic" data-i="close"></span></button><div class="hp-title"><span class="hj-ic" data-i="pencil"></span><span id="trTitle">Tulis</span></div><span class="hp-pill" id="trPct">0%</span></div>
   <div class="hp-say"><img id="trMo" src="baby-mo-poses/baby-mo-pose-15.webp" alt=""><div class="bub" id="trBub"></div></div>
-  <div class="tr-wrap" id="trWrap"><canvas id="trGuide"></canvas><canvas id="trInk"></canvas></div>
-  <div class="tr-bar"><i id="trBar"></i></div>
+  <div class="tr-wrap" id="trWrap"><canvas id="trGuide"></canvas><canvas id="trHint" aria-hidden="true"></canvas><canvas id="trInk"></canvas><canvas id="trDone" aria-hidden="true"></canvas></div>
+  <div class="tr-parts" id="trParts" role="img" aria-label="Bagian huruf"></div>
   <div class="tr-stars" id="trStars" aria-live="polite"></div>
   <div class="tr-row"><button class="clr" id="trClr" type="button">Hapus</button><button class="ok" id="trOk" type="button">Selesai</button></div>
 </div>
@@ -1627,9 +1659,20 @@ function showToast(e,t){
   };
   document.getElementById('lcTrace').onclick=function(){ openTrace(lessonLetters[cardIdx]); };
 
-  /* ── 2. tracing ── */
-  var tr={lt:null,S:0,mask:null,wide:null,drawing:false,last:null,done:false};
-  var ov=document.getElementById('trOv'), guide=document.getElementById('trGuide'), ink=document.getElementById('trInk');
+  /* ── 2. tracing (v2: part-aware) ──
+     The letter's fill mask is split into its connected parts (the body stroke and each dot / small mark).
+     A letter only counts as written when EVERY part is traced: each body part ≥70% covered, each dot ≥45% (one good tap),
+     and most of the ink inside the finger-tolerant "wide" mask. Finished parts turn colourful; missing
+     parts glow softly (strongly after Done, or once the body is done but a dot is still missing).
+     When everything is done Mo celebrates but the canvas stays live; the child moves on with Next.
+     Stars = accuracy (ink inside vs outside) + completeness, never speed. */
+  var TR={ body:0.70, dot:0.45, out:0.35,      // finishes by itself after a stroke
+           bodyOk:0.60, dotOk:0.35, outOk:0.40 }; // a little gentler when the child taps Done
+  var tr={lt:null,S:0,best:0,mask:null,wide:null,lab:null,map:null,parts:[],drawing:false,pid:null,last:null,done:false,stars:0,started:false,nudged:'',hintT:0,liveT:0,okKey:''};
+  var ov=document.getElementById('trOv'), wrap=document.getElementById('trWrap'), guide=document.getElementById('trGuide'), hint=document.getElementById('trHint'), doneCv=document.getElementById('trDone'), ink=document.getElementById('trInk');
+  var ictx=ink.getContext('2d',{willReadFrequently:true});
+  var trReduce=function(){ try{ return matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } };
+  function col(){ return tr.lt.color||'#E8590C'; }
   function drawLetter(ctx,S,glyph,mode){
     ctx.save(); ctx.textAlign='left'; ctx.textBaseline='alphabetic';
     var fs=Math.round(S*0.74); ctx.font='700 '+fs+'px "Scheherazade New", serif';
@@ -1639,71 +1682,216 @@ function showToast(e,t){
     if(fit<1){ fs=Math.floor(fs*fit); ctx.font='700 '+fs+'px "Scheherazade New", serif'; m=ctx.measureText(glyph); L=m.actualBoundingBoxLeft||0; R=m.actualBoundingBoxRight||m.width; A=m.actualBoundingBoxAscent||fs*.6; D=m.actualBoundingBoxDescent||0; }
     var x=S/2-(R-L)/2, y=S/2+(A-D)/2;
     if(mode==='guide'){ ctx.fillStyle='#EEF0F6'; ctx.fillText(glyph,x,y); ctx.setLineDash([S*0.02,S*0.025]); ctx.lineWidth=S*0.008; ctx.strokeStyle='#B7BDD0'; ctx.strokeText(glyph,x,y); }
-    else if(mode==='wide'){ ctx.lineJoin='round'; ctx.lineWidth=S*0.09; ctx.strokeStyle='#000'; ctx.fillStyle='#000'; ctx.strokeText(glyph,x,y); ctx.fillText(glyph,x,y); }
+    else if(mode==='wide'){ ctx.lineJoin='round'; ctx.lineWidth=S*0.10; ctx.strokeStyle='#000'; ctx.fillStyle='#000'; ctx.strokeText(glyph,x,y); ctx.fillText(glyph,x,y); }
     else { ctx.fillStyle='#000'; ctx.fillText(glyph,x,y); }
     ctx.restore();
   }
-  function setup(){
-    var r=document.getElementById('trWrap').getBoundingClientRect(), dpr=Math.min(2,window.devicePixelRatio||1), S=Math.round(r.width*dpr);
-    tr.S=S; [guide,ink].forEach(function(c){ c.width=c.height=S; });
-    var g=guide.getContext('2d'); g.clearRect(0,0,S,S); drawLetter(g,S,base(tr.lt),'guide');
-    var m=document.createElement('canvas'); m.width=m.height=S; drawLetter(m.getContext('2d'),S,base(tr.lt),'fill'); tr.mask=m.getContext('2d').getImageData(0,0,S,S).data;
-    var w=document.createElement('canvas'); w.width=w.height=S; drawLetter(w.getContext('2d'),S,base(tr.lt),'wide'); tr.wide=w.getContext('2d').getImageData(0,0,S,S).data;
-    ink.getContext('2d').clearRect(0,0,S,S); score(true);
+  /* connected parts of the scoring mask (8-neighbour flood fill at full resolution).
+     Specks (anti-alias crumbs) join the nearest real part or are ignored; a part much smaller than the
+     biggest one is a dot / mark (ب ت ث ج خ ذ ز ش ض ظ غ ف ق ن ي, the mark inside ك). */
+  function kmeans(px,S,n){   // split one blob's pixels into n clusters (farthest-point start, a few Lloyd steps)
+    var L=px.length, xs=new Float32Array(L), ys=new Float32Array(L), as=new Int8Array(L), C=[], mx=0, my=0, i, c;
+    for(i=0;i<L;i++){ xs[i]=px[i]%S; ys[i]=(px[i]-xs[i])/S; mx+=xs[i]; my+=ys[i]; } mx/=L; my/=L;
+    var far=function(dist){ var b=-1, bi=0; for(var j=0;j<L;j++){ var d=dist(j); if(d>b){ b=d; bi=j; } } return [xs[bi],ys[bi]]; };
+    C.push(far(function(j){ return (xs[j]-mx)*(xs[j]-mx)+(ys[j]-my)*(ys[j]-my); }));
+    while(C.length<n) C.push(far(function(j){ var m=1e12; C.forEach(function(p){ m=Math.min(m,(xs[j]-p[0])*(xs[j]-p[0])+(ys[j]-p[1])*(ys[j]-p[1])); }); return m; }));
+    for(var it=0;it<12;it++){ var sx=new Float64Array(n), sy=new Float64Array(n), sn=new Float64Array(n);
+      for(i=0;i<L;i++){ var b=0, bd=1e12; for(c=0;c<n;c++){ var d=(xs[i]-C[c][0])*(xs[i]-C[c][0])+(ys[i]-C[c][1])*(ys[i]-C[c][1]); if(d<bd){ bd=d; b=c; } } as[i]=b; sx[b]+=xs[i]; sy[b]+=ys[i]; sn[b]++; }
+      for(c=0;c<n;c++) if(sn[c]) C[c]=[sx[c]/sn[c],sy[c]/sn[c]]; }
+    return as;
+  }
+  function findParts(m,S,nDots){
+    var N=S*S, lab=new Int32Array(N), stack=new Int32Array(N), raw=[], id=0, TH=100;
+    for(var p=0;p<N;p++){ if(lab[p]||m[p*4+3]<TH) continue;
+      id++; var sp=0, area=0, sx=0, sy=0, x0=S, y0=S, x1=0, y1=0; stack[sp++]=p; lab[p]=id;
+      while(sp){ var q=stack[--sp], x=q%S, y=(q-x)/S; area++; sx+=x; sy+=y; if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y;
+        for(var dy=-1;dy<=1;dy++){ var ny=y+dy; if(ny<0||ny>=S) continue;
+          for(var dx=-1;dx<=1;dx++){ var nx=x+dx; if(nx<0||nx>=S) continue; var nq=ny*S+nx; if(!lab[nq] && m[nq*4+3]>=TH){ lab[nq]=id; stack[sp++]=nq; } } } }
+      raw.push({id:id,area:area,cx:sx/area,cy:sy/area,x0:x0,y0:y0,x1:x1,y1:y1});
+    }
+    var big=0; raw.forEach(function(r){ if(r.area>big) big=r.area; });
+    var keep=raw.filter(function(r){ return r.area>=Math.max(12,big*0.006); });
+    keep.forEach(function(r){ r.dot=r.area<big*0.35 && Math.max(r.x1-r.x0,r.y1-r.y0)<S*0.3; r.n=r.dot?1:0; });
+    // in this font neighbouring dots touch at a corner (ت ث ش ق ي), so two dots come out as one blob:
+    // give the biggest blobs extra dots until the letter's known dot count is reached, then split them (k-means)
+    var dots=keep.filter(function(r){ return r.dot; }), nid=id;
+    if(dots.length) for(var k=dots.length;k<(nDots||0);k++){ dots.sort(function(a,b){ return b.area/b.n-a.area/a.n; }); dots[0].n++; }
+    var parts=[];
+    keep.forEach(function(r){ if(r.n<2){ parts.push(r); return; }
+      var px=[]; for(var y=r.y0;y<=r.y1;y++) for(var x=r.x0;x<=r.x1;x++){ var q=y*S+x; if(lab[q]===r.id) px.push(q); }
+      var as=kmeans(px,S,r.n);
+      for(var c=0;c<r.n;c++){ var sub={id:++nid,area:0,cx:0,cy:0,x0:S,y0:S,x1:0,y1:0,dot:true};
+        px.forEach(function(q,i){ if(as[i]!==c) return; var x=q%S, y=(q-x)/S; lab[q]=sub.id; sub.area++; sub.cx+=x; sub.cy+=y; if(x<sub.x0)sub.x0=x; if(x>sub.x1)sub.x1=x; if(y<sub.y0)sub.y0=y; if(y>sub.y1)sub.y1=y; });
+        if(sub.area){ sub.cx/=sub.area; sub.cy/=sub.area; parts.push(sub); } }
+    });
+    var map=new Int32Array(nid+1).fill(-1); parts.forEach(function(r,i){ map[r.id]=i; });
+    raw.forEach(function(r){ if(keep.indexOf(r)>=0) return; var best=-1, bd=S*0.03;   // a speck: give it to a part it touches
+      parts.forEach(function(P,i){ var d=Math.max(P.x0-r.x1,r.x0-P.x1,P.y0-r.y1,r.y0-P.y1,0); if(d<bd){ bd=d; best=i; } }); map[r.id]=best; });
+    // per-part: score samples (enough even for a tiny dot) + an alpha image to draw it coloured / glowing
+    parts.forEach(function(P,i){
+      var st=Math.max(1,Math.round(Math.sqrt(P.area/700))), s=[];
+      for(var y=P.y0;y<=P.y1;y+=st) for(var x=P.x0;x<=P.x1;x+=st){ var q=y*S+x; if(lab[q] && map[lab[q]]===i) s.push(q); }
+      P.samp=s;
+      var pad=3, ox=Math.max(0,P.x0-pad), oy=Math.max(0,P.y0-pad), w=Math.min(S,P.x1+pad+1)-ox, h=Math.min(S,P.y1+pad+1)-oy;
+      var cv=document.createElement('canvas'); cv.width=w; cv.height=h; var c=cv.getContext('2d'), im=c.createImageData(w,h), a=im.data;
+      for(var yy=0;yy<h;yy++) for(var xx=0;xx<w;xx++){ var gx=ox+xx, gy=oy+yy, qq=gy*S+gx, al=m[qq*4+3]; if(!al) continue;
+        var own=lab[qq]?map[lab[qq]]:-2;
+        if(own===-2){ for(var r2=1;r2<=2&&own===-2;r2++) for(var ey=-r2;ey<=r2&&own===-2;ey++) for(var ex=-r2;ex<=r2;ex++){ var ux=gx+ex, uy=gy+ey; if(ux<0||uy<0||ux>=S||uy>=S) continue; var l2=lab[uy*S+ux]; if(l2){ own=map[l2]; break; } } }
+        if(own===i){ a[(yy*w+xx)*4+3]=al; } }
+      c.putImageData(im,0,0); P.cv=cv; P.ox=ox; P.oy=oy; P.tint={};
+    });
+    // body parts first, then the dots from right to left (the way Arabic is read)
+    var order=parts.map(function(P,i){ return i; }).sort(function(a,b){ var A=parts[a],B=parts[b]; return (A.dot-B.dot)||(B.cx-A.cx); });
+    return {lab:lab,map:map,parts:parts,order:order};
+  }
+  function tint(P,c){ if(P.tint[c]) return P.tint[c]; var t=document.createElement('canvas'); t.width=P.cv.width; t.height=P.cv.height; var x=t.getContext('2d');
+    x.drawImage(P.cv,0,0); x.globalCompositeOperation='source-in'; x.fillStyle=c; x.fillRect(0,0,t.width,t.height); return (P.tint[c]=t); }
+  function need(P,tap){ return P.dot?(tap?TR.dotOk:TR.dot):(tap?TR.bodyOk:TR.body); }
+  /* guide = grey letter; hint layer (under the ink) = the parts still to do, glowing;
+     done layer (over the ink) = finished parts "snap" into a clean, colourful shape */
+  function render(){
+    var S=tr.S, g=guide.getContext('2d'); g.clearRect(0,0,S,S); drawLetter(g,S,base(tr.lt),'guide');
+    var dn=doneCv.getContext('2d'); dn.clearRect(0,0,S,S); dn.save(); dn.shadowColor='rgba(255,255,255,.95)'; dn.shadowBlur=S*0.012;
+    tr.parts.forEach(function(P){ if(P.ok) dn.drawImage(tint(P,col()),P.ox,P.oy); }); dn.restore();
+    var h=hint.getContext('2d'); h.clearRect(0,0,S,S); h.save(); h.shadowColor='#FFB020'; h.shadowBlur=S*0.03;
+    tr.parts.forEach(function(P){ if(P.ok) return; h.globalAlpha=P.dot?1:0.55; h.drawImage(tint(P,'#FFC83D'),P.ox,P.oy); }); h.restore();
+  }
+  function buildParts(){
+    var el=document.getElementById('trParts'), dots=tr.parts.filter(function(P){ return P.dot; }).length;
+    el.innerHTML=tr.order.map(function(i){ var P=tr.parts[i]; return P.dot?'<i class="pd" data-i="'+i+'"></i>':'<i class="pb" data-i="'+i+'"><b></b></i>'; }).join('');
+    el.style.setProperty('--pc',col()); el.classList.toggle('nodots',!dots);
+    el.setAttribute('aria-label',dots?T('Garis dan '+dots+' titik','The stroke and '+dots+' dot'+(dots>1?'s':'')):T('Garis huruf','The letter\'s stroke'));
   }
   function score(reset){
-    var S=tr.S, d=reset?null:ink.getContext('2d').getImageData(0,0,S,S).data, st=Math.max(3,Math.round(S/120)), tot=0, cov=0, inkN=0, out=0;
-    for(var y=0;y<S;y+=st) for(var x=0;x<S;x+=st){ var i=(y*S+x)*4+3, on=d&&d[i]>0;
-      if(tr.mask[i]>128){ tot++; if(on) cov++; }
-      if(on){ inkN++; if(tr.wide[i]<64) out++; } }
-    var c=tot?cov/tot:0, o=inkN?out/inkN:0, pct=Math.round(Math.min(1,c/0.7)*100*(o>=0.4?0.35:1));
-    document.getElementById('trBar').style.width=pct+'%'; document.getElementById('trPct').textContent=pct+'%';
-    return {c:c,o:o};
+    var S=tr.S, d=reset?null:ictx.getImageData(0,0,S,S).data, PS=tr.parts, inkN=0, out=0, st=Math.max(2,Math.round(S/180));
+    PS.forEach(function(p){ var cov=0; if(d) for(var k=0;k<p.samp.length;k++) if(d[p.samp[k]*4+3]>40) cov++; p.c=p.samp.length?cov/p.samp.length:1; p.ok=p.c>=need(p,false); });
+    if(d) for(var y=0;y<S;y+=st) for(var x=0;x<S;x+=st){ var i=(y*S+x)*4+3; if(d[i]>40){ inkN++; if(tr.wide[i]<64) out++; } }
+    var o=inkN?out/inkN:0, nd=PS.filter(function(p){ return p.dot; }).length, nb=PS.length-nd, prog=0, all=PS.every(function(p){ return p.ok; });
+    PS.forEach(function(p){ var w=nd?(p.dot?0.25/nd:0.75/nb):1/nb; prog+=w*Math.min(1,p.c/need(p,false)); });
+    var pct=Math.round(prog*100); if(!all) pct=Math.min(pct,99); if(o>=TR.out) pct=Math.round(pct*0.6);
+    if(!tr.done) document.getElementById('trPct').textContent=pct+'%';
+    document.querySelectorAll('#trParts i').forEach(function(e){ var p=PS[+e.dataset.i]; if(!p) return; var was=e.classList.contains('ok');
+      e.classList.toggle('ok',p.ok); if(p.ok&&!was&&!reset) e.classList.add('pop'); if(p.ok) e.classList.remove('want'); else e.classList.remove('pop');
+      var b=e.querySelector('b'); if(b) b.style.width=Math.round(Math.min(1,p.c/need(p,false))*100)+'%'; });
+    var key=PS.map(function(p){ return p.ok?1:0; }).join('');
+    if(key!==tr.okKey){ tr.okKey=key; render(); }
+    wrap.classList.toggle('all-ok',all);
+    return {parts:PS,o:o,inkN:inkN,pct:pct};
+  }
+  function setup(){
+    var r=wrap.getBoundingClientRect(); if(!r.width) return;
+    var dpr=Math.min(2,window.devicePixelRatio||1), S=Math.round(r.width*dpr);
+    tr.S=S; [guide,hint,ink,doneCv].forEach(function(c){ c.width=c.height=S; });
+    var m=document.createElement('canvas'); m.width=m.height=S; drawLetter(m.getContext('2d'),S,base(tr.lt),'fill'); tr.mask=m.getContext('2d').getImageData(0,0,S,S).data;
+    var w=document.createElement('canvas'); w.width=w.height=S; drawLetter(w.getContext('2d'),S,base(tr.lt),'wide'); tr.wide=w.getContext('2d').getImageData(0,0,S,S).data;
+    var nd=(tr.lt.dots||'').match(/^(\d) titik (atas|bawah)/), f=findParts(tr.mask,S,nd?+nd[1]:0); tr.lab=f.lab; tr.map=f.map; tr.parts=f.parts; tr.order=f.order; tr.okKey='';
+    ictx.clearRect(0,0,S,S); resetRound(); buildParts(); score(true); if(tr.intro){ tr.intro=false; intro(); }
+  }
+  function intro(){ var n=tr.parts.filter(function(p){ return p.dot; }).length;
+    bub(n ? T('Ikuti garis abu-abu dengan jarimu, lalu tambahkan <b>'+n+' titik</b>-nya. Pelan-pelan, ya! ✍️','Follow the grey lines with your finger, then add the <b>'+n+' dot'+(n>1?'s':'')+'</b>. Nice and slow! ✍️')
+          : T('Ikuti garis abu-abu dengan jarimu. Pelan-pelan, ya! ✍️','Follow the grey lines with your finger. Nice and slow! ✍️'),'pose-15'); }
+  function resetRound(){
+    tr.done=false; tr.stars=0; tr.started=false; tr.nudged=''; tr.drawing=false; tr.pid=null; clearTimeout(tr.hintT);
+    wrap.classList.remove('hint-soft','hint-strong','all-ok','win');
+    document.getElementById('trClr').classList.remove('nudge');
+    var ok=document.getElementById('trOk'); ok.classList.remove('go'); ok.innerHTML=HJI('tick')+'<span>'+T('Selesai','Done')+'</span>';
+  }
+  function bub(html,pose){ document.getElementById('trBub').innerHTML=html; if(pose) document.getElementById('trMo').src=P(pose); }
+  function say(id,en){ try{ speak(T(id,en),EN?'en-US':'id-ID'); }catch(e){} }
+  function strong(missing){
+    wrap.classList.remove('hint-strong'); void wrap.offsetWidth; wrap.classList.add('hint-strong');
+    document.querySelectorAll('#trParts i').forEach(function(e){ var want=missing.indexOf(tr.parts[+e.dataset.i])>=0; e.classList.remove('want'); if(want){ void e.offsetWidth; e.classList.add('want'); } });
+    clearTimeout(tr.hintT); tr.hintT=setTimeout(function(){ wrap.classList.remove('hint-strong'); },3600);
+  }
+  /* after each stroke (tap=false) or when Done is tapped (tap=true) */
+  function check(r,tap){
+    if(tr.done){   // already celebrated: the child may keep drawing; neater/fuller work can still earn more stars (never fewer)
+      if(r.parts.every(function(p){ return p.ok; }) && r.o<TR.out){ var n=trStars(r); if(n>tr.stars) moreStars(n); }
+      return; }
+    var miss=r.parts.filter(function(p){ return p.c<need(p,tap); }), outBad=r.inkN>0 && r.o>=(tap?TR.outOk:TR.out);
+    if(!miss.length && !outBad){ win(r); return; }
+    if(outBad){ bub(T('Ups, keluar garis. Ikuti bentuk hurufnya, ya! 🙂','Oops, outside the lines. Follow the letter\'s shape! 🙂'),'pose-40'); if(tap){ document.getElementById('trClr').classList.add('nudge'); setTimeout(function(){ document.getElementById('trClr').classList.remove('nudge'); },2400); } return; }
+    var md=miss.filter(function(p){ return p.dot; }), mb=miss.filter(function(p){ return !p.dot; });
+    if(!mb.length && md.length){   // the body is done, a dot is missing → point at the dot(s), even without Done
+      var n=md.length, all=r.parts.filter(function(p){ return p.dot; }).length;
+      bub(n===all ? T('Bagus! Jangan lupa titiknya! Tambahkan <b>'+n+' titik</b> yang berkedip 👆','Great! Don\'t forget the dots! Add the <b>'+n+' glowing dot'+(n>1?'s':'')+'</b> 👆')
+                  : T('Jangan lupa titiknya! Masih <b>'+n+' titik</b> lagi 👆','Don\'t forget the dots! <b>'+n+' more dot'+(n>1?'s':'')+'</b> to go 👆'),'idea');
+      strong(md); var k='d'+n; if(tap||tr.nudged!==k){ tr.nudged=k; say('Jangan lupa titiknya!','Don\'t forget the dots!'); }
+      return;
+    }
+    if(tap){
+      bub(md.length ? T('Hampir! Tebalkan bagian yang berkedip, lalu titiknya 💪','Almost! Trace the glowing part, then the dots 💪')
+                    : T('Hampir! Tebalkan lagi bagian yang berkedip 💪','Almost! Trace over the glowing part too 💪'),'idea');
+      strong(miss);
+    }
   }
   function pt(e){ var r=ink.getBoundingClientRect(), k=tr.S/r.width; return [(e.clientX-r.left)*k,(e.clientY-r.top)*k]; }
-  ink.addEventListener('pointerdown',function(e){ if(tr.done) return; tr.drawing=true; tr.last=pt(e); ink.setPointerCapture(e.pointerId); dot(tr.last); });
-  ink.addEventListener('pointermove',function(e){ if(!tr.drawing) return; var p=pt(e), c=ink.getContext('2d');
-    c.lineCap='round'; c.lineJoin='round'; c.lineWidth=tr.S*0.075; c.strokeStyle=tr.lt.color||'#E8590C';
-    c.beginPath(); c.moveTo(tr.last[0],tr.last[1]); c.lineTo(p[0],p[1]); c.stroke(); tr.last=p; });
-  function up(){ if(!tr.drawing) return; tr.drawing=false; var r=score(); if(r.c>=0.7 && r.o<0.4) win(r); else if(r.o>=0.4) { document.getElementById('trBub').innerHTML=T('Ups, keluar garis. Ikuti bentuk hurufnya, ya! 🙂','Oops, outside the lines. Follow the letter\'s shape! 🙂'); document.getElementById('trMo').src=P('pose-40'); } }
+  function live(){ if(tr.liveT) return; tr.liveT=setTimeout(function(){ tr.liveT=0; if(tr.S) score(); },120); }
+  ink.addEventListener('pointerdown',function(e){
+    if(!tr.S || tr.drawing) return;                                          // one finger at a time: extra touches are ignored
+    if(e.pointerType==='touch' && ((e.width||0)>70 || (e.height||0)>70)) return; // a resting palm (big contact)
+    if(e.button>0) return;
+    e.preventDefault(); tr.drawing=true; tr.pid=e.pointerId; tr.last=pt(e); try{ ink.setPointerCapture(e.pointerId); }catch(x){}
+    dot(tr.last); if(!tr.started){ tr.started=true; wrap.classList.add('hint-soft'); } live();
+  });
+  ink.addEventListener('pointermove',function(e){ if(!tr.drawing || e.pointerId!==tr.pid) return;
+    var evs=(e.getCoalescedEvents&&e.getCoalescedEvents())||[]; if(!evs.length) evs=[e];
+    ictx.lineCap='round'; ictx.lineJoin='round'; ictx.lineWidth=tr.S*0.075; ictx.strokeStyle=col();
+    ictx.beginPath(); ictx.moveTo(tr.last[0],tr.last[1]); evs.forEach(function(v){ var p=pt(v); ictx.lineTo(p[0],p[1]); tr.last=p; }); ictx.stroke(); live(); });
+  function up(e){ if(!tr.drawing || (e && e.pointerId!==tr.pid)) return; tr.drawing=false; tr.pid=null; clearTimeout(tr.liveT); tr.liveT=0; check(score(),false); }
   ink.addEventListener('pointerup',up); ink.addEventListener('pointercancel',up);
-  function dot(p){ var c=ink.getContext('2d'); c.fillStyle=tr.lt.color||'#E8590C'; c.beginPath(); c.arc(p[0],p[1],tr.S*0.0375,0,Math.PI*2); c.fill(); }
-  /* 3-star rating from accuracy: o = share of ink outside the letter, c = how much of the letter is covered */
-  function trStars(r){ var n = r.o<0.10 ? 3 : r.o<0.22 ? 2 : 1; if(r.c<0.7) n=Math.min(n,2); return n; }
+  function dot(p){ ictx.fillStyle=col(); ictx.beginPath(); ictx.arc(p[0],p[1],tr.S*0.0375,0,Math.PI*2); ictx.fill(); }
+  /* 1–3 stars. Accuracy: o = share of the ink outside the (tolerant) letter. Completeness: how well each part is covered. */
+  function trStars(r){
+    var PS=r.parts||[], comp=0; PS.forEach(function(p){ comp+=Math.min(1,p.c/(p.dot?0.5:0.85)); }); comp=PS.length?comp/PS.length:1;
+    var n=r.o<0.25?2:1; if(r.o<0.12 && comp>=0.9) n=3; return n;
+  }
   function starTxt(n){ var h=''; for(var i=1;i<=3;i++) h+=HJI(i<=n?'star':'starO'); return '<span class="hj-st">'+h+'</span>'; }
   function win(r){
     if(tr.done) return; tr.done=true; var lt=tr.lt;
-    var n=trStars(r||{c:1,o:0}), prev=(ST.stars||{})[lt.id]||0; ST.stars=ST.stars||{}; if(n>prev) ST.stars[lt.id]=n;
-    document.getElementById('trWrap').classList.add('win'); setTimeout(function(){ document.getElementById('trWrap').classList.remove('win'); },700);
-    document.getElementById('trBar').style.width='100%'; document.getElementById('trPct').innerHTML=starTxt(n);
-    var se=document.getElementById('trStars'); se.innerHTML=[1,2,3].map(function(i){ return '<i class="'+(i<=n?'on':'')+'" style="animation-delay:'+(i*0.18)+'s">'+HJI(i<=n?'star':'starO')+'</i>'; }).join(''); se.classList.add('on');
-    document.getElementById('trMo').src=P(n===3?'yeyy':n===2?'yes':'pose-41');
+    var n=trStars(r), prev=(ST.stars||{})[lt.id]||0; tr.stars=n; ST.stars=ST.stars||{}; if(n>prev) ST.stars[lt.id]=n;
+    clearTimeout(tr.hintT); wrap.classList.remove('hint-strong','hint-soft'); wrap.classList.add('win'); setTimeout(function(){ wrap.classList.remove('win'); },700);
+    showStars(n);
     var tail = n===3 ? T(' 3 bintang! ✨',' 3 stars! ✨') : n===2 ? T(' Coba lebih rapi lagi untuk 3 bintang.',' Try a little neater for 3 stars.') : T(' Pelan-pelan ikuti garisnya untuk bintang lebih banyak.',' Follow the lines slowly for more stars.');
     if(n>prev && prev) tail+=T(' Rekor baru! 🎉',' New best! 🎉');
-    document.getElementById('trBub').innerHTML=(n===3?T('Masya Allah! Kamu menulis <b>'+lt.name+'</b> dengan bagus!','Masha Allah! You wrote <b>'+lt.name+'</b> beautifully!'):T('Bagus! Kamu menulis <b>'+lt.name+'</b>.','Well done! You wrote <b>'+lt.name+'</b>.'))+tail;
-    try{ window.HJ&&HJ.note(lt.id,'trace',n); }catch(e){}
+    bub((n===3?T('Masya Allah! Kamu menulis <b>'+lt.name+'</b> dengan bagus!','Masha Allah! You wrote <b>'+lt.name+'</b> beautifully!'):T('Bagus! Kamu menulis <b>'+lt.name+'</b>.','Well done! You wrote <b>'+lt.name+'</b>.'))+tail+T(' Ketuk <b>Lanjut</b> kalau sudah.',' Tap <b>Next</b> when you\'re ready.'), n===3?'yeyy':n===2?'yes':'pose-41');
+    tr.best=Math.max(tr.best,n);
     try{ playCorrect(); spawnParticles(14); }catch(e){} sayAr(lt.arName||lt.speak);
     var first=!ST.traced[lt.id]; ST.traced[lt.id]=1; save();
     try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('hijaiyah-classic','trace'); }catch(e){}
     if(first && Object.keys(ST.traced).length%4===0){ try{ window.BabyMo&&BabyMo.addStars&&BabyMo.addStars(1); }catch(e){} }
-    document.getElementById('trOk').innerHTML='<span>'+T('Lanjut','Next')+'</span>'+HJI('next');
+    var ok=document.getElementById('trOk'); ok.innerHTML='<span>'+T('Lanjut','Next')+'</span>'+HJI('next'); ok.classList.add('go');
   }
+  function showStars(n){
+    document.getElementById('trPct').innerHTML=starTxt(n);
+    var se=document.getElementById('trStars'); se.classList.remove('best'); se.innerHTML=[1,2,3].map(function(i){ return '<i class="'+(i<=n?'on':'')+'" style="animation-delay:'+(i*0.18)+'s">'+HJI(i<=n?'star':'starO')+'</i>'; }).join(''); se.classList.add('on');
+  }
+  function moreStars(n){
+    var lt=tr.lt, prev=(ST.stars||{})[lt.id]||0; tr.stars=n; tr.best=Math.max(tr.best,n); if(n>prev){ ST.stars[lt.id]=n; save(); }
+    var se=document.getElementById('trStars'); se.classList.remove('on'); void se.offsetWidth; showStars(n);
+    bub((n===3?T('Masya Allah, makin rapi! 3 bintang! ✨','Masha Allah, even neater! 3 stars! ✨'):T('Makin rapi! 2 bintang ⭐','Neater! 2 stars ⭐'))+T(' Ketuk <b>Lanjut</b> kalau sudah.',' Tap <b>Next</b> when you\'re ready.'),n===3?'yeyy':'yes');
+    try{ playCorrect(); }catch(e){}
+  }
+  function showBest(){ var se=document.getElementById('trStars'), best=(ST.stars||{})[tr.lt.id]||0; se.classList.remove('on');
+    se.innerHTML=best?'<small>'+T('Rekor','Best')+'</small> '+starTxt(best):''; se.classList.toggle('best',!!best); }
   window.openTrace=function(lt){
-    tr.lt=lt; tr.done=false; ov.classList.add('on'); var se=document.getElementById('trStars'); se.classList.remove('on');
-    var best=(ST.stars||{})[lt.id]||0; se.innerHTML=best?'<small>'+T('Rekor','Best')+'</small> '+starTxt(best):''; if(best) se.classList.add('best'); else se.classList.remove('best');
+    tr.lt=lt; tr.S=0; tr.best=0; ov.classList.add('on'); showBest();
     document.getElementById('trTitle').textContent=T('Tulis huruf ','Write ')+lt.name;
-    document.getElementById('trMo').src=P('pose-15');
-    document.getElementById('trBub').innerHTML=T('Ikuti garis abu-abu dengan jarimu. Pelan-pelan, ya! ✍️','Follow the grey lines with your finger. Nice and slow! ✍️');
-    document.getElementById('trOk').innerHTML=HJI('tick')+'<span>'+T('Selesai','Done')+'</span>';
+    bub(T('Ikuti garis abu-abu dengan jarimu. Pelan-pelan, ya! ✍️','Follow the grey lines with your finger. Nice and slow! ✍️'),'pose-15'); tr.intro=true;
+    resetRound(); document.getElementById('trParts').innerHTML='';
     var go=function(){ requestAnimationFrame(setup); };
     if(document.fonts&&document.fonts.load) document.fonts.load('200px "Scheherazade New"').then(go,go); else go();
   };
-  function closeTrace(){ ov.classList.remove('on'); if(document.getElementById('sIntro').classList.contains('active')) loadCard(cardIdx); updateHomeUI(); try{ window.HJ&&HJ.onTraceClose(tr.done); }catch(e){} }
+  function closeTrace(){ ov.classList.remove('on'); clearTimeout(tr.hintT); if(document.getElementById('sIntro').classList.contains('active')) loadCard(cardIdx); updateHomeUI();
+    // the review hears about the round once, with its best stars (stars can still go up after the celebration)
+    try{ if(tr.best && window.HJ) HJ.note(tr.lt.id,'trace',tr.best); }catch(e){}
+    try{ window.HJ&&HJ.onTraceClose(tr.best>0); }catch(e){} }
   document.getElementById('trX').onclick=closeTrace;
-  document.getElementById('trClr').onclick=function(){ tr.done=false; var se=document.getElementById('trStars'); se.classList.remove('on'); se.innerHTML=''; document.getElementById('trOk').innerHTML=HJI('tick')+'<span>'+T('Selesai','Done')+'</span>'; ink.getContext('2d').clearRect(0,0,tr.S,tr.S); score(true); document.getElementById('trMo').src=P('pose-15'); };
-  document.getElementById('trOk').onclick=function(){ if(tr.done){ closeTrace(); return; } var r=score(); if(r.c>=0.55 && r.o<0.45) win(r); else { document.getElementById('trMo').src=P('idea');
-    document.getElementById('trBub').innerHTML=T('Hampir! Tebalkan lagi bagian yang masih abu-abu 💪','Almost! Trace over the grey parts too 💪'); } };
-  window.addEventListener('resize',function(){ if(ov.classList.contains('on')) setup(); });
+  document.getElementById('trClr').onclick=function(){ if(!tr.S) return; ictx.clearRect(0,0,tr.S,tr.S); resetRound(); showBest(); score(true);
+    bub(T('Ayo coba lagi! Ikuti garis abu-abu, ya ✍️','Let\'s try again! Follow the grey lines ✍️'),'pose-15'); };
+  document.getElementById('trOk').onclick=function(){ if(tr.done){ closeTrace(); return; } if(!tr.S) return; check(score(),true); };
+  window.addEventListener('resize',function(){ if(ov.classList.contains('on') && tr.lt){ var r=wrap.getBoundingClientRect(); if(Math.round(r.width*Math.min(2,window.devicePixelRatio||1))!==tr.S) setup(); } });
+  window.__bmTrace=function(){ return tr; };   // read-only peek for the automated tracing tests
 
   /* ── 3. Tangkap Huruf (pop the letter bubbles) — Mudah / Sedang ──
      Sedang (medium) = the original game: random-coloured bubbles.

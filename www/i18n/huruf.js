@@ -41,6 +41,11 @@
   "Mudah": "Easy", "Sedang": "Medium", "Mulai!": "Start!", "Lagi!": "Again!",
   "Latihan Menulis": "Writing Practice", "Kotak Huruf": "Letter Box", "Ketuk hurufnya!": "Tap the letter!",
   "Tulis": "Write", "Hapus": "Clear", "Selesai": "Done", "Ayo Tulis!": "Let's Write!", "Tulis lagi": "Trace again",
+  /* tracing v2 (part-aware): dot reminders, per-part progress */
+  "Jangan lupa titiknya!": "Don't forget the dots!", "Bagian huruf": "Letter parts", "Garis huruf": "The letter's stroke",
+  "Ayo coba lagi! Ikuti garis abu-abu, ya ✍️": "Let's try again! Follow the grey lines ✍️",
+  "Hampir! Tebalkan lagi bagian yang berkedip 💪": "Almost! Trace over the glowing part too 💪",
+  "Hampir! Tebalkan bagian yang berkedip, lalu titiknya 💪": "Almost! Trace the glowing part, then the dots 💪",
   "Dengar kata": "Hear the word", "Huruf yang perlu dilatih:": "Letters to practise:",
   "Ulasan selesai!": "Review done!", "Pecahkan balon huruf": "Pop the balloon with"
 }, [
