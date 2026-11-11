@@ -1001,7 +1001,8 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
 /* Duas tab: close the empty gap under the ribbon; even, centred tile labels on a glass plate */
 #pane-doa .pd .pd-now.pd-now{margin-top:0}
 #pane-doa .pd.pd{padding-top:6px}
-@media(max-width:380px){#pane-doa .pd .pd-mo{height:186px;left:-46px}#pane-doa .pd .pd-now-tx{flex-basis:57%;width:57%}#pane-doa .pd .pd-now-s{text-wrap:balance}#pane-doa .pd .pd-now-t{font-size:clamp(21px,6vw,26px)}}
+#pane-doa .pd .pd-now .pd-mo{z-index:1}#pane-doa .pd .pd-now .pd-now-tx{position:relative;z-index:2}
+@media(max-width:400px){#pane-doa .pd .pd-mo{height:190px;left:-46px}#pane-doa .pd .pd-now-tx{flex-basis:57%;width:57%}#pane-doa .pd .pd-now-s{text-wrap:balance}#pane-doa .pd .pd-now-t{font-size:clamp(21px,6vw,26px)}}
 #pane-doa .pd-doors .pd-door{justify-content:space-between;padding:12px 8px 10px}
 #pane-doa .pd-door .pd-dl{display:flex;align-items:center;justify-content:center;align-self:stretch;min-height:2.5em;padding:5px 6px;margin:0;border-radius:16px;
   font-size:clamp(14px,3.9vw,18px);line-height:1.08;text-align:center;text-wrap:balance;
