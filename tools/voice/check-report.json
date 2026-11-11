@@ -10264,5 +10264,409 @@
   ],
   "ok": false,
   "file": "www/voice/lines-af56e89d.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ أَهِلَّهُ عَلَيْنَا بِالْيُمْنِ وَالْإِيمَانِ، وَالسَّلَامَةِ وَالْإِسْلَامِ، رَبِّي وَرَبُّكَ اللَّهُ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Doa Melihat Hilal — Allāhumma ahillahu 'alainā bil-yumni wal-īmān, was-salāmati wal-islām, rabbī wa rabbukallāh",
+  "heard": [
+   "اللهم اهله علينا باليمن والايمان والسلامه والاسلام ربي وربك الله",
+   "اللهم اهله علينا بالامن والايمان والسلامه والاسلام ربي وربك الله"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_hilal.mp3"
+ },
+ {
+  "text": "نَوَيْتُ صَوْمَ غَدٍ عَنْ أَدَاءِ فَرْضِ شَهْرِ رَمَضَانَ هَذِهِ السَّنَةِ لِلَّهِ تَعَالَى",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Niat Puasa Ramadan — Nawaitu ṣauma ghadin 'an adā'i farḍi syahri Ramaḍāna hādhihis-sanati lillāhi ta'ālā",
+  "heard": [
+   "نويت صوم غد عن اداء فرض شهر رمضان هذه السنه لله تعالى",
+   "لو نويت صوم غد عن اداء فرض شهر رمضان هذه السنه لله تعالى",
+   "نويت صوم غدا عن اداء فرض شهر رمضان هذه السنه لله تعالى"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_niat.mp3"
+ },
+ {
+  "text": "إِنِّي صَائِمٌ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Aku Sedang Puasa — Innī ṣā'im",
+  "heard": [
+   "اني صائم",
+   "و اني صائم",
+   "انى صائم"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_shaim.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Doa Berbuka Puasa — Allāhumma laka ṣumtu wa 'alā rizqika afṭartu",
+  "heard": [
+   "اللهم لك صمت وعلى رزقك افطرت"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_buka.mp3"
+ },
+ {
+  "text": "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Doa Sesudah Berbuka — Dhahabaẓ-ẓama'u wabtallatil-'urūqu wa thabatal-ajru in syā' Allāh",
+  "heard": [
+   "ذهب الظما وابتلت العروق وثبت الاجر ان شاء الله",
+   "ذهب الظماء وابتلت العروق وثبت الاجر ان شاء الله",
+   "رهف الظما وابتلت العروق وثبت الاجر ان شاء الله"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_after.mp3"
+ },
+ {
+  "text": "أَفْطَرَ عِنْدَكُمُ الصَّائِمُونَ، وَأَكَلَ طَعَامَكُمُ الْأَبْرَارُ، وَصَلَّتْ عَلَيْكُمُ الْمَلَائِكَةُ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Doa untuk Tuan Rumah — Afṭara 'indakumuṣ-ṣā'imūn, wa akala ṭa'āmakumul-abrār, wa ṣallat 'alaikumul-malā'ikah",
+  "heard": [
+   "افطر عندكم الصائمون واكل طعامكم الابرار وصلت عليكم الملائكه",
+   "افطر عندكم الصائمون واكل طعامكم الابرار وصلت عليكم الملائكه 2"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_host.mp3"
+ },
+ {
+  "text": "سُبْحَانَ الْمَلِكِ الْقُدُّوسِ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Dzikir Sesudah Witir — Subḥānal-malikil-quddūs (3×)",
+  "heard": [
+   "سبحان الملك القدوس"
+  ],
+  "ok": true,
+  "file": "www/doa-voice/d-r_witr.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Doa Lailatul Qadar — Allāhumma innaka 'afuwwun tuḥibbul-'afwa fa'fu 'annī",
+  "heard": [
+   "اللهم انك عفو تحب العفو فاعف عني",
+   "اللهم انك عفو تحب العفو فاعفو عنا",
+   "اللهم انك عفوا تحب العفو فاعفوا عني"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_qadr.mp3"
+ },
+ {
+  "text": "نَوَيْتُ أَنْ أُخْرِجَ زَكَاةَ الْفِطْرِ عَنْ نَفْسِي فَرْضًا لِلَّهِ تَعَالَى",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Niat Zakat Fitrah — Nawaitu an ukhrija zakātal-fiṭri 'an nafsī farḍan lillāhi ta'ālā",
+  "heard": [
+   "نويت ان اخرج زكاه الفطر عن نفسي فرضا لله تعالى",
+   "نويت ان اخرج زكاه الفطره عن نفسي فرضا لله تعالى",
+   "نويت ان اخرج زكاه الفطر عن نفسي فرضا بالله تعالى"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_zakat.mp3"
+ },
+ {
+  "text": "تَقَبَّلَ اللَّهُ مِنَّا وَمِنْكُمْ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Ucapan Idul Fitri — Taqabbalallāhu minnā wa minkum",
+  "heard": [
+   "تقبل الله منا ومنكم",
+   "تقبل الله منا و منكم",
+   "وتقبل الله منا ومنكم"
+  ],
+  "ok": true,
+  "file": "www/doa-voice/d-r_eid_greet.mp3"
+ },
+ {
+  "text": "اللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، لَا إِلَهَ إِلَّا اللَّهُ، وَاللَّهُ أَكْبَرُ، اللَّهُ أَكْبَرُ، وَلِلَّهِ الْحَمْدُ",
+  "lang": "ar",
+  "sec": "doa",
+  "hint": "Takbir Idul Fitri — Allāhu akbar, Allāhu akbar, lā ilāha illallāh, wallāhu akbar, Allāhu akbar, wa lillāhil-ḥamd",
+  "heard": [
+   "الله اكبر الله اكبر لا اله الا الله والله اكبر الله اكبر ولله الحمد",
+   "الله اكبر الله اكبر لا اله الا الله و الله اكبر الله اكبر ولله الحمد",
+   "الله اكبر الله اكبر لا اله الا الله والله اكبر والله اكبر ولله الحمد"
+  ],
+  "ok": false,
+  "file": "www/doa-voice/d-r_takbir.mp3"
+ },
+ {
+  "text": "Bulan sabit kecil muncul di langit! Itu hilal, tanda bulan baru.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Melihat Hilal",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-7767fe59.mp3"
+ },
+ {
+  "text": "Waktunya sahur! Mo berniat puasa untuk besok.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Niat Puasa Ramadan",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e9778975.mp3"
+ },
+ {
+  "text": "Teman mengejek saat puasa? Mo tetap tenang dan bilang: aku sedang puasa!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Aku Sedang Puasa",
+  "heard": [
+   "Aku sedang puasa",
+   "bilang aku sedang puasa",
+   "dan bilang aku sedang puasa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a5c16c83.mp3"
+ },
+ {
+  "text": "Bedug maghrib berbunyi! Baca doa ini saat berbuka puasa.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Berbuka Puasa",
+  "heard": [
+   "bedug magrib berbunyi",
+   "Bedug Maghrib berbunyi",
+   "berbunyi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-32b019ca.mp3"
+ },
+ {
+  "text": "Alhamdulillah, segar! Setelah minum dan makan kurma, baca doa ini.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Sesudah Berbuka",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ac665e5c.mp3"
+ },
+ {
+  "text": "Ada yang memberi kita makanan berbuka? Doakan dia dengan doa ini!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa untuk Tuan Rumah",
+  "heard": [
+   "makanan berbuka hari ini",
+   "berbuka hari ini"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-092193a2.mp3"
+ },
+ {
+  "text": "Selesai sholat tarawih dan witir, ucapkan dzikir ini tiga kali.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Dzikir Sesudah Witir",
+  "heard": [
+   "ucapkan 3 kali",
+   "ucapkan ini 3 kali",
+   "ucapkan tiga kali"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-1f53528c.mp3"
+ },
+ {
+  "text": "Malam-malam terakhir Ramadan, cari Lailatul Qadar dengan doa ini.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Lailatul Qadar",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cc10a503.mp3"
+ },
+ {
+  "text": "Sebelum sholat Idul Fitri, Mo memberi zakat fitrah berupa beras untuk yang membutuhkan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Niat Zakat Fitrah",
+  "heard": [
+   "zakat fitrah berupa beras untuk yang membutuhkan",
+   "sebelum salat Idul Fitri zakat fitrah berupa beras untuk yang membutuhkan",
+   "zakat fitrah berupa beras untuk membutuhkan"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3a715a43.mp3"
+ },
+ {
+  "text": "Selamat Idul Fitri! Saling mendoakan dengan ucapan ini.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Ucapan Idul Fitri",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-fca50f2f.mp3"
+ },
+ {
+  "text": "Pagi Idul Fitri, kita bertakbir bersama-sama!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Takbir Idul Fitri",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0c1bbdfa.mp3"
+ },
+ {
+  "text": "A tiny crescent in the sky! That's the hilal, the sign of a new month.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Melihat Hilal",
+  "heard": [
+   "a tiny Crescent in the sky that's the Hillel the sign of a new month",
+   "a tiny Crescent in the sky that's the Hillel the sine of a new month",
+   "a tiny Crescent in the sky that's the hillol the sign of a new month"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4057f14b.mp3"
+ },
+ {
+  "text": "It's sahur time! Mo makes the intention to fast tomorrow.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Niat Puasa Ramadan",
+  "heard": [
+   "it's a whoa time",
+   "it's ah whoa time",
+   "it's a who time",
+   " Mo makes the intention to fast tomorrow",
+   " Moe makes the intention to fast tomorrow",
+   " mow makes the intention to fast tomorrow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f90c3af7.mp3"
+ },
+ {
+  "text": "A friend teases Mo while fasting? Mo stays calm and says: I'm fasting!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Aku Sedang Puasa",
+  "heard": [
+   "a friend teases mow while fasting",
+   "a friend teases Mo while fasting",
+   "a friend teases Moe while fasting",
+   " most days common says I'm fasting",
+   " most days common says I am fasting",
+   " most DayZ common says I'm fasting"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-95ed587a.mp3"
+ },
+ {
+  "text": "The maghrib drum booms! Read this du'a when you break your fast.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Berbuka Puasa",
+  "heard": [
+   "the negative drum booms read this Dua when you break your fast",
+   "the negative drum booms read this duaa when you break your fast",
+   "the negative Drumm booms read this Dua when you break your fast"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a22d3672.mp3"
+ },
+ {
+  "text": "Alhamdulillah, so refreshing! After a sip of water and a date, read this du'a.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Sesudah Berbuka",
+  "heard": [
+   "alhamdulillah so refreshing after a sip of water and a date read this Dua",
+   "alhamdulillah so refreshing after a sip of water and a date read this duaa",
+   "alhamdulillah so refreshing after a sip of water and a date read this dewa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e1967eb0.mp3"
+ },
+ {
+  "text": "Someone gave us food to break our fast? Pray for them with this du'a!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa untuk Tuan Rumah",
+  "heard": [
+   "someone gave us food to break our fast pray for them with this Dua",
+   "someone gave us food to break our fast pray for them with this duaa",
+   "someone gave us food to break our fast prey for them with this Dua"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-560c840a.mp3"
+ },
+ {
+  "text": "After the tarawih and witr prayers, say this dhikr three times.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Dzikir Sesudah Witir",
+  "heard": [
+   "after the taui and witr prayers say this dhikr 3 times",
+   "after the tae-eui and witr prayers say this dhikr 3 times",
+   "after the taui and witr prayers say this Dicker 3 times"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-cca5bc0c.mp3"
+ },
+ {
+  "text": "In the last nights of Ramadan, seek Laylatul Qadr with this du'a.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Doa Lailatul Qadar",
+  "heard": [
+   "in the last nights of Ramadan seek with this Dua",
+   "in the last nights of Ramadan seek with this",
+   "in the last nights of Ramadan seek with this duaa"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-5a4139b2.mp3"
+ },
+ {
+  "text": "Before the Eid prayer, Mo gives Zakat al-Fitr — rice for people in need.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Niat Zakat Fitrah",
+  "heard": [
+   "before the Eid prayer Mo gives the cattle fitter rice for people in need",
+   "before the Eid prayer Moe gives the cattle fitter rice for people in need",
+   "before the Eid prayer mow gives the cattle fitter rice for people in need"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-62ed114f.mp3"
+ },
+ {
+  "text": "Happy Eid! Greet each other with this du'a.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Ucapan Idul Fitri",
+  "heard": [
+   "happy Eid greet each other with this Dua",
+   "happy Eid greet each other with this duaa",
+   "happy Eid greet each other with this dewa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-dbcb8931.mp3"
+ },
+ {
+  "text": "On Eid morning, we say the takbir together!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "kapan dibaca / when: Takbir Idul Fitri",
+  "heard": [
+   "on Eid morning we say the takir together",
+   "on Eid morning we say the takhir together",
+   "on Eid morning we say the taukeer together"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-8f266354.mp3"
  }
 ]
