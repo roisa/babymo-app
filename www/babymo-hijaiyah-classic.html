@@ -1631,11 +1631,16 @@ function showToast(e,t){
   var tr={lt:null,S:0,mask:null,wide:null,drawing:false,last:null,done:false};
   var ov=document.getElementById('trOv'), guide=document.getElementById('trGuide'), ink=document.getElementById('trInk');
   function drawLetter(ctx,S,glyph,mode){
-    ctx.save(); ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font='700 '+Math.round(S*0.74)+'px "Scheherazade New", serif';
-    var y=S*0.45;
-    if(mode==='guide'){ ctx.fillStyle='#EEF0F6'; ctx.fillText(glyph,S/2,y); ctx.setLineDash([S*0.02,S*0.025]); ctx.lineWidth=S*0.008; ctx.strokeStyle='#B7BDD0'; ctx.strokeText(glyph,S/2,y); }
-    else if(mode==='wide'){ ctx.lineJoin='round'; ctx.lineWidth=S*0.09; ctx.strokeStyle='#000'; ctx.fillStyle='#000'; ctx.strokeText(glyph,S/2,y); ctx.fillText(glyph,S/2,y); }
-    else { ctx.fillStyle='#000'; ctx.fillText(glyph,S/2,y); }
+    ctx.save(); ctx.textAlign='left'; ctx.textBaseline='alphabetic';
+    var fs=Math.round(S*0.74); ctx.font='700 '+fs+'px "Scheherazade New", serif';
+    // centre the letter's actual ink box (not the font's line box) in the square, and keep it inside ~76% of it
+    var m=ctx.measureText(glyph), L=m.actualBoundingBoxLeft||0, R=m.actualBoundingBoxRight||m.width, A=m.actualBoundingBoxAscent||fs*.6, D=m.actualBoundingBoxDescent||0;
+    var fit=Math.min(1,(S*0.76)/Math.max(1,L+R),(S*0.76)/Math.max(1,A+D));
+    if(fit<1){ fs=Math.floor(fs*fit); ctx.font='700 '+fs+'px "Scheherazade New", serif'; m=ctx.measureText(glyph); L=m.actualBoundingBoxLeft||0; R=m.actualBoundingBoxRight||m.width; A=m.actualBoundingBoxAscent||fs*.6; D=m.actualBoundingBoxDescent||0; }
+    var x=S/2-(R-L)/2, y=S/2+(A-D)/2;
+    if(mode==='guide'){ ctx.fillStyle='#EEF0F6'; ctx.fillText(glyph,x,y); ctx.setLineDash([S*0.02,S*0.025]); ctx.lineWidth=S*0.008; ctx.strokeStyle='#B7BDD0'; ctx.strokeText(glyph,x,y); }
+    else if(mode==='wide'){ ctx.lineJoin='round'; ctx.lineWidth=S*0.09; ctx.strokeStyle='#000'; ctx.fillStyle='#000'; ctx.strokeText(glyph,x,y); ctx.fillText(glyph,x,y); }
+    else { ctx.fillStyle='#000'; ctx.fillText(glyph,x,y); }
     ctx.restore();
   }
   function setup(){
