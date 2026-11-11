@@ -367,24 +367,33 @@
     /* 12 · Doa untuk orang tua — a warm family evening at home */
     parents: {
       pose: "baby-mo-pose-05",
-      svg: '<defs><radialGradient id="dsWarm"><stop offset="0" stop-color="#FFF1C9"/><stop offset="1" stop-color="#F3E3FF"/></radialGradient>' +
-        '<linearGradient id="dsNightP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3470"/><stop offset="1" stop-color="#5B5AA8"/></linearGradient></defs>' +
+      svg: '<defs><radialGradient id="dsWarm" cx=".55" cy=".45" r=".75"><stop offset="0" stop-color="#FFF4D6"/><stop offset="1" stop-color="#F4E2FF"/></radialGradient>' +
+        '<linearGradient id="dsNightP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3470"/><stop offset="1" stop-color="#5B5AA8"/></linearGradient>' +
+        '<radialGradient id="dsLampP"><stop offset="0" stop-color="#FFF3B0" stop-opacity=".9"/><stop offset="1" stop-color="#FFF3B0" stop-opacity="0"/></radialGradient></defs>' +
         '<rect width="400" height="180" fill="url(#dsWarm)"/>' +
-        '<rect x="34" y="20" width="96" height="70" rx="10" fill="url(#dsNightP)" stroke="#fff" stroke-width="7"/><path d="M82 20v70M34 55h96" stroke="#fff" stroke-width="4"/>' +
-        '<circle cx="108" cy="38" r="9" fill="#FFE29A"/><circle cx="113" cy="35" r="8" fill="#2E3A78"/>' + star(52, 34, 3, "twinkle", "#fff") + star(64, 72, 2.4, "twinkle t2", "#fff") +
-        /* family photo frame: three hearts, big-big-small */
-        '<g class="swing"><rect x="168" y="22" width="78" height="56" rx="6" fill="#C98A5B"/><rect x="174" y="28" width="66" height="44" rx="4" fill="#FFF6E8"/>' +
-        '<path d="M190 52 c-4 -6 -12 -3 -11 3 c1 4 11 11 11 11 s10 -7 11 -11 c1 -6 -7 -9 -11 -3z" fill="#5A80E8"/>' +
-        '<path d="M222 52 c-4 -6 -12 -3 -11 3 c1 4 11 11 11 11 s10 -7 11 -11 c1 -6 -7 -9 -11 -3z" fill="#E86FA0"/>' +
-        '<path d="M206 62 c-2.6 -4 -8 -2 -7 2 c.6 2.6 7 7 7 7 s6.4 -4.4 7 -7 c1 -4 -4.4 -6 -7 -2z" fill="#3FB67A"/></g>' +
-        /* sofa and lamp */
+        /* night window with moon + stars */
+        '<rect x="22" y="18" width="88" height="66" rx="10" fill="url(#dsNightP)" stroke="#fff" stroke-width="6"/><path d="M66 18v66M22 51h88" stroke="#fff" stroke-width="3.6"/>' +
+        '<circle cx="92" cy="36" r="9" fill="#FFE29A"/><circle cx="97" cy="33" r="8" fill="#2E3A78"/>' + star(40, 32, 3, "twinkle", "#fff") + star(48, 70, 2.4, "twinkle t2", "#fff") + star(88, 68, 2, "twinkle t3", "#fff") +
+        /* warm lamp glow behind the family */
+        '<circle class="glow" cx="210" cy="78" r="96" fill="url(#dsLampP)"/>' +
+        /* family photo frame on the wall: five hearts */
+        '<g class="swing"><rect x="296" y="16" width="74" height="50" rx="6" fill="#C98A5B"/><rect x="301" y="21" width="64" height="40" rx="4" fill="#FFF6E8"/>' +
+        '<path d="M318 40 c-3 -5 -10 -2.5 -9 2.5 c.8 3.4 9 9 9 9 s8.2 -5.6 9 -9 c1 -5 -6 -7.5 -9 -2.5z" fill="#5A80E8"/>' +
+        '<path d="M348 40 c-3 -5 -10 -2.5 -9 2.5 c.8 3.4 9 9 9 9 s8.2 -5.6 9 -9 c1 -5 -6 -7.5 -9 -2.5z" fill="#E86FA0"/>' +
+        '<path d="M326 52 c-1.8 -3 -6 -1.5 -5.4 1.6 c.5 2 5.4 5.4 5.4 5.4 s5 -3.4 5.4 -5.4 c.6 -3 -3.6 -4.6 -5.4 -1.6z" fill="#3FB67A"/>' +
+        '<path d="M333 54 c-1.6 -2.6 -5.2 -1.3 -4.7 1.4 c.4 1.8 4.7 4.7 4.7 4.7 s4.3 -2.9 4.7 -4.7 c.5 -2.7 -3.1 -4 -4.7 -1.4z" fill="#FFB547"/>' +
+        '<path d="M340 52 c-1.8 -3 -6 -1.5 -5.4 1.6 c.5 2 5.4 5.4 5.4 5.4 s5 -3.4 5.4 -5.4 c.6 -3 -3.6 -4.6 -5.4 -1.6z" fill="#B48CFF"/></g>' +
         floor("#E8D2B8", "#D9BE9E") +
-        '<rect x="20" y="104" width="190" height="44" rx="16" fill="#8C7AE6"/><rect x="28" y="92" width="174" height="30" rx="14" fill="#A594F0"/>' +
-        '<rect x="44" y="98" width="40" height="22" rx="10" fill="#FFD6E4"/><rect x="146" y="98" width="40" height="22" rx="10" fill="#FFE8A3"/>' +
-        '<rect x="14" y="114" width="22" height="36" rx="10" fill="#7C6AD6"/><rect x="194" y="114" width="22" height="36" rx="10" fill="#7C6AD6"/>' +
-        '<circle class="glow" cx="246" cy="98" r="26" fill="#FFF3B0" opacity=".55"/><path d="M234 86 h24 l-5 -20 h-14z" fill="#FFD25A"/><rect x="244" y="86" width="4" height="56" fill="#B09080"/><rect x="236" y="140" width="20" height="6" rx="3" fill="#B09080"/>' +
-        '<g class="beat"><path d="M116 76 c-5 -7 -15 -3 -13 4 c1 5 13 13 13 13 s12 -8 13 -13 c2 -7 -8 -11 -13 -4z" fill="#FF7A9A"/></g>' +
-        sparkle(148, 44, .6, "twinkle t3", "#FFC94A")
+        /* soft rug */
+        '<ellipse cx="236" cy="166" rx="150" ry="13" fill="#F3B8CF" opacity=".55"/><ellipse cx="236" cy="166" rx="128" ry="9" fill="#FFD6E4" opacity=".6"/>' +
+        /* Abi and Umi, smiling at Mo */
+        '<ellipse cx="160" cy="168" rx="26" ry="5" fill="rgba(60,40,30,.18)"/><ellipse cx="226" cy="168" rx="22" ry="5" fill="rgba(60,40,30,.18)"/>' +
+        '<image href="family/abi-wave.webp" x="122" y="12" width="78" height="164"/>' +
+        '<image href="family/umi-welcome.webp" x="192" y="14" width="68" height="162"/>' +
+        /* floating hearts rising toward the parents */
+        '<g class="beat"><path d="M282 70 c-5 -7 -15 -3 -13 4 c1 5 13 13 13 13 s12 -8 13 -13 c2 -7 -8 -11 -13 -4z" fill="#FF7A9A"/></g>' +
+        '<g class="float"><path d="M262 44 c-3 -4.6 -9.6 -2 -8.6 2.6 c.7 3.2 8.6 8.6 8.6 8.6 s7.9 -5.4 8.6 -8.6 c1 -4.6 -5.6 -7.2 -8.6 -2.6z" fill="#FFB0C4"/></g>' +
+        sparkle(112, 100, .6, "twinkle t3", "#FFC94A") + sparkle(276, 112, .5, "twinkle", "#FFC94A")
     },
 
     /* 13 · Dzikir sore — the sun sinking behind the hills, birds flying home, the first star */
