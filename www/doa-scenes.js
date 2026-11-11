@@ -366,7 +366,7 @@
 
     /* 12 · Doa untuk orang tua — a warm family evening at home */
     parents: {
-      pose: "baby-mo-dua-smile", moH: .66, moR: 9,
+      pose: "baby-mo-pose-12", moH: .8, moR: 8,
       svg: '<defs><radialGradient id="dsWarm" cx=".55" cy=".45" r=".75"><stop offset="0" stop-color="#FFF4D6"/><stop offset="1" stop-color="#F4E2FF"/></radialGradient>' +
         '<linearGradient id="dsNightP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3470"/><stop offset="1" stop-color="#5B5AA8"/></linearGradient>' +
         '<radialGradient id="dsLampP"><stop offset="0" stop-color="#FFF3B0" stop-opacity=".9"/><stop offset="1" stop-color="#FFF3B0" stop-opacity="0"/></radialGradient></defs>' +
