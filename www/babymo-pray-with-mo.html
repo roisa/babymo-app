@@ -256,22 +256,6 @@ body[data-view="home"] .main{padding-bottom:calc(108px + var(--safe-bottom))}
 .mo-stage-guide img{height:240px;width:240px;object-fit:contain;position:relative;z-index:1;transition:opacity .3s ease,transform .3s ease;
   filter:drop-shadow(0 14px 16px rgba(30,60,110,.22))}
 .mo-stage-guide img.switching{opacity:0;transform:scale(.94)}
-.mo-stage-guide .stage-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:46px;height:46px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;line-height:1;cursor:pointer}
-.mo-stage-guide .stage-nav:active{transform:translateY(-50%) scale(.92)!important}
-.mo-stage-guide .nav-prev{left:10px}
-.mo-stage-guide .nav-next{right:10px}
-.sound-bars{position:absolute;top:14px;left:14px;display:flex;align-items:flex-end;gap:3px;height:24px;z-index:10;opacity:0;transition:opacity .3s;
-  padding:6px 10px;border-radius:999px;background:var(--chip);box-sizing:content-box;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-.sound-bars.active{opacity:1}
-.sound-bar{width:4px;border-radius:2px;background:var(--tint)}
-.sound-bar.anim{animation:soundWave .8s ease-in-out infinite}
-.sound-bar:nth-child(1){height:8px;animation-delay:0s}
-.sound-bar:nth-child(2){height:14px;animation-delay:.12s}
-.sound-bar:nth-child(3){height:22px;animation-delay:.24s}
-.sound-bar:nth-child(4){height:14px;animation-delay:.36s}
-.sound-bar:nth-child(5){height:8px;animation-delay:.48s}
-@keyframes soundWave{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
 
 /* ===== GUIDE: STEP INFO ===== */
 .step-info{margin:0 2px 14px}
@@ -649,20 +633,68 @@ body[data-view="dzikir"] .main{padding-bottom:8px}
 .mo-stage-guide{background:var(--sky2);height:clamp(250px,72vw,330px);min-height:0;border:2px solid rgba(255,255,255,.9)}
 html[data-bm-theme="classic"] .mo-stage-guide{border-color:rgba(255,255,255,.12)}
 .stage-scene{position:absolute;inset:0;width:100%;height:100%;z-index:0}
-.mo-stage-guide img{position:absolute;left:50%;bottom:-1.5%;height:88%;width:auto;aspect-ratio:1;transform:translateX(-50%);z-index:2;
+/* Mo + his speaking waves share one box (the pose image's square), so the waves
+   can sit in front of his face in every pose */
+.mo-fig{position:absolute;left:50%;bottom:-1.5%;height:88%;aspect-ratio:1;transform:translateX(-50%);z-index:2;transform-origin:50% 100%}
+.mo-fig img{display:block;width:100%;height:100%;object-fit:contain;transition:opacity .3s ease,transform .3s ease;
   filter:drop-shadow(0 6px 6px rgba(90,60,20,.18))}
-.mo-stage-guide img.switching{transform:translateX(-50%) scale(.94)}
+.mo-fig img.switching{opacity:0;transform:scale(.94)}
+.mo-stage-guide{touch-action:pan-y}
 .stage-shadow{position:absolute;left:50%;bottom:2%;width:min(74%,300px);height:16%;transform:translateX(-50%);z-index:1;border-radius:50%;
   background:radial-gradient(ellipse at center,rgba(110,70,20,.32) 0%,rgba(110,70,20,.12) 45%,transparent 70%)}
 html[data-bm-theme="classic"] .stage-shadow{background:radial-gradient(ellipse at center,rgba(0,0,0,.5) 0%,rgba(0,0,0,.2) 45%,transparent 70%)}
-.mo-stage-guide .stage-nav{z-index:5}
-/* ── guide: title with number + Arabic chip ── */
-.step-name-row{align-items:center}
-.step-title{display:flex;align-items:center;gap:10px;min-width:0}
-.step-num{flex:0 0 auto;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--lagoon);color:#fff;font:600 19px/1 var(--fd);
+/* speaking waves: three arcs that ripple out from Mo's mouth while his voice plays */
+.mo-talk{position:absolute;left:66%;top:28%;width:16%;aspect-ratio:40/48;transform:translateY(-50%) scale(.6);transform-origin:0 50%;opacity:0;pointer-events:none;
+  transition:opacity .25s ease,transform .3s var(--spring)}
+.mo-talk svg{display:block;width:100%;height:100%;overflow:visible}
+.mo-talk path{fill:none;stroke:#13A35A;stroke-width:4.6;stroke-linecap:round;paint-order:stroke;
+  filter:drop-shadow(0 0 1.5px #fff) drop-shadow(0 0 1.5px #fff) drop-shadow(0 2px 3px rgba(0,80,40,.25))}
+html[data-bm-theme="classic"] .mo-talk path{stroke:#7CF0AE;filter:drop-shadow(0 0 4px rgba(124,240,174,.55))}
+.speaking .mo-talk{opacity:1;transform:translateY(-50%) scale(1)}
+.speaking .mo-talk path{animation:moTalk 1.05s ease-in-out infinite}
+.speaking .mo-talk .mt2{animation-delay:.16s}.speaking .mo-talk .mt3{animation-delay:.32s}
+@keyframes moTalk{0%,100%{opacity:.25}35%{opacity:1}}
+/* a gentle "talking" bob while he speaks */
+.speaking .mo-fig{animation:moBob .52s ease-in-out infinite alternate}
+@keyframes moBob{from{transform:translateX(-50%) translateY(0) rotate(0)}to{transform:translateX(-50%) translateY(-1.2%) rotate(-.6deg)}}
+@media (prefers-reduced-motion:reduce){.speaking .mo-fig,.speaking .mo-talk path,.sp-spark{animation:none!important}.speaking .mo-talk path{opacity:1}}
+/* ── guide: title plate (number + name + Arabic, centred; wraps to two lines on narrow screens) ── */
+.step-info{margin:0 0 12px;text-align:center}
+.step-plate-wrap{position:relative;z-index:3;display:flex;justify-content:center;margin:-30px 30px 0}
+.step-plate{position:relative;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2px 10px;max-width:100%;
+  padding:6px 16px 6px 7px;border-radius:30px;background:#fff;border:2px solid #F1D79B;
+  box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 4.5px rgba(214,166,72,.38),0 14px 26px -16px rgba(120,80,20,.55)}
+.step-plate::before,.step-plate::after{content:'';position:absolute;width:13px;height:13px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M10 0l2.2 7.8L20 10l-7.8 2.2L10 20l-2.2-7.8L0 10l7.8-2.2z' fill='%23F5B82E'/%3E%3C/svg%3E") center/contain no-repeat;pointer-events:none}
+.step-plate::before{left:12px;top:-7px}.step-plate::after{right:14px;bottom:-7px;width:10px;height:10px}
+.sp-spark{position:absolute;top:50%;width:22px;height:30px;margin-top:-15px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 30'%3E%3Cg stroke='%23FFC21A' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M18 5 10 1.5M19 15H9M18 25l-8 3.5'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat;animation:spSpark 1.8s ease-in-out infinite;pointer-events:none}
+.sp-spark.l{left:-28px}.sp-spark.r{right:-28px;transform:scaleX(-1)}
+@keyframes spSpark{0%,100%{opacity:1}50%{opacity:.45}}
+.step-title{display:flex;align-items:center;gap:9px;min-width:0}
+.step-num{flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--lagoon);color:#fff;font:600 18px/1 var(--fd);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 12px -6px rgba(10,143,160,.8)}
-.step-name-ar{margin-left:auto;padding:0 14px;border-radius:999px;background:var(--tint-l);font-size:22px;line-height:1.75}
-@media (max-width:440px){.step-name-ar{margin-left:48px}}
+.step-plate .step-name{font:600 21px/1.15 var(--fd);color:#14213D;letter-spacing:-.01em;text-align:left}
+.step-name-ar{padding:0 12px;border-radius:999px;background:rgba(18,161,80,.1);font-size:21px;line-height:1.7;color:#0B6B3A;white-space:nowrap}
+.step-desc{text-align:center;margin:10px 8px 0;font-size:15.5px;line-height:1.4}
+html[data-bm-theme="classic"] .step-plate{background:#1D2F48;border-color:rgba(255,201,77,.42);box-shadow:inset 0 0 0 3px #1D2F48,inset 0 0 0 4.5px rgba(255,201,77,.2),0 14px 26px -16px rgba(0,0,0,.8)}
+html[data-bm-theme="classic"] .step-plate .step-name{color:#F0E8D8}
+html[data-bm-theme="classic"] .step-name-ar{background:rgba(48,209,88,.16);color:#C4F5D8}
+@media (max-width:380px){.step-plate-wrap{margin-left:26px;margin-right:26px}.step-plate .step-name{font-size:19.5px}.step-name-ar{font-size:19.5px}.sp-spark{width:18px;height:26px;margin-top:-13px}.sp-spark.l{left:-23px}.sp-spark.r{right:-23px}}
+/* ── guide: Previous / Next pinned to the bottom of the screen (like the Wudhu steps) ── */
+.guide-bar{position:fixed;left:0;right:0;bottom:0;z-index:50;pointer-events:none;opacity:0;visibility:hidden;
+  padding:22px max(16px,env(safe-area-inset-right,0px)) calc(12px + var(--safe-bottom)) max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(180deg,transparent 0%,var(--fade) 42%);transition:opacity .25s ease,visibility 0s .25s}
+body[data-view="guide"] .guide-bar{opacity:1;visibility:visible;transition:opacity .25s ease}
+body[data-view="guide"] .guide-bar .guide-nav-btns{pointer-events:auto}
+.guide-bar .guide-nav-btns{margin:0}
+/* the glass Previous button sits over scrolling content here: make it solid; disabled = muted text, not see-through */
+.guide-bar .guide-nav-btn.prev{background-color:#fff!important}
+html[data-bm-theme="classic"] .guide-bar .guide-nav-btn.prev{background-color:#22322C!important}
+.guide-bar .guide-nav-btn.prev:disabled{opacity:1;color:#A3ACB8!important;-webkit-text-fill-color:#A3ACB8;box-shadow:0 0 0 .5px rgba(21,34,48,.08)!important}
+html[data-bm-theme="classic"] .guide-bar .guide-nav-btn.prev:disabled{color:rgba(240,232,216,.38)!important;-webkit-text-fill-color:rgba(240,232,216,.38)}
+body[data-view="guide"] .pw-ground-svg{height:clamp(150px,21vh,280px)}
+body[data-view="guide"] .main{padding-bottom:10px}
+body[data-view="guide"] .pw-ground{--pad:calc(78px + var(--safe-bottom))}
+@media(min-width:760px){.guide-bar{padding-left:max(18px,calc((100vw - 560px)/2 + 18px));padding-right:max(18px,calc((100vw - 560px)/2 + 18px))}}
 /* ── guide: parchment recitation card ── */
 .recitation-card{position:relative;padding:14px 20px 20px;border-radius:26px;border:1.5px solid rgba(214,166,72,.55);
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%280 0%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") left 8px top 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%2844 0%29 scale%28-1 1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") right 8px top 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%280 44%29 scale%281 -1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") left 8px bottom 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%2844 44%29 scale%28-1 -1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") right 8px bottom 8px/34px no-repeat,linear-gradient(180deg,#FFFCF2 0%,#FFF3D9 100%);
@@ -703,7 +735,7 @@ html[data-bm-theme="classic"] .rec-btn.rec-btn-small{background:rgba(255,255,255
 .dz-ring .rg-fill{fill:none;stroke:url(#dzRingG);stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset .55s cubic-bezier(.3,.7,.3,1)}
 .dz-ring .rg-glow{fill:none;stroke:rgba(43,191,116,.25);stroke-width:20;stroke-linecap:round;transition:stroke-dashoffset .55s cubic-bezier(.3,.7,.3,1)}
 @media (prefers-reduced-motion:reduce){.pw-cl-a,.pw-cl-b,.pw-cl-c{animation:none}.dz-ring .rg-fill,.dz-ring .rg-glow{transition:none}}
-@media (max-height:700px){.mo-stage-guide{height:clamp(230px,64vw,300px)}}
+@media (max-height:700px){.mo-stage-guide{height:clamp(220px,60vw,280px)}.step-indicator{margin-bottom:10px}.step-desc{margin-top:8px;font-size:14.5px}}
 </style>
 <script src="bm-icons.js" defer></script>
 </head>
@@ -887,16 +919,19 @@ html[data-bm-theme="classic"] .rec-btn.rec-btn-small{background:rgba(255,255,255
         <rect x="14" y="124" width="16" height="186" fill="url(#pwPillarG)"/><rect x="370" y="124" width="16" height="186" fill="url(#pwPillarG)" transform="matrix(-1 0 0 1 756 0)"/>
       </svg>
       <span class="stage-shadow" aria-hidden="true"></span>
-      <button class="stage-nav nav-prev" onclick="prevStep()" aria-label="Sebelumnya">‹</button>
-      <div class="sound-bars" id="soundBars"><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div></div>
-      <img id="moImage" src="mo-pray-assets/mo-takbir.webp" alt="Mo pose">
-      <button class="stage-nav nav-next" onclick="nextStep()" aria-label="Selanjutnya">›</button>
+      <div class="mo-fig" id="moFig">
+        <img id="moImage" src="mo-pray-assets/mo-takbir.webp" alt="Mo pose">
+        <span class="mo-talk" id="moTalk" aria-hidden="true"><svg viewBox="0 0 40 48"><path class="mt1" d="M6 17.5a8.5 8.5 0 0 1 0 13"/><path class="mt2" d="M13 11a17 17 0 0 1 0 26"/><path class="mt3" d="M20 4.5a26 26 0 0 1 0 39"/></svg></span>
+      </div>
     </div>
 
     <div class="step-info">
-      <div class="step-name-row">
-        <span class="step-title"><span class="step-num" id="stepNum" aria-hidden="true">1</span><span class="step-name" id="stepName">Takbiratul Ihram</span></span>
-        <span class="step-name-ar" id="stepNameAr">تَكْبِيرَةُ الإِحْرَام</span>
+      <div class="step-plate-wrap">
+        <div class="step-plate">
+          <i class="sp-spark l" aria-hidden="true"></i><i class="sp-spark r" aria-hidden="true"></i>
+          <span class="step-title"><span class="step-num" id="stepNum" aria-hidden="true">1</span><span class="step-name" id="stepName">Takbiratul Ihram</span></span>
+          <span class="step-name-ar" id="stepNameAr">تَكْبِيرَةُ الإِحْرَام</span>
+        </div>
       </div>
       <p class="step-desc" id="stepDesc"></p>
     </div>
@@ -923,10 +958,6 @@ html[data-bm-theme="classic"] .rec-btn.rec-btn-small{background:rgba(255,255,255
       </div>
     </div>
 
-    <div class="guide-nav-btns">
-      <button class="guide-nav-btn prev" id="btnPrevStep" onclick="prevStep()">← Sebelumnya</button>
-      <button class="guide-nav-btn next" id="btnNextStep" onclick="nextStep()">Selanjutnya →</button>
-    </div>
   </div>
 
   <!-- PROGRESS VIEW -->
@@ -1237,7 +1268,7 @@ function animateMo(autoPlay){var img=document.getElementById('moImage');img.clas
 
 function renderStep(){
   var s=STEPS[currentStep];stepsViewed[currentStep]=true;
-  document.getElementById('moImage').src=s.imageGuide;
+  document.getElementById('moImage').src=s.imageGuide;placeMoTalk();
   document.getElementById('stepName').textContent=s.name;
   document.getElementById('stepNum').textContent=currentStep+1;
   document.getElementById('stepNameAr').textContent=s.nameAr;
@@ -1257,7 +1288,27 @@ function renderStepIndicator(){
   }
   el.innerHTML=html;
 }
-var _recPlaying=false,_recHighlightTimers=[];
+var _recPlaying=false,_recHighlightTimers=[],_recGen=0;
+/* Where Mo's mouth is in each pose (fractions of the pose image): the speaking
+   waves sit just in front of his face while his voice is actually playing. */
+var MO_TALK=[[.69,.29],[.50,.33],[.75,.65],[.66,.29],[.85,.6],[.53,.42],[.52,.38]];
+function placeMoTalk(){
+  var t=document.getElementById('moTalk'),a=MO_TALK[currentStep]||MO_TALK[0];if(!t)return;
+  t.style.left=(a[0]*100)+'%';t.style.top=(a[1]*100)+'%';
+}
+/* on only between the voice's real start and end/error (bm-voice fires these for clips too) */
+function setMoSpeaking(on){
+  var st=document.querySelector('.mo-stage-guide');if(st)st.classList.toggle('speaking',!!on);
+}
+/* swipe the scene card left / right to change step (the buttons live in the bottom bar) */
+(function(){
+  var st=document.querySelector('.mo-stage-guide');if(!st)return;var x0=null,y0=0;
+  st.addEventListener('touchstart',function(e){var t=e.touches[0];x0=t.clientX;y0=t.clientY},{passive:true});
+  st.addEventListener('touchend',function(e){
+    if(x0===null)return;var t=e.changedTouches[0],dx=t.clientX-x0,dy=t.clientY-y0;x0=null;
+    if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.5){if(dx<0){if(currentStep<STEPS.length-1)nextStep()}else prevStep()}
+  },{passive:true});
+})();
 
 function renderRecitation(){
   var s=STEPS[currentStep],recs=s.recitations,page=Math.min(currentRecPage,recs.length-1);currentRecPage=page;var r=recs[page];
@@ -1289,13 +1340,12 @@ function playRecitation(autoAdvance){
   if(_recPlaying){stopRecitation();return}
   var r=STEPS[currentStep].recitations[currentRecPage];
   if(!('speechSynthesis' in window))return;
-  speechSynthesis.cancel();_recPlaying=true;
+  speechSynthesis.cancel();_recPlaying=true;var my=++_recGen;
   var totalRepeats=r.repeat||1;
-  var bars=document.getElementById('soundBars');
-  if(bars){bars.classList.add('active');bars.querySelectorAll('.sound-bar').forEach(function(b){b.classList.add('anim')})}
   var btn=document.getElementById('btnPlay');setPlayBtn(true);
+  /* my/_recGen: a reading that was stopped (or replaced by the next step's) never touches the page again */
   function playOnce(repIdx){
-    if(!_recPlaying)return;
+    if(!_recPlaying||my!==_recGen)return;
     var words=r.arabic.split(/\s+/);
     var arabicEl=document.getElementById('recArabic');
     arabicEl.innerHTML=words.map(function(w,i){return '<span class="rec-word" data-idx="'+i+'">'+w+'</span>'}).join(' ');
@@ -1312,22 +1362,24 @@ function playRecitation(autoAdvance){
       },i*perWord+100);
       _recHighlightTimers.push(t);
     });
+    u.onstart=function(){if(_recPlaying&&my===_recGen)setMoSpeaking(true)};
     u.onend=function(){
+      if(my!==_recGen)return;
+      setMoSpeaking(false);
       _recHighlightTimers.forEach(clearTimeout);_recHighlightTimers=[];
       wordEls.forEach(function(e){e.classList.remove('highlight')});
       if(repIdx+1<totalRepeats){setTimeout(function(){playOnce(repIdx+1)},500);return}
       _recPlaying=false;setPlayBtn(false);
-      if(bars){bars.classList.remove('active');bars.querySelectorAll('.sound-bar').forEach(function(b){b.classList.remove('anim')})}
       if(totalRepeats>1){rpt.textContent='× '+totalRepeats+' kali'}
       var isLastRec=currentRecPage>=STEPS[currentStep].recitations.length-1;
       var isLastStep=currentStep===STEPS.length-1;
       if(autoAdvance!==false&&!isLastRec){
-        setTimeout(function(){currentRecPage++;renderRecitation();playRecitation(true)},700);
+        setTimeout(function(){if(my!==_recGen)return;currentRecPage++;renderRecitation();playRecitation(true)},700);
       } else if(autoAdvance!==false&&isLastRec&&isLastStep){
-        setTimeout(finishGuide,800);
+        setTimeout(function(){if(my===_recGen)finishGuide()},800);
       }
     };
-    u.onerror=function(){stopRecitation()};
+    u.onerror=function(){if(my===_recGen)stopRecitation()};
     speechSynthesis.speak(u);
   }
   playOnce(0);
@@ -1340,12 +1392,14 @@ function setPlayBtn(on){
   btn.querySelector('.pb-tx').textContent=on?'Jeda':'Dengarkan';
 }
 function stopRecitation(){
-  _recPlaying=false;_recHighlightTimers.forEach(clearTimeout);_recHighlightTimers=[];
+  _recPlaying=false;_recGen++;_recHighlightTimers.forEach(clearTimeout);_recHighlightTimers=[];
   if('speechSynthesis' in window)speechSynthesis.cancel();
   setPlayBtn(false);
   var el=document.getElementById('recArabic');
   if(el)el.querySelectorAll('.rec-word.highlight').forEach(function(e){e.classList.remove('highlight')});
-  var bars=document.getElementById('soundBars');if(bars){bars.classList.remove('active');bars.querySelectorAll('.sound-bar').forEach(function(b){b.classList.remove('anim')})}
+  setMoSpeaking(false);
+  var rr=STEPS[currentStep]&&STEPS[currentStep].recitations[currentRecPage],rp=document.getElementById('recRepeat');
+  if(rr&&rr.repeat&&rp)rp.textContent='× '+rr.repeat+' kali';
 }
 
 function finishGuide(){
@@ -1778,6 +1832,13 @@ function loadRealPrayerTimes(){
   }catch(e){}
 })();
 </script>
+
+<div class="guide-bar">
+  <div class="guide-nav-btns">
+    <button class="guide-nav-btn prev" id="btnPrevStep" onclick="prevStep()">← Sebelumnya</button>
+    <button class="guide-nav-btn next" id="btnNextStep" onclick="nextStep()">Selanjutnya →</button>
+  </div>
+</div>
 
 <div class="cta-bar" aria-hidden="false">
   <a href="#" onclick="event.preventDefault();startPractice();">🕌 Mulai Latihan Sholat</a>
