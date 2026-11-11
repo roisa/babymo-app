@@ -18,7 +18,7 @@
   "Streak Harian": "Daily Streak",
   "Belajar setiap hari untuk menjaga streak! Konsistensi adalah kunci hafalan huruf untuk si kecil.": "Learn every day to keep the streak going! Little and often is the key to remembering the letters.",
   "Suara Interaktif": "Interactive Sound",
-  "Setiap huruf diucapkan dengan suara. Tap tombol 🔊 kapan saja untuk mendengarkan. Suara otomatis berbunyi saat huruf baru muncul.": "Every letter is spoken aloud. Tap 🔊 any time to listen. The sound plays automatically when a new letter appears.",
+  "Setiap huruf diucapkan dengan suara. Tap tombol suara kapan saja untuk mendengarkan. Suara otomatis berbunyi saat huruf baru muncul.": "Every letter is spoken aloud. Tap the sound button any time to listen. The sound plays automatically when a new letter appears.",
   "Metode Ummi": "Ummi Method",
   "Urutan belajar huruf mengikuti Metode Ummi yang teruji — mulai dari huruf dasar dengan fathah, lalu kasrah, dhammah, sukun, dan seterusnya. 28 huruf penuh.": "The letters follow the proven Ummi Method — starting with the basic letters with fathah, then kasrah, dhammah, sukun and so on. All 28 letters.",
   "Masya Allah!": "Masya Allah!", "Betul!": "Correct!", "Alhamdulillah!": "Alhamdulillah!", "Hebat!": "Great!", "Luar biasa!": "Amazing!", "Sempurna!": "Perfect!",
@@ -32,7 +32,17 @@
   "Jilid 3 — Huruf Akhir (ف–ي)": "Book 3 — Last Letters (ف–ي)",
   "Ujian Besar": "Big Test", "Ujian semua 28 huruf": "Test on all 28 letters", "Ujian 28 Huruf!": "28-Letter Test!",
   "tanpa titik": "no dots", "1 titik atas": "1 dot above", "2 titik atas": "2 dots above", "3 titik atas": "3 dots above",
-  "1 titik bawah": "1 dot below", "2 titik bawah": "2 dots below", "1 titik dalam": "1 dot inside"
+  "1 titik bawah": "1 dot below", "2 titik bawah": "2 dots below", "1 titik dalam": "1 dot inside",
+  /* refreshed front page, Letter Catch levels, quiz */
+  "Belajar 28 huruf bareng Baby Mo": "Learn 28 letters with Baby Mo", "Mulai Belajar": "Start Learning",
+  "Ketuk huruf untuk mendengar": "Tap a letter to hear it", "Suara": "Sound", "Suara nyala": "Sound on", "Suara mati": "Sound off",
+  "Lihat Hasil!": "See Results!", "Tamat! Kembali ke Menu": "All done! Back to Menu",
+  "Tangkap Huruf": "Letter Catch", "Tangkap": "Catch", "Pilih level": "Choose a level", "Level": "Level",
+  "Mudah": "Easy", "Sedang": "Medium", "Mulai!": "Start!", "Lagi!": "Again!",
+  "Latihan Menulis": "Writing Practice", "Kotak Huruf": "Letter Box", "Ketuk hurufnya!": "Tap the letter!",
+  "Tulis": "Write", "Hapus": "Clear", "Selesai": "Done", "Ayo Tulis!": "Let's Write!", "Tulis lagi": "Trace again",
+  "Dengar kata": "Hear the word", "Huruf yang perlu dilatih:": "Letters to practise:",
+  "Ulasan selesai!": "Review done!", "Pecahkan balon huruf": "Pop the balloon with"
 }, [
   [/^(\d+) hari$/, "$1 days"],
   [/^(\d+) \/ (\d+) pelajaran$/, "$1 / $2 lessons"],
