@@ -760,11 +760,13 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
    dark tweaks are scoped to html[data-bm-theme="classic"]. ═════ */
 #learnScreen{padding:0 16px!important;--ov:44px}
 #learnScreen>.l-topbar{position:absolute;z-index:8;top:calc(10px + env(safe-area-inset-top));left:14px;right:14px;margin:0 auto;width:auto;max-width:680px;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:8px}
-#learnScreen .l-back{justify-self:start;border:none!important;border-radius:999px!important;padding:8px 15px!important;min-height:42px!important;background:rgba(255,255,255,.9)!important;color:#152230!important;font:900 14px 'Nunito',sans-serif!important;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 18px -10px rgba(30,30,80,.55)!important}
-#learnScreen .l-counter{justify-self:center;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:900;background:rgba(255,255,255,.88);color:#0B7A3E;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 18px -10px rgba(30,30,80,.5)}
+#learnScreen .l-back{justify-self:start;border:none!important;border-radius:999px!important;padding:8px 15px!important;min-height:42px!important;background:rgba(255,255,255,.7)!important;color:#152230!important;font:900 14px 'Nunito',sans-serif!important;-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(255,255,255,.4),0 8px 18px -10px rgba(30,30,80,.55)!important}
+#learnScreen .l-counter{justify-self:center;border-radius:999px;padding:8px 14px;font-size:13.5px;font-weight:900;background:rgba(255,255,255,.7);color:#0B7A3E;-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(255,255,255,.4),0 8px 18px -10px rgba(30,30,80,.5)}
 #learnScreen .l-lives{display:none}
-#learnScreen .scene-time{position:static;justify-self:end;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.9);color:#4A2C00;font:900 12px/1 'Nunito',sans-serif!important;letter-spacing:.08em;text-transform:uppercase;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 18px -10px rgba(30,30,80,.5)}
-#learnScreen>.timeline{position:absolute;z-index:8;top:calc(62px + env(safe-area-inset-top));left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100% - 32px);padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 14px -10px rgba(30,30,80,.45)}
+#learnScreen .scene-time{position:static;justify-self:end;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.7);color:#4A2C00;font:900 12px/1 'Nunito',sans-serif!important;letter-spacing:.08em;text-transform:uppercase;-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 0 0 1px rgba(255,255,255,.4),0 8px 18px -10px rgba(30,30,80,.5)}
+/* the journey strip: a small frosted-glass pill tucked under the Hub button (left), so it never sits over the scene's faces */
+#learnScreen>.timeline{position:absolute;z-index:8;top:calc(60px + env(safe-area-inset-top));left:max(14px,calc(50% - 340px));right:auto;margin:0;width:max-content;max-width:min(52%,250px);padding:4px 10px;gap:3px;border-radius:999px;background:rgba(255,255,255,.48);-webkit-backdrop-filter:blur(14px) saturate(180%);backdrop-filter:blur(14px) saturate(180%);box-shadow:inset 0 1px 0 rgba(255,255,255,.75),inset 0 0 0 1px rgba(255,255,255,.38),0 6px 14px -10px rgba(30,30,80,.45)}
+#learnScreen>.timeline .tl-label{font-size:11px}#learnScreen>.timeline .tl-dot{width:16px}
 #learnScreen .tl-label{color:#2A3646}
 /* a long playlist (all 14 du'as) makes the strip wider than the phone: scroll it sideways, no scrollbar, soft edges */
 #learnScreen>.timeline{justify-content:flex-start;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
@@ -778,13 +780,27 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 #sceneCard .scene-bg{--mk:linear-gradient(180deg,#000 0,#000 calc(100% - var(--ov) - 4px),rgba(0,0,0,.45) calc(100% - var(--ov) + 18px),transparent 100%);-webkit-mask-image:var(--mk);mask-image:var(--mk)}
 #sceneCard::after{content:'';position:absolute;left:0;right:0;top:0;height:120px;z-index:1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0))}
 #sceneCard .sticker-pop{top:46%}
-/* the action: a big white cloud with little sparkle strokes */
-#sceneCard .act-btn{left:16px;bottom:calc(var(--ov) + 12px);max-width:min(60%,320px);padding:10px 18px 10px 9px;gap:9px;border-radius:999px;background:#fff;color:#1E2B3A;font:900 15px/1.22 'Nunito',sans-serif!important;isolation:isolate;box-shadow:0 14px 26px -14px rgba(40,30,90,.6),inset 0 -3px 0 rgba(30,40,80,.05);animation:actBob 2.6s ease-in-out infinite}
-#sceneCard .act-btn::before{content:'';position:absolute;z-index:-1;left:26px;top:-12px;width:38px;height:38px;border-radius:50%;background:#fff;box-shadow:26px 5px 0 -5px #fff}
-#sceneCard .act-btn::after{content:'';position:absolute;left:-11px;top:-17px;width:26px;height:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 26 26'%3E%3Cg stroke='%23FFC23D' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M13 3v6M4 8l4 4M20 7l-3 4'/%3E%3C/g%3E%3C/svg%3E") no-repeat center/contain}
-#sceneCard .act-btn .act-em{flex:0 0 auto;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:21px;background:linear-gradient(180deg,#FFF6CF,#FFE08A);box-shadow:inset 0 1px 0 #fff,0 3px 6px -3px rgba(180,120,0,.6)}
-@keyframes actBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px) scale(1.03)}}
-@media (prefers-reduced-motion:reduce){#sceneCard .act-btn{animation:none}}
+/* the action: a chunky, glossy sunny button with a white rim, a 3D bottom edge, a soft pulsing ring
+   and a little hand tapping it — it should look like something to press, not a label */
+#sceneCard .act-btn{left:16px;bottom:calc(var(--ov) + 14px);max-width:min(56%,300px);padding:6px 20px 6px 6px;gap:9px;border:3px solid #fff;border-radius:999px;background:linear-gradient(180deg,#FFE96B 0%,#FFC22E 48%,#FF9A1F 100%);color:#5B2600;font:900 15px/1.2 'Nunito',sans-serif!important;text-shadow:0 1px 0 rgba(255,255,255,.55);isolation:isolate;overflow:visible;
+  box-shadow:0 5px 0 #E8780F,0 14px 22px -8px rgba(170,70,0,.55),inset 0 -4px 0 rgba(214,98,0,.28);animation:actJump 1.9s ease-in-out infinite}
+#sceneCard .act-btn::before{content:'';position:absolute;z-index:-1;left:14px;right:16px;top:2px;height:44%;border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.85),rgba(255,255,255,0));pointer-events:none}
+#sceneCard .act-btn::after{content:'';position:absolute;z-index:-2;inset:-5px;border-radius:999px;border:3px solid rgba(255,196,46,.9);pointer-events:none;animation:actRing 1.9s ease-out infinite}
+#sceneCard .act-btn .act-em{flex:0 0 auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:radial-gradient(circle at 40% 30%,#fff 0,#FFF7DA 70%,#FFE9A6 100%);box-shadow:inset 0 -2px 0 rgba(214,140,0,.25),0 2px 4px -1px rgba(160,80,0,.45)}
+#sceneCard .act-btn #actTxt{position:relative}
+#sceneCard .act-hand{position:absolute;right:-16px;bottom:-24px;width:38px;height:46px;pointer-events:none;transform-origin:60% 90%;animation:actTap 1.9s ease-in-out infinite;filter:drop-shadow(0 3px 3px rgba(90,40,0,.35))}
+#sceneCard .act-hand svg{display:block;width:100%;height:100%}
+#sceneCard .act-yay{display:none}
+@keyframes actJump{0%,52%,100%{transform:translateY(0) scale(1)}60%{transform:translateY(-6px) scale(1.04,.97)}68%{transform:translateY(0) scale(.98,1.03)}76%{transform:translateY(-2px)}84%{transform:none}}
+@keyframes actRing{0%,40%{opacity:0;transform:scale(.96)}50%{opacity:1}100%{opacity:0;transform:scale(1.14,1.4)}}
+@keyframes actTap{0%,30%,100%{transform:rotate(-28deg) translate(0,0)}40%{transform:rotate(-28deg) translate(-4px,-6px) scale(.9)}48%{transform:rotate(-28deg) translate(0,0)}}
+/* after the tap: a calm green "Yay!" that pops, then fades away (the scene's action is playing) */
+#sceneCard .act-btn.done{display:flex;pointer-events:none;padding:7px 18px 7px 7px;background:linear-gradient(180deg,#7EE69A,#2FB866);color:#fff;text-shadow:0 1px 0 rgba(0,90,40,.4);box-shadow:0 4px 0 #1E8F4C,0 14px 22px -10px rgba(0,90,40,.5);animation:actDone 2.4s ease forwards}
+#sceneCard .act-btn.done::after,#sceneCard .act-btn.done .act-hand,#sceneCard .act-btn.done #actTxt,#sceneCard .act-btn.done .act-em{display:none}
+#sceneCard .act-btn.done .act-yay{display:inline-flex;align-items:center;gap:8px}
+#sceneCard .act-yay i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#fff;font-style:normal}
+@keyframes actDone{0%{transform:scale(.7)}14%{transform:scale(1.08)}24%,70%{transform:none;opacity:1}100%{transform:translateY(6px) scale(.9);opacity:0;visibility:hidden}}
+@media (prefers-reduced-motion:reduce){#sceneCard .act-btn,#sceneCard .act-hand{animation:none}#sceneCard .act-hand{transform:rotate(-28deg)}#sceneCard .act-btn::after{display:none}#sceneCard .act-btn.done{display:none}}
 /* the du'a card */
 #learnScreen .dua-card{position:relative;z-index:3;overflow:visible;border:none;border-radius:30px 30px 26px 26px;background:rgba(255,255,255,.97);padding:18px 18px 16px;box-shadow:0 -12px 30px -20px rgba(40,40,100,.45),0 14px 30px -22px rgba(30,60,110,.5)!important}
 #learnScreen .dua-card::before{display:none}
@@ -840,9 +856,12 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 @media (prefers-reduced-motion:reduce){.seg-thumb,.rep-sw .sw::after{transition:none}}
 .sb-pass{font:800 13px/1 'Nunito',sans-serif;padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.25)}
 .sb-pass:empty{display:none}
-/* a grassy strip along the bottom */
-.l-grass{align-self:stretch;margin:auto -16px 0;padding-top:4px;height:calc(56px + env(safe-area-inset-bottom));flex-shrink:0;line-height:0}
-.l-grass svg{width:100%;height:56px;display:block}
+/* a grassy strip along the bottom: full width, the hills run edge to edge, the ground colour carries on
+   into the iPhone home-indicator area (no hard cut), the flowers keep their shape at any width */
+.l-grass{position:relative;align-self:stretch;margin:auto -16px 0;padding-top:18px;flex-shrink:0;line-height:0;display:flex;flex-direction:column;pointer-events:none}
+.l-grass::after{content:'';display:block;height:calc(10px + env(safe-area-inset-bottom));background:#3E9A48;margin-top:-1px}
+.l-grass .lg-hills{width:100%;height:60px;display:block;flex:0 0 60px}
+.l-grass .lg-deco{position:absolute;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom));height:60px;width:100%}
 #learnScreen .nav-row{margin-bottom:6px}
 @media(min-width:820px){#learnScreen{--ov:56px}#sceneCard .act-btn{left:max(24px,calc(50% - 340px));font-size:17px!important}}
 /* dark: a calm night version of every scene, text stays readable */
@@ -852,11 +871,11 @@ html[data-bm-theme="classic"] #sceneCard .scene-mo-wrap img{filter:brightness(.8
 html[data-bm-theme="classic"] #sceneCard .scene-mo-sh{background:radial-gradient(closest-side,rgba(0,0,0,.5),rgba(0,0,0,.26) 55%,rgba(0,0,0,0))}
 html[data-bm-theme="classic"] #sceneCard .scene-fx svg{filter:brightness(.86)}
 html[data-bm-theme="classic"] #sceneCard::after{height:100%;background:linear-gradient(180deg,rgba(10,14,40,.35),rgba(10,14,40,0) 40%)}
-html[data-bm-theme="classic"] #learnScreen .l-back,html[data-bm-theme="classic"] #learnScreen .l-counter,html[data-bm-theme="classic"] #learnScreen .scene-time,html[data-bm-theme="classic"] #learnScreen>.timeline{background:rgba(22,28,52,.72)!important;color:#F2F5FA!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)!important}
+html[data-bm-theme="classic"] #learnScreen .l-back,html[data-bm-theme="classic"] #learnScreen .l-counter,html[data-bm-theme="classic"] #learnScreen .scene-time{background:rgba(22,28,52,.6)!important;color:#F2F5FA!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,255,255,.12),0 8px 18px -10px rgba(0,0,0,.6)!important}
+html[data-bm-theme="classic"] #learnScreen>.timeline{background:rgba(22,28,52,.42)!important;color:#F2F5FA!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),inset 0 0 0 1px rgba(255,255,255,.12),0 6px 14px -10px rgba(0,0,0,.6)!important}
 html[data-bm-theme="classic"] #learnScreen .l-counter{color:#8BF0BC!important}
 html[data-bm-theme="classic"] #learnScreen .tl-label{color:#E6EAF2}
-html[data-bm-theme="classic"] #sceneCard .act-btn{background:#F3F0FF;color:#1E2B3A}
-html[data-bm-theme="classic"] #sceneCard .act-btn::before{background:#F3F0FF;box-shadow:26px 5px 0 -5px #F3F0FF}
+html[data-bm-theme="classic"] #sceneCard .act-btn:not(.done){border-color:#FFF4D6;box-shadow:0 5px 0 #B85A08,0 16px 26px -10px rgba(0,0,0,.7),inset 0 -4px 0 rgba(214,98,0,.28)}
 html[data-bm-theme="classic"] #learnScreen .dua-card{background:rgba(26,32,54,.97);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08),0 -12px 30px -20px rgba(0,0,0,.6)!important}
 html[data-bm-theme="classic"] #learnScreen .rd-row{background:rgba(255,200,60,.14);box-shadow:inset 0 0 0 1.5px rgba(255,200,60,.3)}
 html[data-bm-theme="classic"] #learnScreen .arabic-box{background:rgba(255,236,190,.06);border-color:rgba(237,199,122,.45)}
@@ -867,7 +886,7 @@ html[data-bm-theme="classic"] #learnScreen .meaning-en{color:#C3CCDA}
 html[data-bm-theme="classic"] #learnScreen .speed-row{--trk:rgba(118,118,128,.24);--lbl:rgba(235,235,245,.62);--on:#fff;--thumb:#636366;--swoff:rgba(120,120,128,.36)}
 html[data-bm-theme="classic"] .seg-thumb{box-shadow:0 3px 8px rgba(0,0,0,.3),0 3px 1px rgba(0,0,0,.1)}
 html[data-bm-theme="classic"] #learnScreen .arabic-box.reading{border-color:rgba(255,200,60,.8);box-shadow:0 0 0 4px rgba(255,200,60,.16)}
-html[data-bm-theme="classic"] .l-grass{filter:brightness(.5) saturate(.8)}
+html[data-bm-theme="classic"] .l-grass{filter:brightness(.6) saturate(.85)}
 </style>
 <script src="bm-icons.js" defer></script>
 <script src="doa-scenes.js"></script>
@@ -1065,7 +1084,7 @@ if(window.DOA_SERIES==='ramadan') document.write('<link rel="stylesheet" href="d
       <span class="se-main" id="seMain">🌅</span>
       <span class="se-prop" id="seProp">🛏️</span>
     </div>
-    <button class="act-btn" id="actBtn" type="button"><span class="act-em" id="actEm">🛏️</span><span id="actTxt"></span></button>
+    <button class="act-btn" id="actBtn" type="button"><span class="act-em" id="actEm">🛏️</span><span id="actTxt"></span><span class="act-yay" aria-hidden="true"><i><svg viewBox="0 0 20 20" width="18" height="18"><path d="M4.5 10.5l3.6 3.6 7.4-8" fill="none" stroke="#2FB866" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span id="actYay">Yay!</span></span><span class="act-hand" aria-hidden="true"><svg viewBox="0 0 32 40"><g stroke="#7A3E14" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><rect x="11.5" y="1.5" width="8" height="21" rx="4" fill="#FFD7B5"/><path d="M8 18c0-2 1.5-3.2 3.5-3.2h11c3 0 5.5 2.5 5.5 5.5v6.2c0 4.6-3.6 8.2-8.2 8.2h-3.4C11.7 34.7 8 31 8 26.4z" fill="#FFD7B5"/><path d="M19.5 19.5v3M23.8 19.6v3" fill="none"/><path d="M8.6 22.6c-3-1.8-5.6-.6-5.6 1.6 0 1.6 2.4 3.6 5.4 5.4" fill="#FFD7B5"/><rect x="10" y="33.5" width="15" height="5.5" rx="2" fill="#5BB8F0"/></g><ellipse cx="14" cy="5.5" rx="1.4" ry="2.4" fill="#fff" opacity=".7"/></svg></span></button>
     <div class="sticker-pop" id="stickerPop"></div>
     <div class="scene-mo-wrap">
       <img id="sceneMo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
@@ -1112,7 +1131,7 @@ if(window.DOA_SERIES==='ramadan') document.write('<link rel="stylesheet" href="d
     <button class="nav-btn-sec" id="navPrev" onclick="prevDua()">← Kembali</button>
     <button class="nav-btn-pri" id="navNext" onclick="nextDua()">Lanjut →</button>
   </div>
-  <div class="l-grass" aria-hidden="true"><svg viewBox="0 0 400 56" preserveAspectRatio="none"><defs><linearGradient id="lgG1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FDC82"/><stop offset="1" stop-color="#5FB65A"/></linearGradient><linearGradient id="lgG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7CCB6A"/><stop offset="1" stop-color="#3E9A48"/></linearGradient></defs><path d="M0 30C20 18 34 26 48 20s30 4 44-4 28 8 44 2 30-10 46-2 30 6 46-2 30 2 44 6 28-12 44-6 30 8 44 2 24-6 40 0V56H0z" fill="url(#lgG1)"/><path d="M0 40c14-8 26-2 38-8 6 4 10 0 16-6 4 8 10 10 18 6 14 6 24-2 36 2 8-10 14-12 20-4 10 4 20 0 30 2 6-8 12-10 18-2 12 2 22 8 34 0 8 6 16 6 24-2 4 6 12 10 22 4 12-4 22 2 32 0 8-6 16-8 24-2 10 2 20-4 30-2 6 4 12 6 18 2 10 0 14-4 20-6V56H0z" fill="url(#lgG2)"/><g fill="#FF8FB8"><circle cx="64" cy="30" r="3.4"/><circle cx="252" cy="28" r="3.4"/></g><g fill="#FFE066"><circle cx="150" cy="34" r="3"/><circle cx="344" cy="30" r="3"/></g><g fill="#fff"><circle cx="64" cy="30" r="1.2"/><circle cx="252" cy="28" r="1.2"/></g><path d="M110 40c-4-10 2-16 8-18-2 6-2 12-8 18zM300 40c4-10-2-16-8-18 2 6 2 12 8 18z" fill="#4CAF50"/></svg></div>
+  <div class="l-grass" aria-hidden="true"><svg class="lg-hills" viewBox="0 0 400 60" preserveAspectRatio="none"><defs><linearGradient id="lgG1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A6E08A"/><stop offset="1" stop-color="#6CC060"/></linearGradient><linearGradient id="lgG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7FCF6C"/><stop offset=".75" stop-color="#4AA750"/><stop offset="1" stop-color="#3E9A48"/></linearGradient></defs><path d="M0 24C26 10 52 12 80 20S130 30 160 18 214 6 246 16 300 30 330 20 380 10 400 18V60H0z" fill="url(#lgG1)"/><path d="M0 36C18 30 30 33 44 30S70 25 86 30 112 36 130 31 160 24 180 30 210 36 228 31 258 25 278 31 306 36 326 31 356 25 374 30 392 35 400 33V60H0z" fill="url(#lgG2)"/><path d="M0 36C18 30 30 33 44 30S70 25 86 30 112 36 130 31 160 24 180 30 210 36 228 31 258 25 278 31 306 36 326 31 356 25 374 30 392 35 400 33" fill="none" stroke="#B8EC9C" stroke-width="1.6" opacity=".7"/></svg><svg class="lg-deco" viewBox="0 0 400 60" preserveAspectRatio="xMidYMax meet"><g stroke="#3C9447" stroke-width="1.6" stroke-linecap="round" fill="none"><path d="M58 44v-14M150 46v-12M250 44v-15M342 46v-13"/></g><path d="M58 40c-6-1-9-5-8-9 5 1 8 4 8 9zM250 40c6-1 9-5 8-9-5 1-8 4-8 9z" fill="#5DBB5A"/><g fill="#FF8FB8"><circle cx="58" cy="25.5" r="2.6"/><circle cx="62.3" cy="28.6" r="2.6"/><circle cx="60.7" cy="33.6" r="2.6"/><circle cx="55.3" cy="33.6" r="2.6"/><circle cx="53.7" cy="28.6" r="2.6"/><circle cx="250" cy="24.5" r="2.6"/><circle cx="254.3" cy="27.6" r="2.6"/><circle cx="252.7" cy="32.6" r="2.6"/><circle cx="247.3" cy="32.6" r="2.6"/><circle cx="245.7" cy="27.6" r="2.6"/></g><g fill="#FFE066"><circle cx="150" cy="30" r="2.4"/><circle cx="154" cy="33" r="2.4"/><circle cx="152.5" cy="37.5" r="2.4"/><circle cx="147.5" cy="37.5" r="2.4"/><circle cx="146" cy="33" r="2.4"/><circle cx="342" cy="29" r="2.4"/><circle cx="346" cy="32" r="2.4"/><circle cx="344.5" cy="36.5" r="2.4"/><circle cx="339.5" cy="36.5" r="2.4"/><circle cx="338" cy="32" r="2.4"/></g><g fill="#FFF6C8"><circle cx="58" cy="30" r="2"/><circle cx="250" cy="29" r="2"/></g><g fill="#F59E2B"><circle cx="150" cy="34" r="1.8"/><circle cx="342" cy="33" r="1.8"/></g><path d="M104 48c-5-9 1-15 7-17-2 6-1 11-7 17zM300 48c5-9-1-15-7-17 2 6 1 11 7 17z" fill="#46A84E"/><path d="M200 50c-3-7 0-12 5-14-1 5 0 9-5 14z" fill="#46A84E"/></svg></div>
 </div>
 
 
@@ -2061,7 +2080,7 @@ function showToast(e, t){
     // English: the meaning from the dictionary, else the du'a's own English meaning
     if(EN){ var mi=window.BM_T?BM_T(d.meaningId):d.meaningId; document.getElementById('meaningId').textContent=(mi&&mi!==d.meaningId)?mi:d.meaningEn; }
     var a=document.getElementById('actBtn'); a.classList.remove('done');
-    document.getElementById('actEm').textContent=d.prop; document.getElementById('actTxt').textContent=L(d.act[0],d.act[1]).replace(/\s+(\S+)$/,'\u00A0$1');
+    document.getElementById('actEm').textContent=d.prop; document.getElementById('actTxt').textContent=L(d.act[0],d.act[1]).replace(/\s+(\S+)$/,'\u00A0$1'); document.getElementById('actYay').textContent=L('Hore!','Yay!');
     // the tap plays the scene's own action (motion + sound, see doa-scenes.js), then Mo reads the whole du'a
     a.onclick=function(){ if(a.classList.contains('done')) return; a.classList.add('done');
       var p0=pos, t=window.playDoaAction?playDoaAction(d.id):0;

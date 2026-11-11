@@ -427,15 +427,13 @@
     pre(".ev-sun", "transform:translateY(-50px)"), run(".ev-sun", "animation:evSun 1.9s cubic-bezier(.45,0,.35,1) .05s both"),
     "@keyframes evSun{from{transform:translateY(-50px)}to{transform:none}}",
 
-    /* 12 · parents: Mo hops over for a hug, Abi and Umi lean in, a big heart pops */
+    /* 12 · parents: Mo (beside Umi) gives a happy hop, Abi and Umi lean in towards him, a big heart pops over his head */
     geo(".p-abi,.p-umi", "transform-box:fill-box;transform-origin:50% 100%"),
     pre(".p-abi,.p-umi", "transform:none"),
     run(".p-abi", "animation:pAbi .7s " + SPRING + " .35s both"), run(".p-umi", "animation:pUmi .7s " + SPRING + " .3s both"),
-    "@keyframes pAbi{from{transform:none}to{transform:rotate(3deg)}}@keyframes pUmi{from{transform:none}to{transform:rotate(6deg)}}",
-    "#sceneCard.ds:not(.acted)[data-scene=parents] .scene-mo-wrap{transform:none}",
-    "#sceneCard.ds[data-scene=parents] .scene-mo-wrap{transform:translateX(calc(var(--u,1px)*-34))}",
-    mo("parents", "animation:pHop .65s ease-out both"),
-    "@keyframes pHop{0%{transform:none}45%{transform:translate(calc(var(--u,1px)*-18),calc(var(--u,1px)*-16))}80%{transform:translateX(calc(var(--u,1px)*-36)) scale(1.04,.95)}100%{transform:translateX(calc(var(--u,1px)*-34))}}",
+    "@keyframes pAbi{from{transform:none}to{transform:rotate(2.5deg)}}@keyframes pUmi{from{transform:none}to{transform:rotate(3.5deg)}}",
+    mo("parents", "animation:pHop .7s ease-out both"),
+    "@keyframes pHop{0%,100%{transform:none}40%{transform:translateY(calc(var(--u,1px)*-14))}75%{transform:scale(1.05,.95)}}",
 
     /* 13 · tasbih: the finger taps and the beads light up one by one */
     geo(".t-tap", "transform-box:fill-box;transform-origin:50% 100%"),
@@ -1042,9 +1040,12 @@
       fx: function (card) { return card ? "" : say(206, -50, "Assalamu'alaikum!", 0.95, 284, -32); }
     },
 
-    /* 12 · Doa untuk orang tua — a warm, cosy family evening: Abi and Umi smile at Mo making du'a */
+    /* 12 · Doa untuk orang tua — a warm, cosy family evening: Abi, Umi and Mo stand together on the rug,
+       Mo (hands together, making du'a for them) next to Umi's open arms. Sized as a family (Mo about
+       Abi's waist), heads kept low enough to stay clear of the page's top pills, Mo on the right so the
+       tap button (lower left) never covers him; hearts float in the gap between the parents' faces. */
     parents: {
-      pose: "baby-mo-pose-12", mo: { x: 330, y: 132, h: 130 },
+      pose: "baby-mo-dua-smile", mo: { x: 312, y: 129, h: 100 },
       svg: function () {
         return "<defs>" + rg("dsWarm", ["#FFF6DC", "#FFE6E8@.6", "#F2E2FF"], 0.55, 0.45, 0.85) + lg("dsSkyP", ["#5D62C8", "#9A8EEA"]) + lg("dsFl", ["#F4D9BC", "#E6BF98"]) +
           rg("dsLampP", ["#FFF3B0~.85", "#FFF3B0~0"]) + lg("dsFrame", ["#E2A26C", "#B9794A"], "d") +
@@ -1059,26 +1060,26 @@
           // warm lamp glow behind the family
           '<circle class="glow" cx="200" cy="-20" r="120" fill="url(#dsLampP)"/>' +
           // family photo on the wall
-          '<g class="swing"><path d="M330-118l-26 16M330-118l26 16" stroke="#8A5A3A" stroke-width="1.6"/><circle cx="330" cy="-118" r="2.6" fill="#8A5A3A"/>' +
+          '<g transform="translate(18 0)"><g class="swing"><path d="M330-118l-26 16M330-118l26 16" stroke="#8A5A3A" stroke-width="1.6"/><circle cx="330" cy="-118" r="2.6" fill="#8A5A3A"/>' +
           '<rect x="282" y="-104" width="96" height="72" rx="10" fill="url(#dsFrame)"/><rect x="288" y="-98" width="84" height="60" rx="6" fill="#FFF6E8"/>' +
           '<clipPath id="dsPh"><rect x="288" y="-98" width="84" height="60" rx="6"/></clipPath><image clip-path="url(#dsPh)" href="family/family-photo-v2.webp" x="288" y="-98" width="84" height="60" preserveAspectRatio="xMidYMid slice"/>' +
-          '<path d="M291-95l18 0l-18 13z" fill="#fff" opacity=".4"/>' + heart(372, -100, 0.42, "url(#dsPink)", "") + "</g>" +
+          '<path d="M291-95l18 0l-18 13z" fill="#fff" opacity=".4"/>' + heart(372, -100, 0.42, "url(#dsPink)", "") + "</g></g>" +
           band(40, "url(#dsFl)") + floorShine(40) +
-          rug(250, 122, 150, 17, "#FFC9DA", "#fff") +
-          // Abi and Umi
-          shadow(166, 128, 34, 6) + shadow(240, 128, 28, 6) +
-          '<image class="p-abi" href="family/abi-wave.webp" x="114" y="-94" width="105" height="221"/>' +
-          '<image class="p-umi" href="family/umi-welcome.webp" x="198" y="-76" width="84" height="204"/>' +
-          // hearts rising from Mo toward Abi and Umi
-          heart(300, -16, 0.8, "url(#dsPink)", "heartup") + heart(276, -30, 0.55, "#FFB0C4", "heartup h2") + heart(312, -44, 0.6, "#FF8FB0", "heartup h3") +
-          heart(100, -8, 0.6, "#FFB0C4", "float") + sparkle(96, 26, 0.6, "twinkle t3", "#FFC94A") + sparkle(270, 20, 0.5, "twinkle", "#FFC94A") + sparkle(232, -96, 0.6, "twinkle t2", "#FFC94A") +
+          rug(240, 123, 150, 17, "#FFC9DA", "#fff") +
+          // Abi and Umi standing on the rug, with contact shadows (Mo's own shadow comes with him)
+          shadow(160, 127, 36, 6) + shadow(246, 127, 27, 5.5) +
+          '<image class="p-abi" href="family/abi-wave.webp" x="114" y="-66" width="92.4" height="194"/>' +
+          '<image class="p-umi" href="family/umi-welcome.webp" x="208.5" y="-54" width="74.9" height="182"/>' +
+          // little hearts rise up the gap between Abi's and Umi's faces
+          heart(212, 18, 0.6, "url(#dsPink)", "heartup") + heart(200, 4, 0.44, "#FFB0C4", "heartup h2") + heart(224, -2, 0.48, "#FF8FB0", "heartup h3") +
+          heart(62, 18, 0.6, "#FFB0C4", "float") + sparkle(84, 50, 0.6, "twinkle t3", "#FFC94A") + sparkle(372, 62, 0.5, "twinkle", "#FFC94A") + sparkle(232, -96, 0.6, "twinkle t2", "#FFC94A") +
           plant(-46, 52, 1.05, "sway") + lamp(440, 52, 1.6, true);
       },
-      // front layer: the hug — a big heart pops between Mo and Umi, little hearts float up
+      // front layer: the love — a big heart pops just above Mo's head (clear of Abi's and Umi's faces), little hearts float up
       fx: function (card) {
         if (card) return "";
-        return burst(266, -36, 26, "#FF8FB0", 0.6) + '<g class="axpop" style="--d:.6s">' + heart(266, -36, 1.5, "url(#dsPink)", "beat") + "</g>" +
-          [[236, -64, 0.6, 0.85], [292, -70, 0.55, 1.0], [214, -30, 0.5, 1.15], [306, -40, 0.45, 1.25]].map(function (h) { return '<g class="axpop" style="--d:' + h[3] + 's">' + heart(h[0], h[1], h[2], "#FF8FB0", "float2") + "</g>"; }).join("");
+        return burst(314, 8, 22, "#FF8FB0", 0.6) + '<g class="axpop" style="--d:.6s">' + heart(314, 8, 1.05, "url(#dsPink)", "beat") + "</g>" +
+          [[290, -14, 0.48, 0.85], [340, -10, 0.45, 1.0], [212, -10, 0.45, 1.15], [326, -22, 0.36, 1.25]].map(function (h) { return '<g class="axpop" style="--d:' + h[3] + 's">' + heart(h[0], h[1], h[2], "#FF8FB0", "float2") + "</g>"; }).join("");
       }
     },
 
@@ -1205,7 +1206,7 @@
     wakeup: [-4, -92, 236, 236], bathroom_in: [-10, -104, 210, 200], bathroom_out: [20, -104, 230, 210],
     leave_home: [25, -112, 230, 220], vehicle: [30, -90, 240, 220], study: [5, -112, 240, 225],
     eating: [28, -80, 240, 220], after_eat: [5, -82, 240, 220], rain: [130, -122, 250, 250],
-    enter_home: [10, -118, 250, 230], evening_dhikr: [10, -100, 240, 210], parents: [110, -112, 290, 260],
+    enter_home: [10, -118, 250, 230], evening_dhikr: [10, -100, 240, 210], parents: [118, -82, 236, 226],
     bedtime_tasbih: [84, -66, 290, 250], sleep: [-30, -115, 260, 240]
   };
   window.doaSceneThumb = function (id, sfx) {
