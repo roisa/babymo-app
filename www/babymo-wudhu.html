@@ -217,30 +217,251 @@ html[data-bm-theme="classic"] #checkin .ci-btn.ok{background:rgba(110,231,183,.1
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <script src="bm-icons.js" defer></script>
+<style id="wu-home">
+/* ── Wudhu home v2: illustrated bathroom card, splashy title, big glossy buttons.
+   Not a bm-bright block: applies in both themes, with classic (dark) overrides below. */
+.wu-defs{position:absolute;width:0;height:0;overflow:hidden}
+.app{z-index:1}
+.wu-bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;
+  background:linear-gradient(180deg,#DDF1FF 0%,#EEF8FF 45%,#F4FBF2 100%)}
+.wu-bg svg{position:absolute;display:block}
+.wb-cloud{fill:#fff;opacity:.9;filter:drop-shadow(0 6px 10px rgba(80,150,210,.15))}
+.wb-cloud.c1{width:110px;left:-36px;top:70px}
+.wb-cloud.c2{width:120px;right:-44px;top:46%;opacity:.8}
+.wb-cloud.c3{width:90px;left:-30px;top:52%;opacity:.7}
+.wb-mosque{width:86px;fill:rgba(130,185,232,.3);top:60%}
+.wb-mosque.l{left:-26px}.wb-mosque.r{right:-30px;transform:scaleX(-1)}
+.wb-grass{left:0;right:0;bottom:0;width:100%;height:56px}
+.wb-grass .g1{fill:#B9E89A}.wb-grass .g2{fill:#8FD672}
+.wb-leaves{width:96px;bottom:-6px}
+.wb-leaves.l{left:-14px}.wb-leaves.r{right:-14px;transform:scaleX(-1)}
+body:not(:has(#s-home.active)) :is(.wb-leaves,.wb-grass,.wb-mosque){display:none}
+@media (min-width:760px){.wb-mosque{width:170px;top:50%}.wb-leaves{width:150px}.wb-cloud.c1{left:4%;width:150px}.wb-cloud.c2{right:4%}}
+
+/* top bar */
+.wu-top{margin-bottom:6px}
+#s-home .wu-hub{gap:10px;padding:0 20px 0 16px;height:48px;border-radius:24px;font:800 17px/1 'Fredoka','Nunito',sans-serif;
+  background:rgba(255,255,255,.92)!important;color:#152230!important;box-shadow:0 8px 20px -12px rgba(30,80,140,.5),inset 0 1px 0 #fff!important}
+.wu-ar{width:22px;height:22px}
+.wu-steps{gap:6px;padding:9px 16px;font:700 16px/1 'Fredoka','Nunito',sans-serif;background:rgba(255,255,255,.7);color:#0B5FA5;
+  box-shadow:0 0 0 1.5px rgba(255,255,255,.95),0 8px 18px -12px rgba(30,80,140,.45)}
+.wu-ic{width:18px;height:18px;flex:0 0 auto;display:inline-block;vertical-align:-3px}
+
+/* hero scene */
+.wu-hero{aspect-ratio:400/340;background:#EAF6FF;border:4px solid #fff;border-radius:30px;
+  box-shadow:0 18px 36px -20px rgba(3,105,161,.55),0 0 0 1px rgba(120,180,230,.25)}
+.wu-hero>svg,.wu-hero>.wu-mo{position:absolute}
+.wu-scene,.wu-front{inset:0;width:100%;height:100%;pointer-events:none}
+.hero.wu-hero .wu-mo{left:25%;top:17.5%;width:71.25%;height:auto;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(40,70,110,.22))}
+.sc-wall{fill:url(#wuWallG)}.sc-tiles{fill:#CFE9FA}.sc-trim{fill:#fff}.sc-floor{fill:url(#wuFloorG)}
+.sc-frame{fill:#F6E7CF}.sc-sky{fill:url(#wuSkyG)}.sc-cloud{fill:#fff;opacity:.9}.sc-mosque{fill:#8EBFEA}.sc-mull{stroke:#F6E7CF;stroke-width:4;fill:none}
+.sc-leaf{fill:url(#wuLeafG)}.sc-leaf2{fill:url(#wuLeafG2)}.sc-pot{fill:url(#wuPotG)}.sc-wood{fill:url(#wuWoodG)}.sc-towel{fill:url(#wuTowelG)}
+.sc-stone{fill:url(#wuStoneG)}.sc-stone-s{fill:#BFB29E;opacity:.45}.sc-basinin{fill:#BFE6FA}
+.wd{fill:#7DD3FC;stroke:#fff;stroke-width:.8;animation:wuDrip 1.3s linear infinite}
+.wd.d2{animation-delay:-.4s}.wd.d3{animation-delay:-.8s}.wd.d4{animation-delay:-.2s}.wd.d5{animation-delay:-1s}
+@keyframes wuDrip{0%{transform:translateY(-6px);opacity:0}15%{opacity:1}100%{transform:translateY(26px);opacity:0}}
+.wu-spark{animation:wuTw 1.8s ease-in-out infinite}
+@keyframes wuTw{0%,100%{opacity:.4}50%{opacity:1}}
+.wu-hero .bubble{left:3.5%;top:4%;max-width:47%;padding:10px 14px;border-radius:24px 24px 24px 8px;
+  font:700 15.5px/1.25 'Fredoka','Nunito',sans-serif;color:#152230;transform:rotate(-4deg);
+  box-shadow:0 12px 24px -12px rgba(30,60,110,.45);animation:wuBub .6s .35s cubic-bezier(.34,1.56,.64,1) both}
+.wu-hero .bubble::after{content:'';position:absolute;right:-9px;bottom:16px;border:10px solid transparent;border-left-color:#fff;border-right:0;transform:rotate(18deg)}
+.wu-hero .bubble.again{animation:wuWig .6s ease both}
+@keyframes wuBub{from{opacity:0;transform:rotate(-4deg) scale(.6)}to{opacity:1;transform:rotate(-4deg)}}
+@keyframes wuWig{0%,100%{transform:rotate(-4deg)}30%{transform:rotate(-1deg) scale(1.06)}60%{transform:rotate(-6deg)}}
+
+/* title */
+.wu-title{margin:16px 0 4px}
+.wu-title h1{font:700 clamp(34px,10vw,42px)/1.05 'Fredoka','Nunito',sans-serif;display:flex;align-items:center;justify-content:center;gap:8px;color:#14213D;letter-spacing:-.01em}
+.wu-title h1 .w1{color:#14213D}
+.wu-title h1 em.w2{font-style:normal;background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#1EA7EE;-webkit-text-fill-color:#1EA7EE}
+.wu-title h1 b.w3{font-weight:700;color:#7C4DEB}
+.wu-splash{width:42px;height:42px;flex:0 0 auto}
+.wu-splash.l{transform:scaleX(-1)}
+.wu-title p{font:600 17px/1.3 'Fredoka','Nunito',sans-serif;color:#3B4A5C;margin-top:4px}
+
+/* chips */
+.wu-chips{gap:10px;margin:12px 0 2px}
+.wu-chips .pill{gap:7px;padding:7px 16px 7px 8px;min-height:40px;font:600 15px/1 'Fredoka','Nunito',sans-serif;color:#17324F;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 6px 14px -10px rgba(30,80,140,.5)}
+.wu-chips .c-age{background:#D6EEFF}.wu-chips .c-niat{background:#FFF1C4}.wu-chips .c-game{background:#DDF6D2;color:#1F5B2F}
+.wu-chips .wu-ic{width:26px;height:26px}
+.wu-chips .c-game{position:relative}
+.wu-chips .c-game::before,.wu-chips .c-game::after{content:'';position:absolute;top:50%;width:22px;height:30px;margin-top:-15px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 22 30'%3E%3Cg stroke='%23FFC21A' stroke-width='3.4' stroke-linecap='round'%3E%3Cpath d='M18 5 10 1.5M19 15H9M18 25l-8 3.5'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+.wu-chips .c-game::before{left:-28px}.wu-chips .c-game::after{right:-28px;transform:scaleX(-1)}
+.wu-face{position:relative;display:inline-block;width:28px;height:28px;border-radius:50%;overflow:hidden;flex:0 0 auto;background:#FFE6CF}
+.wu-face img{position:absolute;width:270%;height:270%;left:-85%;top:-40%;object-fit:contain;max-width:none}
+
+/* action buttons */
+.wu-actions{gap:12px;margin-top:16px}
+#s-home .wu-actions button{position:relative;min-height:64px;border-radius:32px;padding:0 22px;gap:12px;font:700 20px/1.1 'Fredoka','Nunito',sans-serif;justify-content:center}
+#s-home .wu-actions .lbl{flex:0 1 auto;display:flex;flex-direction:column;align-items:center;gap:2px}
+#s-home .wu-actions .wu-go{position:absolute;right:22px;top:50%;width:26px;height:26px;margin-top:-13px}
+#s-home .wu-actions .wu-bi{width:30px;height:30px;flex:0 0 auto}
+#s-home .wu-actions .btn-primary.wu-learn{min-height:76px;padding-left:80px;border-radius:38px;font-size:23px;
+  background:linear-gradient(180deg,#5EDB6A 0%,#2DBE4E 55%,#1EA142 100%)!important;--bm-glow:rgba(30,160,66,.55);text-shadow:0 1px 2px rgba(0,80,20,.35)}
+.wu-learn .wu-face.big{position:absolute;left:12px;bottom:6px;width:74px;height:74px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#FFF3D6,#FFD9B0);
+  box-shadow:0 0 0 4px rgba(255,255,255,.85),0 8px 16px -8px rgba(0,60,20,.6)}
+
+.wu-learn .wu-bi{filter:drop-shadow(0 2px 3px rgba(0,60,20,.3))}
+#s-home .wu-actions .wu-order{background:#fff!important;color:#14213D!important;box-shadow:0 12px 24px -16px rgba(30,80,140,.55),inset 0 -2px 0 rgba(30,80,140,.08),0 0 0 1px rgba(30,80,140,.06)!important}
+#s-home .wu-actions .wu-kilat{background:linear-gradient(180deg,#FFF6CF,#FFE9A0)!important;color:#14213D!important;
+  box-shadow:0 0 0 3px #FFE08A inset,0 12px 24px -16px rgba(200,140,0,.6)!important}
+#s-home .wu-kilat .sub{font:800 12.5px/1 'Nunito',sans-serif;color:#9A6500;opacity:1}
+#s-home .wu-kilat .sub:empty{display:none}
+@media (prefers-reduced-motion:reduce){.wd,.wu-spark,.wu-hero .bubble,.wu-hero .bubble.again{animation:none!important}.wd{opacity:.8}}
+
+/* dark (classic): an evening wudu corner on a deep-green page */
+html[data-bm-theme="classic"] .wu-bg{background:linear-gradient(180deg,#0E3B2E 0%,#123E33 55%,#0B2A21 100%)}
+html[data-bm-theme="classic"] .wb-cloud{fill:#BFE3D6;opacity:.08;filter:none}
+html[data-bm-theme="classic"] .wb-mosque{fill:rgba(127,209,180,.12)}
+html[data-bm-theme="classic"] .wb-grass .g1{fill:#1C5A3B}html[data-bm-theme="classic"] .wb-grass .g2{fill:#174D33}
+html[data-bm-theme="classic"] .wb-leaves{opacity:.6}
+html[data-bm-theme="classic"] #s-home .wu-hub{background:rgba(255,255,255,.08)!important;color:#F0E8D8!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.1)!important}
+html[data-bm-theme="classic"] .wu-steps{background:rgba(125,211,252,.14);color:#BAE6FD;box-shadow:none}
+html[data-bm-theme="classic"] .wu-hero{border-color:rgba(255,255,255,.14);background:#21405A;box-shadow:0 18px 36px -20px rgba(0,0,0,.8)}
+html[data-bm-theme="classic"] .sc-wall{fill:url(#wuWallD)}
+html[data-bm-theme="classic"] .sc-tiles{fill:#2F5873}
+html[data-bm-theme="classic"] #wuTilePat path{opacity:.18}
+html[data-bm-theme="classic"] .sc-trim{fill:#BFD6E6}
+html[data-bm-theme="classic"] .sc-sky{fill:url(#wuSkyD)}
+html[data-bm-theme="classic"] .sc-cloud{opacity:.25}
+html[data-bm-theme="classic"] .sc-mosque{fill:#1B2B60}
+html[data-bm-theme="classic"] .sc-floor{fill:#7A6450}
+html[data-bm-theme="classic"] .wu-front .sc-stone{fill:url(#wuStoneG);filter:brightness(.8)}
+html[data-bm-theme="classic"] .wu-hero .bubble{background:#fff;color:#152230}
+html[data-bm-theme="classic"] .wu-title h1,html[data-bm-theme="classic"] .wu-title h1 .w1{color:#F0E8D8}
+html[data-bm-theme="classic"] .wu-title h1 em.w2{color:#7DD3FC;-webkit-text-fill-color:#7DD3FC}
+html[data-bm-theme="classic"] .wu-title h1 b.w3{color:#C4B5FD}
+html[data-bm-theme="classic"] .wu-title p{color:#C9D6CC}
+html[data-bm-theme="classic"] .wu-chips .pill{box-shadow:none;color:#E6F2EC}
+html[data-bm-theme="classic"] .wu-chips .c-age{background:rgba(125,211,252,.16)}
+html[data-bm-theme="classic"] .wu-chips .c-niat{background:rgba(253,224,71,.14)}
+html[data-bm-theme="classic"] .wu-chips .c-game{background:rgba(134,239,172,.14);color:#E6F2EC}
+html[data-bm-theme="classic"] #s-home .wu-actions .wu-order{background:rgba(255,255,255,.08)!important;color:#F0E8D8!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.1),0 12px 24px -16px rgba(0,0,0,.7)!important}
+html[data-bm-theme="classic"] #s-home .wu-actions .wu-kilat{background:linear-gradient(180deg,rgba(253,224,71,.20),rgba(250,204,21,.12))!important;color:#FFF4CC!important;box-shadow:0 0 0 2px rgba(253,224,71,.45) inset!important}
+html[data-bm-theme="classic"] #s-home .wu-kilat .sub{color:#FDE68A}
+</style>
 </head>
 <body>
+<!-- shared art for the Wudhu home (kept rendered, never display:none, so gradients resolve) -->
+<svg class="wu-defs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
+  <linearGradient id="wuDropG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9BE3FF"/><stop offset=".55" stop-color="#38B6F5"/><stop offset="1" stop-color="#1679D8"/></linearGradient>
+  <linearGradient id="wuWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6F8FF"/><stop offset="1" stop-color="#7DD3FC"/></linearGradient>
+  <linearGradient id="wuWallG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7FBFF"/><stop offset="1" stop-color="#E4F1FB"/></linearGradient>
+  <linearGradient id="wuWallD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B4D66"/><stop offset="1" stop-color="#21405A"/></linearGradient>
+  <linearGradient id="wuSkyG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3FF"/><stop offset="1" stop-color="#E3F6FF"/></linearGradient>
+  <linearGradient id="wuSkyD" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A3F86"/><stop offset="1" stop-color="#5A6FC0"/></linearGradient>
+  <linearGradient id="wuFloorG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F7E4C8"/><stop offset="1" stop-color="#E8C9A0"/></linearGradient>
+  <linearGradient id="wuStoneG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FBF7F1"/><stop offset=".6" stop-color="#ECE4D8"/><stop offset="1" stop-color="#D4C8B6"/></linearGradient>
+  <linearGradient id="wuWoodG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9B783"/><stop offset="1" stop-color="#B9773F"/></linearGradient>
+  <linearGradient id="wuTowelG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#A9CCFF"/><stop offset="1" stop-color="#5B8FE6"/></linearGradient>
+  <linearGradient id="wuPotG" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#F8C38C"/><stop offset="1" stop-color="#D08446"/></linearGradient>
+  <linearGradient id="wuLeafG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#A6EB7E"/><stop offset="1" stop-color="#2E9E48"/></linearGradient>
+  <linearGradient id="wuLeafG2" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7DDB6A"/><stop offset="1" stop-color="#1F8A3E"/></linearGradient>
+  <linearGradient id="wuGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3B0"/><stop offset=".5" stop-color="#FFD23F"/><stop offset="1" stop-color="#F59E0B"/></linearGradient>
+  <linearGradient id="wuBoltG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE45C"/><stop offset="1" stop-color="#F59E0B"/></linearGradient>
+  <linearGradient id="wuGreenG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8BE36B"/><stop offset="1" stop-color="#22A04A"/></linearGradient>
+  <pattern id="wuTilePat" width="26" height="24" patternUnits="userSpaceOnUse"><path d="M0 .8h26M.8 0v24" stroke="#fff" stroke-width="1.6" opacity=".9"/></pattern>
+  <symbol id="wuDrop" viewBox="0 0 24 24"><path d="M12 2.2S4.5 10.6 4.5 15.2a7.5 7.5 0 0 0 15 0C19.5 10.6 12 2.2 12 2.2Z" fill="url(#wuDropG)"/><ellipse cx="9.2" cy="15" rx="1.7" ry="3.1" fill="#fff" opacity=".75" transform="rotate(18 9.2 15)"/></symbol>
+  <symbol id="wuSplash" viewBox="0 0 40 40"><g fill="url(#wuDropG)"><path d="M24 4c3 0 6 4 4 9-3 6-9 7-10 3s3-12 6-12Z"/><path d="M33 20c2 2 2 6-2 8-5 2-10 0-9-3s9-7 11-5Z"/><path d="M27 32c1 2-1 5-4 5s-5-2-4-4 7-3 8-1Z"/></g><g fill="#fff" opacity=".7"><ellipse cx="23" cy="9" rx="1.3" ry="2.4" transform="rotate(30 23 9)"/><ellipse cx="29" cy="22" rx="2.2" ry="1.1"/></g></symbol>
+  <symbol id="wuBulb" viewBox="0 0 40 40"><g stroke="#FFC21A" stroke-width="2.6" stroke-linecap="round"><path d="M20 2v4M6 8l3 3M34 8l-3 3M2 21h4M34 21h4"/></g><path d="M20 8a11 11 0 0 0-6.6 19.8c1.4 1 2.1 2.4 2.1 4V33h9v-1.2c0-1.6.7-3 2.1-4A11 11 0 0 0 20 8Z" fill="url(#wuGold)"/><rect x="15" y="32" width="10" height="6" rx="2.4" fill="#9AA6B8"/><ellipse cx="16" cy="15" rx="2.4" ry="3.6" fill="#fff" opacity=".7" transform="rotate(30 16 15)"/></symbol>
+  <symbol id="wuPuzzle" viewBox="0 0 40 40"><path d="M6 12h8a4.5 4.5 0 1 1 8 0h8v8a4.5 4.5 0 1 1 0 8v8h-8a4.5 4.5 0 1 0-8 0H6v-8a4.5 4.5 0 1 0 0-8Z" fill="url(#wuGreenG)" transform="rotate(-14 20 24)"/><path d="M9 15.5h4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".7" transform="rotate(-14 20 24)"/></symbol>
+  <symbol id="wuBolt" viewBox="0 0 40 40"><path d="M24 2 7 23h11l-4 15 19-22H21Z" fill="url(#wuBoltG)" stroke="#F08A00" stroke-width="1.4" stroke-linejoin="round"/><path d="M20.5 7 12 19" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".75"/></symbol>
+</defs></svg>
+<!-- soft sky backdrop for the home: clouds, faint mosques, leafy corners, grass -->
+<div class="wu-bg" aria-hidden="true">
+  <svg class="wb-cloud c1" viewBox="0 0 120 50"><path d="M14 46a14 14 0 0 1 4-27 20 20 0 0 1 37-9 18 18 0 0 1 32 4 16 16 0 0 1 20 32Z"/></svg>
+  <svg class="wb-cloud c2" viewBox="0 0 120 50"><path d="M14 46a14 14 0 0 1 4-27 20 20 0 0 1 37-9 18 18 0 0 1 32 4 16 16 0 0 1 20 32Z"/></svg>
+  <svg class="wb-cloud c3" viewBox="0 0 120 50"><path d="M14 46a14 14 0 0 1 4-27 20 20 0 0 1 37-9 18 18 0 0 1 32 4 16 16 0 0 1 20 32Z"/></svg>
+  <svg class="wb-mosque l" viewBox="0 0 120 160"><path d="M12 160V50l4-12 4 12v110Z"/><circle cx="16" cy="34" r="3"/><path d="M30 160v-46a30 30 0 0 1 60 0v46Z"/><path d="M60 72q4 5 0 10q-4-5 0-10Z"/><path d="M98 160V70l4-10 4 10v90Z"/></svg>
+  <svg class="wb-mosque r" viewBox="0 0 120 160"><path d="M12 160V50l4-12 4 12v110Z"/><circle cx="16" cy="34" r="3"/><path d="M30 160v-46a30 30 0 0 1 60 0v46Z"/><path d="M60 72q4 5 0 10q-4-5 0-10Z"/><path d="M98 160V70l4-10 4 10v90Z"/></svg>
+  <svg class="wb-grass" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0 60V30Q60 6 130 22T260 18T400 26V60Z" class="g1"/><path d="M0 60V42Q90 22 200 36T400 38V60Z" class="g2"/></svg>
+  <svg class="wb-leaves l" viewBox="0 0 120 140"><path d="M10 140C0 100 10 60 50 40c4 40-10 80-40 100Z" fill="url(#wuLeafG)"/><path d="M14 140c10-40 40-60 80-58-14 34-44 54-80 58Z" fill="url(#wuLeafG2)"/><path d="M0 120C-10 90 0 70 20 60c6 26 0 48-20 60Z" fill="url(#wuLeafG2)"/><path d="M14 132q14-40 32-82M20 136q30-24 66-48" stroke="#fff" stroke-width="2" fill="none" opacity=".35" stroke-linecap="round"/></svg>
+  <svg class="wb-leaves r" viewBox="0 0 120 140"><path d="M10 140C0 100 10 60 50 40c4 40-10 80-40 100Z" fill="url(#wuLeafG)"/><path d="M14 140c10-40 40-60 80-58-14 34-44 54-80 58Z" fill="url(#wuLeafG2)"/><path d="M0 120C-10 90 0 70 20 60c6 26 0 48-20 60Z" fill="url(#wuLeafG2)"/><path d="M14 132q14-40 32-82M20 136q30-24 66-48" stroke="#fff" stroke-width="2" fill="none" opacity=".35" stroke-linecap="round"/></svg>
+</div>
 <div class="app">
 
   <!-- HOME -->
   <section class="screen active" id="s-home">
-    <div class="topbar">
-      <a class="back-btn btn-sec" href="./index.html">← Game Hub</a>
+    <div class="topbar wu-top">
+      <a class="back-btn btn-sec wu-hub" href="./index.html"><svg class="wu-ar" viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-7-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Game Hub</span></a>
       <div class="grow"></div>
-      <span class="pill">💧 10 langkah</span>
+      <span class="pill wu-steps"><svg class="wu-ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#wuDrop"/></svg><span>10 langkah</span></span>
     </div>
-    <div class="hero" id="wHero">
-      <img src="wudhu-assets/w01-niat.webp" alt="Baby Mo bersiap wudhu">
-      <div class="bubble">Sebelum sholat, wudhu dulu yuk bareng Mo! 💧</div>
+    <div class="hero wu-hero" id="wHero">
+      <svg class="wu-scene" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <rect class="sc-wall" width="400" height="340"/>
+        <ellipse cx="200" cy="40" rx="210" ry="100" fill="#fff" opacity=".55"/>
+        <rect class="sc-tiles" y="196" width="400" height="120"/>
+        <rect y="196" width="400" height="120" fill="url(#wuTilePat)"/>
+        <rect class="sc-trim" y="191" width="400" height="8" rx="2"/>
+        <rect class="sc-floor" y="312" width="400" height="28"/>
+        <path d="M0 312h400" stroke="#fff" stroke-width="2" opacity=".6"/>
+        <g>
+          <path class="sc-frame" d="M10 236V156a45 45 0 0 1 90 0v80Z"/>
+          <path class="sc-sky" d="M18 230V157a37 37 0 0 1 74 0v73Z"/>
+          <g class="sc-cloud"><ellipse cx="38" cy="156" rx="13" ry="5.5"/><ellipse cx="47" cy="152" rx="8" ry="6.5"/><ellipse cx="74" cy="176" rx="9" ry="4"/></g>
+          <g class="sc-mosque">
+            <path d="M34 230v-28a21 21 0 0 1 42 0v28Z"/><path d="M55 174q3 4 0 8q-3-4 0-8Z"/><rect x="54" y="179" width="2" height="5"/>
+            <rect x="23" y="190" width="7" height="40"/><path d="M22 191l4.5-10 4.5 10Z"/><rect x="80" y="196" width="6" height="34"/><path d="M79 197l4-9 4 9Z"/>
+          </g>
+          <path d="M55 120v110M18 192h74" class="sc-mull"/>
+          <rect class="sc-trim" x="4" y="230" width="102" height="9" rx="4"/>
+        </g>
+        <g transform="translate(0 20)">
+          <path class="sc-leaf" d="M48 252c-22-8-34-30-30-52 18 8 30 28 30 52Z"/>
+          <path class="sc-leaf2" d="M50 250c-4-26 6-48 26-58 6 22-6 46-26 58Z"/>
+          <path class="sc-leaf" d="M50 252c10-18 32-26 50-20-8 18-28 26-50 20Z"/>
+          <path class="sc-leaf2" d="M46 254c-16-10-36-10-46 2 14 10 34 10 46-2Z"/>
+          <path d="M25 205q10 20 22 44M70 200q-10 22-20 48M95 234q-22 4-42 16" stroke="#fff" stroke-width="1.6" fill="none" opacity=".45" stroke-linecap="round"/>
+          <path class="sc-pot" d="M24 252h52l-7 46a6 6 0 0 1-6 5H37a6 6 0 0 1-6-5Z"/>
+          <rect class="sc-pot" x="20" y="247" width="60" height="11" rx="5"/>
+          <rect x="24" y="249" width="30" height="3" rx="1.5" fill="#fff" opacity=".5"/>
+        </g>
+        <g>
+          <rect class="sc-wood" x="352" y="118" width="48" height="12" rx="5"/>
+          <circle cx="364" cy="124" r="3" fill="#8A5530"/><circle cx="390" cy="124" r="3" fill="#8A5530"/>
+          <path class="sc-towel" d="M358 126h40v92a6 6 0 0 1-6 6h-28a6 6 0 0 1-6-6Z"/>
+          <rect x="358" y="194" width="40" height="6" fill="#fff" opacity=".85"/><rect x="358" y="204" width="40" height="3" fill="#fff" opacity=".6"/>
+          <rect x="364" y="132" width="6" height="58" rx="3" fill="#fff" opacity=".35"/>
+        </g>
+        <ellipse cx="215" cy="322" rx="110" ry="9" fill="#7A5A3A" opacity=".16"/>
+      </svg>
+      <img class="wu-mo" src="wudhu-assets/w02-tangan.webp" alt="Baby Mo membasuh tangan">
+      <svg class="wu-front" viewBox="0 0 400 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">
+        <path d="M300 350V70l50-12v292Z" class="sc-stone-s"/>
+        <rect class="sc-stone" x="294" y="66" width="54" height="290" rx="6"/>
+        <rect x="299" y="72" width="7" height="262" rx="3.5" fill="#fff" opacity=".55"/>
+        <rect class="sc-stone" x="288" y="56" width="66" height="16" rx="6"/>
+        <path class="sc-stone" d="M240 234h58v40a10 10 0 0 1-10 10h-38a10 10 0 0 1-10-10Z"/>
+        <rect class="sc-stone" x="234" y="226" width="68" height="14" rx="7"/>
+        <ellipse cx="268" cy="233" rx="27" ry="4" class="sc-basinin"/>
+        <rect x="240" y="228" width="40" height="3" rx="1.5" fill="#fff" opacity=".8"/>
+        <path d="M244 250v20" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".5"/>
+        <g class="wu-water">
+          <path d="M271 163q-1 14 -6 28" stroke="url(#wuWater)" stroke-width="5" fill="none" stroke-linecap="round" opacity=".85"/>
+          <circle class="wd d1" cx="262" cy="200" r="2.6"/><circle class="wd d2" cx="256" cy="204" r="2"/><circle class="wd d3" cx="268" cy="202" r="2.2"/>
+          <circle class="wd d4" cx="252" cy="206" r="1.8"/><circle class="wd d5" cx="273" cy="206" r="1.6"/>
+        </g>
+        <g class="wu-spark"><path d="M288 176l10-6M290 186h12M288 196l10 6" stroke="#FFD84D" stroke-width="3.4" stroke-linecap="round"/></g>
+      </svg>
+      <div class="bubble">Sebelum sholat, wudhu dulu yuk bareng Mo! <svg class="wu-ic" viewBox="0 0 24 24" aria-hidden="true"><use href="#wuDrop"/></svg></div>
     </div>
-    <div class="title-block">
-      <h1>Wudhu <em>Bareng Mo</em></h1>
+    <div class="title-block wu-title">
+      <h1><svg class="wu-splash l" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuSplash"/></svg><span class="w1">Wudhu</span> <em class="w2">Bareng</em> <b class="w3">Mo</b><svg class="wu-splash r" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuSplash"/></svg></h1>
       <p>Belajar wudhu langkah demi langkah</p>
     </div>
-    <div class="chips"><span class="pill">👶 Usia 3–7</span><span class="pill">🤲 Niat & doa</span><span class="pill">🧩 Game urutkan</span></div>
-    <div class="home-actions">
-      <button class="btn-primary" onclick="startGuide()">💧 Belajar Wudhu</button>
-      <button class="btn-sec" onclick="startOrder()">🧩 Urutkan Wudhu</button>
-      <button class="btn-sec kilat-btn" onclick="startKilat()"><span>⚡ Tantangan Kilat</span><span class="sub" id="kilatBest"></span></button>
+    <div class="chips wu-chips">
+      <span class="pill c-age"><span class="wu-face"><img src="baby-mo-poses/baby-mo-pose-07.webp" alt=""></span><span>Usia 3–7</span></span>
+      <span class="pill c-niat"><svg class="wu-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuBulb"/></svg><span>Niat &amp; doa</span></span>
+      <span class="pill c-game"><svg class="wu-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuPuzzle"/></svg><span>Game urutkan</span></span>
+    </div>
+    <div class="home-actions wu-actions">
+      <button class="btn-primary wu-learn" onclick="startGuide()"><span class="wu-face big"><img src="baby-mo-poses/baby-mo-pose-07.webp" alt=""></span><svg class="wu-bi" viewBox="0 0 24 24" aria-hidden="true"><use href="#wuDrop"/></svg><span class="lbl">Belajar Wudhu</span><svg class="wu-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="btn-sec wu-order" onclick="startOrder()"><svg class="wu-bi" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuPuzzle"/></svg><span class="lbl">Urutkan Wudhu</span><svg class="wu-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="btn-sec kilat-btn wu-kilat" onclick="startKilat()"><svg class="wu-bi" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuBolt"/></svg><span class="lbl"><span>Tantangan Kilat</span><span class="sub" id="kilatBest"></span></span><svg class="wu-go" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-7 7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     </div>
     <div class="ci" id="checkin"></div>
     <div class="why"><b>Kenapa wudhu?</b> Wudhu membersihkan badan sebelum sholat. Allah menyukai orang-orang yang menyucikan diri 💚</div>

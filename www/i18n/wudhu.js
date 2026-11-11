@@ -1,7 +1,8 @@
 /* Wudhu Bareng Mo — English */
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
   "Wudhu Bareng Mo — Belajar Wudhu untuk Anak | Baby Mo": "Wudu with Mo — Learn Wudu for Kids | Baby Mo",
-  "Wudhu": "Wudu", "Bareng Mo": "with Mo", "Belajar wudhu langkah demi langkah": "Learn wudu step by step",
+  "Wudhu": "Wudu", "Bareng Mo": "with Mo", "Bareng": "with", "10 langkah": "10 steps", "Usia 3–7": "Ages 3–7", "Niat & doa": "Intention & du'a", "Game urutkan": "Ordering game",
+  "Belajar Wudhu": "Learn Wudu", "Urutkan Wudhu": "Put Wudu in Order", "Sebelum sholat, wudhu dulu yuk bareng Mo!": "Before we pray, let's do wudu with Mo!", "Baby Mo membasuh tangan": "Baby Mo washing his hands", "Belajar wudhu langkah demi langkah": "Learn wudu step by step",
   "💧 10 langkah": "💧 10 steps", "👶 Usia 3–7": "👶 Ages 3–7", "🤲 Niat & doa": "🤲 Intention & du'a", "🧩 Game urutkan": "🧩 Ordering game",
   "Sebelum sholat, wudhu dulu yuk bareng Mo! 💧": "Before we pray, let's do wudu with Mo! 💧",
   "💧 Belajar Wudhu": "💧 Learn Wudu", "🧩 Urutkan Wudhu": "🧩 Put Wudu in Order",
