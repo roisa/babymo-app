@@ -345,7 +345,6 @@
     /* 2 · bathroom in: the door swings open, the LEFT foot steps in first, then the right */
     run(".b-glow", "animation:axFade .6s ease .35s both"), pre(".b-glow", "opacity:0"),
     mo("bathroom_in", "animation:bLean .7s ease-in-out .7s both"),
-    "#sceneCard.ds[data-scene=bathroom_in] .scene-mo-wrap img{scale:-1 1}",
     "@keyframes bLean{50%{transform:translateX(calc(var(--u,1px)*-8)) rotate(-3deg)}}",
 
     /* 3 · bathroom out: the RIGHT foot steps out first, the happy drop jumps */
@@ -624,7 +623,7 @@
 
     /* 2 · Masuk kamar mandi — footprints toward the bathroom door, left foot first */
     bathroom_in: {
-      pose: "baby-mo-pose-42", mo: { x: 310, y: 128, h: 196 },
+      pose: "baby-mo-pose-42", flip: true, mo: { x: 310, y: 128, h: 196 },
       svg: function () {
         return "<defs>" + lg("dsFl", ["#CFE6F7", "#A8CBEA"]) + lg("dsDoor", ["#D99A62", "#B4743F"]) + lg("dsTub", ["#FFFFFF", "#D8ECF8"]) + lg("dsTowel", ["#FFC1D3", "#FF8FB0"]) +
           lg("dsDuck", ["#FFE36A", "#FFB81F"]) + lg("dsMir", ["#F3FBFF", "#BFE3F7"], "d") +
@@ -1226,7 +1225,7 @@
     var night = isNight(id);
     return '<span class="dst' + (night ? " night" : "") + '"><svg viewBox="' + (THUMB[id] || [0, -110, 400, 250]).join(" ") + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + svg +
       shadow(f(m.x), m.y, f(sw * 0.46), f(sw * 0.1)).replace("url(#dsSh)", "url(#dsSh" + k + ")") +
-      '<image href="' + poseSrc(s.pose) + '" x="' + f(ix) + '" y="' + f(iy) + '" width="' + f(iw) + '" height="' + f(ih) + '" preserveAspectRatio="none"/>' + fx + "</svg></span>";
+      '<image href="' + poseSrc(s.pose) + '" x="' + f(ix) + '" y="' + f(iy) + '" width="' + f(iw) + '" height="' + f(ih) + '" preserveAspectRatio="none"' + (s.flip ? ' transform="translate(' + f(2 * ix + iw) + ' 0) scale(-1 1)"' : '') + '/>' + fx + "</svg></span>";
   };
 
   /* Place Baby Mo on the scene's ground: the picture is drawn with "meet",
@@ -1271,7 +1270,7 @@
       if (!fxl) { fxl = document.createElement("div"); fxl.className = "scene-fx"; fxl.setAttribute("aria-hidden", "true"); card.appendChild(fxl); }
       fxl.innerHTML = s.fx ? '<svg viewBox="' + VB + '" preserveAspectRatio="xMidYMax meet" overflow="visible">' + fxOf(id) + "</svg>" : "";
     }
-    var mo = document.getElementById("sceneMo");
+    var mo = document.getElementById("sceneMo"); if (mo) { mo.setAttribute("data-flip", s.flip ? "1" : ""); mo.style.scale = s.flip ? "-1 1" : ""; }
     if (mo) {
       mo.src = poseSrc(s.pose);
       layout(card);
