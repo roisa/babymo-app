@@ -345,6 +345,7 @@
     /* 2 · bathroom in: the door swings open, the LEFT foot steps in first, then the right */
     run(".b-glow", "animation:axFade .6s ease .35s both"), pre(".b-glow", "opacity:0"),
     mo("bathroom_in", "animation:bLean .7s ease-in-out .7s both"),
+    "#sceneCard.ds[data-scene=bathroom_in] .scene-mo-wrap img{scale:-1 1}",
     "@keyframes bLean{50%{transform:translateX(calc(var(--u,1px)*-8)) rotate(-3deg)}}",
 
     /* 3 · bathroom out: the RIGHT foot steps out first, the happy drop jumps */
