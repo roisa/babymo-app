@@ -34,7 +34,6 @@ const SHELL = [
   "/family/abi-wave.webp",
   "/family/umi-welcome.webp",
   "/family/family-photo-v2.webp",
-  "/baby-mo-poses/baby-mo-dua-smile.webp",
   "/bm-i18n.js",
   "/i18n/puzzle.js",
   "/i18n/doa.js",

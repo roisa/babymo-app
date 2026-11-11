@@ -198,7 +198,7 @@
   /* ───────── Mo's speaking wave: where his mouth is in each pose (fractions of the image), wave side ───────── */
   var MOUTH = {
     "baby-mo-pose-15": [0.67, 0.33, 1], "baby-mo-pose-06": [0.66, 0.45, 1], "baby-mo-pose-14": [0.64, 0.31, 1], "baby-mo-pose-12": [0.66, 0.47, 1],
-    "baby-mo-pose-36": [0.68, 0.46, 1], "baby-mo-thank-you": [0.64, 0.32, 1], "baby-mo-dua-smile": [0.97, 0.25, 1], "baby-mo-yes": [0.68, 0.32, 1],
+    "baby-mo-pose-36": [0.68, 0.46, 1], "baby-mo-thank-you": [0.64, 0.32, 1], "baby-mo-yes": [0.68, 0.32, 1],
     "baby-mo-pose-41": [0.66, 0.33, 1],
     "mo2-hand-chest": [0.70, 0.45, 1], "mo2-dua-stand-eyes-closed": [0.71, 0.44, 1]
   };
