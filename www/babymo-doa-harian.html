@@ -1693,6 +1693,7 @@ function showToast(e, t){
     ST.learned[d.id]=1; ST.reads[d.id]=reads(d.id)+1;
     var t=dayKey(0), s=ST.streak; if(s.last!==t){ s.n=(s.last===dayKey(-1))?(s.n||0)+1:1; s.last=t; }
     var bonus=d.id===dodDua().id && ST.dodDay!==t; if(bonus) ST.dodDay=t;
+    if(!ST.day||ST.day.d!==t) ST.day={d:t,ids:{}}; ST.day.ids[d.id]=1;   /* today's reads: the hub greys out a finished time of day */
     save();
     var n=reads(d.id);
     try{ if(window.BabyMo&&BabyMo.addStars){ if(first||n===3||bonus) BabyMo.addStars(1); } }catch(e){}

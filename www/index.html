@@ -1368,6 +1368,30 @@ html[data-theme="dark"] .navbar.condensed{background:rgba(11,16,32,.7)!important
 .navbar:before{content:'';position:absolute;left:0;right:0;bottom:100%;height:env(safe-area-inset-top);background:inherit;-webkit-backdrop-filter:inherit;backdrop-filter:inherit}
 .scroller{padding-top:calc(var(--nav-h) + env(safe-area-inset-top))}
 .tab-pane > .pd-scene{top:calc(-96px - env(safe-area-inset-top))!important;height:calc(620px + env(safe-area-inset-top))!important}
+
+/* ===== Play tab: calmer — finished du'as turn grey, missions are one row of three tokens ===== */
+.hm-now.done .hm-play{background:linear-gradient(180deg,#E3E7EE,#C9D0DB);box-shadow:inset 0 3px 0 rgba(255,255,255,.6),inset 0 -6px 0 rgba(0,0,0,.08)}
+.hm-now.done .hm-play svg{fill:#22A653;margin-left:0}
+.hm-now.done .hm-tx small{color:#1E8A4A;font-weight:800}
+#pane-doa .pd-now.done .pd-start{background:linear-gradient(180deg,#E3E7EE,#C9D0DB);color:#3A4766;box-shadow:inset 0 2px 0 rgba(255,255,255,.6),0 8px 14px -10px rgba(40,40,90,.5)}
+#pane-doa .pd-now.done .pd-start svg{fill:#3A4766}
+html[data-theme="dark"] .hm-now.done .hm-play,html[data-theme="dark"] #pane-doa .pd-now.done .pd-start{background:linear-gradient(180deg,#3A4266,#2C3352);color:#C3C9E0}
+#pane-home .dm-prog{display:none}
+#pane-home .dm-list{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.dm-tok{display:flex;flex-direction:column;align-items:center;gap:7px;text-decoration:none;color:#2A2F7A;-webkit-tap-highlight-color:transparent}
+.dm-ti{position:relative;width:68px;height:68px;border-radius:22px;padding:3px;background:#fff;box-shadow:0 8px 16px -10px rgba(40,40,90,.6),inset 0 0 0 2px rgba(42,47,122,.08);transition:transform .2s}
+.dm-ti img{width:100%;height:100%;border-radius:19px;display:block}
+.dm-ck{position:absolute;right:-6px;bottom:-6px;width:26px;height:26px;border-radius:50%;display:none;place-items:center;background:#22A653;color:#fff;font:900 14px/1 Nunito,sans-serif;box-shadow:0 0 0 3px #fff,0 4px 8px -3px rgba(0,80,30,.5)}
+.dm-tok.done .dm-ck{display:grid}
+.dm-tok.done .dm-ti{box-shadow:0 0 0 3px #22A653,0 8px 16px -10px rgba(16,167,101,.7)}
+.dm-tok.done .dm-tl{color:#1E8A4A}
+.dm-tok.next .dm-ti{box-shadow:0 0 0 3px #FFC83D,0 10px 18px -8px rgba(230,150,0,.7);animation:dmNext 2.2s ease-in-out infinite}
+@keyframes dmNext{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.dm-tok.pop .dm-ck{animation:dmPop .7s cubic-bezier(.3,1.6,.5,1)}
+.dm-tok:active .dm-ti{transform:scale(.92)}
+.dm-tl{font:700 12.5px/1.2 'Nunito',sans-serif;text-align:center;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;max-width:110px}
+html[data-theme="dark"] .dm-tok{color:#F2F5FA}html[data-theme="dark"] .dm-tok.done .dm-tl,html[data-theme="dark"] .hm-now.done .hm-tx small{color:#7EE2A8}html[data-theme="dark"] .dm-ti{background:#2A3158}
+@media (prefers-reduced-motion:reduce){.dm-tok.next .dm-ti{animation:none}}
 /* ===== Play + Prayer tabs v3 — same little world as the Duas tab ===== */
 .pd-logo-t.sm{font-size:clamp(34px,10vw,46px)}
 .pd-logo-t.two em{color:#22A653}html[data-theme="dark"] .pd-logo-t.two em{color:#7BE3A0}
@@ -2479,12 +2503,12 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
       // which checks are new since the last time this card was shown → pop
       var seenRaw=get('bm_daily_seen'), seen=seenRaw.indexOf(today+'|')===0?seenRaw.slice(today.length+1).split(','):[];
       var h='';
+      var nextOn=false;
       ms.forEach(function(m){
-        var fresh=m.done&&seen.indexOf(m.id)<0;
-        h+='<a class="dm-row'+(m.done?' done':'')+(fresh?' pop':'')+'" href="./'+esc(m.url)+'" data-mission="'+esc(m.id)+'" aria-label="'+esc(m.text[L]+(m.done?' — '+t.done:''))+'">'
-          +'<span class="dm-art"><img src="'+esc(m.art)+'" alt="" draggable="false"><span>'+m.icon+'</span></span>'
-          +'<span class="dm-txt"><b>'+esc(m.text[L])+'</b><small>'+(m.done?esc(t.done):esc(t.go+m.game[L]))+'</small></span>'
-          +'<span class="dm-go" aria-hidden="true">'+(m.done?'✓':'▶')+'</span></a>';
+        var fresh=m.done&&seen.indexOf(m.id)<0, nx=!m.done&&!nextOn; if(nx) nextOn=true;
+        h+='<a class="dm-tok'+(m.done?' done':'')+(nx?' next':'')+(fresh?' pop':'')+'" href="./'+esc(m.url)+'" data-mission="'+esc(m.id)+'" aria-label="'+esc(m.text[L]+(m.done?' — '+t.done:''))+'">'
+          +'<span class="dm-ti"><img src="'+esc(m.art)+'" alt="" draggable="false"><span class="dm-ck" aria-hidden="true">✓</span></span>'
+          +'<span class="dm-tl">'+esc(m.text[L])+'</span></a>';
       });
       document.getElementById('dmList').innerHTML=h;
       put('bm_daily_seen',today+'|'+ms.filter(function(m){return m.done;}).map(function(m){return m.id;}).join(','));
@@ -2506,7 +2530,7 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     document.addEventListener('visibilitychange',function(){ if(!document.hidden) render(); });
     document.addEventListener('click',function(e){ if(e.target.closest&&e.target.closest('#langBtn,.lang-opt')) setTimeout(render,40); });
     card.addEventListener('click',function(e){
-      var a=e.target.closest&&e.target.closest('.dm-row'); if(!a) return;
+      var a=e.target.closest&&e.target.closest('.dm-row,.dm-tok'); if(!a) return;
       try{ BabyMo.sfx('tap'); var r=a.getBoundingClientRect(); window.burst&&burst(r.left+r.width/2,r.top+r.height/2,6); BabyMo.track('daily_open',{id:a.dataset.mission}); }catch(er){}
     });
     // midnight rollover while the hub stays open
@@ -2602,7 +2626,8 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
       total:DOAS.reduce(function(a,d){ return a+Math.min(3,r(d[0])); },0),
       has:function(id){ return !!learned[id]; },
       streak:(s.last===dayKey(0)||s.last===dayKey(-1))?(s.n||0):0,
-      dodDone:st.dodDay===dayKey(0) };
+      dodDone:st.dodDay===dayKey(0),
+      readToday:function(id){ return !!(st.day&&st.day.d===dayKey(0)&&st.day.ids&&st.day.ids[id]); } };
   }
   var PLAY='<svg viewBox="0 0 24 24"><path d="M7.5 4.6v14.8L19.6 12z"/></svg>', TICK='<svg viewBox="0 0 24 24"><path d="M9.5 16.6 5.4 12.5l-1.6 1.6 5.7 5.7L20.6 8.7 19 7.1z" fill="#fff"/></svg>';
   var CHEV='<svg viewBox="0 0 24 24"><path d="M9 5.5 15.5 12 9 18.5" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -2652,7 +2677,10 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     now.setAttribute('aria-label',(en?'Start the '+w[2]+" du'as":'Mulai Doa '+w[1]));
     $('pdNowT').textContent=en?w[2]+" Du'as":'Doa '+w[1];
     $('pdNowS').textContent=en?SUB[k][1]:SUB[k][0];
-    $('pdStartT').textContent=en?'Start':'Mulai';
+    var wDone=DOAS.filter(function(x){ return x[1]===k; }).every(function(x){ return P.readToday(x[0]); });
+    $('pdStartT').textContent=wDone?(en?'Again':'Lagi'):(en?'Start':'Mulai');
+    now.classList.toggle('done',wDone); if($('hmNow')) $('hmNow').classList.toggle('done',wDone);
+    if(wDone && $('hmS')){} 
     $('pdNowArt').innerHTML=ART[k];
     $('pdNowMo').src='baby-mo-poses/baby-mo-'+w[3]+'.webp';
     ['pane-doa','pane-home','pane-companion'].forEach(function(id){ var pn=document.getElementById(id); if(!pn) return;
@@ -2660,7 +2688,10 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
         var sfx=id.slice(5); c.innerHTML=sc.innerHTML.replace(/id="(pd[A-Za-z]+)"/g,'id="$1-'+sfx+'"').replace(/url\(#(pd[A-Za-z]+)\)/g,'url(#$1-'+sfx+')'); pn.insertBefore(c,pn.firstChild); } }
       ['pagi','siang','sore','malam'].forEach(function(x){ pn.classList.toggle('w-'+x,x===k); }); });
     if($('hmNow')){ $('hmNow').href='./babymo-doa-harian.html?waktu='+k; $('hmT').textContent=en?w[2]+" Du'as":'Doa '+w[1]; $('hmS').textContent=en?SUB[k][1]:SUB[k][0]; $('hmArt').innerHTML=ART[k];
-      $('hmNow').setAttribute('aria-label',(en?'Start the '+w[2]+" du'as":'Mulai Doa '+w[1])); }
+      $('hmNow').setAttribute('aria-label',(en?'Start the '+w[2]+" du'as":'Mulai Doa '+w[1]));
+      var hd=DOAS.filter(function(x){ return x[1]===k; }).every(function(x){ return P.readToday(x[0]); });
+      if(hd) $('hmS').textContent=en?'MashaAllah, all done today! ✓':'MasyaAllah, sudah semua hari ini! ✓';
+      var hp=$('hmNow').querySelector('.hm-play'); if(hp) hp.innerHTML=hd?'<svg viewBox="0 0 24 24"><path d="M9.5 16.6 5.4 12.5l-1.6 1.6 5.7 5.7L20.6 8.7 19 7.1z"/></svg>':'<svg viewBox="0 0 24 24"><path d="M7.5 4.6v14.8L19.6 12z"/></svg>'; }
     /* 2 · Doa Hari Ini */
     var d=dodDua(), dod=$('pdDod');
     dod.href='./babymo-doa-harian.html?doa='+d[0];
