@@ -673,12 +673,12 @@ html[data-bm-theme="classic"] .mo-talk path{stroke:#7CF0AE;filter:drop-shadow(0 
 .step-num{flex:0 0 auto;display:grid;place-items:center;width:34px;height:34px;border-radius:50%;background:var(--lagoon);color:#fff;font:600 18px/1 var(--fd);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 12px -6px rgba(10,143,160,.8)}
 .step-plate .step-name{font:600 21px/1.15 var(--fd);color:#14213D;letter-spacing:-.01em;text-align:left}
-.step-name-ar{padding:0 12px;border-radius:999px;background:rgba(18,161,80,.1);font-size:21px;line-height:1.7;color:#0B6B3A;white-space:nowrap}
+.step-name-ar{display:inline-flex;align-items:center;justify-content:center;height:34px;padding:0 14px 7px;border-radius:999px;background:rgba(18,161,80,.1);font-size:18px;line-height:1;color:#0B6B3A;white-space:nowrap;box-sizing:border-box}
 .step-desc{text-align:center;margin:10px 8px 0;font-size:15.5px;line-height:1.4}
 html[data-bm-theme="classic"] .step-plate{background:#1D2F48;border-color:rgba(255,201,77,.42);box-shadow:inset 0 0 0 3px #1D2F48,inset 0 0 0 4.5px rgba(255,201,77,.2),0 14px 26px -16px rgba(0,0,0,.8)}
 html[data-bm-theme="classic"] .step-plate .step-name{color:#F0E8D8}
 html[data-bm-theme="classic"] .step-name-ar{background:rgba(48,209,88,.16);color:#C4F5D8}
-@media (max-width:380px){.step-plate-wrap{margin-left:26px;margin-right:26px}.step-plate .step-name{font-size:19.5px}.step-name-ar{font-size:19.5px}.sp-spark{width:18px;height:26px;margin-top:-13px}.sp-spark.l{left:-23px}.sp-spark.r{right:-23px}}
+@media (max-width:380px){.step-plate-wrap{margin-left:26px;margin-right:26px}.step-plate .step-name{font-size:19.5px}.step-name-ar{font-size:17px;height:32px}.sp-spark{width:18px;height:26px;margin-top:-13px}.sp-spark.l{left:-23px}.sp-spark.r{right:-23px}}
 /* ── guide: Previous / Next pinned to the bottom of the screen (like the Wudhu steps) ── */
 .guide-bar{position:fixed;left:0;right:0;bottom:0;z-index:50;pointer-events:none;opacity:0;visibility:hidden;
   padding:22px max(16px,env(safe-area-inset-right,0px)) calc(12px + var(--safe-bottom)) max(16px,env(safe-area-inset-left,0px));
@@ -906,7 +906,6 @@ html[data-bm-theme="classic"] .rec-btn.rec-btn-small{background:rgba(255,255,255
         <use class="pw-cl-a" href="#pwCloud" x="70" y="58" width="76" height="32"/>
         <use class="pw-cl-c" href="#pwCloud" x="262" y="86" width="64" height="27"/>
         <use href="#pwTree" x="22" y="102" width="78" height="96"/><use href="#pwTree" x="78" y="116" width="66" height="82"/>
-        <use href="#pwCypress" x="204" y="108" width="20" height="76"/>
         <use href="#pwMosque" x="218" y="92" width="130" height="89"/>
         <use href="#pwTree" x="350" y="128" width="56" height="70"/>
         <rect class="pw-lawn" x="0" y="176" width="400" height="14"/>
