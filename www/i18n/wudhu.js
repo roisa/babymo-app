@@ -39,7 +39,7 @@
   "MasyaAllah, selesai! 🎉": "MashaAllah, all done! 🎉", "Coba lagi biar tanpa salah, ya!": "Try again for a perfect round!",
   "🌟 Coba Level Hebat": "🌟 Try Amazing Level", "🌱 Level Mudah": "🌱 Easy Level", "🔄 Main Lagi": "🔄 Play Again", "💧 Panduan": "💧 Guide", "🏠 Game Hub": "🏠 Game Hub",
   "MasyaAllah, wudhumu selesai! Sekarang siap sholat.": "MashaAllah, your wudu is done! Now you're ready to pray.",
-  "Lanjut belajar sholat 🕌": "Keep learning to pray 🕌", "⚡ Tantangan Kilat": "⚡ Lightning Challenge", "Tantangan Kilat": "Lightning Challenge", "Wudhu dulu sebelum sholat 💧": "Wudu first, before prayer 💧", "Suara": "Sound"
+  "Lanjut belajar sholat 🕌": "Keep learning to pray 🕌", "⚡ Tantangan Kilat": "⚡ Lightning Challenge", "Tantangan Kilat": "Lightning Challenge", "Wudhu dulu sebelum sholat 💧": "Wudu first, before prayer 💧", "Suara": "Sound", "Ketuk Mo untuk dengar doa": "Tap Mo to listen to the du'a", "Ketuk Mo untuk dengar Niat & Bismillah": "Tap Mo to listen to Intention & Bismillah"
 }, [
   [/^Langkah (\d+) \/ (\d+)$/, "Step $1 / $2"],
   [/^Langkah (\d+) dari (\d+)$/, "Step $1 of $2"],
