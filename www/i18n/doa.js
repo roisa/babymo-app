@@ -31,7 +31,7 @@
   "Ya Allah, aku berlindung kepada-Mu dari gangguan setan.": "O Allah, I seek Your protection from the evil ones.",
   "Ya Allah, ampunilah aku.": "O Allah, forgive me.", "Dengan nama Allah.": "In the name of Allah.",
   "Ya Rabb-ku, tambahkanlah ilmu kepadaku.": "My Lord, increase me in knowledge.",
-  "Dengar Doa": "Listen to the Du'a", "Sedang dibaca...": "Reading...", "🐇 Normal": "🐇 Normal", "🐢 Pelan": "🐢 Slow", "🔁 Ulangi 2×": "🔁 Repeat 2×",
+  "Dengar Doa": "Listen to the Du'a", "Sedang dibaca...": "Reading...", "🐇 Normal": "🐇 Normal", "🐢 Pelan": "🐢 Slow", "🔁 Ulangi 2×": "🔁 Repeat 2×", "Pelan": "Slow", "Ulangi 2×": "Repeat 2×",
   "← Kembali": "← Back", "Lanjut →": "Next →", "🌟 Lihat Hasil!": "🌟 See Results!", "Mulai Quiz 🎯": "Start Quiz 🎯",
   "🔇 Suara Arab belum tersedia. Baca teks di atas ya!": "🔇 Arabic audio isn't available. Read the text above!",
   "🎯 Quiz Doa": "🎯 Du'a Quiz", "Quiz": "Quiz", "← Ulang": "← Restart", "Dengar doanya — ini doa apa?": "Listen to the du'a — which one is it?",

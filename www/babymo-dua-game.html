@@ -575,15 +575,16 @@ function sceneSvg(d, vb){
       +'<rect width="400" height="180" fill="url(#fb'+k+')"/><rect y="146" width="400" height="34" fill="#E8C99A"/>'
       +'<text x="'+fx+'" y="118" font-size="84" text-anchor="middle">'+esc(d.emoji||'🤲')+'</text>';
   }
-  return '<svg class="sc" viewBox="'+(vb||'0 0 400 180')+'" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+inner+'</svg>';
+  return '<svg class="sc" viewBox="'+(vb||(s?'0 -64 400 180':'0 0 400 180'))+'" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+inner+'</svg>';
 }
 const poseOf = d=>'baby-mo-poses/'+((SCENES[d.id]&&SCENES[d.id].pose)||'baby-mo-yes')+'.webp';
 // crop window of a scene for a box of aspect a (=w/h), keeping the du'a's prop in view
 function cropFor(d, a){
   const fx=(ART[d.id]&&ART[d.id].fx)||200;
-  if(a>=400/180) return '0 0 400 180';
+  const y0=SCENES[d.id]?-64:0;   // the drawn scenes are taller now (y -120…180): frame the props, not the floor
+  if(a>=400/180) return '0 '+y0+' 400 180';
   const vw=Math.max(60,180*a), x0=Math.min(400-vw,Math.max(0,fx-vw*.42));
-  return x0.toFixed(1)+' 0 '+vw.toFixed(1)+' 180';
+  return x0.toFixed(1)+' '+y0+' '+vw.toFixed(1)+' 180';
 }
 
 // ════════════ SAVE (records + progress) ════════════
