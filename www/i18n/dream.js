@@ -1,6 +1,12 @@
 /* Baby Mo Dreamtime — English */
 (window.__bmI18nQ = window.__bmI18nQ || []).push([{
   "Cerita malam ini": "Tonight's story",
+  "Gosok Gigi": "Brush Teeth", "Ganti Baju": "Change Clothes", "Baca Doa": "Read the Du'a", "Tarik Selimut": "Pull Up the Blanket", "Tarik selimut": "Pull up the blanket",
+  "Selamat Tidur!": "Good Night!", "Baby Mo sudah tidur...": "Baby Mo is asleep...", "Gigi bersih & putih!": "Clean & white teeth!",
+  "Ketuk atau seret bajunya ke Baby Mo!": "Tap or drag the clothes onto Baby Mo!", "Topi Tidur": "Nightcap", "Boneka": "Teddy",
+  "Aamiin — Lanjut Tidur": "Aamiin — Go to Sleep", "Masya Allah, kamu sudah hafal doanya!": "Masha Allah, you know the du'a!",
+  "Dengarkan doanya, lalu tirukan pelan-pelan ya sayang": "Listen to the du'a, then repeat it slowly, sweetheart",
+  "4 langkah malam bersama Baby Mo": "4 bedtime steps with Baby Mo", "Mimpi yang indah ya": "Sweet dreams", "sayang...": "sweetheart...",
   "Siapkan alatnya": "Get your things ready", "Ketuk sikat gigi dan pasta gigi": "Tap the toothbrush and the toothpaste",
   "Siapkan sikat gigi dan pasta gigi, ya.": "Get your toothbrush and toothpaste ready.",
   "Pasta sebesar kacang": "A pea-sized blob", "Tahan tombol untuk menekan pasta gigi": "Hold the button to squeeze the toothpaste",
