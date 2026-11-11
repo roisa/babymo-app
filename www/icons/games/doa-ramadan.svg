@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="doa ramadan">
+  <defs>
+    <linearGradient id="rbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#4C3FB8"/><stop offset=".65" stop-color="#2A2272"/><stop offset="1" stop-color="#14705A"/></linearGradient>
+    <linearGradient id="rsh" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".3"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <linearGradient id="rgold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE9A0"/><stop offset="1" stop-color="#F5B323"/></linearGradient>
+    <clipPath id="rsq"><rect width="100" height="100" rx="23"/></clipPath>
+  </defs>
+  <g clip-path="url(#rsq)">
+    <rect width="100" height="100" fill="url(#rbg)"/>
+    <path d="M0 0h100v40C70 30 30 30 0 40z" fill="url(#rsh)"/>
+    <g fill="#fff" opacity=".85"><circle cx="16" cy="18" r="1.6"/><circle cx="60" cy="12" r="1.2"/><circle cx="86" cy="44" r="1.4"/><circle cx="12" cy="52" r="1.2"/></g>
+    <path d="M24 12a13 13 0 1 0 13 18 10.6 10.6 0 1 1-13-18z" fill="url(#rgold)"/>
+    <path d="M75 0v14" stroke="#FFE08A" stroke-width="1.6"/>
+    <path d="M70 17h10l2 3-2 3v10l-5 4-5-4V23l-2-3z" fill="url(#rgold)"/>
+    <path d="M73 23h4v9h-4z" fill="#FF8A3D" opacity=".85"/>
+    <path d="M0 84Q50 74 100 84V100H0z" fill="#1E6B55"/>
+    <path d="M30 86V70h40v16z" fill="#FFF4DC"/>
+    <path d="M34 70c0-10 7-16 16-20 9 4 16 10 16 20z" fill="url(#rgold)"/>
+    <path d="M50 50v-6" stroke="#FFE08A" stroke-width="2"/><circle cx="50" cy="42.5" r="2" fill="#FFE08A"/>
+    <path d="M22 86V64h6v22zM72 86V64h6v22z" fill="#FFF4DC"/>
+    <path d="M22 64l3-6 3 6zM72 64l3-6 3 6z" fill="url(#rgold)"/>
+    <path d="M45 86v-8a5 5 0 0 1 10 0v8z" fill="#F5B323"/>
+    <path d="M36 77v-3a2 2 0 0 1 4 0v3zM60 77v-3a2 2 0 0 1 4 0v3z" fill="#F5B323" opacity=".8"/>
+  </g>
+</svg>
