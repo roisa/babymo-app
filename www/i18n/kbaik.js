@@ -21,7 +21,7 @@
   "Lanjut yuk!": "Keep going!", "✨ Bagus, lanjut!": "✨ Nice, keep going!", "⭐ Sudah 3! Terus ya!": "⭐ That's 3! Keep going!", "🚀 Setengah jalan!": "🚀 Halfway there!",
   "⚡ Hampir selesai!": "⚡ Almost done!", "🔥 Tinggal sedikit!": "🔥 Just a few left!", "🎯 Hampir!": "🎯 Almost!", "🌟 Mantap!": "🌟 Awesome!", "🎉 Yeahh!": "🎉 Yeahh!",
   "💪 Kamu hebat!": "💪 You're great!", "✓ Tanpa Iklan": "✓ No Ads", "✓ Aman Anak": "✓ Kid-Safe", "✓ Tanpa Pelacakan": "✓ No Tracking",
-  "Tanpa Iklan": "No Ads", "Aman Anak": "Kid-Safe", "Offline OK": "Works Offline"
+  "Bintang": "Stars", "Tanpa Iklan": "No Ads", "Aman Anak": "Kid-Safe", "Offline OK": "Works Offline"
 }, [
   [/^Sudah (\d+)! Terus ya!$/, "That's $1! Keep going!"]
 ], {
