@@ -47,13 +47,13 @@
       '<g class="fa-body"><ellipse cx="0" cy="-26" rx="42" ry="27" fill="' + f + '"/>' +
       '<path d="M6 -50 q-4 10 0 18 M-10 -51 q-4 10 0 18 M-26 -46 q-3 8 0 14" stroke="' + d + '" stroke-width="4" fill="none" stroke-linecap="round"/>' +
       '<ellipse cx="10" cy="-14" rx="20" ry="11" fill="' + cream + '"/></g>' +
-      '<g class="fa-head" style="transform-origin:30% 90%">' +
+      '<g class="fa-leg fa-leg0"><ellipse cx="24" cy="-4" rx="9" ry="6" fill="' + cream + '"/></g><g class="fa-leg fa-leg1"><ellipse cx="-20" cy="-4" rx="9" ry="6" fill="' + cream + '"/></g>' +
+      '<g class="fa-neck"><g class="fa-head" style="transform-origin:30% 90%">' +
       '<path d="M58 -74 l-5 -28 l-18 20 z M26 -80 l-12 -24 l-8 28 z" fill="' + f + '"/><path d="M54 -78 l-3 -16 l-10 12 z M21 -82 l-7 -14 l-5 16 z" fill="#FFB3C1"/>' +
       '<circle cx="34" cy="-56" r="28" fill="' + f + '"/><path d="M40 -82 q-2 8 0 12 M32 -83 q-2 8 0 12" stroke="' + d + '" stroke-width="3" fill="none" stroke-linecap="round"/>' +
       '<ellipse cx="35" cy="-45" rx="14" ry="9" fill="' + cream + '"/>' + eyes([[24, -59], [45, -59]], 4.6) +
       '<path d="M32.5 -50 h5 l-2.5 3 z" fill="#FF8FAD"/><path class="fa-mouth" d="M30 -45 q2.5 3 5 0 q2.5 3 5 0" stroke="' + INK + '" stroke-width="2" fill="none" stroke-linecap="round"/>' +
-      '<path d="M19 -48 h-14 M19 -44 l-13 3 M50 -48 h14 M50 -44 l13 3" stroke="#B9693A" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>' + cheeks([[17, -50], [52, -50]], 3.5) + '</g>' +
-      '<g class="fa-leg fa-leg0"><ellipse cx="24" cy="-4" rx="9" ry="6" fill="' + cream + '"/></g><g class="fa-leg fa-leg1"><ellipse cx="-20" cy="-4" rx="9" ry="6" fill="' + cream + '"/></g>' +
+      '<path d="M19 -48 h-14 M19 -44 l-13 3 M50 -48 h14 M50 -44 l13 3" stroke="#B9693A" stroke-width="1.4" stroke-linecap="round" opacity=".7"/>' + cheeks([[17, -50], [52, -50]], 3.5) + '</g></g>' +
       mud([[-14, -30, 7], [8, -20, 5], [40, -66, 4]]);
   } };
 
@@ -63,10 +63,10 @@
       '<path d="M-14 0 h-8 M-8 0 h4 M4 0 h-4 M10 0 h8" stroke="#F6A623" stroke-width="3" stroke-linecap="round"/>' +
       '<g class="fa-tail" style="transform-origin:100% 80%"><path d="M-30 -52 q-22 -18 -12 -44 q8 18 22 24 q-4 -22 10 -34 q2 20 10 36 z" fill="' + w + '" stroke="' + b + '" stroke-width="2"/></g>' +
       '<g class="fa-body"><ellipse cx="0" cy="-42" rx="36" ry="26" fill="' + w + '"/><path d="M-20 -46 q16 18 36 4 q-14 -2 -20 -14 q-8 8 -16 10z" fill="' + b + '"/></g>' +
-      '<g class="fa-head" style="transform-origin:20% 100%">' +
+      '<g class="fa-neck"><g class="fa-head" style="transform-origin:20% 100%">' +
       '<path d="M18 -70 q2 -14 10 -8 q4 -12 10 -2 q8 -6 8 6 z" fill="#F0453A"/>' +
       '<circle cx="30" cy="-58" r="17" fill="' + w + '"/>' + eyes([[34, -62]], 3.4) +
-      '<path class="fa-beak" d="M44 -60 l12 4 l-12 5 z" fill="#F6A623"/><path d="M42 -50 q4 10 -2 12 q-4 -6 2 -12z" fill="#F0453A"/>' + cheeks([[26, -54]], 3) + '</g>' +
+      '<path class="fa-beak" d="M44 -60 l12 4 l-12 5 z" fill="#F6A623"/><path d="M42 -50 q4 10 -2 12 q-4 -6 2 -12z" fill="#F0453A"/>' + cheeks([[26, -54]], 3) + '</g></g>' +
       mud([[-10, -40, 6], [12, -30, 4]]);
   } };
 
@@ -96,13 +96,13 @@
     return shadow(38, 5) +
       '<g class="fa-tail" style="transform-origin:100% 50%"><circle cx="-34" cy="-30" r="10" fill="#FFFFFF"/></g>' +
       '<g class="fa-body"><ellipse cx="-4" cy="-28" rx="32" ry="26" fill="' + f + '"/><ellipse cx="-14" cy="-6" rx="16" ry="7" fill="' + e + '"/></g>' +
-      '<g class="fa-head" style="transform-origin:30% 100%">' +
+      '<g class="fa-leg fa-leg0"><ellipse cx="18" cy="-4" rx="9" ry="5" fill="#FFFFFF"/></g><g class="fa-leg fa-leg1"><ellipse cx="-24" cy="-4" rx="12" ry="5" fill="#FFFFFF"/></g>' +
+      '<g class="fa-neck"><g class="fa-head" style="transform-origin:30% 100%">' +
       '<g class="fa-ears"><path d="M10 -76 q-10 -40 2 -46 q10 4 6 46z" fill="' + f + '"/><path d="M12 -80 q-5 -30 1 -36 q5 4 2 36z" fill="#F4B6C2"/>' +
       '<path d="M26 -74 q4 -40 18 -42 q6 10 -6 44z" fill="' + f + '"/><path d="M29 -78 q4 -28 12 -32 q3 8 -5 32z" fill="#F4B6C2"/></g>' +
       '<circle cx="22" cy="-58" r="22" fill="' + f + '"/>' + eyes([[15, -62], [32, -62]], 3.6) +
       '<path d="M22 -52 l3 -3 h-6 z" fill="#E58B9B"/><path class="fa-mouth" d="M19 -48 q3 3 3 0 q0 3 3 0" stroke="' + INK + '" stroke-width="1.6" fill="none" stroke-linecap="round"/>' +
-      '<path d="M18 -50 h-12 M28 -50 h12" stroke="#B9AFA2" stroke-width="1.2" stroke-linecap="round"/>' + cheeks([[10, -50], [36, -50]], 3.2) + '</g>' +
-      '<g class="fa-leg fa-leg0"><ellipse cx="18" cy="-4" rx="9" ry="5" fill="#FFFFFF"/></g><g class="fa-leg fa-leg1"><ellipse cx="-24" cy="-4" rx="12" ry="5" fill="#FFFFFF"/></g>' +
+      '<path d="M18 -50 h-12 M28 -50 h12" stroke="#B9AFA2" stroke-width="1.2" stroke-linecap="round"/>' + cheeks([[10, -50], [36, -50]], 3.2) + '</g></g>' +
       mud([[-14, -34, 6], [6, -18, 4]]);
   } };
 
@@ -112,9 +112,9 @@
     return shadow(60, 7) + legs([-34, -16, 14, 30], -34, 34, 9, face) +
       '<g class="fa-tail" style="transform-origin:100% 50%"><circle cx="-64" cy="-60" r="10" fill="' + s + '"/></g>' +
       '<g class="fa-body">' + puffs.map(function (p) { return '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="' + p[2] + '" fill="' + w + '" stroke="' + s + '" stroke-width="2"/>'; }).join('') + '</g>' +
-      '<g class="fa-head" style="transform-origin:10% 90%"><g transform="translate(-8 8)"><ellipse cx="44" cy="-74" rx="10" ry="6" fill="' + face + '" transform="rotate(-25 44 -74)"/><ellipse cx="72" cy="-74" rx="10" ry="6" fill="' + face + '" transform="rotate(25 72 -74)"/>' +
+      '<g class="fa-neck"><g class="fa-head" style="transform-origin:10% 90%"><g transform="translate(-8 8)"><ellipse cx="44" cy="-74" rx="10" ry="6" fill="' + face + '" transform="rotate(-25 44 -74)"/><ellipse cx="72" cy="-74" rx="10" ry="6" fill="' + face + '" transform="rotate(25 72 -74)"/>' +
       '<ellipse cx="58" cy="-62" rx="17" ry="21" fill="' + face + '"/><circle cx="52" cy="-82" r="9" fill="' + w + '"/><circle cx="62" cy="-84" r="9" fill="' + w + '"/>' +
-      eyes([[52, -64], [65, -64]], 3.4) + '<path class="fa-mouth" d="M55 -50 q3 3 6 0" stroke="#F2D6CC" stroke-width="2" fill="none" stroke-linecap="round"/>' + cheeks([[47, -56], [70, -56]], 3) + '</g></g>' +
+      eyes([[52, -64], [65, -64]], 3.4) + '<path class="fa-mouth" d="M55 -50 q3 3 6 0" stroke="#F2D6CC" stroke-width="2" fill="none" stroke-linecap="round"/>' + cheeks([[47, -56], [70, -56]], 3) + '</g></g></g>' +
       mud([[-30, -50, 8], [10, -70, 6], [24, -44, 6]]);
   } };
 
@@ -123,12 +123,12 @@
     return shadow(70, 8) + legs([-40, -22, 26, 44], -48, 48, 10, "#E9E4DA", "#5A4A3A") +
       '<g class="fa-tail" style="transform-origin:100% 100%"><path d="M-58 -78 q-10 -14 -4 -22" stroke="' + w + '" stroke-width="9" stroke-linecap="round" fill="none"/></g>' +
       '<g class="fa-body"><ellipse cx="0" cy="-68" rx="62" ry="32" fill="' + w + '"/><ellipse cx="-14" cy="-76" rx="24" ry="16" fill="#B98A55" opacity=".85"/>' +
-      '<path d="M-50 -60 q50 22 100 0" stroke="' + e + '" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M40 -84 q18 -20 28 -40 l18 10 q-8 26 -26 42z" fill="' + w + '"/></g>' +
-      '<g class="fa-head" style="transform-origin:0% 100%"><g transform="translate(78 -126)">' +
+      '<path d="M-50 -60 q50 22 100 0" stroke="' + e + '" stroke-width="6" fill="none" stroke-linecap="round"/></g>' +
+      '<g class="fa-neck"><path d="M40 -84 q18 -20 28 -40 l18 10 q-8 26 -26 42z" fill="' + w + '"/><g class="fa-head" style="transform-origin:0% 100%"><g transform="translate(78 -126)">' +
       '<path d="M-6 -14 q-12 -18 -4 -26 M6 -14 q4 -20 14 -24" stroke="#9A7A55" stroke-width="5" fill="none" stroke-linecap="round"/>' +
       '<ellipse cx="-14" cy="-4" rx="12" ry="5" fill="' + e + '" transform="rotate(-25 -14 -4)"/><ellipse cx="0" cy="0" rx="16" ry="20" fill="' + w + '"/>' +
       '<ellipse cx="6" cy="14" rx="10" ry="8" fill="#F7D9D2"/><circle cx="8" cy="13" r="1.6" fill="#8A5A4A"/><path d="M2 22 q2 12 -2 18 q-4 -8 -2 -18" fill="' + e + '"/>' +
-      eyes([[-3, -4]], 3.3) + cheeks([[-8, 6]], 3) + '</g></g>' +
+      eyes([[-3, -4]], 3.3) + cheeks([[-8, 6]], 3) + '</g></g></g>' +
       mud([[-30, -62, 8], [20, -56, 6]]);
   } };
 
@@ -139,13 +139,13 @@
       '<g class="fa-body"><ellipse cx="0" cy="-92" rx="88" ry="42" fill="' + w + '"/><path d="M-70 -110 q20 -26 50 -14 q10 24 -14 34 q-30 6 -36 -20z" fill="' + br + '"/>' +
       '<path d="M18 -126 q34 -8 44 16 q-6 24 -34 18 q-18 -10 -10 -34z" fill="' + br + '"/><path d="M-70 -76 q70 30 140 0" stroke="#E2DCCF" stroke-width="7" fill="none" stroke-linecap="round"/>' +
       '<ellipse cx="8" cy="-54" rx="16" ry="7" fill="#F7C7C0"/></g>' +
-      '<g class="fa-head" style="transform-origin:0% 60%"><g transform="translate(96 -116)">' +
+      '<g class="fa-neck"><path d="M52 -122 q24 -10 40 -6 l6 34 q-22 10 -44 8z" fill="' + w + '"/><g class="fa-head" style="transform-origin:0% 60%"><g transform="translate(96 -116)">' +
       '<path d="M-14 -24 q-10 -14 -2 -20 M14 -24 q10 -14 2 -20" stroke="#E9D6B5" stroke-width="6" fill="none" stroke-linecap="round"/>' +
       '<ellipse cx="-24" cy="-14" rx="13" ry="6" fill="' + br + '" transform="rotate(-20 -24 -14)"/><ellipse cx="24" cy="-14" rx="13" ry="6" fill="' + br + '" transform="rotate(20 24 -14)"/>' +
       '<ellipse cx="0" cy="0" rx="24" ry="28" fill="' + br + '"/><path d="M-6 -26 q6 18 0 30 q8 -2 10 -14 q-2 -14 -10 -16z" fill="' + w + '"/>' +
       '<ellipse cx="0" cy="18" rx="20" ry="13" fill="#F7C7C0"/><circle cx="-7" cy="18" r="2.6" fill="#8A5A4A"/><circle cx="7" cy="18" r="2.6" fill="#8A5A4A"/>' +
       eyes([[-10, -6], [10, -6]], 3.6) + cheeks([[-16, 4], [16, 4]], 3.4) +
-      '<path d="M-12 30 q12 6 24 0" stroke="#C0392B" stroke-width="4" fill="none"/><g class="fa-bell"><path d="M-7 34 h14 l3 14 h-20z" fill="#FFC83D"/><circle cx="0" cy="49" r="2.6" fill="#B98A1E"/></g></g></g>' +
+      '<path d="M-12 30 q12 6 24 0" stroke="#C0392B" stroke-width="4" fill="none"/><g class="fa-bell"><path d="M-7 34 h14 l3 14 h-20z" fill="#FFC83D"/><circle cx="0" cy="49" r="2.6" fill="#B98A1E"/></g></g></g></g>' +
       mud([[-40, -80, 10], [30, -70, 8], [-10, -110, 6]]);
   } };
 
@@ -178,6 +178,33 @@
       '<path d="M-6 -16 q6 6 12 4" stroke="#fff" stroke-width="4" stroke-linecap="round"/>' + eyes([[4, 0]], 3.4) + cheeks([[2, 12]], 3.2) + '</g></g>' +
       mud([[-30, -100, 9], [30, -88, 7]]);
   } };
+
+  /* ── feeding rigs (animal units, facing right, ground y = 0) ──
+     p: neck pivot · r: head-down angle (deg) · t: head shift when down · m: mouth at rest
+     ring: [centre x, half width] of the feet ellipse. FarmKit.rig(name).down = mouth with the head down. */
+  var RIG = {
+    kucing:  { p: [18, -40], r: 46, t: [6, 12], m: [35, -46], ring: [2, 56] },
+    ayam:    { p: [20, -50], r: 64, t: [8, 15], m: [50, -56], ring: [2, 40] },
+    kelinci: { p: [12, -42], r: 34, t: [8, 22], m: [22, -48], ring: [-4, 40] },
+    domba:   { p: [46, -60], r: 16, t: [10, 20], m: [50, -41], ring: [-2, 62] },
+    kambing: { p: [50, -86], r: 62, t: [0, 2], m: [84, -110], ring: [2, 72] },
+    sapi:    { p: [60, -100], r: 58, t: [0, 4], m: [96, -98], ring: [2, 98] }
+  };
+  function rig(name) {
+    var a = A[name], g = RIG[name]; if (!a || !g) return null;
+    var vb = a.vb.split(" ").map(Number), th = g.r * Math.PI / 180, dx = g.m[0] - g.p[0], dy = g.m[1] - g.p[1];
+    return { vb: vb, p: g.p, r: g.r, t: g.t, m: g.m, ring: g.ring,
+      down: [g.p[0] + dx * Math.cos(th) - dy * Math.sin(th) + g.t[0], g.p[1] + dx * Math.sin(th) + dy * Math.cos(th) + g.t[1]] };
+  }
+  /* bend the neck: f = 0 (rest) … 1 (head down), plus an extra nibble angle in degrees */
+  function dip(svg, f, nib) {
+    var n = svg && svg.querySelector(".fa-neck"), g = RIG[svg && svg.getAttribute("data-animal")]; if (!n || !g) return;
+    if (!f && !nib) { n.removeAttribute("transform"); return; }
+    /* .farm-a * uses transform-box:fill-box, which also moves the origin of a transform attribute to the
+       group's bounding box corner, so wrap the wanted transform to cancel that out (same in every engine) */
+    var bb = n.getBBox(), bx = bb.x.toFixed(2), by = bb.y.toFixed(2);
+    n.setAttribute("transform", "translate(" + (-bx) + " " + (-by) + ") translate(" + (g.t[0] * f).toFixed(2) + " " + (g.t[1] * f).toFixed(2) + ") rotate(" + (g.r * f + (nib || 0)).toFixed(2) + " " + g.p[0] + " " + g.p[1] + ") translate(" + bx + " " + by + ")");
+  }
 
   /* ── props ── */
   var P = {
@@ -290,6 +317,6 @@
   }
   if (typeof document !== "undefined") { if (document.head) injectCss(); else document.addEventListener("DOMContentLoaded", injectCss); }
 
-  window.FarmKit = { animal: animal, prop: prop, setState: setState, ANIMALS: ANIMALS, PROPS: PROPS,
+  window.FarmKit = { animal: animal, prop: prop, setState: setState, rig: rig, dip: dip, ANIMALS: ANIMALS, PROPS: PROPS,
     STATES: ["idle", "happy", "eat", "hungry", "thirsty", "dirty", "sleep", "sad", "walk"] };
 })();

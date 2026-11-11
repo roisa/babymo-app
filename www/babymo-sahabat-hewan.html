@@ -68,8 +68,6 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .spot{position:absolute;transform:translate(-50%,-94%);cursor:pointer;z-index:2}
 .spot .farm-a{width:100%;height:auto;display:block}
 .spot.back{z-index:2}.spot.front{z-index:5}
-.spot .ring{position:absolute;left:8%;right:8%;bottom:-4%;height:16%;border-radius:50%;background:rgba(255,236,120,0);transition:.25s;pointer-events:none}
-.spot.sel .ring{background:rgba(255,236,120,.55);box-shadow:0 0 0 3px #FFE066,0 0 18px 6px rgba(255,224,102,.7)}
 .spot .tag{position:absolute;left:50%;top:-12%;transform:translateX(-50%);font-size:11px;font-weight:900;color:#fff;background:rgba(20,50,30,.62);padding:2px 8px;border-radius:999px;white-space:nowrap;pointer-events:none}
 .spot.locked{display:none}
 .chicks{position:absolute;z-index:5;display:flex;gap:2px;transform:translate(-50%,-94%);pointer-events:none}
@@ -88,16 +86,11 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .prop .farm-p{width:100%;height:auto;display:block}
 .prop.brush{animation:brushmv .45s ease-in-out infinite alternate}@keyframes brushmv{from{transform:translate(-80%,-100%) rotate(-8deg)}to{transform:translate(-20%,-100%) rotate(8deg)}}
 .prop.ball{transition:left .7s cubic-bezier(.3,.6,.4,1),top .7s cubic-bezier(.3,-0.6,.4,1)}
-.fly{position:fixed;z-index:50;font-size:30px;pointer-events:none;transition:transform .8s cubic-bezier(.5,-0.3,.7,1),opacity .8s}
 .hint{position:absolute;left:10px;right:10px;top:10px;z-index:9;display:flex;justify-content:center;pointer-events:none}
 .hint span{background:rgba(255,255,255,.95);color:#1C3A26;font-weight:900;font-size:14px;line-height:1.3;padding:8px 14px;border-radius:16px;box-shadow:0 6px 16px -6px rgba(0,0,0,.35);text-align:center;max-width:100%}
 .pop{position:absolute;left:50%;top:44%;transform:translate(-50%,-50%) scale(.6);z-index:12;opacity:0;pointer-events:none;font-family:'Fredoka','Nunito',sans-serif;font-size:22px;font-weight:700;color:#fff;text-align:center;padding:10px 16px;border-radius:18px;background:rgba(20,50,30,.84);transition:all .25s cubic-bezier(.3,1.5,.5,1);width:max-content;max-width:88%;line-height:1.3}
 .pop.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
 .pop small{display:block;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;opacity:.92;margin-top:3px}
-.night{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:0;transition:opacity 1s;background:radial-gradient(circle at 80% 12%,rgba(255,244,200,.55) 0 4%,transparent 4.5%),linear-gradient(180deg,rgba(14,22,60,.9),rgba(20,30,70,.72))}
-.night.on{opacity:1}
-.night i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;animation:tw 1.4s ease-in-out infinite alternate}
-@keyframes tw{to{opacity:.2}}
 .tools{width:100%;max-width:440px;display:grid;grid-template-columns:repeat(5,1fr);gap:7px;margin-top:10px}
 .tool{min-height:68px;border-radius:20px;font:inherit;font-weight:900;font-size:13px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card2);color:var(--ink);border:1.5px solid var(--border);position:relative;transition:opacity .2s,transform .1s;padding:4px 2px}
 .tool span{font-size:25px;line-height:1}
@@ -106,8 +99,6 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .tool.go{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.25)}
 .tool.go::after{content:'';position:absolute;inset:-3px;border-radius:22px;border:2px solid var(--gold);animation:pulse 1.4s ease-in-out infinite;pointer-events:none}
 @keyframes pulse{0%,100%{opacity:.15}50%{opacity:1}}
-#sleepBtn.go{border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.3);animation:nudge 1.4s ease-in-out infinite}
-@keyframes nudge{50%{transform:scale(1.06)}}
 
 /* ── Modal ── */
 .modal{position:fixed;inset:0;z-index:30;display:none;align-items:flex-end;justify-content:center;background:rgba(5,15,8,.55);padding:16px 12px calc(14px + env(safe-area-inset-bottom))}
@@ -158,7 +149,7 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .stageframe>.stage{position:absolute!important;top:0;left:50%;height:100%!important;width:auto!important;max-height:none!important;aspect-ratio:400/560;transform:translateX(-50%);border-radius:0!important;box-shadow:none!important;background:transparent!important}
 .stagefill{position:absolute;inset:0;pointer-events:none}
 .stagefill svg{width:100%;height:100%;display:block}
-.stageframe>.night,.stageframe>.rain{position:absolute;inset:0}
+.stageframe>.night,.stageframe>.rain,.stageframe>.dusk{position:absolute;inset:0}
 @media (orientation:landscape) and (max-height:600px){
   .screen.on.land{display:grid!important;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto minmax(0,1fr);column-gap:12px;
     padding-left:max(14px,env(safe-area-inset-left));padding-right:max(14px,env(safe-area-inset-right));padding-top:calc(8px + env(safe-area-inset-top))}
@@ -193,6 +184,160 @@ h1{color:#E8590C}
 .mnote.morn{border-color:#FFC83D;background:linear-gradient(135deg,rgba(255,200,61,.22),rgba(255,200,61,.08))}
 .mnote small{display:block;font-size:13px;color:var(--soft);margin-top:2px}
 .tool{border-radius:20px!important}
+</style>
+<style id="hewan-fx">
+/* ═════ selection disc, feeders, care sparkles ═════ */
+.spot .wob{position:relative;transform-origin:50% 95%}
+.spot .wob.boing{animation:boing .6s cubic-bezier(.3,1.3,.5,1)}
+@keyframes boing{0%{transform:none}25%{transform:scale(1.07,.91)}55%{transform:scale(.96,1.06)}80%{transform:scale(1.01,.99)}100%{transform:none}}
+.spot .flip.mir{transform:scaleX(-1)}
+.spot .flip.mir .tag{transform:scaleX(-1)}
+.spot .lay{position:absolute;left:0;top:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.spot .lay-b{z-index:0}.spot .farm-a{position:relative;z-index:1}.spot .lay-f{z-index:2}
+.ring{opacity:0;transition:opacity .35s ease}
+.spot.sel .ring{opacity:1}
+.ring .rg{fill:none;stroke-linecap:round}
+.ring .halo{stroke:#FFD23F;stroke-opacity:.38;stroke-width:12}
+.ring .core{stroke:#FFE45A;stroke-width:4.4}
+.ring .disc{fill:url(#ringDisc)}
+.spot.sel .ring .halo{animation:rhalo 1.6s ease-in-out infinite}
+.spot.sel .ring .disc{animation:rdisc 1.6s ease-in-out infinite}
+@keyframes rhalo{50%{stroke-width:20;stroke-opacity:.14}}
+@keyframes rdisc{50%{opacity:.55}}
+.fdrop{animation:fdrop .5s cubic-bezier(.3,1.45,.5,1) both}
+@keyframes fdrop{from{transform:translateY(-34px);opacity:0}45%{opacity:1}}
+.feed{transition:opacity .3s}
+.feed.fout{opacity:0}
+.feed .food{transform-box:fill-box;transform-origin:50% 100%}
+.feed.eating .food{animation:fshrink var(--eat,1.6s) cubic-bezier(.4,0,.7,1) forwards}
+@keyframes fshrink{to{transform:scale(.4,.14);opacity:.35}}
+.feed .water{transform-box:fill-box;transform-origin:50% 60%}
+.feed.eating .water{animation:wdrop var(--eat,1.6s) cubic-bezier(.4,0,.7,1) forwards}
+@keyframes wdrop{to{transform:translateY(2px) scale(.7,.55)}}
+.feed .rip{transform-box:fill-box;transform-origin:50% 50%;opacity:0}
+.feed.eating .rip{animation:rip 1s ease-out infinite}
+.feed.eating .rip.r2{animation-delay:.5s}
+@keyframes rip{0%{opacity:.85;transform:scale(.3)}100%{opacity:0;transform:scale(1.4)}}
+.feed .crumb{opacity:0}
+.feed.eating .crumb{animation:crumb .8s cubic-bezier(.3,.6,.6,1) infinite;animation-delay:var(--d)}
+@keyframes crumb{0%{opacity:0;transform:translate(0,0)}15%{opacity:1}100%{opacity:0;transform:translate(var(--cx),var(--cy))}}
+.pfx{position:absolute;z-index:8;width:0;height:0;pointer-events:none}
+.pfx.fixed{position:fixed;z-index:28}
+.pfx i{position:absolute;left:0;top:0;width:var(--s);height:var(--s);margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2);opacity:0;animation:pfly var(--t,1s) cubic-bezier(.2,.75,.35,1) var(--dl,0s) forwards}
+.pfx i svg{width:100%;height:100%;display:block}
+@keyframes pfly{0%{opacity:0;transform:translate(0,0) scale(.3)}15%{opacity:1}70%{opacity:1}100%{opacity:0;transform:translate(var(--x),var(--y)) scale(1) rotate(var(--r))}}
+.farm-a.fa-graze .ey-open{display:none}.farm-a.fa-graze .ey-closed{display:inline}
+
+/* ═════ idle life ═════ */
+.stage svg.life{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;will-change:transform}
+.cloud.c3{animation-duration:58s;animation-delay:-40s}
+.birds{animation:birds 34s linear infinite;animation-delay:-6s}
+.birds path{fill:none;stroke:#3D5A6C;stroke-width:1.6;stroke-linecap:round}
+.bird path{transform-box:fill-box;transform-origin:50% 100%;animation:flap .32s ease-in-out infinite alternate}
+@keyframes flap{to{transform:scaleY(-.6)}}
+@keyframes birds{0%{transform:translate(-40px,74px);opacity:0}2%{opacity:1}26%{transform:translate(440px,34px);opacity:1}27%,100%{transform:translate(440px,34px);opacity:0}}
+.tuft{transform-box:fill-box;transform-origin:50% 100%;animation:gsway 3.4s ease-in-out infinite alternate}
+.tuft.t2{animation-duration:4.1s;animation-delay:-1.3s}.tuft.t3{animation-duration:2.9s;animation-delay:-2.2s}
+@keyframes gsway{from{transform:rotate(-6deg)}to{transform:rotate(6deg)}}
+.bfly .bfp{animation:bf1 26s ease-in-out infinite}
+.bfly.b2 .bfp{animation:bf2 31s ease-in-out infinite;animation-delay:-12s}
+.bfly .wing{transform-box:fill-box;transform-origin:100% 50%;animation:wflap .18s ease-in-out infinite alternate}
+.bfly .wing.wr{transform-origin:0% 50%}
+@keyframes wflap{to{transform:scaleX(.25)}}
+@keyframes bf1{0%{transform:translate(-20px,470px);opacity:0}3%{opacity:1}12%{transform:translate(60px,440px)}22%{transform:translate(120px,476px)}32%{transform:translate(190px,446px)}42%{transform:translate(260px,480px)}52%{transform:translate(330px,452px)}60%{transform:translate(420px,430px);opacity:1}61%,100%{transform:translate(420px,430px);opacity:0}}
+@keyframes bf2{0%{transform:translate(420px,520px);opacity:0}3%{opacity:1}14%{transform:translate(340px,500px)}26%{transform:translate(270px,536px)}38%{transform:translate(190px,506px)}50%{transform:translate(110px,530px)}60%{transform:translate(-20px,490px);opacity:1}61%,100%{transform:translate(-20px,490px);opacity:0}}
+
+/* ═════ time of day: day · golden (time to sleep) · sunset · night · dawn ═════ */
+.sky-gold,.sky-dusk,.sky-dawn{opacity:0;transition:opacity 2.4s ease}
+[data-tod=golden] .sky-gold{opacity:1}
+[data-tod=sunset] .sky-dusk,[data-tod=night] .sky-dusk{opacity:1}
+[data-tod=dawn] .sky-dawn{opacity:1}
+.stage .sun{transition:transform 2.6s cubic-bezier(.45,0,.4,1)}
+.stage .sun circle{transition:fill 2.4s ease}
+[data-tod=golden] .stage .sun{transform:translateY(42px)}
+[data-tod=golden] .stage .sun circle{fill:#FFC85A}
+[data-tod=sunset] .stage .sun,[data-tod=night] .stage .sun{transform:translateY(128px)}
+[data-tod=sunset] .stage .sun circle,[data-tod=night] .stage .sun circle{fill:#FF8A4C}
+[data-tod=dawn] .stage .sun{transform:translateY(30px)}
+[data-tod=dawn] .stage .sun circle{fill:#FFB680}
+.stage .clouds{transition:fill 2.4s ease}
+[data-tod=golden] .stage .clouds{fill:#FFF0D2}
+[data-tod=sunset] .stage .clouds,[data-tod=night] .stage .clouds{fill:#FFC0AE}
+[data-tod=dawn] .stage .clouds{fill:#FFE2EA}
+.stage .win{transition:fill 1.6s ease}
+[data-tod=sunset] .stage .win,[data-tod=night] .stage .win{fill:#FFD25E}
+.stage .winglow{opacity:0;transition:opacity 1.6s ease}
+[data-tod=sunset] .stage .winglow,[data-tod=night] .stage .winglow{opacity:1}
+.stage .estars circle{opacity:0;transition:opacity 1.2s ease}
+[data-tod=sunset] .stage .estars circle,[data-tod=night] .stage .estars circle{opacity:1}
+[data-tod=sunset] .stage .estars circle{animation:twk 1.7s ease-in-out infinite alternate}
+[data-tod=sunset] .stage .estars circle:nth-child(1){transition-delay:.9s}[data-tod=sunset] .stage .estars circle:nth-child(2){transition-delay:1.5s}
+[data-tod=sunset] .stage .estars circle:nth-child(3){transition-delay:1.9s}[data-tod=sunset] .stage .estars circle:nth-child(n+4){transition-delay:2.3s}
+.stage .estars circle:nth-child(2n){animation-delay:-.8s}.stage .estars circle:nth-child(3n){animation-duration:2.3s}
+@keyframes twk{from{fill-opacity:1}to{fill-opacity:.3}}
+[data-tod=night] .birds,[data-tod=night] .bfly,[data-tod=sunset] .bfly{visibility:hidden}
+.dusk{position:absolute;inset:0;z-index:9;pointer-events:none;opacity:0;transition:opacity 2.4s ease;background:linear-gradient(180deg,rgba(255,150,90,0) 0%,rgba(255,140,90,.10) 32%,rgba(255,110,80,.24) 100%)}
+[data-tod=golden] .dusk{opacity:.55}
+[data-tod=sunset] .dusk,[data-tod=night] .dusk{opacity:1}
+[data-tod=dawn] .dusk{opacity:.4}
+.night{position:absolute;inset:0;z-index:10;pointer-events:none;opacity:0;transition:opacity 1.8s ease;background:linear-gradient(180deg,rgba(12,16,58,.88) 0%,rgba(26,30,90,.64) 36%,rgba(16,22,64,.56) 100%)}
+.night.on{opacity:1}
+.night>i{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;box-shadow:0 0 4px 1px rgba(255,255,255,.55)}
+.night.on>i{animation:twk2 1.8s ease-in-out infinite alternate}
+@keyframes twk2{from{opacity:1}to{opacity:.25}}
+.night .nstage{position:absolute;top:0;left:50%;height:100%;aspect-ratio:400/560;transform:translateX(-50%)}
+.night .moon{position:absolute;left:11%;top:5%;width:11%;transform:translateY(90%) rotate(-20deg);opacity:0;transition:transform 2.4s cubic-bezier(.2,.7,.3,1),opacity 1.4s ease;filter:drop-shadow(0 0 10px rgba(255,240,190,.7))}
+.night .moon svg{width:100%;display:block}
+.night.on .moon{transform:none;opacity:1}
+.night .wl{position:absolute;width:3.41%;height:1.99%;top:25.06%;border-radius:2px;background:#FFE07A;box-shadow:0 0 6px 2px rgba(255,210,100,.85),0 0 22px 9px rgba(255,180,70,.35)}
+.night .ff{position:absolute;width:5px;height:5px;margin:-2.5px;border-radius:50%;background:#FFF7A8;box-shadow:0 0 8px 3px rgba(255,240,120,.65);opacity:0}
+.night.on .ff{animation:ff 5.5s ease-in-out infinite}
+@keyframes ff{0%,100%{opacity:0;transform:translate(0,0)}25%{opacity:1}50%{opacity:.4;transform:translate(14px,-12px)}75%{opacity:1;transform:translate(-8px,-20px)}}
+.tod-now *,.tod-now{transition:none!important}
+@media (orientation:landscape) and (max-height:600px){.night .nstage{height:122%;top:auto;bottom:0}}
+.stageframe>.hint{z-index:11}
+.stageframe>.pop{z-index:12}
+#sleepBtn{position:relative;isolation:isolate;transition:background .8s ease,color .8s ease,border-color .8s ease}
+#sleepBtn.go{background:linear-gradient(135deg,#FFC061,#FF7E5F 55%,#B85FC4);color:#fff;border-color:rgba(255,226,160,.95);text-shadow:0 1px 2px rgba(120,40,40,.35);animation:sbreath 1.9s ease-in-out infinite}
+#sleepBtn.go::before{content:'';position:absolute;inset:-10px -12px;border-radius:999px;background:radial-gradient(closest-side,rgba(255,176,96,.85),rgba(255,140,100,.35) 60%,rgba(255,140,100,0));z-index:-1;animation:sglow 1.9s ease-in-out infinite;pointer-events:none}
+#sleepBtn.go::after{content:'';position:absolute;right:6px;top:3px;width:7px;height:7px;background:#FFF6C8;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:stw 1.9s ease-in-out infinite}
+@keyframes sbreath{50%{transform:scale(1.06)}}
+@keyframes sglow{0%,100%{opacity:.4;transform:scale(.9)}50%{opacity:1;transform:scale(1.12)}}
+@keyframes stw{0%,100%{opacity:.2;transform:scale(.6) rotate(0)}50%{opacity:1;transform:scale(1.2) rotate(45deg)}}
+
+/* ═════ collect: a big glowing gift, tap to put it in the basket ═════ */
+.collect{position:fixed;inset:0;z-index:26;display:none;cursor:pointer;touch-action:manipulation}
+.collect.on{display:block}
+.collect .c-bg{position:absolute;inset:0;background:radial-gradient(circle at 50% 44%,rgba(70,50,10,.28),rgba(6,18,10,.74) 72%);opacity:0;transition:opacity .4s ease}
+.collect.show .c-bg{opacity:1}
+.collect .c-stage{position:absolute;left:50%;top:44%;width:0;height:0}
+.c-rays{position:absolute;left:-180px;top:-180px;width:360px;height:360px;border-radius:50%;background:repeating-conic-gradient(from 0deg,rgba(255,236,160,0) 0deg 10deg,rgba(255,236,160,.26) 10deg 20deg);-webkit-mask:radial-gradient(closest-side,#000 25%,transparent 100%);mask:radial-gradient(closest-side,#000 25%,transparent 100%);opacity:0;transition:opacity .5s ease;animation:spin 16s linear infinite}
+.c-glow{position:absolute;left:-125px;top:-125px;width:250px;height:250px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,250,210,.95),rgba(255,214,100,.6) 45%,rgba(255,190,60,0));opacity:0;transition:opacity .45s ease}
+.collect.show .c-rays{opacity:1}.collect.show .c-glow{opacity:1}
+.collect.idle .c-glow{animation:glowp 1.6s ease-in-out infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes glowp{50%{transform:scale(1.12);opacity:.8}}
+.c-item{position:absolute;left:-80px;top:-80px;width:160px;height:160px;will-change:transform}
+.c-item .c-shake{width:100%;height:100%;transform-origin:50% 88%}
+.c-item svg{width:100%;height:100%;display:block;filter:drop-shadow(0 10px 14px rgba(0,0,0,.28))}
+.collect.idle .c-shake{animation:cshake 1.9s ease-in-out infinite}
+@keyframes cshake{0%,46%,100%{transform:none}52%{transform:rotate(-9deg) scale(1.03)}58%{transform:rotate(8deg) scale(1.05)}64%{transform:rotate(-6deg) scale(1.03)}70%{transform:rotate(4deg)}76%{transform:rotate(-2deg)}82%{transform:none}20%{transform:translateY(-6px)}}
+.c-txt{position:absolute;left:0;right:0;top:calc(44% + 104px);text-align:center;pointer-events:none;opacity:0;transform:translateY(10px);transition:opacity .35s ease,transform .35s ease}
+.collect.idle .c-txt{opacity:1;transform:none}
+.c-txt b{display:block;font-family:'Fredoka','Nunito',sans-serif;font-size:30px;font-weight:700;color:#FFE27A;text-shadow:0 2px 10px rgba(0,0,0,.45)}
+.c-txt span{display:inline-block;margin-top:10px;padding:9px 18px;border-radius:999px;background:rgba(255,255,255,.96);color:#1C3A26;font-weight:900;font-size:17px;box-shadow:0 8px 20px -8px rgba(0,0,0,.5);animation:tapb 1.3s ease-in-out infinite}
+@keyframes tapb{50%{transform:scale(1.07)}}
+#basketBtn.bump{animation:bbump .55s cubic-bezier(.3,1.6,.5,1)}
+@keyframes bbump{0%{transform:none}30%{transform:scale(1.28,.86)}60%{transform:scale(.94,1.1)}100%{transform:none}}
+#basketN{display:inline-block}
+#basketN.tick{animation:ntick .5s cubic-bezier(.3,1.7,.5,1)}
+@keyframes ntick{0%{transform:scale(.4)}60%{transform:scale(1.6);color:#FFB000}100%{transform:none}}
+@media (prefers-reduced-motion:reduce){
+  .birds,.bird path,.tuft,.bfly .bfp,.bfly .wing,.cloud,.c-rays,.night.on>i,.night.on .ff,.stage .estars circle,#sleepBtn.go,#sleepBtn.go::before,#sleepBtn.go::after,.collect.idle .c-shake,.collect.idle .c-glow,.c-txt span,.spot.sel .ring .halo,.spot.sel .ring .disc,.feed.eating .crumb,.feed.eating .rip,.spot .wob.boing{animation:none!important}
+  .bfly,.birds{display:none}
+  .stage .sun,.night .moon{transition-duration:.01s!important}
+  .fdrop{animation-duration:.01s}
+}
 </style>
 <script src="bm-icons.js" defer></script>
 <script src="farm/farm-kit.js"></script>
@@ -236,10 +381,18 @@ h1{color:#E8590C}
         <defs>
           <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD3FF"/><stop offset="1" stop-color="#DDF3FF"/></linearGradient>
           <linearGradient id="grass" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9AD775"/><stop offset="1" stop-color="#62B852"/></linearGradient>
+          <linearGradient id="skyGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#86BFEA"/><stop offset=".62" stop-color="#FFD9A6"/><stop offset="1" stop-color="#FFE9BE"/></linearGradient>
+          <linearGradient id="skyDusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3C3F8E"/><stop offset=".42" stop-color="#B85E9C"/><stop offset=".78" stop-color="#FF8A66"/><stop offset="1" stop-color="#FFC277"/></linearGradient>
+          <linearGradient id="skyDawn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9CC3F0"/><stop offset=".6" stop-color="#FFCAD4"/><stop offset="1" stop-color="#FFE5C2"/></linearGradient>
+          <radialGradient id="winGlow"><stop offset="0" stop-color="#FFD25E" stop-opacity=".9"/><stop offset="1" stop-color="#FFB84D" stop-opacity="0"/></radialGradient>
         </defs>
         <rect width="400" height="200" fill="url(#sky)"/>
-        <circle cx="336" cy="54" r="22" fill="#FFE47A"/><circle cx="336" cy="54" r="32" fill="#FFE47A" opacity=".25"/>
-        <g fill="#fff" opacity=".92"><g class="cloud"><ellipse cx="40" cy="44" rx="32" ry="12"/><ellipse cx="58" cy="36" rx="18" ry="12"/></g><g class="cloud c2"><ellipse cx="20" cy="88" rx="26" ry="10"/><ellipse cx="34" cy="80" rx="15" ry="10"/></g></g>
+        <rect class="sky-gold" width="400" height="200" fill="url(#skyGold)"/>
+        <rect class="sky-dusk" width="400" height="200" fill="url(#skyDusk)"/>
+        <rect class="sky-dawn" width="400" height="200" fill="url(#skyDawn)"/>
+        <g class="estars" fill="#FFF8E0"><circle cx="64" cy="26" r="1.6"/><circle cx="150" cy="18" r="1.2"/><circle cx="228" cy="40" r="1.5"/><circle cx="286" cy="16" r="1.1"/><circle cx="110" cy="60" r="1.1"/><circle cx="380" cy="34" r="1.3"/></g>
+        <g class="sun"><circle class="sun-halo" cx="336" cy="54" r="32" fill="#FFE47A" opacity=".25"/><circle class="sun-core" cx="336" cy="54" r="22" fill="#FFE47A"/></g>
+        <g class="clouds" fill="#fff" opacity=".92"><g class="cloud"><ellipse cx="40" cy="44" rx="32" ry="12"/><ellipse cx="58" cy="36" rx="18" ry="12"/></g><g class="cloud c2"><ellipse cx="20" cy="88" rx="26" ry="10"/><ellipse cx="34" cy="80" rx="15" ry="10"/></g><g class="cloud c3"><ellipse cx="10" cy="22" rx="22" ry="8"/><ellipse cx="22" cy="16" rx="12" ry="8"/></g></g>
         <path d="M0 160 Q80 112 170 150 Q250 112 330 146 Q370 130 400 140 V220 H0Z" fill="#7CC4A0"/>
         <path d="M0 176 Q100 150 200 172 Q300 150 400 170 V230 H0Z" fill="#8ED08A"/>
         <!-- barn -->
@@ -247,7 +400,7 @@ h1{color:#E8590C}
           <path d="M-0 -100 h180 v100 h-180z" transform="translate(10 160)" fill="#D9534F"/>
           <path d="M-4 64 l104 -70 l104 70z" fill="#8E3B37"/><path d="M8 60 l92 -60 l92 60" stroke="#FFF7E8" stroke-width="7" fill="none" stroke-linejoin="round"/>
           <rect x="66" y="86" width="68" height="74" fill="#7A2E2B"/><path d="M66 86 l68 74 M134 86 l-68 74" stroke="#FFF7E8" stroke-width="5"/><rect x="66" y="86" width="68" height="74" fill="none" stroke="#FFF7E8" stroke-width="6"/>
-          <circle cx="100" cy="38" r="12" fill="#FFF7E8"/><rect x="20" y="76" width="26" height="22" fill="#FFE8A3" stroke="#FFF7E8" stroke-width="4"/><rect x="154" y="76" width="26" height="22" fill="#FFE8A3" stroke="#FFF7E8" stroke-width="4"/>
+          <circle cx="100" cy="38" r="12" fill="#FFF7E8"/><g class="winglow"><ellipse cx="33" cy="87" rx="34" ry="28" fill="url(#winGlow)"/><ellipse cx="167" cy="87" rx="34" ry="28" fill="url(#winGlow)"/></g><rect class="win" x="20" y="76" width="26" height="22" fill="#FFE8A3" stroke="#FFF7E8" stroke-width="4"/><rect class="win" x="154" y="76" width="26" height="22" fill="#FFE8A3" stroke="#FFF7E8" stroke-width="4"/>
         </g>
         <!-- tree -->
         <g transform="translate(352 120)"><rect x="-6" y="40" width="12" height="60" rx="5" fill="#9A6236"/><circle cx="0" cy="30" r="34" fill="#3FA85B"/><circle cx="-20" cy="44" r="22" fill="#4CB868"/><circle cx="20" cy="46" r="22" fill="#4CB868"/></g>
@@ -261,9 +414,16 @@ h1{color:#E8590C}
         <g fill="#4DA845"><path d="M20 520l4-14 4 14M380 470l4-14 4 14M360 540l4-12 4 12M40 470l4-12 4 12M150 540l4-12 4 12"/></g>
         <g><circle cx="30" cy="490" r="5" fill="#FF8FB8"/><circle cx="30" cy="490" r="2" fill="#FFE066"/><circle cx="372" cy="512" r="5" fill="#FFE066"/><circle cx="372" cy="512" r="2" fill="#FF9A3C"/><circle cx="210" cy="548" r="4" fill="#fff"/><circle cx="210" cy="548" r="1.6" fill="#FFE066"/></g>
       </svg>
+      <svg class="life" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true">
+        <g class="birds"><g class="bird"><path d="M0 0q5 -5 10 0q5 -5 10 0"/></g><g class="bird" transform="translate(-18 8) scale(.8)"><path d="M0 0q5 -5 10 0q5 -5 10 0"/></g><g class="bird" transform="translate(-30 -6) scale(.7)"><path d="M0 0q5 -5 10 0q5 -5 10 0"/></g></g>
+        <g class="tufts" fill="#58B04A"><path class="tuft" d="M58 452q-3 -12 -8 -16q7 4 10 14q1 -12 5 -18q0 10 -2 20z"/><path class="tuft t2" d="M300 470q-3 -12 -8 -16q7 4 10 14q1 -12 5 -18q0 10 -2 20z"/><path class="tuft t3" d="M180 520q-3 -12 -8 -16q7 4 10 14q1 -12 5 -18q0 10 -2 20z"/><path class="tuft t2" d="M254 396q-2 -9 -6 -12q5 3 8 10q1 -9 4 -13q0 7 -2 15z"/><path class="tuft t3" d="M28 392q-2 -9 -6 -12q5 3 8 10q1 -9 4 -13q0 7 -2 15z"/><path class="tuft" d="M344 548q-3 -12 -8 -16q7 4 10 14q1 -12 5 -18q0 10 -2 20z"/></g>
+        <g class="bfly b1"><g class="bfp"><g class="wing"><path d="M0 0q-9 -10 -10 -2q0 6 10 2z" fill="#FF9EC7"/><path d="M0 0q-7 8 -2 9q3 0 2 -9z" fill="#FFC1DA"/></g><g class="wing wr"><path d="M0 0q9 -10 10 -2q0 6 -10 2z" fill="#FF9EC7"/><path d="M0 0q7 8 2 9q-3 0 -2 -9z" fill="#FFC1DA"/></g><rect x="-1" y="-4" width="2" height="9" rx="1" fill="#5A3A55"/></g></g>
+        <g class="bfly b2"><g class="bfp"><g class="wing"><path d="M0 0q-9 -10 -10 -2q0 6 10 2z" fill="#FFD84D"/><path d="M0 0q-7 8 -2 9q3 0 2 -9z" fill="#FFE98F"/></g><g class="wing wr"><path d="M0 0q9 -10 10 -2q0 6 -10 2z" fill="#FFD84D"/><path d="M0 0q7 8 2 9q-3 0 -2 -9z" fill="#FFE98F"/></g><rect x="-1" y="-4" width="2" height="9" rx="1" fill="#5A4A2A"/></g></g>
+      </svg>
       <div id="spots"></div>
       <div class="mo" id="mo"><img id="moImg" src="baby-mo-poses/baby-mo-pose-04.webp" alt="Baby Mo"></div>
       <div id="props"></div>
+      <div class="dusk" id="dusk"></div>
       <div class="night" id="night"></div>
       <div class="hint"><span id="hint">Ketuk hewan untuk merawatnya.</span></div>
       <div class="pop" id="pop"></div>
@@ -293,6 +453,8 @@ h1{color:#E8590C}
   </div>
 </section>
 
+<div class="collect" id="collect" role="button" aria-live="polite"><div class="c-bg"></div><div class="c-stage"><div class="c-rays"></div><div class="c-glow"></div><div class="c-burst" id="cBurst"></div><div class="c-item" id="cItem"></div></div><div class="c-txt"><b id="cName"></b><span id="cTap"></span></div></div>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><radialGradient id="ringDisc"><stop offset="0" stop-color="#FFF3A6" stop-opacity=".75"/><stop offset=".7" stop-color="#FFE066" stop-opacity=".35"/><stop offset="1" stop-color="#FFE066" stop-opacity="0"/></radialGradient></defs></svg>
 <div class="modal" id="modal"><div class="mcard" id="mcard"></div></div>
 
 <script>
@@ -360,6 +522,135 @@ var ADAB = {
 };
 var ADAB_ORDER = ["pahala","minum","lembut","bersih","kucing","lapar","induk","susu","berbagi","umat"];
 
+
+/* ═════ motion helpers ═════ */
+function RM(){ try{ return matchMedia("(prefers-reduced-motion: reduce)").matches; }catch(e){ return false; } }
+/* a point in an animal's own drawing units → stage units (400×560), honouring a mirrored animal */
+function toStage(k,sx,sy){
+  var a=ANIMALS[k], vb=FarmKit.rig(k).vb, s=a.w/vb[2], fx=a.face<0 ? vb[0]+vb[2]-sx : sx-vb[0];
+  return { x:a.x-a.w/2+fx*s, y:a.y-0.94*vb[3]*s+(sy-vb[1])*s };
+}
+function ringSVG(k,part){
+  var R=FarmKit.rig(k), cx=R.ring[0], rx=R.ring[1], ry=rx*0.3, l=(cx-rx)+" 0", r=(cx+rx)+" 0";
+  if(part==="b") return '<g class="ring"><ellipse class="disc" cx="'+cx+'" cy="0" rx="'+(rx*1.04)+'" ry="'+(ry*1.04)+'"/>'+
+    '<path class="rg halo" d="M'+l+' A'+rx+' '+ry+' 0 0 1 '+r+'"/><path class="rg core" d="M'+l+' A'+rx+' '+ry+' 0 0 1 '+r+'"/></g>';
+  return '<g class="ring"><path class="rg halo" d="M'+l+' A'+rx+' '+ry+' 0 0 0 '+r+'"/><path class="rg core" d="M'+l+' A'+rx+' '+ry+' 0 0 0 '+r+'"/></g>';
+}
+/* food & water dishes, drawn in the animal's units so they scale with it and sit at its mouth.
+   w = dish width, base = where it stands (a little in front of the feet), food = what's in it */
+var FEED = {
+  kucing:  { w:46, base:7, food:"fish",   nib:5 },
+  ayam:    { w:50, base:6, food:"grain",  nib:7 },
+  kelinci: { w:44, base:6, food:"carrot", nib:5 },
+  domba:   { w:56, base:7, food:"grass",  nib:4 },
+  kambing: { w:62, base:9, food:"hay",    nib:4 },
+  sapi:    { w:80, base:10, food:"hay",   nib:3 }
+};
+var FOODART = {
+  fish:  { c:"#B9783F", g:'<path d="M-17 1Q-14 -9 0 -10Q14 -9 17 1Q0 6 -17 1Z" fill="#C98A4B"/><g fill="#A86A33"><circle cx="-9" cy="-3" r="2.6"/><circle cx="4" cy="-5" r="2.6"/><circle cx="-1" cy="-1" r="2.4"/><circle cx="11" cy="-1" r="2.2"/></g><g fill="#DDA45F"><circle cx="-3" cy="-6" r="2.5"/><circle cx="7" cy="0" r="2.2"/><circle cx="-12" cy="0" r="2.1"/></g><path d="M-4 -10q6 -4 12 0q-6 4 -12 0zM8 -10l4 -3v6z" fill="#FF9A5A"/>' },
+  grain: { c:"#E3A93A", g:'<path d="M-18 1Q-12 -5 0 -6Q12 -5 18 1Q0 5 -18 1Z" fill="#F2C14E"/><g fill="#D99A2B"><ellipse cx="-10" cy="-1" rx="1.8" ry="1.2"/><ellipse cx="-3" cy="-4" rx="1.8" ry="1.2"/><ellipse cx="5" cy="-2" rx="1.8" ry="1.2"/><ellipse cx="12" cy="0" rx="1.8" ry="1.2"/><ellipse cx="0" cy="1" rx="1.8" ry="1.2"/></g><g fill="#FFE596"><ellipse cx="-6" cy="0" rx="1.6" ry="1.1"/><ellipse cx="2" cy="-5" rx="1.6" ry="1.1"/><ellipse cx="9" cy="-3" rx="1.6" ry="1.1"/></g>' },
+  carrot:{ c:"#FF8A3D", g:'<ellipse cx="0" cy="-1" rx="15" ry="4.5" fill="#7CC456"/><path d="M-14 -2q4 -9 12 -6q-6 2 -12 6z" fill="#5FAE3E"/><path d="M-12 -3L8 -9q3 0 2 3L-11 -1z" fill="#FF8A3D"/><path d="M-4 -1L13 -8q3 0 2 3L-3 2z" fill="#FF9F55"/><path d="M9 -10q2 -5 6 -4M13 -9q4 -3 6 0M11 -7q5 -1 6 3" stroke="#4E9E36" stroke-width="1.6" fill="none" stroke-linecap="round"/>' },
+  grass: { c:"#4E9E36", g:'<path d="M-18 1Q-12 -8 0 -9Q12 -8 18 1Q0 6 -18 1Z" fill="#6DBE4B"/><path d="M-12 -2l-2 -9M-7 -4l1 -10M-1 -5l-2 -9M4 -5l3 -9M9 -3l1 -9M13 -1l4 -7" stroke="#4E9E36" stroke-width="1.8" stroke-linecap="round"/>' },
+  hay:   { c:"#C9A03A", g:'<path d="M-19 2Q-16 -12 0 -13Q16 -12 19 2Q0 7 -19 2Z" fill="#E9C55B"/><path d="M-14 -3q6 -8 14 -9M-8 -7q8 -3 18 -2M-16 0q10 -4 22 -2M2 -11q6 2 12 8M-4 -1q8 -6 16 -4" stroke="#C9A03A" stroke-width="1.5" fill="none" stroke-linecap="round"/><path d="M-6 -12l-4 -4M8 -11l5 -4M14 -6l6 -2" stroke="#D9B44A" stroke-width="1.4" stroke-linecap="round"/>' }
+};
+function feederSVG(k,kind){
+  /* the dish sits just in front of the lowered mouth: its back lip meets the muzzle, so the face stays visible */
+  var R=FarmKit.rig(k), F=FEED[k], W=F.w, rx=W/2, base=F.base;
+  var rim=R.down[1]+W*0.03, H=base-rim, raised=H>W*0.62, cx=R.down[0]+W*(raised?0.08:0.2), ry=W*(raised?0.13:0.17), u=rx/22, f=1;
+  var water=kind==="water", wood=raised;
+  var C = wood ? { rim:"#A97341", inn:"#6E4A2A", body:"#B9824D", lip:"#C99662", line:"#8F5E33" }
+        : water ? { rim:"#3A8AC8", inn:"#2C6EA6", body:"#4FA3E0", lip:"#7CC0F2", line:"#3A8AC8" }
+        : { rim:"#D9604A", inn:"#A8483A", body:"#F07B5A", lip:"#FF9F80", line:"#D9604A" };
+  var irx=rx*0.86, iry=ry*0.74, iy=rim+ry*0.08;
+  var back='<ellipse cx="'+cx+'" cy="'+base+'" rx="'+(rx*1.08)+'" ry="'+(ry*0.6)+'" fill="#000" opacity=".16"/>'+
+    '<ellipse cx="'+cx+'" cy="'+rim+'" rx="'+rx+'" ry="'+ry+'" fill="'+C.rim+'"/><ellipse cx="'+cx+'" cy="'+iy+'" rx="'+irx+'" ry="'+iry+'" fill="'+C.inn+'"/>';
+  var inner = water
+    ? '<ellipse class="water" cx="0" cy="'+(iry/u*0.1)+'" rx="'+(irx/u*0.97)+'" ry="'+(iry/u*0.92)+'" fill="#63C3FF"/><path d="M-12 -1.2q5 -1.6 10 0M4 1.4q4 -1 8 0" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round" opacity=".75" class="water"/>'+
+      '<ellipse class="rip" cx="'+((R.down[0]-cx)/u)+'" cy="0" rx="6" ry="2" fill="none" stroke="#fff" stroke-width="1"/><ellipse class="rip r2" cx="'+((R.down[0]-cx)/u)+'" cy="0" rx="6" ry="2" fill="none" stroke="#fff" stroke-width="1"/>'
+    : '<g class="food">'+FOODART[F.food].g+'</g>';
+  back+='<g transform="translate('+cx+' '+iy+') scale('+u.toFixed(3)+')">'+inner+'</g>';
+  var lower='M'+(cx-rx)+' '+rim+' A'+rx+' '+ry+' 0 0 0 '+(cx+rx)+' '+rim;
+  var front='';
+  if(raised){
+    var bh=W*0.3, bot=rim+bh, lx=rx*0.66, lw=W*0.075;
+    [-1,1].forEach(function(sg){ var x=cx+sg*lx; front+='<rect x="'+(x-lw/2)+'" y="'+(bot-2)+'" width="'+lw+'" height="'+(base-bot+2)+'" rx="'+(lw*0.3)+'" fill="'+C.line+'"/><rect x="'+(x-lw*0.7)+'" y="'+(base-lw*0.5)+'" width="'+(lw*1.4)+'" height="'+(lw*0.6)+'" rx="'+(lw*0.25)+'" fill="#7A4E2A"/>'; });
+    front+='<path d="M'+(cx-lx)+' '+(bot+(base-bot)*0.55)+' L'+(cx+lx)+' '+(bot+(base-bot)*0.55)+'" stroke="'+C.line+'" stroke-width="'+(lw*0.6)+'" stroke-linecap="round"/>';
+    front+='<path d="'+lower+' L'+(cx+rx*0.94)+' '+bot+' A'+(rx*0.94)+' '+(ry*0.9)+' 0 0 1 '+(cx-rx*0.94)+' '+bot+' Z" fill="'+C.body+'"/>';
+    front+='<path d="M'+(cx-rx*0.97)+' '+(rim+bh*0.4)+' A'+(rx*0.97)+' '+ry+' 0 0 0 '+(cx+rx*0.97)+' '+(rim+bh*0.4)+' M'+(cx-rx*0.95)+' '+(rim+bh*0.75)+' A'+(rx*0.95)+' '+ry+' 0 0 0 '+(cx+rx*0.95)+' '+(rim+bh*0.75)+'" stroke="'+C.line+'" stroke-width="1.6" fill="none" opacity=".8"/>';
+  } else {
+    front+='<path d="'+lower+' C'+(cx+rx)+' '+(rim+H*0.8)+' '+(cx+rx*0.72)+' '+base+' '+cx+' '+base+' C'+(cx-rx*0.72)+' '+base+' '+(cx-rx)+' '+(rim+H*0.8)+' '+(cx-rx)+' '+rim+' Z" fill="'+C.body+'"/>'+
+      '<path d="M'+(cx-rx*0.62)+' '+(rim+H*0.5)+' q'+(rx*0.3)+' '+(H*0.28)+' '+(rx*0.7)+' '+(H*0.3)+'" stroke="#fff" stroke-width="'+(W*0.035)+'" fill="none" stroke-linecap="round" opacity=".35"/>';
+  }
+  front+='<path d="'+lower+' L'+(cx+irx)+' '+iy+' A'+irx+' '+iry+' 0 0 1 '+(cx-irx)+' '+iy+' Z" fill="'+C.lip+'"/>';
+  /* crumbs / drops that fall from the mouth while eating */
+  var col = water ? "#7FD0FF" : FOODART[F.food].c, mx=R.down[0], my=R.down[1], cr='';
+  [[-9,10],[8,12],[-4,14],[11,6],[-12,4]].forEach(function(d,i){
+    cr+='<circle class="crumb" cx="'+mx+'" cy="'+my+'" r="'+(W*(water?0.03:0.026)).toFixed(2)+'" fill="'+col+'" style="--cx:'+(d[0]*W/46).toFixed(1)+'px;--cy:'+(d[1]*W/46*(water?-0.6:1)).toFixed(1)+'px;--d:'+(i*0.16)+'s"/>';
+  });
+  front+=cr;
+  return { b:back, f:front };
+}
+function feeder(k,kind){
+  var el=spotEls[k], parts=feederSVG(k,kind), gs=[el.querySelector(".lay-b .feed"), el.querySelector(".lay-f .feed")];
+  gs[0].innerHTML='<g class="fdrop">'+parts.b+'</g>'; gs[1].innerHTML='<g class="fdrop">'+parts.f+'</g>';
+  gs.forEach(function(g){ g.classList.remove("eating","fout"); });
+  return {
+    eat:function(ms){ gs.forEach(function(g){ g.style.setProperty("--eat",ms+"ms"); g.classList.add("eating"); }); },
+    done:function(){ gs.forEach(function(g){ g.querySelectorAll(".crumb,.rip").forEach(function(c){ c.remove(); }); }); },
+    remove:function(){ gs.forEach(function(g){ g.classList.add("fout"); }); setTimeout(function(){ gs.forEach(function(g){ g.innerHTML=""; g.classList.remove("eating","fout"); }); },330); }
+  };
+}
+function clearFeeders(){ document.querySelectorAll(".spot .feed").forEach(function(g){ g.innerHTML=""; g.classList.remove("eating","fout"); }); }
+/* head down / up, and the little nibbles in between (rAF, so it stays smooth) */
+function neckTween(svg,a,b,ms){
+  return new Promise(function(res){
+    if(RM()){ FarmKit.dip(svg,b); res(); return; }
+    var t0=performance.now();
+    (function step(now){ var p=Math.min(1,(now-t0)/ms), e=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2; FarmKit.dip(svg,a+(b-a)*e); if(p<1) requestAnimationFrame(step); else res(); })(t0);
+  });
+}
+function nibble(svg,ms,amp){
+  return new Promise(function(res){
+    if(RM()){ setTimeout(res,ms); return; }
+    var t0=performance.now();
+    (function step(now){ var t=now-t0, p=t/ms, env=Math.min(1,p*5,(1-p)*5);
+      FarmKit.dip(svg,1,(0.5-0.5*Math.cos(t/1000*Math.PI*2*2.4))*amp*env-amp*0.25*env);
+      if(p<1) requestAnimationFrame(step); else { FarmKit.dip(svg,1); res(); } })(t0);
+  });
+}
+/* tiny hearts / sparkles / drops that float up from an animal */
+var SHAPES = {
+  heart:'<svg viewBox="0 0 24 22"><path d="M12 21C5 15 1 11.5 1 7a5.5 5.5 0 0 1 11-1 5.5 5.5 0 0 1 11 1c0 4.5-4 8-11 14z" fill="#FF6F9C"/><path d="M6 5.5a2.6 2.6 0 0 1 3 -1" stroke="#fff" stroke-width="1.6" fill="none" stroke-linecap="round" opacity=".7"/></svg>',
+  star:'<svg viewBox="0 0 24 24"><path d="M12 0l2.6 9.4L24 12l-9.4 2.6L12 24l-2.6-9.4L0 12l9.4-2.6z" fill="#FFE066"/></svg>',
+  spark:'<svg viewBox="0 0 24 24"><path d="M12 2l1.8 8.2L22 12l-8.2 1.8L12 22l-1.8-8.2L2 12l8.2-1.8z" fill="#FFFFFF"/></svg>',
+  drop:'<svg viewBox="0 0 16 22"><path d="M8 1C5 7 2 10 2 14a6 6 0 0 0 12 0c0-4-3-7-6-13z" fill="#5BC0FF"/><path d="M5.5 14a2.5 2.5 0 0 0 2 2.6" stroke="#fff" stroke-width="1.4" fill="none" stroke-linecap="round"/></svg>'
+};
+function particles(n,kinds,spread,dist,size){
+  var h=''; if(RM()) n=Math.min(n,3);
+  for(var i=0;i<n;i++){ var ang=-Math.PI/2+(Math.random()-.5)*spread, d=dist*(0.6+Math.random()*0.6), sz=size*(0.75+Math.random()*0.5);
+    h+='<i style="--x:'+(Math.cos(ang)*d).toFixed(1)+'px;--y:'+(Math.sin(ang)*d).toFixed(1)+'px;--r:'+((Math.random()-.5)*70).toFixed(0)+'deg;--s:'+sz.toFixed(1)+'px;--dl:'+(i*45)+'ms;--t:'+(850+Math.random()*450).toFixed(0)+'ms">'+SHAPES[kinds[i%kinds.length]]+'</i>'; }
+  return h;
+}
+function burst(k,kinds,n){
+  var R=FarmKit.rig(k), p=toStage(k,R.m[0],R.m[1]-18), c=document.createElement("div");
+  c.className="pfx"; c.style.left=pct(p.x,400); c.style.top=pct(p.y,560); c.innerHTML=particles(n||7,kinds,1.9,58,16);
+  $("stage").appendChild(c); setTimeout(function(){ c.remove(); },1900);
+}
+function burstAt(x,y,kinds,n,spread,dist,size){
+  var c=document.createElement("div"); c.className="pfx fixed"; c.style.left=x+"px"; c.style.top=y+"px";
+  c.innerHTML=particles(n,kinds,spread,dist,size); document.body.appendChild(c); setTimeout(function(){ c.remove(); },1900);
+}
+function boing(k){ var w=spotEls[k]&&spotEls[k].querySelector(".wob"); if(!w||RM()) return; w.classList.remove("boing"); void w.offsetWidth; w.classList.add("boing"); }
+/* the whole eat / drink moment: dish appears at the mouth, head goes down, nibble, head up */
+async function serve(k,kind){
+  var svg=spotEls[k].querySelector(".farm-a"), F=FEED[k], EAT=1700;
+  var fd=feeder(k,kind); sfx("tap");
+  await wait(520);
+  FarmKit.setState(svg,"graze"); await neckTween(svg,0,1,420);
+  fd.eat(EAT); await nibble(svg,EAT,F.nib);
+  fd.done(); await neckTween(svg,1,0,340);
+  fd.remove();
+}
 /* ═════ storage ═════ */
 var KEY = "bm_sahabat_hewan_v1";
 function freshAnimal(){ return { fed:false, water:false, clean:true, pet:false, got:false }; }
@@ -423,7 +714,11 @@ function buildSpots(){
   var h="";
   ORDER.forEach(function(k){
     var a=ANIMALS[k];
-    h+='<div class="spot '+a.row+'" data-k="'+k+'" style="left:'+pct(a.x,400)+';top:'+pct(a.y,560)+';width:'+pct(a.w,400)+'"><div class="ring"></div>'+FarmKit.animal(k)+'<div class="tag">'+pname(k)+'</div></div>';
+    var vb=FarmKit.rig(k).vb.join(" "), lay=function(c,inner){ return '<svg class="lay '+c+'" viewBox="'+vb+'" overflow="visible" aria-hidden="true">'+inner+'</svg>'; };
+    /* the selection disc is split: its back half is drawn behind the animal, its front half over the legs */
+    h+='<div class="spot '+a.row+'" data-k="'+k+'" style="left:'+pct(a.x,400)+';top:'+pct(a.y,560)+';width:'+pct(a.w,400)+'"><div class="wob"><div class="flip'+(a.face<0?' mir':'')+'">'+
+      lay("lay-b",ringSVG(k,"b")+'<g class="feed"></g>')+FarmKit.animal(k)+lay("lay-f",ringSVG(k,"f")+'<g class="feed"></g>')+
+      '</div></div><div class="tag">'+pname(k)+'</div></div>';
   });
   h+='<div class="chicks" id="chicks" style="left:'+pct(140,400)+';top:'+pct(440,560)+'"></div>';
   $("spots").innerHTML=h;
@@ -447,7 +742,7 @@ function renderAll(){
   ORDER.forEach(function(k){ renderAnimal(k); });
   $("chicks").innerHTML = D.chicks ? FarmKit.animal("anakAyam")+FarmKit.animal("anakAyam") : "";
   $("dayLbl").textContent=L("Hari ","Day ")+D.day+" · "+D.have.length+" "+L("sahabat","friends");
-  $("basketN").textContent=basketTotal();
+  $("basketN").textContent=basketTotal()-pendingBasket;
   renderTools();
 }
 
@@ -507,6 +802,7 @@ function renderTools(){
   var petBtn=document.querySelector('.tool[data-t="pet"]');
   petBtn.innerHTML = sel==="kucing" ? '<span>🧶</span>'+L("Main","Play") : '<span>🤲</span>'+L("Elus","Stroke");
   $("sleepBtn").classList.toggle("go", allCared() && !busy);
+  if(!todLock) setTod(allCared()?"golden":"day");   /* every friend cared for → the sun starts to set */
   if(busy) return;
   if(!sel){ hint(L("Ketuk hewan untuk merawatnya.","Tap an animal to look after it.")); return; }
   var n=pname(sel)+" ("+aname(sel).toLowerCase()+")";
@@ -558,28 +854,24 @@ async function doTool(t){
   busy=true; renderTools(); var svg=el.querySelector(".farm-a");
   if(t==="feed"){
     say("Bismillah"); hint(L("Bismillah… ","Bismillah… ")+L("beri makan "+pname(k),"feeding "+pname(k)));
-    pose("feed"); var bx=standFor(k).x<a.x ? a.x-a.w*0.32 : a.x+a.w*0.32;
-    var bowl=addProp("mangkuk",bx,a.y+6,a.row==="back"?40:46);
-    await wait(700); FarmKit.setState(svg,"eat"); sfx("tap"); await wait(1500);
-    s.fed=true; save(); bowl.style.opacity="0"; setTimeout(clearProps,300); renderAnimal(k); animalSound(a.snd); sfx("correct");
+    pose("feed"); await serve(k,"food");
+    s.fed=true; save(); renderAnimal(k); animalSound(a.snd); sfx("correct"); boing(k); burst(k,["heart","star","heart"],6);
     pose("happy"); await pop("🥣 "+L("Kenyang!","Yum!")+"<small>"+L(pname(k)+" makan dengan lahap.",pname(k)+" ate it all up.")+"</small>",1300);
     await lesson("pahala",{ title:"🥣 "+L("Bismillah!","Bismillah!"), text:L("Mo selalu membaca Bismillah sebelum memberi makan sahabatnya.","Mo always says Bismillah before feeding his friends.") });
   } else if(t==="water"){
-    pose("water"); var tx=standFor(k).x<a.x ? a.x-a.w*0.3 : a.x+a.w*0.3;
-    var tr=addProp("minum",tx,a.y+6,a.row==="back"?60:70);
-    await wait(600); FarmKit.setState(svg,"eat"); await wait(1400);
-    s.water=true; save(); tr.style.opacity="0"; setTimeout(clearProps,300); renderAnimal(k); sfx("correct");
+    pose("water"); await serve(k,"water");
+    s.water=true; save(); renderAnimal(k); sfx("correct"); boing(k); burst(k,["drop","spark","drop"],6);
     pose("happy"); await pop("💧 "+L("Segar!","Fresh!"),1100);
     await lesson("minum",{ title:"💧 "+L("Segar sekali!","So fresh!") });
   } else if(t==="clean"){
     pose("clean"); var br=addProp("sikat",a.x,a.y-a.w*0.35,a.row==="back"?46:40,"brush");
     sfx("tap"); await wait(1600);
-    s.clean=true; save(); br.remove(); renderAnimal(k); svg.classList.add("fa-clean"); setTimeout(function(){ svg.classList.remove("fa-clean"); },1500); sfx("star");
+    s.clean=true; save(); br.remove(); renderAnimal(k); svg.classList.add("fa-clean"); setTimeout(function(){ svg.classList.remove("fa-clean"); },1500); sfx("star"); boing(k); burst(k,["spark","star","spark"],8);
     pose("happy"); await pop("✨ "+L("Bersih!","Clean!"),1100);
     await lesson("bersih",{ title:"✨ "+L("Bersih dan wangi!","Clean and fresh!") });
   } else if(t==="pet"){
     pose("pet"); FarmKit.setState(svg,"happy"); animalSound(a.snd); await wait(1500);
-    s.pet=true; save(); renderAnimal(k); sfx("correct");
+    s.pet=true; save(); renderAnimal(k); sfx("correct"); boing(k); burst(k,["heart"],6);
     pose("cuddle"); await pop("💗 "+L(pname(k)+" senang dielus!",pname(k)+" loves that!"),1300);
     await lesson("lembut",{ title:"💗 "+L("Pelan-pelan, ya","Gently does it") });
   } else if(t==="play"){
@@ -587,17 +879,21 @@ async function doTool(t){
     await wait(60); ball.style.left=pct(a.x+40,400); ball.style.top=pct(a.y-6,560);
     FarmKit.setState(svg,"walk"); sfx("tap"); await wait(800);
     FarmKit.setState(svg,"happy"); animalSound("cat"); await wait(900);
-    clearProps(); s.pet=true; save(); renderAnimal(k); sfx("correct"); giveStar("friend-kucing"); renderStars();
+    clearProps(); s.pet=true; save(); renderAnimal(k); sfx("correct"); boing(k); burst(k,["heart","star"],6); giveStar("friend-kucing"); renderStars();
     pose("happy"); await pop("🧶 "+L("Mimi senang bermain!","Mimi loves to play!"),1200);
     await lesson("kucing",{ art:"kucing", title:"🐱 "+L("Mimi sayang Mo","Mimi loves Mo") });
   } else if(t==="collect"){
     var g=a.give;
     if(!(s.fed&&s.water&&s.clean)){ busy=false; renderTools(); sfx("wrong"); pop(L("Rawat "+pname(k)+" dulu sampai senang.","Look after "+pname(k)+" first until it's happy.")+"<small>"+L("Makan, minum, dan bersih.","Food, water and clean.")+"</small>",1900); return; }
-    pose("collect"); var pr=addProp(g[0]==="telur"?"telur":g[0]==="susu"?"susu":"wol",a.x+(standFor(k).x<a.x?-a.w*0.25:a.w*0.25),a.y+4,g[0]==="telur"?20:34);
-    await wait(900); flyTo(pr,g[1]); pr.remove(); sfx("star");
-    D.basket[g[0]]=(D.basket[g[0]]||0)+1; s.got=true; save(); renderAll(); if(k==="ayam"){ giveStar("friend-ayam"); renderStars(); }
+    pose("collect"); FarmKit.setState(svg,"happy");
+    var pr=addProp(g[0],a.x+(standFor(k).x<a.x?-a.w*0.25:a.w*0.25),a.y+4,g[0]==="telur"?20:34);
+    burst(k,["spark","star"],5); sfx("star"); await wait(650);
+    /* saved first, so leaving mid-animation never loses the item; the counter catches up when it lands */
+    D.basket[g[0]]=(D.basket[g[0]]||0)+1; s.got=true; save(); pendingBasket++; renderAll(); renderAnimal(k,"happy");
+    await collectFx(g[0],pr); pr.remove();
+    renderAll(); if(k==="ayam"){ giveStar("friend-ayam"); renderStars(); }
     pose("wow"); say(L("Alhamdulillah","Alhamdulillah"));
-    await pop(g[1]+" "+L("Alhamdulillah! Dapat "+g[2].toLowerCase(),"Alhamdulillah! A "+g[3].toLowerCase()),1500);
+    await pop(g[1]+" "+L("Alhamdulillah! Dapat "+g[2].toLowerCase(),"Alhamdulillah! A "+g[3].toLowerCase()),1300);
     await lesson("susu",{ title:g[1]+" "+L("Alhamdulillah!","Alhamdulillah!"), text:L("Telur, susu, dan wol adalah nikmat dari Allah lewat hewan-hewan.","Eggs, milk and wool are Allah's gifts through animals.") });
   }
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('sahabat-hewan','care'); }catch(e){}
@@ -609,12 +905,62 @@ async function doTool(t){
   }
   pose("idle"); busy=false; renderTools();
 }
-function flyTo(fromEl,emoji){
-  var r=fromEl.getBoundingClientRect(), t=$("basketBtn").getBoundingClientRect();
-  var f=document.createElement("div"); f.className="fly"; f.textContent=emoji;
-  f.style.left=(r.left+r.width/2-15)+"px"; f.style.top=(r.top)+"px"; document.body.appendChild(f);
-  setTimeout(function(){ f.style.transform="translate("+(t.left+t.width/2-(r.left+r.width/2))+"px,"+(t.top-r.top)+"px) scale(.5)"; f.style.opacity=".2"; },60);
-  setTimeout(function(){ f.remove(); },1000);
+/* ═════ collect: big glowing item in the middle → tap → it flies into the basket ═════ */
+var pendingBasket=0, collectQ=Promise.resolve();
+var ITEM_ART = {
+  telur:'<svg viewBox="0 0 120 150"><defs><radialGradient id="cEgg" cx=".38" cy=".3" r=".8"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#FFF3DC"/><stop offset="1" stop-color="#EBC897"/></radialGradient></defs><ellipse cx="60" cy="141" rx="34" ry="6" fill="#000" opacity=".2"/><path d="M60 8C89 8 106 56 106 88c0 30-20 50-46 50S14 118 14 88C14 56 31 8 60 8z" fill="url(#cEgg)"/><ellipse cx="42" cy="50" rx="9" ry="17" fill="#fff" opacity=".95" transform="rotate(20 42 50)"/><circle cx="36" cy="76" r="3.5" fill="#fff" opacity=".8"/><g fill="#D9B07A" opacity=".55"><circle cx="76" cy="84" r="2.4"/><circle cx="84" cy="102" r="1.7"/><circle cx="68" cy="112" r="2"/><circle cx="54" cy="100" r="1.5"/><circle cx="88" cy="70" r="1.4"/></g></svg>',
+  susu:'<svg viewBox="0 0 140 150"><defs><linearGradient id="cPail" x1="0" x2="1"><stop offset="0" stop-color="#C3CEDA"/><stop offset=".35" stop-color="#F2F6FA"/><stop offset="1" stop-color="#9FADBD"/></linearGradient></defs><ellipse cx="70" cy="142" rx="44" ry="6" fill="#000" opacity=".2"/><path d="M28 54Q70 -14 112 54" stroke="#7E8A98" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M26 54h88l-9 80q-35 11-70 0z" fill="url(#cPail)"/><path d="M29 82h82M31 110h78" stroke="#8C9AAB" stroke-width="3" opacity=".6"/><ellipse cx="70" cy="54" rx="44" ry="11" fill="#AEB9C6"/><ellipse cx="70" cy="54" rx="39" ry="8" fill="#FFFFFF"/><path d="M52 52q8 -14 16 -2q6 -12 14 0" fill="#fff"/><circle cx="58" cy="34" r="4" fill="#fff"/><circle cx="80" cy="30" r="3" fill="#fff"/><circle cx="70" cy="22" r="2.4" fill="#fff"/><path d="M42 66v54" stroke="#fff" stroke-width="5" stroke-linecap="round" opacity=".7"/></svg>',
+  wol:'<svg viewBox="0 0 140 150"><ellipse cx="70" cy="142" rx="46" ry="6" fill="#000" opacity=".2"/><circle cx="70" cy="80" r="56" fill="#FFF9F1"/><g fill="none" stroke="#E6D8C6" stroke-width="4" stroke-linecap="round"><path d="M22 60q48 -10 90 30"/><path d="M18 84q52 -20 102 20"/><path d="M30 112q40 -36 92 -40"/><path d="M50 30q-10 50 20 104"/><path d="M84 28q-30 40 -18 106"/></g><path d="M118 104q20 10 10 30q-6 10 4 14" stroke="#E6D8C6" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="50" cy="52" rx="12" ry="8" fill="#fff" opacity=".9" transform="rotate(-30 50 52)"/></svg>'
+};
+function collectFx(key,fromEl){ var run=collectQ.then(function(){ return collectOne(key,fromEl); }); collectQ=run.catch(function(){}); return run; }
+function collectOne(key,fromEl){
+  return new Promise(function(res){
+    var ov=$("collect"), it=$("cItem"), g=GIVES[key], rm=RM(), done=false, entry=null;
+    var give=null; ORDER.forEach(function(k){ var gv=ANIMALS[k].give; if(gv&&gv[0]===key) give=gv; });
+    $("cName").textContent=g[0]+" "+(give?L(give[2],give[3]):L(g[1],g[2]));
+    $("cTap").textContent=L("Ketuk untuk simpan!","Tap to collect!");
+    it.innerHTML='<div class="c-shake">'+ITEM_ART[key]+'</div>'; it.style.opacity="1";
+    ov.classList.remove("show","idle"); ov.classList.add("on"); void ov.offsetWidth; ov.classList.add("show");
+    var c=$("cItem").parentNode.getBoundingClientRect(), from=fromEl&&fromEl.getBoundingClientRect();
+    var dx=from?from.left+from.width/2-c.left:0, dy=from?from.top+from.height/2-c.top:60;
+    if(rm) it.animate([{opacity:0},{opacity:1}],{duration:250,fill:"forwards"});
+    else entry=it.animate([{transform:"translate("+dx+"px,"+dy+"px) scale(.18)",opacity:.4},{transform:"translate(0,-22px) scale(1.12)",opacity:1,offset:.68},{transform:"translate(0,4px) scale(.97)",offset:.86},{transform:"translate(0,0) scale(1)",opacity:1}],{duration:720,easing:"cubic-bezier(.25,.7,.35,1)",fill:"forwards"});
+    sfx("star");
+    var ready=function(){ if(done) return; ov.classList.add("idle"); $("cBurst").innerHTML='<div class="pfx" style="left:0;top:0">'+particles(14,["star","spark","star"],Math.PI*2,150,22)+'</div>'; };
+    if(entry) entry.onfinish=ready; else setTimeout(ready,250);
+    var auto=setTimeout(go,9000);
+    function go(){
+      if(done) return; done=true; clearTimeout(auto); ov.onclick=null; if(entry) entry.finish();
+      ov.classList.remove("idle"); sfx("tap");
+      var b=$("basketBtn").getBoundingClientRect(), c2=$("cItem").parentNode.getBoundingClientRect();
+      var bx=b.left+Math.min(22,b.width*.3)-c2.left, by=b.top+b.height/2-c2.top;
+      var land=function(){
+        it.innerHTML=""; ov.classList.remove("on","show","idle"); $("cBurst").innerHTML="";
+        pendingBasket=Math.max(0,pendingBasket-1); $("basketN").textContent=basketTotal()-pendingBasket;
+        var bb=$("basketBtn"), n=$("basketN"); [bb,n].forEach(function(e){ e.classList.remove("bump","tick"); void e.offsetWidth; });
+        if(!rm){ bb.classList.add("bump"); n.classList.add("tick"); burstAt(b.left+Math.min(22,b.width*.3),b.top+b.height/2,["star","spark"],8,Math.PI*2,46,14); }
+        sfx("correct"); res();
+      };
+      ov.classList.remove("show");
+      if(rm){ it.animate([{opacity:1},{opacity:0}],{duration:260,fill:"forwards"}).onfinish=land; return; }
+      /* a soft squash, then a curved flight (quadratic Bézier) that shrinks into the basket */
+      var p1x=-Math.max(60,Math.abs(bx)*0.35), p1y=by*0.62, N=30, kf=[];
+      for(var i=0;i<=N;i++){ var t=i/N, mt=1-t, x=2*mt*t*p1x+t*t*bx, y=2*mt*t*p1y+t*t*by, sc=1-0.8*t*t, rot=Math.sin(t*Math.PI)*-18;
+        kf.push({transform:"translate("+x.toFixed(1)+"px,"+y.toFixed(1)+"px) rotate("+rot.toFixed(1)+"deg) scale("+sc.toFixed(3)+")",opacity:t>.92?(1-t)/.08*.6+.4:1}); }
+      it.animate([{transform:"translate(0,0) scale(1)"},{transform:"translate(0,6px) scale(1.12,.86)"},{transform:"translate(0,-10px) scale(.94,1.08)"},{transform:"translate(0,0) scale(1)"}],{duration:220,easing:"ease-out"}).onfinish=function(){
+        it.animate(kf,{duration:780,easing:"cubic-bezier(.45,.05,.4,1)",fill:"forwards"}).onfinish=land; };
+    }
+    ov.onclick=go;
+  });
+}
+
+/* ═════ time of day on the stage: day · golden · sunset · night · dawn ═════ */
+var TOD="", todLock=false;
+function setTod(t,instant){
+  var fr=$("stage").parentNode; if(t===TOD && !instant) return; TOD=t;
+  if(instant) fr.classList.add("tod-now");
+  fr.setAttribute("data-tod",t); $("night").classList.toggle("on",t==="night");
+  if(instant){ void fr.offsetWidth; requestAnimationFrame(function(){ requestAnimationFrame(function(){ fr.classList.remove("tod-now"); }); }); }
 }
 
 /* ═════ night and the next day ═════ */
@@ -627,10 +973,11 @@ async function sleep(){
       adab:"lapar", yes:L("🌙 Tidur saja","🌙 Sleep anyway"), no:L("🥣 Rawat dulu","🥣 Care first") });
     if(!go){ sel=needy[0]; selectAnimal(needy[0]); return; }
   }
-  busy=true; renderTools(); sel=null; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.remove("sel"); });
+  busy=true; todLock=true; renderTools(); sel=null; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.remove("sel"); });
   hint(L("Selamat malam…","Good night…"));
-  pose("yawn"); await wait(900);
-  pose("sleep"); $("night").classList.add("on"); D.have.forEach(function(k){ renderAnimal(k,"sleep"); });
+  /* the sun sinks behind the hills, the sky turns orange and pink, the barn lights come on */
+  pose("yawn"); setTod("sunset"); await wait(RM()?600:2300);
+  pose("sleep"); setTod("night"); D.have.forEach(function(k){ renderAnimal(k,"sleep"); });
   try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.mark('sahabat-hewan','sleep'); }catch(e){}
   say("Bismika Allahumma ahya wa amut");
   await pop("🌙 Bismika Allahumma ahya wa amut<small>"+L("Dengan nama-Mu ya Allah, aku hidup dan aku mati.","In Your name, O Allah, I live and I die.")+"</small>",2600);
@@ -638,11 +985,13 @@ async function sleep(){
   var nd=advanceDay();
   save();
   await wait(400);
-  $("night").classList.remove("on"); renderAll();
+  /* dawn: the night lifts and the sun climbs back over the hills */
+  setTod("dawn"); hint("☀️ "+L("Selamat pagi!","Good morning!")); renderAll(); pose("yawn"); await wait(RM()?400:1500);
+  setTod("day");
   pose("wave"); say(L("Assalamu'alaikum, teman-teman!","Assalamu'alaikum, friends!"));
   await pop("☀️ "+L("Hari ","Day ")+D.day+"<small>Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur</small>",2300);
   await welcomeNew(nd.newcomer, nd.chicks);
-  pose("idle"); busy=false; renderTools();
+  todLock=false; pose("idle"); busy=false; renderTools();
 }
 /* the night's changes (shared by 🌙 Tidur and the real-date morning) */
 function advanceDay(){
@@ -690,18 +1039,22 @@ function firstNeedy(){
 async function playMorning(){
   var m=D.morning; if(!m || busy) return;
   D.morning=null; save();
-  busy=true; renderTools(); sel=null; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.remove("sel"); });
+  if(m.surprise==="egg" && D.have.indexOf("ayam")>=0) pendingBasket++;   /* the night's egg lands in the basket in front of the child */
+  busy=true; todLock=true; renderTools(); sel=null; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.remove("sel"); });
   hint("☀️ "+L("Selamat pagi!","Good morning!"));
-  $("night").classList.add("on"); D.have.forEach(function(k){ renderAnimal(k,"sleep"); }); pose("sleep");
+  setTod("night",true); D.have.forEach(function(k){ renderAnimal(k,"sleep"); }); pose("sleep");
   await wait(900);
-  $("night").classList.remove("on"); renderAll(); pose("yawn"); await wait(700);
+  setTod("dawn"); renderAll(); D.have.forEach(function(k){ renderAnimal(k,"sleep"); }); pose("yawn"); await wait(RM()?400:1500);
+  setTod("day"); todLock=false; renderAll();
   pose("wave"); sfx("star");
   var k=firstNeedy(), n=pname(k);
   say(L("Selamat pagi! "+n+" lapar, ayo beri makan.","Good morning! "+n+" is hungry — time for breakfast!"));
   await pop("☀️ "+L("Selamat pagi!","Good morning!")+"<small>Alhamdulillahilladzi ahyana ba'da ma amatana wa ilaihin nusyur</small>",2400);
   if(m.gap>=2) { pose("cuddle"); animalSound(ANIMALS[k].snd); await pop("💗 "+L(n+" kangen kamu!",n+" missed you!")+"<small>"+L("Senang kamu datang lagi.","So happy you're back.")+"</small>",2000); }
   await welcomeNew(m.newcomer, m.chicks);
-  if(m.surprise==="egg" && D.have.indexOf("ayam")>=0){ pose("wow"); sfx("star"); renderAll();
+  if(m.surprise==="egg" && D.have.indexOf("ayam")>=0){ pose("wow");
+    var egg=addProp("telur",ANIMALS.ayam.x+ANIMALS.ayam.w*0.25,ANIMALS.ayam.y+4,20); burst("ayam",["spark","star"],5);
+    await wait(500); await collectFx("telur",egg); egg.remove(); renderAll();
     await pop("🥚 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Ciko bertelur tadi malam — sudah masuk keranjang.","Ciko laid an egg in the night — it's in the basket.")+"</small>",2300); }
   else if(m.surprise==="butterfly"){ pose("wow"); sfx("star");
     await pop("🦋 "+L("Kejutan pagi!","Morning surprise!")+"<small>"+L("Kupu-kupu cantik mampir ke peternakan.","A pretty butterfly came to visit the farm.")+"</small>",2200); }
@@ -806,7 +1159,7 @@ $("hero").insertAdjacentHTML("beforeend",'<div class="pet">'+FarmKit.animal("kuc
 /* ═════ wiring ═════ */
 function enterFarm(){
   catchUp();
-  show("s-farm"); renderAll(); moPlace(200,396,142,false); pose("idle");
+  show("s-farm"); clearFeeders(); renderAll(); setTod(allCared()?"golden":"day",true); moPlace(200,396,142,false); pose("idle");
   if(D.morning && D.seen.intro){ playMorning(); return; }
   if(!D.seen.intro){ D.morning=null; D.seen.intro=1; save(); pose("wave"); say(L("Assalamu'alaikum! Ayo rawat sahabat-sahabat kita!","Assalamu'alaikum! Let's look after our animal friends!"));
     pop("👋 "+L("Assalamu'alaikum! Ayo rawat sahabat hewan!","Assalamu'alaikum! Let's care for our animal friends!"),2000); }
@@ -823,7 +1176,10 @@ $("resetBtn").addEventListener("click",function(){
   if(!confirm(L("Mulai dari awal? Hewan dan keranjang diulang (bintang tetap).","Start over? Animals and basket reset (stars stay)."))) return;
   var keep={stars:D.stars,adab:D.adab}; D=fresh(); D.stars=keep.stars; D.adab=keep.adab; save(); buildSpots(); renderBook(); renderHome();
 });
-(function(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*45).toFixed(1)+'%;animation-delay:'+(Math.random()*1.4).toFixed(2)+'s"></i>'; n.innerHTML=h; })();
+(function(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*36).toFixed(1)+'%;animation-delay:'+(-Math.random()*1.8).toFixed(2)+'s"></i>';
+  h+='<div class="nstage"><div class="moon"><svg viewBox="0 0 40 40"><path d="M25 3A17 17 0 1 0 37 29A14 14 0 1 1 25 3z" fill="#FFF1B8"/></svg></div><div class="wl" style="left:10.91%"></div><div class="wl" style="left:31.68%"></div>';
+  [[18,72],[34,80],[52,70],[70,84],[86,74],[62,92]].forEach(function(p,i){ h+='<b class="ff" style="left:'+p[0]+'%;top:'+p[1]+'%;animation-delay:'+(-i*0.9).toFixed(1)+'s"></b>'; });
+  n.innerHTML=h+'</div>'; })();
 if(window.BM_LANG==="en") $("quoteTxt").textContent='"There is no creature on earth, nor bird that flies with its wings, but they are communities like you."';
 catchUp();
 renderHome();
@@ -844,9 +1200,10 @@ window.addEventListener("pageshow",function(e){ if(e.persisted) onWake(); });
   var st=document.getElementById("stage"); if(!st) return;
   var frame=st.parentNode; if(!frame.classList.contains("stageframe")) return;
   var scr=frame.closest(".screen"); if(scr){ scr.classList.add("land"); var t=scr.querySelector(".tools"); if(t) t.style.setProperty("--ntools", t.children.length); }
-  ["night","rain"].forEach(function(id){ var el=document.getElementById(id); if(el && el.parentNode===st) frame.appendChild(el); });
+  ["dusk","night","rain","pop"].forEach(function(id){ var el=document.getElementById(id); if(el && el.parentNode===st) frame.appendChild(el); });
   var mq=matchMedia("(orientation:landscape) and (max-height:600px)"), hint=st.querySelector(".hint");
-  function place(){ if(!hint) return; if(mq.matches){ if(hint.parentNode!==frame) frame.appendChild(hint); } else if(hint.parentNode!==st) st.appendChild(hint); }
+  /* the hint lives on the frame (above the night sky, so bedtime words stay readable) */
+  function place(){ if(hint && hint.parentNode!==frame) frame.appendChild(hint); }
   place(); mq.addEventListener ? mq.addEventListener("change",place) : mq.addListener(place);
   var bg=st.querySelector("svg.bg"), fill=frame.querySelector(".stagefill");
   function sync(){
