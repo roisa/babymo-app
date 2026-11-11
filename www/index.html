@@ -1329,6 +1329,19 @@ html[data-theme="dark"] #pane-doa .pd-dod{background:linear-gradient(100deg,#1E3
 html[data-theme="dark"] .pd-dod-k{color:#FFE9A8}html[data-theme="dark"] #pane-doa .pd-dod-t{color:#DCE8FF}html[data-theme="dark"] #pane-doa .pd-dod-s{color:#A9BBDA}
 html[data-theme="dark"] .pd-go{background:rgba(255,255,255,.14);color:#fff}
 
+/* Duas tab: the Ramadan series card (night sky, lanterns, Baby Mo) */
+#pane-doa .pd-ram{position:relative;display:flex;align-items:center;gap:12px;margin:0 0 16px;padding:8px 14px 8px 8px;border-radius:26px;text-decoration:none;
+  background:linear-gradient(110deg,#3A2E8E,#2A2272 55%,#1F5E6E);box-shadow:inset 0 0 0 1.5px rgba(255,216,116,.55),0 16px 28px -18px rgba(30,20,90,.8)}
+.pd-ram-art{position:relative;flex:0 0 auto;width:clamp(104px,30vw,128px);aspect-ratio:4/3;border-radius:20px;overflow:hidden;box-shadow:0 6px 14px -8px rgba(0,0,0,.6)}
+.pd-ram-art svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.pd-ram-art img{position:absolute;left:50%;bottom:-4%;height:86%;transform:translateX(-50%);filter:drop-shadow(0 4px 5px rgba(10,10,40,.4))}
+.pd-ram-tx{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.pd-ram-k{align-self:flex-start;font:900 10.5px 'Nunito',sans-serif;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:#FFE08A;color:#5A3A00}
+.pd-ram-tx b{font:700 clamp(20px,5.6vw,24px)/1.1 'Fredoka','Nunito',sans-serif;color:#FFE08A}
+.pd-ram-s{font-size:12.5px;font-weight:800;color:#E2DBFF;line-height:1.3}
+#pane-doa .pd-ram .pd-go{background:#FFE08A;color:#3A2E8E}
+#pane-doa .pd-ram:active{transform:scale(.98)}
+
 #pane-doa .pd-doors{gap:10px}
 #pane-doa .pd-door{min-height:150px;padding:12px 6px 14px;justify-content:space-between;border:none;border-radius:26px;box-shadow:0 14px 24px -18px rgba(40,40,90,.6),inset 0 0 0 2px rgba(255,255,255,.7),inset 0 -6px 0 rgba(0,0,0,.05)}
 #pane-doa .pd-door.d-read{background:linear-gradient(180deg,#C9F1D6,#A8E6BF)}
@@ -1858,6 +1871,12 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
           <a class="pd-door d-tasbih" href="./babymo-doa-harian.html?doa=bedtime_tasbih"><span class="pd-dart" id="pdIcTasbih"></span><span class="pd-dl" data-i18n="pd_tasbih">Dzikir &amp; Tasbih</span></a>
         </div>
 
+        <a class="pd-ram" href="./babymo-doa-harian.html?series=ramadan">
+          <span class="pd-ram-art" aria-hidden="true"><svg viewBox="0 0 160 120" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="pdRmSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2A2272"/><stop offset=".6" stop-color="#5A45AE"/><stop offset="1" stop-color="#8C7BD8"/></linearGradient><radialGradient id="pdRmGl"><stop offset="0" stop-color="#FFE9A6" stop-opacity=".9"/><stop offset="1" stop-color="#FFB020" stop-opacity="0"/></radialGradient><linearGradient id="pdRmDome" x1="0" y1="0" x2="1" y2=".3"><stop offset="0" stop-color="#FFE58A"/><stop offset="1" stop-color="#E0A020"/></linearGradient></defs><rect width="160" height="120" fill="url(#pdRmSky)"/><g fill="#fff"><circle cx="18" cy="14" r="1.2"/><circle cx="60" cy="10" r="1"/><circle cx="96" cy="22" r="1.3"/><circle cx="140" cy="12" r="1.1"/><circle cx="122" cy="40" r="1"/><circle cx="40" cy="44" r="1"/></g><circle cx="30" cy="34" r="26" fill="url(#pdRmGl)"/><path d="M34 18a16 16 0 1 0 13 24 13 13 0 0 1-13-24z" fill="#FFD866"/><path d="M0 4Q80 26 160 4" fill="none" stroke="#C9B6F2" stroke-width="1"/><g><path d="M70 14v10" stroke="#C9B6F2"/><path d="M64 26q6-6 12 0z" fill="#E8B046"/><path d="M64 26h12l2 6-2 9H64l-2-9z" fill="#FFB43D" stroke="#C98612"/><path d="M110 18v16" stroke="#C9B6F2"/><path d="M104 36q6-6 12 0z" fill="#E8B046"/><path d="M104 36h12l2 6-2 9h-12l-2-9z" fill="#3CC7B5" stroke="#C98612"/></g><path d="M0 92Q50 76 100 86T160 80V120H0z" fill="#3DA59A"/><g transform="translate(132 92) scale(.36)"><rect x="-42" y="-48" width="84" height="48" rx="5" fill="#fff"/><path d="M-28-48C-34-78-12-92 0-106 12-92 34-78 28-48z" fill="url(#pdRmDome)"/><rect x="-62" y="-100" width="12" height="100" rx="3" fill="#fff"/><path d="M-11 0v-22a11 11 0 0 1 22 0V0z" fill="#FFD86B"/></g><path d="M0 104Q60 92 160 102V120H0z" fill="#2F9A72"/></svg><img src="baby-mo-poses/baby-mo-pose-12.webp" alt="" draggable="false" loading="lazy"></span>
+          <span class="pd-ram-tx"><span class="pd-ram-k" data-i18n="pd_ram_k">Seri Baru</span><b data-i18n="pd_ram">Doa Ramadan</b><span class="pd-ram-s" data-i18n="pd_ram_s">11 doa: hilal, sahur, berbuka, sampai Lebaran</span></span>
+          <span class="pd-go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg></span>
+        </a>
+
         <a class="pd-book" href="./babymo-doa-harian.html?buku=1">
           <span class="pd-book-st" id="pdBookSt" aria-hidden="true"></span>
           <span class="pd-book-tx"><b data-i18n="pd_book">Buku Stiker</b><span id="pdBookN">0 / 14</span></span>
@@ -2166,7 +2185,7 @@ const I18N={
   comp_rib:{id:'Waktu sholat & kiblat',en:'Prayer times & qibla'},
   doa_sub:{id:'Pojok Doa Baby Mo',en:"Baby Mo's Du'a Corner"},
   pd_dod:{id:'Doa Hari Ini',en:"Du'a of the Day"},pd_stickers:{id:'stiker',en:'stickers'},pd_stars:{id:'bintang',en:'stars'},pd_days:{id:'hari',en:'days'},
-  pd_read:{id:'Baca Doa',en:"Read Du'as"},pd_game:{id:'Tebak Doa',en:"Du'a Quiz"},pd_tasbih:{id:'Dzikir & Tasbih',en:'Dhikr & Tasbih'},pd_book:{id:'Buku Stiker',en:'Sticker Book'},
+  pd_read:{id:'Baca Doa',en:"Read Du'as"},pd_game:{id:'Tebak Doa',en:"Du'a Quiz"},pd_tasbih:{id:'Dzikir & Tasbih',en:'Dhikr & Tasbih'},pd_book:{id:'Buku Stiker',en:'Sticker Book'},pd_ram_k:{id:'Seri Baru',en:'New Series'},pd_ram:{id:'Doa Ramadan',en:"Ramadan Du'as"},pd_ram_s:{id:'11 doa: hilal, sahur, berbuka, sampai Lebaran',en:"11 du'as: crescent, sahur, iftar, all the way to Eid"},
   doa_eyebrow:{id:'Pilihan Hari Ini',en:"Today's Pick"},
   doa_greet:{id:'Belajar Doa bersama Baby Mo',en:'Learn Duas with Baby Mo'},
   doa_msg:{id:'Suara Arab asli, adegan animasi, dan kuis seru — dari pagi sampai malam.',en:'Authentic Arabic voice, animated scenes, and fun quizzes — from morning to night.'},

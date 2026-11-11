@@ -52,7 +52,7 @@ const PAGES = {
       const a = [];
       X.STEPS.forEach(s => a.push([s.title + '. ' + s.text, 'id', 'langkah / steps']));          // go(): every step, title + text
       X.STEPS.forEach(s => a.push([s.short, 'id', 'urutkan / order game']));                            // order game: the step tapped
-      [1, 2, 3].forEach(n => a.push([String(n), 'id', 'hitungan / counting']));                      // wash(): taps counted (count ≤ 3)
+      [1, 2, 3].forEach(n => a.push(M === 'en' ? [['One', 'Two', 'Three'][n - 1], 'en', 'hitungan / counting'] : [String(n), 'id', 'hitungan / counting']));   // wash(): taps counted (≤ 3; English says the word)
       a.push(['MasyaAllah, wudhumu selesai! Sekarang siap sholat.', 'id', 'selesai / done']);
       a.push(M === 'en' ? ['MashaAllah, wudu done!', 'en', 'check-in'] : ['MasyaAllah, sudah wudhu!', 'id', 'check-in']);
       return a;
@@ -139,6 +139,12 @@ const PAGES = {
       return a;
     }
   },
+  // Doa Ramadan (babymo-doa-harian.html?series=ramadan): Mo says when we read each du'a as its page opens
+  // (doa-ramadan.js narrate(): always id-ID, bm-i18n speaks the English line in English mode)
+  'doa-ramadan': {
+    g: 'Doa Ramadan', file: 'babymo-doa-harian', q: '&series=ramadan', lits: [],
+    fn: () => window.DOA_SERIES_DATA.duas.map(d => [d.desc, 'id', 'kapan dibaca / when: ' + d.title])
+  },
   'index': {
     g: 'Beranda', lits: ['GREETINGS'],
     fn: (M, X) => {
@@ -160,13 +166,13 @@ const PAGES = {
   const items = new Map(), audit = {}, untranslated = [];
   for (const pg in PAGES) {
     const P = PAGES[pg], lits = {};
-    for (const n of P.lits) lits[n] = literal(pg + '.html', n);
+    for (const n of P.lits) lits[n] = literal((P.file || pg) + '.html', n);
     audit[pg] = { found: 0, id: 0, en: 0, alias: [], untranslated: [] };
     const ks = new Set();
     for (const M of ['id', 'en']) {
       const ctx = await br.newContext(); const p = await ctx.newPage();
       p.on('pageerror', e => console.error(pg, M, 'page error:', e.message));
-      await p.goto(BASE + pg + '.html?lang=' + M, { waitUntil: 'load' }); await p.waitForTimeout(400);
+      await p.goto(BASE + (P.file || pg) + '.html?lang=' + M + (P.q || ''), { waitUntil: 'load' }); await p.waitForTimeout(400);
       const got = await p.evaluate(([src, lits, M]) => {
         const X = {}; for (const n in lits) X[n] = (0, eval)('(' + lits[n] + ')');
         const raw = (0, eval)('(' + src + ')')(M, X);

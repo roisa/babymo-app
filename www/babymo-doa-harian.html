@@ -1022,6 +1022,12 @@ html[data-bm-theme="classic"] #quizScreen .q-fb-wrong .qfb-title{color:#FFB08A}
 }
 </style>
 <style id="hide-mo-bubble">body:has(#quizScreen.active) #bm-mo{display:none!important}</style>
+<script>
+/* Du'a series: ?series=ramadan turns this page into Doa Ramadan (its own du'as, scenes, journey, quiz and
+   progress). Without it the page is the daily series exactly as before. */
+window.DOA_SERIES=/[?&]series=ramadan(?:&|#|$)/.test(location.search)?'ramadan':'';
+if(window.DOA_SERIES==='ramadan') document.write('<link rel="stylesheet" href="doa-ramadan.css"><script src="i18n/doa-ramadan.js"><\/script><script src="doa-ramadan-scenes.js"><\/script><script src="doa-ramadan.js"><\/script>');
+</script>
 </head>
 <body>
 
@@ -1176,7 +1182,7 @@ html[data-bm-theme="classic"] #quizScreen .q-fb-wrong .qfb-title{color:#FFB08A}
 // ═══════════════════════════════════════
 // DATA
 // ═══════════════════════════════════════
-const DUAS = [
+const DUAS = (window.DOA_SERIES_DATA && DOA_SERIES_DATA.duas) || [
   { id:'wakeup', waktu:'pagi', timeCode:'morning', time:'Pagi 🌅', icon:'🌅', prop:'🛏️', bg:'linear-gradient(160deg,#FFD080 0%,#E06820 100%)',
     title:'Doa Bangun Tidur', desc:'Baby Mo baru bangun tidur di pagi hari!',
     arabic:'الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا بَعْدَمَا أَمَاتَنَا وَإِلَيْهِ النُّشُورُ', latin:"Alhamdulillāhil-ladhī ahyānā ba'da mā amātanā, wa ilaihin-nushūr",
@@ -1760,7 +1766,7 @@ function showToast(e, t){
     malam:'<path class="w" d="M27 8A15 15 0 1 0 40 30.5 12 12 0 0 1 27 8z"/>'+spark(36,12,4.4,'y')
   };
   function svg(inner){ return '<svg viewBox="0 0 48 48" aria-hidden="true" focusable="false">'+inner+'</svg>'; }
-  window.doaIcon=function(d,cls){ return '<span class="di di-'+d.waktu+(cls?' '+cls:'')+'">'+svg(G[d.id]||G.study)+'</span>'; };
+  window.doaIcon=function(d,cls){ return '<span class="di di-'+d.waktu+(cls?' '+cls:'')+'">'+svg((window.DOA_SERIES_DATA&&DOA_SERIES_DATA.icons&&DOA_SERIES_DATA.icons[d.id])||G[d.id]||G.study)+'</span>'; };
   window.doaTimeIcon=function(k){ return '<span class="di di-'+k+'">'+svg(T[k])+'</span>'; };
   var STAR='<path d="M12 2.6l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/>';
   window.doaStars=function(n,cls,fresh){ var h='<span class="pips'+(cls?' '+cls:'')+'">'; for(var i=0;i<3;i++) h+='<svg viewBox="0 0 24 24" class="'+(i<n?'on':'')+(fresh===i?' new':'')+'" aria-hidden="true">'+STAR+'</svg>'; return h+'</span>'; };
@@ -1781,9 +1787,11 @@ function showToast(e, t){
     {k:'malam', id:'Malam', en:'Night', e:'🌙', sky:'linear-gradient(180deg,#2B3470 0%,#4C4A9C 55%,#7C6CC4 100%)', dark:'linear-gradient(180deg,#141A3A 0%,#262D63 50%,#1A1B3D 100%)', mo:'thank-you',
       hi:['Selamat malam! 🌙','Good night! 🌙'], sub:['Doakan Abi dan Umi, bertasbih, lalu baca doa sebelum tidur.','Pray for Abi and Umi, say the tasbih, then read the bedtime du\'a.']}
   ];
-  window.nowWaktu=function(){ var h=new Date().getHours(); return (h>=4&&h<10)?'pagi':(h>=10&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam'; };
+  /* another series (doa-ramadan.js) brings its own groups, stages, storage key and look */
+  var SER=window.DOA_SERIES_DATA||null; if(SER) WAKTU=SER.waktu;
+  window.nowWaktu=SER&&SER.nowWaktu||function(){ var h=new Date().getHours(); return (h>=4&&h<10)?'pagi':(h>=10&&h<15)?'siang':(h>=15&&h<18)?'sore':'malam'; };
   function W(k){ return WAKTU.find(function(w){return w.k===k;}); }
-  var KEY='bm_doa_harian_v2', ST={learned:{}};
+  var KEY=SER?SER.key:'bm_doa_harian_v2', ST={learned:{}};
   try{ ST=JSON.parse(localStorage.getItem(KEY)||'{"learned":{}}')||{}; }catch(e){}
   if(!ST.learned) ST.learned={}; if(!ST.reads) ST.reads={}; if(!ST.streak) ST.streak={last:'',n:0};
   // earlier versions only remembered "learned" — count that as the first read
@@ -1807,7 +1815,7 @@ function showToast(e, t){
     document.getElementById('daySky').style.background=window.BM_THEME==='classic'?w.dark:w.sky;
     var ws=document.getElementById('welcomeScreen'); WAKTU.forEach(function(x){ ws.classList.toggle('w-'+x.k,x.k===now); }); ws.classList.toggle('dh-night',now==='malam');
     document.getElementById('dhMo').src='baby-mo-poses/baby-mo-'+w.mo+'.webp';
-    var hm=document.getElementById('dhHeroMo'); if(hm) hm.src='baby-mo-poses/baby-mo-pose-12.webp';
+    var hm=document.getElementById('dhHeroMo'); if(hm) hm.src='baby-mo-poses/baby-mo-'+(SER&&SER.heroMo||'pose-12')+'.webp';
     document.getElementById('dhHello').textContent=L(w.hi[0],w.hi[1]).replace('!',name?', '+name+'!':'!');
     document.getElementById('dhSub').textContent=L(w.sub[0],w.sub[1]);
     document.getElementById('dhCount').textContent='🏅 '+nLearned()+' / '+DUAS.length;
@@ -1825,6 +1833,7 @@ function showToast(e, t){
     sore:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 30a16 16 0 0 1 32 0z" fill="#FF7A59"/><path d="M14 30a10 10 0 0 1 20 0z" fill="#FFB36B"/><path d="M4 31h40" stroke="#E5648A" stroke-width="3.6" stroke-linecap="round"/><path d="M10 37h28M16 43h16" stroke="#F29BB2" stroke-width="3.4" stroke-linecap="round"/><path d="M33 10q3-3 6 0q3-3 6 0" fill="none" stroke="#8A5070" stroke-width="2.2" stroke-linecap="round"/></svg>',
     malam:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M27 6a17 17 0 1 0 15 25 13.5 13.5 0 0 1-15-25z" fill="#FFD866"/><path d="M27 6a17 17 0 1 0 15 25 13.5 13.5 0 0 1-15-25z" fill="none" stroke="#F2B232" stroke-width="1.6"/><circle cx="19" cy="25" r="1.6" fill="#8A5A00"/><path d="M15 31q4 2.6 8 0" fill="none" stroke="#8A5A00" stroke-width="1.8" stroke-linecap="round"/><path d="M38 6l1.6 3.6 3.8.5-2.8 2.6.7 3.8-3.3-1.8-3.3 1.8.7-3.8-2.8-2.6 3.8-.5z" fill="#FFF3B0" stroke="#F2B232" stroke-width="1.2" stroke-linejoin="round"/><circle cx="43" cy="20" r="1.9" fill="#FFD866"/></svg>'
   };
+  if(SER) TICON=SER.ticon;
   var SEL=null;
   function renderPics(){
     var now=nowWaktu(); if(!SEL) SEL=now; var g=W(SEL);
@@ -1886,13 +1895,16 @@ function showToast(e, t){
   window.startLearning=window.startAll;
   function begin(){ pos=0; buildTimeline(); loadDua(PLAY[0]); showScreen('learnScreen'); }
 
+  // a series can split its groups into finer journey stages for the strip (Ramadan: hilal → sahur → … → Eid)
+  function stageOf(d){ return SER&&SER.stages&&d.stage?d.stage:d.waktu; }
+  function stageLabel(k){ var s=SER&&SER.stages&&SER.stages[k]; if(s) return s.e+' '+L(s.id,s.en); var w=W(k); return w.e+' '+L(w.id,w.en); }
   window.buildTimeline=function(){
     var row=document.getElementById('tlRow'); row.innerHTML='';
-    var groups=[]; PLAY.forEach(function(i){ var k=DUAS[i].waktu, g=groups[groups.length-1]; if(!g||g.k!==k){ g={k:k,idx:[]}; groups.push(g);} g.idx.push(i); });
+    var groups=[]; PLAY.forEach(function(i){ var k=stageOf(DUAS[i]), g=groups[groups.length-1]; if(!g||g.k!==k){ g={k:k,idx:[]}; groups.push(g);} g.idx.push(i); });
     groups.forEach(function(g,gi){
       if(gi){ var dv=document.createElement('div'); dv.className='tl-divider'; row.appendChild(dv); }
       var seg=document.createElement('div'); seg.className='tl-seg';
-      var lb=document.createElement('span'); lb.className='tl-label'; lb.textContent=W(g.k).e+' '+L(W(g.k).id,W(g.k).en); seg.appendChild(lb);
+      var lb=document.createElement('span'); lb.className='tl-label'; lb.textContent=stageLabel(g.k); seg.appendChild(lb);
       g.idx.forEach(function(i){ var d=document.createElement('div'); d.className='tl-dot'; d.id='tldot'+i; seg.appendChild(d); });
       row.appendChild(seg);
     });
@@ -1955,7 +1967,7 @@ function showToast(e, t){
   function readFull(onDone){
     var my=++readSeq, txt=DUAS[currentDuaIdx].arabic, k=0;
     var box=document.getElementById('arabicText'), card=box.parentNode, pass=document.getElementById('sbPass');
-    var times=function(){ return ST.rep2?2:1; };
+    var times=function(){ return Math.max(DUAS[currentDuaIdx].times||1, ST.rep2?2:1); };   // d.times: a dhikr said 3×
     try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
     isSpeaking=true; setSoundState('playing');
     var glow=function(on){ box.classList.toggle('full',on); card.classList.toggle('reading',on); };
@@ -2042,7 +2054,7 @@ function showToast(e, t){
     var d=DUAS[idx];
     showScene(d); currentSpeed=ST.speed==='normal'?'normal':'slow'; speedUI(); repUI();
     document.getElementById('lCounter').textContent=L('Doa ','Du\'a ')+(pos+1)+' / '+PLAY.length;
-    document.getElementById('sceneTime').textContent=W(d.waktu).e+' '+L(W(d.waktu).id,W(d.waktu).en);
+    document.getElementById('sceneTime').textContent=stageLabel(stageOf(d));
     document.getElementById('lLives').textContent='';
     document.getElementById('duaTitle').innerHTML=doaIcon(d)+'<span></span>'; document.getElementById('duaTitle').lastChild.textContent=trTitle(d);
     renderReads(d); renderSrc(d); renderTasbih(d);
@@ -2198,6 +2210,8 @@ function showToast(e, t){
   };
 
   /* ─── deep links from the Game Hub: ?doa=parents · ?waktu=malam · ?buku=1 (sticker book) ─── */
+  if(SER&&SER.init) SER.init({ ST:ST, save:save, L:L, T:T, W:W, muted:muted, sfx:sfx, starsOf:starsOf, nLearned:nLearned, idxOf:idxOf,
+    startOne:startOne, startList:function(ix){ groupKey='list'; PLAY=ix.slice(); begin(); }, renderHome:renderHome, stageOf:stageOf, stageLabel:stageLabel, play:function(){ return PLAY; }, pos:function(){ return pos; } });
   renderHome();
   var q=new URLSearchParams(location.search), did=q.get('doa'), wk=q.get('waktu');
   if(did && idxOf(did)>=0) startOne(did); else if(wk && W(wk)) startGroup(wk); else if(q.has('buku')) document.addEventListener('DOMContentLoaded',openBook);

@@ -1162,16 +1162,20 @@
     "baby-mo-dua-smile": [0, 0, 1, 1, 0.5], "baby-mo-pose-06": [0.273, 0.319, 0.675, 0.923, 1]
   };
   function boxOf(pose) { return POSE[pose] || [0.27, 0.15, 0.7, 0.91, 1]; }
+  var NIGHT = { sleep: 1, parents: 1, bedtime_tasbih: 1 };
+  function isNight(id) { return !!NIGHT[id]; }
 
   var cache = {};
   function svgOf(id) { var s = SCENES[id]; if (!s) return ""; return cache[id] || (cache[id] = BASE ? "<defs>" + BASE + "</defs>" + s.svg() : s.svg()); }
   // the front layer (drawn above Baby Mo): seatbelt, spoon, speech bubbles…; card = still picture (no bubbles)
   function fxOf(id, card) { var s = SCENES[id]; return s && s.fx ? s.fx(!!card) : ""; }
 
+  var XCSS = "";
   function ensureCss() {
-    if (document.getElementById("doa-scenes-css")) return;
-    var st = document.createElement("style"); st.id = "doa-scenes-css"; st.textContent = CSS + "\n" + ACSS;
-    document.head.appendChild(st);
+    var st = document.getElementById("doa-scenes-css");
+    if (!st) { st = document.createElement("style"); st.id = "doa-scenes-css"; document.head.appendChild(st); }
+    var css = CSS + "\n" + ACSS + (XCSS ? "\n" + XCSS : "");
+    if (st.textContent.length !== css.length) st.textContent = css;
   }
 
   /* A still picture of a du'a's scene (sky + Baby Mo) for cards on the home screen
@@ -1182,7 +1186,7 @@
     var s = SCENES[id]; if (!s) return "";
     var k = "_" + (sfx || "c") + "_" + id;
     var svg = svgOf(id).replace(/(id="|url\(#)(ds[A-Za-z0-9]+)/g, "$1$2" + k), fx = fxOf(id, true).replace(/(id="|url\(#)(ds[A-Za-z0-9]+)/g, "$1$2" + k);
-    var night = id === "sleep" || id === "parents" || id === "bedtime_tasbih";
+    var night = isNight(id);
     // the card is 400×180: the frame window (CARD_VB) is fitted to its height ("meet"),
     // the walls and skies drawn past the frame fill the sides
     var u = 180 / CARD_VB[3], ox = (400 - 400 * u) / 2, b = boxOf(s.pose), m = s.mo, ih = m.h * u / (b[3] - b[1]), iw = ih * b[4];
@@ -1210,7 +1214,7 @@
     var svg = svgOf(id).replace(re, "$1$2" + k), fx = fxOf(id, true).replace(re, "$1$2" + k);
     var b = boxOf(s.pose), m = s.mo, ih = m.h / (b[3] - b[1]), iw = ih * b[4];
     var ix = m.x - (b[0] + b[2]) / 2 * iw, iy = m.y - b[3] * ih, sw = (b[2] - b[0]) * iw;
-    var night = id === "sleep" || id === "parents" || id === "bedtime_tasbih";
+    var night = isNight(id);
     return '<span class="dst' + (night ? " night" : "") + '"><svg viewBox="' + (THUMB[id] || [0, -110, 400, 250]).join(" ") + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + svg +
       shadow(f(m.x), m.y, f(sw * 0.46), f(sw * 0.1)).replace("url(#dsSh)", "url(#dsSh" + k + ")") +
       '<image href="baby-mo-poses/' + s.pose + '.webp" x="' + f(ix) + '" y="' + f(iy) + '" width="' + f(iw) + '" height="' + f(ih) + '" preserveAspectRatio="none"/>' + fx + "</svg></span>";
@@ -1250,7 +1254,7 @@
     ensureCss();
     card.classList.add("has-scene", "ds"); card.classList.remove("acted");
     card.setAttribute("data-scene", id);
-    card.classList.toggle("night", id === "sleep" || id === "parents" || id === "bedtime_tasbih");
+    card.classList.toggle("night", isNight(id));
     var bg = document.getElementById("sceneBg");
     bg.innerHTML = '<svg viewBox="' + VB + '" preserveAspectRatio="xMidYMax meet" overflow="visible" aria-hidden="true">' + svgOf(id) + "</svg>";
     var fxl = card.querySelector(".scene-fx");
@@ -1287,4 +1291,23 @@
     return still ? 500 : (ACT_MS[id] || 1500);
   };
   window.doaScenePose = function (id) { return SCENES[id] ? SCENES[id].pose : ""; };
+
+  /* Another du'a series (e.g. doa-ramadan-scenes.js) adds its own scenes with the same
+     drawing kit, motion engine, sounds and layout: doaScenesExtend(function (kit) { return
+     { scenes, sounds, pose, thumb, actMs, night, css }; }). */
+  var KIT = { lg: lg, rg: rg, f: f, bg: bg, band: band, shadow: shadow, gloss: gloss, cloud: cloud, star: star, sparkle: sparkle,
+    heart: heart, sun: sun, moon: moon, tree: tree, bush: bush, plant: plant, rug: rug, lamp: lamp, clock: clock, bunting: bunting,
+    windowFrame: windowFrame, floorShine: floorShine, bird: bird, at: at, burst: burst, say: say, pre: pre, geo: geo, run: run, mo: mo,
+    SPRING: SPRING };
+  window.doaScenesExtend = function (make) {
+    var x = typeof make === "function" ? make(KIT) : make; if (!x) return;
+    var k;
+    for (k in x.scenes || {}) SCENES[k] = x.scenes[k];
+    for (k in x.sounds || {}) SND[k] = x.sounds[k];
+    for (k in x.pose || {}) POSE[k] = x.pose[k];
+    for (k in x.thumb || {}) THUMB[k] = x.thumb[k];
+    for (k in x.actMs || {}) ACT_MS[k] = x.actMs[k];
+    (x.night || []).forEach(function (id) { NIGHT[id] = 1; });
+    if (x.css) { XCSS += (XCSS ? "\n" : "") + x.css; if (document.getElementById("doa-scenes-css")) ensureCss(); }
+  };
 })();

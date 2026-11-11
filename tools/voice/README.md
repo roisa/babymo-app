@@ -7,8 +7,10 @@ as before. The manifests ship empty or partly filled, so the games work with or 
 
 ## Clip lists
 
-- `clips.json` — 181 Arabic items for Pulau Hijaiyah and Doa Harian: 167 hijaiyah sounds (sec `huruf`: letter names,
-  syllables with harakat and tanwin, harakat names, 38 words, Bismillah) and 14 du'as (sec `doa`).
+- `clips.json` — 192 Arabic items for Pulau Hijaiyah, Doa Harian and Doa Ramadan: 167 hijaiyah sounds (sec `huruf`: letter
+  names, syllables with harakat and tanwin, harakat names, 38 words, Bismillah) and 25 du'as (sec `doa`): the 14 daily ones
+  (`d-<id>`) and the 11 Ramadan ones (`d-r_<id>`, `g: "Doa Ramadan"`, texts copied exactly from `www/doa-ramadan.js`).
+  Both series play them through `www/doa-voice/voice.js` (`window.DOA_VOICE`), so no page change is needed when they arrive.
 - `clips-app.json` — made by `build-app-clips.js` from the pages' own data:
   - sec `app`: every other Arabic string the games speak (Sholat Bareng Mo recitations and dzikir, Wudhu du'a,
     Kata Baik, Memory Match letters, Susun Huruf letter names and words, Doa Harian word-by-word read-along);
@@ -63,10 +65,23 @@ node tools/voice/test-lines-play.js fake              # plays the games: what wo
 bash tools/voice/cloudshell.sh ar-XA-Chirp3-HD-Algenib     # everything (518 clips), pushes a voice-clips-… branch
 bash tools/voice/cloudshell.sh app                          # only the app Arabic + Cari names (keeps the 181)
 bash tools/voice/cloudshell.sh lines                        # only the Indonesian + English lines not made yet
+bash tools/voice/cloudshell.sh ramadan                      # only the missing Doa Ramadan du'as (11) + missing lines (22)
 bash tools/voice/cloudshell.sh compare                      # samples to choose an Arabic voice
 ```
 
 `lines` keeps every clip already made and checks only the new ones with speech-to-text (`id-ID` / `en-US`).
+`ramadan` first prints a dry run (what is missing), then makes only the missing `doa` + `lines` clips (Arabic in
+`ar-XA-Chirp3-HD-Algenib`, Mo's Indonesian / English "when" lines in the same family), checks only those with
+speech-to-text, rewrites `www/doa-voice/voice.js`, `www/voice/manifest.js` and the listening page data, and pushes a
+`voice-clips-…` branch. Until it has run, Doa Ramadan uses the phone's voice, as before.
+
+### Doa Ramadan from Cloud Shell, step by step
+
+1. Open https://shell.cloud.google.com (signed in to the Google account / project that already makes the clips).
+2. Once: `git clone https://github.com/roisa/babymo-app.git && cd babymo-app` (afterwards just `cd babymo-app`), and make
+   sure `gh auth status` is signed in (`gh auth login` if not) so the branch can be pushed.
+3. `BASE=main bash tools/voice/cloudshell.sh ramadan` (use `BASE=doa-ramadan` while the series is not merged yet).
+4. Listen to anything marked CHECK on `www/tools/dengar-suara.html`, then tell Claude the pushed branch name.
 
 English and Indonesian use the same voice family as the Arabic voice (`en-US-Chirp3-HD-Algenib`,
 `id-ID-Chirp3-HD-Algenib`); set `VOICE_EN=…` / `VOICE_ID=…` to choose others. Chirp voices take no
@@ -84,6 +99,7 @@ python3 tools/voice/gen.py --check                 # all clips + speech-to-text 
 python3 tools/voice/gen.py --only app,cari         # some sections: hijaiyah, doa, app, cari, lines
 python3 tools/voice/gen.py --voice ar-XA-Chirp3-HD-Kore --voice-en en-US-Chirp3-HD-Kore --voice-id id-ID-Chirp3-HD-Kore
 python3 tools/voice/gen.py --manifest              # only rewrite www/voice/manifest.js from the files on disk
+python3 tools/voice/gen.py --dry-run --only doa,lines   # list what would be made (missing files) — no key, no API calls
 ```
 
 Existing files are kept (resume) unless `--force`. The speech-to-text check listens in `ar-SA`, `en-US` or `id-ID`.
