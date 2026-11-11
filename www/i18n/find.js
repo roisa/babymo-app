@@ -27,7 +27,7 @@
   "Pensil": "Pencil", "Rehal": "Quran Stand", "Roti": "Bread", "Sajadah": "Prayer Mat", "Samosa": "Samosa", "Sandal": "Sandals", "Sapi": "Cow", "Sendok": "Spoon", "Sepeda": "Bike",
   "Sikat": "Brush", "Singa": "Lion", "Susu": "Milk", "Tasbih": "Prayer Beads", "Teko": "Teapot", "Telur": "Egg", "Wortel": "Carrot", "bintang": "stars",
   "Bagus! ⭐": "Nice! ⭐", "Keren! ✨": "Cool! ✨", "Hebat! 🌙": "Great! 🌙", "Pintar! 🌸": "Smart! 🌸", "Yay! 🎉": "Yay! 🎉", "Alhamdulillah! 💛": "Alhamdulillah! 💛",
-  "MasyaAllah! 🌟": "MashaAllah! 🌟", "MasyaAllah! 🌙": "MashaAllah! 🌙", "Ketemu Baby Mo! 🎉": "Found Baby Mo! 🎉", "Semua sudah ditemukan!": "Everything's been found!", "Kamu luar biasa!": "You're amazing!",
+  "MasyaAllah! 🌟": "MashaAllah! 🌟", "MasyaAllah! 🌙": "MashaAllah! 🌙", "Ketemu Baby Mo! 🎉": "Found Baby Mo! 🎉", "Semua sudah ditemukan!": "Everything's been found!", "MasyaAllah!": "MashaAllah!", "Semua ketemu dalam gelap!": "Found them all in the dark!", "Kamu luar biasa!": "You're amazing!",
   "Kamar Baby Mo jadi rapi! ✨": "Baby Mo's bedroom is tidy! ✨", "Alhamdulillah, rapi sekali! 🌿": "Alhamdulillah, so tidy! 🌿", "Subhanallah, indah sekali! 🌙": "Subhanallah, so beautiful! 🌙",
   "Selamat malam Ramadan! 🌙": "Happy Ramadan night! 🌙", "MasyaAllah, masjid yang cantik! 🕌": "MashaAllah, what a beautiful mosque! 🕌", "Dapur jadi bersih! 🍽️": "The kitchen is clean! 🍽️",
   "Panen di kebun! 🌾": "Harvest time in the garden! 🌾", "Seru main di pantai! 🌊": "Fun at the beach! 🌊", "Pintar belajar! 📚": "Smart learner! 📚",
