@@ -1110,6 +1110,97 @@ html:not([data-bm-theme="classic"]) .modal-card{background:rgba(255,255,255,.86)
 .trust-row{background:transparent!important;}
 .trust-tag{border-radius:999px;letter-spacing:.04em;}
 </style>
+<style id="kb-ref">
+/* ═════ Word card (celebration) — night-hill scene, cloud title plate, cream Arabic pill,
+   meaning chip and a "Practise at home" parent card. Both themes live here (not a bm-bright*
+   block, which dark mode switches off); dark tweaks are scoped to html[data-bm-theme="classic"]. ═════ */
+.celebration{--kb-bg1:#EEEBFF;--kb-bg2:#F7F5FF;--kb-ink:#2D2370;--kb-ink2:#6B6680;--kb-plate:#fff;--kb-ar:#1E9A4E;--kb-arbg:linear-gradient(180deg,#FFFDF0,#FFF2C4);
+  --kb-chip:#E4DEFF;--kb-chip-ink:#4B3BB5;--kb-card:#fff;--kb-title:#F26B12;
+  background:var(--kb-bg1) linear-gradient(180deg,var(--kb-bg1) 0,var(--kb-bg1) 45%,var(--kb-bg2) 100%) local!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+html[data-bm-theme="classic"] .celebration{--kb-bg1:#1C1F4A;--kb-bg2:#121433;--kb-ink:#F4F1FF;--kb-ink2:#C4BFE3;--kb-plate:#2A2E6E;--kb-ar:#8FF0B4;--kb-arbg:linear-gradient(180deg,#34386E,#2B2F60);
+  --kb-chip:#3D3A8C;--kb-chip-ink:#DCD6FF;--kb-card:#262A5E;--kb-title:#FFA35C}
+.kb-hero{position:relative;z-index:0;align-self:stretch;display:flex;flex-direction:column;align-items:center;
+  margin:calc(-1 * (var(--safe-top) + 18px)) -16px 0;padding:calc(var(--safe-top) + 18px) 16px 26px}
+.kb-scene{position:absolute;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.kb-scene svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+.kb-scene .ks1{stop-color:#6C7DE4}.kb-scene .ks2{stop-color:#9AA6F6}.kb-scene .ks3{stop-color:#C9CCFB}
+.kb-scene .kh1{stop-color:#FFFFFF}.kb-scene .kh2{stop-color:#EEEBFF}
+.kb-scene .km1{stop-color:#8F8DF0}.kb-scene .km2{stop-color:#6C69D6}
+.kb-scene .kb-cloud{fill:#fff;opacity:.8}
+html[data-bm-theme="classic"] .kb-scene .ks1{stop-color:#1A1F5C}
+html[data-bm-theme="classic"] .kb-scene .ks2{stop-color:#2F3584}
+html[data-bm-theme="classic"] .kb-scene .ks3{stop-color:#4A4FA6}
+html[data-bm-theme="classic"] .kb-scene .kh1{stop-color:#3A3E88}
+html[data-bm-theme="classic"] .kb-scene .kh2{stop-color:#1C1F4A}
+html[data-bm-theme="classic"] .kb-scene .km1{stop-color:#5D61B8}
+html[data-bm-theme="classic"] .kb-scene .km2{stop-color:#3F4392}
+html[data-bm-theme="classic"] .kb-scene .kb-cloud{fill:#B9BEFF;opacity:.22}
+.kb-scene .kb-tw{animation:kbTw 3.2s ease-in-out infinite}
+@keyframes kbTw{50%{opacity:.45}}
+.kb-lantern{position:absolute;left:5%;bottom:30px;width:clamp(64px,19%,104px);height:auto;filter:drop-shadow(0 10px 12px rgba(120,70,0,.35));transform-origin:50% 0;animation:kbSway 4s ease-in-out infinite}
+@keyframes kbSway{50%{transform:rotate(3deg)}}
+.celebration .celeb-close{width:44px;height:44px;background:#fff!important;color:#2D2370!important;border:none!important;font-size:18px;font-weight:900;
+  box-shadow:0 8px 18px -8px rgba(40,30,110,.55);z-index:6}
+html[data-bm-theme="classic"] .celebration .celeb-close{background:rgba(255,255,255,.16)!important;color:#fff!important;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.celebration .celeb-banner{margin-top:6px;font:600 21px/1 'Fredoka','Nunito',sans-serif!important;letter-spacing:.01em;padding:12px 30px;color:#4A2800;
+  background:linear-gradient(180deg,#FFE97C 0%,#FFCB2E 100%);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.7),inset 0 -3px 0 rgba(214,140,0,.35),0 10px 20px -10px rgba(160,100,0,.6)!important}
+.celebration .celeb-stage{height:clamp(250px,37vh,340px);margin-top:4px}
+.celebration .celeb-glow{background:radial-gradient(ellipse,rgba(255,255,255,.9) 0%,rgba(255,255,255,.3) 40%,transparent 70%);bottom:-6%}
+html[data-bm-theme="classic"] .celebration .celeb-glow{background:radial-gradient(ellipse,rgba(255,214,107,.4) 0%,transparent 70%)}
+.celebration .celeb-character{height:94%;filter:drop-shadow(0 12px 14px rgba(40,30,110,.3))}
+.celebration .celeb-text{margin-top:-46px;position:relative;z-index:1}
+.celebration .celeb-num{position:relative;z-index:3;width:54px;height:54px;border-radius:0;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 60'%3E%3Cdefs%3E%3CradialGradient id='g' cx='.4' cy='.3' r='.8'%3E%3Cstop offset='0' stop-color='%2374E39E'/%3E%3Cstop offset='1' stop-color='%23129246'/%3E%3C/radialGradient%3E%3C/defs%3E%3Cg fill='url(%23g)'%3E%3Ccircle cx='47' cy='30' r='10.5'/%3E%3Ccircle cx='42' cy='42' r='10.5'/%3E%3Ccircle cx='30' cy='47' r='10.5'/%3E%3Ccircle cx='18' cy='42' r='10.5'/%3E%3Ccircle cx='13' cy='30' r='10.5'/%3E%3Ccircle cx='18' cy='18' r='10.5'/%3E%3Ccircle cx='30' cy='13' r='10.5'/%3E%3Ccircle cx='42' cy='18' r='10.5'/%3E%3Ccircle cx='30' cy='30' r='19'/%3E%3C/g%3E%3Cellipse cx='24' cy='19' rx='8' ry='4' fill='%23fff' opacity='.45'/%3E%3C/svg%3E") center/contain no-repeat!important;
+  box-shadow:none!important;font:600 22px/1 'Fredoka','Nunito',sans-serif;color:#fff;text-shadow:0 1px 2px rgba(0,80,30,.4);filter:drop-shadow(0 6px 8px rgba(18,120,60,.35))}
+.celebration .celeb-title{position:relative;display:block;width:fit-content;max-width:calc(100% - 70px);margin:-14px auto 0;padding:24px 30px 16px;border-radius:999px;
+  background:var(--kb-plate)!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;color:var(--kb-title)!important;-webkit-text-fill-color:var(--kb-title)!important;
+  font:600 clamp(28px,8.6vw,40px)/1.05 'Fredoka','Nunito',sans-serif;text-shadow:none!important;box-shadow:0 14px 26px -18px rgba(60,40,160,.55)}
+.celebration .celeb-title::before{content:'';position:absolute;z-index:-1;left:18%;top:-14px;width:46px;height:46px;border-radius:50%;background:var(--kb-plate);
+  box-shadow:58px -4px 0 6px var(--kb-plate),120px 2px 0 0 var(--kb-plate)}
+.celebration .celeb-title::after,.celebration .celeb-meaning::after{content:'';position:absolute;top:50%;left:-44px;right:-44px;height:40px;margin-top:-20px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%23FFC21A' stroke-width='5.5' stroke-linecap='round'%3E%3Cpath d='M30 9 L20 3'/%3E%3Cpath d='M28 20 L14 20'/%3E%3Cpath d='M30 31 L20 37'/%3E%3C/g%3E%3C/svg%3E") left center/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%23FFC21A' stroke-width='5.5' stroke-linecap='round'%3E%3Cpath d='M10 9 L20 3'/%3E%3Cpath d='M12 20 L26 20'/%3E%3Cpath d='M10 31 L20 37'/%3E%3C/g%3E%3C/svg%3E") right center/34px no-repeat}
+.celebration .celeb-arabic{display:block;width:fit-content;max-width:92%;margin:12px auto 0;padding:2px 34px 10px;border-radius:999px;background:var(--kb-arbg);color:var(--kb-ar)!important;
+  font-size:clamp(30px,9vw,40px);line-height:1.6;filter:none;box-shadow:inset 0 2px 0 rgba(255,255,255,.7),inset 0 -3px 0 rgba(220,180,80,.28),0 10px 20px -14px rgba(150,110,20,.55)}
+html[data-bm-theme="classic"] .celebration .celeb-arabic{box-shadow:inset 0 1px 0 rgba(255,255,255,.12),0 10px 20px -14px rgba(0,0,0,.7)}
+.celebration .celeb-meaning{position:relative;display:block;width:fit-content;min-width:70%;max-width:calc(100% - 70px);margin:30px auto 0;padding:24px 22px 14px;border-radius:28px;
+  background:var(--kb-card)!important;border:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 14px 26px -18px rgba(60,40,160,.5)!important}
+.celebration .celeb-meaning::after{top:-6px;left:-40px;right:-40px}
+.celebration .celeb-meaning-label{position:absolute;left:50%;top:-15px;transform:translateX(-50%);margin:0;white-space:nowrap;padding:7px 18px;border-radius:999px;
+  background:var(--kb-chip);color:var(--kb-chip-ink)!important;font:800 13.5px/1 'Nunito',sans-serif!important;letter-spacing:.12em}
+.celebration .celeb-indo{font:600 17px/1.3 'Fredoka','Nunito',sans-serif;color:var(--kb-ink)}
+/* parent card */
+.celebration .practice{position:relative;max-width:440px;margin-top:22px;padding:16px 16px 14px;text-align:left;border-radius:28px;
+  background:linear-gradient(180deg,#FFFCEE,#FFF5D6)!important;border:2px solid #F7DC8A!important;box-shadow:0 18px 32px -22px rgba(150,110,20,.6)!important}
+html[data-bm-theme="classic"] .celebration .practice{background:linear-gradient(180deg,#2E2B5A,#26234C)!important;border-color:rgba(255,206,90,.45)!important;box-shadow:0 18px 32px -22px rgba(0,0,0,.8)!important}
+.practice .pr-k{display:flex;align-items:center;gap:8px;width:fit-content;margin:0 auto 12px;padding:6px 18px 6px 10px;border-radius:999px;
+  background:linear-gradient(180deg,#FFEB94,#FFD650);color:#8A4500!important;font:900 13.5px/1 'Nunito',sans-serif;letter-spacing:.1em;box-shadow:inset 0 1px 0 rgba(255,255,255,.7)}
+.practice .pr-house{width:30px;height:30px;margin:-10px 0 -6px}
+.practice .pr-row{display:flex;align-items:center;gap:14px}
+.practice .pr-txt{flex:1;min-width:0}
+.practice .pr-check{flex:0 0 auto;display:grid;place-items:center;width:48px;height:48px;padding:0;border-radius:13px;border:3px solid #26A95C;background:#fff;color:transparent;cursor:pointer;
+  box-shadow:0 4px 10px -6px rgba(14,122,59,.6);transition:transform .2s}
+.practice .pr-check svg{width:30px;height:30px}
+.practice .pr-check.on{color:#1E9A4E;background:#F0FFF5}
+.practice .pr-check:active{transform:scale(.9)}
+.practice .pr-check[disabled]{cursor:default}
+html[data-bm-theme="classic"] .practice .pr-check{background:#1E2148;border-color:#4ADE80}
+html[data-bm-theme="classic"] .practice .pr-check.on{color:#6FE89B;background:rgba(74,222,128,.14)}
+.celebration .practice .pr-q,#todayModal .practice .pr-q{margin:0 0 4px;text-align:left;font:600 18.5px/1.22 'Fredoka','Nunito',sans-serif;color:#2D2370}
+.celebration .practice .pr-h,#todayModal .practice .pr-h{text-align:left;font-size:13.5px;color:#6B6680}
+html[data-bm-theme="classic"] .practice .pr-q{color:#FFF3D6!important}
+html[data-bm-theme="classic"] .practice .pr-h{color:#C7C2E0!important}
+:is(#celebPractice,#tdPractice) .pr-btn{display:flex!important;align-items:center;justify-content:center;gap:10px;margin-top:14px;min-height:58px;border-radius:999px!important;
+  background:linear-gradient(180deg,#38C773 0%,#169A4D 100%)!important;color:#fff!important;font:600 20px/1.1 'Fredoka','Nunito',sans-serif!important;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 5px 0 #0E7A3B,0 16px 22px -12px rgba(14,122,59,.65)!important}
+.practice .pr-btn svg{width:26px;height:26px;flex:0 0 auto}
+.practice .pr-btn b{font-weight:600}
+.practice .pr-btn .pr-plus{font:900 13px/1 'Nunito',sans-serif;padding:5px 8px;border-radius:999px;background:rgba(255,255,255,.22)}
+.practice .pr-done{text-align:center}
+.practice .pr-streak{text-align:center}
+@media (max-width:360px){.celebration .celeb-title{padding:22px 22px 14px}.practice .pr-q{font-size:17px}}
+@media (min-width:760px){.celebration .celeb-stage{height:clamp(300px,34vh,380px)}}
+@media (prefers-reduced-motion:reduce){.kb-scene .kb-tw,.kb-lantern,.celebration .celeb-character{animation:none!important}}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
@@ -1173,6 +1264,41 @@ html:not([data-bm-theme="classic"]) .modal-card{background:rgba(255,255,255,.86)
 <!-- Celebration Overlay -->
 <div class="celebration" id="celebration">
   <button class="celeb-close" id="celebCloseBtn" aria-label="Tutup">✕</button>
+  <div class="kb-hero">
+  <div class="kb-scene" aria-hidden="true">
+    <svg viewBox="0 0 400 380" preserveAspectRatio="xMidYMax slice">
+      <defs>
+        <linearGradient id="kbSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="ks1"/><stop offset=".55" class="ks2"/><stop offset="1" class="ks3"/></linearGradient>
+        <linearGradient id="kbHill" gradientUnits="userSpaceOnUse" x1="0" y1="312" x2="0" y2="380"><stop offset="0" class="kh1"/><stop offset="1" class="kh2"/></linearGradient>
+        <linearGradient id="kbMosq" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="km1"/><stop offset="1" class="km2"/></linearGradient>
+        <radialGradient id="kbBush" cx=".4" cy=".3" r=".8"><stop offset="0" stop-color="#A9E27C"/><stop offset=".6" stop-color="#5DBB4E"/><stop offset="1" stop-color="#2F8F3E"/></radialGradient>
+        <radialGradient id="kbGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF4D0" stop-opacity=".9"/><stop offset="1" stop-color="#FFF4D0" stop-opacity="0"/></radialGradient>
+      </defs>
+      <rect width="400" height="380" fill="url(#kbSky)"/>
+      <g class="kb-tw" fill="#fff">
+        <path d="M70 70l2 6 6 2-6 2-2 6-2-6-6-2 6-2z"/><path d="M300 40l1.6 5 5 1.6-5 1.6-1.6 5-1.6-5-5-1.6 5-1.6z"/>
+        <path d="M200 26l1.4 4 4 1.4-4 1.4-1.4 4-1.4-4-4-1.4 4-1.4z"/><path d="M360 150l1.6 5 5 1.6-5 1.6-1.6 5-1.6-5-5-1.6 5-1.6z"/>
+        <circle cx="130" cy="120" r="1.8"/><circle cx="250" cy="110" r="1.6"/><circle cx="40" cy="170" r="1.6"/><circle cx="330" cy="100" r="1.8"/><circle cx="270" cy="180" r="1.4"/>
+      </g>
+      <path d="M44 106l4.6 9.3 10.3 1.5-7.5 7.3 1.8 10.3-9.2-4.9-9.2 4.9 1.8-10.3-7.5-7.3 10.3-1.5z" fill="#FFD43B"/>
+      <path d="M80 150l2.8 5.6 6.2.9-4.5 4.4 1 6.2-5.5-2.9-5.5 2.9 1-6.2-4.5-4.4 6.2-.9z" fill="#FFD43B"/>
+      <path d="M318 168l3 6 6.6 1-4.8 4.6 1.2 6.6-6-3.1-6 3.1 1.2-6.6-4.8-4.6 6.6-1z" fill="#FFD43B"/>
+      <g class="kb-cloud"><path d="M-20 120 q6-30 40-26 q14-26 48-14 q30-6 34 22 q20 4 16 20 h-150z"/><path d="M300 236 q4-22 30-20 q12-20 38-10 q26-2 26 20 q16 4 12 18 h-118z"/></g>
+      <g fill="url(#kbMosq)">
+        <rect x="318" y="160" width="16" height="140" rx="6"/><path d="M318 162 q8-22 16 0z"/>
+        <path d="M262 300 v-50 q0-30 38-36 q38 6 38 36 v50z"/><path d="M236 300 v-28 q0-18 22-22 q22 4 22 22 v28z"/>
+        <path d="M330 300 v-26 q0-16 20-20 q20 4 20 20 v26z"/>
+      </g>
+      <g class="kb-win" fill="#FFD66B"><rect x="282" y="262" width="9" height="16" rx="4.5"/><rect x="296" y="262" width="9" height="16" rx="4.5"/><rect x="310" y="262" width="9" height="16" rx="4.5"/><rect x="322" y="190" width="8" height="14" rx="4"/><rect x="322" y="214" width="8" height="14" rx="4"/></g>
+      <g fill="url(#kbBush)">
+        <circle cx="10" cy="300" r="40"/><circle cx="56" cy="312" r="30"/><circle cx="-10" cy="330" r="44"/>
+        <circle cx="392" cy="292" r="42"/><circle cx="350" cy="314" r="28"/><circle cx="410" cy="330" r="40"/>
+      </g>
+      <ellipse cx="200" cy="420" rx="330" ry="110" fill="url(#kbHill)"/>
+      <ellipse cx="200" cy="328" rx="120" ry="16" fill="url(#kbGlow)"/>
+    </svg>
+    <img class="kb-lantern" src="icons/scene/lantern.svg" alt="" draggable="false">
+  </div>
   <span class="celeb-banner">✨ Mashaa Allah! ✨</span>
 
   <div class="celeb-stage">
@@ -1181,6 +1307,7 @@ html:not([data-bm-theme="classic"]) .modal-card{background:rgba(255,255,255,.86)
       <img class="celeb-character" id="celebCharImg" alt="" />
     </div>
     <div class="theme-emoji pos-tr" id="themeEmoji">👋</div>
+  </div>
   </div>
 
   <div class="celeb-text">
@@ -1921,16 +2048,21 @@ function practiceHtml(p){
     const ds = kbShift(t, -i), dd = +ds.slice(8);
     cal += `<i class="${d.practiced[ds] ? 'ok' : ''}${i === 0 ? ' today' : ''}">${d.practiced[ds] ? '✓' : ''}<span>${dd}</span></i>`;
   }
-  return `<div class="pr-k">🏠 ${KL('Praktik di rumah', 'Practise at home')}</div>
-    <div class="pr-q">${KB_EN ? q[1] : q[0]}</div>
+  const tick = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  return `<div class="pr-k"><img class="pr-house" src="icons/scene/house.svg" alt="" draggable="false">${KL('Praktik di rumah', 'Practise at home')}</div>
+    <div class="pr-row">
+      <button type="button" class="pr-check${done ? ' on' : ''}" data-pcheck ${done ? 'disabled' : ''} aria-label="${KL('Centang: sudah dipraktikkan', 'Tick: practised')}">${tick}</button>
+      <div class="pr-txt"><div class="pr-q">${KB_EN ? q[1] : q[0]}</div>
+      ${done ? '' : `<div class="pr-h">${KL('Untuk Ayah/Bunda: centang kalau si kecil sudah mempraktikkannya hari ini.', 'For parents: tick when your little one has practised it today.')}</div>`}</div>
+    </div>
     ${done ? `<div class="pr-done">✅ ${KL('Sudah dipraktikkan hari ini! Masya Allah', 'Practised today! Masha Allah')} 🌟</div>`
-           : `<div class="pr-h">${KL('Untuk Ayah/Bunda: centang kalau si kecil sudah mempraktikkannya hari ini.', 'For parents: tick when your little one has practised it today.')}</div>
-              <button class="btn btn-primary pr-btn" data-practice="${p.id}">✅ ${KL('Sudah!', 'Yes, done!')} <span>+1 ⭐</span></button>`}
+           : `<button class="btn btn-primary pr-btn" data-practice="${p.id}">${tick}<b>${KL('Sudah Praktik Hari Ini!', 'I Practised Today!')}</b><span class="pr-plus">+1 ⭐</span></button>`}
     <div class="pr-cal">${cal}</div>
     <div class="pr-streak">🔥 ${st ? st + ' ' + KL('hari berturut-turut', st === 1 ? 'day in a row' : 'days in a row') : KL('Mulai rentetan praktik hari ini!', 'Start a practice streak today!')}${d.best > 1 ? ' · ' + KL('Rekor', 'Best') + ' ' + d.best : ''}</div>`;
 }
 function wirePractice(root, p, after){
   const b = root.querySelector('[data-practice]'); if (!b) return;
+  const ck = root.querySelector('[data-pcheck]'); if (ck) ck.addEventListener('click', () => { ck.classList.add('on'); b.click(); });
   b.addEventListener('click', () => {
     const d = kbLoad(), t = kbToday();
     if (!d.practiced[t]) {

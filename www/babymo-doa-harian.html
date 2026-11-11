@@ -699,50 +699,65 @@ html[data-bm-theme="classic"] #welcomeScreen .pd-scene .flw{opacity:.4}
 .src-note{display:flex;gap:6px;align-items:flex-start;margin-top:9px;padding-top:8px;border-top:1px dashed rgba(120,130,150,.3);font-size:12px;font-weight:700;line-height:1.4;color:#4A5A6C}
 .src-note[hidden]{display:none}
 html[data-bm-theme="classic"] .src-note{color:#C3CCDA;border-top-color:rgba(255,255,255,.14)}
-.tsb{--ink:#152230;--ink2:#4A5A6C;--panel:#fff;--seg:#E9EDF5;--seg-on:#fff;--bead:#D9DEE8;--face1:#FFFFFF;--face2:#F1EEFF;--ar:#0B6B3A;
-  width:100%;max-width:440px;flex-shrink:0;margin-bottom:14px;padding:12px 12px 14px;border-radius:24px;background:var(--panel);color:var(--ink);text-align:center;box-shadow:0 0 0 .5px rgba(21,34,48,.06),0 12px 26px -18px rgba(30,60,110,.55)}
+.tsb{--ink:#2D2370;--ink2:#5B5487;--panel:#fff;--seg:#EEEAFB;--seg-on:linear-gradient(180deg,#FFF3B0,#FFE27A);--face1:#FFFFFF;--face2:#F3EEFF;--ar:#11894F;--lt:#5B3FB0;--of:#ECE7FF;--cur:#FFF6DA;
+  position:relative;width:100%;max-width:440px;flex-shrink:0;margin-bottom:14px;padding:16px 12px 0;border-radius:32px;background:var(--panel);color:var(--ink);text-align:center;overflow:hidden;
+  box-shadow:0 0 0 .5px rgba(45,35,112,.06),0 18px 36px -22px rgba(60,40,160,.55)}
 .tsb[hidden]{display:none}
-html[data-bm-theme="classic"] .tsb{--ink:#F2F5FA;--ink2:#C3CCDA;--panel:rgba(255,255,255,.06);--seg:rgba(255,255,255,.08);--seg-on:rgba(255,255,255,.2);--bead:rgba(255,255,255,.2);--face1:#2A3356;--face2:#1C2240;--ar:#FFE08A;box-shadow:inset 0 0 0 1px rgba(255,255,255,.1)}
-.tsb-h{font-size:15px;font-weight:900;margin-bottom:8px}
-.tsb-seg{display:flex;gap:4px;padding:4px;border-radius:16px;background:var(--seg);margin-bottom:10px}
-.tsb-seg button{flex:1;min-height:44px;border:none;border-radius:12px;background:transparent;color:var(--ink2);font:900 14px/1.2 'Nunito',sans-serif;cursor:pointer;padding:6px 4px}
-.tsb-seg button.on{background:var(--seg-on);color:var(--ink);box-shadow:0 4px 10px -6px rgba(20,30,60,.5)}
-.tsb-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:10px}
-.tsb-st{position:relative;border-radius:14px;padding:6px 4px 7px;background:var(--seg);border:2px solid transparent;overflow:hidden}
-.tsb-st.cur{border-color:#FFB400}
-.tsb-st .a{font-family:'Scheherazade New',serif;font-size:17px;line-height:1.4;direction:rtl;color:var(--ar);font-weight:700}
-.tsb-st .n{font-size:12.5px;font-weight:900;color:var(--ink2)}
+html[data-bm-theme="classic"] .tsb{--ink:#F2EFFF;--ink2:#C3BEE6;--panel:rgba(40,44,100,.62);--seg:rgba(255,255,255,.08);--face1:#343A7E;--face2:#22265A;--ar:#8FF0B4;--lt:#CFC4FF;--of:rgba(255,255,255,.12);--cur:rgba(255,214,107,.14);
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.1),0 18px 36px -22px rgba(0,0,0,.8)}
+.tsb-h{display:flex;align-items:center;justify-content:center;gap:8px;margin:0 auto 12px;width:fit-content;padding:0 44px;font:600 22px/1.2 'Fredoka','Nunito',sans-serif;color:var(--ink);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%23FFC21A' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M30 9 L20 3'/%3E%3Cpath d='M28 20 L14 20'/%3E%3Cpath d='M30 31 L20 37'/%3E%3C/g%3E%3C/svg%3E") left center/30px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%23FFC21A' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M10 9 L20 3'/%3E%3Cpath d='M12 20 L26 20'/%3E%3Cpath d='M10 31 L20 37'/%3E%3C/g%3E%3C/svg%3E") right center/30px no-repeat}
+.tsb-h img{width:30px;height:30px}
+.tsb-seg{display:flex;gap:4px;padding:5px;border-radius:999px;background:var(--seg);margin-bottom:12px}
+.tsb-seg button{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;min-height:46px;border:none;border-radius:999px;background:transparent;color:var(--ink);font:600 16px/1.2 'Fredoka','Nunito',sans-serif;cursor:pointer;padding:6px 4px}
+.tsb-seg button img{width:24px;height:24px}
+.tsb-seg button.on{background:var(--seg-on);box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 12px -8px rgba(180,120,0,.6)}
+html[data-bm-theme="classic"] .tsb-seg button.on{background:linear-gradient(180deg,#FFE88A,#F5C33B);color:#3A2600}
+.tsb-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:12px}
+.tsb-st{position:relative;border-radius:18px;padding:7px 4px 8px;background:var(--seg);border:2.5px solid transparent;overflow:hidden}
+.tsb-st.cur{border-color:#FFB400;background:var(--cur)}
+.tsb-st .a{font-family:'Scheherazade New',serif;font-size:19px;line-height:1.4;direction:rtl;color:var(--ar);font-weight:700}
+.tsb-st .n{font:600 15px/1.2 'Fredoka','Nunito',sans-serif;color:var(--ink)}
 .tsb-st.done .n{color:#0E8A45}
 html[data-bm-theme="classic"] .tsb-st.done .n{color:#7EE2A8}
 .tsb-st .bar{position:absolute;left:0;bottom:0;height:4px;background:#FFB400;transition:width .2s}
 .tsb-st.done .bar{background:#22C06E}
-.tsb-btn{position:relative;display:block;margin:0 auto;width:min(290px,76vw);aspect-ratio:1;border:none;border-radius:50%;padding:0;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--ink);
-  background:radial-gradient(circle at 50% 38%,var(--face1) 0%,var(--face2) 70%);box-shadow:inset 0 2px 0 rgba(255,255,255,.6),0 16px 30px -16px rgba(60,40,140,.55);-webkit-user-select:none;user-select:none;transition:transform .08s}
-html[data-bm-theme="classic"] .tsb-btn{box-shadow:inset 0 1px 0 rgba(255,255,255,.15),0 16px 30px -16px rgba(0,0,0,.8)}
+.tsb-btn{position:relative;display:block;margin:4px auto 0;width:min(300px,78vw);aspect-ratio:1;border:none;border-radius:50%;padding:0;cursor:pointer;font-family:'Nunito',sans-serif;color:var(--ink);
+  background:radial-gradient(circle at 50% 40%,var(--face1) 0%,var(--face2) 72%);box-shadow:0 0 0 10px rgba(236,231,255,.55),inset 0 2px 0 #fff,0 22px 40px -22px rgba(80,50,180,.6);-webkit-user-select:none;user-select:none;transition:transform .08s}
+html[data-bm-theme="classic"] .tsb-btn{box-shadow:0 0 0 10px rgba(255,255,255,.05),inset 0 1px 0 rgba(255,255,255,.15),0 22px 40px -22px rgba(0,0,0,.85)}
 .tsb-btn:active,.tsb-btn.tap{transform:scale(.965)}
 .tsb-btn svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.tsb-btn .bd{fill:var(--bead);transition:fill .15s}
-.tsb-btn .bd.on{fill:#FFB400}
-.tsb-btn .bd.last{fill:#FF8A00;animation:tsbBead .35s cubic-bezier(.34,1.8,.5,1)}
+.tsb-btn .bd{fill:url(#tsbOff);transition:fill .15s;transform-box:fill-box;transform-origin:center}
+.tsb-btn .bd.on{fill:url(#tsbOn)}
+.tsb-btn .bd.last{animation:tsbBead .35s cubic-bezier(.34,1.8,.5,1)}
+html[data-bm-theme="classic"] .tsb-btn .bd:not(.on){opacity:.5}
 @keyframes tsbBead{0%{transform:scale(1.7)}100%{transform:none}}
-.tsb-btn .bd{transform-box:fill-box;transform-origin:center}
 .tsb-in{position:absolute;inset:16%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}
-.tsb-ar{font-family:'Scheherazade New',serif;font-size:clamp(26px,8vw,36px);font-weight:700;line-height:1.35;direction:rtl;color:var(--ar)}
-.tsb-lt{font-size:14px;font-weight:800;font-style:italic;color:var(--ink2)}
-.tsb-num{font-size:clamp(40px,13vw,56px);font-weight:900;line-height:1;margin-top:2px;font-variant-numeric:tabular-nums}
-.tsb-of{font-size:13px;font-weight:800;color:var(--ink2)}
+.tsb-ar{font-family:'Scheherazade New',serif;font-size:clamp(30px,9vw,42px);font-weight:700;line-height:1.35;direction:rtl;color:var(--ar)}
+.tsb-lt{font:600 17px/1.2 'Fredoka','Nunito',sans-serif;font-style:italic;color:var(--lt)}
+.tsb-num{font:600 clamp(48px,15vw,66px)/1 'Fredoka','Nunito',sans-serif;color:var(--ink);margin-top:4px;font-variant-numeric:tabular-nums}
+.tsb-of{margin-top:6px;padding:5px 16px;border-radius:999px;background:var(--of);font:600 16px/1.1 'Fredoka','Nunito',sans-serif;color:var(--lt)}
+.tsb-hand{position:absolute;right:6%;bottom:6%;width:22%;height:auto;pointer-events:none;opacity:0;transition:opacity .3s;filter:drop-shadow(0 6px 8px rgba(45,35,112,.25))}
+.tsb-btn.hint .tsb-hand{opacity:1;animation:tsbHand 1.4s ease-in-out infinite}
+@keyframes tsbHand{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,-6px) scale(.94)}}
 .tsb-btn.pulse .tsb-num{animation:tsbNum .25s ease}
 @keyframes tsbNum{50%{transform:scale(1.15)}}
 .tsb-btn.phase{animation:tsbPhase .6s cubic-bezier(.34,1.7,.5,1)}
 @keyframes tsbPhase{0%{transform:scale(.9)}100%{transform:none}}
-.tsb-mean{font-size:14px;font-weight:800;margin-top:10px;color:var(--ink)}
-.tsb-tot{font-size:13px;font-weight:800;color:var(--ink2);margin-top:3px}
-.tsb-row{display:flex;gap:8px;justify-content:center;margin-top:10px}
+.tsb-foot{position:relative;display:flex;align-items:center;gap:10px;margin:18px 4px 0;padding:10px 14px 10px 92px;min-height:70px;border-radius:24px;background:var(--seg);text-align:left}
+.tsb-mo{position:absolute;left:6px;bottom:0;width:80px;height:104px;object-fit:cover;object-position:50% 0;border-radius:0 0 0 22px;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(45,35,112,.25))}
+.tsb-ft{flex:1;min-width:0}
+.tsb-mean{font:600 17px/1.25 'Fredoka','Nunito',sans-serif;color:var(--ink)}
+.tsb-tot{font-size:13.5px;font-weight:800;color:var(--ink2);margin-top:3px;line-height:1.3}
+.tsb-row{display:flex;gap:8px;justify-content:center;margin-top:12px}
 .tsb-row button{min-height:44px;border:none;border-radius:22px;padding:8px 16px;background:var(--seg);color:var(--ink);font:900 13.5px 'Nunito',sans-serif;cursor:pointer}
 .tsb-row button:active{transform:scale(.96)}
+.tsb-grass{display:block;width:calc(100% + 24px);height:44px;margin:8px -12px 0}
+html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 /* sticker-book star pips sit outside #welcomeScreen, where --pip is defined */
 #book .pips svg:not(.on){fill:rgba(120,130,150,.35)}
-@media(min-width:820px){.tsb{max-width:680px!important}}
+@media(min-width:820px){.tsb{max-width:680px!important}.tsb-btn{width:340px}}
+@media (max-width:360px){.tsb-seg button{font-size:14.5px}.tsb-h{font-size:20px;padding:0 36px}}
 @media (max-height:500px) and (orientation:landscape){.tsb-btn{width:min(260px,60vh + 40px)}}
 @media (prefers-reduced-motion:reduce){.tsb-btn,.tsb-btn *{animation:none!important}}
 </style>
@@ -1871,12 +1886,13 @@ function showToast(e, t){
     var box=document.getElementById('tsb'); TS.tok++;
     if(!d.tasbih){ box.hidden=true; box.innerHTML=''; TS.d=null; return; }
     TS.d=d; TS.ph=0; TS.c=0; TS.busy=false; TS.done=false;
-    box.innerHTML='<div class="tsb-h">📿 '+T('Ayo bertasbih!')+'</div>'
-      +'<div class="tsb-seg" role="group"><button type="button" data-m="full">📿 33 · 33 · 34</button><button type="button" data-m="short">⭐ '+T('Versi pendek')+'</button></div>'
+    box.innerHTML='<div class="tsb-h"><img src="icons/scene/tasbih.svg" alt="" draggable="false">'+T('Ayo bertasbih!')+'</div>'
+      +'<div class="tsb-seg" role="group"><button type="button" data-m="full"><img src="icons/scene/tasbih.svg" alt="" draggable="false">33 · 33 · 34</button><button type="button" data-m="short">⭐ '+T('Versi pendek')+'</button></div>'
       +'<div class="tsb-steps" id="tsbSteps"></div>'
-      +'<button class="tsb-btn" id="tsbBtn" type="button"><svg id="tsbRing" viewBox="0 0 200 200" aria-hidden="true"></svg><span class="tsb-in"><span class="tsb-ar" id="tsbAr"></span><span class="tsb-lt" id="tsbLt"></span><span class="tsb-num" id="tsbNum">0</span><span class="tsb-of" id="tsbOf"></span></span></button>'
-      +'<div class="tsb-mean" id="tsbMean"></div><div class="tsb-tot" id="tsbTot"></div>'
-      +'<div class="tsb-row"><button type="button" id="tsbHear">🔊 '+T('Dengar')+'</button><button type="button" id="tsbReset">↺ '+T('Ulang dari awal')+'</button></div>';
+      +'<button class="tsb-btn" id="tsbBtn" type="button"><svg id="tsbRing" viewBox="0 0 200 200" aria-hidden="true"></svg><span class="tsb-in"><span class="tsb-ar" id="tsbAr"></span><span class="tsb-lt" id="tsbLt"></span><span class="tsb-num" id="tsbNum">0</span><span class="tsb-of" id="tsbOf"></span></span><img class="tsb-hand" src="icons/scene/tap-hand.svg" alt="" aria-hidden="true" draggable="false"></button>'
+      +'<div class="tsb-foot"><img class="tsb-mo" src="baby-mo-poses/baby-mo-dua-smile.webp" alt="" draggable="false"><div class="tsb-ft"><div class="tsb-mean" id="tsbMean"></div><div class="tsb-tot" id="tsbTot"></div></div></div>'
+      +'<div class="tsb-row"><button type="button" id="tsbHear">🔊 '+T('Dengar')+'</button><button type="button" id="tsbReset">↺ '+T('Ulang dari awal')+'</button></div>'
+      +'<svg class="tsb-grass" viewBox="0 0 400 44" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 Q60 12 120 20 Q200 30 280 16 Q340 8 400 20 V44 H0z" fill="#9FDC7A"/><path d="M0 34 Q90 22 200 30 Q300 38 400 28 V44 H0z" fill="#5CB84E"/></svg>';
     box.hidden=false;
     box.querySelectorAll('.tsb-seg button').forEach(function(b){ b.onclick=function(){ if(tsMode()===b.dataset.m) return; ST.tsbMode=b.dataset.m; save(); sfx('tap'); renderTasbih(d); }; });
     var btn=document.getElementById('tsbBtn'); btn.onclick=tsTap; btn.setAttribute('aria-label',T('Ketuk untuk menghitung'));
@@ -1892,7 +1908,8 @@ function showToast(e, t){
     document.getElementById('tsbSteps').innerHTML=h;
     var n=short?3:tgt, lit=short?TS.ph+(TS.c>=1?1:0):TS.c, R=86, r=short?14:6.3, s='';
     for(var i=0;i<n;i++){ var a=-Math.PI/2+i*2*Math.PI/n; s+='<circle class="bd'+(i<lit?' on':'')+(fresh&&i===lit-1?' last':'')+'" cx="'+(100+R*Math.cos(a)).toFixed(1)+'" cy="'+(100+R*Math.sin(a)).toFixed(1)+'" r="'+r+'"/>'; }
-    document.getElementById('tsbRing').innerHTML=s;
+    document.getElementById('tsbRing').innerHTML='<defs><radialGradient id="tsbOn" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#7EE6A4"/><stop offset=".6" stop-color="#1FA85C"/><stop offset="1" stop-color="#0E7A45"/></radialGradient><radialGradient id="tsbOff" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#F1ECFF"/><stop offset=".7" stop-color="#CDBFF5"/><stop offset="1" stop-color="#AE9CEB"/></radialGradient></defs>'+s;
+    document.getElementById('tsbBtn').classList.toggle('hint',!TS.done&&tsCount()===0);
     document.getElementById('tsbAr').textContent=p.ar; document.getElementById('tsbLt').textContent=p.lt;
     document.getElementById('tsbNum').textContent=short?lit:TS.c;
     document.getElementById('tsbOf').textContent='/ '+n;

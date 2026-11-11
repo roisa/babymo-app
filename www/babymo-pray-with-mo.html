@@ -499,9 +499,120 @@ html[data-bm-theme="classic"] .tr-badge{color:#06311A}
 .topbar .back-btn{width:44px;height:44px;padding:0}
 .guide-nav-btn,.dzikir-nav-btn,.btn-primary,.rec-btn-play,.dz-btn-play{font-weight:900}
 </style>
+<style id="pw-dzikir">
+/* ═════ Dhikr & Du'a view — sky backdrop, pill tabs, lantern card, bead ring round Mo with a
+   green cloud counter, orange play button. Both themes (not a bm-bright* block). ═════ */
+:root{--dz-sky1:#C7D0FF;--dz-sky2:#E6E2FF;--dz-sky3:#F6F0FF;--dz-ink:#2D2370;--dz-ink2:#5B5487;--dz-card:rgba(255,255,255,.74);--dz-pill:#fff;
+  --dz-mean:#E9E4FF;--dz-ar:#11894F;--dz-lat:#A2460C;--dz-track:#E2DCF7;--dz-face:radial-gradient(circle at 50% 40%,#FFFDF4 0%,#FFF6DD 55%,#F3EDFF 100%)}
+html[data-bm-theme="classic"]{--dz-sky1:#141A44;--dz-sky2:#1D2358;--dz-sky3:#151A3E;--dz-ink:#F2EFFF;--dz-ink2:#C3BEE6;--dz-card:rgba(36,40,92,.72);--dz-pill:rgba(255,255,255,.1);
+  --dz-mean:rgba(170,150,255,.2);--dz-ar:#8FF0B4;--dz-lat:#FFB27A;--dz-track:rgba(255,255,255,.12);--dz-face:radial-gradient(circle at 50% 40%,#3A3F86 0%,#2B2F6A 60%,#23275A 100%)}
+.dz-sky{display:none;position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,var(--dz-sky1) 0%,var(--dz-sky2) 45%,var(--dz-sky3) 100%)}
+body[data-view="dzikir"] .dz-sky{display:block}
+.dz-sky-top{position:absolute;left:50%;top:0;width:min(100%,560px);height:150px;transform:translateX(-50%)}
+.dz-sky .dz-cl{fill:#fff;opacity:.85}.dz-sky .dz-st{fill:#FFD43B}
+html[data-bm-theme="classic"] .dz-sky .dz-cl{fill:#B9BEFF;opacity:.16}
+.dz-grass{position:absolute;left:0;right:0;bottom:0;width:100%;height:84px}
+html[data-bm-theme="classic"] .dz-grass{filter:brightness(.55) saturate(.8)}
+body[data-view="dzikir"] .main{padding-bottom:calc(70px + var(--safe-bottom))}
+body[data-view="dzikir"] .topbar{background:linear-gradient(180deg,var(--dz-sky1) 55%,rgba(199,208,255,0));box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-bm-theme="classic"] body[data-view="dzikir"] .topbar{background:linear-gradient(180deg,var(--dz-sky1) 55%,rgba(20,26,68,0))}
+body[data-view="dzikir"] .topbar-title{position:relative;flex:0 1 auto;margin:6px auto 0;padding:9px 22px;border-radius:999px;background:var(--dz-pill);color:var(--dz-ink);
+  font:600 19px/1.1 var(--fd);overflow:visible;box-shadow:0 8px 18px -10px rgba(60,40,160,.5),inset 0 1px 0 rgba(255,255,255,.8)}
+body[data-view="dzikir"] .topbar-title::before{content:'';position:absolute;left:50%;top:-19px;width:56px;height:22px;margin-left:-28px;background:url(icons/scene/mosque-mini.svg) center bottom/contain no-repeat}
+html[data-bm-theme="classic"] body[data-view="dzikir"] .topbar-title{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:rgba(44,48,108,.94);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
+/* tabs */
+#viewDzikir .dzikir-nav{-webkit-mask-image:none;mask-image:none;margin-bottom:6px;padding-top:6px;padding-bottom:12px}
+#viewDzikir .dzikir-dot{min-height:48px;padding:0 20px;border-radius:999px;font:600 16px/1 var(--fd);color:var(--dz-ink);background:var(--dz-pill);border:none;
+  box-shadow:0 8px 16px -10px rgba(60,40,160,.45),inset 0 1px 0 rgba(255,255,255,.8)}
+#viewDzikir .dzikir-dot.done{background:#DDF6E5;color:#127A40}
+#viewDzikir .dzikir-dot.done::before{content:'✓';font:900 16px/1 'Nunito',sans-serif}
+#viewDzikir .dzikir-dot.active{background:linear-gradient(180deg,#2BBF74 0%,#139067 100%);color:#fff;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.35),0 0 0 3px rgba(43,191,116,.22),0 10px 18px -8px rgba(19,144,103,.75)}
+html[data-bm-theme="classic"] #viewDzikir .dzikir-dot{box-shadow:inset 0 1px 0 rgba(255,255,255,.12)}
+html[data-bm-theme="classic"] #viewDzikir .dzikir-dot.done{background:rgba(74,222,128,.18);color:#8FF0B4}
+/* card */
+#viewDzikir .dzikir-card{position:relative;overflow:visible;border-radius:38px;padding:26px 18px 22px;background:var(--dz-card);border:1.5px solid rgba(255,255,255,.9);
+  box-shadow:0 24px 44px -28px rgba(60,40,160,.6),inset 0 1px 0 #fff}
+html[data-bm-theme="classic"] #viewDzikir .dzikir-card{border-color:rgba(255,255,255,.1);box-shadow:0 24px 44px -24px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.08)}
+.dz-lantern{position:absolute;left:16px;top:-16px;width:58px;height:auto;pointer-events:none;transform-origin:50% 0;animation:dzSway 4s ease-in-out infinite;filter:drop-shadow(0 8px 10px rgba(150,90,0,.3))}
+@keyframes dzSway{50%{transform:rotate(4deg)}}
+#viewDzikir .dzikir-title{font:600 30px/1.1 var(--fd);color:#3B2A8C;margin:0 44px 8px}
+html[data-bm-theme="classic"] #viewDzikir .dzikir-title{color:#E4DEFF}
+#viewDzikir .dzikir-badge{padding:7px 16px;background:linear-gradient(180deg,#FFE97C,#FFCF33);color:#6A3D00;font:900 15px/1 'Nunito',sans-serif;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),0 6px 12px -8px rgba(180,120,0,.7)}
+#viewDzikir .dzikir-arabic{position:relative;color:var(--dz-ar);font-size:46px;line-height:1.75;margin-bottom:2px}
+#viewDzikir .dzikir-arabic.long-text{font-size:25px}
+#viewDzikir .dzikir-arabic:not(.long-text)::before,#viewDzikir .dzikir-arabic:not(.long-text)::after{content:'';position:absolute;top:22%;width:34px;height:34px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg stroke='%23FFC21A' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M28 8 L22 16'/%3E%3Cpath d='M34 22 L24 24'/%3E%3Cpath d='M14 6 L15 14'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+#viewDzikir .dzikir-arabic::before{left:2px;transform:scaleX(-1)}
+#viewDzikir .dzikir-arabic::after{right:2px}
+#viewDzikir .dzikir-latin{font:600 20px/1.25 var(--fd);font-style:normal;color:var(--dz-lat);margin-bottom:8px}
+#viewDzikir .dzikir-arabic.long-text + .dzikir-latin{font:700 14.5px/1.45 'Nunito',sans-serif;color:var(--dz-lat)}
+#viewDzikir .dzikir-meaning{display:inline-block;max-width:100%;padding:8px 22px;border-radius:999px;background:var(--dz-mean);color:#3B2A8C;font:600 16px/1.3 var(--fd);margin-bottom:12px}
+html[data-bm-theme="classic"] #viewDzikir .dzikir-meaning{color:#E4DEFF}
+#viewDzikir .dzikir-arabic.long-text ~ .dzikir-meaning{border-radius:20px;font-size:14.5px}
+/* bead ring + Mo */
+#viewDzikir .tasbih-wrap{position:relative;margin:6px -6px 10px}
+#viewDzikir .tasbih-circle{width:min(270px,68vw);height:auto;aspect-ratio:1;background:var(--dz-face);overflow:visible;
+  box-shadow:0 0 0 8px rgba(255,255,255,.55),0 22px 40px -22px rgba(80,50,180,.6),inset 0 2px 0 #fff}
+html[data-bm-theme="classic"] #viewDzikir .tasbih-circle{box-shadow:0 0 0 8px rgba(255,255,255,.06),0 22px 40px -22px rgba(0,0,0,.8),inset 0 1px 0 rgba(255,255,255,.12)}
+#viewDzikir .tasbih-ring{display:none}
+.dz-beads{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.dz-beads .bd{fill:url(#dzBoff);transition:fill .2s;transform-box:fill-box;transform-origin:center}
+.dz-beads .bd.on{fill:url(#dzBon)}
+.dz-beads .bd.pop{animation:dzPop .4s cubic-bezier(.34,1.8,.5,1)}
+@keyframes dzPop{0%{transform:scale(1.7)}100%{transform:none}}
+html[data-bm-theme="classic"] .dz-beads .bd:not(.on){opacity:.55}
+.dz-arch{position:absolute;left:25%;right:25%;top:21%;bottom:24%;border-radius:999px 999px 18px 18px;background:linear-gradient(180deg,rgba(255,236,170,.75),rgba(255,236,170,.15));pointer-events:none}
+html[data-bm-theme="classic"] .dz-arch{background:linear-gradient(180deg,rgba(255,214,107,.22),rgba(255,214,107,0))}
+.dz-mo{position:absolute;left:50%;top:-9%;width:98%;height:auto;transform:translateX(-50%);pointer-events:none;object-fit:contain;
+  }
+.dz-cloud{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);width:46%;padding:4px 0 7px;display:flex;flex-direction:column;align-items:center;
+  border-radius:44% 44% 40% 40%/56% 56% 44% 44%;background:linear-gradient(180deg,#2FBE73,#139A57);
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 10px 18px -10px rgba(10,110,60,.75)}
+.dz-cloud::before,.dz-cloud::after{content:'';position:absolute;top:-8px;width:34%;height:28px;border-radius:50%;background:#2FBE73;z-index:-1}
+.dz-cloud::before{left:10%}.dz-cloud::after{right:10%}
+#viewDzikir .tasbih-count{font:600 36px/1 var(--fd);color:#fff}
+#viewDzikir .tasbih-total{font:800 15px/1 'Nunito',sans-serif;color:rgba(255,255,255,.92);margin-top:2px}
+#viewDzikir .tasbih-circle:active{transform:scale(.96)}
+#viewDzikir .tasbih-label{margin-top:14px;font:600 16px/1.2 var(--fd);color:var(--dz-ink)}
+.dz-deco{position:absolute;bottom:34px;width:28%;max-width:120px;height:auto;pointer-events:none;z-index:2}
+.dz-deco-l{left:-30px}.dz-deco-r{right:-30px}
+/* controls */
+#viewDzikir .dzikir-controls{gap:28px}
+#viewDzikir .dz-btn{width:58px;height:58px;font:800 19px/1 var(--fd);color:var(--dz-ink);background:var(--dz-pill);border:none;box-shadow:0 10px 18px -10px rgba(60,40,160,.5),inset 0 1px 0 rgba(255,255,255,.8)}
+#viewDzikir #dzPlayBtn{width:74px;height:74px;font-size:26px;background:linear-gradient(180deg,#FF9A3C 0%,#F2601E 100%)!important;color:#fff;
+  box-shadow:inset 0 3px 0 rgba(255,255,255,.35),0 5px 0 #C2410C,0 14px 24px -10px rgba(220,80,20,.6)}
+#viewDzikir .dzikir-progress{height:12px;margin:18px 6px 0;background:var(--dz-track);border-radius:99px}
+#viewDzikir .dzikir-progress-fill{background:linear-gradient(90deg,#24B36A,#139067);border-radius:99px}
+/* prev / next */
+#viewDzikir .dzikir-nav-btn{min-height:60px;border-radius:999px;font:600 18px/1.1 var(--fd)!important}
+#viewDzikir .dzikir-nav-btn.prev{background:var(--dz-pill);color:var(--dz-ink);border:none;box-shadow:0 10px 18px -10px rgba(60,40,160,.5)}
+#viewDzikir .dzikir-nav-btn.next,#viewDzikir #dzCompleteNext{background:linear-gradient(180deg,#2BBF74 0%,#118A5F 100%)!important;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 12px 22px -10px rgba(17,138,95,.7)}
+#viewDzikir .dzikir-complete{background:var(--dz-card);border:1.5px solid rgba(255,255,255,.9)}
+html[data-bm-theme="classic"] #viewDzikir .dzikir-complete{border-color:rgba(255,255,255,.1)}
+@media (min-width:700px){#viewDzikir .tasbih-circle{width:320px}.dz-deco{max-width:150px;bottom:40px}.dz-lantern{width:70px}}
+@media (max-width:370px){#viewDzikir .dzikir-arabic{font-size:40px}.dz-deco{width:27%}}
+@media (prefers-reduced-motion:reduce){.dz-lantern,.dz-beads .bd.pop{animation:none!important}}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
+
+<!-- Dhikr view backdrop: soft sky, clouds, stars and a grass strip (decorative) -->
+<div class="dz-sky" aria-hidden="true">
+  <svg class="dz-sky-top" viewBox="0 0 400 140" preserveAspectRatio="xMidYMin slice">
+    <g class="dz-cl"><path d="M70 92 q4-20 26-18 q10-18 32-8 q22-2 22 18 q12 2 10 14 h-96z"/><path d="M262 84 q4-18 24-16 q10-16 30-8 q20-2 20 16 q12 2 10 12 h-88z"/><path d="M-30 128 q6-22 30-18 q12-20 36-8 q24-2 24 20 h-90z"/><path d="M340 130 q6-22 30-18 q12-20 36-8 q24 0 22 20 h-88z"/></g>
+    <g class="dz-st"><path d="M140 30l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/><path d="M336 30l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></g>
+    <g fill="#fff" opacity=".9"><circle cx="190" cy="20" r="1.6"/><circle cx="250" cy="26" r="1.4"/><circle cx="40" cy="40" r="1.4"/><circle cx="380" cy="70" r="1.6"/></g>
+  </svg>
+  <svg class="dz-grass" viewBox="0 0 400 90" preserveAspectRatio="xMidYMax slice">
+    <defs><linearGradient id="dzG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A6E07E"/><stop offset="1" stop-color="#5CB84E"/></linearGradient>
+    <radialGradient id="dzL" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#9BE37A"/><stop offset="1" stop-color="#2E9E4F"/></radialGradient></defs>
+    <path d="M0 70 Q100 52 200 60 Q300 68 400 54 V90 H0z" fill="url(#dzG)"/>
+    <g fill="url(#dzL)"><path d="M10 90 C-4 60 8 30 30 18 C30 50 26 70 24 90z"/><path d="M30 90 C30 66 44 46 64 40 C56 62 48 78 44 90z"/><path d="M-6 90 C-10 70 -4 52 8 44 C8 64 8 78 6 90z"/>
+    <path d="M390 90 C404 60 392 30 370 18 C370 50 374 70 376 90z"/><path d="M370 90 C370 66 356 46 336 40 C344 62 352 78 356 90z"/></g>
+  </svg>
+</div>
 
 <!-- ===== TOP BAR ===== -->
 <div class="topbar on-hero">
@@ -703,16 +814,24 @@ html[data-bm-theme="classic"] .tr-badge{color:#06311A}
   <div class="view" id="viewDzikir">
     <div class="dzikir-nav" id="dzikirNav"></div>
     <div class="dzikir-card">
+      <img class="dz-lantern" src="icons/scene/lantern.svg" alt="" aria-hidden="true" draggable="false">
       <div class="dzikir-title" id="dzTitle"></div>
       <div class="dzikir-badge" id="dzBadge"></div>
       <div class="dzikir-arabic" id="dzArabic"></div>
       <div class="dzikir-latin" id="dzLatin"></div>
       <div class="dzikir-meaning" id="dzMeaning"></div>
       <div class="tasbih-wrap">
-        <div class="tasbih-circle" id="tasbihBtn" onclick="tasbihTap()">
+        <img class="dz-deco dz-deco-l" src="icons/scene/book-cushion.svg" alt="" aria-hidden="true" draggable="false">
+        <img class="dz-deco dz-deco-r" src="icons/scene/star-tower.svg" alt="" aria-hidden="true" draggable="false">
+        <div class="tasbih-circle" id="tasbihBtn" onclick="tasbihTap()" role="button" aria-label="Tap untuk menghitung">
+          <svg class="dz-beads" id="dzBeads" viewBox="0 0 200 200" aria-hidden="true"></svg>
           <div class="tasbih-ring" id="tasbihRing"></div>
-          <div class="tasbih-count" id="tasbihCount">0</div>
-          <div class="tasbih-total" id="tasbihTotal">/ 33</div>
+          <span class="dz-arch" aria-hidden="true"></span>
+          <img class="dz-mo" src="baby-mo-poses/baby-mo-pose-12.webp" alt="" draggable="false">
+          <div class="dz-cloud">
+            <div class="tasbih-count" id="tasbihCount">0</div>
+            <div class="tasbih-total" id="tasbihTotal">/ 33</div>
+          </div>
         </div>
         <div class="tasbih-label">Tap untuk menghitung</div>
       </div>
@@ -1251,6 +1370,7 @@ function renderDzikir(){
   var pct=Math.min(100,Math.round(tasbihCurrent/d.count*100));
   document.getElementById('dzProgress').style.width=pct+'%';
   document.getElementById('tasbihRing').style.transform='rotate('+(tasbihCurrent/d.count*360)+'deg)';
+  drawDzBeads(tasbihCurrent,d.count);
   var done=tasbihCurrent>=d.count;
   if(done){try{localStorage.setItem('mo_dzikir_done_'+currentDzikir,'1');}catch(e){}}
   var completeEl=document.getElementById('dzikirComplete');
@@ -1267,6 +1387,17 @@ function renderDzikir(){
   document.getElementById('dzNextBtn').textContent=currentDzikir===DZIKIR.length-1?'Selesai ✓':'Selanjutnya →';
 }
 
+/* ring of 33 beads round Mo; they turn green as the count grows */
+var _dzLit=-1;
+function drawDzBeads(cur,count){
+  var el=document.getElementById('dzBeads');if(!el)return;
+  var n=33,lit=Math.min(n,Math.round(cur/count*n)),R=88,r=6.6,h='';
+  for(var i=0;i<n;i++){var a=-Math.PI/2+i*2*Math.PI/n;
+    h+='<circle class="bd'+(i<lit?' on':'')+(i<lit&&i>=_dzLit&&_dzLit>=0?' pop':'')+'" cx="'+(100+R*Math.cos(a)).toFixed(1)+'" cy="'+(100+R*Math.sin(a)).toFixed(1)+'" r="'+r+'"/>';}
+  el.innerHTML='<defs><radialGradient id="dzBon" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#7EE6A4"/><stop offset=".6" stop-color="#1FA85C"/><stop offset="1" stop-color="#0E7A45"/></radialGradient>'+
+    '<radialGradient id="dzBoff" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#EEE8FF"/><stop offset=".7" stop-color="#C9BBF5"/><stop offset="1" stop-color="#A996EA"/></radialGradient></defs>'+h;
+  _dzLit=lit;
+}
 function goToDzikir(idx){
   stopDzikirPlay();
   currentDzikir=idx;tasbihCurrent=0;
