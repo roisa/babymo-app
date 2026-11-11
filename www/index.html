@@ -1351,12 +1351,23 @@ html[data-theme="dark"] .wv{--soft:rgba(150,100,20,.4);--softe:rgba(20,110,60,.4
 .wv .rb-sh{fill:rgba(120,70,0,.22);filter:blur(3px)}
 .wv .rb-hi{stroke:rgba(255,255,255,.85);stroke-width:3px;stroke-linecap:round}
 .wv .rb-lo{stroke:rgba(200,120,0,.25);stroke-width:3px;stroke-linecap:round}
-.wv .rb-tx{dominant-baseline:central;fill:#6E1F32;font-family:'Nunito',sans-serif;font-weight:900;letter-spacing:.1px}
+.wv .rb-tx{fill:#6E1F32;font-family:'Nunito',sans-serif;font-weight:900;letter-spacing:.1px}
 .wv.pr .rb-tx{fill:#5A3200}
 .wv .rb-heart{fill:#E5484D}
 html[data-theme="dark"] .wv{--shc:rgba(0,0,0,.45);--rim:#3B4380;--oc:#262C6E;--dp:#B8862A;--dpe:#1F8F52}
 html[data-theme="dark"] .wv .g1,html[data-theme="dark"] .wv.pr .g1{stop-color:#FFF4C8}html[data-theme="dark"] .wv .g2,html[data-theme="dark"] .wv.pr .g2{stop-color:#FFD66B}html[data-theme="dark"] .wv .g3,html[data-theme="dark"] .wv.pr .g3{stop-color:#F2B93A}
 html[data-theme="dark"] .wv .e1{stop-color:#A6F2C2}html[data-theme="dark"] .wv .e2{stop-color:#4CCB84}html[data-theme="dark"] .wv .e3{stop-color:#2FA765}
+
+/* ===== Floating top bar (like Doa Harian): no strip at the top — the scene runs under the
+   star jar and gear; the frosted glass bar only appears once the page scrolls. ===== */
+.app{padding-top:0!important}
+.navbar{position:absolute!important;left:0;right:0;top:env(safe-area-inset-top);background:transparent!important;border-bottom-color:transparent!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important;transition:background .25s,box-shadow .25s}
+.navbar.condensed{background:rgba(255,255,255,.72)!important;-webkit-backdrop-filter:saturate(180%) blur(24px)!important;backdrop-filter:saturate(180%) blur(24px)!important;box-shadow:0 .5px 0 var(--hairline)}
+html[data-theme="dark"] .navbar.condensed{background:rgba(11,16,32,.7)!important}
+.navbar:before{content:'';position:absolute;left:0;right:0;bottom:100%;height:env(safe-area-inset-top);background:inherit;-webkit-backdrop-filter:inherit;backdrop-filter:inherit}
+.scroller{padding-top:calc(var(--nav-h) + env(safe-area-inset-top))}
+.tab-pane > .pd-scene{top:calc(-96px - env(safe-area-inset-top))!important;height:calc(620px + env(safe-area-inset-top))!important}
 /* ===== Play + Prayer tabs v3 — same little world as the Duas tab ===== */
 .pd-logo-t.sm{font-size:clamp(34px,10vw,46px)}
 .pd-logo-t.two em{color:#22A653}html[data-theme="dark"] .pd-logo-t.two em{color:#7BE3A0}
@@ -2738,10 +2749,12 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
       /* make sure it fits the arc in the font actually used (iPhone fonts measure wider) */
       try{ var rp=svg.querySelector('#'+id+'r'), room=(rp?rp.getTotalLength():300)-(heart?52:28);
         for(var g=0; g<12; g++){ var tw=tx.getComputedTextLength(); if(!tw||tw<=room) break; rs=rs*Math.max(.8,room/tw)*.98; tx.setAttribute('font-size',rs); } }catch(e){}
+      /* centre the letters in the band on every browser: alphabetic baseline sits ~0.35em below the band's middle line */
+      tx.setAttribute('transform','translate('+(heart?-10:0)+' '+(rs*0.36).toFixed(1)+')');
       if(heart){ var hw=0; try{ hw=tx.getComputedTextLength(); }catch(e){} if(!hw) hw=rl[0].t.length*rs*.5;
-        var hx=190+hw/2+14, ht=(hx-40)/300, hy=141*(1-ht)*(1-ht)+214*ht*(1-ht)+141*ht*ht+1;
+        var hx=190+hw/2+14, ht=(hx-40)/300, hy=141*(1-ht)*(1-ht)+214*ht*(1-ht)+141*ht*ht-2;
         el('path',{'class':'rb-heart',d:'M'+hx+' '+(hy+6)+' c-7-4.6-9-8.2-9-10.8a4.6 4.6 0 0 1 9-1.4a4.6 4.6 0 0 1 9 1.4c0 2.6-2 6.2-9 10.8z'},svg);
-        tx.setAttribute('transform','translate(-10 0)'); }
+        }
     }
     box.classList.add('wv-on');
   }
