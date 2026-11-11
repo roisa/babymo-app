@@ -1378,6 +1378,7 @@ body:not(:has(.celebration.show)):not(:has(.modal.show)) #bm-mo{display:none!imp
 }
 </style>
 <script src="bm-icons.js" defer></script>
+<style id="kb-tap">html,body{touch-action:manipulation}.tile,.tile *{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}</style>
 </head>
 <body>
 <div class="kb-sky" aria-hidden="true">
@@ -1966,7 +1967,9 @@ function buildPuzzle(phrase, isToday){
 
       inner.appendChild(front); inner.appendChild(back);
       tile.appendChild(inner);
-      tile.addEventListener('click', () => onTileClick(tile));
+      // open on finger-down for an instant response (click stays as a fallback for keyboards/mice)
+      tile.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse' || e.button === 0) { tile._pd = Date.now(); onTileClick(tile); } });
+      tile.addEventListener('click', () => { if (!tile._pd || Date.now() - tile._pd > 800) onTileClick(tile); });
       grid.appendChild(tile);
     }
   }
@@ -2359,13 +2362,8 @@ document.getElementById('hubBtn').addEventListener('click', () => {
   else if (history.length > 1){ history.back(); }
 });
 
-// Prevent accidental double-tap zoom on iOS
-let lastTouch = 0;
-document.addEventListener('touchend', (e) => {
-  const now = Date.now();
-  if (now - lastTouch <= 350) e.preventDefault();
-  lastTouch = now;
-}, { passive: false });
+// Double-tap zoom is turned off with CSS (touch-action: manipulation), so quick taps are never swallowed.
+// (The old touchend trick cancelled every tap that came within 350 ms of the previous one.)
 
 // Prevent scroll/bounce — allow only inside scrollable containers
 document.addEventListener('touchmove', (e) => {
