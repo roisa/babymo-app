@@ -593,6 +593,36 @@ html[data-bm-theme="classic"] .dh-pic{background:#1F2638;box-shadow:inset 0 0 0 
 #dhDay #dhNow{display:block;width:100%;max-width:440px;margin:0 0 14px!important}
 @media(min-width:600px){#dhDay #dhNow{max-width:680px}}
 </style>
+<style id="dh-kids">
+/* Doa Harian home v5: no du'a-of-the-day (it lives in the hub), big chunky time-of-day picture buttons */
+#welcomeScreen #dod{display:none!important}
+#dhDay .dh-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0;margin:6px 0 14px;background:none!important;box-shadow:none!important;-webkit-backdrop-filter:none;backdrop-filter:none;border-radius:0}
+#dhDay .dh-tab{position:relative;display:flex;flex-direction:column;align-items:center;gap:2px;min-height:118px;padding:12px 4px 10px;border:none;border-radius:24px;cursor:pointer;
+  background:#fff;color:#2A2F7A;font-family:'Fredoka','Nunito',sans-serif;box-shadow:0 10px 18px -12px rgba(40,40,90,.55),inset 0 -5px 0 rgba(0,0,0,.06);
+  transition:transform .25s cubic-bezier(.3,1.6,.5,1),box-shadow .2s;-webkit-tap-highlight-color:transparent}
+#dhDay .dh-tab .ti{display:block;width:52px;height:52px;transition:transform .3s cubic-bezier(.3,1.6,.5,1)}
+#dhDay .dh-tab .ti svg{width:100%;height:100%;display:block;filter:drop-shadow(0 3px 3px rgba(0,0,0,.12))}
+#dhDay .dh-tab b{font-weight:700;font-size:clamp(14px,3.9vw,17px);line-height:1.1}
+#dhDay .dh-tab small{font:800 11.5px 'Nunito',sans-serif;opacity:.7}
+#dhDay .dh-tab .nowtag{position:absolute;top:-8px;left:50%;transform:translateX(-50%);padding:2px 8px;border-radius:999px;background:#FF5A5F;color:#fff;font:900 10.5px 'Nunito',sans-serif;letter-spacing:.03em;box-shadow:0 3px 8px -3px rgba(200,40,40,.7);white-space:nowrap}
+#dhDay .dh-tab .nowdot{display:none}
+#dhDay .dh-tab:active{transform:scale(.94)}
+#dhDay .dh-tab.on{color:#fff;transform:translateY(-4px);box-shadow:0 16px 24px -14px var(--tc),inset 0 -6px 0 rgba(0,0,0,.14),inset 0 2px 0 rgba(255,255,255,.45)}
+#dhDay .dh-tab.on .ti{transform:scale(1.14) rotate(-6deg)}
+#dhDay .dh-tab.on small{opacity:.92}
+#dhDay .t-pagi{--tc:rgba(240,120,30,.8)}#dhDay .t-pagi.on{background:linear-gradient(180deg,#FFB547,#FF8A2B)}
+#dhDay .t-siang{--tc:rgba(30,130,230,.8)}#dhDay .t-siang.on{background:linear-gradient(180deg,#5CC2FF,#2D8CF0)}
+#dhDay .t-sore{--tc:rgba(230,80,120,.8)}#dhDay .t-sore.on{background:linear-gradient(180deg,#FF8FA3,#F05A7E)}
+#dhDay .t-malam{--tc:rgba(100,70,220,.8)}#dhDay .t-malam.on{background:linear-gradient(180deg,#9A86FF,#6A4FE0)}
+html[data-bm-theme="classic"] #dhDay .dh-tab:not(.on){background:rgba(255,255,255,.09);color:#F2F5FA;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+#dhDay #dhNow{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.18);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),inset 0 -6px 0 rgba(0,0,0,.14),0 12px 22px -12px rgba(40,40,90,.6)!important;font-family:'Fredoka','Nunito',sans-serif!important;font-weight:700!important;border-radius:26px!important}
+#dhDay #dhNow.s-pagi{background:linear-gradient(180deg,#FFB547,#FF8A2B)!important}
+#dhDay #dhNow.s-siang{background:linear-gradient(180deg,#5CC2FF,#2D8CF0)!important}
+#dhDay #dhNow.s-sore{background:linear-gradient(180deg,#FF8FA3,#F05A7E)!important}
+#dhDay #dhNow.s-malam{background:linear-gradient(180deg,#9A86FF,#6A4FE0)!important}
+@media(min-width:600px){#dhDay .dh-tabs{max-width:680px}#dhDay .dh-tab{min-height:130px}#dhDay .dh-tab .ti{width:60px;height:60px}}
+@media (prefers-reduced-motion:reduce){#dhDay .dh-tab,#dhDay .dh-tab .ti{transition:none}}
+</style>
 <style id="dh-tasbih">
 /* ═════ hadith source line + the bedtime tasbih counter.
    Both themes live here (NOT in a bm-bright* block, which dark mode switches off);
@@ -1443,13 +1473,21 @@ function showToast(e, t){
     renderPics();
   }
   /* one time of day at a time: tabs (Pagi · Siang · Sore · Malam) + big picture cards */
+  var TICON={
+    pagi:'<svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#FFC23D" stroke-width="3.4" stroke-linecap="round"><path d="M24 7v5M11 13l3.4 3.4M37 13l-3.4 3.4M5 26h4.5M38.5 26H43"/></g><path d="M10 32a14 14 0 0 1 28 0z" fill="#FF9E3D"/><path d="M15 32a9 9 0 0 1 18 0z" fill="#FFD25A"/><path d="M4 33c8-4 14-4 20-1s12 3 20-1v9H4z" fill="#7FD06B"/><path d="M4 38c9-3 16-2 22 0s11 2 18-1v7H4z" fill="#54B85A"/></svg>',
+    siang:'<svg viewBox="0 0 48 48" aria-hidden="true"><g stroke="#FFC23D" stroke-width="3.4" stroke-linecap="round"><path d="M24 4v5M24 39v5M4 24h5M39 24h5M9.9 9.9l3.5 3.5M34.6 34.6l3.5 3.5M38.1 9.9l-3.5 3.5M13.4 34.6l-3.5 3.5"/></g><circle cx="24" cy="24" r="11" fill="#FFC93D"/><circle cx="24" cy="24" r="7.5" fill="#FFE27A"/><circle cx="20.5" cy="22.5" r="1.5" fill="#8A5A00"/><circle cx="27.5" cy="22.5" r="1.5" fill="#8A5A00"/><path d="M20.5 27q3.5 3 7 0" fill="none" stroke="#8A5A00" stroke-width="1.8" stroke-linecap="round"/></svg>',
+    sore:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M8 30a16 16 0 0 1 32 0z" fill="#FF7A59"/><path d="M14 30a10 10 0 0 1 20 0z" fill="#FFB36B"/><path d="M4 31h40" stroke="#E5648A" stroke-width="3.6" stroke-linecap="round"/><path d="M10 37h28M16 43h16" stroke="#F29BB2" stroke-width="3.4" stroke-linecap="round"/><path d="M33 10q3-3 6 0q3-3 6 0" fill="none" stroke="#8A5070" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    malam:'<svg viewBox="0 0 48 48" aria-hidden="true"><path d="M27 6a17 17 0 1 0 15 25 13.5 13.5 0 0 1-15-25z" fill="#FFD866"/><path d="M27 6a17 17 0 1 0 15 25 13.5 13.5 0 0 1-15-25z" fill="none" stroke="#F2B232" stroke-width="1.6"/><circle cx="19" cy="25" r="1.6" fill="#8A5A00"/><path d="M15 31q4 2.6 8 0" fill="none" stroke="#8A5A00" stroke-width="1.8" stroke-linecap="round"/><path d="M38 6l1.6 3.6 3.8.5-2.8 2.6.7 3.8-3.3-1.8-3.3 1.8.7-3.8-2.8-2.6 3.8-.5z" fill="#FFF3B0" stroke="#F2B232" stroke-width="1.2" stroke-linejoin="round"/><circle cx="43" cy="20" r="1.9" fill="#FFD866"/></svg>'
+  };
   var SEL=null;
   function renderPics(){
     var now=nowWaktu(); if(!SEL) SEL=now; var g=W(SEL);
     document.getElementById('dhNow').textContent='🔊 '+L('Mulai Doa '+g.id,'Start the '+g.en+' Du\'as');
     document.getElementById('dhNow').onclick=function(){ startGroup(SEL); };
+    document.getElementById('dhNow').className='w-start s-'+SEL;
     var t='<div class="dh-tabs" role="tablist">';
-    WAKTU.forEach(function(x){ t+='<button type="button" role="tab" class="dh-tab'+(x.k===SEL?' on':'')+'" aria-selected="'+(x.k===SEL)+'" data-k="'+x.k+'"><span class="em">'+x.e+'</span>'+L(x.id,x.en)+(x.k===now?'<span class="nowdot" aria-label="'+L('sekarang','now')+'"></span>':'')+'</button>'; });
+    WAKTU.forEach(function(x){ var cnt=DUAS.filter(function(d){return d.waktu===x.k;}).length;
+      t+='<button type="button" role="tab" class="dh-tab t-'+x.k+(x.k===SEL?' on':'')+'" aria-selected="'+(x.k===SEL)+'" data-k="'+x.k+'"><span class="ti">'+TICON[x.k]+'</span><b>'+L(x.id,x.en)+'</b><small>'+cnt+' '+L('doa',cnt>1?"du'as":"du'a")+'</small>'+(x.k===now?'<span class="nowtag">'+L('Sekarang','Now')+'</span>':'')+'</button>'; });
     t+='</div><div class="dh-pics">';
     DUAS.filter(function(d){return d.waktu===SEL;}).forEach(function(d){ var n=starsOf(d.id), tt=trTitle(d);
       t+='<button type="button" class="dh-pic'+(n>=3?' gold':'')+'" data-id="'+d.id+'" aria-label="'+tt.replace(/"/g,'&quot;')+'">'
