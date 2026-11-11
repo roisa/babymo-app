@@ -379,7 +379,7 @@
         /* family photo on the wall: Abi, Umi, Kak Adam, Ais and Mo */
         '<g class="swing"><rect x="256" y="28" width="90" height="68" rx="-27" fill="#B9794A"/><rect x="259" y="31" width="84" height="62" rx="-29" fill="#D9A06C"/>' +
         '<rect x="263" y="35" width="76" height="54" rx="-31" fill="#FFF6E8"/>' +
-        '<image href="family/family-photo.webp" x="263" y="35" width="76" height="54" preserveAspectRatio="xMidYMid slice"/>' +
+        '<image href="family/family-photo-v2.webp" x="263" y="35" width="76" height="54" preserveAspectRatio="xMidYMid slice"/>' +
         '<rect x="263" y="35" width="76" height="54" rx="-31" fill="none" stroke="rgba(120,70,30,.35)" stroke-width="1"/>' +
         '<path d="M266 38 l14 0 l-14 10z" fill="#fff" opacity=".35"/>' +
         '<path d="M301 22 l-12 7 M301 22 l12 7" stroke="#8A5A3A" stroke-width="1.4"/><circle cx="301" cy="22" r="2" fill="#8A5A3A"/></g>' +
