@@ -1504,6 +1504,25 @@ html[data-theme="dark"] #prayerHub .ph-empty .sec{background:rgba(255,255,255,.1
 #prayerTools .ph-tool .ic svg{width:100%;height:100%;display:block}
 #prayerTools .ph-tool b{font-family:'Fredoka','Nunito',sans-serif;font-weight:700;font-size:19px;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.18)}
 #prayerTools .ph-tool span{color:rgba(255,255,255,.92);font-size:12px}
+
+/* ===== Play tab: iOS "liquid glass" — translucent cards over the scene ===== */
+#pane-home{--gl:rgba(255,255,255,.42);--gl2:rgba(255,255,255,.58);--glb:rgba(255,255,255,.75);--gls:0 18px 36px -22px rgba(30,50,100,.45)}
+html[data-theme="dark"] #pane-home{--gl:rgba(30,36,72,.42);--gl2:rgba(36,42,82,.55);--glb:rgba(255,255,255,.18);--gls:0 18px 36px -22px rgba(0,0,0,.7)}
+#pane-home .mo-bub,#pane-home .hm-now,#pane-home .dm-card,#pane-home .continue-card{
+  background:linear-gradient(160deg,var(--gl2),var(--gl))!important;
+  -webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9),inset 0 0 0 1px var(--glb),var(--gls)!important;border:none!important}
+html[data-theme="dark"] #pane-home .mo-bub,html[data-theme="dark"] #pane-home .hm-now,html[data-theme="dark"] #pane-home .dm-card,html[data-theme="dark"] #pane-home .continue-card{box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 0 0 1px var(--glb),var(--gls)!important}
+#pane-home .mo-bub::before{border-right-color:rgba(255,255,255,.5)!important}
+html[data-theme="dark"] #pane-home .mo-bub::before{border-right-color:rgba(36,42,82,.5)!important}
+#pane-home .hm-bush{opacity:.35}
+/* soft specular sheen across the top of each glass card */
+#pane-home .hm-now::after,#pane-home .dm-card::after{content:'';position:absolute;left:0;right:0;top:0;height:46%;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0))}
+html[data-theme="dark"] #pane-home .hm-now::after,html[data-theme="dark"] #pane-home .dm-card::after{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,0))}
+#pane-home .dm-card{position:relative}
+#pane-home .dm-ti{background:rgba(255,255,255,.7)}
+#pane-home .dm-streak.off{background:rgba(255,255,255,.55)!important}
 </style>
 <script>
 (function(){
