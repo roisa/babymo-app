@@ -265,7 +265,6 @@
     var row = document.getElementById("rmJrRow"), stops = row.querySelectorAll(".rm-st");
     if (cur < 0) cur = STAGE_ORDER.length - 1;
     var me = stops[cur]; me.classList.add("now");
-    me.insertAdjacentHTML("afterbegin", '<img class="rm-me" src="baby-mo-render2/mo2-dua-stand.webp" alt="" aria-hidden="true">');
     stops.forEach(function (b) {
       b.onclick = function () {
         var k = b.dataset.k, ix = DUAS.map(function (d, j) { return d.stage === k ? j : -1; }).filter(function (j) { return j >= 0; });
