@@ -773,6 +773,13 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 #learnScreen .scene-time{position:static;justify-self:end;display:inline-flex;align-items:center;gap:4px;white-space:nowrap;padding:9px 13px;border-radius:999px;background:rgba(255,255,255,.9);color:#4A2C00;font:900 12px/1 'Nunito',sans-serif!important;letter-spacing:.08em;text-transform:uppercase;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);box-shadow:0 8px 18px -10px rgba(30,30,80,.5)}
 #learnScreen>.timeline{position:absolute;z-index:8;top:calc(62px + env(safe-area-inset-top));left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100% - 32px);padding:5px 12px;border-radius:999px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 14px -10px rgba(30,30,80,.45)}
 #learnScreen .tl-label{color:#2A3646}
+/* a long playlist (all 14 du'as) makes the strip wider than the phone: scroll it sideways, no scrollbar, soft edges */
+#learnScreen>.timeline{justify-content:flex-start;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+#learnScreen>.timeline::-webkit-scrollbar{display:none}
+#learnScreen>.timeline .tl-seg,#learnScreen>.timeline .tl-divider{flex-shrink:0}
+#learnScreen>.timeline .tl-dot{flex-shrink:0}
+#learnScreen>.timeline.ovf{--fl:0px;--fr:0px;-webkit-mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%);mask-image:linear-gradient(90deg,transparent 0,#000 var(--fl),#000 calc(100% - var(--fr)),transparent 100%)}
+#learnScreen>.timeline.ovf.fl{--fl:24px}#learnScreen>.timeline.ovf.fr{--fr:24px}
 /* the picture */
 #sceneCard.scene-card{align-self:stretch;width:auto;max-width:none!important;margin:0 -16px calc(-1 * var(--ov));height:calc(clamp(320px,42vh,600px) + env(safe-area-inset-top));border-radius:0;overflow:hidden;background:transparent!important;flex-shrink:0}
 #sceneCard .scene-bg{-webkit-mask-image:linear-gradient(180deg,#000 0,#000 76%,rgba(0,0,0,.5) 88%,transparent 100%);mask-image:linear-gradient(180deg,#000 0,#000 76%,rgba(0,0,0,.5) 88%,transparent 100%)}
@@ -828,6 +835,7 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 html[data-bm-theme="classic"] #sceneCard .scene-bg svg{filter:brightness(.62) saturate(.82) contrast(1.05)}
 html[data-bm-theme="classic"] #sceneCard.night .scene-bg svg{filter:brightness(.8) saturate(.9)}
 html[data-bm-theme="classic"] #sceneCard .scene-mo-wrap img{filter:brightness(.88) drop-shadow(0 10px 12px rgba(0,0,0,.4))}
+html[data-bm-theme="classic"] #sceneCard .scene-fx svg{filter:brightness(.86)}
 html[data-bm-theme="classic"] #sceneCard::after{height:100%;background:linear-gradient(180deg,rgba(10,14,40,.35),rgba(10,14,40,0) 40%)}
 html[data-bm-theme="classic"] #learnScreen .l-back,html[data-bm-theme="classic"] #learnScreen .l-counter,html[data-bm-theme="classic"] #learnScreen .scene-time,html[data-bm-theme="classic"] #learnScreen>.timeline{background:rgba(22,28,52,.72)!important;color:#F2F5FA!important;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)!important}
 html[data-bm-theme="classic"] #learnScreen .l-counter{color:#8BF0BC!important}
@@ -1732,7 +1740,26 @@ function showToast(e, t){
     });
     updateTimeline();
   };
-  window.updateTimeline=function(){ PLAY.forEach(function(i,p){ var d=document.getElementById('tldot'+i); if(d) d.className='tl-dot'+(p<pos?' done':p===pos?' active':''); }); };
+  // the strip scrolls sideways when the playlist is long (e.g. all 14 du'as): keep the current du'a centred
+  window.updateTimeline=function(){
+    var row=document.getElementById('tlRow'), cur=null;
+    PLAY.forEach(function(i,p){ var d=document.getElementById('tldot'+i); if(d){ d.className='tl-dot'+(p<pos?' done':p===pos?' active':''); if(p===pos) cur=d; } });
+    if(!row) return;
+    requestAnimationFrame(function(){
+      var over=row.scrollWidth>row.clientWidth+2; row.classList.toggle('ovf',over); tlEdges();
+      if(!over||!cur) return;
+      // centre the current dot; for the first dot of a time of day, centre its label + dot so the label shows
+      var lbl=cur.parentNode.querySelector('.tl-label'), a=cur.offsetLeft, b=a+cur.offsetWidth;
+      if(lbl && cur.parentNode.querySelector('.tl-dot')===cur) a=lbl.offsetLeft;
+      var x=Math.max(0,Math.min((a+b)/2-row.clientWidth/2,row.scrollWidth-row.clientWidth));
+      var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+      try{ row.scrollTo({left:x,behavior:still?'auto':'smooth'}); }catch(e){ row.scrollLeft=x; }
+    });
+  };
+  // soft fade only on the side(s) with more to scroll to
+  function tlEdges(){ var r=document.getElementById('tlRow'); if(!r) return; r.classList.toggle('fl',r.scrollLeft>2); r.classList.toggle('fr',r.scrollLeft<r.scrollWidth-r.clientWidth-2); }
+  document.getElementById('tlRow').addEventListener('scroll',tlEdges,{passive:true});
+  window.addEventListener('resize',function(){ if(document.getElementById('learnScreen').classList.contains('active')) updateTimeline(); });
 
   /* ─── a simple scene for du'as without a hand-drawn one ─── */
   var SKY={pagi:['#FFE3A3','#FFF4E2'],siang:['#9FDBFF','#E9F7FF'],sore:['#FFB38A','#FFE6CC'],malam:['#2E3A78','#5B5AA8']};
@@ -1858,7 +1885,11 @@ function showToast(e, t){
     if(EN){ var mi=window.BM_T?BM_T(d.meaningId):d.meaningId; document.getElementById('meaningId').textContent=(mi&&mi!==d.meaningId)?mi:d.meaningEn; }
     var a=document.getElementById('actBtn'); a.classList.remove('done');
     document.getElementById('actEm').textContent=d.prop; document.getElementById('actTxt').textContent=L(d.act[0],d.act[1]).replace(/\s+(\S+)$/,'\u00A0$1');
-    a.onclick=function(){ a.classList.add('done'); playTone(784,.12,'triangle',.2); spawnParticles(6); setSceneMoExpression('celebrate'); setTimeout(function(){ readAlong(function(){ earn(d); }); },350); };
+    // the tap plays the scene's own action (motion + sound, see doa-scenes.js), then the read-along starts
+    a.onclick=function(){ if(a.classList.contains('done')) return; a.classList.add('done');
+      var p0=pos, t=window.playDoaAction?playDoaAction(d.id):0;
+      if(!t){ if(!muted()) playTone(784,.12,'triangle',.2); spawnParticles(6); setSceneMoExpression('celebrate'); t=350; }
+      setTimeout(function(){ if(pos!==p0 || PLAY[pos]!==idx || !document.getElementById('learnScreen').classList.contains('active')) return; readAlong(function(){ earn(d); }); },t); };
     var last=pos===PLAY.length-1;
     document.getElementById('navPrev').textContent=pos===0?L('🏠 Menu','🏠 Menu'):L('← Kembali','← Back');
     document.getElementById('navNext').textContent=last?(PLAY.length>1?L('Mulai Quiz 🎯','Start Quiz 🎯'):L('Selesai ✓','Done ✓')):L('Lanjut →','Next →');
