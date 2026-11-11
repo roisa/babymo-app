@@ -1978,3 +1978,34 @@
     initCompanion();
   }
 })();
+
+/* Portrait only (website on phones). The iOS app is locked to portrait in Info.plist; Safari can't lock
+   rotation, so a phone turned sideways gets a friendly "turn me upright" screen. Hijaiyah Island keeps
+   its landscape mode. */
+(function () {
+  if (/babymo-hijaiyah\.html/.test(location.pathname) || /\/tools\//.test(location.pathname)) return;
+  var en = function () { try { return (localStorage.getItem("bm_lang") || "id") === "en"; } catch (e) { return false; } };
+  var css = "#bm-rotate{display:none;position:fixed;inset:0;z-index:2147483000;align-items:center;justify-content:center;gap:28px;padding:20px;" +
+    "background:linear-gradient(160deg,#BFE6FF 0%,#E9F7FF 55%,#FFF4DE 100%);font-family:Fredoka,Nunito,system-ui,sans-serif;color:#2A2F7A;text-align:left}" +
+    "@media (orientation:landscape) and (max-height:500px) and (pointer:coarse){#bm-rotate{display:flex}html,body{overflow:hidden!important}}" +
+    "#bm-rotate img{height:min(62vh,230px);width:auto;filter:drop-shadow(0 10px 12px rgba(30,50,90,.25))}" +
+    "#bm-rotate .ph{width:54px;height:88px;border:5px solid #2A2F7A;border-radius:14px;position:relative;animation:bmRot 2.4s ease-in-out infinite;margin-bottom:14px;background:#fff}" +
+    "#bm-rotate .ph:after{content:'';position:absolute;left:50%;bottom:6px;width:14px;height:4px;margin-left:-7px;border-radius:2px;background:#2A2F7A}" +
+    "#bm-rotate b{display:block;font-size:clamp(22px,4.6vw,32px);font-weight:700;line-height:1.1}" +
+    "#bm-rotate span{display:block;font:700 clamp(14px,2.6vw,18px)/1.35 Nunito,system-ui,sans-serif;color:#4A5578;margin-top:6px;max-width:320px}" +
+    "@keyframes bmRot{0%,25%{transform:rotate(-90deg)}55%,100%{transform:rotate(0)}}" +
+    "@media (prefers-reduced-motion:reduce){#bm-rotate .ph{animation:none}}" +
+    "html[data-theme=dark] #bm-rotate,html[data-bm-theme=classic] #bm-rotate{background:linear-gradient(160deg,#141B44,#262D63);color:#FFE9A8}" +
+    "html[data-theme=dark] #bm-rotate span,html[data-bm-theme=classic] #bm-rotate span{color:#C3C9E0}" +
+    "html[data-theme=dark] #bm-rotate .ph,html[data-bm-theme=classic] #bm-rotate .ph{border-color:#FFE9A8;background:#232B4A}";
+  function add() {
+    if (document.getElementById("bm-rotate")) return;
+    var st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
+    var d = document.createElement("div"); d.id = "bm-rotate"; d.setAttribute("role", "alert");
+    d.innerHTML = '<img src="baby-mo-poses/baby-mo-pose-41.webp" alt=""><div><div class="ph" aria-hidden="true"></div><b>' +
+      (en() ? "Turn your phone upright!" : "Putar HP-nya tegak, ya!") + "</b><span>" +
+      (en() ? "Baby Mo plays best standing tall. 📱" : "Baby Mo paling seru dimainkan dengan HP berdiri. 📱") + "</span></div>";
+    document.body.appendChild(d);
+  }
+  if (document.body) add(); else document.addEventListener("DOMContentLoaded", add);
+})();
