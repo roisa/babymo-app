@@ -354,7 +354,7 @@
 
     /* 6 · Untuk tuan rumah — a buka bersama: Umi welcomes the guests, Mo thanks her */
     S.r_host = {
-      pose: "baby-mo-thank-you", mo: { x: 324, y: 128, h: 186 },
+      pose: "baby-mo-thank-you", mo: { x: 324, y: 128, h: 150 },
       svg: function () {
         return "<defs>" + DEFS + rg("dsRhWarm", ["#FFF7E4", "#FFE7D6@.6", "#F5E2FF"], 0.45, 0.4, 0.9) + lg("dsRhFl", ["#F0CFA8", "#DDB088"]) + lg("dsRhCl", ["#FFFFFF", "#FFEFF6"]) + "</defs>" +
           bg("url(#dsRhWarm)") +
@@ -411,7 +411,7 @@
 
     /* 8 · Lailatul Qadar — a calm, starry night on the rooftop; Mo and Ais make du'a */
     S.r_qadr = {
-      pose: "baby-mo-pose-12", mo: { x: 324, y: 132, h: 128 },
+      pose: "baby-mo-pose-12", mo: { x: 324, y: 132, h: 122 },
       svg: function () {
         var sky = "";
         for (var i = 0; i < 46; i++) { var x = (i * 89) % 520 - 60, y = -118 + ((i * 53) % 112); sky += '<circle class="twinkle t' + (i % 4 + 1) + '" cx="' + x + '" cy="' + y + '" r="' + (i % 5 ? 1.2 : 2) + '" fill="' + (i % 3 ? "#fff" : "#FFF3B0") + '"/>'; }
@@ -432,7 +432,7 @@
           lantern(20, 4, 6, 0.6, "dsRmGa", { cls: "", cord: "transparent" }) + lantern(400, 4, 6, 0.6, "dsRmGc", { cls: "", cord: "transparent" }) +
           // two prayer mats
           '<g transform="translate(272 118)"><path d="M-120 0l26-30h196l26 30z" fill="#2FA37A"/><path d="M-108-4l20-22h176l20 22z" fill="none" stroke="#FFE08A" stroke-width="2"/><path d="M-40-26q20-16 40 0" fill="none" stroke="#FFE08A" stroke-width="2"/><path d="M40-26q20-16 40 0" fill="none" stroke="#FFE08A" stroke-width="2"/></g>' +
-          person("ais-garden/dua-hands-closed.webp", 230, 130, 118, 1, [0.327, 0.33, 0.673, 0.907], "") +
+          person("ais-garden/dua-hands-closed.webp", 242, 132, 126, 1, [0.327, 0.33, 0.673, 0.907], "") +
           plant(-44, 60, 1, "") + plant(450, 60, 1, "");
       }
     };
@@ -471,7 +471,7 @@
 
     /* 10 · Ucapan Idul Fitri — Eid morning: ketupat at the door, the family together, a big hug */
     S.r_eid_greet = {
-      pose: "baby-mo-pose-41", mo: { x: 332, y: 130, h: 156 },
+      pose: "baby-mo-pose-41", mo: { x: 338, y: 130, h: 124 },
       svg: function () {
         return "<defs>" + DEFS + lgu("dsReSky", ["#7FD0FF@0", "#C6ECFF@.6", "#FFF6E0@1"], -120, 30) + lg("dsReWall", ["#FFF8EE", "#F6E6D2"]) + lg("dsReGr", ["#A6E08A", "#6CC06A"]) + lg("dsReDoor", ["#3FB58A", "#1E8A64"]) + "</defs>" +
           bg("url(#dsReSky)") + sun(372, -96, 15, true) + cloud(250, -100, 0.5, "drift slow") +
@@ -488,15 +488,15 @@
           // the family
           person("family/abi-wave.webp", 62, 128, 236, 200 / 420, [0, 0, 1, 1], "re-abi") +
           person("family/umi-welcome.webp", 148, 126, 222, 173 / 420, [0, 0, 1, 1], "re-umi") +
-          person("ais-garden/arms-wide-joy.webp", 236, 130, 116, 1, [0.23, 0.06, 0.767, 0.827], "re-ais") +
+          person("ais-garden/arms-wide-joy.webp", 252, 130, 124, 1, [0.23, 0.06, 0.767, 0.827], "re-ais") +
           // ketupat sparkle after the tap
           [[10, -48], [70, -44], [132, -42], [194, -46], [244, -54]].map(function (p, i) { return burst(p[0], p[1], 16, "#FFE08A", f(0.1 + i * 0.12)) + at("axpop", f(0.15 + i * 0.12), sparkle(p[0] + 12, p[1] - 14, 0.55, "twinkle", "#FFE08A")); }).join("") +
           bush(-50, 120, 1, true) + bush(452, 120, 1, true) + plant(286, 46, 0.9, "sway");
       },
       fx: function (card) {
         if (card) return "";
-        return say(250, -54, "Taqabbalallah!", 0.9, 316, -30) + burst(276, 4, 24, "#FF8FB0", 1.0) + '<g class="axpop" style="--d:1.0s">' + heart(276, 2, 1.1, "url(#dsPink)", "beat") + "</g>" +
-          [[226, -16, 0.5, 1.15], [306, -10, 0.5, 1.3], [200, 10, 0.45, 1.4]].map(function (h) { return '<g class="axpop" style="--d:' + h[3] + 's">' + heart(h[0], h[1], h[2], "#FF8FB0", "float2") + "</g>"; }).join("");
+        return say(262, -50, "Taqabbalallah!", 0.9, 318, -6) + burst(282, -20, 24, "#FF8FB0", 1.0) + '<g class="axpop" style="--d:1.0s">' + heart(282, -22, 1.0, "url(#dsPink)", "beat") + "</g>" +
+          [[236, -16, 0.5, 1.15], [318, -12, 0.5, 1.3], [206, 8, 0.45, 1.4]].map(function (h) { return '<g class="axpop" style="--d:' + h[3] + 's">' + heart(h[0], h[1], h[2], "#FF8FB0", "float2") + "</g>"; }).join("");
       }
     };
 
@@ -608,7 +608,7 @@
       thumb: {
         r_hilal: [40, -104, 290, 250], r_niat: [20, -110, 300, 250], r_shaim: [90, -100, 300, 250], r_buka: [10, -110, 290, 250],
         r_after: [120, -50, 230, 200], r_host: [40, -110, 320, 250], r_witr: [100, -110, 300, 260], r_qadr: [150, -70, 250, 214],
-        r_zakat: [10, -110, 320, 260], r_eid_greet: [130, -100, 270, 240], r_takbir: [60, -100, 320, 250]
+        r_zakat: [10, -110, 320, 260], r_eid_greet: [186, -44, 212, 190], r_takbir: [60, -100, 320, 250]
       },
       actMs: { r_hilal: 1700, r_niat: 1500, r_shaim: 1500, r_buka: 2000, r_after: 2200, r_host: 1700, r_witr: 2300, r_qadr: 1700, r_zakat: 1700, r_eid_greet: 2000, r_takbir: 2000 },
       night: ["r_niat", "r_witr", "r_qadr"]
