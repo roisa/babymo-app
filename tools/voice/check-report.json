@@ -10231,5 +10231,38 @@
   ],
   "ok": true,
   "file": "www/voice/lines-738922e2.mp3"
+ },
+ {
+  "text": "One",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "hitungan / counting",
+  "heard": [
+   "1"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-2c61a3ba.mp3"
+ },
+ {
+  "text": "Two",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "hitungan / counting",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/lines-fae2c765.mp3"
+ },
+ {
+  "text": "Three",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "hitungan / counting",
+  "heard": [
+   "3"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-af56e89d.mp3"
  }
 ]
