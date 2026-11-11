@@ -366,7 +366,7 @@
 
     /* 12 · Doa untuk orang tua — a warm family evening at home */
     parents: {
-      pose: "baby-mo-pose-05",
+      pose: "baby-mo-dua-smile", moH: .66, moR: 9,
       svg: '<defs><radialGradient id="dsWarm" cx=".55" cy=".45" r=".75"><stop offset="0" stop-color="#FFF4D6"/><stop offset="1" stop-color="#F4E2FF"/></radialGradient>' +
         '<linearGradient id="dsNightP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3470"/><stop offset="1" stop-color="#5B5AA8"/></linearGradient>' +
         '<radialGradient id="dsLampP"><stop offset="0" stop-color="#FFF3B0" stop-opacity=".9"/><stop offset="1" stop-color="#FFF3B0" stop-opacity="0"/></radialGradient></defs>' +
@@ -470,7 +470,7 @@
     var svg = s.svg.replace(/(id="|url\(#)(ds[A-Za-z0-9]+)/g, "$1$2" + k);
     var night = id === "sleep" || id === "parents" || id === "bedtime_tasbih";
     return '<span class="dsa' + (night ? " night" : "") + '"><svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + svg +
-      '</svg><img src="baby-mo-poses/' + s.pose + '.webp" alt="" loading="lazy" decoding="async"></span>';
+      '</svg><img src="baby-mo-poses/' + s.pose + '.webp" alt="" loading="lazy" decoding="async"' + (s.moH ? ' style="height:' + Math.round(88 * s.moH) + '%;right:' + (s.moR || 6) + '%"' : '') + '></span>';
   };
 
   /* Render the scene for a du'a id into the header card. */
@@ -484,6 +484,7 @@
     var mo = document.getElementById("sceneMo");
     if (mo) {
       mo.src = "baby-mo-poses/" + s.pose + ".webp";
+      var hh = s.moH ? Math.round(156 * s.moH) + "px" : ""; mo.style.height = hh; mo.parentElement.style.height = hh; mo.parentElement.style.right = s.moR ? s.moR + "%" : "";
       var wrap = mo.parentElement; wrap.style.animation = "none"; void wrap.offsetWidth; wrap.style.animation = "";
     }
     return true;
