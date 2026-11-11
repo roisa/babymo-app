@@ -310,8 +310,10 @@
   var SPRING = "cubic-bezier(.34,1.56,.64,1)";
   var ACSS = [
     // generic: pop in · fade in · fade out · one-shot burst
-    pre(".axpop,.axfade", "opacity:0"), pre(".axout", "opacity:1"),
+    pre(".axpop,.axfade,.axsay", "opacity:0"), pre(".axout", "opacity:1"),
     run(".axpop", "animation:axPop .55s " + SPRING + " var(--d,0s) both"),
+    // a speech bubble pops in, stays while it is read, then fades away (nothing left over the scene)
+    run(".axsay", "animation:axPop .55s " + SPRING + " var(--d,0s) both,axOut .6s ease calc(var(--d,0s) + 3.4s) forwards"),
     run(".axfade", "animation:axFade var(--t,.8s) ease var(--d,0s) both"),
     run(".axout", "animation:axOut var(--t,.8s) ease var(--d,0s) both"),
     run(".axburst", "animation:axBurst var(--t,.7s) ease-out var(--d,0s) both"),
@@ -455,11 +457,15 @@
     return '<g class="axburst" opacity="0" style="--d:' + d + 's"><circle cx="' + x + '" cy="' + y + '" r="' + r + '" fill="none" stroke="' + col + '" stroke-width="2.4"/>' +
       '<path d="M' + x + " " + (y - r - 4) + "v-6M" + x + " " + (y + r + 4) + "v6M" + (x - r - 4) + " " + y + "h-6M" + (x + r + 4) + " " + y + 'h6" stroke="' + col + '" stroke-width="2.4" stroke-linecap="round"/></g>';
   }
-  // a speech bubble (front layer); tail points at (tx, ty)
+  // a speech bubble (front layer); a short, chunky tail leans towards (tx, ty).
+  // (It used to run all the way to (tx, ty): a long thin white sliver that stayed visible as a stray
+  //  "white line" by Mo's hair whenever the bubble itself was hidden behind the du'a timeline pill.)
   function say(cx, cy, text, d, tx, ty) {
     var w = Math.round(text.length * 6.7 + 24), h = 26, x = cx - w / 2, y = cy - h / 2;
-    return '<g class="axpop" style="--d:' + d + 's"><g filter="drop-shadow(0 3px 4px rgba(40,30,90,.25))">' +
-      '<path d="M' + f(cx + w * 0.12) + " " + (y + h - 2) + "L" + tx + " " + ty + "L" + f(cx + w * 0.3) + " " + (y + h - 2) + 'z" fill="#fff"/>' +
+    var bx = cx + w * 0.3, by = y + h - 3, dx = tx - bx, dy = ty - by, n = Math.sqrt(dx * dx + dy * dy) || 1;
+    var px = f(bx + dx / n * 10), py = f(Math.max(by + 6, by + dy / n * 10));
+    return '<g class="axsay" style="--d:' + d + 's"><g filter="drop-shadow(0 3px 4px rgba(40,30,90,.25))">' +
+      '<path d="M' + f(bx - 9) + " " + by + "Q" + f(bx - 1) + " " + f(by + 4) + " " + px + " " + py + "Q" + f(bx + 2) + " " + f(by + 2) + " " + f(bx + 7) + " " + by + 'z" fill="#fff"/>' +
       '<rect x="' + f(x) + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="13" fill="#fff"/></g>' +
       '<text x="' + cx + '" y="' + (cy + 4.6) + '" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="13" fill="#2B2F3A">' + text + "</text></g>";
   }
