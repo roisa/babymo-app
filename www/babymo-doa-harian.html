@@ -585,6 +585,14 @@ html[data-bm-theme="classic"] .dh-pic{background:#1F2638;box-shadow:inset 0 0 0 
 .dod .dsa svg{position:absolute;inset:0;width:100%;height:100%}
 .dod .dsa img{position:absolute;left:50%;bottom:0;height:92%;transform:translateX(-50%)}
 </style>
+<style id="dh-compact">
+/* Doa Harian home: no second greeting (the hub's Duas tab already greets) — compact title, Start under the tabs */
+#welcomeScreen .dh-hello{display:none}
+#welcomeScreen .w-title{font-size:clamp(26px,7.4vw,32px)!important;margin:4px 0 0!important}
+#welcomeScreen .w-arabic{font-size:19px!important;margin:0 0 12px!important}
+#dhDay #dhNow{display:block;width:100%;max-width:440px;margin:0 0 14px!important}
+@media(min-width:600px){#dhDay #dhNow{max-width:680px}}
+</style>
 <style id="dh-tasbih">
 /* ═════ hadith source line + the bedtime tasbih counter.
    Both themes live here (NOT in a bm-bright* block, which dark mode switches off);
@@ -1448,7 +1456,8 @@ function showToast(e, t){
         +(window.doaSceneArt?doaSceneArt(d.id,'h'):doaIcon(d))
         +(ST.learned[d.id]?'<span class="done"><svg viewBox="0 0 24 24"><path d="M9.5 16.6 5.4 12.5l-1.6 1.6 5.7 5.7L20.6 8.7 19 7.1z"/></svg>'+L('Sudah','Done')+'</span>':'')
         +'<span class="cap"><b>'+tt+'</b>'+doaStars(n)+'</span></button>'; });
-    var day=document.getElementById('dhDay'); day.innerHTML=t+'</div>';
+    var sb=document.getElementById('dhNow'), day=document.getElementById('dhDay'); day.innerHTML=t+'</div>';
+    var pics=day.querySelector('.dh-pics'); if(sb&&pics) day.insertBefore(sb,pics);
     day.querySelectorAll('.dh-tab').forEach(function(b){ b.onclick=function(){ if(SEL===b.dataset.k) return; SEL=b.dataset.k; sfx('tap'); renderPics(); }; });
     day.querySelectorAll('.dh-pic').forEach(function(b){ b.onclick=function(){ tapTile(b,b.dataset.id); }; });
   }
