@@ -1101,6 +1101,13 @@ html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di{box-shadow:0
 #learnScreen .dua-card .dua-desc{text-align:center;text-wrap:balance;margin-left:6px;margin-right:6px}
 #learnScreen .dua-card{padding-top:14px}
 </style>
+<style id="ce-x">
+.ce-card .ce-x{position:absolute;top:12px;right:12px;z-index:5;width:36px;height:36px;border:none;border-radius:50%;display:grid;place-items:center;cursor:pointer;
+  background:rgba(21,34,48,.07);color:#5A6478;-webkit-tap-highlight-color:transparent;transition:transform .15s,background .2s}
+.ce-card .ce-x svg{width:18px;height:18px}
+.ce-card .ce-x:active{transform:scale(.9);background:rgba(21,34,48,.14)}
+html[data-bm-theme="classic"] .ce-card .ce-x{background:rgba(255,255,255,.1);color:#C9D2E4}
+</style>
 </head>
 <body>
 
@@ -2167,6 +2174,8 @@ function showToast(e, t){
     sfx('win');
     c.querySelector('.ce-again').onclick=function(){ closeCele(); renderReads(d); if(!muted()) playTone(523,0.06); readFull(function(){ earn(d); }); };
     c.querySelector('.ce-next').onclick=function(){ closeCele(); nextDua(); };
+    c.insertAdjacentHTML('afterbegin','<button class="ce-x" type="button" aria-label="'+T('Tutup')+'"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/></svg></button>');
+    c.querySelector('.ce-x').onclick=function(){ closeCele(); sfx('tap'); };
   }
   function closeCele(){ document.getElementById('cele').classList.remove('on'); }
 
