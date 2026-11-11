@@ -502,23 +502,14 @@ html[data-bm-theme="classic"] .tr-badge{color:#06311A}
 <style id="pw-dzikir">
 /* ═════ Dhikr & Du'a view — sky backdrop, pill tabs, lantern card, bead ring round Mo with a
    green cloud counter, orange play button. Both themes (not a bm-bright* block). ═════ */
-:root{--dz-sky1:#C7D0FF;--dz-sky2:#E6E2FF;--dz-sky3:#F6F0FF;--dz-ink:#2D2370;--dz-ink2:#5B5487;--dz-card:rgba(255,255,255,.74);--dz-pill:#fff;
+:root{--dz-ink:#2D2370;--dz-ink2:#5B5487;--dz-card:rgba(255,255,255,.74);--dz-pill:#fff;
   --dz-mean:#E9E4FF;--dz-ar:#11894F;--dz-lat:#A2460C;--dz-track:#E2DCF7;--dz-face:radial-gradient(circle at 50% 40%,#FFFDF4 0%,#FFF6DD 55%,#F3EDFF 100%)}
-html[data-bm-theme="classic"]{--dz-sky1:#141A44;--dz-sky2:#1D2358;--dz-sky3:#151A3E;--dz-ink:#F2EFFF;--dz-ink2:#C3BEE6;--dz-card:rgba(36,40,92,.72);--dz-pill:rgba(255,255,255,.1);
+html[data-bm-theme="classic"]{--dz-ink:#F2EFFF;--dz-ink2:#C3BEE6;--dz-card:rgba(36,40,92,.72);--dz-pill:rgba(255,255,255,.1);
   --dz-mean:rgba(170,150,255,.2);--dz-ar:#8FF0B4;--dz-lat:#FFB27A;--dz-track:rgba(255,255,255,.12);--dz-face:radial-gradient(circle at 50% 40%,#3A3F86 0%,#2B2F6A 60%,#23275A 100%)}
-.dz-sky{display:none;position:fixed;inset:0;z-index:0;pointer-events:none;background:linear-gradient(180deg,var(--dz-sky1) 0%,var(--dz-sky2) 45%,var(--dz-sky3) 100%)}
-body[data-view="dzikir"] .dz-sky{display:block}
-.dz-sky-top{position:absolute;left:50%;top:0;width:min(100%,560px);height:150px;transform:translateX(-50%)}
-.dz-sky .dz-cl{fill:#fff;opacity:.85}.dz-sky .dz-st{fill:#FFD43B}
-html[data-bm-theme="classic"] .dz-sky .dz-cl{fill:#B9BEFF;opacity:.16}
-.dz-grass{position:absolute;left:0;right:0;bottom:0;width:100%;height:84px}
-html[data-bm-theme="classic"] .dz-grass{filter:brightness(.55) saturate(.8)}
 body[data-view="dzikir"] .main{padding-bottom:calc(70px + var(--safe-bottom))}
-body[data-view="dzikir"] .topbar{background:linear-gradient(180deg,var(--dz-sky1) 55%,rgba(199,208,255,0));box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-html[data-bm-theme="classic"] body[data-view="dzikir"] .topbar{background:linear-gradient(180deg,var(--dz-sky1) 55%,rgba(20,26,68,0))}
+body[data-view="dzikir"] .topbar{background:linear-gradient(180deg,var(--sky1) 50%,transparent);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
 body[data-view="dzikir"] .topbar-title{position:relative;flex:0 1 auto;margin:6px auto 0;padding:9px 22px;border-radius:999px;background:var(--dz-pill);color:var(--dz-ink);
   font:600 19px/1.1 var(--fd);overflow:visible;box-shadow:0 8px 18px -10px rgba(60,40,160,.5),inset 0 1px 0 rgba(255,255,255,.8)}
-body[data-view="dzikir"] .topbar-title::before{content:'';position:absolute;left:50%;top:-19px;width:56px;height:22px;margin-left:-28px;background:url(icons/scene/mosque-mini.svg) center bottom/contain no-repeat}
 html[data-bm-theme="classic"] body[data-view="dzikir"] .topbar-title{-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);background:rgba(44,48,108,.94);box-shadow:inset 0 1px 0 rgba(255,255,255,.14)}
 /* tabs */
 #viewDzikir .dzikir-nav{-webkit-mask-image:none;mask-image:none;margin-bottom:6px;padding-top:6px;padding-bottom:12px}
@@ -566,13 +557,6 @@ html[data-bm-theme="classic"] .dz-beads .bd:not(.on){opacity:.55}
 html[data-bm-theme="classic"] .dz-arch{background:linear-gradient(180deg,rgba(255,214,107,.22),rgba(255,214,107,0))}
 .dz-mo{position:absolute;left:50%;top:-9%;width:98%;height:auto;transform:translateX(-50%);pointer-events:none;object-fit:contain;
   }
-.dz-cloud{position:absolute;left:50%;bottom:10%;transform:translateX(-50%);width:46%;padding:4px 0 7px;display:flex;flex-direction:column;align-items:center;
-  border-radius:44% 44% 40% 40%/56% 56% 44% 44%;background:linear-gradient(180deg,#2FBE73,#139A57);
-  box-shadow:inset 0 3px 0 rgba(255,255,255,.3),0 10px 18px -10px rgba(10,110,60,.75)}
-.dz-cloud::before,.dz-cloud::after{content:'';position:absolute;top:-8px;width:34%;height:28px;border-radius:50%;background:#2FBE73;z-index:-1}
-.dz-cloud::before{left:10%}.dz-cloud::after{right:10%}
-#viewDzikir .tasbih-count{font:600 36px/1 var(--fd);color:#fff}
-#viewDzikir .tasbih-total{font:800 15px/1 'Nunito',sans-serif;color:rgba(255,255,255,.92);margin-top:2px}
 #viewDzikir .tasbih-circle:active{transform:scale(.96)}
 #viewDzikir .tasbih-label{margin-top:14px;font:600 16px/1.2 var(--fd);color:var(--dz-ink)}
 .dz-deco{position:absolute;bottom:34px;width:28%;max-width:120px;height:auto;pointer-events:none;z-index:2}
@@ -594,23 +578,217 @@ html[data-bm-theme="classic"] #viewDzikir .dzikir-complete{border-color:rgba(255
 @media (max-width:370px){#viewDzikir .dzikir-arabic{font-size:40px}.dz-deco{width:27%}}
 @media (prefers-reduced-motion:reduce){.dz-lantern,.dz-beads .bd.pop{animation:none!important}}
 </style>
+<style id="pw-scene">
+/* ═════ Mosque courtyard scene for every screen (light day / dark night) + the guide's
+   scene card, parchment recitation card and the dhikr counter. Both themes. ═════ */
+:root{--sky1:#B9DFFF;--sky2:#E2F2FF;--sky3:#FFF5E2}
+html[data-bm-theme="classic"]{--sky1:#0A1530;--sky2:#14284B;--sky3:#22405F}
+.pw-defs{position:absolute;width:0;height:0;overflow:hidden}
+.pws1{stop-color:var(--sky1)}.pws2{stop-color:var(--sky2)}.pws3{stop-color:var(--sky3)}
+.pwd1{stop-color:#86D2F7}.pwd2{stop-color:#2C82D4}
+.pwf1{stop-color:#FAEBD0}.pwf2{stop-color:#EED6AE}
+.pwp1{stop-color:#FBEED8}.pwp2{stop-color:#EFD8B2}.pwp3{stop-color:#DDBE8C}
+:root{--mq-wall-fill:#FFF9EE;--mq-shade-fill:#F1E0C4;--mq-trim-fill:#EBCF9C;--mq-band-fill:#57B0E6;--mq-win-fill:#4A7BC4;--mq-door-fill:#3C68AE;--mq-gold-fill:#F2B232;--mq-hi-fill:none;--mq-hi-stroke:rgba(255,255,255,.5);--tr-a-fill:#7DCB66;--tr-b-fill:#4CAA56;--tr-hi-fill:rgba(255,255,255,.22);--tr-hl-fill:none;--tr-hl-stroke:rgba(255,255,255,.22);--tr-trunk-fill:#A77246;--pw-cl-fill:#fff;--pw-cl-opacity:.92;--pw-star-fill:#fff;--pw-star-opacity:.85;--pw-moon-fill:#FFE6A0;--pw-hill-fill:#BDE5AC;--pw-lawn-fill:#A3DA8C;--pw-arc-fill:#FFF3DF;--pw-arc-sh-fill:#EBD5B0;--pw-arc-top-fill:#EBD2A2;--pw-floor-fill:#F1DEBE;--pw-bal-fill:#FBECD4;--pw-bal-top-fill:#EED5AA;--pw-tile-stroke:rgba(180,140,80,.22);--pw-wall-fill:#F7E6C9;--pw-wall-edge-stroke:#E3C795}
+html[data-bm-theme="classic"]{--mq-wall-fill:#3B4874;--mq-shade-fill:#2E3960;--mq-trim-fill:#56638F;--mq-band-fill:#C9A24A;--mq-win-fill:#FFD27A;--mq-door-fill:#F0B04A;--mq-gold-fill:#FFD27A;--mq-hi-stroke:rgba(255,255,255,.18);--tr-a-fill:#245A4A;--tr-b-fill:#1A4539;--tr-hi-fill:rgba(255,255,255,.06);--tr-hl-stroke:rgba(255,255,255,.06);--tr-trunk-fill:#3A2C24;--pw-cl-fill:#A9BCEB;--pw-cl-opacity:.14;--pw-hill-fill:#163737;--pw-lawn-fill:#1B4639;--pw-arc-fill:#323E64;--pw-arc-sh-fill:#273151;--pw-arc-top-fill:#414E7A;--pw-floor-fill:#28304F;--pw-bal-fill:#333F66;--pw-bal-top-fill:#45527E;--pw-tile-stroke:rgba(255,255,255,.06);--pw-wall-fill:#2C3657;--pw-wall-edge-stroke:#3E4A74}
+.mq-wall{fill:var(--mq-wall-fill)}
+.mq-shade{fill:var(--mq-shade-fill)}
+.mq-trim{fill:var(--mq-trim-fill)}
+.mq-band{fill:var(--mq-band-fill)}
+.mq-win{fill:var(--mq-win-fill)}
+.mq-door{fill:var(--mq-door-fill)}
+.mq-gold{fill:var(--mq-gold-fill)}
+.mq-dome{fill:url(#pwDomeG)}
+.mq-hi{fill:var(--mq-hi-fill);stroke:var(--mq-hi-stroke)}
+.tr-a{fill:var(--tr-a-fill)}
+.tr-b{fill:var(--tr-b-fill)}
+.tr-hi{fill:var(--tr-hi-fill)}
+.tr-hl{fill:var(--tr-hl-fill);stroke:var(--tr-hl-stroke)}
+.tr-trunk{fill:var(--tr-trunk-fill)}
+.pw-cl{fill:var(--pw-cl-fill);opacity:var(--pw-cl-opacity)}
+.pw-sun{fill:url(#pwSunG)}
+.pw-night{display:none}
+.pw-star{fill:var(--pw-star-fill);opacity:var(--pw-star-opacity)}
+.pw-moon{fill:var(--pw-moon-fill)}
+.pw-hill{fill:var(--pw-hill-fill)}
+.pw-lawn{fill:var(--pw-lawn-fill)}
+.pw-arc{fill:var(--pw-arc-fill)}
+.pw-arc-sh{fill:var(--pw-arc-sh-fill)}
+.pw-arc-top{fill:var(--pw-arc-top-fill)}
+.pw-floor{fill:var(--pw-floor-fill)}
+.pw-bal{fill:var(--pw-bal-fill)}
+.pw-bal-top{fill:var(--pw-bal-top-fill)}
+.pw-tile{stroke:var(--pw-tile-stroke);stroke-width:1.2}
+.pw-wall{fill:var(--pw-wall-fill)}
+.pw-wall-edge{stroke:var(--pw-wall-edge-stroke);stroke-width:4}
+html[data-bm-theme="classic"] .pw-sun{display:none}html[data-bm-theme="classic"] .pw-night{display:inline}
+.mq-win,.mq-door{filter:var(--mq-glow,none)}
+html[data-bm-theme="classic"]{--mq-glow:drop-shadow(0 0 2px rgba(255,200,100,.75));--pw-arc-in-fill:#1F2843}
+:root{--pw-arc-in-fill:#EBDABB}.pw-arc-in{fill:var(--pw-arc-in-fill)}
+html[data-bm-theme="classic"] .pwd1{stop-color:#3B86B8}html[data-bm-theme="classic"] .pwd2{stop-color:#173F6A}
+html[data-bm-theme="classic"] .pwf1{stop-color:#2F3B5E}html[data-bm-theme="classic"] .pwf2{stop-color:#232C4A}
+html[data-bm-theme="classic"] .pwp1{stop-color:#38446C}html[data-bm-theme="classic"] .pwp2{stop-color:#2C3658}html[data-bm-theme="classic"] .pwp3{stop-color:#1F2744}
+/* the page backdrop */
+.pw-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 52%,var(--sky3) 100%)}
+.pw-bg-top{position:absolute;left:0;top:0;width:100%;height:clamp(170px,30vh,300px)}
+.pw-bg-scene{position:absolute;left:0;bottom:0;width:100%;height:clamp(210px,34vh,460px)}
+.pw-cl-a,.pw-cl-b,.pw-cl-c{animation:pwDrift 26s ease-in-out infinite alternate}
+.pw-cl-b{animation-duration:34s;animation-direction:alternate-reverse}.pw-cl-c{animation-duration:30s}
+@keyframes pwDrift{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
+/* ── guide: scene card ── */
+.mo-stage-guide{background:var(--sky2);height:clamp(250px,72vw,330px);min-height:0;border:2px solid rgba(255,255,255,.9)}
+html[data-bm-theme="classic"] .mo-stage-guide{border-color:rgba(255,255,255,.12)}
+.stage-scene{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.mo-stage-guide img{position:absolute;left:50%;bottom:-1.5%;height:88%;width:auto;aspect-ratio:1;transform:translateX(-50%);z-index:2;
+  filter:drop-shadow(0 6px 6px rgba(90,60,20,.18))}
+.mo-stage-guide img.switching{transform:translateX(-50%) scale(.94)}
+.stage-shadow{position:absolute;left:50%;bottom:2%;width:min(74%,300px);height:16%;transform:translateX(-50%);z-index:1;border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(110,70,20,.32) 0%,rgba(110,70,20,.12) 45%,transparent 70%)}
+html[data-bm-theme="classic"] .stage-shadow{background:radial-gradient(ellipse at center,rgba(0,0,0,.5) 0%,rgba(0,0,0,.2) 45%,transparent 70%)}
+.mo-stage-guide .stage-nav{z-index:5}
+/* ── guide: title with number + Arabic chip ── */
+.step-name-row{align-items:center}
+.step-title{display:flex;align-items:center;gap:10px;min-width:0}
+.step-num{flex:0 0 auto;display:grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--lagoon);color:#fff;font:600 19px/1 var(--fd);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 6px 12px -6px rgba(10,143,160,.8)}
+.step-name-ar{margin-left:auto;padding:0 14px;border-radius:999px;background:var(--tint-l);font-size:22px;line-height:1.75}
+@media (max-width:440px){.step-name-ar{margin-left:48px}}
+/* ── guide: parchment recitation card ── */
+.recitation-card{position:relative;padding:14px 20px 20px;border-radius:26px;border:1.5px solid rgba(214,166,72,.55);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%280 0%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") left 8px top 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%2844 0%29 scale%28-1 1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") right 8px top 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%280 44%29 scale%281 -1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") left 8px bottom 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%2844 44%29 scale%28-1 -1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") right 8px bottom 8px/34px no-repeat,linear-gradient(180deg,#FFFCF2 0%,#FFF3D9 100%);
+  box-shadow:inset 0 0 0 6px #FFF9EA,inset 0 0 0 7.5px rgba(214,166,72,.42),0 18px 34px -24px rgba(140,90,20,.55)}
+html[data-bm-theme="classic"] .recitation-card{border-color:rgba(255,201,77,.36);
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%280 0%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") left 8px top 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%2844 0%29 scale%28-1 1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") right 8px top 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%280 44%29 scale%281 -1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") left 8px bottom 8px/34px no-repeat,url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 44 44'%3E%3Cg transform='translate%2844 44%29 scale%28-1 -1%29' fill='none' stroke='%23D4A445' stroke-width='1.8' stroke-linecap='round'%3E%3Cpath d='M4 40C4 20 12 6 34 4'/%3E%3Cpath d='M4 40C8 30 14 24 24 22C30 21 33 25 30 28C27 31 23 28 25 25'/%3E%3Cpath d='M34 4C30 8 31 13 35 13C38 13 39 9 36 8'/%3E%3C/g%3E%3Ccircle cx='0' cy='0' r='0'/%3E%3C/svg%3E") right 8px bottom 8px/34px no-repeat,linear-gradient(180deg,#3A3322 0%,#2B2618 100%);
+  box-shadow:inset 0 0 0 6px #352E1E,inset 0 0 0 7.5px rgba(255,201,77,.28),0 18px 34px -22px rgba(0,0,0,.8)}
+.recitation-card .rec-progress{margin:0 14px 0}
+.recitation-arabic{color:#12733D}
+html[data-bm-theme="classic"] .recitation-arabic{color:#BDF2D2}
+.recitation-latin{font:600 19px/1.3 var(--fd);font-style:italic;color:#D9480F}
+html[data-bm-theme="classic"] .recitation-latin{color:#FFB27A}
+.recitation-meaning{font-size:15.5px;color:#3D3524}
+html[data-bm-theme="classic"] .recitation-meaning{color:#EADFC4}
+.recitation-controls{gap:12px}
+.rec-btn.rec-btn-small{width:54px;height:54px;color:var(--ink);background:rgba(255,255,255,.85);border:1px solid rgba(214,166,72,.35)}
+html[data-bm-theme="classic"] .rec-btn.rec-btn-small{background:rgba(255,255,255,.08);border-color:rgba(255,201,77,.22)}
+.rec-btn.rec-btn-small svg{width:22px;height:22px}
+.rec-btn.rec-btn-small:disabled{opacity:.35;pointer-events:none}
+.rec-btn.rec-btn-small.gone{visibility:hidden}
+#btnPlay.rec-btn-play{width:auto;min-width:168px;height:58px;padding:0 26px 0 20px;gap:10px;border-radius:29px;font:900 17.5px/1 'Nunito',sans-serif;color:#fff;
+  background:linear-gradient(180deg,#2BBF74 0%,#118A5F 100%)!important;text-shadow:0 1px 1.5px rgba(0,70,35,.35);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 12px 22px -10px rgba(17,138,95,.75)!important}
+#btnPlay .pb-ic{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.22)}
+#btnPlay .pb-ic svg{width:14px;height:14px;fill:#fff}
+#btnPlay.playing{background:linear-gradient(180deg,#FF9A3C 0%,#F2601E 100%)!important;box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 12px 22px -10px rgba(220,80,20,.6)!important}
+/* ── dhikr counter: a pill below Mo (hands stay visible); a progress ring for small counts ── */
+.dz-count{display:inline-flex;align-items:baseline;gap:5px;margin-top:14px;padding:7px 20px 8px;border-radius:999px;cursor:pointer;
+  background:linear-gradient(180deg,#2FBE73,#139A57);color:#fff;font-variant-numeric:tabular-nums;user-select:none;-webkit-user-select:none;
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.3),0 10px 18px -10px rgba(10,110,60,.75)}
+#viewDzikir .dz-count .tasbih-count{font:600 30px/1 var(--fd);color:#fff}
+#viewDzikir .dz-count .tasbih-total{font:800 16px/1 'Nunito',sans-serif;color:rgba(255,255,255,.92);margin:0}
+#viewDzikir .tasbih-label{margin-top:8px}
+.dz-mo{top:-3%!important;width:92%!important}
+.dz-ring{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none;display:none}
+.ring-mode .dz-ring{display:block}.ring-mode .dz-beads{display:none}
+.dz-ring .rg-track{fill:none;stroke:var(--dz-track);stroke-width:11}
+.dz-ring .rg-fill{fill:none;stroke:url(#dzRingG);stroke-width:11;stroke-linecap:round;transition:stroke-dashoffset .55s cubic-bezier(.3,.7,.3,1)}
+.dz-ring .rg-glow{fill:none;stroke:rgba(43,191,116,.25);stroke-width:20;stroke-linecap:round;transition:stroke-dashoffset .55s cubic-bezier(.3,.7,.3,1)}
+@media (prefers-reduced-motion:reduce){.pw-cl-a,.pw-cl-b,.pw-cl-c{animation:none}.dz-ring .rg-fill,.dz-ring .rg-glow{transition:none}}
+@media (max-height:700px){.mo-stage-guide{height:clamp(230px,64vw,300px)}}
+</style>
 <script src="bm-icons.js" defer></script>
 </head>
 <body>
 
-<!-- Dhikr view backdrop: soft sky, clouds, stars and a grass strip (decorative) -->
-<div class="dz-sky" aria-hidden="true">
-  <svg class="dz-sky-top" viewBox="0 0 400 140" preserveAspectRatio="xMidYMin slice">
-    <g class="dz-cl"><path d="M70 92 q4-20 26-18 q10-18 32-8 q22-2 22 18 q12 2 10 14 h-96z"/><path d="M262 84 q4-18 24-16 q10-16 30-8 q20-2 20 16 q12 2 10 12 h-88z"/><path d="M-30 128 q6-22 30-18 q12-20 36-8 q24-2 24 20 h-90z"/><path d="M340 130 q6-22 30-18 q12-20 36-8 q24 0 22 20 h-88z"/></g>
-    <g class="dz-st"><path d="M140 30l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/><path d="M336 30l3 7 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z"/></g>
-    <g fill="#fff" opacity=".9"><circle cx="190" cy="20" r="1.6"/><circle cx="250" cy="26" r="1.4"/><circle cx="40" cy="40" r="1.4"/><circle cx="380" cy="70" r="1.6"/></g>
+<!-- Shared scene pieces (mosque, minaret, trees, clouds) drawn once and reused by the
+     page backdrop and the guide's scene card. Decorative only. -->
+<svg class="pw-defs" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <radialGradient id="pwSunG"><stop offset="0" stop-color="#FFF4C8" stop-opacity=".95"/><stop offset=".35" stop-color="#FFF1C0" stop-opacity=".55"/><stop offset="1" stop-color="#FFF1C0" stop-opacity="0"/></radialGradient>
+    <linearGradient id="pwDomeG" x1="0" y1="0" x2="1" y2="1"><stop class="pwd1" offset="0"/><stop class="pwd2" offset="1"/></linearGradient>
+    <linearGradient id="pwSkyG" x1="0" y1="0" x2="0" y2="1"><stop class="pws1" offset="0"/><stop class="pws2" offset=".62"/><stop class="pws3" offset="1"/></linearGradient>
+    <linearGradient id="pwFloorG" x1="0" y1="0" x2="0" y2="1"><stop class="pwf1" offset="0"/><stop class="pwf2" offset="1"/></linearGradient>
+    <linearGradient id="pwPillarG" x1="0" y1="0" x2="1" y2="0"><stop class="pwp1" offset="0"/><stop class="pwp2" offset=".55"/><stop class="pwp3" offset="1"/></linearGradient>
+    <pattern id="pwArcP" x="0" y="265" width="50" height="55" patternUnits="userSpaceOnUse"><path class="pw-arc" fill-rule="evenodd" d="M0 0H50V55H0Z M9 55V25A16 16 0 0 1 41 25V55Z"/><path class="pw-arc-sh" d="M41 55V25A16 16 0 0 0 38 15.6L36 18A13 13 0 0 1 38 25V55Z"/></pattern>
+    <symbol id="pwCres" viewBox="-6 -6 12 12"><path class="mq-gold" transform="rotate(-90)" d="M2.733 -4.187A5 5 0 1 0 2.733 4.187A4.2 4.2 0 1 1 2.733 -4.187Z"/></symbol>
+    <symbol id="pwMinaret" viewBox="0 0 32 190">
+      <rect class="mq-wall" x="6" y="70" width="20" height="120"/><rect class="mq-shade" x="19" y="70" width="7" height="120"/>
+      <rect class="mq-band" x="6" y="124" width="20" height="4"/>
+      <path class="mq-win" d="M12.5 112v-11a3.5 3.5 0 0 1 7 0v11z"/><path class="mq-win" d="M12.5 166v-11a3.5 3.5 0 0 1 7 0v11z"/>
+      <rect class="mq-trim" x="1" y="63" width="30" height="8" rx="2"/>
+      <rect class="mq-wall" x="9" y="36" width="14" height="27"/><rect class="mq-shade" x="18" y="36" width="5" height="27"/>
+      <path class="mq-win" d="M13.5 56v-8a2.5 2.5 0 0 1 5 0v8z"/>
+      <rect class="mq-trim" x="6" y="31" width="20" height="5" rx="2"/>
+      <path class="mq-dome" d="M7 32C7 22 12 18 16 10C20 18 25 22 25 32Z"/>
+      <rect class="mq-gold" x="15.25" y="3" width="1.5" height="8"/>
+      <use href="#pwCres" x="11.5" y="-2.5" width="9" height="9"/>
+    </symbol>
+    <symbol id="pwMosque" viewBox="0 0 300 206">
+      <use href="#pwMinaret" x="6" y="16" width="32" height="190"/>
+      <use href="#pwMinaret" x="262" y="16" width="32" height="190"/>
+      <!-- side wings + small domes -->
+      <rect class="mq-wall" x="40" y="126" width="58" height="80"/><rect class="mq-wall" x="202" y="126" width="58" height="80"/>
+      <rect class="mq-shade" x="246" y="126" width="14" height="80"/>
+      <rect class="mq-trim" x="38" y="122" width="62" height="6" rx="2"/><rect class="mq-trim" x="200" y="122" width="62" height="6" rx="2"/>
+      <rect class="mq-wall" x="53" y="110" width="26" height="12"/><rect class="mq-wall" x="221" y="110" width="26" height="12"/>
+      <path class="mq-dome" d="M51 112C49 100 58 94 66 86C74 94 83 100 81 112Z"/><path class="mq-dome" d="M219 112C217 100 226 94 234 86C242 94 251 100 249 112Z"/>
+      <rect class="mq-gold" x="65.25" y="76" width="1.5" height="11"/><rect class="mq-gold" x="233.25" y="76" width="1.5" height="11"/>
+      <use href="#pwCres" x="62" y="70" width="8" height="8"/><use href="#pwCres" x="230" y="70" width="8" height="8"/>
+      <path class="mq-win" d="M52 172v-18a6 6 0 0 1 12 0v18z"/><path class="mq-win" d="M74 172v-18a6 6 0 0 1 12 0v18z"/>
+      <path class="mq-win" d="M214 172v-18a6 6 0 0 1 12 0v18z"/><path class="mq-win" d="M236 172v-18a6 6 0 0 1 12 0v18z"/>
+      <!-- prayer hall -->
+      <rect class="mq-wall" x="86" y="106" width="128" height="100"/>
+      <rect class="mq-shade" x="196" y="106" width="18" height="100"/>
+      <rect class="mq-trim" x="82" y="101" width="136" height="7" rx="2"/>
+      <rect class="mq-band" x="86" y="122" width="128" height="4"/>
+      <path class="mq-win" d="M97 168v-22a7 7 0 0 1 14 0v22z"/><path class="mq-win" d="M189 168v-22a7 7 0 0 1 14 0v22z"/>
+      <path class="mq-trim" d="M126 206v-38a24 24 0 0 1 48 0v38z"/>
+      <path class="mq-door" d="M132 206v-37a18 18 0 0 1 36 0v37z"/>
+      <!-- drum + main dome -->
+      <rect class="mq-wall" x="110" y="80" width="80" height="22"/><rect class="mq-shade" x="176" y="80" width="14" height="22"/>
+      <path class="mq-win" d="M122 98v-9a4 4 0 0 1 8 0v9z"/><path class="mq-win" d="M146 98v-9a4 4 0 0 1 8 0v9z"/><path class="mq-win" d="M170 98v-9a4 4 0 0 1 8 0v9z"/>
+      <rect class="mq-trim" x="106" y="76" width="88" height="6" rx="2"/>
+      <path class="mq-dome" d="M112 77C99 60 109 44 131 34C141 29 147 25 150 16C153 25 159 29 169 34C191 44 201 60 188 77Z"/>
+      <path class="mq-hi" d="M122 64C121 52 130 44 142 38" fill="none" stroke-width="4" stroke-linecap="round"/>
+      <rect class="mq-gold" x="149.1" y="6" width="1.8" height="11"/><circle class="mq-gold" cx="150" cy="11" r="2.4"/>
+      <use href="#pwCres" x="144.5" y="-1.5" width="11" height="11"/>
+    </symbol>
+    <symbol id="pwTree" viewBox="0 0 100 124">
+      <rect class="tr-trunk" x="45" y="78" width="10" height="46" rx="3"/>
+      <circle class="tr-b" cx="28" cy="66" r="24"/><circle class="tr-b" cx="72" cy="64" r="25"/>
+      <circle class="tr-a" cx="50" cy="44" r="34"/><circle class="tr-a" cx="34" cy="58" r="18"/><circle class="tr-a" cx="66" cy="56" r="20"/>
+      <circle class="tr-hi" cx="39" cy="32" r="13"/>
+    </symbol>
+    <symbol id="pwCypress" viewBox="0 0 40 150">
+      <rect class="tr-trunk" x="17" y="126" width="6" height="24" rx="2"/>
+      <path class="tr-b" d="M20 4C33 30 37 70 34 104C32 124 26 132 20 132C14 132 8 124 6 104C3 70 7 30 20 4Z"/>
+      <path class="tr-hl" d="M17 22C12 44 11 74 13 100" fill="none" stroke-width="5" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="pwCloud" viewBox="0 0 120 50"><path class="pw-cl" d="M14 48C3 48 0 36 9 31C8 19 22 13 31 19C35 7 54 3 63 15C70 6 88 8 90 22C104 20 116 30 110 42C108 46 104 48 98 48Z"/></symbol>
+  </defs>
+</svg>
+
+<!-- Page backdrop: sky, clouds, a mosque behind a courtyard arcade, trees.
+     Night version in dark mode (moon, stars, warm windows). -->
+<div class="pw-bg" aria-hidden="true">
+  <svg class="pw-bg-top" viewBox="0 0 800 220" preserveAspectRatio="xMidYMin slice">
+    <g class="pw-night"><circle class="pw-star" cx="120" cy="80" r="1.8"/><circle class="pw-star" cx="250" cy="96" r="1.4"/><circle class="pw-star" cx="330" cy="140" r="1.6"/><circle class="pw-star" cx="440" cy="120" r="1.3"/><circle class="pw-star" cx="520" cy="84" r="1.8"/><circle class="pw-star" cx="610" cy="150" r="1.4"/><circle class="pw-star" cx="690" cy="74" r="1.6"/><circle class="pw-star" cx="200" cy="170" r="1.3"/><circle class="pw-star" cx="370" cy="190" r="1.2"/><circle class="pw-star" cx="560" cy="200" r="1.3"/>
+      <path class="pw-moon" transform="translate(24 50)" d="M598 66a26 26 0 1 0 22 40a21 21 0 1 1 -22 -40z"/></g>
+    <circle class="pw-sun" cx="590" cy="70" r="70"/>
+    <use class="pw-cl-a" href="#pwCloud" x="170" y="88" width="120" height="50"/>
+    <use class="pw-cl-b" href="#pwCloud" x="470" y="140" width="96" height="40"/>
+    <use class="pw-cl-c" href="#pwCloud" x="610" y="96" width="110" height="46"/>
+    <use class="pw-cl-b" href="#pwCloud" x="300" y="176" width="70" height="30"/>
   </svg>
-  <svg class="dz-grass" viewBox="0 0 400 90" preserveAspectRatio="xMidYMax slice">
-    <defs><linearGradient id="dzG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#A6E07E"/><stop offset="1" stop-color="#5CB84E"/></linearGradient>
-    <radialGradient id="dzL" cx=".4" cy=".3" r=".9"><stop offset="0" stop-color="#9BE37A"/><stop offset="1" stop-color="#2E9E4F"/></radialGradient></defs>
-    <path d="M0 70 Q100 52 200 60 Q300 68 400 54 V90 H0z" fill="url(#dzG)"/>
-    <g fill="url(#dzL)"><path d="M10 90 C-4 60 8 30 30 18 C30 50 26 70 24 90z"/><path d="M30 90 C30 66 44 46 64 40 C56 62 48 78 44 90z"/><path d="M-6 90 C-10 70 -4 52 8 44 C8 64 8 78 6 90z"/>
-    <path d="M390 90 C404 60 392 30 370 18 C370 50 374 70 376 90z"/><path d="M370 90 C370 66 356 46 336 40 C344 62 352 78 356 90z"/></g>
+  <svg class="pw-bg-scene" viewBox="0 0 800 340" preserveAspectRatio="xMidYMax slice">
+    <path class="pw-hill" d="M0 250C120 214 230 228 330 236C430 244 520 214 640 222C720 228 770 236 800 232V340H0Z"/>
+    <use href="#pwTree" x="40" y="150" width="92" height="114"/><use href="#pwTree" x="660" y="140" width="100" height="124"/>
+    <use href="#pwCypress" x="232" y="132" width="30" height="112"/><use href="#pwCypress" x="538" y="132" width="30" height="112"/>
+    <use href="#pwMosque" x="282" y="84" width="236" height="162"/>
+    <use href="#pwTree" x="150" y="164" width="88" height="108"/><use href="#pwTree" x="560" y="160" width="92" height="114"/>
+    <use href="#pwCypress" x="130" y="150" width="26" height="100"/><use href="#pwCypress" x="646" y="150" width="26" height="100"/>
+    <rect class="pw-lawn" x="0" y="240" width="800" height="40"/>
+    <rect class="pw-arc-top" x="0" y="256" width="800" height="9"/>
+    <rect class="pw-arc-in" x="0" y="265" width="800" height="55"/><rect x="0" y="265" width="800" height="55" fill="url(#pwArcP)"/>
+    <rect class="pw-floor" x="0" y="318" width="800" height="22"/>
   </svg>
 </div>
 
@@ -690,6 +868,27 @@ html[data-bm-theme="classic"] #viewDzikir .dzikir-complete{border-color:rgba(255
     <div class="step-indicator" id="stepIndicator"></div>
 
     <div class="mo-stage-guide">
+      <svg class="stage-scene" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
+        <rect x="0" y="0" width="400" height="200" fill="url(#pwSkyG)"/>
+        <g class="pw-night"><circle class="pw-star" cx="96" cy="60" r="1.5"/><circle class="pw-star" cx="170" cy="40" r="1.2"/><circle class="pw-star" cx="250" cy="70" r="1.4"/><circle class="pw-star" cx="300" cy="36" r="1.2"/>
+          <path class="pw-moon" d="M318 52a17 17 0 1 0 14 26a13.5 13.5 0 1 1 -14 -26z"/></g>
+        <circle class="pw-sun" cx="320" cy="62" r="46"/>
+        <use class="pw-cl-a" href="#pwCloud" x="70" y="58" width="76" height="32"/>
+        <use class="pw-cl-c" href="#pwCloud" x="262" y="86" width="64" height="27"/>
+        <use href="#pwTree" x="22" y="102" width="78" height="96"/><use href="#pwTree" x="78" y="116" width="66" height="82"/>
+        <use href="#pwCypress" x="204" y="108" width="20" height="76"/>
+        <use href="#pwMosque" x="218" y="92" width="130" height="89"/>
+        <use href="#pwTree" x="350" y="128" width="56" height="70"/>
+        <rect class="pw-lawn" x="0" y="176" width="400" height="14"/>
+        <rect class="pw-bal" x="0" y="184" width="400" height="22"/>
+        <rect class="pw-bal-top" x="0" y="180" width="400" height="6" rx="2"/>
+        <rect x="0" y="206" width="400" height="94" fill="url(#pwFloorG)"/>
+        <path class="pw-tile" d="M0 226H400M0 252H400M0 284H400M200 206V300M140 206L96 300M260 206L304 300M80 206L-8 300M320 206L408 300" fill="none"/>
+        <path class="pw-wall" fill-rule="evenodd" d="M-10 -10H410V310H-10Z M30 310V124A170 112 0 0 1 370 124V310Z"/>
+        <path d="M30 310V124A170 112 0 0 1 370 124V310" fill="none" class="pw-wall-edge"/>
+        <rect x="14" y="124" width="16" height="186" fill="url(#pwPillarG)"/><rect x="370" y="124" width="16" height="186" fill="url(#pwPillarG)" transform="matrix(-1 0 0 1 756 0)"/>
+      </svg>
+      <span class="stage-shadow" aria-hidden="true"></span>
       <button class="stage-nav nav-prev" onclick="prevStep()" aria-label="Sebelumnya">‹</button>
       <div class="sound-bars" id="soundBars"><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div><div class="sound-bar"></div></div>
       <img id="moImage" src="mo-pray-assets/mo-takbir.webp" alt="Mo pose">
@@ -698,7 +897,7 @@ html[data-bm-theme="classic"] #viewDzikir .dzikir-complete{border-color:rgba(255
 
     <div class="step-info">
       <div class="step-name-row">
-        <span class="step-name" id="stepName">Takbiratul Ihram</span>
+        <span class="step-title"><span class="step-num" id="stepNum" aria-hidden="true">1</span><span class="step-name" id="stepName">Takbiratul Ihram</span></span>
         <span class="step-name-ar" id="stepNameAr">تَكْبِيرَةُ الإِحْرَام</span>
       </div>
       <p class="step-desc" id="stepDesc"></p>
@@ -711,9 +910,9 @@ html[data-bm-theme="classic"] #viewDzikir .dzikir-complete{border-color:rgba(255
       <div class="recitation-meaning" id="recMeaning"></div>
       <div class="recitation-repeat" id="recRepeat" style="display:none"></div>
       <div class="recitation-controls">
-        <button class="rec-btn rec-btn-small" onclick="prevRecPage()" aria-label="Bacaan sebelumnya">⏮</button>
-        <button class="rec-btn rec-btn-play" id="btnPlay" onclick="playRecitation()" aria-label="Dengarkan bacaan">▶</button>
-        <button class="rec-btn rec-btn-small" onclick="nextRecPage()" aria-label="Bacaan berikutnya">⏭</button>
+        <button class="rec-btn rec-btn-small" id="btnRecPrev" onclick="prevRecPage()" aria-label="Bacaan sebelumnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="rec-btn rec-btn-play" id="btnPlay" onclick="playRecitation()" aria-label="Dengarkan bacaan"><span class="pb-ic" aria-hidden="true"><svg viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z"/></svg></span><span class="pb-tx">Dengarkan</span></button>
+        <button class="rec-btn rec-btn-small" id="btnRecNext" onclick="nextRecPage()" aria-label="Bacaan berikutnya"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       </div>
       <div class="recitation-page" id="recPage"></div>
     </div>
@@ -828,10 +1027,16 @@ html[data-bm-theme="classic"] #viewDzikir .dzikir-complete{border-color:rgba(255
           <div class="tasbih-ring" id="tasbihRing"></div>
           <span class="dz-arch" aria-hidden="true"></span>
           <img class="dz-mo" src="baby-mo-poses/baby-mo-pose-12.webp" alt="" draggable="false">
-          <div class="dz-cloud">
-            <div class="tasbih-count" id="tasbihCount">0</div>
-            <div class="tasbih-total" id="tasbihTotal">/ 33</div>
-          </div>
+          <svg class="dz-ring" id="dzRing" viewBox="0 0 200 200" aria-hidden="true">
+            <defs><linearGradient id="dzRingG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#5FDC97"/><stop offset="1" stop-color="#0F8A55"/></linearGradient></defs>
+            <circle class="rg-track" cx="100" cy="100" r="90"/>
+            <circle class="rg-glow" id="dzRingGlow" cx="100" cy="100" r="90" transform="rotate(-90 100 100)" stroke-dasharray="565.49" stroke-dashoffset="565.49"/>
+            <circle class="rg-fill" id="dzRingFill" cx="100" cy="100" r="90" transform="rotate(-90 100 100)" stroke-dasharray="565.49" stroke-dashoffset="565.49"/>
+          </svg>
+        </div>
+        <div class="dz-count" onclick="tasbihTap()" aria-live="polite">
+          <span class="tasbih-count" id="tasbihCount">0</span>
+          <span class="tasbih-total" id="tasbihTotal">/ 33</span>
         </div>
         <div class="tasbih-label">Tap untuk menghitung</div>
       </div>
@@ -1019,6 +1224,7 @@ function renderStep(){
   var s=STEPS[currentStep];stepsViewed[currentStep]=true;
   document.getElementById('moImage').src=s.imageGuide;
   document.getElementById('stepName').textContent=s.name;
+  document.getElementById('stepNum').textContent=currentStep+1;
   document.getElementById('stepNameAr').textContent=s.nameAr;
   document.getElementById('stepDesc').textContent=s.desc;
   document.getElementById('tipText').textContent=s.tip;
@@ -1045,6 +1251,8 @@ function renderRecitation(){
   document.getElementById('recMeaning').textContent=r.meaning;
   var rpt=document.getElementById('recRepeat');if(r.repeat){rpt.style.display='';rpt.textContent='× '+r.repeat+' kali'}else{rpt.style.display='none'}
   var pg=document.getElementById('recPage');if(recs.length>1){pg.textContent=(page+1)+' / '+recs.length;pg.style.display=''}else{pg.style.display='none'}
+  var bP=document.getElementById('btnRecPrev'),bN=document.getElementById('btnRecNext');
+  bP.classList.toggle('gone',recs.length<2);bN.classList.toggle('gone',recs.length<2);bP.disabled=page===0;bN.disabled=page>=recs.length-1;
   var progEl=document.getElementById('recProgress');
   if(recs.length>1){
     var segHtml='';
@@ -1070,7 +1278,7 @@ function playRecitation(autoAdvance){
   var totalRepeats=r.repeat||1;
   var bars=document.getElementById('soundBars');
   if(bars){bars.classList.add('active');bars.querySelectorAll('.sound-bar').forEach(function(b){b.classList.add('anim')})}
-  var btn=document.getElementById('btnPlay');btn.textContent='⏸';
+  var btn=document.getElementById('btnPlay');setPlayBtn(true);
   function playOnce(repIdx){
     if(!_recPlaying)return;
     var words=r.arabic.split(/\s+/);
@@ -1093,7 +1301,7 @@ function playRecitation(autoAdvance){
       _recHighlightTimers.forEach(clearTimeout);_recHighlightTimers=[];
       wordEls.forEach(function(e){e.classList.remove('highlight')});
       if(repIdx+1<totalRepeats){setTimeout(function(){playOnce(repIdx+1)},500);return}
-      _recPlaying=false;btn.textContent='▶';
+      _recPlaying=false;setPlayBtn(false);
       if(bars){bars.classList.remove('active');bars.querySelectorAll('.sound-bar').forEach(function(b){b.classList.remove('anim')})}
       if(totalRepeats>1){rpt.textContent='× '+totalRepeats+' kali'}
       var isLastRec=currentRecPage>=STEPS[currentStep].recitations.length-1;
@@ -1109,10 +1317,17 @@ function playRecitation(autoAdvance){
   }
   playOnce(0);
 }
+/* the Listen pill: icon + label (Dengarkan / Jeda) */
+function setPlayBtn(on){
+  var btn=document.getElementById('btnPlay');if(!btn)return;
+  btn.classList.toggle('playing',!!on);
+  btn.querySelector('.pb-ic').innerHTML=on?'<svg viewBox="0 0 14 14"><path d="M3 2h3v10H3zM8 2h3v10H8z"/></svg>':'<svg viewBox="0 0 14 14"><path d="M3 1.5v11l9.5-5.5z"/></svg>';
+  btn.querySelector('.pb-tx').textContent=on?'Jeda':'Dengarkan';
+}
 function stopRecitation(){
   _recPlaying=false;_recHighlightTimers.forEach(clearTimeout);_recHighlightTimers=[];
   if('speechSynthesis' in window)speechSynthesis.cancel();
-  var btn=document.getElementById('btnPlay');if(btn)btn.textContent='▶';
+  setPlayBtn(false);
   var el=document.getElementById('recArabic');
   if(el)el.querySelectorAll('.rec-word.highlight').forEach(function(e){e.classList.remove('highlight')});
   var bars=document.getElementById('soundBars');if(bars){bars.classList.remove('active');bars.querySelectorAll('.sound-bar').forEach(function(b){b.classList.remove('anim')})}
@@ -1391,6 +1606,12 @@ function renderDzikir(){
 var _dzLit=-1;
 function drawDzBeads(cur,count){
   var el=document.getElementById('dzBeads');if(!el)return;
+  /* small targets (×1, ×3): a smooth progress ring instead of 33 beads */
+  var small=count<=10,btn=document.getElementById('tasbihBtn');
+  btn.classList.toggle('ring-mode',small);
+  if(small){var len=565.49,off=(len*(1-Math.min(1,cur/count))).toFixed(2);
+    document.getElementById('dzRingFill').setAttribute('stroke-dashoffset',off);
+    document.getElementById('dzRingGlow').setAttribute('stroke-dashoffset',off);_dzLit=-1;return}
   var n=33,lit=Math.min(n,Math.round(cur/count*n)),R=88,r=6.6,h='';
   for(var i=0;i<n;i++){var a=-Math.PI/2+i*2*Math.PI/n;
     h+='<circle class="bd'+(i<lit?' on':'')+(i<lit&&i>=_dzLit&&_dzLit>=0?' pop':'')+'" cx="'+(100+R*Math.cos(a)).toFixed(1)+'" cy="'+(100+R*Math.sin(a)).toFixed(1)+'" r="'+r+'"/>';}
@@ -1416,10 +1637,26 @@ function nextDzikir(){
 function prevDzikir(){if(currentDzikir>0){stopDzikirPlay();currentDzikir--;tasbihCurrent=0;renderDzikir()}}
 function resetTasbih(){stopDzikirPlay();tasbihCurrent=0;renderDzikir()}
 
+/* bead click on every count — the same WebAudio tick as the du'a game's tasbih
+   (babymo-doa-harian.html bead()); silent when the app is muted */
+var _tsAc=null;
+function tasbihMuted(){try{if(window.BabyMo&&BabyMo.isMuted)return BabyMo.isMuted();return localStorage.getItem('bm_muted')==='1'}catch(e){return false}}
+function tasbihBead(c,t){
+  if(tasbihMuted())return;
+  try{
+    var AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+    if(!_tsAc)_tsAc=new AC();if(_tsAc.state==='suspended')_tsAc.resume();
+    var ctx=_tsAc,o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);o.type='sine';o.frequency.value=c>=t?988:700+(c%11)*12;
+    g.gain.setValueAtTime(.12,ctx.currentTime);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.06);
+    o.start(ctx.currentTime);o.stop(ctx.currentTime+.06);
+  }catch(e){}
+}
 function tasbihTap(){
   var d=DZIKIR[currentDzikir];
   if(tasbihCurrent>=d.count) return;
   tasbihCurrent++;
+  tasbihBead(tasbihCurrent,d.count);
   renderDzikir();
   if(tasbihCurrent>=d.count){
     dzikirDone[currentDzikir]=true;
@@ -1453,7 +1690,7 @@ function playNextDzikirUtterance(){
     if(pIdx>=phrases.length){
       _dzikirHighlightTimers.forEach(clearTimeout);_dzikirHighlightTimers=[];
       wordEls.forEach(function(e){e.classList.remove('highlight')});
-      tasbihCurrent++;renderDzikir();
+      tasbihCurrent++;tasbihBead(tasbihCurrent,d.count);renderDzikir();
       if(tasbihCurrent>=d.count){dzikirDone[currentDzikir]=true;stopDzikirPlay();renderDzikir();if(navigator.vibrate)navigator.vibrate(100);return}
       dzikirTimer=setTimeout(playNextDzikirUtterance,800);
       return;
