@@ -627,10 +627,21 @@ html[data-bm-theme="classic"]{--mq-glow:drop-shadow(0 0 2px rgba(255,200,100,.75
 html[data-bm-theme="classic"] .pwd1{stop-color:#3B86B8}html[data-bm-theme="classic"] .pwd2{stop-color:#173F6A}
 html[data-bm-theme="classic"] .pwf1{stop-color:#2F3B5E}html[data-bm-theme="classic"] .pwf2{stop-color:#232C4A}
 html[data-bm-theme="classic"] .pwp1{stop-color:#38446C}html[data-bm-theme="classic"] .pwp2{stop-color:#2C3658}html[data-bm-theme="classic"] .pwp3{stop-color:#1F2744}
-/* the page backdrop */
+/* the page backdrop: calm sky + clouds only (fixed) */
 .pw-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:linear-gradient(180deg,var(--sky1) 0%,var(--sky2) 52%,var(--sky3) 100%)}
 .pw-bg-top{position:absolute;left:0;top:0;width:100%;height:clamp(170px,30vh,300px)}
-.pw-bg-scene{position:absolute;left:0;bottom:0;width:100%;height:clamp(210px,34vh,460px)}
+/* the courtyard ground with the mosque sits in the page flow after the content, so it is
+   always seen whole at the end of the page (fills the bottom of short pages) */
+body{display:flex;flex-direction:column;min-height:100vh;min-height:100dvh}
+.main{flex:1 0 auto;width:100%}
+.pw-ground{--pad:var(--safe-bottom);position:relative;z-index:1;flex:0 0 auto;margin-top:6px;pointer-events:none;padding-bottom:var(--pad);
+  background:linear-gradient(var(--pw-floor-fill),var(--pw-floor-fill)) left bottom/100% calc(var(--pad) + 2px) no-repeat}
+.pw-ground-svg{display:block;width:100%;height:clamp(200px,32vh,420px)}
+.pw-g-alt{display:none}
+body[data-view="guide"] .pw-g-mosque{display:none}body[data-view="guide"] .pw-g-alt{display:inline}
+body[data-view="home"] .main{padding-bottom:12px}
+body[data-view="home"] .pw-ground{--pad:calc(84px + var(--safe-bottom))}
+body[data-view="dzikir"] .main{padding-bottom:8px}
 .pw-cl-a,.pw-cl-b,.pw-cl-c{animation:pwDrift 26s ease-in-out infinite alternate}
 .pw-cl-b{animation-duration:34s;animation-direction:alternate-reverse}.pw-cl-c{animation-duration:30s}
 @keyframes pwDrift{from{transform:translateX(-14px)}to{transform:translateX(14px)}}
@@ -770,25 +781,12 @@ html[data-bm-theme="classic"] .rec-btn.rec-btn-small{background:rgba(255,255,255
      Night version in dark mode (moon, stars, warm windows). -->
 <div class="pw-bg" aria-hidden="true">
   <svg class="pw-bg-top" viewBox="0 0 800 220" preserveAspectRatio="xMidYMin slice">
-    <g class="pw-night"><circle class="pw-star" cx="120" cy="80" r="1.8"/><circle class="pw-star" cx="250" cy="96" r="1.4"/><circle class="pw-star" cx="330" cy="140" r="1.6"/><circle class="pw-star" cx="440" cy="120" r="1.3"/><circle class="pw-star" cx="520" cy="84" r="1.8"/><circle class="pw-star" cx="610" cy="150" r="1.4"/><circle class="pw-star" cx="690" cy="74" r="1.6"/><circle class="pw-star" cx="200" cy="170" r="1.3"/><circle class="pw-star" cx="370" cy="190" r="1.2"/><circle class="pw-star" cx="560" cy="200" r="1.3"/>
-      <path class="pw-moon" transform="translate(24 50)" d="M598 66a26 26 0 1 0 22 40a21 21 0 1 1 -22 -40z"/></g>
+    <g class="pw-night"><circle class="pw-star" cx="120" cy="80" r="1.8"/><circle class="pw-star" cx="250" cy="96" r="1.4"/><circle class="pw-star" cx="330" cy="140" r="1.6"/><circle class="pw-star" cx="440" cy="120" r="1.3"/><circle class="pw-star" cx="520" cy="84" r="1.8"/><circle class="pw-star" cx="610" cy="150" r="1.4"/><circle class="pw-star" cx="690" cy="74" r="1.6"/><circle class="pw-star" cx="200" cy="170" r="1.3"/><circle class="pw-star" cx="370" cy="190" r="1.2"/><circle class="pw-star" cx="560" cy="200" r="1.3"/></g>
     <circle class="pw-sun" cx="590" cy="70" r="70"/>
     <use class="pw-cl-a" href="#pwCloud" x="170" y="88" width="120" height="50"/>
     <use class="pw-cl-b" href="#pwCloud" x="470" y="140" width="96" height="40"/>
     <use class="pw-cl-c" href="#pwCloud" x="610" y="96" width="110" height="46"/>
     <use class="pw-cl-b" href="#pwCloud" x="300" y="176" width="70" height="30"/>
-  </svg>
-  <svg class="pw-bg-scene" viewBox="0 0 800 340" preserveAspectRatio="xMidYMax slice">
-    <path class="pw-hill" d="M0 250C120 214 230 228 330 236C430 244 520 214 640 222C720 228 770 236 800 232V340H0Z"/>
-    <use href="#pwTree" x="40" y="150" width="92" height="114"/><use href="#pwTree" x="660" y="140" width="100" height="124"/>
-    <use href="#pwCypress" x="232" y="132" width="30" height="112"/><use href="#pwCypress" x="538" y="132" width="30" height="112"/>
-    <use href="#pwMosque" x="282" y="84" width="236" height="162"/>
-    <use href="#pwTree" x="150" y="164" width="88" height="108"/><use href="#pwTree" x="560" y="160" width="92" height="114"/>
-    <use href="#pwCypress" x="130" y="150" width="26" height="100"/><use href="#pwCypress" x="646" y="150" width="26" height="100"/>
-    <rect class="pw-lawn" x="0" y="240" width="800" height="40"/>
-    <rect class="pw-arc-top" x="0" y="256" width="800" height="9"/>
-    <rect class="pw-arc-in" x="0" y="265" width="800" height="55"/><rect x="0" y="265" width="800" height="55" fill="url(#pwArcP)"/>
-    <rect class="pw-floor" x="0" y="318" width="800" height="22"/>
   </svg>
 </div>
 
@@ -1062,6 +1060,23 @@ html[data-bm-theme="classic"] .rec-btn.rec-btn-small{background:rgba(255,255,255
   </div>
 
 </div><!-- .main -->
+<!-- Courtyard ground: the mosque scene closes every page below the content (never behind text) -->
+<div class="pw-ground" aria-hidden="true">
+  <svg class="pw-ground-svg" viewBox="0 0 800 340" preserveAspectRatio="xMidYMax slice">
+    <path class="pw-night pw-moon" d="M566 40a22 22 0 1 0 19 34a18 18 0 1 1 -19 -34z"/>
+    <path class="pw-hill" d="M0 250C120 214 230 228 330 236C430 244 520 214 640 222C720 228 770 236 800 232V340H0Z"/>
+    <use href="#pwTree" x="40" y="150" width="92" height="114"/><use href="#pwTree" x="660" y="140" width="100" height="124"/>
+    <g class="pw-g-mosque"><use href="#pwCypress" x="232" y="132" width="30" height="112"/><use href="#pwCypress" x="538" y="132" width="30" height="112"/>
+    <use href="#pwMosque" x="282" y="84" width="236" height="162"/></g>
+    <g class="pw-g-alt"><use href="#pwTree" x="300" y="150" width="96" height="118"/><use href="#pwCypress" x="396" y="136" width="30" height="112"/><use href="#pwTree" x="420" y="156" width="88" height="108"/></g>
+    <use href="#pwTree" x="150" y="164" width="88" height="108"/><use href="#pwTree" x="560" y="160" width="92" height="114"/>
+    <use href="#pwCypress" x="130" y="150" width="26" height="100"/><use href="#pwCypress" x="646" y="150" width="26" height="100"/>
+    <rect class="pw-lawn" x="0" y="240" width="800" height="40"/>
+    <rect class="pw-arc-top" x="0" y="256" width="800" height="9"/>
+    <rect class="pw-arc-in" x="0" y="265" width="800" height="55"/><rect x="0" y="265" width="800" height="55" fill="url(#pwArcP)"/>
+    <rect class="pw-floor" x="0" y="318" width="800" height="22"/>
+  </svg>
+</div>
 
 <!-- CELEBRATION -->
 <div class="modal-overlay" id="celebOverlay">
