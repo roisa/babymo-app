@@ -306,7 +306,8 @@ self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(CACHE).then((c) =>
       // Best-effort: a single missing asset must not fail the install.
-      Promise.all(SHELL.map((u) => c.add(u).catch(() => {})))
+      // cache:'reload' skips the browser's HTTP cache, so a new version never stores a stale copy
+      Promise.all(SHELL.map((u) => c.add(new Request(u, { cache: "reload" })).catch(() => {})))
     )
   );
 });
@@ -343,20 +344,23 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // Same-origin assets: cache-first, refresh in the background.
+  // Same-origin assets: serve the cached copy at once, and refresh it in the background
+  // (stale-while-revalidate), so fixes reach phones on the next open without a cache bump.
   if (url.origin === location.origin) {
     e.respondWith(
-      caches.match(req).then(
-        (m) =>
-          m ||
-          fetch(req)
-            .then((r) => {
+      caches.match(req).then((m) => {
+        const net = fetch(req, { cache: "no-cache" })
+          .then((r) => {
+            if (r && r.ok && r.type === "basic") {
               const copy = r.clone();
               caches.open(CACHE).then((c) => c.put(req, copy)).catch(() => {});
-              return r;
-            })
-            .catch(() => m)
-      )
+            }
+            return r;
+          })
+          .catch(() => m);
+        if (m) { e.waitUntil(net.then(() => {}, () => {})); return m; }
+        return net;
+      })
     );
     return;
   }
