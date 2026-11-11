@@ -35,7 +35,7 @@
   "← Kembali": "← Back", "Lanjut →": "Next →", "🌟 Lihat Hasil!": "🌟 See Results!", "Mulai Quiz 🎯": "Start Quiz 🎯",
   "🔇 Suara Arab belum tersedia. Baca teks di atas ya!": "🔇 Arabic audio isn't available. Read the text above!",
   "🎯 Quiz Doa": "🎯 Du'a Quiz", "Quiz": "Quiz", "← Ulang": "← Restart", "Dengar doanya — ini doa apa?": "Listen to the du'a — which one is it?",
-  "Dengar lagi": "Listen again", "Doa ini dibaca saat...?": "When do we read this du'a...?", "Pilih gambar yang benar! · Tap the right picture!": "Tap the right picture!",
+  "Dengar lagi": "Listen again", "Doa ini dibaca saat...?": "When do we read this du'a...?", "Pilih gambar yang benar! · Tap the right picture!": "Tap the right picture!", "Ketuk gambar yang benar!": "Tap the right picture!",
   "Betul!": "Correct!", "Betul! Alhamdulillah! ✨": "Correct! Alhamdulillah! ✨", "Bagus!": "Nice!", "Luar biasa! ⭐": "Amazing! ⭐", "Subhanallah! Hebat! 💚": "Subhanallah! Great! 💚",
   "Alhamdulillah! ✨": "Alhamdulillah! ✨", "Hampir betul! Coba lagi nanti!": "Almost! Try again later!",
   "Sempurna! 🏆": "Perfect! 🏆", "Masya Allah! 🌟": "Masha Allah! 🌟", "Terus Berlatih! 🌱": "Keep Practicing! 🌱",

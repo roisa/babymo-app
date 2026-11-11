@@ -855,6 +855,155 @@ html[data-bm-theme="classic"] .l-grass{filter:brightness(.5) saturate(.8)}
 </style>
 <script src="bm-icons.js" defer></script>
 <script src="doa-scenes.js"></script>
+<style id="bm-quiz-pics">
+/* ════ QUIZ — sky, big Baby Mo card, cloud question bar, picture answers ════ */
+#quizScreen{--qi:#2A1F6B;--qi2:#5B5F86;--qcard:#FFFFFF;--qrim:rgba(255,255,255,.95);--qsh:0 18px 34px -22px rgba(60,70,150,.55);
+  --qar:#FFF6E2;--qar-b:rgba(240,150,40,.20);--qar-t:#D9480F;
+  padding:10px 14px 22px;padding-top:calc(10px + env(safe-area-inset-top));
+  background:
+    radial-gradient(60px 26px at 12% 16%,rgba(255,255,255,.9),transparent 70%),
+    radial-gradient(90px 34px at 20% 18%,rgba(255,255,255,.75),transparent 70%),
+    radial-gradient(110px 36px at 88% 46%,rgba(255,255,255,.75),transparent 70%),
+    radial-gradient(70px 26px at 78% 48%,rgba(255,255,255,.85),transparent 70%),
+    radial-gradient(130px 40px at 10% 96%,rgba(255,255,255,.8),transparent 70%),
+    radial-gradient(120px 40px at 92% 98%,rgba(255,255,255,.8),transparent 70%),
+    linear-gradient(180deg,#CFE3FF 0%,#DDE9FF 45%,#ECE4FF 100%);}
+html[data-bm-theme="classic"] #quizScreen{--qi:#F2F5FA;--qi2:#B9C4D9;--qcard:#1E2645;--qrim:rgba(255,255,255,.10);--qsh:0 18px 34px -20px rgba(0,0,0,.75);
+  --qar:rgba(255,214,120,.10);--qar-b:rgba(255,214,120,.22);--qar-t:#FFCB6B;
+  background:
+    radial-gradient(1.5px 1.5px at 14% 12%,#fff,transparent),radial-gradient(1.5px 1.5px at 72% 8%,#fff,transparent),
+    radial-gradient(1.2px 1.2px at 40% 30%,rgba(255,255,255,.8),transparent),radial-gradient(1.2px 1.2px at 90% 36%,rgba(255,255,255,.8),transparent),
+    radial-gradient(110px 36px at 88% 46%,rgba(255,255,255,.05),transparent 70%),
+    radial-gradient(130px 40px at 10% 96%,rgba(255,255,255,.06),transparent 70%),
+    linear-gradient(180deg,#131A3C 0%,#1E2556 50%,#2A2356 100%);}
+#quizScreen .mo-quiz-wrap{display:none!important}
+#quizScreen>*{position:relative}
+
+/* top row */
+#quizScreen .q-topbar{gap:8px;margin-bottom:10px;align-items:center}
+#quizScreen .q-back{flex:0 0 auto;min-height:40px;padding:8px 14px;border-radius:999px!important;font-size:14px;font-weight:900}
+#quizScreen .q-title{position:relative;display:inline-flex;align-items:center;gap:5px;padding:6px 14px 6px 8px;border-radius:999px;
+  background:linear-gradient(180deg,#FFF09A 0%,#FFD43B 60%,#FFC21A 100%);box-shadow:inset 0 2px 0 rgba(255,255,255,.75),inset 0 -2px 0 rgba(200,120,0,.25),0 8px 16px -10px rgba(200,120,0,.8);
+  font-size:17px;font-weight:900;letter-spacing:.3px;text-transform:uppercase;line-height:1;white-space:nowrap;color:#E8590C}
+#quizScreen .q-title .q-ic{font-size:20px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.2))}
+#quizScreen .q-ta{color:#E8590C;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+#quizScreen .q-tb{color:#6A2FB0;text-shadow:0 1px 0 rgba(255,255,255,.7)}
+.q-spk{position:absolute;width:22px;height:22px;pointer-events:none;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cg fill='none' stroke='%23FFC21A' stroke-width='5' stroke-linecap='round'%3E%3Cpath d='M10 5l8 9'/%3E%3Cpath d='M3 21h11'/%3E%3Cpath d='M10 36l8-7'/%3E%3C/g%3E%3C/svg%3E")}
+.q-spk.r{transform:scaleX(-1)}
+#quizScreen .q-title .q-spk.l{left:-20px;top:50%;margin-top:-11px}
+#quizScreen .q-title .q-spk.r{right:-20px;top:50%;margin-top:-11px}
+#quizScreen .q-count{flex:0 0 auto;min-width:64px;min-height:40px;padding:6px 12px 7px;border-radius:999px;background:rgba(255,255,255,.85);box-shadow:0 0 0 .5px rgba(21,34,48,.08),inset 0 1px 0 #fff,0 8px 18px -12px rgba(30,60,110,.45);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+html[data-bm-theme="classic"] #quizScreen .q-count{background:rgba(255,255,255,.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}
+#quizScreen .q-counter-badge{background:none;padding:0;font-size:15px;font-weight:900;color:#0F9A55;letter-spacing:.5px;line-height:1}
+html[data-bm-theme="classic"] #quizScreen .q-counter-badge{color:#7BE8B0}
+#quizScreen .q-progress{width:40px;height:4px;margin:0;background:rgba(15,154,85,.15)}
+#quizScreen .q-prog-fill{background:linear-gradient(90deg,#2DC76D,#0F9A55)}
+
+/* big card: Baby Mo + prompt + Arabic + listen */
+#quizScreen .q-stimulus{display:flex;align-items:flex-end;gap:4px;padding:12px 12px 12px 0;margin:2px 0 12px;text-align:center;overflow:visible;
+  background:var(--qcard);border:none;border-radius:30px;box-shadow:inset 0 0 0 1.5px var(--qrim),var(--qsh)}
+#quizScreen .q-stimulus::before{display:none}
+#quizScreen .q-mo{--mw:clamp(186px,54vw,230px);flex:0 0 auto;width:var(--mw);height:var(--mw);margin:calc(var(--mw)*-.16) calc(var(--mw)*-.21) calc(var(--mw)*-.09 - 12px) calc(var(--mw)*-.22);position:relative;z-index:1;align-self:flex-end;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(40,50,110,.25));transform-origin:50% 100%;animation:qMoIn .5s cubic-bezier(.34,1.56,.64,1) both}
+#quizScreen .q-mo.pop{animation:qMoPop .7s cubic-bezier(.34,1.56,.64,1)}
+#quizScreen .q-mo.oops{animation:moWrong .5s ease}
+@keyframes qMoIn{from{transform:translateY(10px) scale(.9);opacity:0}to{transform:none;opacity:1}}
+@keyframes qMoPop{0%{transform:scale(1)}35%{transform:translateY(-12px) scale(1.06) rotate(-4deg)}70%{transform:scale(1.02,.97)}100%{transform:none}}
+#quizScreen .q-stim-body{position:relative;z-index:2;flex:1 1 auto;min-width:0;display:flex;flex-direction:column;align-items:center;gap:9px}
+#quizScreen .q-stim-label{position:relative;margin:0 16px;font-size:16px!important;font-weight:900;letter-spacing:0;text-transform:none;color:var(--qi);line-height:1.25;text-wrap:balance}
+#quizScreen .q-stim-label .q-spk{width:16px;height:16px;top:50%;margin-top:-8px}
+#quizScreen .q-stim-label .q-spk.l{left:-18px}#quizScreen .q-stim-label .q-spk.r{right:-18px}
+#quizScreen .q-stim-arabic{width:100%;margin:0;padding:8px 10px;border-radius:18px;background:var(--qar);box-shadow:inset 0 0 0 1.5px var(--qar-b);
+  color:var(--qar-t);font-size:clamp(21px,6vw,30px);line-height:1.65;text-shadow:none}
+#quizScreen .q-play-btn{position:relative;gap:8px;padding:10px 22px;font-size:15px;border-radius:999px!important;
+  background:linear-gradient(180deg,#36D27F 0%,#14A85D 55%,#0E8E4C 100%)!important;--bm-glow:rgba(18,161,90,.6)}
+#quizScreen .q-play-btn.speaking{background:linear-gradient(180deg,#22B86A 0%,#0E8E4C 100%)!important}
+#quizScreen .q-play-btn .q-spk{width:18px;height:18px;top:50%;margin-top:-9px}
+#quizScreen .q-play-btn .q-spk.l{left:-24px}#quizScreen .q-play-btn .q-spk.r{right:-24px}
+
+/* cloud-shaped question bar */
+#quizScreen .q-prompt{position:relative;margin:6px 0 12px;padding:9px 20px 9px;border-radius:999px;background:rgba(255,255,255,.88);box-shadow:inset 0 1px 0 #fff,0 12px 22px -18px rgba(60,70,150,.6);isolation:isolate}
+#quizScreen .q-prompt::before,#quizScreen .q-prompt::after{content:'';position:absolute;z-index:-1;background:inherit;border-radius:50%}
+#quizScreen .q-prompt::before{width:70px;height:44px;left:16%;top:-12px}
+#quizScreen .q-prompt::after{width:96px;height:52px;right:18%;top:-16px}
+html[data-bm-theme="classic"] #quizScreen .q-prompt{background:#252E52;box-shadow:0 12px 22px -16px rgba(0,0,0,.8)}
+#quizScreen .q-prompt .q-star{position:absolute;top:50%;width:18px;height:18px;margin-top:-4px;fill:#FFC21A}
+#quizScreen .q-prompt .q-star.l{left:-7px}#quizScreen .q-prompt .q-star.r{right:-7px}
+#quizScreen .q-prompt-text{display:flex;align-items:center;justify-content:center;gap:6px;font-size:17px;font-weight:900;color:var(--qi);line-height:1.2}
+#quizScreen .q-prompt-en{font-size:13px;font-weight:800;color:var(--qi2);margin-top:2px}
+
+/* answers: pictures */
+#quizScreen .q-choices{gap:9px;margin-bottom:14px;align-items:stretch}
+#quizScreen .q-choice{--tg:#FFF4D2;--tgi:#7A4A00;justify-content:flex-start;gap:5px;min-height:0;padding:5px 5px 7px;border:none;border-radius:22px;overflow:visible;
+  background:var(--qcard);box-shadow:inset 0 0 0 1.5px var(--qrim),var(--qsh);transition:transform .2s,box-shadow .25s,opacity .25s}
+#quizScreen .q-choice.qc-w-siang{--tg:#DDF0FF;--tgi:#0B4A80}
+#quizScreen .q-choice.qc-w-sore{--tg:#FFE6D6;--tgi:#8A3A12}
+#quizScreen .q-choice.qc-w-malam{--tg:#ECE5FF;--tgi:#4A2C96}
+html[data-bm-theme="classic"] #quizScreen .q-choice{--tg:rgba(255,255,255,.08);--tgi:#F2F5FA}
+#quizScreen .q-choice::before,#quizScreen .q-choice::after{content:none}
+#quizScreen .q-choice:active{transform:scale(.95)}
+#quizScreen .qc-pic{position:relative;display:block;width:100%;aspect-ratio:1/.92;border-radius:17px;overflow:hidden;background:#BFE6FF;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+#quizScreen .qc-pic .dsa{position:absolute;bottom:0;left:0;height:118%;aspect-ratio:400/180;opacity:0;transition:opacity .25s}
+#quizScreen .qc-pic.ok .dsa{opacity:1}
+#quizScreen .qc-pic .dsa svg{position:absolute;inset:0;width:100%;height:100%;display:block}
+#quizScreen .qc-pic .dsa img{position:absolute;filter:drop-shadow(0 5px 6px rgba(30,40,70,.28))}
+#quizScreen .qc-pic.night{background:#2B3470}
+#quizScreen .qc-tag{flex:1 1 auto;display:flex;align-items:center;gap:5px;width:100%;min-height:40px;padding:4px 6px 4px 4px;border-radius:14px;background:var(--tg)}
+#quizScreen .qc-emoji{font-size:0;line-height:0;filter:none;flex:0 0 auto}
+#quizScreen .q-choice .di{--s:27px;border-radius:8px}
+#quizScreen .qc-label{flex:1 1 auto;min-width:0;text-align:left;font-size:12px;font-weight:900;line-height:1.15;color:var(--tgi);word-break:normal;overflow-wrap:anywhere;hyphens:auto}
+#quizScreen .qc-result{display:none;position:absolute;left:50%;bottom:-21px;top:auto;right:auto;width:32px;height:32px;margin-left:-16px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#6BE59B,#18A85A 60%,#0E8445);box-shadow:0 0 0 3px #fff,0 6px 12px -4px rgba(10,120,60,.7);place-items:center;z-index:3}
+#quizScreen .qc-result svg{width:20px;height:20px}
+#quizScreen .q-choice.correct{background:linear-gradient(180deg,#FFFBEA,#FFF3C4);box-shadow:0 0 0 3px #FFD43B,0 0 22px 4px rgba(255,200,40,.55),var(--qsh);animation:correctPop .4s cubic-bezier(.34,1.56,.64,1);z-index:2}
+html[data-bm-theme="classic"] #quizScreen .q-choice.correct{background:linear-gradient(180deg,#3A3A4A,#2E2C3C)}
+#quizScreen .q-choice.correct .qc-result{display:grid}
+#quizScreen .q-choice.correct .q-spk{display:block}
+#quizScreen .q-choice .q-spk{display:none;width:24px;height:24px}
+#quizScreen .q-choice .q-spk.l{left:-12px;top:-14px;transform:rotate(30deg)}
+#quizScreen .q-choice .q-spk.r{right:-12px;bottom:-12px;transform:scaleX(-1) rotate(30deg)}
+#quizScreen .q-choice.wrong{background:var(--qcard);box-shadow:0 0 0 3px rgba(255,107,92,.55),0 0 16px rgba(255,107,92,.25),var(--qsh);animation:qShake .45s ease}
+@keyframes qShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-5px) rotate(-1deg)}45%{transform:translateX(4px) rotate(1deg)}70%{transform:translateX(-2px)}}
+#quizScreen .q-choice.disabled{opacity:1}
+#quizScreen .q-choice.disabled:not(.correct):not(.wrong){opacity:.6;filter:saturate(.7)}
+
+/* feedback */
+#quizScreen .q-feedback{margin-top:14px;padding:12px 14px 14px;border-radius:24px;background:var(--qcard);border:none;box-shadow:inset 0 0 0 1.5px var(--qrim),var(--qsh)}
+#quizScreen .q-feedback.show{animation:qFbIn .35s cubic-bezier(.34,1.56,.64,1)}
+@keyframes qFbIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+#quizScreen .q-fb-correct{box-shadow:inset 0 0 0 2px rgba(45,199,109,.35),var(--qsh)}
+#quizScreen .q-fb-wrong{box-shadow:inset 0 0 0 2px rgba(255,140,90,.35),var(--qsh)}
+#quizScreen .qfb-emoji{display:none}
+#quizScreen .qfb-title{font-size:18px;color:var(--qi)}
+#quizScreen .q-fb-correct .qfb-title{color:#0F9A55}
+#quizScreen .q-fb-wrong .qfb-title{color:#D9480F}
+html[data-bm-theme="classic"] #quizScreen .q-fb-correct .qfb-title{color:#7BE8B0}
+html[data-bm-theme="classic"] #quizScreen .q-fb-wrong .qfb-title{color:#FFB08A}
+#quizScreen .qfb-meaning{font-size:13px;font-weight:700;color:var(--qi2);margin-top:3px}
+#quizScreen .q-next-btn{margin-top:10px;border-radius:999px!important;font-size:16px;padding:13px}
+
+@media(min-height:780px){#quizScreen .qc-pic{aspect-ratio:1/1.1}#quizScreen .qc-label{font-size:12.5px}}
+@media(max-height:700px){
+  #quizScreen .q-stimulus{padding-top:9px;padding-bottom:9px}
+  #quizScreen .q-stim-body{gap:6px}
+  #quizScreen .q-stim-arabic{font-size:21px;line-height:1.55;padding:5px 8px}
+  #quizScreen .q-play-btn{padding:8px 18px}
+  #quizScreen .q-prompt{margin:4px 0 9px;padding:7px 18px}
+  #quizScreen .qc-pic{aspect-ratio:1/.8}
+}
+@media(min-width:600px){
+  #quizScreen .q-mo{--mw:250px}
+  #quizScreen .q-stim-label{font-size:19px!important}
+  #quizScreen .q-prompt-text{font-size:20px}
+  #quizScreen .qc-label{font-size:14px}
+  #quizScreen .q-choice .di{--s:36px}
+  #quizScreen .q-choices{gap:14px}
+}
+@media (prefers-reduced-motion: reduce){
+  #quizScreen .q-mo,#quizScreen .q-mo.pop,#quizScreen .q-mo.oops,#quizScreen .q-choice.correct,#quizScreen .q-choice.wrong,
+  #quizScreen .q-feedback.show,#quizScreen .q-play-btn,#quizScreen .q-play-btn.speaking,#quizScreen .q-stim-arabic{animation:none!important}
+  #quizScreen .q-choice,#quizScreen .qc-pic .dsa{transition:none}
+}
+</style>
 </head>
 <body>
 
@@ -943,20 +1092,21 @@ html[data-bm-theme="classic"] .l-grass{filter:brightness(.5) saturate(.8)}
 <div class="screen" id="quizScreen">
   <div class="q-topbar">
     <button class="q-back" onclick="showScreen('learnScreen')">← Ulang</button>
-    <div class="q-title">🎯 Quiz Doa</div>
-    <div class="q-counter-badge" id="qCounterBadge">1 / 4</div>
+    <div class="q-title" data-no-i18n><span class="q-spk l" aria-hidden="true"></span><span class="q-ic" aria-hidden="true">🎯</span><span class="q-ta" id="qTitleA">Kuis</span> <span class="q-tb" id="qTitleB">Doa</span><span class="q-spk r" aria-hidden="true"></span></div>
+    <div class="q-count"><span class="q-counter-badge" id="qCounterBadge">1 / 4</span><div class="q-progress"><div class="q-prog-fill" id="qProgFill" style="width:0%"></div></div></div>
   </div>
-  <div class="q-progress"><div class="q-prog-fill" id="qProgFill" style="width:0%"></div></div>
   <div class="q-stimulus">
-    <div class="q-stim-label">Dengar doanya — ini doa apa?</div>
-    <div class="q-stim-arabic" id="qStimArabic">بِسْمِ اللَّهِ</div>
-    <button class="q-play-btn" id="qPlayBtn" onclick="playQuizAudio()">
-      <span id="qPlayIcon">🔊</span> Dengar lagi
-    </button>
+    <img class="q-mo" id="qMo" src="baby-mo-poses/baby-mo-pose-08.webp" alt="" draggable="false"/>
+    <div class="q-stim-body">
+      <div class="q-stim-label"><span class="q-spk l" aria-hidden="true"></span><span id="qStimLabel" data-no-i18n>Dengar doanya — ini doa apa?</span><span class="q-spk r" aria-hidden="true"></span></div>
+      <div class="q-stim-arabic" id="qStimArabic">بِسْمِ اللَّهِ</div>
+      <button class="q-play-btn" id="qPlayBtn" onclick="playQuizAudio()"><span class="q-spk l" aria-hidden="true"></span><span id="qPlayIcon">🔊</span> <span>Dengar lagi</span><span class="q-spk r" aria-hidden="true"></span></button>
+    </div>
   </div>
   <div class="q-prompt">
-    <div class="q-prompt-text" id="qPromptText">Doa ini dibaca saat...?</div>
-    <div class="q-prompt-en" id="qPromptEn">Pilih gambar yang benar! · Tap the right picture!</div>
+    <svg class="q-star l" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></svg><svg class="q-star r" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></svg>
+    <div class="q-prompt-text"><span aria-hidden="true">🌙</span><span id="qPromptText">Doa ini dibaca saat...?</span></div>
+    <div class="q-prompt-en" id="qPromptEn">Ketuk gambar yang benar!</div>
   </div>
   <div class="q-choices" id="qChoices"></div>
   <div class="q-feedback" id="qFeedback">
@@ -1351,7 +1501,7 @@ function loadQuestion(qi){
 
   setQuizPlayState('idle');
   document.getElementById('qPromptText').textContent = d.quizPrompt;
-  document.getElementById('qPromptEn').textContent   = 'Pilih gambar yang benar! · Tap the right picture!';
+  document.getElementById('qPromptEn').textContent   = 'Ketuk gambar yang benar!';
   document.getElementById('qFeedback').className = 'q-feedback';
   document.getElementById('moQuizWrap').classList.add('hidden');
 
@@ -1997,6 +2147,50 @@ function showToast(e, t){
   };
   window.restartGame=function(){ ['cs1','cs2','cs3'].forEach(function(id){ document.getElementById(id).classList.remove('lit'); }); begin(); };
   var mq=document.getElementById('moQuizImg'); if(mq) mq.src='baby-mo-poses/baby-mo-idea.webp';
+
+  /* ─── quiz look: Baby Mo in the question card, answers as scene pictures ─── */
+  var QMO={q:'pose-08',ok:'yeyy',no:'idea'}, qFrames=[];
+  var SPK='<span class="q-spk l" aria-hidden="true"></span><span class="q-spk r" aria-hidden="true"></span>';
+  var CHECK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+  document.getElementById('qStimLabel').textContent=L('Dengar doanya \u2014 ini doa apa?','Listen to the du\'a \u2014 which one is it?').replace(' \u2014','\u00A0\u2014');
+  document.getElementById('qTitleA').textContent=L('Kuis','Du\'a'); document.getElementById('qTitleB').textContent=L('Doa','Quiz');
+  function qMo(k){ var m=document.getElementById('qMo'); if(!m) return;
+    m.src='baby-mo-poses/baby-mo-'+QMO[k]+'.webp'; m.classList.remove('pop','oops'); void m.offsetWidth;
+    if(k!=='q') m.classList.add(k==='ok'?'pop':'oops'); }
+  // the scene picture is wide (400×180): slide it so Baby Mo sits in the middle of the square card
+  function qFrame(pic){
+    var s=pic.querySelector('.dsa'), im=s&&s.querySelector('img'); if(!im){ pic.classList.add('ok'); return; }
+    var go=function(){ var W=pic.clientWidth, SW=s.offsetWidth; if(!W||!SW) return;
+      var cx=im.complete&&im.offsetWidth?im.offsetLeft+im.offsetWidth/2:SW/2;
+      s.style.left=Math.round(Math.max(W-SW,Math.min(0,W/2-cx)))+'px'; if(im.complete) pic.classList.add('ok'); };
+    im.addEventListener('load',go); im.addEventListener('error',function(){ pic.classList.add('ok'); });
+    requestAnimationFrame(go); qFrames.push(go);
+  }
+  window.addEventListener('resize',function(){ qFrames.forEach(function(f){ f(); }); });
+  var _lq=loadQuestion;
+  window.loadQuestion=function(qi){
+    _lq(qi); qFrames=[]; qMo('q');
+    document.querySelectorAll('#qChoices .q-choice').forEach(function(b,i){
+      var lbl=b.querySelector('.qc-label'), ic=b.querySelector('.qc-emoji'), res=b.querySelector('.qc-result');
+      var d=DUAS.find(function(x){ return x.quizLabel===lbl.dataset.k; }); if(!d) return;
+      b.classList.add('qc-w-'+d.waktu); b.type='button';
+      var pic=document.createElement('span'); pic.className='qc-pic'; pic.setAttribute('aria-hidden','true');
+      pic.innerHTML=window.doaSceneArt?doaSceneArt(d.id,'q'+i):'';
+      if(pic.querySelector('.dsa.night')) pic.classList.add('night');
+      var tag=document.createElement('span'); tag.className='qc-tag'; tag.appendChild(ic); tag.appendChild(lbl);
+      b.insertBefore(tag,b.firstChild); b.insertBefore(pic,tag);
+      if(res){ res.innerHTML=CHECK; res.setAttribute('aria-hidden','true'); }
+      b.insertAdjacentHTML('beforeend',SPK);
+      qFrame(pic);
+    });
+  };
+  var _ha=handleAnswer;
+  window.handleAnswer=function(btn,ok,dua){
+    if(quizAnswered) return;
+    _ha(btn,ok,dua); qMo(ok?'ok':'no');
+    var mean=EN?dua.meaningEn:dua.meaningId;
+    document.getElementById('qfbMeaning').textContent=ok?'"'+mean+'"':trTitle(dua)+': "'+mean+'"';
+  };
 
   /* ─── deep links from the Game Hub: ?doa=parents · ?waktu=malam · ?buku=1 (sticker book) ─── */
   renderHome();

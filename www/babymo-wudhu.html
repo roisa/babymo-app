@@ -649,7 +649,7 @@ function wash(){
   taps++;
   var pills = document.querySelectorAll('#gCount i'); if(pills[taps-1]) pills[taps-1].classList.add('on');
   if(s.alt){ alt = !alt; document.getElementById('gImg').src = IMG(alt ? s.alt : s.img); }
-  if(s.ar) sayArabic(s); else { rain(); sfx('tap'); speak(String(taps)); }
+  if(s.ar) sayArabic(s); else { rain(); sfx('tap'); var en=window.BM_LANG==='en'; speak(en?['One','Two','Three','Four','Five'][taps-1]||String(taps):String(taps), en?'en-US':'id-ID'); }
   if(navigator.vibrate) try{ navigator.vibrate(12); }catch(e){}
   if(taps >= s.count){
     var w = document.getElementById('gWash'); w.classList.add('done');
