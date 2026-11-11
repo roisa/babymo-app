@@ -432,7 +432,7 @@
           lantern(20, 4, 6, 0.6, "dsRmGa", { cls: "", cord: "transparent" }) + lantern(400, 4, 6, 0.6, "dsRmGc", { cls: "", cord: "transparent" }) +
           // two prayer mats
           '<g transform="translate(272 118)"><path d="M-120 0l26-30h196l26 30z" fill="#2FA37A"/><path d="M-108-4l20-22h176l20 22z" fill="none" stroke="#FFE08A" stroke-width="2"/><path d="M-40-26q20-16 40 0" fill="none" stroke="#FFE08A" stroke-width="2"/><path d="M40-26q20-16 40 0" fill="none" stroke="#FFE08A" stroke-width="2"/></g>' +
-          person("ais-garden/dua-hands-closed.webp", 242, 132, 126, 1, [0.327, 0.33, 0.673, 0.907], "") +
+          person("ais-garden/dua-hands-closed.webp", 244, 132, 110, 1, [0.327, 0.33, 0.673, 0.907], "") +
           plant(-44, 60, 1, "") + plant(450, 60, 1, "");
       }
     };
