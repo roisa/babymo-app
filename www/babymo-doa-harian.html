@@ -1088,6 +1088,19 @@ html[data-bm-theme="classic"] #learnScreen>.timeline{background:rgba(22,28,52,.3
 html[data-bm-theme="classic"] #learnScreen>.timeline .tl-dot{background:rgba(255,255,255,.35)!important}
 html[data-bm-theme="classic"] #learnScreen>.timeline .tl-dot.done{background:rgba(255,255,255,.85)!important}
 </style>
+<style id="dua-title-center">
+/* du'a title like the Wudhu step title: icon on top, name centred on a soft pill with sparkle marks, line centred below */
+#learnScreen .dua-card .dua-title{position:relative;flex-direction:column;justify-content:center;gap:8px;text-align:center;margin:2px auto 6px;font-family:'Fredoka','Nunito',sans-serif;font-weight:700;font-size:21px;line-height:1.15;letter-spacing:-.01em}
+#learnScreen .dua-card .dua-title .di{--s:56px;border-radius:18px;box-shadow:0 10px 18px -8px rgba(40,30,90,.45),0 0 0 4px #fff}
+html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di{box-shadow:0 10px 18px -8px rgba(0,0,0,.6),0 0 0 4px rgba(26,32,54,1)}
+#learnScreen .dua-card .dua-title>span:last-child{position:relative;display:inline-block;max-width:calc(100% - 56px);padding:2px 6px;text-wrap:balance}
+#learnScreen .dua-card .dua-title>span:last-child::before,#learnScreen .dua-card .dua-title>span:last-child::after{content:'';position:absolute;top:50%;width:18px;height:24px;margin-top:-12px;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 18 24'%3E%3Cg stroke='%23FFC21A' stroke-width='3' stroke-linecap='round'%3E%3Cpath d='M15 3 9 8M16 12H8M15 21l-6-5'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat}
+#learnScreen .dua-card .dua-title>span:last-child::before{left:-22px;transform:scaleX(-1)}
+#learnScreen .dua-card .dua-title>span:last-child::after{right:-22px}
+#learnScreen .dua-card .dua-desc{text-align:center;text-wrap:balance;margin-left:6px;margin-right:6px}
+#learnScreen .dua-card{padding-top:14px}
+</style>
 </head>
 <body>
 
@@ -2180,12 +2193,12 @@ function showToast(e, t){
       if(!t){ if(!muted()) playTone(784,.12,'triangle',.2); spawnParticles(6); setSceneMoExpression('celebrate'); t=350; }
       setTimeout(function(){ if(pos!==p0 || PLAY[pos]!==idx || !document.getElementById('learnScreen').classList.contains('active')) return;
         // after the motion, glide down to what the child reads next: the tasbih counter, else the Arabic
-        var tg=(d.tasbih&&!document.getElementById('tsb').hidden)?document.getElementById('tsb'):document.querySelector('#learnScreen .arabic-box');
+        var tg=(d.tasbih&&!document.getElementById('tsb').hidden)?document.getElementById('tsb'):document.querySelector('#learnScreen .dua-card');
         if(tg){ var r=tg.getBoundingClientRect(), vh=window.innerHeight||document.documentElement.clientHeight;
-          if(d.tasbih?r.top>24:(r.top<70||r.top>vh*0.45)){ var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+          if(r.top>24||r.top<-4){ var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
             // the learn screen scrolls inside its own box; fall back to the window
             var sc=tg.parentElement; while(sc&&sc!==document.body){ var o=getComputedStyle(sc).overflowY; if((o==='auto'||o==='scroll')&&sc.scrollHeight>sc.clientHeight+4) break; sc=sc.parentElement; }
-            var off=d.tasbih?12:90;
+            var off=12;
             if(sc&&sc!==document.body){ var top=sc.scrollTop+r.top-sc.getBoundingClientRect().top-off; try{ sc.scrollTo({top:Math.max(0,top),behavior:still?'auto':'smooth'}); }catch(e){ sc.scrollTop=top; } }
             else { try{ window.scrollTo({top:Math.max(0,window.scrollY+r.top-off),behavior:still?'auto':'smooth'}); }catch(e){ window.scrollTo(0,window.scrollY+r.top-off); } } } }
         readFull(function(){ earn(d); }); },t); };
