@@ -1009,6 +1009,22 @@ html.theme-anim .qs, html.theme-anim .h-card, html.theme-anim .hero{transition:b
   box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 4px 10px -6px rgba(40,40,90,.35)}
 html[data-theme="dark"] #pane-doa .pd-door .pd-dl{background:rgba(255,255,255,.10);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
 </style>
+<style id="hub-polish2">
+.pd-dod-k svg.pd-hands{width:28px;height:28px;fill:none;margin:-3px 0 -3px -2px}
+/* Play tab: big half-body Baby Mo peeking over the "now" card; pose changes through the day */
+#pane-home .mo-greet .mo-pic{width:min(46vw,214px);height:min(60vw,260px);margin:0 -14px -40px -8px;overflow:visible;clip-path:inset(-200px -200px 0 -200px);z-index:1;align-self:flex-end}
+#pane-home .mo-greet .mo-pic img{position:absolute;width:150%;height:auto;max-width:none;max-height:none;left:-22%;top:-6%;object-fit:initial;animation:moBreath 4s ease-in-out infinite;transform-origin:50% 100%;transition:opacity .35s,transform .35s}
+#pane-home .mo-greet .mo-pic img.swap{opacity:0;transform:translateY(10px) scale(.96)}
+#pane-home .mo-greet .mo-pic img.cheer{animation:moCheer .6s ease}
+#pane-home .hm-now{position:relative;z-index:3}
+#pane-home .mo-greet .mo-sub,#pane-home .mo-greet .mo-hello{text-wrap:balance}
+#pane-home .mo-greet .mo-bub{position:relative;z-index:2;margin-bottom:28px}
+@keyframes moBreath{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-4px) rotate(-1.2deg)}}
+@keyframes moCheer{0%{transform:scale(1)}35%{transform:scale(1.08) translateY(-10px)}100%{transform:scale(1)}}
+@media (min-width:700px){#pane-home .mo-greet .mo-pic{width:260px;height:320px}}
+@media (max-width:380px){#pane-home .mo-greet .mo-pic{width:38vw;height:52vw;margin-right:-18px}#pane-home .mo-greet .mo-hello{font-size:19px}#pane-home .mo-greet .mo-sub{font-size:13.5px}}
+@media (prefers-reduced-motion:reduce){#pane-home .mo-greet .mo-pic img{animation:none}}
+</style>
 </head>
 <body>
 
@@ -1826,10 +1842,9 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
             <ellipse cx="60" cy="80" rx="46" ry="7" fill="rgba(60,110,180,.18)"/>
             <path d="M24 78 L60 52 L96 78" fill="none" stroke="#A8642A" stroke-width="7" stroke-linecap="round"/><path d="M30 78 L60 58 L90 78" fill="none" stroke="#C98443" stroke-width="3" stroke-linecap="round"/>
             <path d="M58 54 C44 44 24 42 10 46 L16 64 C30 60 46 62 58 70z" fill="#FFF7E6" stroke="#E5C9A0" stroke-width="2"/><path d="M62 54 C76 44 96 42 110 46 L104 64 C90 60 74 62 62 70z" fill="#FFFDF6" stroke="#E5C9A0" stroke-width="2"/>
-            <path d="M60 53v18" stroke="#E5C9A0" stroke-width="2"/>
-            <path d="M84 40l2.6 5.4 5.9.8-4.3 4.1 1 5.8-5.2-2.8-5.2 2.8 1-5.8-4.3-4.1 5.9-.8z" fill="#FFC93D"/></svg></span>
+            <path d="M60 53v18" stroke="#E5C9A0" stroke-width="2"/></svg></span>
           <div class="pd-dod-tx">
-            <div class="pd-dod-k"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17l-5.6 3 1.1-6.3-4.6-4.4 6.3-.9z"/></svg><span data-i18n="pd_dod">Doa Hari Ini</span></div>
+            <div class="pd-dod-k"><svg class="pd-hands" viewBox="0 0 32 32" aria-hidden="true"><defs><linearGradient id="pdhg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE0BD"/><stop offset="1" stop-color="#F6A862"/></linearGradient></defs><g id="pdhL" transform="rotate(-14 11 20)"><path d="M9 29.6C9 27.6 8.6 26 7.6 24.2L5.4 20.4C4.7 19.1 4.5 17.8 5.4 17.2 6.3 16.6 7.5 17.2 8.2 18.3L8.6 18.9V9.4C8.6 7.6 9.6 6.4 11.2 6.4H13C14.6 6.4 15.6 7.6 15.6 9.4V24.6C15.6 26.6 15.2 28 14.8 29.6Z" fill="url(#pdhg)" stroke="#D9824A" stroke-width=".75" stroke-linejoin="round"/><path d="M10.9 7.4V12.4M13.3 7.4V12.4" stroke="#E7975A" stroke-width=".75" stroke-linecap="round"/><path d="M10.2 18.6C11.4 19.8 13 20 14.2 19.4" stroke="#E7975A" stroke-width=".7" fill="none" stroke-linecap="round"/></g><use href="#pdhL" transform="translate(32 0) scale(-1 1)"/><path d="M16 2.2l.85 2.15 2.15.85-2.15.85L16 8.2l-.85-2.15L13 5.2l2.15-.85z" fill="#FFC93D"/><circle cx="22.6" cy="3.6" r=".9" fill="#FFC93D"/><circle cx="9.4" cy="3.2" r=".75" fill="#FFC93D"/></svg><span data-i18n="pd_dod">Doa Hari Ini</span></div>
             <div class="pd-dod-t" id="pdDodT"></div>
             <div class="pd-dod-s" id="pdDodS"></div>
           </div>
@@ -2856,6 +2871,32 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
   if(document.fonts&&document.fonts.load){ Promise.all([document.fonts.load("900 18px Nunito"),document.fonts.load("700 60px Fredoka")]).catch(function(){}).then(function(){ return document.fonts.ready; }).then(start);
     document.fonts.addEventListener&&document.fonts.addEventListener('loadingdone',function(){ setTimeout(all,50); }); }
   else window.addEventListener('load',start);
+})();
+</script>
+<script>
+/* Play tab Mo: a time-of-day pose set (pyjamas at night), a gentle change every few seconds, a cheer when tapped */
+(function(){
+  var img=document.querySelector('#moPic img'); if(!img) return;
+  var SETS={morning:['baby-mo-pose-41','baby-mo-pose-01','baby-mo-pose-26','baby-mo-yes'],
+    day:['baby-mo-idea','baby-mo-pose-37','baby-mo-ok','baby-mo-pose-26','baby-mo-pose-24'],
+    evening:['baby-mo-thank-you','baby-mo-pose-01','baby-mo-pose-31','baby-mo-wow'],
+    night:['baby-mo-pj-both','baby-mo-pj-top','baby-mo-pj-both']};
+  var CHEER=['baby-mo-yeyy','baby-mo-pose-37','baby-mo-pose-41'];
+  function part(){ var h=new Date().getHours(); return h>=4&&h<10?'morning':h<15?'day':h<19?'evening':'night'; }
+  var set=SETS[part()], i=0, src=function(n){return 'baby-mo-poses/'+n+'.webp';};
+  set.concat(CHEER).forEach(function(n){ var p=new Image(); p.src=src(n); });
+  function show(n){ if(img.getAttribute('src')===src(n)) return; img.classList.add('swap');
+    setTimeout(function(){ img.onload=function(){ img.classList.remove('swap'); }; img.src=src(n); },330); }
+  show(set[0]);
+  var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!still) setInterval(function(){
+    var pane=img.closest('.tab-pane'); if(pane&&!pane.classList.contains('active')) return;
+    if(document.hidden) return; set=SETS[part()]; i=(i+1)%set.length; show(set[i]);
+  },7000);
+  document.getElementById('moPic').addEventListener('click',function(){
+    show(CHEER[Math.floor(Math.random()*CHEER.length)]);
+    setTimeout(function(){ img.classList.remove('cheer'); void img.offsetWidth; img.classList.add('cheer'); },380);
+  });
 })();
 </script>
 </body>
