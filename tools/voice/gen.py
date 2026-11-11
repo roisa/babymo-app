@@ -189,8 +189,20 @@ def read_js_manifest(path):
     except Exception:
         return {}
 
-def write_manifest(items, voices):
+def human_tags():
+    """clips recorded by a person (tools/voice/import-recordings.sh tags them ?v=humanN): "www/<folder>/<file>" -> tag.
+    gen.py keeps these files and their tags, even with --force (only --replace-human remakes them with TTS)."""
+    out = {}
+    for folder, name in (("www/voice", "manifest.js"), ("www/hijaiyah-voice", "voice.js"), ("www/doa-voice", "voice.js")):
+        for v in read_js_manifest(os.path.join(ROOT, folder, name)).values():
+            f, _, t = str(v).partition("?v=")
+            if t.startswith("human"):
+                out[os.path.normpath(os.path.join(folder, f))] = t
+    return out
+
+def write_manifest(items, voices, human=None):
     """www/voice/manifest.js: every clip on disk, keyed "lang|text", plus the transliteration aliases."""
+    human = human_tags() if human is None else human
     man = {}
     # the existing sections, read from their own manifests (keeps their ?v= tags)
     for sec, rel in (("huruf", "../hijaiyah-voice/"), ("doa", "../doa-voice/")):
@@ -204,7 +216,7 @@ def write_manifest(items, voices):
         fn = x["id"] + ".mp3"
         fp = os.path.join(ROOT, "www", "voice", fn)
         if os.path.exists(fp) and os.path.getsize(fp) > 500:
-            man[x["lang"] + "|" + norm(x["t"], x["lang"])] = fn + "?v=" + tag(voices[x["lang"]])
+            man[x["lang"] + "|" + norm(x["t"], x["lang"])] = fn + "?v=" + (human.get(os.path.normpath("www/voice/" + fn)) or tag(voices[x["lang"]]))
     if os.path.exists(ALIASES):
         for lat, ar in json.load(open(ALIASES, encoding="utf-8")).items():
             f = man.get("ar|" + norm(ar, "ar"))
@@ -237,11 +249,13 @@ def main():
     ap.add_argument("--test", action="store_true")
     ap.add_argument("--manifest", action="store_true", help="only rewrite www/voice/manifest.js from the files on disk")
     ap.add_argument("--compare", action="store_true", help="make one short sample per Arabic voice in tools/voice/compare/")
-    ap.add_argument("--force", action="store_true", help="remake clips that already exist")
+    ap.add_argument("--force", action="store_true", help="remake clips that already exist (not the human recordings)")
+    ap.add_argument("--replace-human", action="store_true", help="with --force: also replace the human recordings (?v=human…) with TTS")
     ap.add_argument("--dry-run", action="store_true", help="only list the clips that would be made (no API key needed)")
     a = ap.parse_args()
     voices = {"ar": a.voice, "en": a.voice_en or family(a.voice, "en"), "id": a.voice_id or family(a.voice, "id")}
     items = load_items()
+    HUMAN = {} if a.replace_human else human_tags()
     if a.compare:
         req = urllib.request.Request("https://texttospeech.googleapis.com/v1/voices?languageCode=ar-XA" + ("&key=" + KEY if KEY else ""),
                                      headers=({"Authorization": "Bearer " + TOKEN, "x-goog-user-project": PROJECT} if TOKEN and not KEY else {}))
@@ -276,7 +290,7 @@ def main():
             if secs and sec not in secs:
                 continue
             sel = [x for x in items if x["sec"] == sec]
-            todo = [x for x in sel if a.force or not (os.path.exists(os.path.join(ROOT, folder, x["id"] + ".mp3")) and os.path.getsize(os.path.join(ROOT, folder, x["id"] + ".mp3")) > 500)]
+            todo = [x for x in sel if (a.force and os.path.normpath(os.path.join(folder, x["id"] + ".mp3")) not in HUMAN) or not (os.path.exists(os.path.join(ROOT, folder, x["id"] + ".mp3")) and os.path.getsize(os.path.join(ROOT, folder, x["id"] + ".mp3")) > 500)]
             print(f"[{sec}] {len(sel)} clips, {len(sel) - len(todo)} already made, {len(todo)} to make")
             for x in todo:
                 print(f"   + {folder}/{x['id']}.mp3  {x['lang']}  {voices[x['lang']]}  {x['t'][:70]}  ({x.get('h','')[:50]})")
@@ -304,13 +318,14 @@ def main():
             lang = x["lang"]; voice = voices[lang]
             fn = x["id"] + ".mp3"
             fp = os.path.join(d, fn)
-            old = os.path.exists(fp) and os.path.getsize(fp) > 500 and not a.force
+            human = HUMAN.get(os.path.normpath(os.path.join(folder, fn)))
+            old = os.path.exists(fp) and os.path.getsize(fp) > 500 and (not a.force or bool(human))
             if old:
                 mp3 = open(fp, "rb").read()          # already made on an earlier run — resume
             else:
                 mp3 = synth(x["t"], x["k"], voice, lang)
                 open(fp, "wb").write(mp3); made += 1
-            man[x["t"]] = fn + "?v=" + tag(voice)
+            man[x["t"]] = fn + "?v=" + (human or tag(voice))
             line = f"[{sec} {i}/{len(sel)}] {lang} {x['t']}  ({x.get('h','')})  {len(mp3)}B"
             if a.check and (not old or a.recheck):
                 alts = transcribe(mp3, lang)
@@ -323,9 +338,9 @@ def main():
                 f.write(f"/* {title}: Arabic text -> file (generated by tools/voice/gen.py, voice {voices['ar']}) */\n")
                 f.write(f"window.{var}=" + json.dumps(man, ensure_ascii=False) + ";\n")
             print(f"wrote {folder}/voice.js ({len(man)} clips)")
-    write_manifest(items, voices)
+    write_manifest(items, voices, HUMAN)
     write_listen_data(items)
-    print(f"made {made} new clips")
+    print(f"made {made} new clips" + (f" (kept {len(HUMAN)} human recordings)" if HUMAN else ""))
     if report:
         p = os.path.join(HERE, "check-report.json")
         # keep the earlier results of clips that were not checked this time

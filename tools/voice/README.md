@@ -59,6 +59,52 @@ node tools/voice/test-lines-play.js fake              # plays the games: what wo
   same clip as the plain line, whatever voice, pitch or rate the page chose.
 - Links carry `?v=<voice>` so phones fetch new audio after a voice change.
 
+## Real (human) voice: record, export, import
+
+The recording page `www/tools/rekam-suara.html` (web only: https://play.babymo.id/tools/rekam-suara.html; in the iOS app
+it only says "Hanya di web" and never asks for the microphone; `tools/cap-strip-web-only.js` also drops `www/tools/`
+from the app bundle) lists **every clip the app can play**: Huruf Hijaiyah (167), Doa Harian (14), Doa Ramadan (11),
+Arab di game (135), Cari Baby Mo (202 = 101 ID + 101 EN) and the spoken lines (560 = 280 ID + 280 EN, grouped per game
+and language) = 1089. Each card shows the text, the hint, the target file (`www/<folder>/<id>.mp3`), and what the app
+plays today (AI · Algenib, or a human take `?v=humanN`), with a button to hear the current clip.
+
+The list comes from `www/tools/rekam-data.js`, made from the clip lists here — rebuild it whenever they change:
+
+```bash
+node tools/voice/build-rekam-data.js
+```
+
+Recording: tap the red button (desktop: Space), read, tap again. The take is trimmed (silence before/after), high-passed,
+loudness-normalised to about −19 LUFS (what the AI clips measure, −19…−23) with peaks at most −1 dBFS, resampled to
+24 kHz mono and kept as WAV in the browser's IndexedDB (`bm-rekam`), so nothing is lost on reload. Listen, then Approve
+(Enter); ←/→ move, P plays the take, R the current clip. Filters: not recorded / not approved / approved / human in app,
+plus search (text, hint, id or file name).
+
+Export: "Download ZIP" (iPhone: share sheet → save to Files / Drive) gives `babymo-rekaman-<date>.zip` with the approved
+takes as `www/<folder>/<id>.wav` (the same paths as the app's mp3s) + `rekam-manifest.json`. No MP3 encoder in the
+browser; the import script converts. Then, in the repo:
+
+```bash
+bash tools/voice/import-recordings.sh ~/Downloads/babymo-rekaman-20261111-1530.zip   # DRY_RUN=1 to preview
+#   per take:  ffmpeg -i <id>.wav -ac 1 -ar 24000 -codec:a libmp3lame -b:a 64k www/<folder>/<id>.mp3
+#   and the file's ?v= tag in www/voice/manifest.js, hijaiyah-voice/voice.js, doa-voice/voice.js: algenib → human1 (→ human2 …)
+git checkout -b voice-human-1 && git add www/voice www/hijaiyah-voice www/doa-voice && git commit -m "Voice: real-voice recordings" && git push -u origin voice-human-1
+```
+
+Listen on `www/tools/dengar-suara.html`, merge, and bump `babymo-games-vNN` in `www/sw.js` when shipping.
+
+### Mixed voices (a partly recorded set)
+
+How the app picks a clip: `bm-voice.js` turns the spoken text into a key (`"<lang>|<normalised text>"`, or the plain
+Arabic text in `HIJ_VOICE` / `DOA_VOICE`), looks it up in the manifests, and plays that file. The keys never change; an
+imported take only replaces the file (`<id>.mp3`, same name) and its `?v=` tag (so phones and the service worker fetch
+the new audio instead of a cached copy). So every clip you recorded plays in your voice and every other one stays the AI
+voice; nothing else in the app changes, and you can record more later in any order.
+
+`gen.py` keeps human recordings: files whose manifest tag is `?v=human…` are never remade (not even with `--force`,
+e.g. `cloudshell.sh all`) and keep their tag when the manifests are rewritten; `--force --replace-human` puts TTS back.
+To undo one take by hand: `git checkout <commit> -- www/<folder>/<id>.mp3` and set its tag back to `?v=algenib`.
+
 ## Generate in Google Cloud Shell
 
 ```bash
@@ -100,9 +146,10 @@ python3 tools/voice/gen.py --only app,cari         # some sections: hijaiyah, do
 python3 tools/voice/gen.py --voice ar-XA-Chirp3-HD-Kore --voice-en en-US-Chirp3-HD-Kore --voice-id id-ID-Chirp3-HD-Kore
 python3 tools/voice/gen.py --manifest              # only rewrite www/voice/manifest.js from the files on disk
 python3 tools/voice/gen.py --dry-run --only doa,lines   # list what would be made (missing files) — no key, no API calls
+python3 tools/voice/gen.py --force --replace-human     # also remake the human recordings (?v=human…) with TTS
 ```
 
-Existing files are kept (resume) unless `--force`. The speech-to-text check listens in `ar-SA`, `en-US` or `id-ID`.
+Existing files are kept (resume) unless `--force`; human recordings are kept even then (see above). The speech-to-text check listens in `ar-SA`, `en-US` or `id-ID`.
 
 Listen to the clips on `www/tools/dengar-suara.html` (tabs per section; it reads the manifests), especially any
 marked CHECK, then bump `babymo-games-vNN` in `www/sw.js` before shipping.
