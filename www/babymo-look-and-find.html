@@ -536,6 +536,7 @@ html[data-bm-theme="bright"] .comp-why{color:#5A3A00;}
   box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 12px 26px -16px rgba(20,60,30,.55)!important;text-shadow:none!important}
 .map-title{display:inline-flex!important;align-items:center;gap:8px;min-height:46px;padding:0 16px 0 9px!important;font:600 20px/1 'Fredoka','Nunito',sans-serif!important;color:#C2410C!important;letter-spacing:-.01em}
 .map-title .mt-ic{width:30px;height:30px;border-radius:9px;flex:none;box-shadow:0 3px 8px -3px rgba(150,60,0,.5)}
+#s-home .map-title .mt-txt{--t-hi:#FFB46E;--t-top:#FF8A2A;--t-bot:#EE5208;--t-ext:#F7A066;--t-glow:rgba(200,80,0,.2);--t-o:.05em;margin-bottom:.05em;font-weight:700;letter-spacing:.01em}
 .map-stars{min-height:46px;padding:0 14px!important;gap:6px!important;color:#152230!important;font:700 17px/1 'Fredoka','Nunito',sans-serif!important;font-variant-numeric:tabular-nums}
 .map-stars .ms-star{width:20px;height:20px;fill:#F5B400;filter:drop-shadow(0 1px 1px rgba(160,100,0,.35))}
 .map-stars .ms-of{opacity:.55!important;font-size:14px!important}
@@ -695,7 +696,14 @@ html[data-bm-theme="classic"] .fp-rail{background:rgba(255,255,255,.12)}
 .cw-cloud::before{left:22px;box-shadow:178px -6px 0 -6px #FCFAFF}
 .cw-cloud::after{right:28px;width:70px;height:56px;top:-14px;box-shadow:-120px 4px 0 -10px #FCFAFF}
 #s-complete .comp-title{display:flex;align-items:center;justify-content:center;gap:6px;margin:0;font:700 clamp(34px,10.4vw,44px)/1.05 'Fredoka','Nunito',sans-serif;letter-spacing:-.01em;
-  color:var(--cw-ink2)!important;text-shadow:0 2px 0 #4A21A6,0 4px 0 #36157F,0 8px 14px rgba(70,30,150,.32)!important;animation:titleP .5s cubic-bezier(.175,.885,.32,1.275) .1s both}
+  color:var(--cw-ink2)!important;text-shadow:none!important;animation:titleP .5s cubic-bezier(.175,.885,.32,1.275) .1s both}
+/* 3D sticker title (shared with the map title): glossy gradient face, crisp white
+   outline, a short colour-matched extrusion and one soft shadow (no dark band) */
+#s-complete .comp-title>span,.map-title .mt-txt{--t-hi:#C9B2FF;--t-top:#9168FF;--t-bot:#6234E0;--t-ext:#8A5FF2;--t-glow:rgba(106,59,228,.22);--t-o:.06em;
+  padding:0 .08em;letter-spacing:.012em;color:var(--t-bot);background:linear-gradient(180deg,var(--t-hi) 0%,var(--t-top) 34%,var(--t-bot) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(var(--t-o) 0 0 #fff) drop-shadow(calc(var(--t-o) * -1) 0 0 #fff) drop-shadow(0 var(--t-o) 0 #fff) drop-shadow(0 calc(var(--t-o) * -1) 0 #fff)
+    drop-shadow(0 .07em 0 var(--t-ext)) drop-shadow(0 .14em .18em var(--t-glow))}
 .cw-moon{width:.92em;height:.92em;flex:none;margin-top:-.12em;filter:drop-shadow(0 3px 0 #D08A00) drop-shadow(0 6px 8px rgba(200,140,0,.35));animation:cwMoon 3s ease-in-out infinite}
 @keyframes cwMoon{50%{transform:rotate(-10deg) scale(1.05)}}
 .cw-ribbon{position:relative;z-index:2;margin-top:-22px;max-width:calc(100% - 36px);padding:8px 22px 9px;border-radius:14px;transform:rotate(-2deg);
@@ -788,7 +796,7 @@ html[data-bm-theme="classic"] .cw-cloud{background:radial-gradient(120% 90% at 5
 html[data-bm-theme="classic"] .cw-cloud::before,html[data-bm-theme="classic"] .cw-cloud::after{background:radial-gradient(circle at 50% 35%,#4D4190 0%,#3E3478 70%)}
 html[data-bm-theme="classic"] .cw-cloud::before{box-shadow:178px -6px 0 -6px #43397F}
 html[data-bm-theme="classic"] .cw-cloud::after{box-shadow:-120px 4px 0 -10px #43397F}
-html[data-bm-theme="classic"] #s-complete .comp-title{color:#FFF6D8!important;text-shadow:0 2px 0 #B7A0FF,0 4px 0 #7C5BE0,0 8px 16px rgba(0,0,0,.45)!important}
+html[data-bm-theme="classic"] #s-complete .comp-title>span,html[data-bm-theme="classic"] #s-home .map-title .mt-txt{--t-hi:#FFF6C2;--t-top:#FFDD55;--t-bot:#FFB01C;--t-ext:#F29A0C;--t-glow:rgba(0,0,0,.35)}
 html[data-bm-theme="classic"] #s-complete .comp-why,html[data-bm-theme="classic"] .cw-msg{background:rgba(255,255,255,.12);box-shadow:0 0 0 1px rgba(255,255,255,.16),0 8px 18px -12px rgba(0,0,0,.6);
   -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
 html[data-bm-theme="classic"] .comp-why .cw-gold{color:#FFD86B}
@@ -819,7 +827,7 @@ html[data-bm-theme="classic"] #s-complete .cstar.off{opacity:.45}
     <div class="map-wrap" id="map-wrap"><div class="map-world" id="map-world"></div></div>
   </div>
   <div class="map-header">
-    <div class="map-title"><img class="mt-ic" src="icons/games/cari-baby-mo.svg" alt="" width="28" height="28">Cari Baby Mo</div>
+    <div class="map-title"><img class="mt-ic" src="icons/games/cari-baby-mo.svg" alt="" width="28" height="28"><span class="mt-txt">Cari Baby Mo</span></div>
     <div class="map-stars"><svg class="ms-star" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.6l2.9 5.9 6.5.9-4.7 4.6 1.1 6.5L12 17.4l-5.8 3.1 1.1-6.5L2.6 9.4l6.5-.9z"/></svg><span id="map-star-n">0</span><span class="ms-of" id="map-star-of">/54</span></div>
   </div>
   <button class="map-mission" id="map-mission" type="button" hidden></button>
