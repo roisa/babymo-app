@@ -2737,6 +2737,9 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
       el('path',{'class':'rb-lo',d:'M44 159 Q190 125 336 159',fill:'none'},svg);
       var rl=[{t:rib.textContent.replace(/\s+/g,' ').trim(),em:false}], rs=fit(svg,id+'r',rl,19,heart?250:282);
       var tx=textOn(svg,id+'r',rl,rs,'rb-tx',0);
+      /* make sure it fits the arc in the font actually used (iPhone fonts measure wider) */
+      try{ var rp=svg.querySelector('#'+id+'r'), room=(rp?rp.getTotalLength():300)-(heart?52:28);
+        for(var g=0; g<12; g++){ var tw=tx.getComputedTextLength(); if(!tw||tw<=room) break; rs=rs*Math.max(.8,room/tw)*.98; tx.setAttribute('font-size',rs); } }catch(e){}
       if(heart){ var hw=0; try{ hw=tx.getComputedTextLength(); }catch(e){} if(!hw) hw=rl[0].t.length*rs*.5;
         var hx=190+hw/2+14, hy=127;
         el('path',{'class':'rb-heart',d:'M'+hx+' '+(hy+6)+' c-7-4.6-9-8.2-9-10.8a4.6 4.6 0 0 1 9-1.4a4.6 4.6 0 0 1 9 1.4c0 2.6-2 6.2-9 10.8z'},svg);
@@ -2751,7 +2754,9 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     var mo=new MutationObserver(function(){ clearTimeout(start.t); start.t=setTimeout(all,30); });
     document.querySelectorAll('.pd-logo .pd-logo-t, .pd-logo .pd-ribbon > span').forEach(function(s){ mo.observe(s,{childList:true,characterData:true,subtree:true}); });
   }
-  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(start); else window.addEventListener('load',start);
+  if(document.fonts&&document.fonts.load){ Promise.all([document.fonts.load("900 18px Nunito"),document.fonts.load("700 60px Fredoka")]).catch(function(){}).then(function(){ return document.fonts.ready; }).then(start);
+    document.fonts.addEventListener&&document.fonts.addEventListener('loadingdone',function(){ setTimeout(all,50); }); }
+  else window.addEventListener('load',start);
 })();
 </script>
 </body>
