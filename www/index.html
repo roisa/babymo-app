@@ -2022,6 +2022,38 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
             </div>
             <div class="lrow-chev">›</div>
           </a>
+          <a class="lrow" href="./babymo-wudhu.html">
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/wudhu.svg" alt="" draggable="false"></div>
+            <div class="lrow-body">
+              <div class="lrow-title" data-i18n="cat_wudhu_t">Belajar Wudhu</div>
+              <div class="lrow-sub" data-i18n="cat_wudhu_s">Langkah wudhu bareng Mo</div>
+            </div>
+            <div class="lrow-chev">›</div>
+          </a>
+          <a class="lrow" href="./babymo-doa-harian.html?doa=bedtime_tasbih">
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/scene/tasbih.svg" alt="" draggable="false"></div>
+            <div class="lrow-body">
+              <div class="lrow-title" data-i18n="cat_tsbm_t">Tasbih Sebelum Tidur</div>
+              <div class="lrow-sub" data-i18n="cat_tsbm_s">Subhanallah 33 · Alhamdulillah 33 · Allahu Akbar 34</div>
+            </div>
+            <div class="lrow-chev">›</div>
+          </a>
+          <a class="lrow" href="./babymo-pray-with-mo.html?view=dzikir">
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/scene/tasbih.svg" alt="" draggable="false"></div>
+            <div class="lrow-body">
+              <div class="lrow-title" data-i18n="cat_tsbs_t">Dzikir Setelah Sholat</div>
+              <div class="lrow-sub" data-i18n="cat_tsbs_s">Tasbih, Ayat Kursi & dzikir penutup</div>
+            </div>
+            <div class="lrow-chev">›</div>
+          </a>
+          <a class="lrow" href="./babymo-doa-harian.html?series=ramadan">
+            <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/games/doa-harian.svg" alt="" draggable="false"></div>
+            <div class="lrow-body">
+              <div class="lrow-title" data-i18n="cat_ram_t">Doa Ramadan</div>
+              <div class="lrow-sub" data-i18n="cat_ram_s">11 doa: hilal, sahur, berbuka, sampai Lebaran</div>
+            </div>
+            <div class="lrow-chev">›</div>
+          </a>
         </div>
       </div>
 
@@ -2181,7 +2213,7 @@ const I18N={
   cat_hij_t:{id:'Pulau Hijaiyah',en:'Hijaiyah Island'},cat_hij_s:{id:'Jelajah, gali & bangun bareng Baby Mo',en:'Explore, dig & build with Baby Mo'},
   cat_kata_t:{id:'Kata Islam',en:'Islamic Words'},cat_kata_s:{id:'Susun kata Arab',en:'Arrange Arabic words'},
   cat_beat_s:{id:'Game ritme seru',en:'Fun rhythm game'},
-  cat_comp_t:{id:'Sholat Bareng Mo',en:'Pray with Mo'},cat_comp_s:{id:'Panduan sholat interaktif',en:'Interactive prayer guide'},
+  cat_comp_t:{id:'Sholat Bareng Mo',en:'Pray with Mo'},cat_wudhu_t:{id:'Belajar Wudhu',en:'Learn Wudu'},cat_wudhu_s:{id:'Langkah wudhu bareng Mo',en:'Wudu step by step with Mo'},cat_tsbm_t:{id:'Tasbih Sebelum Tidur',en:'Bedtime Tasbih'},cat_tsbm_s:{id:'Subhanallah 33 · Alhamdulillah 33 · Allahu Akbar 34',en:'Subhanallah 33 · Alhamdulillah 33 · Allahu Akbar 34'},cat_tsbs_t:{id:'Dzikir Setelah Sholat',en:'Dhikr After Prayer'},cat_tsbs_s:{id:'Tasbih, Ayat Kursi & dzikir penutup',en:'Tasbih, Ayat al-Kursi & closing dhikr'},cat_ram_t:{id:'Doa Ramadan',en:"Ramadan Du'as"},cat_ram_s:{id:'11 doa: hilal, sahur, berbuka, sampai Lebaran',en:"11 du'as: crescent, sahur, iftar, all the way to Eid"},cat_comp_s:{id:'Panduan sholat interaktif',en:'Interactive prayer guide'},
   foot_home:{id:'Islamic Early Learning untuk Si Kecil',en:'Islamic Early Learning for Little Ones'},
   game_title:{id:'Game <em>Baby Mo</em>',en:'<em>Baby Mo</em> Games'},
   game_sub:{id:'15 game seru untuk si kecil',en:'15 fun games for kids'},
@@ -2930,6 +2962,18 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     show(CHEER[Math.floor(Math.random()*CHEER.length)]);
     setTimeout(function(){ img.classList.remove('cheer'); void img.offsetWidth; img.classList.add('cheer'); },380);
   });
+})();
+</script>
+<script>
+/* During Ramadan (and the first days of Shawwal for Eid) the Ramadan Du'as card moves above Du'a of the Day in the Duas tab */
+(function(){
+  function hijri(){ try{ var p=new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{month:'numeric',day:'numeric'}).formatToParts(new Date()), m=0,d=0;
+    p.forEach(function(x){ if(x.type==='month') m=+x.value; if(x.type==='day') d=+x.value; }); return {m:m,d:d}; }catch(e){ return null; } }
+  var h=hijri(); if(!h) return;
+  var on=h.m===9||(h.m===10&&h.d<=3)||(h.m===8&&h.d>=28);
+  if(!on) return;
+  var ram=document.querySelector('#pane-doa .pd-ram'), dod=document.getElementById('pdDod');
+  if(ram&&dod&&dod.parentNode){ dod.parentNode.insertBefore(ram,dod); ram.classList.add('in-season'); }
 })();
 </script>
 </body>
