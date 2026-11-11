@@ -400,91 +400,95 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 }
 </style>
 <style id="dt-home-v3">
-/* ── Dreamtime home v3: full-bleed cosy bedroom, cloud title, ribbon, light step tiles.
-   Dreamtime is night-only, so this applies in both hub themes. */
+/* ── Dreamtime home v4: cosy bedroom, cloud title, glass cards, Start above the fold,
+   tonight's story as an in-place accordion. Night-only, so it applies in both hub themes. */
 #s-home{overflow-x:hidden}
-.dh-wrap{position:relative;display:flex;flex-direction:column;min-height:100%;padding-bottom:calc(10px + env(safe-area-inset-bottom))}
-.dh-scene{position:relative;width:100%;aspect-ratio:400/318;overflow:hidden;flex:0 0 auto}
-.dh-scene>svg,.dh-scene>img,.dh-scene>i{position:absolute}
-.dh-room,.dh-blanket,.dh-cheer{inset:0;width:100%;height:100%}
+.dh-wrap{--sh:min(79.5vw,44vh,44svh,500px);position:relative;display:flex;flex-direction:column;min-height:100%}
+.dh-scene{position:relative;width:100%;height:var(--sh);overflow:hidden;flex:0 0 auto;background:#2F2681}
+.dh-room{position:absolute;inset:0;width:100%;height:100%}
 .dh-scene::after{content:'';position:absolute;left:0;right:0;bottom:0;height:34%;background:linear-gradient(180deg,rgba(43,35,112,0),#2B2370 92%);pointer-events:none}
-.dh-mo{left:13%;top:0;width:74%;height:auto;aspect-ratio:1;object-fit:contain;filter:drop-shadow(0 8px 12px rgba(20,12,60,.35));transform-origin:50% 70%;animation:dhBob 3.6s ease-in-out infinite}
+.dh-mo{transform-box:fill-box;transform-origin:50% 80%;animation:dhBob 3.6s ease-in-out infinite;filter:drop-shadow(0 8px 10px rgba(20,12,60,.35))}
 @keyframes dhBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5%)}}
-.dh-teddy{left:69%;top:46%;width:22%;height:auto;aspect-ratio:1;transform:rotate(-10deg);filter:drop-shadow(0 6px 8px rgba(20,12,60,.4))}
-.dh-teddy .dic{width:100%;height:100%}
-.dh-cheer g{animation:dhTw 1.6s ease-in-out infinite}
+.dh-teddy>svg{filter:drop-shadow(0 6px 6px rgba(20,12,60,.4))}
+.dh-cheer>g{animation:dhTw 1.6s ease-in-out infinite}
 .dh-tw{animation:dhTw 2.4s ease-in-out infinite}
 @keyframes dhTw{0%,100%{opacity:.35}50%{opacity:1}}
-.dh-back{position:absolute;z-index:3;left:16px;top:calc(14px + env(safe-area-inset-top));width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+.dh-back{position:absolute;z-index:3;left:16px;top:calc(12px + env(safe-area-inset-top));width:46px;height:46px;border-radius:50%;display:grid;place-items:center;
   background:linear-gradient(180deg,#fff,#ECE8FF);color:#2B2468;box-shadow:0 8px 18px -8px rgba(10,6,40,.7),inset 0 -2px 0 rgba(90,70,200,.12);transition:transform .26s cubic-bezier(.34,1.56,.64,1)}
 .dh-back svg{width:24px;height:24px}
 .dh-back:active{transform:scale(.92)}
-.dh-body{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;padding:0 18px;margin-top:-30%}
+.dh-body{position:relative;z-index:2;flex:1 0 auto;display:flex;flex-direction:column;align-items:center;padding:0 18px 34px;margin-top:calc(var(--sh) * -.37)}
 /* cloud title */
-.dh-cloud{position:relative;width:min(100%,380px);aspect-ratio:360/180;display:grid;place-items:center;filter:drop-shadow(0 14px 20px rgba(12,8,50,.45))}
+.dh-cloud{position:relative;width:min(100%,380px,46vh,46svh);aspect-ratio:360/180;display:grid;place-items:center;filter:drop-shadow(0 14px 20px rgba(12,8,50,.45))}
 .dh-cloudbg{position:absolute;inset:0;width:100%;height:100%}
 .dh-title{position:relative;text-align:center;font-family:'Fredoka','Nunito',sans-serif;font-weight:700;line-height:.95;letter-spacing:-.01em;margin-top:6%}
 .dh-title span{display:block}
-.dh-title .t1{font-size:clamp(38px,12.4vw,49px);color:#1E2470;text-shadow:0 2px 0 rgba(255,255,255,.9)}
-.dh-title .t2{font-size:clamp(44px,14vw,56px);color:#6B3CD9;text-shadow:0 2px 0 rgba(255,255,255,.9)}
+.dh-title .t1{font-size:clamp(30px,min(12.4vw,6.2vh,6.2svh),49px);color:#1E2470;text-shadow:0 2px 0 rgba(255,255,255,.9)}
+.dh-title .t2{font-size:clamp(34px,min(14vw,7.1vh,7.1svh),56px);color:#6B3CD9;text-shadow:0 2px 0 rgba(255,255,255,.9)}
 .dh-title .dh-moon{width:.8em;height:.8em;margin-left:4px;vertical-align:-.08em;filter:drop-shadow(0 3px 4px rgba(120,80,0,.35))}
 .dh-st{position:absolute;width:26px;height:26px}
 .dh-st.s1{left:12%;top:52%}.dh-st.s2{right:11%;top:56%;width:20px;height:20px}
-.dh-ribbon{position:relative;z-index:1;margin-top:-34px;display:inline-flex;align-items:center;gap:6px;padding:9px 26px;transform:rotate(-1.5deg);
-  font:600 min(4.2vw,18px)/1.1 'Fredoka','Nunito',sans-serif;white-space:nowrap;color:#4A2A08;border-radius:10px;
+.dh-ribbon{position:relative;z-index:1;margin-top:-32px;display:inline-flex;align-items:center;gap:6px;padding:8px 24px;transform:rotate(-1.5deg);
+  font:600 min(4.2vw,17px)/1.1 'Fredoka','Nunito',sans-serif;white-space:nowrap;color:#4A2A08;border-radius:10px;
   background:linear-gradient(180deg,#FFF0BF,#FFD983);box-shadow:inset 0 2px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(200,130,20,.25),0 10px 18px -10px rgba(10,6,40,.8)}
 .dh-ribbon::before,.dh-ribbon::after{content:'';position:absolute;top:8px;width:18px;height:100%;background:#E8B24E;z-index:-1;border-radius:3px}
 .dh-ribbon::before{left:-10px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,40% 50%)}
 .dh-ribbon::after{right:-10px;clip-path:polygon(0 0,100% 0,60% 50%,100% 100%,0 100%)}
-.dh-ribbon .ic{width:22px;height:22px}
-/* moon streak card */
-#s-home .dh-moonbox{max-width:400px;margin:14px auto 0;padding:12px 14px;gap:12px;border-radius:26px!important;
-  background-color:rgba(255,255,255,.09)!important;border:1.5px solid rgba(200,190,255,.35)!important}
-.dh-moonbox .moonsvg{flex:0 0 64px;width:64px;height:64px}
-.dh-moonbox .mt{border-left:1.5px solid rgba(200,190,255,.28);padding-left:12px}
-.dh-moonbox .mt b{font-size:18.5px!important;display:flex!important;align-items:flex-start;gap:7px}
-.dh-moonbox .mt b .ic{margin-top:-1px}
-.dh-moonbox .mt b .ic{width:24px;height:24px}
-.dh-moonbox .mt small{font-size:13.5px!important;color:#CFC9F5!important}
-.dh-moonbox .mdots{gap:7px;margin-top:9px}
-.dh-moonbox .mdots i{width:18px;height:18px}
-.dh-moonbox .mfull{flex:0 0 36px;width:36px;height:36px;position:relative}
+.dh-ribbon .ic{width:20px;height:20px}
+/* ── Game Hub glass: translucent blurred card, white rim, top sheen ── */
+#s-home .dh-glass{position:relative;isolation:isolate;overflow:hidden;color:#fff;
+  background:linear-gradient(160deg,rgba(255,255,255,.18),rgba(255,255,255,.08)),rgba(42,34,110,.38)!important;border:0!important;
+  -webkit-backdrop-filter:blur(22px) saturate(180%)!important;backdrop-filter:blur(22px) saturate(180%)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 0 0 1px rgba(255,255,255,.18),0 18px 36px -22px rgba(0,0,0,.7)!important}
+#s-home .dh-glass::after{content:'';position:absolute;left:0;right:0;top:0;height:48%;border-radius:inherit;border-bottom-left-radius:0;border-bottom-right-radius:0;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.16),rgba(255,255,255,0))}
+/* moon streak card (compact) */
+#s-home .dh-moonbox{max-width:400px;margin:12px auto 0;padding:10px 14px;gap:12px;border-radius:24px!important}
+.dh-moonbox .moonsvg{flex:0 0 54px;width:54px;height:54px}
+.dh-moonbox .mt{border-left:1.5px solid rgba(255,255,255,.2);padding-left:12px}
+.dh-moonbox .mt b{font-size:17px!important;line-height:1.15!important;display:flex!important;align-items:flex-start;gap:6px;color:#fff}
+.dh-moonbox .mt b .ic{width:21px;height:21px;margin-top:-1px;flex:0 0 auto}
+.dh-moonbox .mt small{font-size:13px!important;line-height:1.25!important;color:#E4E0FF!important;margin-top:2px!important}
+.dh-moonbox .mdots{gap:6px;margin-top:7px}
+.dh-moonbox .mdots i{width:15px;height:15px}
+.dh-moonbox .mfull{flex:0 0 32px;width:32px;height:32px;position:relative}
 .dh-moonbox .mfull::before{content:'';position:absolute;inset:-8px;border-radius:50%;background:radial-gradient(circle,rgba(255,215,110,.35),transparent 70%)}
 .dh-moonbox .mfull .dic{position:relative}
-/* tonight's story pill */
-#s-home .dh-story{width:100%;max-width:400px;margin:12px auto 0;min-height:72px;padding:8px 10px 8px 6px;gap:10px;border-radius:40px!important;justify-content:flex-start;text-align:left;
-  background:linear-gradient(180deg,#F3EFFF,#DCD3FB)!important;border:2px solid rgba(255,255,255,.8)!important;color:#2B2468;box-shadow:0 14px 26px -16px rgba(5,2,30,.9),inset 0 -3px 0 rgba(110,90,210,.15)!important;-webkit-backdrop-filter:none;backdrop-filter:none}
-.dh-book{position:relative;flex:0 0 84px;height:62px;margin:-14px 0 -6px}
-.dh-book>.ic:first-child{position:absolute;left:6px;top:0;width:70px;height:70px;transform:rotate(-8deg);filter:drop-shadow(0 6px 6px rgba(60,30,140,.35))}
-.dh-book .sp1{position:absolute;left:0;top:6px;width:16px;height:16px}.dh-book .sp2{position:absolute;right:0;top:-2px;width:14px;height:14px}
-#homeStoryT{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;white-space:normal!important;overflow:visible!important}
-#homeStoryT small{font:600 15px/1.15 'Fredoka','Nunito',sans-serif;color:#3C347D}
-#homeStoryT b{font:700 18px/1.15 'Fredoka','Nunito',sans-serif;color:#1E1A5C;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
-.dh-play{flex:0 0 52px;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(180deg,#A58BFF,#7148E0);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),0 6px 12px -6px rgba(80,40,180,.8)}
-.dh-play svg{width:24px;height:24px;margin-left:3px}
 /* step tiles */
-.dh-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:400px;margin:16px auto 0}
-.dh-tile{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;padding:12px 4px 9px;border-radius:22px;text-align:center;
-  background:linear-gradient(180deg,#F1EDFF,#D9D0FA);border:2px solid rgba(255,255,255,.75);box-shadow:0 12px 20px -14px rgba(5,2,30,.9),inset 0 -3px 0 rgba(110,90,210,.15)}
-.dh-tile b{position:absolute;left:-4px;top:-8px;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:700 16px/1 'Fredoka','Nunito',sans-serif;color:#fff;
-  background:linear-gradient(180deg,#9D7BFF,#6A3FDB);box-shadow:0 0 0 2.5px #fff,0 4px 8px -3px rgba(60,20,160,.7)}
-.dh-tile .ic{width:46px;height:46px;filter:drop-shadow(0 3px 3px rgba(60,30,140,.35)) drop-shadow(0 0 1px rgba(60,30,140,.35))}
-.dh-tile span{font:600 14.5px/1.12 'Fredoka','Nunito',sans-serif;color:#2B2468}
-/* start + hub */
-.dh-go{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin-top:16px}
-.dh-burst{width:30px;height:38px;flex:0 0 auto;animation:dhTw 1.8s ease-in-out infinite}
-#s-home .dh-go .gbtn{flex:0 1 330px;justify-content:center;min-height:68px;padding:0 26px;gap:12px;font:700 clamp(22px,6.6vw,27px)/1 'Fredoka','Nunito',sans-serif;
+.dh-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%;max-width:400px;margin:14px auto 0}
+.dh-tile{display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 4px 8px;border-radius:20px;text-align:center;overflow:visible!important}
+.dh-tile b{position:absolute;left:5px;top:5px;width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font:700 13px/1 'Fredoka','Nunito',sans-serif;color:#fff;z-index:1;
+  background:linear-gradient(180deg,#A98BFF,#6A3FDB);box-shadow:0 0 0 2px rgba(255,255,255,.85),0 3px 6px -2px rgba(30,10,100,.7)}
+.dh-tile .ic{width:42px;height:42px;filter:drop-shadow(0 3px 3px rgba(10,5,50,.35))}
+.dh-tile span{font:600 14px/1.1 'Fredoka','Nunito',sans-serif;color:#fff;text-shadow:0 1px 2px rgba(20,10,70,.45)}
+/* start */
+.dh-go{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin-top:14px}
+.dh-burst{width:28px;height:36px;flex:0 0 auto;animation:dhTw 1.8s ease-in-out infinite}
+#s-home .dh-go .gbtn{flex:0 1 330px;justify-content:center;min-height:62px;padding:0 24px;gap:12px;font:700 clamp(22px,6.4vw,26px)/1 'Fredoka','Nunito',sans-serif;
   background:linear-gradient(180deg,#6BE58A 0%,#2DC25A 55%,#1FA64B 100%);text-shadow:0 1px 2px rgba(0,80,20,.35);animation:dhGlow 2.6s ease-in-out infinite;
   box-shadow:inset 0 16px 14px -12px rgba(255,255,255,.45),inset 0 1px 0 rgba(255,255,255,.6),0 12px 26px -10px rgba(40,200,90,.55)!important}
 @keyframes dhGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(90,230,130,0))}50%{filter:drop-shadow(0 0 12px rgba(90,230,130,.45))}}
-.dh-tri{width:26px;height:26px;filter:drop-shadow(0 1px 2px rgba(0,80,20,.35))}
-#s-home .dh-hub{text-decoration:none;margin-top:12px;gap:10px;min-height:48px;padding:0 26px;font:600 18px/1 'Fredoka','Nunito',sans-serif!important;color:#E9E5FF!important;
-  background:rgba(255,255,255,.04);border:2px solid rgba(200,190,255,.45);box-shadow:none}
+.dh-tri{width:24px;height:24px;filter:drop-shadow(0 1px 2px rgba(0,80,20,.35))}
+/* tonight's story: a quiet, low-emphasis row under Start (opens the story sheet) */
+#s-home .dh-story{width:100%;max-width:360px;margin:14px auto 0;min-height:50px;padding:6px 8px 6px 12px;gap:10px;border-radius:999px!important;justify-content:flex-start;text-align:left;
+  background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.04)),rgba(30,26,80,.30)!important;color:#D9D5F2}
+.dh-sbook{flex:0 0 30px;width:30px;height:30px;opacity:.85;filter:saturate(.7)}
+#homeStoryT{flex:1;min-width:0;display:block;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis;font:500 15px/1.2 'Fredoka','Nunito',sans-serif;color:#CFCAEE}
+#homeStoryT small{font:inherit;color:#B4AEDD;margin-right:5px}
+#homeStoryT b{font-weight:600;color:#E6E3FA}
+.dh-play{flex:0 0 32px;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;color:#E6E3FA;background:rgba(255,255,255,.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+.dh-play svg{width:14px;height:14px;margin-left:2px}
+/* hub pill */
+#s-home .dh-hub{text-decoration:none;margin-top:14px;gap:10px;min-height:48px;padding:0 26px;font:600 18px/1 'Fredoka','Nunito',sans-serif!important;color:#fff!important;border-radius:999px}
 .dh-hub svg{width:30px;height:24px}
-.dh-clouds{position:relative;display:block;width:100%;height:70px;margin-top:-26px;pointer-events:none;z-index:1}
-/* phones up to 375 wide / short screens: tighten */
-@media (max-width:380px){.dh-steps{gap:8px}.dh-tile span{font-size:13px}.dh-tile .ic{width:42px;height:42px}#homeStoryT b{font-size:16.5px}.dh-moonbox .mt b{font-size:18px!important}.dh-moonbox .moonsvg{flex-basis:64px;width:64px;height:64px}.dh-moonbox .mfull{display:none}}
-@media (prefers-reduced-motion:reduce){.dh-mo,.dh-cheer g,.dh-tw,.dh-burst,#s-home .dh-go .gbtn{animation:none!important}}
+/* continuous layered cloud band (tiles seamlessly at any width) */
+.dh-clouds{position:relative;display:block;width:100%;height:calc(88px + env(safe-area-inset-bottom));margin-top:-30px;pointer-events:none;z-index:1;flex:0 0 auto}
+/* phones ≤380 wide / short screens: tighten */
+@media (max-width:380px){.dh-body{padding-left:14px;padding-right:14px}.dh-steps{gap:8px}.dh-tile span{font-size:13px}.dh-tile .ic{width:38px;height:38px}#homeStoryT{font-size:14px}.dh-moonbox .mt b{font-size:16px!important}.dh-moonbox .mt small{font-size:12.5px!important}.dh-moonbox .mfull{display:none}}
+@media (max-height:700px){.dh-ribbon{margin-top:-28px;padding:7px 20px}.dh-steps{margin-top:10px}.dh-tile{padding:8px 3px 6px}.dh-tile .ic{width:34px;height:34px}.dh-tile span{font-size:12.5px}
+  #s-home .dh-moonbox{margin-top:10px;padding:8px 12px}.dh-moonbox .moonsvg{flex-basis:46px;width:46px;height:46px}.dh-moonbox .mdots{margin-top:5px}.dh-moonbox .mdots i{width:13px;height:13px}
+  .dh-go{margin-top:12px}#s-home .dh-go .gbtn{min-height:56px}}
+@media (prefers-reduced-motion:reduce){.dh-mo,.dh-cheer>g,.dh-tw,.dh-burst,#s-home .dh-go .gbtn{animation:none!important}}
 </style>
 </head>
 <body>
@@ -499,6 +503,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <linearGradient id="dgPurple" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B49BFF"/><stop offset="1" stop-color="#6A4FD8"/></linearGradient>
   <linearGradient id="dgGold" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF3C2"/><stop offset=".55" stop-color="#FFD36B"/><stop offset="1" stop-color="#F2A93B"/></linearGradient>
   <linearGradient id="dgPink" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC6DD"/><stop offset="1" stop-color="#F0699B"/></linearGradient>
+  <linearGradient id="dgHand" gradientUnits="userSpaceOnUse" x1="0" y1="6" x2="0" y2="44"><stop offset="0" stop-color="#FFE6D2"/><stop offset=".6" stop-color="#FCCBA6"/><stop offset="1" stop-color="#F0AE86"/></linearGradient>
   <linearGradient id="dgSkin" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE3CC"/><stop offset="1" stop-color="#F2AE84"/></linearGradient>
   <linearGradient id="dgTeddy" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7AE79"/><stop offset="1" stop-color="#A8673A"/></linearGradient>
   <linearGradient id="dgWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E7AB74"/><stop offset="1" stop-color="#A9663A"/></linearGradient>
@@ -532,7 +537,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   <div class="dh-wrap">
     <!-- cosy night bedroom -->
     <div class="dh-scene" aria-hidden="true">
-      <svg class="dh-room" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <svg class="dh-room" viewBox="0 21 400 318" preserveAspectRatio="xMidYMax meet" focusable="false">
         <defs>
           <linearGradient id="dhWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4A3DA6"/><stop offset="1" stop-color="#2F2681"/></linearGradient>
           <linearGradient id="dhNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#191457"/><stop offset=".7" stop-color="#2E2788"/><stop offset="1" stop-color="#4A3FA8"/></linearGradient>
@@ -542,11 +547,11 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
           <radialGradient id="dhGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFE7A0" stop-opacity=".75"/><stop offset=".45" stop-color="#FFC56B" stop-opacity=".25"/><stop offset="1" stop-color="#FFB86B" stop-opacity="0"/></radialGradient>
           <radialGradient id="dhMoonGlow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#FFF1B8" stop-opacity=".55"/><stop offset="1" stop-color="#FFF1B8" stop-opacity="0"/></radialGradient>
         </defs>
-        <rect width="400" height="360" fill="url(#dhWall)"/>
+        <rect x="-400" y="0" width="1200" height="360" fill="url(#dhWall)"/>
         <g fill="#C9BCFF" opacity=".35"><circle cx="30" cy="30" r="1.6"/><circle cx="92" cy="18" r="1.2"/><circle cx="150" cy="40" r="1.4"/><circle cx="60" cy="96" r="1.2"/><circle cx="210" cy="16" r="1.3"/><circle cx="118" cy="120" r="1"/></g>
         <!-- window -->
-        <rect x="246" y="10" width="170" height="196" rx="10" fill="url(#dhFrame)"/>
-        <rect x="256" y="20" width="160" height="176" rx="4" fill="url(#dhNight)"/>
+        <rect x="246" y="10" width="420" height="196" rx="10" fill="url(#dhFrame)"/>
+        <rect x="256" y="20" width="400" height="176" rx="4" fill="url(#dhNight)"/>
         <circle cx="342" cy="66" r="44" fill="url(#dhMoonGlow)"/>
         <path d="M346 40a26 26 0 1 0 22 40 21 21 0 1 1-22-40Z" fill="url(#dgGold)"/>
         <path d="M336 50a20 20 0 0 0-4 16" stroke="#fff" stroke-width="2.4" stroke-linecap="round" fill="none" opacity=".6"/>
@@ -560,16 +565,16 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <g fill="#1F1966">
           <path d="M318 196v-34a22 22 0 0 1 44 0v34Z"/><path d="M340 120q3 4 0 8q-3-4 0-8Z"/><rect x="339" y="126" width="2" height="6"/>
           <rect x="300" y="146" width="9" height="50"/><path d="M298 148l6.5-14 6.5 14Z"/><rect x="372" y="152" width="8" height="44"/><path d="M370 154l6-12 6 12Z"/>
-          <path d="M256 196v-16a14 14 0 0 1 28 0v16Z"/><rect x="380" y="176" width="40" height="20"/>
+          <path d="M256 196v-16a14 14 0 0 1 28 0v16Z"/><rect x="380" y="176" width="40" height="20"/><path d="M420 196v-12a12 12 0 0 1 24 0v12Z"/><rect x="452" y="168" width="7" height="28"/><path d="M450 170l5.5-11 5.5 11Z"/>
         </g>
         <g fill="#FFD36B"><rect x="333" y="172" width="5" height="9" rx="2.5"/><rect x="343" y="172" width="5" height="9" rx="2.5"/><rect x="267" y="184" width="4" height="7" rx="2"/></g>
-        <path d="M336 20v176M256 108h160" stroke="url(#dhFrame)" stroke-width="6"/>
-        <rect x="240" y="198" width="180" height="12" rx="5" fill="#B7AAF5"/>
+        <path d="M336 20v176M496 20v176M256 108h400" stroke="url(#dhFrame)" stroke-width="6"/>
+        <rect x="240" y="198" width="430" height="12" rx="5" fill="#B7AAF5"/>
         <!-- curtains -->
         <path d="M236 4h34c-4 50 2 120 10 196h-40c4-70 2-140-4-196Z" fill="url(#dhCurtain)"/>
         <path d="M250 20c-2 60 0 120 6 176" stroke="#fff" stroke-width="2" opacity=".35" fill="none"/>
         <g fill="#fff" opacity=".55"><circle cx="252" cy="40" r="1.6"/><circle cx="262" cy="80" r="1.4"/><circle cx="250" cy="124" r="1.6"/><circle cx="264" cy="164" r="1.4"/></g>
-        <rect x="228" y="0" width="190" height="10" rx="5" fill="#7A6BD8"/>
+        <rect x="228" y="0" width="440" height="10" rx="5" fill="#7A6BD8"/>
         <!-- nightstand, books and star lamp -->
         <circle cx="38" cy="168" r="90" fill="url(#dhGlow)"/>
         <rect x="-6" y="236" width="84" height="80" rx="6" fill="url(#dgWood)"/>
@@ -598,18 +603,18 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <!-- pillow -->
         <path d="M112 236q-6-34 18-40q70-12 140 0q24 6 18 40q-80 14-176 0Z" fill="url(#bgPillow)"/>
         <path d="M132 204q68-10 136 0" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/>
-      </svg>
-      <img class="dh-mo" src="baby-mo-poses/baby-mo-pose-41.webp" alt="Baby Mo">
-      <svg class="dh-blanket" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <path d="M70 250q60-34 140-30t200 14v140H60Z" fill="#2A1C86" opacity=".35" transform="translate(0 6)"/>
-        <path d="M70 250q60-34 140-30t200 14v140H60Z" fill="url(#qPat)"/>
-        <path d="M70 250q60-34 140-30t200 14v140H60Z" fill="url(#bgShade)"/>
-        <path d="M64 252q64-36 146-32t196 14l-2 20q-96-18-196-16t-140 30Z" fill="url(#bgCuff)"/>
-        <path d="M84 254q60-26 126-24" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/>
-      </svg>
-      <i class="dh-teddy" data-ic="teddy"></i>
-      <svg class="dh-cheer" viewBox="0 0 400 360" preserveAspectRatio="xMidYMid slice" focusable="false">
-        <g stroke="#FFD84D" stroke-width="4.5" stroke-linecap="round"><path d="M104 108l-12-10M98 124l-16-2M114 94l-5-14M296 108l12-10M302 124l16-2M286 94l5-14"/></g>
+        <!-- Baby Mo, then a quilt tucked between the bed posts (symmetric) -->
+        <image class="dh-mo" href="baby-mo-poses/baby-mo-pose-41.webp" x="52" y="21" width="296" height="296"/>
+        <g class="dh-quilt">
+          <path d="M78 252Q200 214 322 252L332 360H68Z" fill="#2A1C86" opacity=".35" transform="translate(0 6)"/>
+          <path d="M78 252Q200 214 322 252L332 360H68Z" fill="url(#qPat)"/>
+          <path d="M78 252Q200 214 322 252L332 360H68Z" fill="url(#bgShade)"/>
+          <path d="M72 254Q200 212 328 254L329 274Q200 234 71 274Z" fill="url(#bgCuff)"/>
+          <path d="M92 252Q200 222 308 252" stroke="#fff" stroke-width="3" fill="none" opacity=".8" stroke-linecap="round"/>
+          <path d="M74 276Q72 320 70 360M326 276Q328 320 330 360" stroke="#4A3BB0" stroke-width="2" opacity=".5" fill="none"/>
+        </g>
+        <g id="dhTeddy" class="dh-teddy" transform="translate(262 178) rotate(-10 34 34)"></g>
+        <g class="dh-cheer"><g stroke="#FFD84D" stroke-width="4.5" stroke-linecap="round"><path d="M104 108l-12-10M98 124l-16-2M114 94l-5-14M296 108l12-10M302 124l16-2M286 94l5-14"/></g></g>
       </svg>
     </div>
     <a class="dh-back" href="./index.html" aria-label="Kembali ke Game Hub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-7-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
@@ -626,18 +631,13 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
       </div>
       <div class="dh-ribbon"><span>4 langkah malam bersama Baby Mo</span><i class="ic" data-ic="star"></i></div>
 
-      <button class="moonbox dh-moonbox" id="homeMoon" type="button"></button>
-      <button class="storychip dh-story" id="homeStory" type="button">
-        <span class="dh-book"><i class="ic" data-ic="book"></i><i class="ic sp1" data-ic="sparkle"></i><i class="ic sp2" data-ic="sparkle"></i></span>
-        <span id="homeStoryT">Cerita malam ini</span>
-        <span class="dh-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5Z" fill="#fff" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
-      </button>
+      <button class="moonbox dh-moonbox dh-glass" id="homeMoon" type="button"></button>
 
       <div class="dh-steps">
-        <div class="dh-tile"><b>1</b><i class="ic" data-ic="brush"></i><span>Gosok<br>Gigi</span></div>
-        <div class="dh-tile"><b>2</b><i class="ic" data-ic="shirt"></i><span>Ganti<br>Baju</span></div>
-        <div class="dh-tile"><b>3</b><i class="ic" data-ic="hands"></i><span>Baca<br>Doa</span></div>
-        <div class="dh-tile"><b>4</b><i class="ic" data-ic="pillow"></i><span>Tidur<br>Yuk</span></div>
+        <div class="dh-tile dh-glass"><b>1</b><i class="ic" data-ic="brush"></i><span>Gosok<br>Gigi</span></div>
+        <div class="dh-tile dh-glass"><b>2</b><i class="ic" data-ic="shirt"></i><span>Ganti<br>Baju</span></div>
+        <div class="dh-tile dh-glass"><b>3</b><i class="ic" data-ic="hands"></i><span>Baca<br>Doa</span></div>
+        <div class="dh-tile dh-glass"><b>4</b><i class="ic" data-ic="pillow"></i><span>Tidur<br>Yuk</span></div>
       </div>
 
       <div class="dh-go">
@@ -645,13 +645,22 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
         <button class="gbtn" id="btn-start"><svg class="dh-tri" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg><span>Mulai Tidur</span></button>
         <svg class="dh-burst r" viewBox="0 0 40 50" aria-hidden="true"><g stroke="#FFD84D" stroke-width="5" stroke-linecap="round"><path d="M10 10 20 4M8 25h14M10 40l10 6"/></g></svg>
       </div>
-      <a class="dt-hub dh-hub" href="./index.html"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M9 3h14a8 8 0 0 1 7.8 9.6l-1.3 6.2a3.6 3.6 0 0 1-6.3 1.6L20.5 17h-9l-2.7 3.4a3.6 3.6 0 0 1-6.3-1.6L1.2 12.6A8 8 0 0 1 9 3Z" fill="url(#dgLav)"/><path d="M9 7.5v6M6 10.5h6" stroke="#3B2F8F" stroke-width="2.2" stroke-linecap="round"/><circle cx="21.5" cy="8.5" r="1.7" fill="#F0699B"/><circle cx="24.5" cy="11.5" r="1.7" fill="#5BD8E8"/><circle cx="21.5" cy="14.2" r="1.7" fill="#FFD36B"/><circle cx="18.6" cy="11.5" r="1.7" fill="#8CE6A0"/></svg><span>Game Hub</span></a>
+      <button class="storychip dh-story dh-glass" id="homeStory" type="button">
+        <i class="ic dh-sbook" data-ic="book"></i>
+        <span id="homeStoryT">Cerita malam ini</span>
+        <span class="dh-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
+      </button>
+      <a class="dt-hub dh-hub dh-glass" href="./index.html"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M9 3h14a8 8 0 0 1 7.8 9.6l-1.3 6.2a3.6 3.6 0 0 1-6.3 1.6L20.5 17h-9l-2.7 3.4a3.6 3.6 0 0 1-6.3-1.6L1.2 12.6A8 8 0 0 1 9 3Z" fill="url(#dgLav)"/><path d="M9 7.5v6M6 10.5h6" stroke="#3B2F8F" stroke-width="2.2" stroke-linecap="round"/><circle cx="21.5" cy="8.5" r="1.7" fill="#F0699B"/><circle cx="24.5" cy="11.5" r="1.7" fill="#5BD8E8"/><circle cx="21.5" cy="14.2" r="1.7" fill="#FFD36B"/><circle cx="18.6" cy="11.5" r="1.7" fill="#8CE6A0"/></svg><span>Game Hub</span></a>
     </div>
-    <svg class="dh-clouds" viewBox="0 0 400 90" preserveAspectRatio="none" aria-hidden="true" focusable="false">
-      <path d="M0 90V40c14-20 44-22 58-4 10-24 48-26 60 0 8-8 20-8 26 2V90Z" fill="#6A5CC8" opacity=".55"/>
-      <path d="M260 90V50c8-18 34-22 46-6 12-30 56-30 66-2 14-6 26 0 28 10V90Z" fill="#6A5CC8" opacity=".55"/>
-      <path d="M0 90V60c18-14 40-10 50 4 14-14 40-10 46 8V90Z" fill="#8F84E0" opacity=".7"/>
-      <path d="M300 90V70c14-14 40-14 50 2 12-10 34-8 50 2V90Z" fill="#8F84E0" opacity=".7"/>
+    <svg class="dh-clouds" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="dhCl1" patternUnits="userSpaceOnUse" width="176" height="400" x="-30"><g fill="#5547B4"><circle cx="0" cy="40" r="32"/><circle cx="176" cy="40" r="32"/><circle cx="58" cy="34" r="30"/><circle cx="116" cy="44" r="28"/><rect y="40" width="176" height="360"/></g></pattern>
+        <pattern id="dhCl2" patternUnits="userSpaceOnUse" width="142" height="400" x="40"><g fill="#7466D2"><circle cx="0" cy="58" r="24"/><circle cx="142" cy="58" r="24"/><circle cx="44" cy="52" r="26"/><circle cx="94" cy="60" r="22"/><rect y="60" width="142" height="340"/></g></pattern>
+        <pattern id="dhCl3" patternUnits="userSpaceOnUse" width="118" height="400" x="10"><g fill="#9C92EC"><circle cx="0" cy="76" r="18"/><circle cx="118" cy="76" r="18"/><circle cx="36" cy="72" r="20"/><circle cx="78" cy="78" r="17"/><rect y="78" width="118" height="322"/></g></pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#dhCl1)" opacity=".55"/>
+      <rect width="100%" height="100%" fill="url(#dhCl2)" opacity=".7"/>
+      <rect width="100%" height="100%" fill="url(#dhCl3)" opacity=".85"/>
     </svg>
   </div>
 </div>
@@ -743,10 +752,24 @@ var IC=(function(){
   o.zzz=sv('<path d="M6 22h11L6 36h11" fill="none" stroke="url(#dgLav)" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"/>'
     +'<path d="M22 12h9l-9 11h9" fill="none" stroke="url(#dgLav)" stroke-width="3.8" stroke-linecap="round" stroke-linejoin="round"/>'
     +'<path d="M35 4h7l-7 8h7" fill="none" stroke="url(#dgLav)" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>');
-  o.hands=sv('<g><path d="M22 41C14 41 7.5 35 6.5 26.5L5 15.5a3 3 0 0 1 5.9-.9L12.5 23l.4-12a3 3 0 0 1 6 .2l-.2 11 1.7-9.5a2.9 2.9 0 0 1 5.7 1L24 27Z" fill="url(#dgSkin)"/>'
-    +'<path d="M26 41C34 41 40.5 35 41.5 26.5L43 15.5a3 3 0 0 0-5.9-.9L35.5 23l-.4-12a3 3 0 0 0-6 .2l.2 11-1.7-9.5a2.9 2.9 0 0 0-5.7 1L24 27Z" fill="url(#dgSkin)"/>'
-    +'<path d="M8.5 17l1.3 9M15.8 12.5l-.3 9.5" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".6"/></g>'
-    +'<path d="M24 2.5c.6 3.6 2 5 5.5 5.6-3.5.6-4.9 2-5.5 5.6-.6-3.6-2-5-5.5-5.6 3.5-.6 4.9-2 5.5-5.6Z" fill="url(#dgGold)"/>');
+  /* du'a hands: two open palms side by side, slightly cupped, pinkies touching, thumbs out */
+  o.hands=(function(){
+    var F='<rect x="17.4" y="13.2" width="4.6" height="16" rx="2.3" transform="rotate(4 19.7 21)"/>'      /* pinky */
+      +'<rect x="13.1" y="9.4" width="4.9" height="19" rx="2.45" transform="rotate(-1 15.5 19)"/>'        /* ring */
+      +'<rect x="8.7" y="7.8" width="5" height="20" rx="2.5" transform="rotate(-6 11.2 18)"/>'            /* middle */
+      +'<rect x="4.6" y="10.4" width="4.8" height="18" rx="2.4" transform="rotate(-12 7 19.4)"/>'        /* index */
+      +'<rect x="1.4" y="22.6" width="5.2" height="12" rx="2.6" transform="rotate(-32 4 28.6)"/>'        /* thumb */
+      +'<path d="M5.2 25.5C4.8 34.5 9.4 41.6 16.2 42.6c3.9.6 6.9-1.3 7.1-5.2l-.4-12.2c-5.8 1.6-11.8 1.4-17.7.3Z"/>'; /* palm */
+    var one='<g fill="none" stroke="#C97A52" stroke-width="2" stroke-linejoin="round">'+F+'</g>'
+      +'<g fill="url(#dgHand)">'+F+'</g>'
+      +'<path d="M14.6 23.2l.3 4.8M18.8 25.6l.2 3.6M10.4 22.6l.5 5" stroke="#E79F78" stroke-width="1.1" stroke-linecap="round" opacity=".75"/>'
+      +'<path d="M8.8 31.6q5.8 3.6 13.4 1.6" stroke="#E79F78" stroke-width="1.2" fill="none" stroke-linecap="round" opacity=".7"/>'
+      +'<ellipse cx="15.8" cy="35.4" rx="5.4" ry="3.4" fill="#F59C8E" opacity=".28"/>'
+      +'<path d="M10.2 10.6v5.4M14.6 11.6v5M6.6 13.4l.6 3.8" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".75"/>';
+    return sv('<ellipse cx="24" cy="45.2" rx="15" ry="1.8" fill="#000" opacity=".14"/>'
+      +'<g>'+one+'</g><g transform="matrix(-1 0 0 1 48 0)">'+one+'</g>'
+      +'<path d="M24 1.6c.5 2.8 1.6 3.9 4.4 4.4-2.8.5-3.9 1.6-4.4 4.4-.5-2.8-1.6-3.9-4.4-4.4 2.8-.5 3.9-1.6 4.4-4.4Z" fill="url(#dgGold)"/>');
+  })();
   o.book=sv('<path d="M4 13q10-4 20 1 10-5 20-1v27q-10-4-20 1-10-5-20-1Z" fill="url(#dgPurple)"/>'
     +'<path d="M6.5 11q9-3.5 17.5 1.5V38q-8.5-4.5-17.5-1.5Z" fill="url(#dgWhite)"/><path d="M41.5 11Q32.5 7.5 24 12.5V38q8.5-4.5 17.5-1.5Z" fill="url(#dgWhite)"/>'
     +'<path d="M17.5 17a6.5 6.5 0 1 0 4.5 10.2 5.2 5.2 0 1 1-4.5-10.2Z" fill="url(#dgGold)"/>'+star5(33,22,3.4,'#FFC94D')+star5(29.5,30,2.2,'#FFC94D')
@@ -801,6 +824,7 @@ var IC=(function(){
 /* fill <i data-ic="name"> placeholders in static markup */
 function fillIcons(root){(root||document).querySelectorAll('[data-ic]').forEach(function(el){var n=el.getAttribute('data-ic');if(IC[n]&&typeof IC[n]==='string')el.innerHTML=IC[n];});}
 fillIcons();
+(function(){var t=document.getElementById('dhTeddy');if(t&&IC.teddy){t.innerHTML=IC.teddy.replace('<svg class="dic"','<svg width="72" height="72"');}})();
 function ic(n,cls,st){return '<i class="ic'+(cls?' '+cls:'')+'"'+(st?' style="'+st+'"':'')+'>'+IC[n]+'</i>';}
 </script>
 <script>
