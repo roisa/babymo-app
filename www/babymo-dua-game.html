@@ -769,7 +769,7 @@ const SCENES = {};
     try{
       if(window.renderDoaScene && renderDoaScene(d.id)){
         const svg=$('sceneBg').innerHTML, m=svg.match(/^<svg[^>]*>([\s\S]*)<\/svg>$/);
-        SCENES[d.id]={inner:m?m[1]:svg, pose:($('sceneMo').getAttribute('src')||'').replace(/^.*\/|\.webp$/g,'')||'baby-mo-yes'};
+        SCENES[d.id]={inner:m?m[1]:svg, src:$('sceneMo').getAttribute('src')||''};
       }
     }catch(e){}
   });
@@ -789,7 +789,7 @@ function sceneSvg(d, vb){
   }
   return '<svg class="sc" viewBox="'+(vb||(s?'0 -64 400 180':'0 0 400 180'))+'" preserveAspectRatio="xMidYMid slice" aria-hidden="true">'+inner+'</svg>';
 }
-const poseOf = d=>'baby-mo-poses/'+((SCENES[d.id]&&SCENES[d.id].pose)||'baby-mo-yes')+'.webp';
+const poseOf = d=>(SCENES[d.id]&&SCENES[d.id].src)||'baby-mo-poses/baby-mo-yes.webp';
 // crop window of a scene for a box of aspect a (=w/h), keeping the du'a's prop in view
 function cropFor(d, a){
   const fx=(ART[d.id]&&ART[d.id].fx)||200;

@@ -110,7 +110,9 @@
     norm: norm, key: key, langOf: langOf,
     has: function (text, lang) { return !!urlFor(text, lang); },
     urlFor: function (text, lang) { return urlFor(text, lang); },
-    stop: function () { try { ss && ss.cancel(); } catch (e) {} }
+    stop: function () { try { ss && ss.cancel(); } catch (e) {} },
+    // the <audio> playing a recorded clip for this utterance right now (null otherwise): for read-along timing
+    clipOf: function (u) { return cur && cur.urls && cur.u === u && A ? A : null; }
   };
   if (!ss || !ss.speak) return;
 
@@ -207,8 +209,9 @@
       a.onerror = function () { started ? next() : fallback(); };
       try {
         a.src = url;
-        var slow = !!u.bmSlow;
-        a.playbackRate = a.defaultPlaybackRate = slow ? 0.8 : 1;
+        // u.bmRate: an exact clip speed (e.g. 0.5); else u.bmSlow plays it a little slower (0.8×)
+        var rate = u.bmRate > 0 && u.bmRate <= 2 ? +u.bmRate : (u.bmSlow ? 0.8 : 1);
+        a.playbackRate = a.defaultPlaybackRate = rate;
         try { a.preservesPitch = a.webkitPreservesPitch = a.mozPreservesPitch = true; } catch (e) {}
         a.volume = (u.volume >= 0 && u.volume <= 1) ? u.volume : 1;
         var p = a.play();

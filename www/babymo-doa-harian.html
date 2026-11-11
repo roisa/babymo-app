@@ -216,9 +216,19 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 /* ════ COMPLETE SCREEN ════ */
 #completeScreen{padding:24px 16px 36px;padding-top:calc(24px + env(safe-area-inset-top));justify-content:flex-start;text-align:center;}
 
-.c-mascot-wrap{position:relative;width:110px;height:110px;margin:0 auto 12px;}
-.c-mascot{width:110px;height:110px;object-fit:contain;display:block;filter:drop-shadow(0 5px 14px rgba(0,0,0,.35));animation:completeSway 2.8s ease-in-out infinite alternate;}
-@keyframes completeSway{from{transform:rotate(-10deg) scale(1);}to{transform:rotate(10deg) scale(1.06);}}
+/* the finish screen grows with its content (the screen scrolls); nothing in it may shrink and clip */
+#completeScreen>*{flex-shrink:0;}
+/* a big render-2 Mo cheering above the card: his lower half tucks behind the card's top edge.
+   --mo = the 480×480 picture (Mo ≈ 77% of it, head at ~14%); the wrap shows his top ~60%. */
+.c-mascot-wrap{--mo:min(74vw,290px);position:relative;z-index:0;width:var(--mo);height:calc(var(--mo) * .47);margin:0 auto;pointer-events:none;}
+.c-mascot{position:absolute;left:0;top:calc(var(--mo) * -.13);width:var(--mo);height:var(--mo);max-width:none;display:block;filter:drop-shadow(0 6px 14px rgba(0,0,0,.25));transform-origin:50% 90%;animation:completeSway 2.6s ease-in-out infinite;}
+@keyframes completeSway{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-6px) rotate(2deg);}}
+@media(prefers-reduced-motion:reduce){.c-mascot{animation:none;}}
+@media(min-width:760px){.c-mascot-wrap{--mo:360px;}}
+/* the card sits in front of Mo, so it is opaque here (same tint as before over the page colour) */
+#completeScreen .c-card{z-index:1;background:linear-gradient(var(--card),var(--card)),var(--bg2);}
+/* the kit's small cheering Mo + bubble would sit on the big Mo's face here (and be a second Mo): not on this screen */
+body:has(#completeScreen.active) #bm-mo{display:none!important;}
 
 .c-card{background:var(--card);border:1px solid rgba(200,144,64,.2);border-radius:24px;padding:24px 18px 20px;width:100%;max-width:400px;position:relative;overflow:hidden;margin-bottom:14px;}
 .c-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);}
@@ -378,6 +388,13 @@ html[data-lang="en"] .meaning-en{display:none;}
 .sticker-pop{position:absolute;left:50%;top:50%;z-index:5;transform:translate(-50%,-50%) scale(0);font-size:58px;transition:transform .45s cubic-bezier(.3,1.6,.5,1);pointer-events:none;filter:drop-shadow(0 8px 12px rgba(0,0,0,.3))}
 .sticker-pop.on{transform:translate(-50%,-50%) scale(1)}
 .arabic-text.full{animation:fullGlow 1.8s ease-in-out infinite}
+/* karaoke read-along (readFull): unread words softer, read words deeper, a gold fill sweeps (right→left) over the current word */
+#arabicText .w{border-radius:.3em;transition:opacity .25s,color .25s}
+#arabicText.karaoke .w{opacity:.5}
+#arabicText.karaoke .w.read,#arabicText.karaoke .w.cur{opacity:1;color:#064F29}
+#arabicText.karaoke .w.cur{background:linear-gradient(to left,rgba(255,200,60,.62) var(--p,0%),rgba(255,200,60,.16) var(--p,0%));box-shadow:0 0 0 .06em rgba(255,200,60,.16);-webkit-box-decoration-break:clone;box-decoration-break:clone}
+html[data-bm-theme="classic"] #arabicText.karaoke .w.read,html[data-bm-theme="classic"] #arabicText.karaoke .w.cur{color:#FFF1C2}
+html[data-bm-theme="classic"] #arabicText.karaoke .w.cur{background:linear-gradient(to left,rgba(255,200,60,.42) var(--p,0%),rgba(255,200,60,.1) var(--p,0%))}
 @keyframes fullGlow{0%,100%{text-shadow:0 0 6px rgba(255,214,90,.45)}50%{text-shadow:0 0 18px rgba(255,200,60,.95)}}
 @media (prefers-reduced-motion:reduce){.arabic-text.full{animation:none;text-shadow:0 0 12px rgba(255,200,60,.8)}}
 </style>
@@ -738,7 +755,9 @@ html[data-bm-theme="classic"] .tsb-btn .bd:not(.on){opacity:.5}
 .tsb-btn.phase{animation:tsbPhase .6s cubic-bezier(.34,1.7,.5,1)}
 @keyframes tsbPhase{0%{transform:scale(.9)}100%{transform:none}}
 .tsb-foot{position:relative;display:flex;align-items:center;gap:10px;margin:18px 4px 0;padding:10px 14px 10px 92px;min-height:70px;border-radius:24px;background:var(--seg);text-align:left}
-.tsb-mo{position:absolute;left:6px;bottom:0;width:80px;height:104px;object-fit:cover;object-position:50% 0;border-radius:0 0 0 22px;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(45,35,112,.25))}
+.tsb-mo{position:absolute;left:6px;bottom:0;width:80px;height:104px;overflow:hidden;border-radius:0 0 0 22px;pointer-events:none;filter:drop-shadow(0 6px 8px rgba(45,35,112,.25))}
+/* render-2 Mo (480×480): Mo's width fills the 80px window, head at the top */
+.tsb-mo img{position:absolute;left:-49px;top:-23px;width:178px;height:178px;max-width:none}
 .tsb-ft{flex:1;min-width:0}
 .tsb-mean{font:600 17px/1.25 'Fredoka','Nunito',sans-serif;color:var(--ink)}
 .tsb-tot{font-size:13.5px;font-weight:800;color:var(--ink2);margin-top:3px;line-height:1.3}
@@ -788,24 +807,27 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 #sceneCard .act-btn::after{content:'';position:absolute;z-index:-2;inset:-5px;border-radius:999px;border:3px solid rgba(255,196,46,.9);pointer-events:none;animation:actRing 1.9s ease-out infinite}
 #sceneCard .act-btn .act-em{flex:0 0 auto;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;font-size:22px;background:radial-gradient(circle at 40% 30%,#fff 0,#FFF7DA 70%,#FFE9A6 100%);box-shadow:inset 0 -2px 0 rgba(214,140,0,.25),0 2px 4px -1px rgba(160,80,0,.45)}
 #sceneCard .act-btn #actTxt{position:relative}
-#sceneCard .act-hand{position:absolute;right:-16px;bottom:-24px;width:38px;height:46px;pointer-events:none;transform-origin:60% 90%;animation:actTap 1.9s ease-in-out infinite;filter:drop-shadow(0 3px 3px rgba(90,40,0,.35))}
+/* a small tap hint on the button's lower-right edge: the finger presses up-left, a ripple at its tip */
+#sceneCard .act-hand{position:absolute;right:4px;bottom:-12px;width:24px;height:30px;pointer-events:none;transform-origin:55% 95%;transform:rotate(-24deg);animation:actTap 1.9s ease-in-out infinite;filter:drop-shadow(0 2px 2px rgba(90,40,0,.3))}
+#sceneCard .act-hand::before{content:'';position:absolute;left:0;top:-6px;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.95);box-shadow:0 0 0 1px rgba(214,110,0,.35);opacity:0;animation:actRipple 1.9s ease-out infinite}
 #sceneCard .act-hand svg{display:block;width:100%;height:100%}
 #sceneCard .act-yay{display:none}
 @keyframes actJump{0%,52%,100%{transform:translateY(0) scale(1)}60%{transform:translateY(-6px) scale(1.04,.97)}68%{transform:translateY(0) scale(.98,1.03)}76%{transform:translateY(-2px)}84%{transform:none}}
 @keyframes actRing{0%,40%{opacity:0;transform:scale(.96)}50%{opacity:1}100%{opacity:0;transform:scale(1.14,1.4)}}
-@keyframes actTap{0%,30%,100%{transform:rotate(-28deg) translate(0,0)}40%{transform:rotate(-28deg) translate(-4px,-6px) scale(.9)}48%{transform:rotate(-28deg) translate(0,0)}}
+@keyframes actTap{0%,30%,100%{transform:rotate(-24deg) translate(0,0)}40%{transform:rotate(-24deg) translate(-1px,-3px) scale(.9)}50%{transform:rotate(-24deg) translate(0,0)}}
+@keyframes actRipple{0%,38%{opacity:0;transform:scale(.3)}42%{opacity:1;transform:scale(.4)}75%,100%{opacity:0;transform:scale(1.9)}}
 /* after the tap: a calm green "Yay!" that pops, then fades away (the scene's action is playing) */
 #sceneCard .act-btn.done{display:flex;pointer-events:none;padding:7px 18px 7px 7px;background:linear-gradient(180deg,#7EE69A,#2FB866);color:#fff;text-shadow:0 1px 0 rgba(0,90,40,.4);box-shadow:0 4px 0 #1E8F4C,0 14px 22px -10px rgba(0,90,40,.5);animation:actDone 2.4s ease forwards}
 #sceneCard .act-btn.done::after,#sceneCard .act-btn.done .act-hand,#sceneCard .act-btn.done #actTxt,#sceneCard .act-btn.done .act-em{display:none}
 #sceneCard .act-btn.done .act-yay{display:inline-flex;align-items:center;gap:8px}
 #sceneCard .act-yay i{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:#fff;font-style:normal}
 @keyframes actDone{0%{transform:scale(.7)}14%{transform:scale(1.08)}24%,70%{transform:none;opacity:1}100%{transform:translateY(6px) scale(.9);opacity:0;visibility:hidden}}
-@media (prefers-reduced-motion:reduce){#sceneCard .act-btn,#sceneCard .act-hand{animation:none}#sceneCard .act-hand{transform:rotate(-28deg)}#sceneCard .act-btn::after{display:none}#sceneCard .act-btn.done{display:none}}
+@media (prefers-reduced-motion:reduce){#sceneCard .act-btn,#sceneCard .act-hand{animation:none}#sceneCard .act-hand{transform:rotate(-24deg)}#sceneCard .act-hand::before{display:none}#sceneCard .act-btn::after{display:none}#sceneCard .act-btn.done{display:none}}
 /* the du'a card */
 #learnScreen .dua-card{position:relative;z-index:3;overflow:visible;border:none;border-radius:30px 30px 26px 26px;background:rgba(255,255,255,.97);padding:18px 18px 16px;box-shadow:0 -12px 30px -20px rgba(40,40,100,.45),0 14px 30px -22px rgba(30,60,110,.5)!important}
 #learnScreen .dua-card::before{display:none}
 #learnScreen .tsb{position:relative;z-index:3;border-radius:30px 30px 24px 24px}
-#learnScreen .dua-title{padding-right:72px;font-size:18px;line-height:1.2;margin-bottom:4px}
+#learnScreen .dua-title{padding-right:0;font-size:18px;line-height:1.2;margin-bottom:4px}
 #learnScreen .dua-title .di{--s:48px;border-radius:15px}
 #learnScreen .dua-desc{font-size:13.5px;font-weight:700;margin-bottom:12px}
 .dc-peek{position:absolute;top:-8px;right:4px;width:96px;height:96px;object-fit:contain;pointer-events:none;-webkit-mask-image:linear-gradient(180deg,#000 50%,transparent 74%);mask-image:linear-gradient(180deg,#000 50%,transparent 74%);animation:dcPeek 4s ease-in-out infinite;transform-origin:50% 80%}
@@ -828,7 +850,8 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 /* read along: a big green pill with Mo at its end */
 #learnScreen .sound-btn{height:68px;border-radius:999px;font-size:18px;background:linear-gradient(180deg,#43D886 0%,#17A85C 100%)!important;--bm-glow:rgba(23,168,92,.6);padding:0 76px 0 20px;justify-content:center}
 #learnScreen .sound-btn.speaking{background:linear-gradient(180deg,#22B568 0%,#0E8A4A 100%)!important}
-#learnScreen .sound-btn .sb-mo{position:absolute;right:20px;bottom:-46px;height:104px;width:auto;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,60,30,.35))}
+/* render-2 Mo (480×480 frame, Mo ≈ 79% tall, feet at 91.5%; bigger head): head peeks out as before, centre ~48px from the right */
+#learnScreen .sound-btn .sb-mo{position:absolute;right:-12px;bottom:-47px;height:120px;width:120px;pointer-events:none;filter:drop-shadow(0 4px 6px rgba(0,60,30,.35))}
 #learnScreen .sound-btn::before{content:'';position:absolute;right:6px;top:8px;width:72px;height:52px;border-radius:999px;background:rgba(255,255,255,.18)}
 /* while Mo reads the whole du'a: the box glows softly */
 #learnScreen .arabic-box{transition:border-color .3s,box-shadow .3s}
@@ -836,9 +859,12 @@ html[data-bm-theme="classic"] .tsb-grass{filter:brightness(.6) saturate(.85)}
 /* Normal / Slow: an iOS segmented control (a white thumb slides on a grey track);
    Repeat 2×: an iOS switch in a matching capsule */
 #learnScreen .speed-row{--sf:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,'Nunito',sans-serif;--trk:rgba(118,118,128,.12);--lbl:rgba(60,60,67,.62);--on:#000;--thumb:#fff;--swoff:rgba(120,120,128,.32);display:flex;gap:8px;align-items:stretch}
-.seg{position:relative;flex:1 1 auto;min-width:0;display:grid;grid-template-columns:1fr 1fr;padding:3px;border-radius:999px;background:var(--trk);isolation:isolate}
-.seg-thumb{position:absolute;z-index:-1;top:3px;bottom:3px;left:3px;width:calc(50% - 3px);border-radius:999px;background:var(--thumb);box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04),0 0 0 .5px rgba(0,0,0,.04);transition:transform .34s cubic-bezier(.3,1.2,.5,1)}
+.seg{position:relative;flex:1 1 auto;min-width:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));padding:3px;border-radius:999px;background:var(--trk);isolation:isolate}
+.seg-thumb{position:absolute;z-index:-1;top:3px;bottom:3px;left:3px;width:calc((100% - 6px) / 3);border-radius:999px;background:var(--thumb);box-shadow:0 3px 8px rgba(0,0,0,.12),0 3px 1px rgba(0,0,0,.04),0 0 0 .5px rgba(0,0,0,.04);transition:transform .34s cubic-bezier(.3,1.2,.5,1)}
 .seg[data-v="slow"] .seg-thumb{transform:translateX(100%)}
+.seg[data-v="slower"] .seg-thumb{transform:translateX(200%)}
+/* three speeds + Repeat: on a phone the speed control takes its own row, Repeat sits under it */
+@media (max-width:599px){#learnScreen .speed-row{flex-wrap:wrap}#learnScreen .speed-row .seg{flex:1 1 100%}#learnScreen .speed-row .rep-sw{flex:1 1 100%;justify-content:center;min-height:46px}#learnScreen .speed-row .rep-sw .sw{margin-left:auto}#learnScreen .speed-row .rep-sw .sp-ic{display:block}}
 .seg-btn{-webkit-appearance:none;appearance:none;border:0;margin:0;background:none;min-height:44px;padding:0 6px;border-radius:999px;display:flex;align-items:center;justify-content:center;gap:5px;font:600 15px/1 var(--sf);letter-spacing:-.01em;color:var(--lbl);cursor:pointer;-webkit-tap-highlight-color:transparent;transition:color .2s,opacity .15s;white-space:nowrap;min-width:0}
 .seg-btn.active{color:var(--on);font-weight:700}
 .seg-btn:not(.active):active{opacity:.55}
@@ -1099,7 +1125,7 @@ html[data-bm-theme="classic"] #learnScreen>.timeline .tl-dot.done{background:rgb
       <span class="se-main" id="seMain">🌅</span>
       <span class="se-prop" id="seProp">🛏️</span>
     </div>
-    <button class="act-btn" id="actBtn" type="button"><span class="act-em" id="actEm">🛏️</span><span id="actTxt"></span><span class="act-yay" aria-hidden="true"><i><svg viewBox="0 0 20 20" width="18" height="18"><path d="M4.5 10.5l3.6 3.6 7.4-8" fill="none" stroke="#2FB866" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span id="actYay">Yay!</span></span><span class="act-hand" aria-hidden="true"><svg viewBox="0 0 32 40"><g stroke="#7A3E14" stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"><rect x="11.5" y="1.5" width="8" height="21" rx="4" fill="#FFD7B5"/><path d="M8 18c0-2 1.5-3.2 3.5-3.2h11c3 0 5.5 2.5 5.5 5.5v6.2c0 4.6-3.6 8.2-8.2 8.2h-3.4C11.7 34.7 8 31 8 26.4z" fill="#FFD7B5"/><path d="M19.5 19.5v3M23.8 19.6v3" fill="none"/><path d="M8.6 22.6c-3-1.8-5.6-.6-5.6 1.6 0 1.6 2.4 3.6 5.4 5.4" fill="#FFD7B5"/><rect x="10" y="33.5" width="15" height="5.5" rx="2" fill="#5BB8F0"/></g><ellipse cx="14" cy="5.5" rx="1.4" ry="2.4" fill="#fff" opacity=".7"/></svg></span></button>
+    <button class="act-btn" id="actBtn" type="button"><span class="act-em" id="actEm">🛏️</span><span id="actTxt"></span><span class="act-yay" aria-hidden="true"><i><svg viewBox="0 0 20 20" width="18" height="18"><path d="M4.5 10.5l3.6 3.6 7.4-8" fill="none" stroke="#2FB866" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></i><span id="actYay">Yay!</span></span><span class="act-hand" aria-hidden="true"><svg viewBox="0 0 30 38"><g stroke="#8A4B22" stroke-width="1.6" stroke-linejoin="round" stroke-linecap="round"><path d="M7 16.2c0-2.1 1.6-3.6 3.6-3.6h11.6c2.3 0 4.1 1.9 4.1 4.2v4.6c0 4.6-3.4 8-7.8 8h-3.4c-4.6 0-8.1-3.5-8.1-8.1z" fill="#FFD9BC"/><path d="M9 15V5.2a3.4 3.4 0 0 1 6.8 0V14" fill="#FFD9BC"/><path d="M17.4 13.2v3.2M21.6 13.4v3" stroke-width="1.3" opacity=".7"/><path d="M7.4 18.6c-2.3.5-3.1 3.2-1.4 4.8l2.2 2" fill="#FFD9BC"/><rect x="9" y="27.6" width="14.6" height="8.2" rx="3" fill="#6FB6FF"/><path d="M11 31.7h10.6" stroke="#fff" stroke-width="1.4" opacity=".75"/></g><ellipse cx="11.2" cy="5.4" rx="1.3" ry="2" fill="#fff" opacity=".7"/></svg></span></button>
     <div class="sticker-pop" id="stickerPop"></div>
     <div class="scene-mo-wrap">
       <img id="sceneMo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
@@ -1107,7 +1133,6 @@ html[data-bm-theme="classic"] #learnScreen>.timeline .tl-dot.done{background:rgb
   </div>
   <div class="tsb" id="tsb" hidden></div>
   <div class="dua-card">
-    <img class="dc-peek" src="baby-mo-poses/baby-mo-pose-26.webp" alt="" aria-hidden="true">
     <div class="dua-title" id="duaTitle">Doa Bangun Tidur</div>
     <div class="dua-desc" id="duaDesc">Baby Mo baru bangun tidur di pagi hari!</div>
     <div class="rd-row" id="rdRow"></div>
@@ -1130,13 +1155,14 @@ html[data-bm-theme="classic"] #learnScreen>.timeline .tl-dot.done{background:rgb
       <span class="sound-btn-icon" id="soundBtnIcon">🔊</span>
       <span id="soundBtnText">Baca Bersama Mo</span>
       <span class="sb-pass" id="sbPass" aria-hidden="true"></span>
-      <img class="sb-mo" src="baby-mo-poses/baby-mo-dua-smile.webp" alt="" aria-hidden="true">
+      <img class="sb-mo" src="baby-mo-render2/mo2-dua-stand.webp" alt="" aria-hidden="true">
     </button>
     <div class="speed-row">
       <div class="seg" id="speedSeg" data-v="slow" role="radiogroup" aria-label="Kecepatan">
         <span class="seg-thumb" aria-hidden="true"></span>
         <button type="button" class="seg-btn" id="speedNormal" role="radio" aria-checked="false" onclick="setSpeed('normal')"><svg class="sp-ic" viewBox="0 0 40 28" aria-hidden="true"><ellipse cx="19" cy="18" rx="10" ry="7.5" fill="#D9B38C"/><circle cx="29" cy="12" r="6" fill="#E2C09C"/><path d="M27 7c-2-6 0-8 2-7 1 1 0 5-1 7zM31 7c1-6 4-7 5-5 0 2-2 5-4 6z" fill="#E2C09C"/><path d="M28.5 6.5c-1-3 0-4 .6-3.6M32 6.6c1-3 2.5-3.6 3-3" stroke="#FF9AB0" stroke-width="1.2" fill="none" stroke-linecap="round"/><circle cx="31" cy="11.5" r="1.1" fill="#3A2A2A"/><circle cx="34.6" cy="13.4" r="1" fill="#FF8FA3"/><circle cx="9.5" cy="16" r="3" fill="#fff"/><path d="M13 25h6M22 25h5" stroke="#C49A72" stroke-width="3" stroke-linecap="round"/><path d="M4 12h4M2 17h4" stroke="#9FD3F5" stroke-width="1.8" stroke-linecap="round"/></svg><span>Normal</span></button>
         <button type="button" class="seg-btn active" id="speedSlow" role="radio" aria-checked="true" onclick="setSpeed('slow')"><svg class="sp-ic" viewBox="0 0 40 28" aria-hidden="true"><path d="M4 24h26c4 0 6-2 6-5" stroke="#B8E08F" stroke-width="5" fill="none" stroke-linecap="round"/><circle cx="17" cy="15" r="9" fill="#FFB86B"/><path d="M17 15m-5 0a5 5 0 1 0 5-5 3 3 0 1 0 3 3" stroke="#E07B2C" stroke-width="2" fill="none" stroke-linecap="round"/><path d="M33 19V9M36 19V10" stroke="#B8E08F" stroke-width="2" stroke-linecap="round"/><circle cx="33" cy="8" r="1.8" fill="#8CC66A"/><circle cx="36" cy="9" r="1.8" fill="#8CC66A"/><ellipse cx="13" cy="10" rx="3" ry="1.6" fill="#fff" opacity=".5"/></svg><span>Pelan</span></button>
+        <button type="button" class="seg-btn" id="speedSlower" role="radio" aria-checked="false" onclick="setSpeed('slower')"><svg class="sp-ic" viewBox="0 0 40 28" aria-hidden="true"><path d="M3 25h32" stroke="#B8E08F" stroke-width="3" stroke-linecap="round"/><ellipse cx="9" cy="21.5" rx="3" ry="2.6" fill="#8CC66A"/><ellipse cx="25" cy="21.5" rx="3" ry="2.6" fill="#8CC66A"/><path d="M27 15.5c2-3.6 6.6-4 8.6-1.4 1.6 2.2.2 5-2.6 5.4l-5.4.6z" fill="#9AD27A"/><circle cx="33" cy="14.6" r="1.1" fill="#2A3A22"/><path d="M4 20c0-7.6 5.6-12.6 12.6-12.6S29.2 12.4 29.2 20z" fill="#5FAE5A"/><path d="M10 20c0-4.6 3-7.6 6.6-7.6s6.6 3 6.6 7.6M16.6 8v4.4M7.2 14.6l3.4 2M26 14.6l-3.4 2" stroke="#3E8A3E" stroke-width="1.6" fill="none" stroke-linecap="round"/><ellipse cx="12" cy="11.8" rx="3" ry="1.5" fill="#fff" opacity=".35"/></svg><span>Lebih pelan</span></button>
       </div>
       <button type="button" class="rep-sw" id="speedRepeat" role="switch" aria-checked="false" onclick="toggleRepeat()"><svg class="sp-ic" viewBox="0 0 28 28" aria-hidden="true"><path d="M5 13a8 8 0 0 1 14-5.3" stroke="#7C5CE0" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M21 3v5.5h-5.5" stroke="#7C5CE0" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 15a8 8 0 0 1-14 5.3" stroke="#FF8A3D" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M7 25v-5.5h5.5" stroke="#FF8A3D" stroke-width="3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Ulangi 2×</span><span class="sw" aria-hidden="true"></span></button>
     </div>
@@ -1186,7 +1212,7 @@ html[data-bm-theme="classic"] #learnScreen>.timeline .tl-dot.done{background:rgb
 <!-- ════ COMPLETE SCREEN ════ -->
 <div class="screen" id="completeScreen">
   <div class="c-mascot-wrap">
-    <img class="c-mascot" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
+    <img class="c-mascot" src="baby-mo-render2/mo2-cheer-both.webp" alt="Baby Mo"/>
   </div>
   <div class="c-card">
     <div class="c-title" id="cTitle">Masya Allah! 🌟</div>
@@ -1300,6 +1326,9 @@ let QUIZ_Q = [0, 6, 5, 11];
 // ═══════════════════════════════════════
 // Uses the built-in Arabic voice of the phone or browser.
 let isSpeaking = false, currentSpeed = 'slow', audioCtx = null;
+/* Normal 1× · Slow 0.8× · Slower 0.5× (the recorded clip's playbackRate, pitch kept); TTS fallback rates */
+const CLIP_RATE = { normal:1, slow:0.8, slower:0.5 }, TTS_RATE = { normal:0.60, slow:0.40, slower:0.30 };
+function speedKey(s){ return s === 'normal' || s === 'slower' ? s : 'slow'; }
 let currentQuizDuaIdx = 0;
 
 // Web Speech API vars
@@ -1328,9 +1357,8 @@ function speakDua(text, rate, after){
       if(window.speechSynthesis) speechSynthesis.cancel();
       if(duaAudio){ duaAudio.onended = duaAudio.onerror = null; duaAudio.pause(); }
       const a = duaAudio = new Audio('doa-voice/' + f);
-      const slow = (rate !== undefined ? rate <= 0.45 : currentSpeed === 'slow');
       a.preservesPitch = a.webkitPreservesPitch = a.mozPreservesPitch = true;
-      a.playbackRate = slow ? 0.75 : 1;
+      a.playbackRate = rate !== undefined ? (rate <= 0.45 ? 0.8 : 1) : CLIP_RATE[currentSpeed];
       const end = () => { if(duaAudio !== a) return; isSpeaking = false; setSoundState('idle'); setQuizPlayState('idle'); if(after) after(); };
       a.onended = end;
       a.onerror = () => { if(duaAudio !== a) return; duaAudio = null; speakDuaFallback(text, rate); };
@@ -1352,7 +1380,7 @@ function speakDuaFallback(text, rate){
   speechSynthesis.cancel();
   const utt  = new SpeechSynthesisUtterance(text);
   utt.lang   = 'ar-SA';
-  utt.rate   = rate !== undefined ? rate : (currentSpeed === 'slow' ? 0.40 : 0.60);
+  utt.rate   = rate !== undefined ? rate : TTS_RATE[currentSpeed];
   utt.pitch  = 1.0;   // never modify pitch on Arabic TTS
   utt.volume = 1.0;
   if(wsArabicVoice) utt.voice = wsArabicVoice; // else the system picks its ar-SA voice
@@ -1398,12 +1426,12 @@ function playQuizAudio(){
 }
 
 function setSpeed(s){
-  currentSpeed = s === 'normal' ? 'normal' : 'slow';
+  currentSpeed = speedKey(s);
   speedUI();
 }
 function speedUI(){
   const seg = document.getElementById('speedSeg'); if(seg) seg.dataset.v = currentSpeed;
-  ['normal','slow'].forEach(k => { const b = document.getElementById(k === 'normal' ? 'speedNormal' : 'speedSlow'); if(!b) return;
+  ['normal','slow','slower'].forEach(k => { const b = document.getElementById(k === 'normal' ? 'speedNormal' : k === 'slow' ? 'speedSlow' : 'speedSlower'); if(!b) return;
     b.classList.toggle('active', currentSpeed === k); b.setAttribute('aria-checked', String(currentSpeed === k)); });
 }
 let repeatTimer = null;
@@ -1993,12 +2021,51 @@ function showToast(e, t){
   // a single phrase (bedtime tasbih counter)
   function speakWord(text,done){
     try{ if(!window.speechSynthesis){ setTimeout(done,500); return; }
-      var u=new SpeechSynthesisUtterance(text); u.lang='ar-SA'; u.rate=currentSpeed==='slow'?0.5:0.7; if(wsArabicVoice) u.voice=wsArabicVoice;
-      u.bmSlow=currentSpeed==='slow';   // a recorded clip plays a little slower (bm-voice.js)
+      var u=new SpeechSynthesisUtterance(text); u.lang='ar-SA'; u.rate=currentSpeed==='normal'?0.7:currentSpeed==='slower'?0.4:0.5; if(wsArabicVoice) u.voice=wsArabicVoice;
+      u.bmSlow=currentSpeed!=='normal'; u.bmRate=CLIP_RATE[currentSpeed];   // the recorded clip's speed (bm-voice.js)
       var t=setTimeout(function(){ done&&done(); done=null; },2600); u.onend=u.onerror=function(){ clearTimeout(t); if(done){ var f=done; done=null; setTimeout(f,120);} };
       speechSynthesis.cancel(); speechSynthesis.speak(u);
     }catch(e){ setTimeout(done,500); }
   }
+  /* ─── karaoke read-along: the Arabic is split into word spans (its characters untouched). While Mo reads,
+     a soft gold fill sweeps right-to-left across the word being read; words already read turn a deeper colour.
+     Timing: the recorded clip's currentTime / duration (less a short lead-in and lead-out), each word's share
+     weighted by its letters (harakat ignored), so it follows any speed; with no clip (the phone's voice, or
+     muted) the same sweep runs on the estimated reading time. ─── */
+  var HARAKAT=/[ؐ-ًؚ-ٰٟۖ-ۭـ\s]/g;
+  function wrapWords(box,txt){
+    box.textContent='';
+    txt.split(/(\s+)/).forEach(function(s){ if(!s) return;
+      if(/^\s+$/.test(s)){ box.appendChild(document.createTextNode(s)); return; }
+      var w=document.createElement('span'); w.className='w'; w.textContent=s; w.setAttribute('data-n',Math.max(1,s.replace(HARAKAT,'').length)); box.appendChild(w); });
+  }
+  var KA={raf:0,tok:0,log:null};
+  function kaClear(){ cancelAnimationFrame(KA.raf); KA.tok++; var box=document.getElementById('arabicText'); if(!box) return;
+    box.classList.remove('karaoke'); Array.prototype.forEach.call(box.querySelectorAll('.w'),function(w){ w.classList.remove('read','cur'); w.style.removeProperty('--p'); }); }
+  // getFrac() → reading progress 0…1, or -1 while the voice has not started yet
+  function kaStart(getFrac){
+    kaClear(); var tok=KA.tok, box=document.getElementById('arabicText'), ws=[].slice.call(box.querySelectorAll('.w')); if(!ws.length) return;
+    var n=ws.map(function(w){ return +w.getAttribute('data-n')||1; }), tot=n.reduce(function(a,b){ return a+b; },0), cum=[], c=0, last=-1;
+    n.forEach(function(x){ c+=x; cum.push(c/tot); });
+    box.classList.add('karaoke');
+    (function tick(){
+      if(tok!==KA.tok) return;
+      var f=getFrac();
+      if(f>=0){
+        f=Math.min(1,f); var i=0; while(i<cum.length-1 && f>=cum[i]) i++;
+        var s=i?cum[i-1]:0, p=Math.max(0,Math.min(1,(f-s)/(cum[i]-s)));
+        if(i!==last){ ws.forEach(function(w,k){ w.classList.toggle('read',k<i); w.classList.toggle('cur',k===i); }); last=i; }
+        ws[i].style.setProperty('--p',(p*100).toFixed(1)+'%');
+        if(KA.log) KA.log.push([Math.round(performance.now()),i,ws.length,+f.toFixed(3)]);
+      }
+      KA.raf=requestAnimationFrame(tick);
+    })();
+  }
+  window.doaKaraoke=KA;   // the timing log (KA.log=[] to record) for checks
+  var LEAD=0.25, TAIL=0.35;   // seconds of breath before the first word / after the last one in a clip
+  function clipFrac(a){ var d=a.duration; if(!isFinite(d)||d<=0) return -1; var l=Math.min(LEAD,d*.08), r=Math.min(TAIL,d*.1);
+    return Math.max(0,(a.currentTime-l)/(d-l-r)); }
+  var SLOWF={normal:1,slow:1.25,slower:2};
   function readFull(onDone){
     var my=++readSeq, txt=DUAS[currentDuaIdx].arabic, k=0;
     var box=document.getElementById('arabicText'), card=box.parentNode, pass=document.getElementById('sbPass');
@@ -2006,9 +2073,9 @@ function showToast(e, t){
     try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){}
     isSpeaking=true; setSoundState('playing');
     var glow=function(on){ box.classList.toggle('full',on); card.classList.toggle('reading',on); };
-    var finish=function(){ if(my!==readSeq) return; glow(false); if(pass) pass.textContent=''; isSpeaking=false; setSoundState('idle'); onDone&&onDone(); };
+    var finish=function(){ if(my!==readSeq) return; kaClear(); glow(false); if(pass) pass.textContent=''; isSpeaking=false; setSoundState('idle'); onDone&&onDone(); };
     // no sound (muted / no speech at all): the words glow for about as long as the reading takes
-    var est=function(){ return Math.max(2200,txt.split(/\s+/).length*720*(currentSpeed==='slow'?1.25:1)); };
+    var est=function(){ return Math.max(2200,txt.split(/\s+/).length*720*SLOWF[currentSpeed]); };
     (function one(){
       if(my!==readSeq) return;
       k++; glow(true); if(pass) pass.textContent=times()>1?k+'/'+times():'';
@@ -2017,21 +2084,30 @@ function showToast(e, t){
         if(k<times()){ glow(false); setTimeout(one,700); } else finish(); };
       if(muted()||!window.speechSynthesis){
         if(muted()) showAudioNote(L('🔇 Suara sedang mati — baca doanya bersama ya!','🔇 Sound is off — read the du\'a together!'));
-        wd=setTimeout(next,est()); return; }
-      var slow=currentSpeed==='slow', u=new SpeechSynthesisUtterance(txt);
-      u.lang='ar-SA'; u.rate=slow?0.40:0.60; u.pitch=1; u.bmSlow=slow; if(wsArabicVoice) u.voice=wsArabicVoice;
+        var E0=est(), t0=performance.now(); kaStart(function(){ return (performance.now()-t0)/E0; });
+        wd=setTimeout(next,E0); return; }
+      var u=new SpeechSynthesisUtterance(txt), ts=0, E=est();
+      u.lang='ar-SA'; u.rate=TTS_RATE[currentSpeed]; u.pitch=1; u.bmSlow=currentSpeed!=='normal'; u.bmRate=CLIP_RATE[currentSpeed]; if(wsArabicVoice) u.voice=wsArabicVoice;
       u.onend=next; u.onerror=next;
+      try{ u.addEventListener('start',function(){ ts=performance.now(); }); }catch(e){}
       wd=setTimeout(next,60000);   // never hang the page
       try{ speechSynthesis.speak(u); }catch(e){ wd=setTimeout(next,est()); }
+      var clip=false;
+      kaStart(function(){
+        var a=window.BMVoice&&BMVoice.clipOf&&BMVoice.clipOf(u);
+        if(a){ clip=true; return a.currentTime>0||!a.paused ? clipFrac(a) : -1; }   // the recorded clip
+        if(clip) return 1;                                                          // the clip has ended
+        return ts ? (performance.now()-ts)/E : -1;                                  // the phone's voice: estimated
+      });
     })();
   }
   window.handleSoundClick=function(){ if(isSpeaking){ stopSpeech(); return; } if(!muted()) playTone(523,0.06); readFull(function(){ earn(DUAS[currentDuaIdx]); }); };
-  var _stop=stopSpeech; window.stopSpeech=function(){ readSeq++; _stop(); var b=document.getElementById('arabicText'); if(b){ b.classList.remove('full'); b.parentNode.classList.remove('reading'); } var p=document.getElementById('sbPass'); if(p) p.textContent=''; };
+  var _stop=stopSpeech; window.stopSpeech=function(){ readSeq++; kaClear(); _stop(); var b=document.getElementById('arabicText'); if(b){ b.classList.remove('full'); b.parentNode.classList.remove('reading'); } var p=document.getElementById('sbPass'); if(p) p.textContent=''; };
   // Normal / Slow and Repeat 2× are remembered (Slow the first time)
   var _setSpeed=setSpeed; window.setSpeed=function(v){ if(v!==currentSpeed) sfx('tap'); _setSpeed(v); ST.speed=currentSpeed; save(); };
   function repUI(){ var b=document.getElementById('speedRepeat'); if(b) b.setAttribute('aria-checked',ST.rep2?'true':'false'); }
   window.toggleRepeat=function(){ ST.rep2=!ST.rep2; save(); repUI(); sfx('tap'); };
-  currentSpeed=ST.speed==='normal'?'normal':'slow'; speedUI(); repUI();
+  currentSpeed=speedKey(ST.speed); speedUI(); repUI();
   document.getElementById('speedSeg').setAttribute('aria-label',L('Kecepatan','Speed'));
 
   function earn(d){
@@ -2087,7 +2163,8 @@ function showToast(e, t){
     pos=Math.max(0,PLAY.indexOf(idx)); readSeq++;
     _load(idx);
     var d=DUAS[idx];
-    showScene(d); currentSpeed=ST.speed==='normal'?'normal':'slow'; speedUI(); repUI();
+    wrapWords(document.getElementById('arabicText'),d.arabic);
+    showScene(d); currentSpeed=speedKey(ST.speed); speedUI(); repUI();
     document.getElementById('lCounter').textContent=L('Doa ','Du\'a ')+(pos+1)+' / '+PLAY.length;
     document.getElementById('sceneTime').textContent=stageLabel(stageOf(d));
     document.getElementById('lLives').textContent='';
@@ -2096,7 +2173,7 @@ function showToast(e, t){
     // English: the meaning from the dictionary, else the du'a's own English meaning
     if(EN){ var mi=window.BM_T?BM_T(d.meaningId):d.meaningId; document.getElementById('meaningId').textContent=(mi&&mi!==d.meaningId)?mi:d.meaningEn; }
     var a=document.getElementById('actBtn'); a.classList.remove('done');
-    document.getElementById('actEm').textContent=d.prop; document.getElementById('actTxt').textContent=L(d.act[0],d.act[1]).replace(/\s+(\S+)$/,'\u00A0$1'); document.getElementById('actYay').textContent=L('Hore!','Yay!');
+    document.getElementById('actEm').textContent=d.prop; document.getElementById('actTxt').textContent=L(d.act[0],d.act[1]).replace(/[\s\u00A0]*(?:[\p{Extended_Pictographic}\p{Emoji_Modifier}\u200D\uFE0F\u20E3])+\s*$/u,'').replace(/\s+(\S+)$/,'\u00A0$1'); document.getElementById('actYay').textContent=L('Hore!','Yay!');
     // the tap plays the scene's own action (motion + sound, see doa-scenes.js), then Mo reads the whole du'a
     a.onclick=function(){ if(a.classList.contains('done')) return; a.classList.add('done');
       var p0=pos, t=window.playDoaAction?playDoaAction(d.id):0;
@@ -2133,7 +2210,7 @@ function showToast(e, t){
       +'<div class="tsb-seg" role="group"><button type="button" data-m="full"><img src="icons/scene/tasbih.svg" alt="" draggable="false">33 · 33 · 34</button><button type="button" data-m="short">⭐ '+T('Versi pendek')+'</button></div>'
       +'<div class="tsb-steps" id="tsbSteps"></div>'
       +'<button class="tsb-btn" id="tsbBtn" type="button"><svg id="tsbRing" viewBox="0 0 200 200" aria-hidden="true"></svg><span class="tsb-in"><span class="tsb-ar" id="tsbAr"></span><span class="tsb-lt" id="tsbLt"></span><span class="tsb-num" id="tsbNum">0</span><span class="tsb-of" id="tsbOf"></span></span><img class="tsb-hand" src="icons/scene/tap-hand.svg" alt="" aria-hidden="true" draggable="false"></button>'
-      +'<div class="tsb-foot"><img class="tsb-mo" src="baby-mo-poses/baby-mo-dua-smile.webp" alt="" draggable="false"><div class="tsb-ft"><div class="tsb-mean" id="tsbMean"></div><div class="tsb-tot" id="tsbTot"></div></div></div>'
+      +'<div class="tsb-foot"><span class="tsb-mo"><img src="baby-mo-render2/mo2-hand-chest.webp" alt="" draggable="false"></span><div class="tsb-ft"><div class="tsb-mean" id="tsbMean"></div><div class="tsb-tot" id="tsbTot"></div></div></div>'
       +'<div class="tsb-row"><button type="button" id="tsbHear">🔊 '+T('Dengar')+'</button><button type="button" id="tsbReset">↺ '+T('Ulang dari awal')+'</button></div>'
       +'<svg class="tsb-grass" viewBox="0 0 400 44" preserveAspectRatio="none" aria-hidden="true"><path d="M0 26 Q60 12 120 20 Q200 30 280 16 Q340 8 400 20 V44 H0z" fill="#9FDC7A"/><path d="M0 34 Q90 22 200 30 Q300 38 400 28 V44 H0z" fill="#5CB84E"/></svg>';
     box.hidden=false;
@@ -2205,7 +2282,8 @@ function showToast(e, t){
     document.getElementById('cSub').textContent=L('Kamu sudah belajar '+PLAY.length+' doa bersama Mo! 🏅 '+nLearned()+' / '+DUAS.length+' stiker','You learned '+PLAY.length+' du\'as with Mo! 🏅 '+nLearned()+' / '+DUAS.length+' stickers');
     var recap=document.getElementById('cRecap'); recap.innerHTML='<div class="cr-head">✅ '+L('Doa yang kamu pelajari','Du\'as you learned')+'</div>';
     PLAY.forEach(function(i){ var d=DUAS[i]; recap.innerHTML+='<div class="cr-item"><div class="cr-top"><span class="cr-icon">'+doaIcon(d)+'</span><span class="cr-title-small">'+d.title+'</span></div><div class="cr-arabic">'+d.arabic+'</div><div class="cr-meaning">'+(EN?d.meaningEn:d.meaningId)+'</div></div>'; });
-    var m=document.querySelector('.c-mascot'); if(m) m.src='baby-mo-poses/baby-mo-yeyy.webp';
+    var m=document.querySelector('.c-mascot'), ns=(document.getElementById('cStarsDisp').textContent.match(/\u2B50/g)||[]).length;
+    if(m) m.src='baby-mo-render2/mo2-'+(ns>=3?'cheer-both':ns===2?'excited':'arms-wide')+'.webp';
   };
   window.restartGame=function(){ ['cs1','cs2','cs3'].forEach(function(id){ document.getElementById(id).classList.remove('lit'); }); begin(); };
   var mq=document.getElementById('moQuizImg'); if(mq) mq.src='baby-mo-poses/baby-mo-idea.webp';
