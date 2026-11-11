@@ -1,54 +1,68 @@
-/* Baby Mo — Doa Harian illustrated scene headers.
-   One hand-drawn, gently animated SVG scene per du'a, with a real Baby Mo
-   render standing in it. Pure SVG + CSS (no images besides Baby Mo), so the
-   scenes stay crisp and light. Motion respects prefers-reduced-motion. */
+/* Baby Mo — Doa Harian illustrated scenes.
+   One hand-drawn, gently animated SVG scene per du'a, painted in a soft,
+   glossy "3D cartoon" style (gradients, highlights, soft shadows) to sit
+   next to the real Baby Mo renders. Pure SVG + CSS, no images besides the
+   characters, so the scenes stay crisp and light. Motion respects
+   prefers-reduced-motion.
+
+   Coordinate frame: x 0…400, y -120…180 (viewBox "0 -120 400 300").
+   The lower part (y 0…180) lines up with the older 400×180 header frame so
+   other games that crop "0 0 400 180" still get the ground and the props.
+   Skies, walls and floors are drawn far past the frame on every side, so the
+   scene can be shown edge to edge at any aspect ratio ("meet" + overflow).
+   Baby Mo stands on the ground at y≈128, on the right; his place in each
+   scene is given in frame units (x = centre, y = feet, h = visible height). */
 (function () {
   "use strict";
 
+  var VB = "0 -120 400 300", FY = 180, FH = 300;
+
   var CSS = [
-    ".scene-card.has-scene{height:184px;background:#fff}",
-    ".scene-card.has-scene .scene-time{left:auto;right:12px;background:rgba(255,255,255,.82);color:#152230;backdrop-filter:blur(6px)}",
-    ".scene-card.has-scene.night .scene-time{background:rgba(20,24,60,.55);color:#fff}",
+    /* the learn-screen header: a full-bleed picture (layout lives in the page) */
     ".scene-card.has-scene .scene-overlay,.scene-card.has-scene .scene-emojis{display:none}",
     ".scene-card.has-scene .scene-bg{background:none!important}",
-    ".scene-card.has-scene .scene-bg svg{position:absolute;inset:0;width:100%;height:100%;display:block}",
-    ".scene-card.has-scene .scene-mo-wrap{width:auto;height:156px;right:4%;bottom:0}",
-    ".scene-card.has-scene .scene-mo-wrap img{width:auto;height:156px;object-fit:contain;filter:drop-shadow(0 8px 10px rgba(30,40,70,.28))}",
-    ".scene-card.has-scene .scene-mo-wrap{animation:dsMoIn .55s cubic-bezier(.34,1.56,.64,1)}",
-    "@keyframes dsMoIn{from{transform:translateY(24px) scale(.9);opacity:0}to{transform:none;opacity:1}}",
+    ".scene-card.has-scene .scene-bg svg{position:absolute;inset:0;width:100%;height:100%;display:block;overflow:visible}",
+    ".scene-card.has-scene .scene-mo-wrap{position:absolute;right:auto;z-index:2;animation:dsMoIn .6s cubic-bezier(.34,1.56,.64,1)}",
+    ".scene-card.has-scene .scene-mo-wrap img{display:block;width:100%;height:100%;object-fit:contain;transform-origin:50% 92%;filter:drop-shadow(0 10px 12px rgba(40,30,80,.28));animation:dsMoBob 3.8s ease-in-out infinite}",
+    ".scene-card.has-scene .scene-mo-wrap img.celebrate{animation:moCelebrate .5s cubic-bezier(.34,1.56,.64,1)}",
+    ".scene-card.has-scene .scene-mo-wrap img.wrong{animation:moWrong .4s ease}",
+    "@keyframes dsMoIn{from{transform:translateY(30px) scale(.9);opacity:0}to{transform:none;opacity:1}}",
+    "@keyframes dsMoBob{0%,100%{transform:translateY(0) rotate(-1.2deg)}50%{transform:translateY(-4px) rotate(1.2deg)}}",
     // shared motion
     ".ds svg *{transform-box:fill-box;transform-origin:center}",
     ".ds .float{animation:dsFloat 4s ease-in-out infinite}",
     ".ds .float2{animation:dsFloat 5.5s ease-in-out infinite .8s}",
-    "@keyframes dsFloat{50%{transform:translateY(-5px)}}",
-    ".ds .drift{animation:dsDrift 22s linear infinite}",
-    ".ds .drift.slow{animation-duration:34s}",
-    ".ds .drift.d2{animation-delay:-11s}",
-    "@keyframes dsDrift{from{transform:translateX(-140px)}to{transform:translateX(160px)}}",
-    ".ds .spin{animation:dsSpin 18s linear infinite}",
+    "@keyframes dsFloat{50%{transform:translateY(-6px)}}",
+    ".ds .drift{animation:dsDrift 26s ease-in-out infinite alternate}",
+    ".ds .drift.slow{animation-duration:38s}",
+    ".ds .drift.d2{animation-delay:-13s}",
+    "@keyframes dsDrift{from{transform:translateX(-40px)}to{transform:translateX(40px)}}",
+    ".ds .spin{animation:dsSpin 24s linear infinite}",
     "@keyframes dsSpin{to{transform:rotate(360deg)}}",
-    ".ds .rise{animation:dsRise 1.6s cubic-bezier(.2,.8,.3,1) both}",
-    "@keyframes dsRise{from{transform:translateY(46px)}to{transform:none}}",
+    ".ds .rise{animation:dsRise 1.8s cubic-bezier(.2,.8,.3,1) both}",
+    "@keyframes dsRise{from{transform:translateY(40px)}to{transform:none}}",
     ".ds .twinkle{animation:dsTwinkle 2.4s ease-in-out infinite}",
     ".ds .twinkle.t2{animation-delay:.8s}.ds .twinkle.t3{animation-delay:1.6s}.ds .twinkle.t4{animation-delay:.4s}",
-    "@keyframes dsTwinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.1)}}",
-    ".ds .sway{animation:dsSway 3.6s ease-in-out infinite}",
-    "@keyframes dsSway{50%{transform:skewX(-4deg) translateX(2px)}}",
-    ".ds .swing{animation:dsSwing 3s ease-in-out infinite;transform-origin:top center}",
-    "@keyframes dsSwing{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}",
+    "@keyframes dsTwinkle{0%,100%{opacity:.35;transform:scale(.7)}50%{opacity:1;transform:scale(1.12)}}",
+    ".ds .sway{animation:dsSway 3.6s ease-in-out infinite;transform-origin:center bottom}",
+    "@keyframes dsSway{50%{transform:rotate(-4deg)}}",
+    ".ds .swing{animation:dsSwing 3.4s ease-in-out infinite;transform-origin:top center}",
+    "@keyframes dsSwing{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}",
     ".ds .steam{animation:dsSteam 2.6s ease-in-out infinite;opacity:0}",
     ".ds .steam.s2{animation-delay:.85s}.ds .steam.s3{animation-delay:1.7s}",
-    "@keyframes dsSteam{0%{opacity:0;transform:translateY(6px) scaleY(.8)}35%{opacity:.85}100%{opacity:0;transform:translateY(-20px) scaleY(1.1)}}",
+    "@keyframes dsSteam{0%{opacity:0;transform:translateY(6px) scaleY(.8)}35%{opacity:.9}100%{opacity:0;transform:translateY(-22px) scaleY(1.1)}}",
     ".ds .bubble{animation:dsBubble 4.2s ease-in infinite;opacity:0}",
     ".ds .bubble.b2{animation-delay:1.1s}.ds .bubble.b3{animation-delay:2.2s}.ds .bubble.b4{animation-delay:3.1s}",
-    "@keyframes dsBubble{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:.9}100%{opacity:0;transform:translateY(-90px) scale(1.15)}}",
+    "@keyframes dsBubble{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:.95}100%{opacity:0;transform:translateY(-80px) scale(1.15)}}",
     ".ds .step{animation:dsStep 3.2s ease-in-out infinite;opacity:0}",
     ".ds .step.p2{animation-delay:.5s}.ds .step.p3{animation-delay:1s}.ds .step.p4{animation-delay:1.5s}",
     "@keyframes dsStep{0%,8%{opacity:0;transform:scale(.6)}18%,70%{opacity:1;transform:scale(1)}90%,100%{opacity:0}}",
     ".ds .shine{animation:dsShine 3.5s ease-in-out infinite}",
-    "@keyframes dsShine{0%,30%{transform:translateX(-60px);opacity:0}45%{opacity:.9}70%,100%{transform:translateX(60px);opacity:0}}",
+    "@keyframes dsShine{0%,30%{transform:translateX(-50px);opacity:0}45%{opacity:.9}70%,100%{transform:translateX(50px);opacity:0}}",
     ".ds .glow{animation:dsGlow 2.8s ease-in-out infinite}",
-    "@keyframes dsGlow{50%{opacity:.55;transform:scale(1.08)}}",
+    "@keyframes dsGlow{50%{opacity:.6;transform:scale(1.08)}}",
+    ".ds .beam{animation:dsBeam 5s ease-in-out infinite}",
+    "@keyframes dsBeam{50%{opacity:.55}}",
     ".ds .page{animation:dsPage 3.4s ease-in-out infinite;transform-origin:left center}",
     "@keyframes dsPage{0%,35%{transform:scaleX(1)}60%,100%{transform:scaleX(-1)}}",
     ".ds .letter{animation:dsLetter 5s ease-in-out infinite;opacity:0}",
@@ -57,403 +71,709 @@
     ".ds .zz{animation:dsZ 3.6s ease-in-out infinite;opacity:0}",
     ".ds .zz.z2{animation-delay:1.2s}.ds .zz.z3{animation-delay:2.4s}",
     "@keyframes dsZ{0%{opacity:0;transform:translate(0,8px) scale(.6)}25%{opacity:1}100%{opacity:0;transform:translate(16px,-30px) scale(1.2)}}",
-    ".ds .bird{animation:dsBird 9s linear infinite}",
-    "@keyframes dsBird{from{transform:translate(-40px,10px)}50%{transform:translate(60px,-4px)}to{transform:translate(160px,6px)}}",
+    ".ds .bird{animation:dsBird 11s linear infinite}",
+    ".ds .bird.k2{animation-delay:-5s}",
+    "@keyframes dsBird{from{transform:translate(-60px,10px)}50%{transform:translate(60px,-6px)}to{transform:translate(180px,6px)}}",
     ".ds .flap{animation:dsFlap .5s ease-in-out infinite alternate;transform-origin:center bottom}",
     "@keyframes dsFlap{to{transform:scaleY(.4)}}",
-    ".ds .wobble{animation:dsWobble 1.8s ease-in-out infinite;transform-origin:bottom center}",
-    "@keyframes dsWobble{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}",
-    ".ds .door{animation:dsDoor 4s ease-in-out infinite;transform-origin:left center}",
-    "@keyframes dsDoor{0%,20%{transform:scaleX(1)}45%,75%{transform:scaleX(.55)}100%{transform:scaleX(1)}}",
+    ".ds .wobble{animation:dsWobble 1.1s ease-in-out infinite;transform-origin:bottom center}",
+    "@keyframes dsWobble{0%,100%{transform:rotate(-7deg)}50%{transform:rotate(7deg)}}",
+    ".ds .rock{animation:dsRock 3.2s ease-in-out infinite;transform-origin:bottom center}",
+    "@keyframes dsRock{0%,100%{transform:rotate(-4deg)}50%{transform:rotate(4deg)}}",
+    ".ds .door{animation:dsDoor 4.4s ease-in-out infinite;transform-origin:left center}",
+    "@keyframes dsDoor{0%,20%{transform:scaleX(1)}45%,75%{transform:scaleX(.5)}100%{transform:scaleX(1)}}",
     ".ds .wheel{animation:dsSpin .7s linear infinite}",
     ".ds .dash{animation:dsDash .9s linear infinite}",
     "@keyframes dsDash{to{transform:translateX(-48px)}}",
-    ".ds .pass{animation:dsPass 6s linear infinite}",
-    ".ds .pass.p2{animation-delay:-3s}",
-    "@keyframes dsPass{from{transform:translateX(120px)}to{transform:translateX(-320px)}}",
+    ".ds .pass{animation:dsPass 7s linear infinite}",
+    ".ds .pass.p2{animation-delay:-3.5s}",
+    "@keyframes dsPass{from{transform:translateX(140px)}to{transform:translateX(-340px)}}",
+    ".ds .speed{animation:dsSpeed .8s ease-in infinite;opacity:0}",
+    ".ds .speed.v2{animation-delay:.27s}.ds .speed.v3{animation-delay:.54s}",
+    "@keyframes dsSpeed{0%{opacity:0;transform:translateX(10px)}30%{opacity:.9}100%{opacity:0;transform:translateX(-26px)}}",
     ".ds .bump{animation:dsBump .45s ease-in-out infinite alternate}",
-    "@keyframes dsBump{to{transform:translateY(-1.6px)}}",
+    "@keyframes dsBump{to{transform:translateY(-1.8px)}}",
     ".ds .drop{animation:dsDrop 1s linear infinite;opacity:.85}",
     ".ds .drop.r2{animation-delay:-.33s}.ds .drop.r3{animation-delay:-.66s}",
-    "@keyframes dsDrop{from{transform:translate(6px,-40px)}to{transform:translate(-6px,150px)}}",
+    "@keyframes dsDrop{from{transform:translate(8px,-60px)}to{transform:translate(-8px,190px)}}",
     ".ds .ripple{animation:dsRipple 1.6s ease-out infinite;opacity:0}",
     ".ds .ripple.q2{animation-delay:.55s}.ds .ripple.q3{animation-delay:1.1s}",
     "@keyframes dsRipple{0%{opacity:.9;transform:scale(.3)}100%{opacity:0;transform:scale(1.4)}}",
     ".ds .beat{animation:dsBeat 1.4s ease-in-out infinite}",
     "@keyframes dsBeat{0%,100%{transform:scale(1)}15%{transform:scale(1.15)}30%{transform:scale(1)}45%{transform:scale(1.1)}}",
-    ".ds .sink{animation:dsSink 8s ease-in-out infinite alternate}",
-    "@keyframes dsSink{from{transform:translateY(-6px)}to{transform:translateY(10px)}}",
+    ".ds .heartup{animation:dsHeart 4.6s ease-in infinite;opacity:0}",
+    ".ds .heartup.h2{animation-delay:1.5s}.ds .heartup.h3{animation-delay:3s}",
+    "@keyframes dsHeart{0%{opacity:0;transform:translateY(10px) scale(.5)}20%{opacity:1;transform:translateY(0) scale(1)}100%{opacity:0;transform:translateY(-70px) scale(1.1)}}",
+    ".ds .sink{animation:dsSink 9s ease-in-out infinite alternate}",
+    "@keyframes dsSink{from{transform:translateY(-8px)}to{transform:translateY(10px)}}",
     ".ds .bead{animation:dsBeadOn 4s linear infinite;opacity:0}",
     "@keyframes dsBeadOn{0%{opacity:0}5%,45%{opacity:1}60%,100%{opacity:0}}",
-    "@media (prefers-reduced-motion:reduce){.ds *{animation:none!important}.ds .steam,.ds .bubble,.ds .step,.ds .letter,.ds .zz{opacity:.8}}"
+    ".ds .flutter{animation:dsFlutter 7s ease-in-out infinite}",
+    "@keyframes dsFlutter{0%,100%{transform:translate(0,0)}25%{transform:translate(18px,-12px)}50%{transform:translate(34px,2px)}75%{transform:translate(14px,10px)}}",
+    ".ds .wing{animation:dsWing .35s ease-in-out infinite alternate}",
+    "@keyframes dsWing{to{transform:scaleX(.35)}}",
+    ".ds .blink{animation:dsBlink 4.5s ease-in-out infinite;transform-origin:center}",
+    "@keyframes dsBlink{0%,92%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}",
+    ".ds .hop{animation:dsHop 2.6s ease-in-out infinite;transform-origin:center bottom}",
+    "@keyframes dsHop{0%,60%,100%{transform:translateY(0)}70%{transform:translateY(-10px) scaleY(1.05)}80%{transform:translateY(0) scaleY(.92)}}",
+    "@media (prefers-reduced-motion:reduce){.ds *,.ds .scene-mo-wrap,.ds .scene-mo-wrap img{animation:none!important}.ds .steam,.ds .bubble,.ds .step,.ds .letter,.ds .zz,.ds .heartup,.ds .speed{opacity:.85}}"
   ].join("\n");
 
-  var cloud = function (x, y, s, fill, cls) {
-    return '<g class="' + (cls || "drift") + '"><g transform="translate(' + x + ' ' + y + ') scale(' + s + ')" fill="' + (fill || "#fff") + '">' +
-      '<ellipse cx="0" cy="8" rx="22" ry="10"/><ellipse cx="-12" cy="4" rx="12" ry="10"/><ellipse cx="10" cy="0" rx="14" ry="13"/></g></g>';
-  };
-  var star = function (x, y, r, cls, fill) {
-    var p = [];
-    for (var i = 0; i < 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * .45 : r; p.push((x + rr * Math.cos(a)).toFixed(1) + "," + (y + rr * Math.sin(a)).toFixed(1)); }
-    return '<polygon class="' + (cls || "") + '" points="' + p.join(" ") + '" fill="' + (fill || "#FFE27A") + '"/>';
-  };
-  var sparkle = function (x, y, s, cls, fill) {
-    // position on the outer group, animation on the inner one (CSS transform would override the attribute)
-    return '<g transform="translate(' + x + ' ' + y + ') scale(' + s + ')"><path class="' + (cls || "") + '" fill="' + (fill || "#fff") +
-      '" d="M0-10C1.2-2.4 2.4-1.2 10 0 2.4 1.2 1.2 2.4 0 10-1.2 2.4-2.4 1.2-10 0-2.4-1.2-1.2-2.4 0-10z"/></g>';
-  };
-  var foot = function (x, y, rot, cls, left) {
-    return '<g transform="translate(' + x + ' ' + y + ') rotate(' + rot + ') scale(' + (left ? -1 : 1) + ',1)"><g class="step ' + cls + '" fill="#8AA5C2" opacity=".75">' +
-      '<ellipse cx="0" cy="0" rx="4.2" ry="7"/><circle cx="-2.6" cy="-9.5" r="1.6"/><circle cx="0" cy="-10.6" r="1.7"/><circle cx="2.5" cy="-9.8" r="1.5"/></g></g>';
-  };
-  var floor = function (c1, c2) {
-    return '<rect x="0" y="146" width="400" height="34" fill="' + c1 + '"/><rect x="0" y="146" width="400" height="4" fill="' + c2 + '"/>';
-  };
+  /* ───────────── tiny drawing kit ───────────── */
+  function stopsOf(stops) {
+    return stops.map(function (s, i) {
+      var op = s.split("~"), p = op[0].split("@");
+      return '<stop offset="' + (p[1] || (stops.length > 1 ? (i / (stops.length - 1)).toFixed(2) : 0)) + '" stop-color="' + p[0] + '"' + (op[1] ? ' stop-opacity="' + op[1] + '"' : "") + "/>";
+    }).join("");
+  }
+  // linear gradient: dir "v" (top→bottom, default), "h" (left→right) or "d" (diagonal)
+  function lg(id, stops, dir) {
+    var c = dir === "h" ? 'x1="0" y1="0" x2="1" y2="0"' : dir === "d" ? 'x1="0" y1="0" x2="1" y2="1"' : 'x1="0" y1="0" x2="0" y2="1"';
+    return '<linearGradient id="' + id + '" ' + c + ">" + stopsOf(stops) + "</linearGradient>";
+  }
+  function rg(id, stops, cx, cy, r) {
+    return '<radialGradient id="' + id + '"' + (cx != null ? ' cx="' + cx + '" cy="' + cy + '" r="' + (r || 0.6) + '"' : "") + ">" + stopsOf(stops) + "</radialGradient>";
+  }
+  // shared paint: soft shadow, gloss, cloud, sun, leaves, wood, glass, white plastic
+  var BASE = rg("dsSh", ["#3A2450~.30", "#3A2450~0"]) +
+    lg("dsGl", ["#fff~.85", "#fff~0"]) +
+    lg("dsCl", ["#FFFFFF", "#E2ECFA"]) +
+    rg("dsSun", ["#FFFDE6", "#FFE266@.55", "#FFAE2B"], 0.4, 0.35, 0.7) +
+    rg("dsHalo", ["#FFF3B0~.85", "#FFF3B0~0"]) +
+    rg("dsLeaf", ["#A6E884", "#4CAF50@.7", "#2F8A3E"], 0.35, 0.3, 0.8) +
+    lg("dsTrunk", ["#B07A4A", "#7E5230"], "h") +
+    lg("dsGlass", ["#E8F7FF", "#B6E1F7"], "d") +
+    lg("dsWhite", ["#FFFFFF", "#E6ECF5"]) +
+    lg("dsPotR", ["#FF9A7A", "#E2603F"]) +
+    rg("dsPink", ["#FFD0DE", "#FF8FB0"], 0.4, 0.35, 0.8) +
+    rg("dsGold", ["#FFF5C2", "#FFD34D@.5", "#F2A516"], 0.4, 0.35, 0.8);
 
+  function f(n) { return Math.round(n * 10) / 10; }
+  function bg(fill) { return '<rect x="-800" y="-900" width="2000" height="1500" fill="' + fill + '"/>'; }
+  function band(y, fill, h) { return '<rect x="-800" y="' + y + '" width="2000" height="' + (h || 600) + '" fill="' + fill + '"/>'; }
+  function shadow(cx, cy, rx, ry) { return '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + (ry || rx * 0.18) + '" fill="url(#dsSh)"/>'; }
+  function gloss(x, y, w, h, rx, op) { return '<rect x="' + f(x + w * 0.1) + '" y="' + f(y + h * 0.07) + '" width="' + f(w * 0.8) + '" height="' + f(h * 0.38) + '" rx="' + (rx || 0) + '" fill="url(#dsGl)" opacity="' + (op || 0.7) + '"/>'; }
+  function cloud(x, y, s, cls, op, fill) {
+    return '<g class="' + (cls || "drift") + '"><g transform="translate(' + x + " " + y + ") scale(" + s + ')" opacity="' + (op || 1) + '" fill="' + (fill || "url(#dsCl)") + '">' +
+      '<ellipse cx="0" cy="10" rx="34" ry="12"/><circle cx="-16" cy="2" r="13"/><circle cx="4" cy="-6" r="18"/><circle cx="22" cy="3" r="11"/>' +
+      '<ellipse cx="-2" cy="-14" rx="9" ry="4" fill="#fff" opacity=".8"/></g></g>';
+  }
+  function star(x, y, r, cls, fill) {
+    var p = [];
+    for (var i = 0; i < 10; i++) { var a = -Math.PI / 2 + i * Math.PI / 5, rr = i % 2 ? r * 0.48 : r; p.push(f(x + rr * Math.cos(a)) + "," + f(y + rr * Math.sin(a))); }
+    return '<polygon class="' + (cls || "") + '" points="' + p.join(" ") + '" fill="' + (fill || "#FFE27A") + '" stroke="' + (fill || "#FFE27A") + '" stroke-width="' + f(r * 0.25) + '" stroke-linejoin="round"/>';
+  }
+  function sparkle(x, y, s, cls, fill) {
+    // position on the outer group, animation on the inner one (a CSS transform would override the attribute)
+    return '<g transform="translate(' + x + " " + y + ") scale(" + s + ')"><path class="' + (cls || "") + '" fill="' + (fill || "#fff") +
+      '" d="M0-10C1.2-2.4 2.4-1.2 10 0 2.4 1.2 1.2 2.4 0 10-1.2 2.4-2.4 1.2-10 0-2.4-1.2-1.2-2.4 0-10z"/></g>';
+  }
+  function heart(x, y, s, fill, cls) {
+    return '<g transform="translate(' + x + " " + y + ") scale(" + s + ')"><g class="' + (cls || "") + '"><path d="M0 9C-3-1-15-3-15 5c0 6 9 11 15 16 6-5 15-10 15-16 0-8-12-6-15 4z" transform="translate(0 -10)" fill="' + (fill || "url(#dsPink)") + '"/>' +
+      '<ellipse cx="-7" cy="-7" rx="3.4" ry="2.2" fill="#fff" opacity=".75" transform="rotate(-30 -7 -7)"/></g></g>';
+  }
+  function sun(cx, cy, r, face, cls) {
+    var rays = "";
+    for (var i = 0; i < 12; i++) { var a = i * Math.PI / 6; rays += '<path d="M' + f(cx + Math.cos(a - 0.12) * (r + 6)) + " " + f(cy + Math.sin(a - 0.12) * (r + 6)) + "L" + f(cx + Math.cos(a) * (r * 1.9)) + " " + f(cy + Math.sin(a) * (r * 1.9)) + "L" + f(cx + Math.cos(a + 0.12) * (r + 6)) + " " + f(cy + Math.sin(a + 0.12) * (r + 6)) + 'z"/>'; }
+    return '<g class="' + (cls || "") + '"><circle class="glow" cx="' + cx + '" cy="' + cy + '" r="' + r * 2.6 + '" fill="url(#dsHalo)"/>' +
+      '<g class="spin"><g fill="#FFD95A" opacity=".75">' + rays + "</g></g>" +
+      '<circle cx="' + cx + '" cy="' + cy + '" r="' + r + '" fill="url(#dsSun)"/>' +
+      (face ? '<g fill="none" stroke="#B4650E" stroke-width="' + f(r * 0.1) + '" stroke-linecap="round"><path d="M' + f(cx - r * 0.42) + " " + f(cy - r * 0.08) + "q" + f(r * 0.14) + " " + f(-r * 0.18) + " " + f(r * 0.28) + ' 0M' + f(cx + r * 0.14) + " " + f(cy - r * 0.08) + "q" + f(r * 0.14) + " " + f(-r * 0.18) + " " + f(r * 0.28) + ' 0"/><path d="M' + f(cx - r * 0.28) + " " + f(cy + r * 0.2) + "q" + f(r * 0.28) + " " + f(r * 0.3) + " " + f(r * 0.56) + ' 0"/></g>' +
+        '<circle cx="' + f(cx - r * 0.55) + '" cy="' + f(cy + r * 0.2) + '" r="' + f(r * 0.14) + '" fill="#FF9A6A" opacity=".6"/><circle cx="' + f(cx + r * 0.55) + '" cy="' + f(cy + r * 0.2) + '" r="' + f(r * 0.14) + '" fill="#FF9A6A" opacity=".6"/>' : "") +
+      '<ellipse cx="' + f(cx - r * 0.35) + '" cy="' + f(cy - r * 0.45) + '" rx="' + f(r * 0.3) + '" ry="' + f(r * 0.18) + '" fill="#fff" opacity=".7"/></g>';
+  }
+  // a smiling crescent moon; sky = the colour behind it (cuts the crescent)
+  function moon(cx, cy, r, sky, cls) {
+    return '<g class="' + (cls || "") + '"><circle class="glow" cx="' + cx + '" cy="' + cy + '" r="' + r * 2.4 + '" fill="url(#dsHalo)" opacity=".7"/>' +
+      '<path d="M' + f(cx + r * 0.25) + " " + f(cy - r) + "A" + r + " " + r + " 0 1 0 " + f(cx + r) + " " + f(cy + r * 0.45) + "A" + f(r * 0.82) + " " + f(r * 0.82) + " 0 0 1 " + f(cx + r * 0.25) + " " + f(cy - r) + 'z" fill="url(#dsGold)"/>' +
+      '<path d="M' + f(cx - r * 0.5) + " " + f(cy - r * 0.05) + "q" + f(r * 0.12) + " " + f(-r * 0.15) + " " + f(r * 0.24) + ' 0" fill="none" stroke="#9A6A10" stroke-width="' + f(r * 0.09) + '" stroke-linecap="round"/>' +
+      '<path d="M' + f(cx - r * 0.42) + " " + f(cy + r * 0.32) + "q" + f(r * 0.18) + " " + f(r * 0.16) + " " + f(r * 0.36) + " " + f(-r * 0.04) + '" fill="none" stroke="#9A6A10" stroke-width="' + f(r * 0.09) + '" stroke-linecap="round"/>' +
+      '<circle cx="' + f(cx - r * 0.62) + '" cy="' + f(cy + r * 0.18) + '" r="' + f(r * 0.12) + '" fill="#FF9A6A" opacity=".55"/></g>';
+  }
+  function tree(x, y, s, cls) {
+    return '<g transform="translate(' + x + " " + y + ") scale(" + s + ')"><g class="' + (cls || "") + '">' + shadow(0, 0, 22, 5) +
+      '<rect x="-4" y="-30" width="8" height="30" rx="3" fill="url(#dsTrunk)"/>' +
+      '<circle cx="0" cy="-46" r="22" fill="url(#dsLeaf)"/><circle cx="-15" cy="-34" r="14" fill="url(#dsLeaf)"/><circle cx="15" cy="-33" r="14" fill="url(#dsLeaf)"/>' +
+      '<ellipse cx="-7" cy="-58" rx="8" ry="5" fill="#fff" opacity=".28"/></g></g>';
+  }
+  function bush(x, y, s, flowers) {
+    var h = '<g transform="translate(' + x + " " + y + ") scale(" + s + ')">' + shadow(0, 0, 26, 5) +
+      '<circle cx="-14" cy="-10" r="13" fill="url(#dsLeaf)"/><circle cx="12" cy="-10" r="14" fill="url(#dsLeaf)"/><circle cx="0" cy="-20" r="15" fill="url(#dsLeaf)"/><ellipse cx="-4" cy="-29" rx="6" ry="3.5" fill="#fff" opacity=".3"/>';
+    if (flowers) [[-14, -16, "#FF8FB8"], [2, -26, "#FFE066"], [14, -14, "#fff"], [-2, -10, "#FF8FB8"]].forEach(function (p) {
+      h += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="3.6" fill="' + p[2] + '"/><circle cx="' + p[0] + '" cy="' + p[1] + '" r="1.4" fill="#FFB020"/>';
+    });
+    return h + "</g>";
+  }
+  function plant(x, y, s, cls) {
+    return '<g transform="translate(' + x + " " + y + ") scale(" + s + ')"><g class="' + (cls || "") + '">' + shadow(0, 0, 16, 3.5) +
+      '<path d="M-11-18h22l-3 18h-16z" fill="url(#dsPotR)"/><rect x="-13" y="-21" width="26" height="6" rx="3" fill="#FFB49A"/>' +
+      '<path d="M0-21c-10-14-4-26 0-30 4 4 10 16 0 30M0-21c-16-6-18-16-16-21 5 0 13 5 16 21M0-21c16-6 18-16 16-21-5 0-13 5-16 21" fill="url(#dsLeaf)"/>' +
+      '<rect x="-8" y="-17" width="4" height="12" rx="2" fill="#fff" opacity=".35"/></g></g>';
+  }
+  function foot(x, y, rot, cls, left, fill) {
+    return '<g transform="translate(' + x + " " + y + ") rotate(" + rot + ") scale(" + (left ? -1.35 : 1.35) + ',1.35)"><g class="step ' + cls + '" fill="' + (fill || "#7EA6D6") + '" opacity=".8">' +
+      '<ellipse cx="0" cy="0" rx="4.2" ry="7"/><circle cx="-2.6" cy="-9.5" r="1.6"/><circle cx="0" cy="-10.6" r="1.7"/><circle cx="2.5" cy="-9.8" r="1.5"/></g></g>';
+  }
+  // a framed window with its own sky (inner = content drawn in window space, clipped)
+  function windowFrame(id, x, y, w, h, rx, inner, frame) {
+    frame = frame || "#fff";
+    return '<clipPath id="' + id + '"><rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + rx + '"/></clipPath>' +
+      shadow(x + w / 2, y + h + 8, w * 0.55, 6) +
+      '<g clip-path="url(#' + id + ')">' + inner + '<path d="M' + (x + w * 0.15) + " " + y + "l" + (w * 0.22) + " 0l" + (-w * 0.3) + " " + h + "l" + (-w * 0.22) + ' 0z" fill="#fff" opacity=".16"/></g>' +
+      '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + h + '" rx="' + rx + '" fill="none" stroke="' + frame + '" stroke-width="8"/>' +
+      '<rect x="' + (x - 2) + '" y="' + (y - 2) + '" width="' + (w + 4) + '" height="' + (h + 4) + '" rx="' + (rx + 2) + '" fill="none" stroke="#000" stroke-opacity=".06" stroke-width="1.5"/>' +
+      '<path d="M' + (x + w / 2) + " " + y + "v" + h + "M" + x + " " + (y + h / 2) + "h" + w + '" stroke="' + frame + '" stroke-width="5"/>' +
+      '<rect x="' + (x - 10) + '" y="' + (y + h) + '" width="' + (w + 20) + '" height="9" rx="4.5" fill="url(#dsWhite)"/>';
+  }
+  function floorShine(y) { return '<rect x="-800" y="' + y + '" width="2000" height="5" fill="#fff" opacity=".35"/><rect x="-800" y="' + (y + 5) + '" width="2000" height="6" fill="#000" opacity=".04"/>'; }
+  function rug(cx, cy, rx, ry, c1, c2) {
+    return '<ellipse cx="' + cx + '" cy="' + (cy + 3) + '" rx="' + rx + '" ry="' + ry + '" fill="#000" opacity=".06"/><ellipse cx="' + cx + '" cy="' + cy + '" rx="' + rx + '" ry="' + ry + '" fill="' + c1 + '"/>' +
+      '<ellipse cx="' + cx + '" cy="' + cy + '" rx="' + f(rx * 0.8) + '" ry="' + f(ry * 0.72) + '" fill="none" stroke="' + c2 + '" stroke-width="3" stroke-dasharray="7 5"/>';
+  }
+  function zz(x, y, col) {
+    return '<text class="zz" x="' + x + '" y="' + y + '" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="20" fill="' + col + '">Z</text>' +
+      '<text class="zz z2" x="' + (x + 14) + '" y="' + (y - 14) + '" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="15" fill="' + col + '">z</text>' +
+      '<text class="zz z3" x="' + (x + 26) + '" y="' + (y - 26) + '" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="12" fill="' + col + '">z</text>';
+  }
+  function bird(x, y, s, col, cls) {
+    return '<g class="bird ' + (cls || "") + '"><g transform="translate(' + x + " " + y + ") scale(" + (s || 1) + ')"><path class="flap" d="M-8 0q4-6 8 0q4-6 8 0" fill="none" stroke="' + (col || "#6A5A7A") + '" stroke-width="2.4" stroke-linecap="round"/></g></g>';
+  }
+  function butterfly(x, y, s) {
+    return '<g class="flutter"><g transform="translate(' + x + " " + y + ") scale(" + s + ')"><g class="wing"><path d="M0 0C-6-12-18-10-14 0-18 10-6 10 0 0z" fill="#FF9FCB"/><path d="M0 0C6-12 18-10 14 0 18 10 6 10 0 0z" fill="#FFC56B"/></g><ellipse cx="0" cy="0" rx="1.6" ry="6" fill="#5A3A6A"/></g></g>';
+  }
+  function bed(x, y, w, quilt1, quilt2, wood, teddy) {
+    // x,y = top-left of the mattress
+    return shadow(x + w / 2, y + 70, w * 0.55, 8) +
+      '<rect x="' + (x - 14) + '" y="' + (y - 46) + '" width="22" height="118" rx="10" fill="' + wood + '"/>' + gloss(x - 14, y - 46, 22, 118, 8, 0.5) +
+      '<rect x="' + (x + w - 8) + '" y="' + (y - 10) + '" width="18" height="82" rx="8" fill="' + wood + '"/>' +
+      '<rect x="' + x + '" y="' + (y + 14) + '" width="' + w + '" height="44" rx="12" fill="' + wood + '"/>' +
+      '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="26" rx="13" fill="url(#dsWhite)"/>' +
+      '<rect x="' + (x + 6) + '" y="' + (y - 20) + '" width="58" height="30" rx="15" fill="url(#dsWhite)"/><ellipse cx="' + (x + 28) + '" cy="' + (y - 12) + '" rx="16" ry="4" fill="#fff"/>' +
+      '<path d="M' + (x + 52) + " " + (y + 4) + "c30-10 " + (w - 70) + "-8 " + (w - 52) + " 0v40c-16 6-" + (w - 70) + " 6-" + (w - 52) + ' 0z" fill="' + quilt1 + '"/>' +
+      '<path d="M' + (x + 52) + " " + (y + 4) + "c30-10 " + (w - 70) + "-8 " + (w - 52) + ' 0v8c-30-6-' + (w - 70) + "-4-" + (w - 52) + ' 4z" fill="#fff" opacity=".35"/>' +
+      '<path d="M' + (x + 52) + " " + (y + 30) + "c30 6 " + (w - 70) + " 6 " + (w - 52) + ' 0" fill="none" stroke="' + quilt2 + '" stroke-width="3" stroke-dasharray="6 5"/>' +
+      (teddy ? teddyBear(x + w - 40, y + 2, 0.85) : "");
+  }
+  function teddyBear(x, y, s) {
+    // sitting teddy, bottom-centre at x,y
+    return '<g transform="translate(' + x + " " + y + ") scale(" + s + ')"><g class="rock">' +
+      lg("dsTed", ["#E0A36A", "#B9773F"]) +
+      '<ellipse cx="0" cy="-14" rx="15" ry="16" fill="url(#dsTed)"/><ellipse cx="0" cy="-10" rx="8" ry="9" fill="#F6D2A8"/>' +
+      '<ellipse cx="-14" cy="-4" rx="6" ry="5" fill="url(#dsTed)"/><ellipse cx="14" cy="-4" rx="6" ry="5" fill="url(#dsTed)"/>' +
+      '<circle cx="-11" cy="-44" r="6" fill="url(#dsTed)"/><circle cx="11" cy="-44" r="6" fill="url(#dsTed)"/><circle cx="-11" cy="-44" r="3" fill="#F6D2A8"/><circle cx="11" cy="-44" r="3" fill="#F6D2A8"/>' +
+      '<circle cx="0" cy="-34" r="14" fill="url(#dsTed)"/><ellipse cx="0" cy="-29" rx="6.5" ry="5" fill="#F6D2A8"/>' +
+      '<circle cx="-5" cy="-37" r="1.8" fill="#3A2418"/><circle cx="5" cy="-37" r="1.8" fill="#3A2418"/><ellipse cx="0" cy="-31" rx="2.2" ry="1.6" fill="#3A2418"/>' +
+      '<path d="M-2.4-27.5q2.4 2 4.8 0" fill="none" stroke="#3A2418" stroke-width="1.1" stroke-linecap="round"/>' +
+      '<path d="M-6-20l6 3 6-3-1 5-5-1-5 1z" fill="#FF6B8A"/><ellipse cx="-5" cy="-42" rx="4" ry="2.4" fill="#fff" opacity=".35"/></g></g>';
+  }
+  function lamp(x, y, s, on) {
+    // a little bedside lamp, base at x,y
+    return '<g transform="translate(' + x + " " + y + ") scale(" + s + ')">' + (on ? '<circle class="glow" cx="0" cy="-34" r="44" fill="url(#dsHalo)"/>' : "") + shadow(0, 0, 18, 3.6) +
+      '<rect x="-3" y="-30" width="6" height="28" rx="3" fill="#C9B6F2"/><ellipse cx="0" cy="-2" rx="13" ry="4" fill="#A98FE6"/>' +
+      '<path d="M-16-30h32l-7-24h-18z" fill="' + (on ? "#FFE08A" : "#F3D9A6") + '"/><path d="M-12-33l4-18h5l-3 18z" fill="#fff" opacity=".45"/></g>';
+  }
+  function clock(x, y, s) {
+    // a ringing alarm clock, feet at x,y
+    return '<g transform="translate(' + x + " " + y + ") scale(" + s + ')"><g class="wobble">' + shadow(0, 0, 16, 3) +
+      '<path d="M-9-4l-4 4M9-4l4 4" stroke="#B4322E" stroke-width="3" stroke-linecap="round"/>' +
+      '<circle cx="-11" cy="-34" r="7" fill="#FFC23D"/><circle cx="11" cy="-34" r="7" fill="#FFC23D"/><rect x="-1.5" y="-38" width="3" height="6" fill="#B4322E"/>' +
+      rg("dsClk", ["#FF8A7A", "#E5484D@.7", "#B4322E"], 0.35, 0.3, 0.8) +
+      '<circle cx="0" cy="-18" r="16" fill="url(#dsClk)"/><circle cx="0" cy="-18" r="11.5" fill="#fff"/>' +
+      '<path d="M0-26v8l5 3" stroke="#2B2F3A" stroke-width="2.2" stroke-linecap="round" fill="none"/><ellipse cx="-6" cy="-27" rx="4" ry="2.4" fill="#fff" opacity=".7"/></g>' +
+      '<g stroke="#FF8A3D" stroke-width="2.4" stroke-linecap="round" class="twinkle"><path d="M-22-42l-5-5M22-42l5-5M-25-24h-7M25-24h7"/></g></g>';
+  }
+  function bunting(x1, x2, y, cols) {
+    var h = '<path d="M' + x1 + " " + y + "Q" + (x1 + x2) / 2 + " " + (y + 14) + " " + x2 + " " + y + '" fill="none" stroke="#C9A27A" stroke-width="1.6"/>', n = 7;
+    for (var i = 0; i < n; i++) {
+      var t = (i + 0.5) / n, xx = x1 + (x2 - x1) * t, yy = y + 28 * t * (1 - t);
+      h += '<path d="M' + f(xx - 7) + " " + f(yy) + "h14l-7 13z" + '" fill="' + cols[i % cols.length] + '"/>';
+    }
+    return '<g class="swing">' + h + "</g>";
+  }
+
+  /* ───────────── the 14 scenes ─────────────
+     each: pose (Baby Mo render), mo {x, y, h} in frame units, svg (defs + art) */
   var SCENES = {
-    /* 1 · Bangun tidur — sunrise bedroom */
+    /* 1 · Bangun tidur — a sunrise bedroom: big window, bed with teddy, ringing alarm clock */
     wakeup: {
-      pose: "baby-mo-pose-41",
-      svg: '<defs><linearGradient id="dsSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB98A"/><stop offset=".55" stop-color="#FFD9A0"/><stop offset="1" stop-color="#FFF1C9"/></linearGradient>' +
-        '<clipPath id="dsWin"><rect x="34" y="20" width="124" height="88" rx="10"/></clipPath>' +
-        '<radialGradient id="dsSun"><stop offset="0" stop-color="#FFF6C4"/><stop offset=".55" stop-color="#FFC94A"/><stop offset="1" stop-color="#FF9F1A"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="#FFF0DC"/><circle cx="330" cy="40" r="120" fill="#FFE2C2" opacity=".6"/>' +
-        '<g clip-path="url(#dsWin)"><rect x="34" y="20" width="124" height="88" fill="url(#dsSky)"/>' +
-        '<g class="rise"><g class="spin" ><g transform="translate(96 92)" stroke="#FFD25A" stroke-width="3" stroke-linecap="round" opacity=".8">' +
-        '<path d="M0-34V-44M24-24l7-7M34 0h10M-24-24l-7-7M-34 0h-10"/></g></g><circle cx="96" cy="92" r="22" fill="url(#dsSun)"/></g>' +
-        '<path d="M34 98c20-8 40-8 62-2s42 6 62-2v14H34z" fill="#9FD9A6"/>' +
-        cloud(70, 40, .7) + cloud(130, 30, .55, "#fff", "drift d2") +
-        '<g class="bird"><g transform="translate(60 46)"><path class="flap" d="M-7 0q3.5-5 7 0q3.5-5 7 0" fill="none" stroke="#7A5A48" stroke-width="2" stroke-linecap="round"/></g></g></g>' +
-        '<rect x="34" y="20" width="124" height="88" rx="10" fill="none" stroke="#fff" stroke-width="7"/><path d="M96 20v88M34 64h124" stroke="#fff" stroke-width="4"/>' +
-        '<path class="sway" d="M22 14h30c-4 30-2 64 6 100H22z" fill="#FF9DB4"/><path class="sway" d="M170 14h-30c4 30 2 64-6 100h36z" fill="#FF9DB4"/>' +
-        '<rect x="16" y="10" width="160" height="7" rx="3.5" fill="#E9897A"/>' +
-        floor("#F2C996", "#E3B47E") +
-        '<rect x="12" y="112" width="150" height="42" rx="12" fill="#8FC9F2"/><rect x="12" y="104" width="150" height="16" rx="8" fill="#B6DEFA"/>' +
-        '<rect x="22" y="96" width="44" height="18" rx="9" fill="#fff"/><path d="M70 118c20-6 50-6 92 0v36H70z" fill="#5FA8E6"/>' +
-        '<rect x="6" y="94" width="12" height="62" rx="5" fill="#C98A5B"/><rect x="156" y="104" width="12" height="52" rx="5" fill="#C98A5B"/>' +
-        '<g class="float2"><circle cx="214" cy="62" r="17" fill="#fff" stroke="#E9897A" stroke-width="4"/><path d="M214 52v10l7 5" stroke="#3B4A5C" stroke-width="2.6" stroke-linecap="round" fill="none"/></g>' +
-        sparkle(250, 30, .8, "twinkle", "#FFC94A") + sparkle(196, 110, .55, "twinkle t2", "#FFC94A")
+      pose: "baby-mo-pose-41", mo: { x: 306, y: 128, h: 200 },
+      svg: function () {
+        return "<defs>" + lg("dsWall", ["#FFF4E4", "#FFE0C2"]) + lg("dsSkyW", ["#FFA77E", "#FFC890@.45", "#FFF0C8"]) + lg("dsFl", ["#F7CF9C", "#E4A56A"]) +
+          lg("dsCur", ["#FFB9CB", "#FF8EAE"], "h") + lg("dsQuilt", ["#86CDF8", "#4E9DEA"]) + lg("dsWood", ["#E9AE78", "#C27E46"]) +
+          lg("dsBeam", ["#FFF6D0~.6", "#FFF6D0~0"]) + lg("dsHill", ["#A9E08F", "#6CC06A"]) +
+          '<pattern id="dsDots" width="26" height="26" patternUnits="userSpaceOnUse"><circle cx="6" cy="6" r="2.2" fill="#FFCFA6" opacity=".55"/><circle cx="19" cy="19" r="2.2" fill="#FFCFA6" opacity=".55"/></pattern></defs>' +
+          bg("url(#dsWall)") + bg("url(#dsDots)") +
+          '<circle cx="128" cy="-46" r="160" fill="#FFE6B0" opacity=".45"/>' +
+          bunting(222, 400, -112, ["#FF8FB0", "#FFD25A", "#7FD3F7", "#9BE07F"]) +
+          windowFrame("dsWinW", 52, -98, 152, 104, 18,
+            '<rect x="52" y="-98" width="152" height="104" fill="url(#dsSkyW)"/>' +
+            '<g class="rise">' + sun(128, -14, 20, true) + "</g>" +
+            '<path d="M52-2c26-16 50-18 76-8s52 8 76-6v22H52z" fill="url(#dsHill)"/>' + tree(80, 0, 0.42) + tree(178, -2, 0.36) +
+            cloud(92, -66, 0.55) + cloud(176, -76, 0.42, "drift d2") + bird(120, -60, 0.8, "#8A5A48")) +
+          plant(186, -3, 0.62, "sway") +
+          '<path class="sway" d="M30-112h40c-6 46-2 84 8 124H30z" fill="url(#dsCur)"/><path class="sway" d="M226-112h-40c6 46 2 84-8 124h48z" fill="url(#dsCur)"/>' +
+          '<rect x="20" y="-118" width="216" height="9" rx="4.5" fill="#E9897A"/><circle cx="20" cy="-113.5" r="6" fill="#FFB49A"/><circle cx="236" cy="-113.5" r="6" fill="#FFB49A"/>' +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          '<path class="beam" d="M64 6h132l70 100H40z" fill="url(#dsBeam)"/>' +
+          rug(250, 112, 120, 16, "#FFC3D3", "#fff") +
+          bed(-34, 30, 196, "url(#dsQuilt)", "#BFE6FF", "url(#dsWood)", true) +
+          // nightstand + clock
+          shadow(208, 84, 26, 5) + '<rect x="186" y="34" width="44" height="50" rx="8" fill="url(#dsWood)"/>' + gloss(186, 34, 44, 50, 6, 0.45) +
+          '<rect x="192" y="52" width="32" height="4" rx="2" fill="#A86A38" opacity=".5"/>' + clock(208, 34, 0.95) +
+          sparkle(236, -60, 0.9, "twinkle", "#FFC94A") + sparkle(30, -30, 0.6, "twinkle t2", "#fff") + sparkle(254, -20, 0.55, "twinkle t3", "#FFB0C4") +
+          plant(-40, 52, 1, "sway") + plant(440, 52, 1.05, "sway");
+      }
     },
 
-    /* 2 · Masuk kamar mandi — footprints toward the door, left foot first */
+    /* 2 · Masuk kamar mandi — footprints toward the bathroom door, left foot first */
     bathroom_in: {
-      pose: "baby-mo-pose-21",
-      svg: '<defs><pattern id="dsTile" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#DDF3FB"/><path d="M22 0H0V22" fill="none" stroke="#BFE4F2" stroke-width="2"/></pattern>' +
-        '<linearGradient id="dsMirror" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#EAF7FF"/><stop offset="1" stop-color="#BFE3F7"/></linearGradient>' +
-        '<clipPath id="dsMir"><rect x="150" y="26" width="58" height="52" rx="26"/></clipPath></defs>' +
-        '<rect width="400" height="180" fill="url(#dsTile)"/>' +
-        floor("#BFD7EA", "#A9C6DE") +
-        '<rect x="28" y="30" width="82" height="118" rx="8" fill="#C98A5B"/><rect x="36" y="38" width="66" height="44" rx="6" fill="#B87A4C"/><rect x="36" y="90" width="66" height="50" rx="6" fill="#B87A4C"/>' +
-        '<circle cx="98" cy="96" r="5" fill="#FFD25A"/><rect x="54" y="16" width="30" height="20" rx="6" fill="#fff"/><path d="M69 21c-4 5-6 7-6 9a6 6 0 0 0 12 0c0-2-2-4-6-9z" fill="#38BDF8"/>' +
-        foot(150, 166, -78, "p4", true) + foot(178, 160, -100, "p3") + foot(204, 168, -80, "p2", true) + foot(232, 160, -100, "p1") +
-        '<rect x="146" y="22" width="66" height="60" rx="30" fill="#fff"/><rect x="150" y="26" width="58" height="52" rx="26" fill="url(#dsMirror)"/>' +
-        '<g clip-path="url(#dsMir)"><rect class="shine" x="172" y="10" width="12" height="90" fill="#fff" opacity=".8" transform="rotate(20 178 52)"/></g>' +
-        '<path d="M140 104h80l-6 22a10 10 0 0 1-10 8h-48a10 10 0 0 1-10-8z" fill="#fff"/><rect x="136" y="98" width="88" height="10" rx="5" fill="#F4FBFF"/>' +
-        '<rect x="176" y="86" width="8" height="14" rx="3" fill="#A9B8C8"/><path d="M180 88h12v6" stroke="#A9B8C8" stroke-width="5" fill="none" stroke-linecap="round"/>' +
-        '<circle class="bubble" cx="160" cy="96" r="5" fill="#fff" stroke="#9ED8F5"/><circle class="bubble b2" cx="200" cy="96" r="4" fill="#fff" stroke="#9ED8F5"/>' +
-        '<circle class="bubble b3" cx="176" cy="98" r="6" fill="#fff" stroke="#9ED8F5"/><circle class="bubble b4" cx="214" cy="96" r="3.5" fill="#fff" stroke="#9ED8F5"/>' +
-        '<g class="swing"><rect x="238" y="40" width="4" height="10" fill="#A9B8C8"/><rect x="226" y="48" width="28" height="44" rx="6" fill="#FFB3C7"/><rect x="226" y="80" width="28" height="6" fill="#FF8FAE"/></g>'
+      pose: "baby-mo-pose-42", mo: { x: 310, y: 128, h: 196 },
+      svg: function () {
+        return "<defs>" + lg("dsFl", ["#CFE6F7", "#A8CBEA"]) + lg("dsDoor", ["#D99A62", "#B4743F"]) + lg("dsTub", ["#FFFFFF", "#D8ECF8"]) + lg("dsTowel", ["#FFC1D3", "#FF8FB0"]) +
+          lg("dsDuck", ["#FFE36A", "#FFB81F"]) + lg("dsMir", ["#F3FBFF", "#BFE3F7"], "d") +
+          '<pattern id="dsTile" width="26" height="26" patternUnits="userSpaceOnUse"><rect width="26" height="26" fill="#E3F6FD"/><rect x="1.5" y="1.5" width="23" height="23" rx="5" fill="#EEFAFF"/><rect x="4" y="3.5" width="12" height="5" rx="2.5" fill="#fff" opacity=".9"/></pattern></defs>' +
+          bg("url(#dsTile)") + band(-30, "#BDE6F6", 10) + band(-27, "#D5F1FB", 3) +
+          '<circle cx="90" cy="-20" r="120" fill="#fff" opacity=".35"/>' +
+          // the bathroom door, open a little, warm light + bath inside
+          shadow(92, 42, 64, 6) + '<rect x="36" y="-92" width="112" height="134" rx="10" fill="#9C6A40"/>' +
+          '<rect x="44" y="-84" width="96" height="126" rx="6" fill="#CFF1FF"/>' +
+          '<path d="M56 12h60a6 6 0 0 1 6 6v6a16 16 0 0 1-16 16H66a16 16 0 0 1-16-16v-6a6 6 0 0 1 6-6z" fill="url(#dsTub)"/><rect x="50" y="6" width="76" height="10" rx="5" fill="#fff"/>' +
+          '<circle class="bubble" cx="70" cy="6" r="6" fill="#fff" stroke="#9ED8F5"/><circle class="bubble b2" cx="96" cy="4" r="4.5" fill="#fff" stroke="#9ED8F5"/><circle class="bubble b3" cx="112" cy="6" r="7" fill="#fff" stroke="#9ED8F5"/>' +
+          '<g class="door"><rect x="44" y="-84" width="96" height="126" rx="6" fill="url(#dsDoor)"/>' + gloss(44, -84, 96, 126, 6, 0.4) +
+          '<rect x="54" y="-72" width="76" height="48" rx="8" fill="#C4844E"/><rect x="54" y="-14" width="76" height="46" rx="8" fill="#C4844E"/>' +
+          '<circle cx="128" cy="-20" r="5.5" fill="url(#dsGold)"/>' +
+          '<circle cx="92" cy="-48" r="15" fill="#fff"/><path d="M92-58c-5 7-8 10-8 13a8 8 0 0 0 16 0c0-3-3-6-8-13z" fill="#38BDF8"/></g>' +
+          // mirror + sink
+          '<rect x="174" y="-94" width="66" height="74" rx="33" fill="#fff"/><rect x="179" y="-89" width="56" height="64" rx="28" fill="url(#dsMir)"/>' +
+          '<clipPath id="dsMirC"><rect x="179" y="-89" width="56" height="64" rx="28"/></clipPath><g clip-path="url(#dsMirC)"><rect class="shine" x="200" y="-110" width="12" height="110" fill="#fff" opacity=".85" transform="rotate(20 206 -57)"/></g>' +
+          shadow(207, 42, 30, 5) + '<rect x="200" y="0" width="14" height="42" rx="5" fill="url(#dsWhite)"/>' +
+          '<path d="M172-8h70l-6 18a12 12 0 0 1-12 8h-34a12 12 0 0 1-12-8z" fill="url(#dsWhite)"/><rect x="168" y="-14" width="78" height="10" rx="5" fill="#fff"/>' +
+          '<rect x="203" y="-26" width="8" height="14" rx="3" fill="#A9B8C8"/><path d="M207-24h12v6" stroke="#A9B8C8" stroke-width="5" fill="none" stroke-linecap="round"/>' +
+          '<circle class="bubble b2" cx="188" cy="-16" r="5" fill="#fff" stroke="#9ED8F5"/><circle class="bubble b4" cx="226" cy="-16" r="4" fill="#fff" stroke="#9ED8F5"/>' +
+          // towel
+          '<g class="swing"><rect x="370" y="-80" width="4" height="10" fill="#A9B8C8"/><rect x="356" y="-72" width="32" height="54" rx="7" fill="url(#dsTowel)"/><rect x="356" y="-32" width="32" height="7" fill="#FF7FA3"/></g>' +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          rug(104, 54, 40, 7, "#FFD6E4", "#fff") +
+          // rubber duck by the door
+          '<g transform="translate(24 50)"><g class="rock">' + shadow(0, 2, 14, 3) + '<path d="M-12-2c0-10 8-12 14-10 2-8 14-8 14 2 0 4-3 6-4 7 4 0 8 2 6 6-2 3-6 3-30 3-2 0 0-6 0-8z" fill="url(#dsDuck)"/>' +
+          '<path d="M14-10l7 2-7 2z" fill="#FF8A3D"/><circle cx="9" cy="-12" r="1.7" fill="#2B2F3A"/><ellipse cx="2" cy="-14" rx="3" ry="2" fill="#fff" opacity=".7"/></g></g>' +
+          // footprints from Mo to the door: the step into the door is the left foot
+          foot(244, 64, -95, "p1", false) + foot(214, 56, -85, "p2", true) + foot(184, 64, -95, "p3", false) + foot(154, 56, -85, "p4", true) +
+          sparkle(160, -70, 0.7, "twinkle", "#fff") + sparkle(254, -84, 0.6, "twinkle t2", "#7FD3F7") +
+          plant(-42, 52, 1, "sway") + '<g transform="translate(430 52)">' + shadow(0, 0, 22, 4) + '<rect x="-20" y="-60" width="40" height="60" rx="8" fill="#fff"/><rect x="-16" y="-50" width="32" height="10" rx="5" fill="#FFC1D3"/><rect x="-16" y="-34" width="32" height="10" rx="5" fill="#9ED8F5"/></g>';
+      }
     },
 
     /* 3 · Keluar kamar mandi — fresh & sparkly, footprints out, right foot first */
     bathroom_out: {
-      pose: "baby-mo-pose-07",
-      svg: '<defs><pattern id="dsTile2" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#DDF7EC"/><path d="M22 0H0V22" fill="none" stroke="#BDEBD7" stroke-width="2"/></pattern>' +
-        '<linearGradient id="dsLight" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#FFF7D6"/><stop offset="1" stop-color="#FFF7D6" stop-opacity="0"/></linearGradient></defs>' +
-        '<rect width="400" height="180" fill="url(#dsTile2)"/>' +
-        floor("#BFE6D2", "#A5D8BF") +
-        '<rect x="28" y="30" width="82" height="118" rx="8" fill="#8A6A4B"/><rect x="34" y="36" width="70" height="112" fill="#FFF3C4"/>' +
-        '<path d="M110 40l70-10v130l-70-12z" fill="url(#dsLight)" opacity=".8"/>' +
-        '<g class="door"><rect x="34" y="36" width="70" height="112" rx="4" fill="#C98A5B"/><rect x="42" y="44" width="54" height="40" rx="5" fill="#B87A4C"/><rect x="42" y="92" width="54" height="48" rx="5" fill="#B87A4C"/><circle cx="92" cy="98" r="4.5" fill="#FFD25A"/></g>' +
-        foot(130, 160, 100, "p1", false) + foot(158, 168, 80, "p2", true) + foot(186, 160, 100, "p3", false) + foot(214, 168, 80, "p4", true) +
-        '<g class="float"><path d="M196 40c-10 14-15 22-15 29a15 15 0 0 0 30 0c0-7-5-15-15-29z" fill="#7DD3FC"/><circle cx="191" cy="70" r="2" fill="#0B4A6F"/><circle cx="201" cy="70" r="2" fill="#0B4A6F"/><path d="M191 77q5 5 10 0" stroke="#0B4A6F" stroke-width="2" fill="none" stroke-linecap="round"/></g>' +
-        sparkle(150, 46, 1, "twinkle") + sparkle(232, 30, .8, "twinkle t2", "#FFE27A") + sparkle(240, 104, .9, "twinkle t3") + sparkle(132, 110, .6, "twinkle t4", "#FFE27A") +
-        '<g class="swing"><rect x="252" y="44" width="4" height="10" fill="#9FB5AA"/><rect x="240" y="52" width="28" height="40" rx="6" fill="#A7E3C9"/><rect x="240" y="80" width="28" height="6" fill="#7FD0AE"/></g>'
+      pose: "baby-mo-pose-07", mo: { x: 310, y: 128, h: 196 },
+      svg: function () {
+        return "<defs>" + lg("dsFl", ["#CDEFDF", "#A2DCC1"]) + lg("dsDoor", ["#D99A62", "#B4743F"]) + lg("dsLight", ["#FFF7D6~.9", "#FFF7D6~0"], "h") + lg("dsTowel", ["#B4EBD3", "#7FD0AE"]) +
+          rg("dsDrop", ["#C9F1FF", "#5EC8F5@.7", "#2E9FDB"], 0.35, 0.3, 0.8) +
+          '<pattern id="dsTile2" width="26" height="26" patternUnits="userSpaceOnUse"><rect width="26" height="26" fill="#DDF7EC"/><rect x="1.5" y="1.5" width="23" height="23" rx="5" fill="#EAFBF3"/><rect x="4" y="3.5" width="12" height="5" rx="2.5" fill="#fff" opacity=".9"/></pattern></defs>' +
+          bg("url(#dsTile2)") + band(-30, "#BDEBD7", 10) +
+          // door wide open, bright light pouring out
+          shadow(92, 42, 64, 6) + '<rect x="36" y="-92" width="112" height="134" rx="10" fill="#8A6A4B"/><rect x="44" y="-84" width="96" height="126" rx="6" fill="#FFF3C4"/>' +
+          '<path class="beam" d="M140-80l110 30v100l-110-8z" fill="url(#dsLight)"/>' +
+          '<path d="M44-84l-26-10v148l26-12z" fill="url(#dsDoor)"/><circle cx="26" cy="-16" r="3.6" fill="url(#dsGold)"/>' +
+          '<circle class="glow" cx="92" cy="-20" r="46" fill="url(#dsHalo)"/>' +
+          // smiling water drop
+          '<g transform="translate(206 -58)"><g class="float">' + shadow(0, 48, 18, 4) +
+          '<path d="M0-30C-14-10-22 2-22 12a22 22 0 0 0 44 0c0-10-8-22-22-42z" fill="url(#dsDrop)"/>' +
+          '<ellipse cx="-9" cy="2" rx="4" ry="7" fill="#fff" opacity=".6" transform="rotate(20 -9 2)"/>' +
+          '<circle class="blink" cx="-7" cy="12" r="2.6" fill="#0B4A6F"/><circle class="blink" cx="7" cy="12" r="2.6" fill="#0B4A6F"/><path d="M-6 20q6 6 12 0" stroke="#0B4A6F" stroke-width="2.4" fill="none" stroke-linecap="round"/>' +
+          '<circle cx="-13" cy="18" r="3" fill="#FF8FB0" opacity=".6"/><circle cx="13" cy="18" r="3" fill="#FF8FB0" opacity=".6"/></g></g>' +
+          '<g class="swing"><rect x="372" y="-80" width="4" height="10" fill="#9FB5AA"/><rect x="358" y="-72" width="32" height="54" rx="7" fill="url(#dsTowel)"/><rect x="358" y="-32" width="32" height="7" fill="#5FC79A"/></g>' +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          // footprints out of the door toward Mo: right foot first
+          foot(156, 56, 95, "p1", false) + foot(186, 64, 85, "p2", true) + foot(216, 56, 95, "p3", false) + foot(246, 64, 85, "p4", true) +
+          '<circle class="bubble" cx="170" cy="20" r="7" fill="#fff" stroke="#9EE8C8"/><circle class="bubble b2" cx="250" cy="10" r="5" fill="#fff" stroke="#9EE8C8"/><circle class="bubble b3" cx="140" cy="0" r="5.5" fill="#fff" stroke="#9EE8C8"/><circle class="bubble b4" cx="230" cy="24" r="4" fill="#fff" stroke="#9EE8C8"/>' +
+          sparkle(160, -64, 1.1, "twinkle", "#fff") + sparkle(256, -92, 0.9, "twinkle t2", "#FFE27A") + sparkle(250, -6, 0.9, "twinkle t3", "#fff") + sparkle(118, -100, 0.7, "twinkle t4", "#FFE27A") + sparkle(372, 2, 0.7, "twinkle", "#fff") +
+          plant(-42, 52, 1, "sway") + plant(440, 52, 1, "sway");
+      }
     },
 
-    /* 4 · Sebelum makan — a tidy table, steam rising; Mo stands on the floor beside it */
+    /* 4 · Sebelum makan — a sunny dining corner, a full plate, steam rising */
     eating: {
-      pose: "baby-mo-pose-05",
-      svg: '<defs><pattern id="dsCloth" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#FFF"/><rect width="8" height="8" fill="#FFB3B3"/><rect x="8" y="8" width="8" height="8" fill="#FFB3B3"/></pattern>' +
-        '<clipPath id="dsWin2"><rect x="150" y="14" width="96" height="62" rx="10"/></clipPath></defs>' +
-        '<rect width="400" height="180" fill="#FFF4D8"/><circle cx="60" cy="10" r="90" fill="#FFE9B3" opacity=".7"/>' +
-        '<g clip-path="url(#dsWin2)"><rect x="150" y="14" width="96" height="62" fill="#BFE6FF"/><circle class="glow" cx="224" cy="34" r="12" fill="#FFD25A"/>' + cloud(180, 50, .5) + '</g>' +
-        '<rect x="150" y="14" width="96" height="62" rx="10" fill="none" stroke="#fff" stroke-width="6"/><path d="M198 14v62" stroke="#fff" stroke-width="4"/>' +
-        floor("#E9BE8F", "#D9A974") +
-        // table: legs on the floor, cloth on top
-        '<rect x="34" y="128" width="10" height="34" rx="3" fill="#B97D4A"/><rect x="236" y="128" width="10" height="34" rx="3" fill="#B97D4A"/>' +
-        '<rect x="20" y="118" width="240" height="12" rx="4" fill="#C98A5B"/>' +
-        '<path d="M18 108h244v12c-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-18 0-6 8-12 8-10 0z" fill="url(#dsCloth)"/>' +
-        // plate: rice + egg
-        '<ellipse cx="74" cy="107" rx="36" ry="6" fill="#fff" stroke="#E5ECF3"/><path d="M50 106c0-13 10-20 20-20s20 7 20 20z" fill="#fff" stroke="#E5ECF3"/>' +
-        '<circle cx="62" cy="96" r="1.8" fill="#E5ECF3"/><circle cx="76" cy="93" r="1.8" fill="#E5ECF3"/><ellipse cx="96" cy="103" rx="10" ry="5" fill="#fff" stroke="#F1E6C8"/><circle cx="96" cy="102" r="3.6" fill="#FFC94A"/>' +
-        '<path class="steam" d="M62 80c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-        '<path class="steam s2" d="M74 78c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-        // soup bowl
-        '<path d="M126 92h44c0 10-8 16-22 16s-22-6-22-16z" fill="#7DD3FC"/><ellipse cx="148" cy="92" rx="22" ry="4.5" fill="#F59E0B"/><rect x="138" y="106" width="20" height="3" rx="1.5" fill="#5BB8E8"/>' +
-        '<path class="steam s3" d="M142 84c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/><path class="steam" d="M155 82c-5-6 5-10 0-16" stroke="#C9D6E3" stroke-width="3" fill="none" stroke-linecap="round"/>' +
-        // glass of water + apple, standing on the cloth
-        '<path d="M188 82h20l-2 26h-16z" fill="#E0F4FF" stroke="#9ED8F5" stroke-width="2"/><path d="M190 94h16l-1.2 13h-13.6z" fill="#7DD3FC" opacity=".7"/>' +
-        '<circle cx="232" cy="99" r="9" fill="#FF6B6B"/><path d="M232 90q2-6 7-6" stroke="#5A8F3C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M233 89c2-4 6-5 9-4-2 4-6 5-9 4z" fill="#7BC46A"/>'
+      pose: "baby-mo-pose-05", mo: { x: 318, y: 128, h: 192 },
+      svg: function () {
+        return "<defs>" + lg("dsWall", ["#FFF7DE", "#FFE7B8"]) + lg("dsSky", ["#8FD3FF", "#DDF3FF"]) + lg("dsFl", ["#F0C48F", "#DCA46A"]) + lg("dsTop", ["#E9B07A", "#C98A52"]) +
+          lg("dsBowl", ["#9EE2FF", "#4FB6EC"]) + rg("dsApple", ["#FF9A8A", "#F0484A@.7", "#C22E35"], 0.35, 0.3, 0.8) + rg("dsLampG", ["#FFF1B0~.95", "#FFF1B0~0"]) +
+          '<pattern id="dsCloth" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#FFF"/><rect width="8" height="8" fill="#FFB0B0"/><rect x="8" y="8" width="8" height="8" fill="#FFB0B0"/></pattern>' +
+          '<pattern id="dsStripe" width="34" height="10" patternUnits="userSpaceOnUse"><rect width="17" height="10" fill="#FFEFC8" opacity=".7"/></pattern></defs>' +
+          bg("url(#dsWall)") + bg("url(#dsStripe)") + band(-4, "#F6D7A0", 8) +
+          windowFrame("dsWinE", 30, -96, 128, 84, 16,
+            '<rect x="30" y="-96" width="128" height="84" fill="url(#dsSky)"/>' + sun(132, -70, 12, true) + cloud(70, -60, 0.5) + cloud(120, -36, 0.35, "drift d2") +
+            '<path d="M30-24c30-10 60-12 90-4s30 4 38 0v16H30z" fill="#9FDA8E"/>') +
+          // hanging lamp
+          '<g class="swing"><path d="M212-130v52" stroke="#8A6A4B" stroke-width="2"/><circle class="glow" cx="212" cy="-60" r="40" fill="url(#dsLampG)"/><path d="M194-62a18 16 0 0 1 36 0z" fill="#FF9A6A"/><path d="M198-66a14 10 0 0 1 10-8" stroke="#fff" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/><circle cx="212" cy="-60" r="5" fill="#FFF3B0"/></g>' +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          // table + cloth
+          shadow(110, 100, 150, 10) + '<rect x="0" y="54" width="12" height="50" rx="4" fill="#B97D4A"/><rect x="214" y="54" width="12" height="50" rx="4" fill="#B97D4A"/>' +
+          '<rect x="-30" y="22" width="276" height="22" rx="10" fill="url(#dsTop)"/>' +
+          '<path d="M-34 16h284v20c-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-24 0z" fill="url(#dsCloth)"/>' +
+          '<rect x="-34" y="14" width="284" height="6" rx="3" fill="#fff" opacity=".5"/>' +
+          // plate: rice dome + egg + greens
+          '<ellipse cx="62" cy="16" rx="44" ry="9" fill="#000" opacity=".08"/><ellipse cx="62" cy="13" rx="44" ry="10" fill="url(#dsWhite)"/><ellipse cx="62" cy="12" rx="32" ry="6" fill="#F2F6FA"/>' +
+          '<path d="M36 12c0-18 12-26 24-26s22 8 22 26z" fill="url(#dsWhite)"/><ellipse cx="50" cy="-6" rx="7" ry="4" fill="#fff"/>' +
+          '<ellipse cx="88" cy="8" rx="13" ry="6" fill="#fff"/><circle cx="88" cy="7" r="5" fill="url(#dsGold)"/><path d="M30 10q6-8 12-2M34 8q2-8 8-6" stroke="#5FBF7A" stroke-width="4" fill="none" stroke-linecap="round"/>' +
+          '<path class="steam" d="M52-24c-5-6 5-10 0-16" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/><path class="steam s2" d="M66-26c-5-6 5-10 0-16" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/>' +
+          // soup bowl
+          '<path d="M118-4h52c0 14-10 22-26 22s-26-8-26-22z" fill="url(#dsBowl)"/><ellipse cx="144" cy="-4" rx="26" ry="5" fill="#F7A733"/><ellipse cx="136" cy="-5" rx="5" ry="2" fill="#FFD27A"/><path d="M124 0q4 8 10 10" stroke="#fff" stroke-width="2.4" fill="none" opacity=".6" stroke-linecap="round"/>' +
+          '<path class="steam s3" d="M136-14c-5-6 5-10 0-16" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/><path class="steam" d="M152-12c-5-6 5-10 0-16" stroke="#fff" stroke-width="3.4" fill="none" stroke-linecap="round"/>' +
+          // glass of water + apple + spoon
+          '<path d="M182-16h22l-2.5 32h-17z" fill="url(#dsGlass)" stroke="#9ED8F5" stroke-width="2"/><path d="M184.2 0h17.6l-1.2 15h-15.2z" fill="#7DD3FC" opacity=".7"/><rect x="186" y="-12" width="4" height="22" rx="2" fill="#fff" opacity=".8"/>' +
+          '<circle cx="226" cy="4" r="11" fill="url(#dsApple)"/><path d="M226-7q2-6 7-6" stroke="#5A8F3C" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M227-8c2-4 6-5 9-4-2 4-6 5-9 4z" fill="#7BC46A"/><ellipse cx="222" cy="0" rx="3" ry="2" fill="#fff" opacity=".7"/>' +
+          '<path d="M104 10l10-14" stroke="#C9CED6" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="116" cy="-7" rx="4" ry="6" fill="#DDE2EA" transform="rotate(35 116 -7)"/>' +
+          sparkle(258, -40, 0.8, "twinkle", "#FFC94A") + sparkle(170, -60, 0.6, "twinkle t2", "#FF9AB0") +
+          plant(-50, 52, 1.05, "sway") + plant(440, 52, 1, "sway");
+      }
     },
 
-    /* 5 · Doa belajar — a tidy desk, page flipping, letters floating; Mo stands on the floor */
+    /* 5 · Doa belajar — a cosy study corner: shelf, desk lamp, an open book with letters floating up */
     study: {
-      pose: "baby-mo-idea",
-      svg: '<defs><radialGradient id="dsLamp" cx=".5" cy="0"><stop offset="0" stop-color="#FFF4C2" stop-opacity=".95"/><stop offset="1" stop-color="#FFF4C2" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="#EEE8FF"/><circle cx="340" cy="20" r="110" fill="#E3DAFF" opacity=".7"/>' +
-        // wall shelf with upright books and a little plant
-        '<rect x="20" y="58" width="116" height="7" rx="3" fill="#B993E8"/>' +
-        '<rect x="26" y="26" width="12" height="32" rx="2" fill="#FF8FAE"/><rect x="40" y="30" width="10" height="28" rx="2" fill="#7DD3FC"/><rect x="52" y="24" width="13" height="34" rx="2" fill="#FFC94A"/>' +
-        '<rect x="67" y="32" width="10" height="26" rx="2" fill="#86E0A9"/><rect x="79" y="27" width="12" height="31" rx="2" fill="#A78BFA"/>' +
-        '<path d="M104 44h22l-3 14h-16z" fill="#E9897A"/><path d="M115 44c-6-10-2-16 0-18 2 2 6 8 0 18M115 44c-10-4-12-10-11-13 3 0 9 3 11 13M115 44c10-4 12-10 11-13-3 0-9 3-11 13" fill="#5FBF7A"/>' +
-        floor("#D9B48A", "#C99E70") +
-        // desk on legs
-        '<rect x="34" y="124" width="10" height="38" rx="3" fill="#B98552"/><rect x="226" y="124" width="10" height="38" rx="3" fill="#B98552"/>' +
-        '<rect x="24" y="126" width="222" height="12" rx="3" fill="#C9935E"/><rect x="18" y="116" width="234" height="10" rx="4" fill="#D9A56E"/>' +
-        // lamp standing on the desk
-        '<path class="glow" d="M150 62h44l34 54H118z" fill="url(#dsLamp)"/>' +
-        '<path d="M154 40l-10 22h46l-10-22z" fill="#7C5CE0"/><rect x="165" y="62" width="4" height="50" fill="#5B42B8"/><ellipse cx="167" cy="114" rx="16" ry="4" fill="#5B42B8"/>' +
-        // open book lying flat on the desk + pencil beside it
-        '<path d="M52 115l38-5 38 5v-3l-38-5-38 5z" fill="#C7BCEB"/>' +
-        '<path d="M52 112c12-6 26-7 38-4v-18c-12-3-26-2-38 4z" fill="#fff" stroke="#D7CCF5" stroke-width="2"/>' +
-        '<path d="M60 98l22-4M60 104l18-3" stroke="#C7BCEB" stroke-width="2.2" stroke-linecap="round"/>' +
-        '<path d="M128 112c-12-6-26-7-38-4v-18c12-3 26-2 38 4z" fill="#fff" stroke="#D7CCF5" stroke-width="2"/>' +
-        '<path d="M98 94l22 4M98 100l18 3" stroke="#C7BCEB" stroke-width="2.2" stroke-linecap="round"/>' +
-        '<path class="page" d="M90 108v-18c10-3 22-2 32 3v18c-10-5-22-6-32-3z" fill="#FAF7FF" stroke="#D7CCF5" stroke-width="1.6"/>' +
-        '<rect x="196" y="110" width="34" height="5" rx="2" fill="#FFC94A"/><path d="M230 110l7 2.5-7 2.5z" fill="#F4D3A8"/><rect x="192" y="110" width="5" height="5" rx="1.5" fill="#FF8FAE"/>' +
-        // letters floating up from the book
-        '<text class="letter" x="74" y="84" font-family="Amiri Quran, Amiri, serif" font-size="20" fill="#7C5CE0">ا</text>' +
-        '<text class="letter l2" x="92" y="80" font-family="Amiri Quran, Amiri, serif" font-size="20" fill="#E8590C">ب</text>' +
-        '<text class="letter l3" x="112" y="84" font-family="Amiri Quran, Amiri, serif" font-size="20" fill="#0A9488">ت</text>' +
-        sparkle(232, 40, .8, "twinkle", "#FFC94A") + sparkle(256, 76, .6, "twinkle t2", "#A78BFA") + sparkle(214, 20, .5, "twinkle t3", "#FF8FAE")
+      pose: "baby-mo-idea", mo: { x: 318, y: 128, h: 196 },
+      svg: function () {
+        return "<defs>" + lg("dsWall", ["#F3EEFF", "#E2D8FF"]) + lg("dsFl", ["#DDB88C", "#C69C6C"]) + lg("dsDesk", ["#E2AE76", "#C48A50"]) +
+          lg("dsLampC", ["#FFF4C2~.9", "#FFF4C2~0"]) + lg("dsShade", ["#9B7CF0", "#6E4FD8"]) + rg("dsGlobe", ["#A7E6FF", "#3FA6E8@.7", "#2470B8"], 0.35, 0.3, 0.8) +
+          '<pattern id="dsSt" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M10 8l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5-2.9 1.5.6-3-2.2-2 3-.5z" fill="#D5C8FF" opacity=".6"/></pattern></defs>' +
+          bg("url(#dsWall)") + bg("url(#dsSt)") +
+          // shelf with books + plant
+          '<rect x="16" y="-56" width="132" height="9" rx="4" fill="#B993E8"/>' + shadow(82, -46, 66, 3) +
+          '<rect x="24" y="-96" width="14" height="40" rx="3" fill="#FF8FAE"/><rect x="40" y="-90" width="12" height="34" rx="3" fill="#7DD3FC"/><rect x="54" y="-100" width="15" height="44" rx="3" fill="#FFC94A"/>' +
+          '<rect x="71" y="-88" width="12" height="32" rx="3" fill="#86E0A9"/><rect x="85" y="-94" width="14" height="38" rx="3" fill="#A78BFA"/><rect x="101" y="-84" width="10" height="28" rx="3" fill="#FF9A6A" transform="rotate(14 106 -70)"/>' +
+          '<g opacity=".45" fill="#fff"><rect x="26" y="-92" width="4" height="30" rx="2"/><rect x="56" y="-96" width="4" height="34" rx="2"/><rect x="87" y="-90" width="4" height="28" rx="2"/></g>' +
+          plant(132, -56, 0.7, "sway") +
+          // alphabet poster
+          '<g class="swing"><rect x="172" y="-104" width="68" height="56" rx="8" fill="#fff"/><rect x="176" y="-100" width="60" height="48" rx="6" fill="#FFF7E0"/>' +
+          '<text x="190" y="-66" text-anchor="middle" font-family="Amiri Quran, Amiri, serif" font-size="22" fill="#E8590C">ا</text><text x="206" y="-66" text-anchor="middle" font-family="Amiri Quran, Amiri, serif" font-size="22" fill="#0A9488">ب</text><text x="223" y="-66" text-anchor="middle" font-family="Amiri Quran, Amiri, serif" font-size="22" fill="#7C5CE0">ت</text></g>' +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          // desk
+          shadow(110, 100, 150, 10) + '<rect x="-4" y="40" width="12" height="62" rx="4" fill="#B98552"/><rect x="214" y="40" width="12" height="62" rx="4" fill="#B98552"/>' +
+          '<rect x="-30" y="20" width="270" height="22" rx="8" fill="url(#dsDesk)"/>' + gloss(-30, 20, 270, 22, 8, 0.5) +
+          // lamp
+          '<path class="glow" d="M168-38h40l50 58H122z" fill="url(#dsLampC)"/>' +
+          '<path d="M170-62l-10 26h52l-10-26z" fill="url(#dsShade)"/><path d="M168-40l6-18h6l-5 18z" fill="#fff" opacity=".4"/><rect x="184" y="-36" width="5" height="52" rx="2.5" fill="#5B42B8"/><ellipse cx="186" cy="18" rx="17" ry="4.5" fill="#5B42B8"/>' +
+          // open book + flipping page + letters
+          '<path d="M44 18l42-6 42 6v-4l-42-6-42 6z" fill="#C7BCEB"/>' +
+          '<path d="M44 15c13-7 29-8 42-5v-24c-13-3-29-2-42 5z" fill="#fff" stroke="#D7CCF5" stroke-width="2"/><path d="M52-2l24-4M52 5l20-3" stroke="#C7BCEB" stroke-width="2.4" stroke-linecap="round"/>' +
+          '<path d="M128 15c-13-7-29-8-42-5v-24c13-3 29-2 42 5z" fill="#fff" stroke="#D7CCF5" stroke-width="2"/><path d="M96-6l24 4M96 1l20 3" stroke="#C7BCEB" stroke-width="2.4" stroke-linecap="round"/>' +
+          '<path class="page" d="M86 10v-24c11-3 24-2 35 3v24c-11-5-24-6-35-3z" fill="#FAF7FF" stroke="#D7CCF5" stroke-width="1.6"/>' +
+          '<text class="letter" x="66" y="-26" font-family="Amiri Quran, Amiri, serif" font-size="24" fill="#7C5CE0">ا</text>' +
+          '<text class="letter l2" x="86" y="-32" font-family="Amiri Quran, Amiri, serif" font-size="24" fill="#E8590C">ب</text>' +
+          '<text class="letter l3" x="108" y="-26" font-family="Amiri Quran, Amiri, serif" font-size="24" fill="#0A9488">ت</text>' +
+          // pencil cup + globe
+          '<rect x="2" y="-8" width="22" height="26" rx="5" fill="#7DD3FC"/><rect x="6" y="-26" width="4" height="22" rx="2" fill="#FFC94A" transform="rotate(-10 8 -15)"/><rect x="13" y="-28" width="4" height="24" rx="2" fill="#FF8FAE"/><rect x="18" y="-22" width="4" height="18" rx="2" fill="#86E0A9" transform="rotate(12 20 -13)"/><rect x="5" y="-5" width="4" height="18" rx="2" fill="#fff" opacity=".5"/>' +
+          '<rect x="226" y="10" width="4" height="10" fill="#8A6A4B"/><ellipse cx="228" cy="19" rx="10" ry="3" fill="#8A6A4B"/><circle cx="228" cy="-6" r="15" fill="url(#dsGlobe)"/><path d="M220-12c4-2 8 2 6 6s-8 2-8 8M232-2c3 2 6 0 7 4" stroke="#7BC46A" stroke-width="4" fill="none" stroke-linecap="round"/><ellipse cx="222" cy="-14" rx="4" ry="2.5" fill="#fff" opacity=".7"/>' +
+          sparkle(262, -54, 0.9, "twinkle", "#FFC94A") + sparkle(150, -26, 0.6, "twinkle t2", "#A78BFA") + sparkle(250, -100, 0.6, "twinkle t3", "#FF8FAE") +
+          plant(-46, 52, 1, "sway") + '<g transform="translate(432 52)">' + shadow(0, 0, 24, 4) + '<rect x="-22" y="-70" width="44" height="70" rx="6" fill="#C9A27A"/><rect x="-18" y="-64" width="10" height="26" rx="2" fill="#FF8FAE"/><rect x="-6" y="-60" width="10" height="22" rx="2" fill="#7DD3FC"/><rect x="6" y="-66" width="10" height="28" rx="2" fill="#FFC94A"/><rect x="-18" y="-30" width="36" height="4" rx="2" fill="#A47A50"/></g>';
+      }
     },
 
-    /* 6 · Sebelum tidur — night room, moon, stars, Zzz */
+    /* 6 · Sebelum tidur — a soft night room, smiling moon, bed with stars, night lamp, Zzz */
     sleep: {
-      pose: "baby-mo-pose-39",
-      svg: '<defs><linearGradient id="dsNight" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E2A5A"/><stop offset="1" stop-color="#3A3F7A"/></linearGradient>' +
-        '<clipPath id="dsWin3"><rect x="34" y="18" width="110" height="80" rx="40"/></clipPath>' +
-        '<radialGradient id="dsNl"><stop offset="0" stop-color="#FFE29A" stop-opacity=".9"/><stop offset="1" stop-color="#FFE29A" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="#2B2F66"/>' +
-        '<g clip-path="url(#dsWin3)"><rect x="34" y="18" width="110" height="80" fill="url(#dsNight)"/>' +
-        '<circle class="glow" cx="104" cy="50" r="24" fill="#FFF3C4" opacity=".25"/><circle cx="104" cy="50" r="16" fill="#FFE29A"/><circle cx="112" cy="44" r="14" fill="#1E2A5A"/>' +
-        star(56, 36, 4, "twinkle", "#fff") + star(74, 64, 3, "twinkle t2", "#FFE29A") + star(130, 80, 3.5, "twinkle t3", "#fff") +
-        cloud(70, 84, .45, "#5A64A8", "drift slow") + '</g>' +
-        '<rect x="34" y="18" width="110" height="80" rx="40" fill="none" stroke="#5A64A8" stroke-width="6"/>' +
-        star(190, 26, 3.5, "twinkle t4", "#FFE29A") + star(236, 52, 2.6, "twinkle", "#fff") + star(170, 70, 2.4, "twinkle t3", "#fff") + star(258, 18, 3, "twinkle t2", "#fff") +
-        floor("#3F4488", "#353A78") +
-        '<rect x="8" y="110" width="160" height="44" rx="12" fill="#6C7AE0"/><rect x="8" y="102" width="160" height="16" rx="8" fill="#8E9BF0"/>' +
-        '<rect x="18" y="94" width="46" height="18" rx="9" fill="#E8EBFF"/><path d="M66 116c24-6 58-6 102 0v38H66z" fill="#A78BFA"/>' +
-        star(96, 132, 4, "", "#FFE29A") + star(130, 140, 3.2, "", "#FFE29A") + star(150, 126, 2.6, "", "#FFE29A") +
-        '<rect x="0" y="92" width="12" height="64" rx="5" fill="#4C4F96"/><rect x="164" y="102" width="12" height="54" rx="5" fill="#4C4F96"/>' +
-        '<circle class="glow" cx="214" cy="118" r="30" fill="url(#dsNl)"/><path d="M204 116h20l-4-16h-12z" fill="#FFD25A"/><rect x="211" y="116" width="6" height="22" fill="#B6A6E8"/><rect x="202" y="138" width="24" height="6" rx="3" fill="#B6A6E8"/>' +
-        '<text class="zz" x="262" y="92" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="18" fill="#C7D2FE">Z</text>' +
-        '<text class="zz z2" x="276" y="78" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="14" fill="#C7D2FE">z</text>' +
-        '<text class="zz z3" x="288" y="66" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="11" fill="#C7D2FE">z</text>'
+      pose: "baby-mo-pose-39", mo: { x: 314, y: 130, h: 138 },
+      svg: function () {
+        return "<defs>" + lg("dsWall", ["#4A4FA8", "#383C8C"]) + lg("dsSkyN", ["#232C6A", "#4B4FA8"]) + lg("dsFl", ["#5A5AB0", "#3E3F8A"]) +
+          lg("dsQuilt", ["#B49CFF", "#8467EE"]) + lg("dsWood", ["#7A7FD8", "#5559B8"]) + rg("dsNl", ["#FFE29A~.8", "#FFE29A~0"]) +
+          '<pattern id="dsSt" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M12 10l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5-2.9 1.5.6-3-2.2-2 3-.5z" fill="#8C90E8" opacity=".55"/><circle cx="34" cy="32" r="1.6" fill="#8C90E8" opacity=".6"/></pattern></defs>' +
+          bg("url(#dsWall)") + bg("url(#dsSt)") +
+          windowFrame("dsWinS", 40, -100, 118, 96, 48,
+            '<rect x="40" y="-100" width="118" height="96" fill="url(#dsSkyN)"/>' + moon(116, -64, 18, "#2A3270", "float2") +
+            star(64, -78, 4, "twinkle", "#fff") + star(80, -38, 3, "twinkle t2", "#FFE29A") + star(140, -22, 3.4, "twinkle t3", "#fff") + cloud(76, -20, 0.42, "drift slow", 0.5, "#7A80D0"), "#8C90E8") +
+          '<path class="sway" d="M26-112h34c-6 40-2 76 6 104H26z" fill="#7C6BE0" opacity=".9"/><path class="sway" d="M172-112h-34c6 40 2 76-6 104h40z" fill="#7C6BE0" opacity=".9"/>' +
+          '<rect x="18" y="-118" width="162" height="8" rx="4" fill="#A99BF5"/>' +
+          star(212, -90, 4.2, "twinkle t4", "#FFE29A") + star(250, -60, 3, "twinkle", "#fff") + star(206, -40, 2.6, "twinkle t3", "#fff") + star(380, -100, 3.4, "twinkle t2", "#FFE29A") +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          rug(268, 116, 110, 15, "#6E62C8", "#A99BF5") +
+          bed(-40, 34, 200, "url(#dsQuilt)", "#E2D8FF", "url(#dsWood)", true) +
+          star(70, 52, 4.4, "", "#FFE29A") + star(108, 60, 3.6, "", "#FFE29A") + star(140, 48, 3, "", "#FFE29A") +
+          // nightstand + lamp
+          shadow(214, 86, 26, 5) + '<rect x="192" y="40" width="44" height="46" rx="8" fill="url(#dsWood)"/>' + gloss(192, 40, 44, 46, 6, 0.35) + lamp(214, 40, 1, true) +
+          zz(356, -20, "#E0E4FF") +
+          plant(-46, 52, 1, "") + plant(444, 52, 1, "");
+      }
     },
-    /* 7 · Keluar rumah — morning front yard, the door swinging open */
+
+    /* 7 · Keluar rumah — a sunny front yard, the door swinging open, a path to the gate */
     leave_home: {
-      pose: "baby-mo-run",
-      svg: '<defs><linearGradient id="dsSkyM" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9FD8FF"/><stop offset="1" stop-color="#E9F7FF"/></linearGradient></defs>' +
-        '<rect width="400" height="180" fill="url(#dsSkyM)"/><circle class="glow" cx="250" cy="34" r="16" fill="#FFE47A"/>' +
-        cloud(150, 30, .7) + cloud(330, 22, .5, "#fff", "drift d2") +
-        '<path d="M0 124 Q90 100 190 118 Q300 100 400 120 V180 H0Z" fill="#A6DB8E"/>' +
-        '<rect x="0" y="140" width="400" height="40" fill="#8ED07A"/>' +
-        /* house */
-        '<rect x="22" y="58" width="132" height="90" rx="4" fill="#FFF3DE"/><path d="M10 64 L88 18 L166 64Z" fill="#E86B5A"/><path d="M22 64 L88 26 L154 64" stroke="#FFF7E8" stroke-width="5" fill="none" stroke-linejoin="round"/>' +
-        '<rect x="34" y="78" width="28" height="26" rx="4" fill="#9ED8FF" stroke="#fff" stroke-width="4"/><path d="M48 78v26M34 91h28" stroke="#fff" stroke-width="3"/>' +
-        '<rect x="74" y="88" width="34" height="60" rx="4" fill="#5B3A22"/><rect class="door" x="74" y="88" width="34" height="60" rx="4" fill="#B87A4C"/><circle cx="102" cy="120" r="2.6" fill="#FFD25A"/>' +
-        '<rect x="70" y="146" width="42" height="6" rx="3" fill="#E3B47E"/>' +
-        '<path d="M150 152 h44 M206 150 h40 M258 152 h40" stroke="#E9D7A8" stroke-width="12" stroke-linecap="round"/>' +
-        /* little shoes and a bush */
-        '<path d="M122 146 q6 -6 14 0 v4 h-14z M136 146 q6 -6 14 0 v4 h-14z" fill="#3D7EE3"/>' +
-        '<circle cx="170" cy="134" r="14" fill="#5DBB6B"/><circle cx="186" cy="138" r="11" fill="#4CAF5E"/><circle cx="168" cy="128" r="3" fill="#FF8FB8"/><circle cx="182" cy="132" r="3" fill="#FFE066"/>' +
-        '<g class="bird"><g transform="translate(200 50)"><path class="flap" d="M-7 0q3.5-5 7 0q3.5-5 7 0" fill="none" stroke="#5A6A7A" stroke-width="2" stroke-linecap="round"/></g></g>'
+      pose: "baby-mo-run", mo: { x: 312, y: 128, h: 194 },
+      svg: function () {
+        return "<defs>" + lg("dsSky", ["#7CC8FF", "#BFE6FF@.6", "#EAF7FF"]) + lg("dsHillB", ["#B5E2A0", "#8DCF83"]) + lg("dsGrass", ["#9FDC82", "#6CC062"]) +
+          lg("dsWallH", ["#FFF8EA", "#F6E2C2"]) + lg("dsRoof", ["#FF7A6B", "#D9483F"]) + lg("dsDoor", ["#D99A62", "#B4743F"]) + lg("dsPath", ["#F6E3B8", "#E8CC92"]) + "</defs>" +
+          bg("url(#dsSky)") + sun(232, -66, 15, true) +
+          cloud(150, -96, 0.7) + cloud(370, -70, 0.55, "drift d2") + cloud(-30, -60, 0.6, "drift slow") +
+          bird(250, -54, 0.9, "#4A6A8A") + bird(276, -66, 0.7, "#4A6A8A", "k2") +
+          '<path d="M-800 10Q-100-30 0 4Q90-26 190 0Q300-30 400 -4Q600-30 1200 0V300H-800Z" fill="url(#dsHillB)"/>' +
+          tree(230, 6, 0.75) + tree(400, 2, 0.8) + tree(-20, 8, 0.85) +
+          // house
+          shadow(92, 46, 90, 7) + '<rect x="14" y="-56" width="160" height="102" rx="6" fill="url(#dsWallH)"/>' + '<rect x="14" y="-56" width="160" height="10" fill="#000" opacity=".05"/>' +
+          '<rect x="130" y="-110" width="18" height="34" rx="3" fill="#C9564A"/>' +
+          '<path d="M0-50L94-112L188-50Z" fill="url(#dsRoof)" stroke="url(#dsRoof)" stroke-width="10" stroke-linejoin="round"/><path d="M20-56L94-104L168-56" stroke="#FFF7E8" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>' +
+          '<path d="M60-86l20-13" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".5"/>' +
+          '<circle cx="94" cy="-70" r="10" fill="#9ED8FF" stroke="#fff" stroke-width="3"/>' +
+          '<rect x="26" y="-36" width="38" height="34" rx="6" fill="#9ED8FF" stroke="#fff" stroke-width="4"/><path d="M45-36v34M26-19h38" stroke="#fff" stroke-width="3"/><rect x="22" y="-2" width="46" height="9" rx="4" fill="#C98A5B"/><circle cx="30" cy="-4" r="3.4" fill="#FF8FB8"/><circle cx="44" cy="-5" r="3.4" fill="#FFE066"/><circle cx="58" cy="-4" r="3.4" fill="#FF8FB8"/>' +
+          '<rect x="124" y="-36" width="38" height="34" rx="6" fill="#9ED8FF" stroke="#fff" stroke-width="4"/><path d="M143-36v34M124-19h38" stroke="#fff" stroke-width="3"/>' +
+          '<rect x="76" y="-22" width="38" height="68" rx="5" fill="#5B3A22"/><rect x="78" y="-20" width="34" height="66" fill="#FFF0B8"/>' +
+          '<g class="door"><rect x="78" y="-20" width="34" height="66" rx="4" fill="url(#dsDoor)"/><rect x="83" y="-14" width="24" height="24" rx="4" fill="#C4844E"/><rect x="83" y="16" width="24" height="24" rx="4" fill="#C4844E"/><circle cx="106" cy="14" r="3" fill="url(#dsGold)"/></g>' +
+          '<rect x="70" y="44" width="50" height="8" rx="4" fill="#E3B47E"/>' +
+          band(52, "url(#dsGrass)") +
+          '<path d="M80 52C90 70 150 66 200 74S300 96 330 120L250 140C220 110 140 96 70 80Z" fill="url(#dsPath)"/>' +
+          // fence
+          '<g fill="#fff">' + [196, 214, 232, 250].map(function (x) { return '<path d="M' + x + ' 50v-30l6-7 6 7v30z"/>'; }).join("") + '<rect x="192" y="26" width="76" height="5" rx="2"/><rect x="192" y="40" width="76" height="5" rx="2"/></g>' +
+          bush(184, 56, 0.9, true) + bush(-4, 58, 1, true) +
+          // shoes waiting on the step
+          '<path d="M124 50q7-7 16 0v5h-16zM140 50q7-7 16 0v5h-16z" fill="#3D7EE3"/><path d="M127 49q4-3 8-1" stroke="#fff" stroke-width="1.6" fill="none"/>' +
+          butterfly(170, -12, 0.9) +
+          sparkle(300, -100, 0.7, "twinkle", "#fff") + tree(-60, 54, 1) + tree(460, 54, 1);
+      }
     },
 
-    /* 8 · Naik kendaraan — a family car driving along a sunny road */
+    /* 8 · Naik kendaraan — a red family car driving through a sunny town */
     vehicle: {
-      pose: "baby-mo-yes",
-      svg: '<defs><linearGradient id="dsSkyV" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FD0FF"/><stop offset="1" stop-color="#DDF2FF"/></linearGradient>' +
-        '<linearGradient id="dsCar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF7A6B"/><stop offset="1" stop-color="#E5484D"/></linearGradient></defs>' +
-        '<rect width="400" height="180" fill="url(#dsSkyV)"/><circle class="glow" cx="40" cy="34" r="17" fill="#FFE47A"/>' +
-        cloud(140, 26, .65) + cloud(250, 40, .5, "#fff", "drift d2") +
-        '<path d="M0 104 Q70 76 150 98 Q240 70 330 96 Q370 86 400 92 V130 H0Z" fill="#9FD3A0"/>' +
-        /* trees and poles passing by */
-        '<g class="pass"><g transform="translate(300 0)"><rect x="-3" y="88" width="6" height="30" fill="#9A6236"/><circle cx="0" cy="84" r="14" fill="#4CB868"/><circle cx="-8" cy="92" r="9" fill="#5DC377"/></g></g>' +
-        '<g class="pass p2"><g transform="translate(300 0)"><rect x="-3" y="92" width="6" height="26" fill="#9A6236"/><circle cx="0" cy="88" r="12" fill="#3FA85B"/></g></g>' +
-        '<rect x="0" y="116" width="400" height="10" fill="#7CC67A"/>' +
-        /* road */
-        '<rect x="0" y="124" width="400" height="44" fill="#5E6672"/><rect x="0" y="124" width="400" height="4" fill="#C9CED6"/><rect x="0" y="164" width="400" height="4" fill="#C9CED6"/>' +
-        '<g class="dash">' + [0,48,96,144,192,240,288,336,384,432].map(function (x) { return '<rect x="' + x + '" y="144" width="26" height="4" rx="2" fill="#FFE066"/>'; }).join('') + '</g>' +
-        '<rect x="0" y="168" width="400" height="12" fill="#8ED07A"/>' +
-        /* car */
-        '<g transform="translate(88 104)"><g class="bump">' +
-        '<ellipse cx="62" cy="54" rx="58" ry="5" fill="#000" opacity=".18"/>' +
-        '<path d="M8 40 q0 -14 14 -16 l18 -2 l16 -18 q4 -4 10 -4 h34 q6 0 10 5 l14 17 h10 q14 2 14 18 v10 h-140z" fill="url(#dsCar)"/>' +
-        '<path d="M44 22 l14 -15 h16 v15z" fill="#BFE7FF"/><path d="M80 22 v-15 h12 q4 0 6 3 l10 12z" fill="#BFE7FF"/>' +
-        '<rect x="76" y="7" width="4" height="15" fill="#E5484D"/><rect x="112" y="28" width="12" height="4" rx="2" fill="#B8323A"/>' +
-        '<circle cx="132" cy="34" r="4" fill="#FFF3B0"/><rect x="6" y="34" width="6" height="6" rx="2" fill="#FF9A3C"/>' +
-        '<g transform="translate(36 50)"><g class="wheel"><circle r="12" fill="#2B2F3A"/><circle r="5.5" fill="#C9CED6"/><rect x="-1.2" y="-10" width="2.4" height="20" fill="#C9CED6"/></g></g>' +
-        '<g transform="translate(110 50)"><g class="wheel"><circle r="12" fill="#2B2F3A"/><circle r="5.5" fill="#C9CED6"/><rect x="-1.2" y="-10" width="2.4" height="20" fill="#C9CED6"/></g></g>' +
-        '</g></g>' +
-        sparkle(232, 70, .7, "twinkle", "#fff")
+      pose: "baby-mo-pose-15", mo: { x: 326, y: 128, h: 194 },
+      svg: function () {
+        return "<defs>" + lg("dsSky", ["#78C5FF", "#B9E3FF@.6", "#E8F6FF"]) + lg("dsCar", ["#FF8676", "#E5484D@.6", "#B8323A"]) + lg("dsRoad", ["#6B7380", "#596170"]) +
+          lg("dsWalk", ["#E9E1D2", "#D7CCB8"]) + lg("dsGrass", ["#A6DE88", "#7CC66C"]) + lg("dsWin", ["#D9F3FF", "#9ED6F5"], "d") +
+          lg("dsB1", ["#FFD3B0", "#F6B48A"]) + lg("dsB2", ["#C9E2FF", "#9FC6F2"]) + lg("dsB3", ["#FFE7A3", "#F5CB6A"]) + lg("dsB4", ["#E3D4FF", "#C2ACF5"]) + "</defs>" +
+          bg("url(#dsSky)") + sun(40, -88, 16, true) + cloud(160, -92, 0.7) + cloud(290, -72, 0.5, "drift d2") + cloud(470, -86, 0.6, "drift slow") + cloud(-80, -80, 0.6) +
+          // town skyline
+          (function () {
+            var h = "", B = [[-90, 60, "dsB2"], [-40, 80, "dsB4"], [0, 64, "dsB1"], [44, 96, "dsB2"], [96, 70, "dsB3"], [140, 108, "dsB4"], [196, 80, "dsB1"], [246, 92, "dsB2"], [300, 66, "dsB3"], [344, 100, "dsB4"], [400, 76, "dsB1"], [446, 90, "dsB2"]];
+            B.forEach(function (b) {
+              var x = b[0], hh = b[1], w = 42, y = 20 - hh;
+              h += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + hh + '" rx="6" fill="url(#' + b[2] + ')"/><rect x="' + (x + 4) + '" y="' + (y + 4) + '" width="6" height="' + (hh - 8) + '" rx="3" fill="#fff" opacity=".35"/>';
+              for (var r = y + 10; r < 8; r += 16) h += '<rect x="' + (x + 14) + '" y="' + r + '" width="8" height="9" rx="2" fill="#fff" opacity=".75"/><rect x="' + (x + 27) + '" y="' + r + '" width="8" height="9" rx="2" fill="#fff" opacity=".75"/>';
+            });
+            return h;
+          })() +
+          band(18, "url(#dsGrass)") +
+          '<g class="pass"><g transform="translate(300 0)">' + tree(0, 26, 0.7) + "</g></g>" + '<g class="pass p2"><g transform="translate(300 0)">' + tree(0, 26, 0.6) + bush(30, 28, 0.6, true) + "</g></g>" +
+          // road
+          band(28, "url(#dsRoad)", 64) + band(28, "#C9CED6", 4) + band(88, "#C9CED6", 4) +
+          '<g class="dash">' + [-60, -12, 36, 84, 132, 180, 228, 276, 324, 372, 420, 468].map(function (x) { return '<rect x="' + x + '" y="57" width="26" height="5" rx="2.5" fill="#FFE066"/>'; }).join("") + "</g>" +
+          band(92, "url(#dsWalk)") + floorShine(92) +
+          // speed lines
+          '<g stroke="#fff" stroke-width="3" stroke-linecap="round"><path class="speed" d="M6 -4h22"/><path class="speed v2" d="M0 12h26"/><path class="speed v3" d="M8 26h18"/></g>' +
+          // the car
+          '<g transform="translate(34 -36)"><g class="bump">' + shadow(92, 92, 92, 7) +
+          '<path d="M6 70v-18c0-12 8-20 20-22l30-4 26-26c5-5 11-6 18-6h44c8 0 14 3 18 8l20 24h12c16 2 24 12 24 26v18c0 6-4 10-10 10H16C10 80 6 76 6 70z" fill="url(#dsCar)"/>' +
+          '<path d="M64 26l26-24h22v24zM120 26V2h20c4 0 7 2 9 4l18 20z" fill="url(#dsWin)"/>' +
+          '<path d="M70 22l14-13h5L76 22z M126 22V8h4v14z" fill="#fff" opacity=".6"/>' +
+          '<path d="M20 36c40-6 120-8 186-2" stroke="#fff" stroke-width="5" fill="none" opacity=".4" stroke-linecap="round"/>' +
+          '<path d="M116 26v48" stroke="#B8323A" stroke-width="2.4"/><rect x="128" y="38" width="14" height="4" rx="2" fill="#8E2229"/>' +
+          '<ellipse cx="208" cy="44" rx="7" ry="5.5" fill="#FFF7C2"/><rect x="2" y="44" width="8" height="10" rx="3" fill="#FF9A3C"/>' +
+          '<rect x="8" y="66" width="208" height="8" rx="4" fill="#B8323A" opacity=".6"/>' +
+          [52, 172].map(function (x) { return '<g transform="translate(' + x + ' 78)"><g class="wheel"><circle r="19" fill="#2B2F3A"/><circle r="10" fill="#D5DAE2"/><path d="M0-9v18M-9 0h18" stroke="#9AA2AE" stroke-width="3"/><circle r="3.5" fill="#6A7280"/></g></g>'; }).join("") +
+          "</g></g>" +
+          // traffic sign
+          '<g transform="translate(-56 92)">' + shadow(0, 0, 10, 2.4) + '<rect x="-2.5" y="-90" width="5" height="90" fill="#A9B2BE"/><circle cx="0" cy="-90" r="14" fill="#3A8EE6" stroke="#fff" stroke-width="3"/><path d="M-6-90h12M2-95l5 5-5 5" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></g>' +
+          sparkle(266, -40, 0.8, "twinkle", "#fff") + sparkle(120, -84, 0.6, "twinkle t2", "#fff") + tree(470, 92, 1);
+      }
     },
 
-    /* 9 · Sesudah makan — a clean plate and a happy tummy */
+    /* 9 · Sesudah makan — a clean, shiny plate, a glass of milk and a happy tummy */
     after_eat: {
-      pose: "baby-mo-thank-you",
-      svg: '<rect width="400" height="180" fill="#FFF3E0"/><circle cx="330" cy="30" r="120" fill="#FFE6C4" opacity=".6"/>' +
-        '<rect x="30" y="18" width="110" height="76" rx="10" fill="#BFE7FF" stroke="#fff" stroke-width="7"/><path d="M85 18v76M30 56h110" stroke="#fff" stroke-width="4"/>' +
-        cloud(70, 40, .5) + '<circle cx="118" cy="34" r="9" fill="#FFE47A"/>' +
-        '<path d="M22 14h24c-4 30-2 64 6 90H22z M148 14h-24c4 30 2 64-6 90h30z" fill="#FFB38A"/>' +
-        /* table */
-        '<rect x="0" y="118" width="400" height="62" fill="#C98A5B"/><rect x="0" y="112" width="400" height="12" rx="3" fill="#E0A574"/>' +
-        '<path d="M0 124 h400" stroke="#B5794C" stroke-width="2"/>' +
-        /* plate */
-        '<ellipse cx="120" cy="114" rx="52" ry="12" fill="#000" opacity=".1"/><ellipse cx="120" cy="110" rx="50" ry="13" fill="#fff"/><ellipse cx="120" cy="109" rx="34" ry="8" fill="#F3F6FA"/>' +
-        '<circle cx="110" cy="108" r="1.6" fill="#E8C27A"/><circle cx="128" cy="110" r="1.4" fill="#E8C27A"/><circle cx="120" cy="106" r="1.2" fill="#E8C27A"/>' +
-        '<path d="M178 96 l4 20" stroke="#C9CED6" stroke-width="4" stroke-linecap="round"/><ellipse cx="177" cy="94" rx="4" ry="6" fill="#C9CED6"/>' +
-        /* glass of milk */
-        '<path d="M206 76 h26 l-3 40 h-20z" fill="#EAF6FF" stroke="#C9E4F5" stroke-width="2"/><path d="M208 96 h22 l-1.6 20 h-18.8z" fill="#fff"/>' +
-        '<path d="M60 96 q6 -10 16 -4" stroke="#fff" stroke-width="0"/>' +
-        '<path class="steam" d="M120 92 q-6 -10 0 -18 q6 -8 0 -16" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>' +
-        '<g class="beat"><path d="M256 60 c-6 -8 -18 -4 -16 4 c1 6 16 16 16 16 s15 -10 16 -16 c2 -8 -10 -12 -16 -4z" fill="#FF7A9A"/></g>' +
-        sparkle(150, 70, .8, "twinkle", "#FFC94A") + sparkle(90, 80, .6, "twinkle t2", "#FFC94A")
+      pose: "baby-mo-thank-you", mo: { x: 318, y: 128, h: 196 },
+      svg: function () {
+        return "<defs>" + lg("dsWall", ["#FFF1E2", "#FFDCC0"]) + lg("dsSky", ["#9FDBFF", "#E2F5FF"]) + lg("dsFl", ["#F2C796", "#DDA66C"]) + lg("dsTop", ["#7FD3C0", "#4DB8A2"]) +
+          lg("dsCur", ["#FFC6A8", "#FF9F7A"], "h") + lg("dsMilk", ["#FFFFFF", "#F1F4FA"]) +
+          '<pattern id="dsTiles" width="22" height="22" patternUnits="userSpaceOnUse"><rect width="22" height="22" fill="#E7F7F3"/><rect x="1" y="1" width="20" height="20" rx="4" fill="#F4FCFA"/></pattern></defs>' +
+          bg("url(#dsWall)") + '<rect x="-800" y="-30" width="2000" height="70" fill="url(#dsTiles)"/><rect x="-800" y="-32" width="2000" height="5" fill="#BFE6DA"/>' +
+          windowFrame("dsWinA", 40, -104, 116, 66, 14, '<rect x="40" y="-104" width="116" height="66" fill="url(#dsSky)"/>' + sun(70, -80, 11, true) + cloud(120, -78, 0.42) + '<path d="M40-48c26-8 52-8 76-2s32 2 40 0v10H40z" fill="#9FDA8E"/>') +
+          '<path class="sway" d="M24-118h30c-4 30-2 52 6 80H24z" fill="url(#dsCur)"/><path class="sway" d="M172-118h-30c4 30 2 52-6 80h36z" fill="url(#dsCur)"/><rect x="16" y="-122" width="164" height="7" rx="3.5" fill="#E9897A"/>' +
+          // shelf with jars
+          '<rect x="206" y="-70" width="110" height="7" rx="3.5" fill="#C98A5B"/>' +
+          '<rect x="212" y="-96" width="22" height="26" rx="6" fill="#FFE29A" opacity=".9"/><rect x="210" y="-100" width="26" height="6" rx="3" fill="#FF8A6B"/>' +
+          '<rect x="240" y="-92" width="18" height="22" rx="5" fill="#BDEBFF" opacity=".9"/><rect x="238" y="-96" width="22" height="5" rx="2.5" fill="#7DB8F2"/>' +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          // table
+          shadow(110, 100, 150, 10) + '<rect x="0" y="40" width="12" height="62" rx="4" fill="#3E9E8A"/><rect x="214" y="40" width="12" height="62" rx="4" fill="#3E9E8A"/>' +
+          '<rect x="-30" y="18" width="270" height="24" rx="10" fill="url(#dsTop)"/>' + gloss(-30, 18, 270, 24, 8, 0.45) +
+          // clean shiny plate with spoon + fork
+          '<ellipse cx="80" cy="18" rx="56" ry="12" fill="#000" opacity=".08"/><ellipse cx="80" cy="14" rx="56" ry="13" fill="url(#dsWhite)"/><ellipse cx="80" cy="13" rx="40" ry="8.5" fill="#F3F6FA"/>' +
+          '<ellipse cx="62" cy="10" rx="12" ry="3" fill="#fff"/><path class="shine" d="M70 6l10 0-6 12-10 0z" fill="#fff" opacity=".9"/>' +
+          '<path d="M56 18l40-12" stroke="#C9CED6" stroke-width="3.4" stroke-linecap="round"/><ellipse cx="100" cy="4.6" rx="7" ry="4" fill="#DDE2EA" transform="rotate(-16 100 4.6)"/>' +
+          '<circle cx="74" cy="15" r="1.4" fill="#E8C27A"/><circle cx="90" cy="16" r="1.2" fill="#E8C27A"/>' +
+          // glass of milk + napkin
+          '<path d="M164-22h26l-3 40h-20z" fill="url(#dsGlass)" stroke="#C9E4F5" stroke-width="2"/><path d="M165.6-6h22.8l-1.8 23h-19.2z" fill="url(#dsMilk)"/><rect x="168" y="-18" width="4" height="30" rx="2" fill="#fff" opacity=".9"/>' +
+          '<path d="M200 16l30-6 6 8-30 6z" fill="#FFB3C7"/><path d="M204 18l26-5" stroke="#fff" stroke-width="1.6" stroke-dasharray="3 3"/>' +
+          heart(258, -56, 1.15, "url(#dsPink)", "beat") + heart(150, -54, 0.6, "#FFB0C4", "float") +
+          sparkle(120, -26, 0.9, "twinkle", "#FFC94A") + sparkle(40, -14, 0.6, "twinkle t2", "#FFC94A") + sparkle(226, -24, 0.6, "twinkle t3", "#fff") +
+          plant(-48, 52, 1, "sway") + plant(440, 52, 1, "sway");
+      }
     },
 
-    /* 10 · Ketika hujan — gentle rain, puddles and happy plants */
+    /* 10 · Ketika hujan — gentle rain, glossy clouds, a little rainbow, puddles and a happy frog */
     rain: {
-      pose: "baby-mo-wow",
-      svg: '<defs><linearGradient id="dsSkyR" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8FA7C8"/><stop offset="1" stop-color="#D8E4F2"/></linearGradient></defs>' +
-        '<rect width="400" height="180" fill="url(#dsSkyR)"/>' +
-        cloud(70, 26, 1.1, "#EEF3FA") + cloud(190, 18, .95, "#E4EBF5", "drift d2") + cloud(310, 30, .8, "#EEF3FA", "drift slow") +
-        '<path d="M0 122 Q100 104 200 118 Q300 102 400 120 V180 H0Z" fill="#7EC48A"/><rect y="146" width="400" height="34" fill="#6DB879"/>' +
-        /* rain */
-        (function () { var r = ''; for (var i = 0; i < 26; i++) { var x = (i * 37) % 400, y = (i * 23) % 60, c = ["", "r2", "r3"][i % 3];
-          r += '<path class="drop ' + c + '" d="M' + x + ' ' + y + ' l-3 9" stroke="#F2F8FF" stroke-width="2.4" stroke-linecap="round"/>'; } return r; })() +
-        /* puddles with ripples */
-        '<ellipse cx="80" cy="160" rx="34" ry="7" fill="#9CC7EA"/><ellipse class="ripple" cx="76" cy="160" rx="14" ry="3" fill="none" stroke="#fff" stroke-width="1.6"/><ellipse class="ripple q2" cx="90" cy="160" rx="10" ry="2.4" fill="none" stroke="#fff" stroke-width="1.4"/>' +
-        '<ellipse cx="200" cy="166" rx="26" ry="5" fill="#9CC7EA"/><ellipse class="ripple q3" cx="200" cy="166" rx="10" ry="2.4" fill="none" stroke="#fff" stroke-width="1.4"/>' +
-        /* happy sprouting plants */
-        '<g class="sway"><path d="M140 146 v-22" stroke="#3E8E4A" stroke-width="3"/><ellipse cx="132" cy="126" rx="9" ry="5" fill="#5DBB6B" transform="rotate(-25 132 126)"/><ellipse cx="148" cy="122" rx="9" ry="5" fill="#5DBB6B" transform="rotate(25 148 122)"/></g>' +
-        '<g class="sway"><path d="M250 148 v-16" stroke="#3E8E4A" stroke-width="3"/><ellipse cx="243" cy="133" rx="7" ry="4" fill="#5DBB6B" transform="rotate(-25 243 133)"/><ellipse cx="257" cy="130" rx="7" ry="4" fill="#5DBB6B" transform="rotate(25 257 130)"/></g>' +
-        /* umbrella */
-        '<g class="wobble"><g transform="translate(36 70)"><path d="M0 34 Q30 -6 60 34 q-7.5 -6 -15 0 q-7.5 -6 -15 0 q-7.5 -6 -15 0 q-7.5 -6 -15 0z" fill="#FF8FB8"/>' +
-        '<path d="M15 34 q15 -36 15 -40 q0 4 15 40" fill="#FFC1D6"/><path d="M30 -6 v58 q0 6 -6 6" stroke="#7A5A48" stroke-width="3" fill="none" stroke-linecap="round"/></g></g>'
+      pose: "baby-mo-wow", mo: { x: 318, y: 128, h: 180 },
+      svg: function () {
+        return "<defs>" + lg("dsSky", ["#8EA9D6", "#BFD0EA@.6", "#E2EAF6"]) + lg("dsCl2", ["#FFFFFF", "#D3DEEE"]) + lg("dsHillB", ["#A6D7A0", "#86C589"]) + lg("dsGrass", ["#8ED384", "#62B86A"]) +
+          lg("dsUmb", ["#FF9DC0", "#F05A8C"]) + rg("dsFrog", ["#B8F08A", "#5FC24E@.7", "#3E9A38"], 0.35, 0.3, 0.8) + lg("dsPud", ["#B9DDF7", "#8EC3EA"]) + "</defs>" +
+          bg("url(#dsSky)") +
+          // a soft rainbow
+          '<g opacity=".55" fill="none" stroke-width="7"><path d="M-30 20a100 100 0 0 1 200 0" stroke="#FF9AA8"/><path d="M-23 20a93 93 0 0 1 186 0" stroke="#FFD27A"/><path d="M-16 20a86 86 0 0 1 172 0" stroke="#A6E88A"/><path d="M-9 20a79 79 0 0 1 158 0" stroke="#8FD0FF"/></g>' +
+          cloud(60, -88, 1.25, "drift", 1, "url(#dsCl2)") + cloud(200, -98, 1.05, "drift d2", 1, "url(#dsCl2)") + cloud(340, -86, 0.9, "drift slow", 1, "url(#dsCl2)") + cloud(-100, -90, 1, "drift", 1, "url(#dsCl2)") + cloud(500, -90, 1, "drift d2", 1, "url(#dsCl2)") +
+          // a happy cloud face
+          '<g transform="translate(200 -98)"><circle cx="-8" cy="0" r="2.2" fill="#5A6A8A"/><circle cx="10" cy="0" r="2.2" fill="#5A6A8A"/><path d="M-4 6q5 5 10 0" stroke="#5A6A8A" stroke-width="2" fill="none" stroke-linecap="round"/><circle cx="-14" cy="6" r="3" fill="#FFB0C4" opacity=".7"/><circle cx="16" cy="6" r="3" fill="#FFB0C4" opacity=".7"/></g>' +
+          '<path d="M-800 20Q-100-6 0 14Q100-12 200 10Q300-14 400 8Q600-12 1200 10V300H-800Z" fill="url(#dsHillB)"/>' + tree(250, 22, 0.6) + tree(120, 18, 0.5) + tree(-30, 24, 0.7) + tree(430, 20, 0.7) +
+          band(40, "url(#dsGrass)") + floorShine(40) +
+          // rain
+          (function () { var r = ""; for (var i = 0; i < 40; i++) { var x = ((i * 47) % 600) - 100, y = ((i * 29) % 130) - 120, c = ["", "r2", "r3"][i % 3];
+            r += '<path class="drop ' + c + '" d="M' + x + " " + y + ' l-3 10" stroke="#F2F8FF" stroke-width="2.6" stroke-linecap="round"/>'; } return r; })() +
+          // puddles + ripples
+          '<ellipse cx="96" cy="58" rx="46" ry="9" fill="url(#dsPud)"/><ellipse cx="86" cy="56" rx="16" ry="2.6" fill="#fff" opacity=".6"/><ellipse class="ripple" cx="104" cy="58" rx="16" ry="3.4" fill="none" stroke="#fff" stroke-width="1.8"/><ellipse class="ripple q2" cx="80" cy="59" rx="11" ry="2.4" fill="none" stroke="#fff" stroke-width="1.6"/>' +
+          '<ellipse cx="226" cy="66" rx="30" ry="6" fill="url(#dsPud)"/><ellipse class="ripple q3" cx="226" cy="66" rx="12" ry="2.6" fill="none" stroke="#fff" stroke-width="1.6"/>' +
+          // flowers drinking the rain
+          '<g transform="translate(166 52)"><g class="sway"><path d="M0 0v-26" stroke="#3E8E4A" stroke-width="3"/><ellipse cx="-7" cy="-12" rx="7" ry="3.6" fill="#5DBB6B" transform="rotate(-25 -7 -12)"/><circle cx="0" cy="-30" r="7" fill="#FF8FB8"/><circle cx="0" cy="-30" r="3" fill="#FFE066"/></g></g>' +
+          '<g transform="translate(18 50)"><g class="sway"><path d="M0 0v-22" stroke="#3E8E4A" stroke-width="3"/><ellipse cx="7" cy="-10" rx="7" ry="3.6" fill="#5DBB6B" transform="rotate(25 7 -10)"/><circle cx="0" cy="-26" r="6.4" fill="#FFE066"/><circle cx="0" cy="-26" r="2.6" fill="#FF9A3C"/></g></g>' +
+          // frog on the puddle's edge
+          '<g transform="translate(138 52)"><g class="hop">' + shadow(0, 2, 16, 3) + '<ellipse cx="0" cy="-10" rx="16" ry="12" fill="url(#dsFrog)"/><circle cx="-8" cy="-22" r="6.5" fill="url(#dsFrog)"/><circle cx="8" cy="-22" r="6.5" fill="url(#dsFrog)"/>' +
+          '<circle cx="-8" cy="-22" r="3.6" fill="#fff"/><circle cx="8" cy="-22" r="3.6" fill="#fff"/><circle cx="-7.4" cy="-21.4" r="2" fill="#2B2F3A"/><circle cx="8.6" cy="-21.4" r="2" fill="#2B2F3A"/>' +
+          '<path d="M-6-10q6 5 12 0" stroke="#2E6A2A" stroke-width="1.8" fill="none" stroke-linecap="round"/><circle cx="-11" cy="-11" r="2.4" fill="#FF9AB0" opacity=".7"/><circle cx="11" cy="-11" r="2.4" fill="#FF9AB0" opacity=".7"/><ellipse cx="-4" cy="-17" rx="4" ry="2" fill="#fff" opacity=".45"/></g></g>' +
+          // the open umbrella above Mo
+          '<g transform="translate(314 -64)"><g class="rock"><path d="M-62 8Q0-58 62 8q-10-8-20 0q-11-8-21 0q-11-8-21 0q-11-8-21 0q-10-8-21 0z" fill="url(#dsUmb)"/>' +
+          '<path d="M-21 8Q-12-40 0-46Q12-40 21 8" fill="#FFC1D6" opacity=".9"/><path d="M-40-12q20-26 40-30" stroke="#fff" stroke-width="4" fill="none" opacity=".45" stroke-linecap="round"/><circle cx="0" cy="-48" r="4" fill="#F05A8C"/>' +
+          '<path d="M0-44v60" stroke="#7A5A48" stroke-width="3.4" stroke-linecap="round"/></g></g>' +
+          sparkle(290, 10, 0.6, "twinkle", "#fff") + bush(-70, 60, 1, true) + bush(470, 60, 1, true);
+      }
     },
 
-    /* 11 · Masuk rumah — evening, the porch light is on */
+    /* 11 · Masuk rumah — a warm evening, the porch lamp is on, the door has a heart wreath */
     enter_home: {
-      pose: "baby-mo-yes",
-      svg: '<defs><linearGradient id="dsSkyE" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FF9F7A"/><stop offset=".6" stop-color="#FFC9A0"/><stop offset="1" stop-color="#FFE6CC"/></linearGradient>' +
-        '<radialGradient id="dsLamp"><stop offset="0" stop-color="#FFF3B0" stop-opacity=".95"/><stop offset="1" stop-color="#FFF3B0" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="url(#dsSkyE)"/><circle cx="250" cy="96" r="26" fill="#FFD86B" opacity=".9"/>' +
-        cloud(310, 30, .6, "#FFE3D4") + cloud(200, 22, .5, "#FFE3D4", "drift d2") +
-        '<path d="M0 122 Q90 100 190 116 Q300 98 400 118 V180 H0Z" fill="#9CCB86"/><rect y="144" width="400" height="36" fill="#86BD72"/>' +
-        /* house front */
-        '<rect x="18" y="52" width="170" height="96" rx="4" fill="#FFF3DE"/><path d="M6 58 L103 10 L200 58Z" fill="#C9564A"/><path d="M18 58 L103 18 L188 58" stroke="#FFF7E8" stroke-width="5" fill="none" stroke-linejoin="round"/>' +
-        '<rect x="30" y="72" width="34" height="30" rx="4" fill="#FFE29A" stroke="#fff" stroke-width="4"/><path d="M47 72v30M30 87h34" stroke="#fff" stroke-width="3"/>' +
-        '<rect x="142" y="72" width="34" height="30" rx="4" fill="#FFE29A" stroke="#fff" stroke-width="4"/><path d="M159 72v30M142 87h34" stroke="#fff" stroke-width="3"/>' +
-        '<rect x="84" y="80" width="40" height="68" rx="5" fill="#8A5634"/><rect x="88" y="84" width="32" height="28" rx="4" fill="#9E6640"/><rect x="88" y="116" width="32" height="28" rx="4" fill="#9E6640"/><circle cx="114" cy="116" r="3" fill="#FFD25A"/>' +
-        '<circle class="glow" cx="134" cy="76" r="22" fill="url(#dsLamp)"/><rect x="130" y="66" width="8" height="12" rx="3" fill="#FFE07A" stroke="#7A5232" stroke-width="2"/>' +
-        /* welcome mat */
-        '<rect x="74" y="148" width="60" height="10" rx="4" fill="#E3B47E"/><path d="M80 153 h48" stroke="#C98A5B" stroke-width="2" stroke-dasharray="4 3"/>' +
-        '<g class="float2"><text x="103" y="46" text-anchor="middle" font-size="16">👋</text></g>' +
-        '<circle cx="200" cy="140" r="10" fill="#5DBB6B"/><circle cx="196" cy="134" r="2.6" fill="#FF8FB8"/>'
+      pose: "baby-mo-pose-08", mo: { x: 318, y: 128, h: 194 },
+      svg: function () {
+        return "<defs>" + lg("dsSky", ["#FF9C82", "#FFC3A0@.55", "#FFE9CF"]) + lg("dsHillB", ["#C7C48F", "#A9B27A"]) + lg("dsGrass", ["#A4D489", "#7CBE6A"]) +
+          lg("dsWallH", ["#FFF6E6", "#F3DDBC"]) + lg("dsRoof", ["#E7766A", "#B9463E"]) + lg("dsDoor", ["#B57A4A", "#8A5634"]) + rg("dsWarm", ["#FFF0A8", "#FFD36B@.7", "#FFB03B"], 0.5, 0.4, 0.8) + "</defs>" +
+          bg("url(#dsSky)") + sun(258, -12, 22, true, "sink") + cloud(330, -86, 0.6, "drift", 1, "#FFE4D6") + cloud(170, -100, 0.5, "drift d2", 1, "#FFE4D6") + cloud(-60, -80, 0.6, "drift slow", 1, "#FFE4D6") +
+          bird(300, -60, 0.8, "#8A4A5A") + bird(330, -50, 0.6, "#8A4A5A", "k2") +
+          '<path d="M-800 14Q-100-10 0 10Q120-16 240 6Q330-10 400 6Q600-14 1200 6V300H-800Z" fill="url(#dsHillB)"/>' + tree(-30, 18, 0.8) + tree(440, 14, 0.8) +
+          // house
+          shadow(108, 54, 110, 8) + '<rect x="6" y="-50" width="206" height="104" rx="6" fill="url(#dsWallH)"/>' +
+          '<path d="M-10-44L109-112L228-44Z" fill="url(#dsRoof)" stroke="url(#dsRoof)" stroke-width="10" stroke-linejoin="round"/><path d="M12-50L109-104L206-50" stroke="#FFF7E8" stroke-width="5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>' +
+          '<rect x="20" y="-32" width="42" height="38" rx="6" fill="url(#dsWarm)" stroke="#fff" stroke-width="4"/><path d="M41-32v38M20-13h42" stroke="#fff" stroke-width="3"/>' +
+          '<rect x="156" y="-32" width="42" height="38" rx="6" fill="url(#dsWarm)" stroke="#fff" stroke-width="4"/><path d="M177-32v38M156-13h42" stroke="#fff" stroke-width="3"/>' +
+          '<circle class="glow" cx="41" cy="-13" r="30" fill="url(#dsHalo)" opacity=".7"/><circle class="glow" cx="177" cy="-13" r="30" fill="url(#dsHalo)" opacity=".7"/>' +
+          '<rect x="86" y="-18" width="46" height="72" rx="6" fill="url(#dsDoor)"/>' + gloss(86, -18, 46, 72, 6, 0.35) + '<rect x="92" y="-12" width="34" height="26" rx="4" fill="#9E6640"/><rect x="92" y="20" width="34" height="28" rx="4" fill="#9E6640"/><circle cx="124" cy="20" r="3.4" fill="url(#dsGold)"/>' +
+          heart(109, -2, 0.62, "url(#dsPink)", "beat") +
+          '<circle class="glow" cx="146" cy="-26" r="26" fill="url(#dsHalo)"/><rect x="141" y="-38" width="10" height="16" rx="3.5" fill="#FFE07A" stroke="#7A5232" stroke-width="2"/>' +
+          '<rect x="78" y="54" width="62" height="10" rx="4" fill="#E3B47E"/>' +
+          band(60, "url(#dsGrass)") +
+          '<rect x="80" y="62" width="58" height="12" rx="5" fill="#E86B5A"/><path d="M86 68h46" stroke="#FFD0C4" stroke-width="2" stroke-dasharray="4 3"/>' +
+          // flower pots by the door
+          plant(68, 60, 0.9, "sway") + plant(152, 60, 0.9, "sway") + bush(226, 64, 0.9, true) +
+          heart(260, -64, 0.7, "#FFB0C4", "heartup") + heart(240, -40, 0.5, "url(#dsPink)", "heartup h2") +
+          sparkle(240, -90, 0.7, "twinkle", "#fff") + bush(-70, 64, 1, true) + bush(470, 64, 1, true);
+      }
     },
 
-    /* 12 · Doa untuk orang tua — a warm family evening at home */
+    /* 12 · Doa untuk orang tua — a warm, cosy family evening: Abi and Umi smile at Mo making du'a */
     parents: {
-      pose: "baby-mo-pose-12", moH: .8, moR: 8,
-      svg: '<defs><radialGradient id="dsWarm" cx=".55" cy=".45" r=".75"><stop offset="0" stop-color="#FFF4D6"/><stop offset="1" stop-color="#F4E2FF"/></radialGradient>' +
-        '<linearGradient id="dsNightP" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2B3470"/><stop offset="1" stop-color="#5B5AA8"/></linearGradient>' +
-        '<radialGradient id="dsLampP"><stop offset="0" stop-color="#FFF3B0" stop-opacity=".9"/><stop offset="1" stop-color="#FFF3B0" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="url(#dsWarm)"/>' +
-        /* night window with moon + stars */
-        '<rect x="22" y="18" width="88" height="66" rx="10" fill="url(#dsNightP)" stroke="#fff" stroke-width="6"/><path d="M66 18v66M22 51h88" stroke="#fff" stroke-width="3.6"/>' +
-        '<circle cx="92" cy="36" r="9" fill="#FFE29A"/><circle cx="97" cy="33" r="8" fill="#2E3A78"/>' + star(40, 32, 3, "twinkle", "#fff") + star(48, 70, 2.4, "twinkle t2", "#fff") + star(88, 68, 2, "twinkle t3", "#fff") +
-        /* warm lamp glow behind the family */
-        '<circle class="glow" cx="210" cy="78" r="96" fill="url(#dsLampP)"/>' +
-        /* family photo on the wall: Abi, Umi, Kak Adam, Ais and Mo */
-        '<g class="swing"><rect x="256" y="28" width="90" height="68" rx="-27" fill="#B9794A"/><rect x="259" y="31" width="84" height="62" rx="-29" fill="#D9A06C"/>' +
-        '<rect x="263" y="35" width="76" height="54" rx="-31" fill="#FFF6E8"/>' +
-        '<image href="family/family-photo-v2.webp" x="263" y="35" width="76" height="54" preserveAspectRatio="xMidYMid slice"/>' +
-        '<rect x="263" y="35" width="76" height="54" rx="-31" fill="none" stroke="rgba(120,70,30,.35)" stroke-width="1"/>' +
-        '<path d="M266 38 l14 0 l-14 10z" fill="#fff" opacity=".35"/>' +
-        '<path d="M301 22 l-12 7 M301 22 l12 7" stroke="#8A5A3A" stroke-width="1.4"/><circle cx="301" cy="22" r="2" fill="#8A5A3A"/></g>' +
-        floor("#E8D2B8", "#D9BE9E") +
-        /* soft rug */
-        '<ellipse cx="236" cy="166" rx="150" ry="13" fill="#F3B8CF" opacity=".55"/><ellipse cx="236" cy="166" rx="128" ry="9" fill="#FFD6E4" opacity=".6"/>' +
-        /* Abi and Umi, smiling at Mo */
-        '<ellipse cx="160" cy="168" rx="26" ry="5" fill="rgba(60,40,30,.18)"/><ellipse cx="222" cy="168" rx="21" ry="5" fill="rgba(60,40,30,.18)"/>' +
-        '<image href="family/abi-wave.webp" x="122" y="12" width="78" height="164"/>' +
-        '<image href="family/umi-welcome.webp" x="191" y="30" width="61" height="146"/>' +
-        /* floating hearts rising toward the parents */
-        '<g class="beat"><path d="M352 92 c-5 -7 -15 -3 -13 4 c1 5 13 13 13 13 s12 -8 13 -13 c2 -7 -8 -11 -13 -4z" fill="#FF7A9A"/></g>' +
-        '<g class="float"><path d="M372 70 c-3 -4.6 -9.6 -2 -8.6 2.6 c.7 3.2 8.6 8.6 8.6 8.6 s7.9 -5.4 8.6 -8.6 c1 -4.6 -5.6 -7.2 -8.6 -2.6z" fill="#FFB0C4"/></g>' +
-        sparkle(112, 100, .6, "twinkle t3", "#FFC94A") + sparkle(276, 112, .5, "twinkle", "#FFC94A")
+      pose: "baby-mo-pose-12", mo: { x: 330, y: 132, h: 130 },
+      svg: function () {
+        return "<defs>" + rg("dsWarm", ["#FFF6DC", "#FFE6E8@.6", "#F2E2FF"], 0.55, 0.45, 0.85) + lg("dsSkyP", ["#5D62C8", "#9A8EEA"]) + lg("dsFl", ["#F4D9BC", "#E6BF98"]) +
+          rg("dsLampP", ["#FFF3B0~.85", "#FFF3B0~0"]) + lg("dsFrame", ["#E2A26C", "#B9794A"], "d") +
+          '<pattern id="dsHt" width="44" height="44" patternUnits="userSpaceOnUse"><path d="M12 14c-2-3-7-2-7 2 0 3 7 7 7 7s7-4 7-7c0-4-5-5-7-2z" fill="#FFD3E0" opacity=".55"/><circle cx="34" cy="34" r="2" fill="#FFE29A" opacity=".6"/></pattern></defs>' +
+          bg("url(#dsWarm)") + bg("url(#dsHt)") +
+          // night window with a smiling moon
+          windowFrame("dsWinP", 14, -100, 100, 78, 16,
+            '<rect x="14" y="-100" width="100" height="78" fill="url(#dsSkyP)"/>' + moon(80, -68, 16, "#5D62C8", "float2") +
+            star(34, -84, 3.4, "twinkle", "#fff") + star(44, -44, 2.8, "twinkle t2", "#FFE29A") + star(98, -36, 2.4, "twinkle t3", "#fff")) +
+          // a cute smiling star on the wall
+          '<g transform="translate(150 -92)"><g class="float">' + star(0, 0, 13, "", "url(#dsGold)") + '<circle cx="-3.6" cy="-1" r="1.5" fill="#9A6A10"/><circle cx="3.6" cy="-1" r="1.5" fill="#9A6A10"/><path d="M-3 3q3 3 6 0" stroke="#9A6A10" stroke-width="1.4" fill="none" stroke-linecap="round"/></g></g>' +
+          // warm lamp glow behind the family
+          '<circle class="glow" cx="200" cy="-20" r="120" fill="url(#dsLampP)"/>' +
+          // family photo on the wall
+          '<g class="swing"><path d="M330-118l-26 16M330-118l26 16" stroke="#8A5A3A" stroke-width="1.6"/><circle cx="330" cy="-118" r="2.6" fill="#8A5A3A"/>' +
+          '<rect x="282" y="-104" width="96" height="72" rx="10" fill="url(#dsFrame)"/><rect x="288" y="-98" width="84" height="60" rx="6" fill="#FFF6E8"/>' +
+          '<clipPath id="dsPh"><rect x="288" y="-98" width="84" height="60" rx="6"/></clipPath><image clip-path="url(#dsPh)" href="family/family-photo-v2.webp" x="288" y="-98" width="84" height="60" preserveAspectRatio="xMidYMid slice"/>' +
+          '<path d="M291-95l18 0l-18 13z" fill="#fff" opacity=".4"/>' + heart(372, -100, 0.42, "url(#dsPink)", "") + "</g>" +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          rug(250, 122, 150, 17, "#FFC9DA", "#fff") +
+          // Abi and Umi
+          shadow(166, 128, 34, 6) + shadow(240, 128, 28, 6) +
+          '<image href="family/abi-wave.webp" x="114" y="-94" width="105" height="221"/>' +
+          '<image href="family/umi-welcome.webp" x="198" y="-76" width="84" height="204"/>' +
+          // hearts rising from Mo toward Abi and Umi
+          heart(300, -16, 0.8, "url(#dsPink)", "heartup") + heart(276, -30, 0.55, "#FFB0C4", "heartup h2") + heart(312, -44, 0.6, "#FF8FB0", "heartup h3") +
+          heart(100, -8, 0.6, "#FFB0C4", "float") + sparkle(96, 26, 0.6, "twinkle t3", "#FFC94A") + sparkle(270, 20, 0.5, "twinkle", "#FFC94A") + sparkle(232, -96, 0.6, "twinkle t2", "#FFC94A") +
+          plant(-46, 52, 1.05, "sway") + lamp(440, 52, 1.6, true);
+      }
     },
 
     /* 13 · Dzikir sore — the sun sinking behind the hills, birds flying home, the first star */
     evening_dhikr: {
-      pose: "baby-mo-pose-42",
-      svg: '<defs><linearGradient id="dsSkyS" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7A5FC8"/><stop offset=".45" stop-color="#E98AA6"/><stop offset=".8" stop-color="#FFB27A"/><stop offset="1" stop-color="#FFD8A0"/></linearGradient>' +
-        '<radialGradient id="dsSunS"><stop offset="0" stop-color="#FFF4C2"/><stop offset=".6" stop-color="#FFC94A"/><stop offset="1" stop-color="#FF8A3D"/></radialGradient>' +
-        '<radialGradient id="dsHaloS"><stop offset="0" stop-color="#FFE29A" stop-opacity=".85"/><stop offset="1" stop-color="#FFE29A" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="url(#dsSkyS)"/>' +
-        /* the sun going down behind the far hills */
-        '<circle class="glow" cx="150" cy="112" r="62" fill="url(#dsHaloS)"/>' +
-        '<g class="sink"><circle cx="150" cy="112" r="28" fill="url(#dsSunS)"/></g>' +
-        star(300, 26, 5, "twinkle", "#FFF3B0") + star(250, 14, 2.6, "twinkle t2", "#fff") + star(352, 46, 2.2, "twinkle t3", "#fff") + star(60, 20, 2.4, "twinkle t4", "#fff") +
-        cloud(60, 58, .55, "#FFC7C2", "drift slow") + cloud(250, 50, .45, "#F7B3C6", "drift d2") +
-        /* birds flying home */
-        '<g class="bird"><g transform="translate(200 46)"><path class="flap" d="M-7 0q3.5-5 7 0q3.5-5 7 0" fill="none" stroke="#5A3A6A" stroke-width="2" stroke-linecap="round"/></g></g>' +
-        '<g class="bird" style="animation-delay:-3s"><g transform="translate(180 62)"><path class="flap" d="M-5 0q2.5-4 5 0q2.5-4 5 0" fill="none" stroke="#5A3A6A" stroke-width="1.8" stroke-linecap="round"/></g></g>' +
-        /* hills (they hide the lower half of the sun), a little mosque far away */
-        '<path d="M0 118 Q70 98 150 112 Q230 96 300 110 Q350 100 400 108 V180 H0Z" fill="#B0609A"/>' +
-        '<g fill="#7E3F7E"><rect x="44" y="92" width="34" height="20" rx="2"/><path d="M47 92a14 14 0 0 1 28 0z"/><rect x="82" y="78" width="6" height="34" rx="2"/><path d="M80 78l5-9 5 9z"/><rect x="58" y="100" width="7" height="12" rx="3.5" fill="#FFD27A"/></g>' +
-        '<path d="M0 138 Q110 120 220 134 Q320 122 400 132 V180 H0Z" fill="#7E4C8C"/>' +
-        '<rect y="152" width="400" height="28" fill="#5E3A78"/><rect y="152" width="400" height="3" fill="#6E4688"/>' +
-        /* a small house with warm windows on the near hill */
-        '<rect x="196" y="116" width="54" height="36" rx="3" fill="#4A2D63"/><path d="M190 118 L223 96 L256 118Z" fill="#3E2556"/>' +
-        '<rect class="glow" x="204" y="126" width="12" height="11" rx="2" fill="#FFD27A"/><rect class="glow" x="230" y="126" width="12" height="11" rx="2" fill="#FFD27A"/>' +
-        sparkle(120, 40, .7, "twinkle t2", "#FFF3B0") + sparkle(330, 84, .55, "twinkle", "#FFE29A")
+      pose: "baby-mo-dua-smile", mo: { x: 318, y: 130, h: 196 },
+      svg: function () {
+        return "<defs>" + lg("dsSky", ["#8A6AD8", "#E98AB0@.45", "#FFB27A@.8", "#FFD9A0"]) + rg("dsSunS", ["#FFF6C8", "#FFC94A@.6", "#FF8A3D"], 0.4, 0.35, 0.7) +
+          lg("dsH1", ["#D68AB4", "#B66A9E"]) + lg("dsH2", ["#A86AAE", "#8A5098"]) + lg("dsH3", ["#8BC27A", "#6AA866"]) + rg("dsWarm", ["#FFF0A8", "#FFC94A"], 0.5, 0.4, 0.8) + "</defs>" +
+          bg("url(#dsSky)") +
+          '<circle class="glow" cx="140" cy="-6" r="90" fill="url(#dsHalo)"/>' +
+          '<g class="sink">' + sun(140, -6, 30, true) + "</g>" +
+          star(300, -96, 6, "twinkle", "#FFF3B0") + star(250, -110, 2.8, "twinkle t2", "#fff") + star(370, -70, 2.4, "twinkle t3", "#fff") + star(40, -100, 2.6, "twinkle t4", "#fff") + star(-60, -90, 3, "twinkle", "#fff") + star(460, -96, 3, "twinkle t2", "#fff") +
+          cloud(50, -56, 0.7, "drift slow", 0.95, "#FFC7C8") + cloud(250, -64, 0.55, "drift d2", 0.9, "#F7B3CF") +
+          bird(190, -66, 1, "#5A3A6A") + bird(170, -50, 0.75, "#5A3A6A", "k2") + bird(214, -44, 0.6, "#5A3A6A") +
+          // far hills (they hide the lower half of the sun) with a little mosque
+          '<path d="M-800 10Q-100-16 0 6Q70-14 150 2Q230-16 300 0Q350-10 400 -2Q600-16 1200 4V300H-800Z" fill="url(#dsH1)"/>' +
+          '<g fill="#8E4C8E"><rect x="36" y="-20" width="40" height="24" rx="3"/><path d="M40-20a16 16 0 0 1 32 0z"/><rect x="82" y="-40" width="7" height="44" rx="2.5"/><path d="M80-40l5.5-10 5.5 10z"/><path d="M56-38v-6" stroke="#8E4C8E" stroke-width="1.6"/><rect x="51" y="-12" width="10" height="16" rx="5" fill="#FFD27A"/></g>' +
+          '<path d="M-800 30Q-100 12 0 26Q110 10 220 24Q320 12 400 22Q600 10 1200 24V300H-800Z" fill="url(#dsH2)"/>' +
+          // a small house with warm windows
+          '<rect x="186" y="2" width="56" height="34" rx="3" fill="#6E3E80"/><path d="M180 4L214-18L248 4Z" fill="#5A2E6E" stroke="#5A2E6E" stroke-width="5" stroke-linejoin="round"/>' +
+          '<rect class="glow" x="194" y="12" width="13" height="12" rx="2" fill="url(#dsWarm)"/><rect class="glow" x="221" y="12" width="13" height="12" rx="2" fill="url(#dsWarm)"/>' +
+          '<path d="M-800 52Q-100 34 0 48Q120 30 240 44Q330 32 400 42Q600 30 1200 44V300H-800Z" fill="url(#dsH3)"/>' + floorShine(300) +
+          tree(20, 54, 0.7) + bush(150, 62, 0.8, true) + tree(420, 50, 0.8) +
+          '<g fill="#FFF3B0">' + [[60, 30], [120, 18], [250, 34], [176, 44], [36, 10]].map(function (p, i) { return '<circle class="twinkle t' + (i % 4 + 1) + '" cx="' + p[0] + '" cy="' + p[1] + '" r="2.4"/>'; }).join("") + "</g>" +
+          sparkle(120, -80, 0.8, "twinkle t2", "#FFF3B0") + sparkle(372, -10, 0.6, "twinkle", "#FFE29A") + tree(-60, 60, 1);
+      }
     },
 
     /* 14 · Tasbih sebelum tidur — a cosy night room, a loop of prayer beads lighting up one by one */
     bedtime_tasbih: {
-      pose: "baby-mo-pose-12",
-      svg: '<defs><linearGradient id="dsNightT" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1E2A5A"/><stop offset="1" stop-color="#3C4285"/></linearGradient>' +
-        '<clipPath id="dsWinT"><rect x="26" y="18" width="96" height="74" rx="12"/></clipPath>' +
-        '<radialGradient id="dsBeadGlow"><stop offset="0" stop-color="#FFE29A" stop-opacity=".55"/><stop offset="1" stop-color="#FFE29A" stop-opacity="0"/></radialGradient></defs>' +
-        '<rect width="400" height="180" fill="#2E3270"/><circle cx="330" cy="30" r="110" fill="#3A3F86" opacity=".6"/>' +
-        '<g clip-path="url(#dsWinT)"><rect x="26" y="18" width="96" height="74" fill="url(#dsNightT)"/>' +
-        '<circle class="glow" cx="92" cy="46" r="22" fill="#FFF3C4" opacity=".22"/><circle cx="92" cy="46" r="14" fill="#FFE29A"/><circle cx="99" cy="41" r="12.5" fill="#1E2A5A"/>' +
-        star(46, 34, 3.6, "twinkle", "#fff") + star(60, 70, 2.6, "twinkle t2", "#FFE29A") + star(110, 78, 2.6, "twinkle t3", "#fff") + '</g>' +
-        '<rect x="26" y="18" width="96" height="74" rx="12" fill="none" stroke="#5A64A8" stroke-width="6"/><path d="M74 18v74M26 55h96" stroke="#5A64A8" stroke-width="3.5"/>' +
-        star(160, 22, 3, "twinkle t4", "#FFE29A") + star(196, 46, 2.2, "twinkle", "#fff") + star(140, 64, 2, "twinkle t3", "#fff") +
-        floor("#3F4488", "#353A78") +
-        /* bed with a soft blanket */
-        '<rect x="0" y="112" width="132" height="42" rx="12" fill="#6C7AE0"/><rect x="0" y="104" width="132" height="16" rx="8" fill="#8E9BF0"/>' +
-        '<rect x="10" y="96" width="44" height="18" rx="9" fill="#E8EBFF"/><path d="M58 118c22-5 46-5 74 0v36H58z" fill="#A78BFA"/>' +
-        /* the prayer-bead loop on a little round rug, one bead lighting up after another */
-        '<ellipse cx="206" cy="150" rx="58" ry="10" fill="#5A4FB0"/><ellipse cx="206" cy="149" rx="46" ry="7" fill="#6E62C8"/>' +
-        '<circle class="glow" cx="206" cy="106" r="44" fill="url(#dsBeadGlow)"/>' +
-        (function () {
-          var h = '<circle cx="206" cy="104" r="30" fill="none" stroke="#C7B6FF" stroke-width="1.6" opacity=".7"/>';
-          for (var i = 1; i < 16; i++) {
-            var a = Math.PI / 2 + i * Math.PI * 2 / 16, x = (206 + 30 * Math.cos(a)).toFixed(1), y = (104 + 30 * Math.sin(a)).toFixed(1);
-            h += '<circle cx="' + x + '" cy="' + y + '" r="5.2" fill="#B9A4FF"/><circle class="bead" style="animation-delay:' + (i * .25).toFixed(2) + 's" cx="' + x + '" cy="' + y + '" r="5.2" fill="#FFD25A"/>';
-          }
-          return h + '<circle cx="206" cy="138" r="6.4" fill="#FFD25A"/><path d="M206 143l-6 9h12z" fill="#FFB400"/>';
-        })() +
-        '<g class="float2"><text x="206" y="110" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="16" fill="#FFF3C4">33</text></g>' +
-        sparkle(256, 70, .7, "twinkle", "#FFE29A") + sparkle(160, 92, .5, "twinkle t2", "#fff")
+      pose: "baby-mo-pose-06", mo: { x: 322, y: 132, h: 134 },
+      svg: function () {
+        return "<defs>" + lg("dsWall", ["#5257B4", "#3D4196"]) + lg("dsSkyN", ["#222A66", "#454AA2"]) + lg("dsFl", ["#6461BE", "#47459A"]) +
+          lg("dsQuilt", ["#9E8BFF", "#7461E6"]) + lg("dsWood", ["#7A7FD8", "#5559B8"]) + rg("dsBeadGlow", ["#FFE29A~.6", "#FFE29A~0"]) +
+          '<pattern id="dsSt" width="46" height="46" patternUnits="userSpaceOnUse"><path d="M12 10l1.5 3 3 .5-2.2 2 .6 3-2.9-1.5-2.9 1.5.6-3-2.2-2 3-.5z" fill="#8C90E8" opacity=".5"/></pattern></defs>' +
+          bg("url(#dsWall)") + bg("url(#dsSt)") +
+          windowFrame("dsWinT", 26, -100, 104, 82, 16,
+            '<rect x="26" y="-100" width="104" height="82" fill="url(#dsSkyN)"/>' + moon(94, -66, 16, "#2A3270", "float2") +
+            star(46, -82, 3.6, "twinkle", "#fff") + star(58, -40, 2.8, "twinkle t2", "#FFE29A") + star(116, -30, 2.6, "twinkle t3", "#fff"), "#8C90E8") +
+          star(170, -96, 3.6, "twinkle t4", "#FFE29A") + star(220, -70, 2.6, "twinkle", "#fff") + star(158, -50, 2.2, "twinkle t3", "#fff") + star(390, -96, 3, "twinkle t2", "#FFE29A") +
+          band(40, "url(#dsFl)") + floorShine(40) +
+          bed(-90, 30, 150, "url(#dsQuilt)", "#E2D8FF", "url(#dsWood)", false) +
+          // the prayer-bead loop on a little round rug
+          rug(166, 66, 70, 11, "#5A4FB0", "#9C8CF0") +
+          '<circle class="glow" cx="166" cy="8" r="56" fill="url(#dsBeadGlow)"/>' +
+          (function () {
+            var cx = 166, cy = 6, R = 36, h = '<circle cx="' + cx + '" cy="' + cy + '" r="' + R + '" fill="none" stroke="#C7B6FF" stroke-width="1.8" opacity=".7"/>';
+            for (var i = 1; i < 18; i++) {
+              var a = Math.PI / 2 + i * Math.PI * 2 / 18, x = f(cx + R * Math.cos(a)), y = f(cy + R * Math.sin(a));
+              h += '<circle cx="' + x + '" cy="' + y + '" r="6" fill="#B9A4FF"/><circle class="bead" style="animation-delay:' + (i * 0.22).toFixed(2) + 's" cx="' + x + '" cy="' + y + '" r="6" fill="url(#dsGold)"/><circle cx="' + f(x - 2) + '" cy="' + f(y - 2) + '" r="1.8" fill="#fff" opacity=".7"/>';
+            }
+            return h + '<circle cx="' + cx + '" cy="' + (cy + R + 4) + '" r="7.5" fill="url(#dsGold)"/><path d="M' + cx + " " + (cy + R + 10) + 'l-7 12h14z" fill="#FFB400"/>';
+          })() +
+          '<g class="float2"><text x="166" y="14" text-anchor="middle" font-family="Fredoka, Nunito, sans-serif" font-weight="700" font-size="22" fill="#FFF3C4">33</text></g>' +
+          lamp(262, 40, 1, true) +
+          sparkle(240, -30, 0.8, "twinkle", "#FFE29A") + sparkle(110, -6, 0.55, "twinkle t2", "#fff") +
+          plant(-46, 52, 1, "") + plant(444, 52, 1, "");
+      }
     }
-
   };
+
+  /* visible box of each Baby Mo render inside its image: [left, top, right, bottom] (fractions) + width/height */
+  var POSE = {
+    "baby-mo-pose-41": [0.210, 0.156, 0.781, 0.938, 1], "baby-mo-pose-42": [0.273, 0.154, 0.683, 0.917, 1],
+    "baby-mo-pose-07": [0.252, 0.169, 0.665, 0.908, 1], "baby-mo-pose-05": [0.304, 0.156, 0.688, 0.906, 1],
+    "baby-mo-idea": [0.317, 0.156, 0.708, 0.906, 1], "baby-mo-pose-39": [0.242, 0.340, 0.654, 0.933, 1],
+    "baby-mo-run": [0.302, 0.152, 0.731, 0.894, 1], "baby-mo-pose-15": [0.181, 0.146, 0.715, 0.908, 1],
+    "baby-mo-thank-you": [0.267, 0.150, 0.662, 0.908, 1], "baby-mo-wow": [0.331, 0.150, 0.683, 0.906, 1],
+    "baby-mo-pose-08": [0.263, 0.179, 0.773, 0.906, 1], "baby-mo-pose-12": [0.300, 0.315, 0.685, 0.915, 1],
+    "baby-mo-dua-smile": [0, 0, 1, 1, 0.5], "baby-mo-pose-06": [0.273, 0.319, 0.675, 0.923, 1]
+  };
+  function boxOf(pose) { return POSE[pose] || [0.27, 0.15, 0.7, 0.91, 1]; }
+
+  var cache = {};
+  function svgOf(id) { var s = SCENES[id]; if (!s) return ""; return cache[id] || (cache[id] = BASE ? "<defs>" + BASE + "</defs>" + s.svg() : s.svg()); }
 
   function ensureCss() {
     if (document.getElementById("doa-scenes-css")) return;
@@ -461,32 +781,57 @@
     document.head.appendChild(st);
   }
 
-  /* A still picture of a du'a's scene (sky + Baby Mo) for cards on the home screen.
-     No motion (calm for small children); gradient ids get a per-card suffix so
-     several scenes can share the page with the big one on the learn screen. */
+  /* A still picture of a du'a's scene (sky + Baby Mo) for cards on the home screen
+     (400×180 cards). No motion (calm for small children); gradient ids get a
+     per-card suffix so several scenes can share the page with the big one. */
+  var CARD_VB = [0, -110, 400, 250];
   window.doaSceneArt = function (id, sfx) {
     var s = SCENES[id]; if (!s) return "";
     var k = "_" + (sfx || "c") + "_" + id;
-    var svg = s.svg.replace(/(id="|url\(#)(ds[A-Za-z0-9]+)/g, "$1$2" + k);
+    var svg = svgOf(id).replace(/(id="|url\(#)(ds[A-Za-z0-9]+)/g, "$1$2" + k);
     var night = id === "sleep" || id === "parents" || id === "bedtime_tasbih";
-    return '<span class="dsa' + (night ? " night" : "") + '"><svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + svg +
-      '</svg><img src="baby-mo-poses/' + s.pose + '.webp" alt="" loading="lazy" decoding="async"' + (s.moH ? ' style="height:' + Math.round(88 * s.moH) + '%;right:' + (s.moR || 6) + '%"' : '') + '></span>';
+    // the card is 400×180: the frame window (CARD_VB) is fitted to its height ("meet"),
+    // the walls and skies drawn past the frame fill the sides
+    var u = 180 / CARD_VB[3], ox = (400 - 400 * u) / 2, b = boxOf(s.pose), m = s.mo, ih = m.h * u / (b[3] - b[1]), iw = ih * b[4];
+    var bottom = (CARD_VB[1] + CARD_VB[3] - m.y) * u - (1 - b[3]) * ih, left = ox + m.x * u - (b[0] + b[2]) / 2 * iw;
+    var st = "left:" + f(left / 4) + "%;right:auto;bottom:" + f(bottom / 1.8) + "%;height:" + f(ih / 1.8) + "%;width:auto;transform:none";
+    return '<span class="dsa' + (night ? " night" : "") + '"><svg viewBox="' + CARD_VB.join(" ") + '" preserveAspectRatio="xMidYMax meet" overflow="visible" aria-hidden="true" focusable="false">' + svg +
+      '</svg><img src="baby-mo-poses/' + s.pose + '.webp" alt="" loading="lazy" decoding="async" style="' + st + '"></span>';
   };
+
+  /* Place Baby Mo on the scene's ground: the picture is drawn with "meet",
+     bottom-anchored, so frame unit u = min(W/400, H/300). */
+  function layout(card) {
+    var mo = document.getElementById("sceneMo"), s = SCENES[card.getAttribute("data-scene")];
+    if (!mo || !s || !mo.parentElement || !mo.parentElement.classList.contains("scene-mo-wrap")) return;
+    var W = card.clientWidth, H = card.clientHeight; if (!W || !H) return;
+    var u = Math.min(W / 400, H / FH), ox = (W - 400 * u) / 2, b = boxOf(s.pose), m = s.mo;
+    var ih = m.h * u / (b[3] - b[1]), iw = ih * b[4], wrap = mo.parentElement;
+    wrap.style.left = f(ox + m.x * u - (b[0] + b[2]) / 2 * iw) + "px";
+    wrap.style.bottom = f((FY - m.y) * u - (1 - b[3]) * ih) + "px";
+    wrap.style.width = f(iw) + "px"; wrap.style.height = f(ih) + "px"; wrap.style.right = "auto";
+    mo.style.height = ""; mo.style.width = "";
+    card.style.setProperty("--u", f(u) + "px");
+  }
+  var ro = null;
 
   /* Render the scene for a du'a id into the header card. */
   window.renderDoaScene = function (id) {
     var s = SCENES[id]; var card = document.getElementById("sceneCard"); if (!s || !card) return false;
     ensureCss();
     card.classList.add("has-scene", "ds");
+    card.setAttribute("data-scene", id);
     card.classList.toggle("night", id === "sleep" || id === "parents" || id === "bedtime_tasbih");
     var bg = document.getElementById("sceneBg");
-    bg.innerHTML = '<svg viewBox="0 0 400 180" preserveAspectRatio="xMidYMid slice" aria-hidden="true">' + s.svg + "</svg>";
+    bg.innerHTML = '<svg viewBox="' + VB + '" preserveAspectRatio="xMidYMax meet" overflow="visible" aria-hidden="true">' + svgOf(id) + "</svg>";
     var mo = document.getElementById("sceneMo");
     if (mo) {
       mo.src = "baby-mo-poses/" + s.pose + ".webp";
-      var hh = s.moH ? Math.round(156 * s.moH) + "px" : ""; mo.style.height = hh; mo.parentElement.style.height = hh; mo.parentElement.style.right = s.moR ? s.moR + "%" : "";
+      layout(card);
       var wrap = mo.parentElement; wrap.style.animation = "none"; void wrap.offsetWidth; wrap.style.animation = "";
     }
+    if (!ro && window.ResizeObserver && card.classList.contains("scene-card")) { ro = new ResizeObserver(function () { layout(card); }); ro.observe(card); }
     return true;
   };
+  window.doaScenePose = function (id) { return SCENES[id] ? SCENES[id].pose : ""; };
 })();
