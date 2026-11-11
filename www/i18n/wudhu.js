@@ -39,9 +39,10 @@
   "MasyaAllah, selesai! 🎉": "MashaAllah, all done! 🎉", "Coba lagi biar tanpa salah, ya!": "Try again for a perfect round!",
   "🌟 Coba Level Hebat": "🌟 Try Amazing Level", "🌱 Level Mudah": "🌱 Easy Level", "🔄 Main Lagi": "🔄 Play Again", "💧 Panduan": "💧 Guide", "🏠 Game Hub": "🏠 Game Hub",
   "MasyaAllah, wudhumu selesai! Sekarang siap sholat.": "MashaAllah, your wudu is done! Now you're ready to pray.",
-  "Lanjut belajar sholat 🕌": "Keep learning to pray 🕌", "⚡ Tantangan Kilat": "⚡ Lightning Challenge", "Tantangan Kilat": "Lightning Challenge", "Wudhu dulu sebelum sholat 💧": "Wudu first, before prayer 💧"
+  "Lanjut belajar sholat 🕌": "Keep learning to pray 🕌", "⚡ Tantangan Kilat": "⚡ Lightning Challenge", "Tantangan Kilat": "Lightning Challenge", "Wudhu dulu sebelum sholat 💧": "Wudu first, before prayer 💧", "Suara": "Sound"
 }, [
   [/^Langkah (\d+) \/ (\d+)$/, "Step $1 / $2"],
+  [/^Langkah (\d+) dari (\d+)$/, "Step $1 of $2"],
   [/^Hampir! Setelah "(.+)", apa ya\? 🤔$/, "Almost! What comes after \"{1}\"? 🤔"],
   [/^(.+)\. (.+)$/, function (m, t) { var a = t(m[1]), b = t(m[2]); return (a !== m[1] || b !== m[2]) ? a + ". " + b : m[0]; }]
 ]]);
