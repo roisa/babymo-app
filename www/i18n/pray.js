@@ -25,7 +25,7 @@
   "Berdiri tegak kembali dengan tenang ✨": "Stand up straight again, calmly ✨", "7 anggota: dahi, 2 telapak tangan, 2 lutut, 2 ujung kaki 🌟": "7 parts: forehead, 2 palms, 2 knees, 2 tips of the feet 🌟",
   "Duduk dengan tenang, mohon ampun kepada Allah 💚": "Sit calmly and ask Allah for forgiveness 💚",
   "Setelah tashahhud, ucapkan salam menoleh ke kanan lalu ke kiri 🕊️": "After tashahhud, say salam turning right, then left 🕊️",
-  "Tips dari Mo": "Tips from Mo", "← Sebelumnya": "← Previous", "Selanjutnya →": "Next →", "Selesai ✓": "Done ✓",
+  "Tips dari Mo": "Tips from Mo", "Dengarkan": "Listen", "Jeda": "Pause", "← Sebelumnya": "← Previous", "Selanjutnya →": "Next →", "Selesai ✓": "Done ✓",
   "Allah Maha Besar": "Allah is the Greatest", "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang": "In the name of Allah, the Most Gracious, the Most Merciful",
   "Segala puji bagi Allah, Tuhan seluruh alam": "All praise is for Allah, Lord of all the worlds", "Yang Maha Pengasih, Maha Penyayang": "The Most Gracious, the Most Merciful",
   "Pemilik hari pembalasan": "Master of the Day of Judgement", "Hanya kepada-Mu kami menyembah dan memohon pertolongan": "You alone we worship and You alone we ask for help",
