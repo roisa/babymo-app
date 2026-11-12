@@ -10,6 +10,7 @@ struct PrayerEntry: TimelineEntry {
     let prayer: Prayer
     let time: Date
     let city: String
+    var iftar: Date? = nil   // during Ramadan, until maghrib
 }
 
 struct PrayerProvider: TimelineProvider {
@@ -39,7 +40,9 @@ struct PrayerProvider: TimelineProvider {
     private func entry(at d: Date) -> PrayerEntry {
         let city = PrayerSettings.city
         let next = PrayerTimes.next(after: d, city: city) ?? (.fajr, d)
-        return PrayerEntry(date: d, prayer: next.0, time: next.1, city: city.name)
+        var iftar: Date? = nil
+        if Ramadan.day(on: d) != nil, let f = PrayerTimes.fastTimes(on: d, city: city), d < f.iftar { iftar = f.iftar }
+        return PrayerEntry(date: d, prayer: next.0, time: next.1, city: city.name, iftar: iftar)
     }
 }
 
@@ -78,9 +81,15 @@ struct PrayerComplicationView: View {
                 .widgetAccentable()
                 Text("\(entry.prayer.name) \(hhmm(entry.time))")
                     .font(.system(size: 19, weight: .heavy, design: .rounded))
-                Text(entry.time, style: .relative)
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.secondary)
+                if let iftar = entry.iftar {
+                    Text(L("Buka puasa \(hhmm(iftar))", "Iftar \(hhmm(iftar))"))
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.secondary)
+                } else {
+                    Text(entry.time, style: .relative)
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
         }
