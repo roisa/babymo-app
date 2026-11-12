@@ -36,6 +36,15 @@ struct HomeView: View {
                 .buttonStyle(.plain)
 
                 NavigationLink {
+                    PrayerView()
+                } label: {
+                    HomeTile(icon: "icon-pray",
+                             title: L("Sholat", "Prayer"),
+                             sub: L("Waktu sholat · \(PrayerSettings.city.name)", "Prayer times · \(PrayerSettings.city.name)"))
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
                     TasbihView()
                 } label: {
                     HomeTile(icon: "icon-tasbih",

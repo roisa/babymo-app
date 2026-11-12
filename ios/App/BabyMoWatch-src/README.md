@@ -12,6 +12,13 @@ What's inside
 - **Tasbih**: 33 Subḥānallāh · 33 Alḥamdulillāh · 34 Allāhu akbar (same as Doa Harian).
   Tap or turn the Digital Crown; beads light up around Mo, a click on the wrist each count,
   a stronger tap between sets, Mo cheers at the end.
+- **Prayer**: today's five times for the chosen city (same list and the exact same
+  calculation as the Sholat tab: Kemenag RI, Subuh 20°, Isya 18°, Ashar Shafi'i; checked
+  minute-for-minute against `www/bm-prayertimes.js` for 7 cities × 730 days), the next prayer
+  big with a countdown and Mo, and an optional **"Wudu reminder"** 10 minutes before each
+  prayer (local notifications, asks permission once). No GPS: the parent picks the city.
+- **Watch-face complication** (`../BabyMoWatchWidget-src/`): the next prayer, e.g.
+  "Ashar 14:58", in the circular, corner, inline and rectangular spots.
 - Indonesian when the watch language is Indonesian, English otherwise. Offline, no data
   leaves the watch, no permissions.
 - Art: Baby Mo render 1 cut at the waist (`BabyMoArt.xcassets`), game icons from the app.
@@ -31,6 +38,19 @@ What's inside
 5. Select the watch target → **General** → Minimum Deployments **watchOS 10.0**.
    App Icon should be **AppIcon** (from `BabyMoArt.xcassets`).
 6. Pick the **BabyMoWatch Watch App** scheme with a watch simulator and Run.
+
+### Watch-face complication (optional, after the app runs)
+
+7. **File → New → Target… → watchOS → Widget Extension** → Product Name
+   **BabyMoWatchWidget**, embed in **BabyMoWatch Watch App**, untick "Include Configuration
+   App Intent" → Finish.
+8. Delete Xcode's sample Swift file in the new widget folder and drag in
+   `../BabyMoWatchWidget-src/PrayerWidget.swift` (target: the widget only).
+9. Select `PrayerTimes.swift` and `WatchTheme.swift` → File inspector → **Target Membership**
+   → also tick **BabyMoWatchWidget**.
+10. So the complication sees the city chosen in the app: for both the watch app and the widget
+    target, **Signing & Capabilities → + Capability → App Groups → +** →
+    `group.id.babymo.app`. (Without it the complication uses Jakarta.)
 
 If Xcode shows build errors, copy them to Claude and they will be fixed.
 
