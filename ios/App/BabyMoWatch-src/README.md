@@ -48,6 +48,25 @@ What's inside
    App Icon should be **AppIcon** (from `BabyMoArt.xcassets`).
 6. Pick the **BabyMoWatch Watch App** scheme with a watch simulator and Run.
 
+### Update 13 Nov: titles, move-to-count tasbih, shake-to-feed pet
+
+- Every screen now draws its own title (game icon + bold white title) instead of the grey
+  system title; the toggles and back button use the Baby Mo green (`AccentColor` in
+  `BabyMoArt.xcassets`).
+- **Tasbih**: count by moving the wrist (tap and the Digital Crown still work), a sound on
+  each count (Mo says the dhikr · bead click · none), wrist taps on/off, and bedtime
+  33·33·34 or after-prayer 33·33·33 — all under the ⚙︎ button.
+- **Mo's pet**: shake the wrist 3 times to give food, water and clean; patting stays a
+  gentle tap.
+
+New files to add to the **BabyMoWatch Watch App** target (drag them in like before, Copy
+items off, target = the watch app): `WristMotion.swift`, and in `Audio/`:
+`t-subhanallah.mp3`, `t-alhamdulillah.mp3`, `t-allahuakbar.mp3`, `t-bead.wav`, `pet-pop.wav`.
+
+So counting keeps going when the screen dims: select the watch target → **Signing &
+Capabilities → + Capability → Background Modes** → tick **Session type: Mindfulness**.
+(Without it, counting by movement works while the screen is on.)
+
 ### Watch-face complication (optional, after the app runs)
 
 7. **File → New → Target… → watchOS → Widget Extension** → Product Name

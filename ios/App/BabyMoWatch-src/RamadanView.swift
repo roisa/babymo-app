@@ -27,11 +27,11 @@ struct RamadanView: View {
             let day = Ramadan.day(on: now)
             ScrollView {
                 VStack(spacing: 8) {
+                    BMTitle(text: "Ramadan", icon: "icon-ramadan")
                     if let day {
                         countdownCard(now: now, day: day)
                     } else {
                         VStack(spacing: 2) {
-                            Text(L("Ramadan", "Ramadan")).font(BM.display(18))
                             Text(L("\(Ramadan.daysUntil(from: now)) hari lagi", "\(Ramadan.daysUntil(from: now)) days to go"))
                                 .font(BM.display(13)).foregroundStyle(BM.gold)
                             Text(L("Yuk latihan doanya dulu bersama Mo!", "Let's practise the du'as with Mo!"))
@@ -75,7 +75,7 @@ struct RamadanView: View {
             }
         }
         .background(BM.sky(Color(red: 0.42, green: 0.36, blue: 0.86), Color(red: 0.14, green: 0.12, blue: 0.40)))
-        .navigationTitle("Ramadan")
+        .bmScreen()
         .onChange(of: reminders) { _, on in
             UserDefaults.standard.set(on, forKey: "bm_watch_ramadan_rem")
             if on {

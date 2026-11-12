@@ -5,16 +5,25 @@ struct HomeView: View {
         ScrollView {
             VStack(spacing: 10) {
                 // Mo greets from the top, upper body only (render 1, cut at the waist)
-                ZStack(alignment: .bottomLeading) {
+                HStack(alignment: .bottom, spacing: 0) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("Baby Mo")
+                            .font(BM.display(20))
+                            .foregroundStyle(BM.gold)
+                            .shadow(color: .black.opacity(0.35), radius: 3, y: 1.5)
+                        Text("Assalamu'alaikum!")
+                            .font(BM.display(13.5))
+                            .foregroundStyle(Color(red: 0.14, green: 0.15, blue: 0.43))
+                            .lineLimit(2)
+                            .minimumScaleFactor(0.8)
+                            .padding(.horizontal, 9).padding(.vertical, 5)
+                            .background(RoundedRectangle(cornerRadius: 12, style: .continuous).fill(.white))
+                    }
+                    .padding(.bottom, 8)
+                    Spacer(minLength: 0)
                     Image("mo-wave-up")
                         .resizable().scaledToFit()
-                        .frame(height: 92)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
-                    Text("Assalamu'alaikum!")
-                        .font(BM.display(16))
-                        .foregroundStyle(.white)
-                        .shadow(color: .black.opacity(0.4), radius: 4, y: 2)
-                        .padding(.bottom, 6)
+                        .frame(height: 86)
                 }
 
                 if Ramadan.day() != nil { ramadanTile }
@@ -69,7 +78,7 @@ struct HomeView: View {
             .padding(.horizontal, 4)
         }
         .background(BM.sky(Color(red: 0.24, green: 0.27, blue: 0.72), Color(red: 0.10, green: 0.12, blue: 0.36)))
-        .navigationTitle("Baby Mo")
+        .bmScreen()
     }
 }
 

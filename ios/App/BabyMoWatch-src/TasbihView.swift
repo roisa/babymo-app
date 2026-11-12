@@ -1,18 +1,35 @@
 import SwiftUI
 import WatchKit
 
-/// Bedtime tasbih, same as the Doa Harian game: 33 Subḥānallāh, 33 Alḥamdulillāh, 34 Allāhu akbar.
-/// Tap the screen or turn the Digital Crown; each count lights the next bead around Mo.
+/// Tasbih settings (kept on the watch, changeable any time from the gear button).
+enum TasbihPrefs {
+    static let motion = "bm_tasbih_motion"      // count by moving the wrist (tap always works)
+    static let sens = "bm_tasbih_sens"          // WristShake.Sensitivity
+    static let sound = "bm_tasbih_sound"        // 0 off · 1 bead click · 2 Mo says the phrase
+    static let haptic = "bm_tasbih_haptic"      // wrist tap on every count
+    static let mode = "bm_tasbih_mode"          // 0 bedtime 33·33·34 · 1 after prayer 33·33·33
+}
+
+/// Bedtime tasbih, same as the Doa Harian game: 33 Subḥānallāh, 33 Alḥamdulillāh, 34 Allāhu akbar
+/// (or 33·33·33 after prayer). Count by moving the wrist, tapping the screen or turning the
+/// Digital Crown; each count lights the next bead around Mo, with the chosen sound and a wrist tap.
 struct TasbihView: View {
     private let phrases = ["سُبْحَانَ اللَّهِ", "الْحَمْدُ لِلَّهِ", "اللَّهُ أَكْبَرُ"]
     private let latin = ["Subḥānallāh", "Alḥamdulillāh", "Allāhu akbar"]
-    private let goals = [33, 33, 34]
+    private let voices = ["t-subhanallah", "t-alhamdulillah", "t-allahuakbar"]
     private let beadColors: [(Color, Color)] = [
         (Color(red: 0.49, green: 0.94, blue: 0.64), Color(red: 0.13, green: 0.63, blue: 0.29)),  // green
         (Color(red: 1.0, green: 0.90, blue: 0.54), Color(red: 0.95, green: 0.70, blue: 0.11)),   // gold
         (Color(red: 1.0, green: 0.75, blue: 0.54), Color(red: 0.94, green: 0.44, blue: 0.16)),   // orange
     ]
 
+    @AppStorage(TasbihPrefs.motion) private var useMotion = true
+    @AppStorage(TasbihPrefs.sens) private var sens = WristShake.Sensitivity.normal.rawValue
+    @AppStorage(TasbihPrefs.sound) private var sound = 2
+    @AppStorage(TasbihPrefs.haptic) private var haptic = true
+    @AppStorage(TasbihPrefs.mode) private var mode = 0
+
+    @StateObject private var shake = WristShake()
     @State private var set = 0
     @State private var count = 0
     @State private var done = false
@@ -20,13 +37,28 @@ struct TasbihView: View {
     @State private var lastCrownStep = 0
     @State private var bob = false
 
+    private var goals: [Int] { mode == 1 ? [33, 33, 33] : [33, 33, 34] }
+
     var body: some View {
         GeometryReader { geo in
-            let side = min(geo.size.width, geo.size.height) * 0.82
+            let side = min(geo.size.width * 0.8, geo.size.height * 0.62)
             ZStack {
-                VStack(spacing: 2) {
+                VStack(spacing: 1) {
+                    BMTitle(text: "Tasbih", icon: "icon-tasbih", trailing: AnyView(
+                        NavigationLink { TasbihSettingsView() } label: {
+                            Image(systemName: "gearshape.fill")
+                                .font(.system(size: 13, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: 28, height: 28)
+                                .background(Circle().fill(.white.opacity(0.18)))
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel(L("Pengaturan tasbih", "Tasbih settings"))
+                    ))
+                    .opacity(done ? 0 : 1)
+
                     Text(phrases[set])
-                        .font(BM.arabic(18))
+                        .font(BM.arabic(17))
                         .foregroundStyle(BM.gold)
                         .opacity(done ? 0 : 1)
 
@@ -55,8 +87,13 @@ struct TasbihView: View {
                         .font(BM.display(12))
                         .foregroundStyle(.white)
                         .opacity(done ? 0 : 1)
+                    if useMotion && !done {
+                        Label(L("Gerakkan tanganmu", "Move your hand"), systemImage: "hand.wave.fill")
+                            .font(BM.body(10))
+                            .foregroundStyle(.white.opacity(0.7))
+                    }
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
 
                 if done { finished }
             }
@@ -71,10 +108,27 @@ struct TasbihView: View {
             if s > lastCrownStep { step() }
             lastCrownStep = s
         }
-        .navigationTitle("Tasbih")
+        .onAppear(perform: startMotion)
+        .onDisappear(perform: stopMotion)
+        .onChange(of: useMotion) { _, _ in stopMotion(); startMotion() }
+        .onChange(of: sens) { _, v in shake.sensitivity = WristShake.Sensitivity(rawValue: v) ?? .normal }
+        .onChange(of: mode) { _, _ in withAnimation { done = false; set = 0; count = 0 } }
+        .bmScreen()
         .accessibilityElement(children: .combine)
         .accessibilityLabel("\(latin[set]) \(count) / \(goals[set])")
         .accessibilityAddTraits(.isButton)
+    }
+
+    private func startMotion() {
+        guard useMotion else { return }
+        shake.sensitivity = WristShake.Sensitivity(rawValue: sens) ?? .normal
+        shake.start { step() }
+        DhikrSession.shared.begin()
+    }
+
+    private func stopMotion() {
+        shake.stop()
+        DhikrSession.shared.end()
     }
 
     private func beads(side: CGFloat) -> some View {
@@ -127,20 +181,83 @@ struct TasbihView: View {
             withAnimation { done = false; set = 0; count = 0 }
             return
         }
+        let phrase = set
         withAnimation(.spring(response: 0.25, dampingFraction: 0.5)) {
             count += 1
             bob.toggle()
         }
+        switch sound {
+        case 1: QuickSounds.shared.play("t-bead")
+        case 2: QuickSounds.shared.play(voices[phrase])
+        default: break
+        }
         if count >= goals[set] {
             if set == 2 {
-                WKInterfaceDevice.current().play(.success)
+                bmHaptic(.success, enabled: haptic)
                 withAnimation(.spring(response: 0.5, dampingFraction: 0.7)) { done = true }
             } else {
-                WKInterfaceDevice.current().play(.notification)
+                bmHaptic(.notification, enabled: haptic)
                 withAnimation { set += 1; count = 0 }
             }
         } else {
-            WKInterfaceDevice.current().play(.click)
+            bmHaptic(.click, enabled: haptic)
         }
+    }
+}
+
+/// Gear button on the tasbih: how to count, which sound, wrist taps, which tasbih.
+struct TasbihSettingsView: View {
+    @AppStorage(TasbihPrefs.motion) private var useMotion = true
+    @AppStorage(TasbihPrefs.sens) private var sens = WristShake.Sensitivity.normal.rawValue
+    @AppStorage(TasbihPrefs.sound) private var sound = 2
+    @AppStorage(TasbihPrefs.haptic) private var haptic = true
+    @AppStorage(TasbihPrefs.mode) private var mode = 0
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                BMTitle(text: L("Pengaturan", "Settings"), icon: "icon-tasbih")
+
+                Toggle(isOn: $useMotion) {
+                    VStack(alignment: .leading, spacing: 1) {
+                        Text(L("Hitung dengan gerakan", "Count by moving")).font(BM.display(13))
+                        Text(L("Gerakkan tangan, satu gerakan = satu hitungan", "Flick your wrist, one move = one count")).font(BM.body(10)).opacity(0.75)
+                    }
+                }
+                .tint(BM.green)
+
+                if useMotion {
+                    Text(L("Kekuatan gerakan", "How strong a move")).font(BM.display(12)).opacity(0.85)
+                    Picker(L("Kekuatan", "Strength"), selection: $sens) {
+                        ForEach(WristShake.Sensitivity.allCases) { s in Text(s.label).tag(s.rawValue) }
+                    }
+                    .pickerStyle(.navigationLink)
+                }
+
+                Text(L("Suara tiap hitungan", "Sound on each count")).font(BM.display(12)).opacity(0.85)
+                Picker(L("Suara", "Sound"), selection: $sound) {
+                    Text(L("Suara Mo (dzikir)", "Mo says the dhikr")).tag(2)
+                    Text(L("Bunyi tasbih", "Bead click")).tag(1)
+                    Text(L("Tanpa suara", "No sound")).tag(0)
+                }
+                .pickerStyle(.navigationLink)
+
+                Toggle(isOn: $haptic) {
+                    Text(L("Getar tiap hitungan", "Wrist tap on each count")).font(BM.display(13))
+                }
+                .tint(BM.green)
+
+                Text(L("Jenis tasbih", "Which tasbih")).font(BM.display(12)).opacity(0.85)
+                Picker(L("Tasbih", "Tasbih"), selection: $mode) {
+                    Text(L("Sebelum tidur · 33·33·34", "Bedtime · 33·33·34")).tag(0)
+                    Text(L("Sesudah sholat · 33·33·33", "After prayer · 33·33·33")).tag(1)
+                }
+                .pickerStyle(.navigationLink)
+            }
+            .foregroundStyle(.white)
+            .padding(.horizontal, 4)
+        }
+        .background(BM.sky(Color(red: 0.36, green: 0.37, blue: 0.84), Color(red: 0.15, green: 0.16, blue: 0.43)))
+        .bmScreen()
     }
 }

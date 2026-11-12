@@ -37,3 +37,40 @@ struct BMButtonStyle: ButtonStyle {
             .scaleEffect(configuration.isPressed ? 0.96 : 1)
     }
 }
+
+/// Screen title in the Baby Mo style: the game's icon + a bold rounded white title.
+/// Replaces the grey system navigation title, which was hard to read on the colourful skies.
+struct BMTitle: View {
+    let text: String
+    var icon: String? = nil
+    var trailing: AnyView? = nil
+
+    var body: some View {
+        HStack(spacing: 7) {
+            if let icon {
+                Image(icon)
+                    .resizable().scaledToFit()
+                    .frame(width: 24, height: 24)
+                    .clipShape(RoundedRectangle(cornerRadius: 7, style: .continuous))
+                    .shadow(color: .black.opacity(0.3), radius: 2, y: 1)
+            }
+            Text(text)
+                .font(BM.display(19))
+                .foregroundStyle(.white)
+                .shadow(color: .black.opacity(0.35), radius: 3, y: 1.5)
+                .lineLimit(1)
+                .minimumScaleFactor(0.7)
+            Spacer(minLength: 0)
+            if let trailing { trailing }
+        }
+        .padding(.horizontal, 4)
+        .accessibilityAddTraits(.isHeader)
+    }
+}
+
+extension View {
+    /// Hide the grey system title (the back button stays) — the screen draws its own BMTitle.
+    func bmScreen() -> some View {
+        self.navigationTitle("")
+    }
+}
