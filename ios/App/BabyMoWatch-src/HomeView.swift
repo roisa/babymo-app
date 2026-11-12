@@ -17,6 +17,8 @@ struct HomeView: View {
                         .padding(.bottom, 6)
                 }
 
+                if Ramadan.day() != nil { ramadanTile }
+
                 NavigationLink {
                     DuaPlayerView(dua: WatchDuas.now)
                 } label: {
@@ -52,11 +54,36 @@ struct HomeView: View {
                              sub: L("Sebelum tidur · 33 · 33 · 34", "Bedtime · 33 · 33 · 34"))
                 }
                 .buttonStyle(.plain)
+
+                NavigationLink {
+                    PetView()
+                } label: {
+                    HomeTile(icon: "icon-pet",
+                             title: L("Hewan Mo", "Mo's pet"),
+                             sub: L("Rawat Mimi si kucing", "Look after Mimi the cat"))
+                }
+                .buttonStyle(.plain)
+
+                if Ramadan.day() == nil { ramadanTile }
             }
             .padding(.horizontal, 4)
         }
         .background(BM.sky(Color(red: 0.24, green: 0.27, blue: 0.72), Color(red: 0.10, green: 0.12, blue: 0.36)))
         .navigationTitle("Baby Mo")
+    }
+}
+
+extension HomeView {
+    var ramadanTile: some View {
+        NavigationLink {
+            RamadanView()
+        } label: {
+            HomeTile(icon: "icon-ramadan",
+                     title: "Ramadan",
+                     sub: Ramadan.day().map { L("Hari ke-\($0) · sahur & buka", "Day \($0) · suhoor & iftar") }
+                        ?? L("\(Ramadan.daysUntil()) hari lagi", "\(Ramadan.daysUntil()) days to go"))
+        }
+        .buttonStyle(.plain)
     }
 }
 

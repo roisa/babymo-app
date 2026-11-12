@@ -140,6 +140,7 @@ enum PrayerTimes {
         if t["fajr"]!.isNaN || fixHour(t["sunrise"]! - t["fajr"]!) > fajrMax { t["fajr"] = t["sunrise"]! - fajrMax }
         if t["isha"]!.isNaN || fixHour(t["isha"]! - t["sunset"]!) > ishaMax { t["isha"] = t["sunset"]! + ishaMax }
         t["maghrib"] = t["sunset"]!
+        t["imsak"] = t["fajr"]! - 10.0 / 60
         return t
     }
 
@@ -167,6 +168,20 @@ enum PrayerTimes {
         }
     }
 
+    /// Imsak (Subuh − 10 min, as in the app) and Maghrib (iftar) for the day that contains `date`.
+    static func fastTimes(on date: Date, city: PrayerCity, calendar: Calendar = .current) -> (imsak: Date, iftar: Date)? {
+        let comps = calendar.dateComponents([.year, .month, .day], from: date)
+        guard let y = comps.year, let m = comps.month, let d = comps.day,
+              let startOfDay = calendar.date(from: comps),
+              let noon = calendar.date(byAdding: .hour, value: 12, to: startOfDay) else { return nil }
+        let tz = Double(calendar.timeZone.secondsFromGMT(for: noon)) / 3600
+        let h = hours(year: y, month: m, day: d, lat: city.lat, lng: city.lng, tz: tz)
+        guard let im = minutes(h["imsak"]!), let mg = minutes(h["maghrib"]!),
+              let imsak = calendar.date(byAdding: .minute, value: im, to: startOfDay),
+              let iftar = calendar.date(byAdding: .minute, value: mg, to: startOfDay) else { return nil }
+        return (imsak, iftar)
+    }
+
     /// The next prayer from `now` (looks into tomorrow after Isha).
     static func next(after now: Date, city: PrayerCity, calendar: Calendar = .current) -> (Prayer, Date)? {
         if let n = times(on: now, city: city, calendar: calendar).first(where: { $0.1 > now }) { return n }
@@ -177,5 +192,26 @@ enum PrayerTimes {
     /// The prayer whose time has started (nil before Subuh).
     static func current(at now: Date, city: PrayerCity, calendar: Calendar = .current) -> Prayer? {
         times(on: now, city: city, calendar: calendar).last(where: { $0.1 <= now })?.0
+    }
+}
+
+/// Ramadan by the Umm al-Qura calendar (the same calendar the app uses).
+enum Ramadan {
+    static let hijri = Calendar(identifier: .islamicUmmAlQura)
+
+    /// Day of Ramadan (1…30), or nil outside Ramadan.
+    static func day(on date: Date = Date()) -> Int? {
+        let c = hijri.dateComponents([.month, .day], from: date)
+        return c.month == 9 ? c.day : nil
+    }
+
+    /// Days until 1 Ramadan (0 during Ramadan).
+    static func daysUntil(from date: Date = Date()) -> Int {
+        if day(on: date) != nil { return 0 }
+        let cal = Calendar.current
+        for i in 1...400 {
+            if let d = cal.date(byAdding: .day, value: i, to: date), day(on: d) == 1 { return i }
+        }
+        return 0
     }
 }

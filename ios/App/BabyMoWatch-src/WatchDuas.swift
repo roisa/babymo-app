@@ -72,6 +72,46 @@ enum WatchDuas {
             meaningEn: "All praise to Allah who revived us after death."),
     ]
 
+    /// Ramadan du'as (from www/doa-ramadan.js, voices d-r_*.mp3).
+    static let ramadan: [WatchDua] = [
+        WatchDua(
+            id: "r_niat", audio: "d-r_niat", symbol: "moon.stars.fill",
+            tint: Color(red: 0.42, green: 0.36, blue: 0.86),
+            skyTop: Color(red: 0.42, green: 0.36, blue: 0.86), skyMid: Color(red: 0.16, green: 0.14, blue: 0.42),
+            titleId: "Niat Puasa Ramadan", titleEn: "Intention to Fast Ramadan",
+            subId: "Waktunya sahur! Mo berniat puasa untuk besok.", subEn: "Suhoor time! Mo makes the intention to fast tomorrow.",
+            arabic: "نَوَيْتُ صَوْمَ غَدٍ عَنْ أَدَاءِ فَرْضِ شَهْرِ رَمَضَانَ هَذِهِ السَّنَةِ لِلَّهِ تَعَالَى",
+            meaningId: "Aku berniat puasa besok untuk menunaikan kewajiban bulan Ramadan tahun ini karena Allah Ta'ala.",
+            meaningEn: "I intend to fast tomorrow, to do the duty of Ramadan this year, for Allah the Most High."),
+        WatchDua(
+            id: "r_shaim", audio: "d-r_shaim", symbol: "face.smiling.inverse",
+            tint: Color(red: 0.13, green: 0.63, blue: 0.42),
+            skyTop: Color(red: 0.25, green: 0.75, blue: 0.54), skyMid: Color(red: 0.11, green: 0.43, blue: 0.38),
+            titleId: "Aku Sedang Puasa", titleEn: "I'm Fasting",
+            subId: "Teman mengejek? Mo tetap tenang dan bilang: aku sedang puasa!", subEn: "Someone teasing? Mo stays calm and says: I'm fasting!",
+            arabic: "إِنِّي صَائِمٌ",
+            meaningId: "Sesungguhnya aku sedang berpuasa.",
+            meaningEn: "I am fasting."),
+        WatchDua(
+            id: "r_buka", audio: "d-r_buka", symbol: "sunset.fill",
+            tint: Color(red: 0.91, green: 0.47, blue: 0.16),
+            skyTop: Color(red: 0.98, green: 0.62, blue: 0.30), skyMid: Color(red: 0.62, green: 0.25, blue: 0.30),
+            titleId: "Doa Berbuka Puasa", titleEn: "Du'a for Breaking the Fast",
+            subId: "Bedug maghrib berbunyi! Baca doa ini saat berbuka.", subEn: "The maghrib drum! Say this when you break your fast.",
+            arabic: "اللَّهُمَّ لَكَ صُمْتُ وَعَلَى رِزْقِكَ أَفْطَرْتُ",
+            meaningId: "Ya Allah, untuk-Mu aku berpuasa dan dengan rezeki-Mu aku berbuka.",
+            meaningEn: "O Allah, for You I fasted, and with Your provision I break my fast."),
+        WatchDua(
+            id: "r_after", audio: "d-r_after", symbol: "drop.fill",
+            tint: Color(red: 0.20, green: 0.55, blue: 0.85),
+            skyTop: Color(red: 0.31, green: 0.60, blue: 0.91), skyMid: Color(red: 0.16, green: 0.28, blue: 0.62),
+            titleId: "Doa Sesudah Berbuka", titleEn: "Du'a After Iftar",
+            subId: "Alhamdulillah, segar! Setelah minum dan makan kurma, baca doa ini.", subEn: "Alhamdulillah, fresh! After a drink and a date, say this du'a.",
+            arabic: "ذَهَبَ الظَّمَأُ وَابْتَلَّتِ الْعُرُوقُ وَثَبَتَ الْأَجْرُ إِنْ شَاءَ اللَّهُ",
+            meaningId: "Telah hilang rasa haus, urat-urat telah basah, dan pahala telah tetap, insya Allah.",
+            meaningEn: "The thirst is gone, the veins are moist again, and the reward is sure, if Allah wills."),
+    ]
+
     /// The du'a that fits the time of day best (shown first on the home screen).
     static var now: WatchDua {
         let h = Calendar.current.component(.hour, from: Date())

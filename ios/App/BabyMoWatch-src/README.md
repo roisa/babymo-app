@@ -17,6 +17,15 @@ What's inside
   minute-for-minute against `www/bm-prayertimes.js` for 7 cities × 730 days), the next prayer
   big with a countdown and Mo, and an optional **"Wudu reminder"** 10 minutes before each
   prayer (local notifications, asks permission once). No GPS: the parent picks the city.
+- **Ramadan**: day N of Ramadan, a big countdown to iftar (or to imsak at night) with Mo, the
+  four Ramadan du'as in Mo's voice (intention, "I'm fasting", breaking the fast, after iftar),
+  and optional suhoor (45 min before imsak) and iftar reminders. Outside Ramadan the tile
+  shows "N days to go" and kids can practise the du'as. Imsak and Maghrib are the app's own
+  numbers (checked against the JS for 3 cities × 730 days); Ramadan is found with the Umm
+  al-Qura calendar, like the app (1 Ramadan 1448 = 8 Feb 2027).
+- **Mo's pet**: Mimi the cat from Sahabat Hewan Mo, a daily check-in: Food (with
+  Bismillah) → Water → Clean → Pat, with the app's own adab lines, wrist taps and a daily
+  streak. Cat art exported from `www/farm/farm-kit.js`.
 - **Watch-face complication** (`../BabyMoWatchWidget-src/`): the next prayer, e.g.
   "Ashar 14:58", in the circular, corner, inline and rectangular spots.
 - Indonesian when the watch language is Indonesian, English otherwise. Offline, no data
