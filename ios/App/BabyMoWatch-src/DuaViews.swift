@@ -5,24 +5,35 @@ import WatchKit
 /// List of the five du'a moments.
 struct DuaMomentsView: View {
     var body: some View {
-        List(WatchDuas.all) { dua in
-            NavigationLink {
-                DuaPlayerView(dua: dua)
-            } label: {
-                HStack(spacing: 10) {
-                    Image(systemName: dua.symbol)
-                        .font(.system(size: 15, weight: .bold))
-                        .foregroundStyle(.white)
-                        .frame(width: 32, height: 32)
-                        .background(Circle().fill(dua.tint))
-                    Text(dua.title)
-                        .font(BM.display(14))
-                        .lineLimit(2)
+        ScrollView {
+            VStack(spacing: 7) {
+                BMTitle(text: L("Semua doa", "All du'as"), icon: "icon-doa")
+                ForEach(WatchDuas.all) { dua in
+                    NavigationLink {
+                        DuaPlayerView(dua: dua)
+                    } label: {
+                        HStack(spacing: 9) {
+                            Image(systemName: dua.symbol)
+                                .font(.system(size: 14, weight: .bold))
+                                .foregroundStyle(.white)
+                                .frame(width: 30, height: 30)
+                                .background(Circle().fill(dua.tint))
+                            Text(dua.title)
+                                .font(BM.display(13.5))
+                                .foregroundStyle(.white)
+                                .lineLimit(2)
+                            Spacer(minLength: 0)
+                        }
+                        .padding(7)
+                        .background(RoundedRectangle(cornerRadius: 16, style: .continuous).fill(.white.opacity(0.13)))
+                    }
+                    .buttonStyle(.plain)
                 }
-                .padding(.vertical, 4)
             }
+            .padding(.horizontal, 4)
         }
-        .navigationTitle(L("Doa", "Du'as"))
+        .background(BM.sky(Color(red: 0.24, green: 0.27, blue: 0.72), Color(red: 0.10, green: 0.12, blue: 0.36)))
+        .bmScreen()
     }
 }
 
@@ -152,7 +163,7 @@ struct DuaPlayerView: View {
             .padding(.horizontal, 4)
         }
         .background(BM.sky(dua.skyTop, dua.skyMid))
-        .navigationTitle(L("Doa", "Du'a"))
+        .bmScreen()
         .onDisappear { audio.stop() }
     }
 }

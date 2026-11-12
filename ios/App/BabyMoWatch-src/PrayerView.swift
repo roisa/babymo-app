@@ -30,6 +30,7 @@ struct PrayerView: View {
 
             ScrollView {
                 VStack(spacing: 8) {
+                    BMTitle(text: L("Sholat", "Prayer"), icon: "icon-pray")
                     NavigationLink {
                         CityPickerView(city: $city)
                     } label: {
@@ -87,7 +88,7 @@ struct PrayerView: View {
             }
         }
         .background(BM.sky(Color(red: 0.24, green: 0.27, blue: 0.72), Color(red: 0.10, green: 0.12, blue: 0.36)))
-        .navigationTitle(L("Sholat", "Prayer"))
+        .bmScreen()
         .onChange(of: city) { _, c in
             PrayerSettings.city = c
             WidgetCenter.shared.reloadAllTimelines()
@@ -145,19 +146,30 @@ struct CityPickerView: View {
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
-        List(PrayerCity.all) { c in
-            Button {
-                city = c
-                dismiss()
-            } label: {
-                HStack {
-                    Text(c.name).font(BM.display(14))
-                    Spacer()
-                    if c == city { Image(systemName: "checkmark.circle.fill").foregroundStyle(BM.green) }
+        ScrollView {
+            VStack(spacing: 6) {
+                BMTitle(text: L("Pilih kota", "Choose city"), icon: "icon-pray")
+                ForEach(PrayerCity.all) { c in
+                    Button {
+                        city = c
+                        dismiss()
+                    } label: {
+                        HStack {
+                            Text(c.name).font(BM.display(14)).foregroundStyle(.white)
+                            Spacer()
+                            if c == city { Image(systemName: "checkmark.circle.fill").foregroundStyle(BM.greenHi) }
+                        }
+                        .padding(.horizontal, 10).padding(.vertical, 9)
+                        .background(RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(c == city ? BM.green.opacity(0.45) : .white.opacity(0.13)))
+                    }
+                    .buttonStyle(.plain)
                 }
             }
+            .padding(.horizontal, 4)
         }
-        .navigationTitle(L("Pilih kota", "Choose city"))
+        .background(BM.sky(Color(red: 0.24, green: 0.27, blue: 0.72), Color(red: 0.10, green: 0.12, blue: 0.36)))
+        .bmScreen()
     }
 }
 

@@ -53,6 +53,14 @@ struct PetView: View {
     @State private var busy: PetState.Step? = nil   // the action being animated
     @State private var bubble: String? = nil
     @State private var hop = false
+    @StateObject private var shake = WristShake()
+    @State private var shakes = 0          // shakes so far for this step (3 needed)
+    @State private var wiggle = false
+    private let shakesNeeded = 3
+
+    /// Food, water and clean are done by shaking the wrist (like shaking the food bag);
+    /// patting stays a gentle tap: "stroke gently, no rough play".
+    private var shakeStep: Bool { [.feed, .water, .clean].contains(pet.step) }
 
     private var name: String { L("Mimi", "Mimi") }
 
@@ -93,14 +101,15 @@ struct PetView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: 6) {
-                HStack(spacing: 4) {
-                    Image(systemName: "flame.fill").foregroundStyle(.orange)
-                    Text(L("\(pet.streak) hari", "\(pet.streak) days")).font(BM.display(12))
-                    Spacer()
-                    Text(name).font(BM.display(14))
-                }
-                .foregroundStyle(.white)
-                .padding(.horizontal, 6)
+                BMTitle(text: name, icon: "icon-pet", trailing: AnyView(
+                    HStack(spacing: 3) {
+                        Image(systemName: "flame.fill").foregroundStyle(.orange)
+                        Text("\(pet.streak)").font(BM.display(13)).foregroundStyle(.white)
+                    }
+                    .padding(.horizontal, 8).padding(.vertical, 3)
+                    .background(Capsule().fill(.black.opacity(0.22)))
+                    .accessibilityLabel(L("\(pet.streak) hari berturut-turut", "\(pet.streak)-day streak"))
+                ))
 
                 ZStack(alignment: .bottom) {
                     Ellipse().fill(Color(red: 0.42, green: 0.78, blue: 0.40)).frame(height: 30).offset(y: 6)
@@ -114,6 +123,7 @@ struct PetView: View {
                         .resizable().scaledToFit()
                         .frame(height: 104)
                         .offset(y: hop ? -6 : 0)
+                        .rotationEffect(.degrees(wiggle ? 4 : 0), anchor: .bottom)
                     if busy == .clean {
                         Image(systemName: "sparkles").font(.system(size: 30)).foregroundStyle(.yellow).offset(x: -30, y: -60)
                     }
@@ -130,6 +140,17 @@ struct PetView: View {
                 .frame(height: 118)
 
                 Text(hint).font(BM.display(12.5)).foregroundStyle(.white).multilineTextAlignment(.center)
+
+                if shakeStep && busy == nil {
+                    HStack(spacing: 5) {
+                        Image(systemName: "hand.wave.fill")
+                        Text(L("Goyangkan tangan!", "Shake your hand!")).font(BM.display(11.5))
+                        ForEach(0..<shakesNeeded, id: \.self) { i in
+                            Circle().fill(i < shakes ? BM.gold : .white.opacity(0.3)).frame(width: 7, height: 7)
+                        }
+                    }
+                    .foregroundStyle(BM.gold)
+                }
 
                 HStack(spacing: 6) {
                     action(.feed, "fish.fill", L("Makan", "Food"))
@@ -149,8 +170,12 @@ struct PetView: View {
             .padding(.horizontal, 4)
         }
         .background(BM.sky(Color(red: 0.45, green: 0.70, blue: 0.98), Color(red: 0.18, green: 0.42, blue: 0.62)))
-        .navigationTitle(L("Hewan", "Pet"))
-        .onAppear { pet.load() }
+        .bmScreen()
+        .onAppear {
+            pet.load()
+            shake.start { shook() }
+        }
+        .onDisappear { shake.stop() }
     }
 
     private func action(_ s: PetState.Step, _ symbol: String, _ label: String) -> some View {
@@ -174,6 +199,22 @@ struct PetView: View {
         .buttonStyle(.plain)
         .disabled(busy != nil)
         .accessibilityLabel(label)
+    }
+
+    /// One wrist shake: three of them finish the food / water / clean step.
+    private func shook() {
+        guard busy == nil, shakeStep else { return }
+        shakes += 1
+        QuickSounds.shared.play("pet-pop")
+        WKInterfaceDevice.current().play(.click)
+        withAnimation(.spring(response: 0.15, dampingFraction: 0.35)) { wiggle = true }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
+            withAnimation(.spring(response: 0.2, dampingFraction: 0.5)) { wiggle = false }
+        }
+        if shakes >= shakesNeeded {
+            shakes = 0
+            tap(pet.step)
+        }
     }
 
     private func tap(_ s: PetState.Step) {
