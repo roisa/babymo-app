@@ -654,6 +654,34 @@ html[data-bm-theme="dark"] .bm-wa-s,html[data-bm-theme="classic"] .bm-wa-s{backg
 .bm-wa svg.wi{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .bm-wa-pri svg.wi{width:20px;height:20px}
 </style>
+<style>
+/* ── Liquid glass result card (iOS 26 style): see-through frosted panel with a specular top edge,
+      a fine light rim, a soft inner glow and depth shadow; the "Coba juga" card and pills match ── */
+.mo-peek+.done-card,#completeScreen .bm-next,#s-complete .bm-next{position:relative;isolation:isolate;
+  background:linear-gradient(160deg,rgba(255,255,255,.62),rgba(255,255,255,.34))!important;
+  -webkit-backdrop-filter:blur(26px) saturate(185%);backdrop-filter:blur(26px) saturate(185%);
+  border:1px solid rgba(255,255,255,.65)!important;
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 22px rgba(255,255,255,.22),0 24px 48px -26px rgba(20,50,90,.55),0 2px 6px -2px rgba(20,50,90,.12)!important}
+.mo-peek+.done-card{border-radius:32px}
+/* the bright sheen across the top of the glass */
+.mo-peek+.done-card::before,#completeScreen .bm-next::before,#s-complete .bm-next::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.55) 0,rgba(255,255,255,.12) 22%,rgba(255,255,255,0) 45%),radial-gradient(120% 60% at 15% 0%,rgba(255,255,255,.35),transparent 60%)}
+#completeScreen .bm-wa-s,#s-complete .bm-wa-s{background:rgba(255,255,255,.5)!important;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  border:1px solid rgba(255,255,255,.7)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.95),0 8px 18px -12px rgba(20,50,90,.5)!important}
+/* dark / classic: smoky glass that lets the night colours through */
+html[data-bm-theme="classic"] .mo-peek+.done-card,html[data-bm-theme="dark"] .mo-peek+.done-card,
+html[data-bm-theme="classic"] #completeScreen .bm-next,html[data-bm-theme="dark"] #completeScreen .bm-next,
+html[data-bm-theme="classic"] #s-complete .bm-next,html[data-bm-theme="dark"] #s-complete .bm-next{
+  background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05))!important;border-color:rgba(255,255,255,.22)!important;
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.32),inset 0 -1px 0 rgba(255,255,255,.06),inset 0 0 24px rgba(255,255,255,.05),0 26px 50px -24px rgba(0,0,0,.7)!important}
+html[data-bm-theme="classic"] .mo-peek+.done-card::before,html[data-bm-theme="dark"] .mo-peek+.done-card::before,
+html[data-bm-theme="classic"] #completeScreen .bm-next::before,html[data-bm-theme="dark"] #completeScreen .bm-next::before,
+html[data-bm-theme="classic"] #s-complete .bm-next::before,html[data-bm-theme="dark"] #s-complete .bm-next::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.16) 0,rgba(255,255,255,.04) 24%,rgba(255,255,255,0) 46%),radial-gradient(120% 60% at 15% 0%,rgba(255,255,255,.10),transparent 60%)}
+html[data-bm-theme="classic"] #completeScreen .bm-wa-s,html[data-bm-theme="dark"] #completeScreen .bm-wa-s,
+html[data-bm-theme="classic"] #s-complete .bm-wa-s,html[data-bm-theme="dark"] #s-complete .bm-wa-s{background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.2)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -12px rgba(0,0,0,.6)!important}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.mo-peek+.done-card{background:var(--card)!important}}
+</style>
 </head>
 <body>
 <!-- shared art for the Wudhu home (kept rendered, never display:none, so gradients resolve) -->
