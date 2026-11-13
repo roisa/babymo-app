@@ -344,6 +344,72 @@ h1{color:#E8590C}
 </style>
 <script src="bm-icons.js" defer></script>
 <script src="farm/farm-kit.js"></script>
+<style id="polish-ui">
+/* ── Polish (Nov 2026): two-tone UI icons, one glass tool dock, scrapbook book page ── */
+.gi{width:1.2em;height:1.2em;display:inline-block;vertical-align:-.26em;flex:0 0 auto;overflow:visible;filter:drop-shadow(0 1.5px 1.2px rgba(0,0,0,.2))}
+.tool .gi{width:1.18em;height:1.18em;vertical-align:top}
+.pill .gi{width:1.4em;height:1.4em;margin-inline-end:3px}
+.kicker .gi{width:1.6em;height:1.6em;margin:-4px 0}
+.quote b .gi{width:1.7em;height:1.7em;margin:-6px 4px -4px 0;vertical-align:-.5em}
+.btn-pri .gi,.btn-sec .gi{width:1.4em;height:1.4em}
+.btn-pri .gi{width:1.6em;height:1.6em;padding:3px;border-radius:50%;background:rgba(255,255,255,.94);box-shadow:0 2px 6px -2px rgba(0,0,0,.25);filter:none}
+.mcard .row .btn-pri .gi{width:1.5em;height:1.5em}
+.day .gi{margin:0 3px 0 1px}
+.badge .gi{width:1.3em;height:1.3em;filter:none}
+.bk .e .gi{width:1.15em;height:1.15em}
+.seed span .gi,.bitem span .gi{width:1.1em;height:1.1em}
+.tabs2 button .gi,.ad b .gi{margin-inline-end:5px}
+.ad b .gi{width:1.25em;height:1.25em}
+
+/* the action bar: one iOS-style glass dock (dark/classic first, bright below) */
+.tools{position:relative;isolation:isolate;gap:4px!important;padding:6px;border-radius:30px;
+  background:rgba(255,255,255,.08);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.08),0 16px 30px -18px rgba(0,0,0,.7)}
+.tools::before{content:'';position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%)}
+.tools .tool{min-height:60px;background:transparent;border:1.5px solid transparent;box-shadow:none!important;border-radius:24px!important;transition:opacity .2s,transform .1s,background .2s}
+.tools .tool.go{background:rgba(255,255,255,.14);border-color:var(--gold);box-shadow:0 0 0 3px rgba(255,200,61,.22)!important}
+.tools .tool.go::after{inset:-2px;border-radius:26px}
+html[data-bm-theme="bright"] .tools{background:rgba(255,255,255,.74);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35),0 0 0 .5px rgba(23,48,34,.08),0 16px 30px -18px rgba(30,80,50,.55)}
+html[data-bm-theme="bright"] .tools::before{background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%)}
+html[data-bm-theme="bright"] .tools .tool.go{background:#fff;box-shadow:0 0 0 3px rgba(232,89,12,.16),0 6px 14px -8px rgba(30,80,50,.5)!important}
+@media (orientation:landscape) and (max-height:600px){ .screen.land>.tools{padding:6px;border-radius:26px} .screen.land>.tools .tool{border-radius:20px!important} }
+
+/* Garden/Friends Book: a soft scrapbook page (paper tint + texture, washi tape, faint stickers) */
+#s-book::before{content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='rotate(-45 60 60)' opacity='.22'%3E%3Cpath d='M8 48h104l-3 4 3 4-3 4 3 4-3 4 3 4H8l3-4-3-4 3-4-3-4 3-4-3-4z' fill='%23FF8FB0'/%3E%3Cpath d='M8 52h104' stroke='%23fff' stroke-opacity='.5' stroke-width='2'/%3E%3Cg fill='%23fff' fill-opacity='.35'%3E%3Ccircle cx='30' cy='60' r='3'/%3E%3Ccircle cx='55' cy='64' r='3'/%3E%3Ccircle cx='80' cy='58' r='3'/%3E%3Ccircle cx='100' cy='64' r='2.4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") left -34px bottom -34px/120px 120px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='rotate(45 60 60)' opacity='.22'%3E%3Cpath d='M8 48h104l-3 4 3 4-3 4 3 4-3 4 3 4H8l3-4-3-4 3-4-3-4 3-4-3-4z' fill='%23FFC83D'/%3E%3Cpath d='M8 52h104' stroke='%23fff' stroke-opacity='.5' stroke-width='2'/%3E%3Cg fill='%23fff' fill-opacity='.35'%3E%3Ccircle cx='30' cy='60' r='3'/%3E%3Ccircle cx='55' cy='64' r='3'/%3E%3Ccircle cx='80' cy='58' r='3'/%3E%3Ccircle cx='100' cy='64' r='2.4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") right -34px bottom -34px/120px 120px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.22' transform='rotate(-14 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cg fill='%23E3A15C'%3E%3Cellipse cx='24' cy='32' rx='10' ry='8.5'/%3E%3Cellipse cx='11' cy='20' rx='4' ry='5'/%3E%3Cellipse cx='19' cy='12' rx='4' ry='5.4'/%3E%3Cellipse cx='29' cy='12' rx='4' ry='5.4'/%3E%3Cellipse cx='37' cy='20' rx='4' ry='5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") left -10px top 46%/40px 40px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.22' transform='rotate(12 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cpath d='M24 4l6 13 14 1.6-10.4 9.6 3 14L24 35l-12.6 7.2 3-14L4 18.6 18 17z' fill='%23FFC83D'/%3E%3C/g%3E%3C/svg%3E") right -8px top 30%/34px 34px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.22' transform='rotate(10 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cpath d='M24 42C14 35 5 28 5 18.5 5 12 10 7.5 15.5 7.5c3.6 0 6.6 1.8 8.5 4.8 1.9-3 4.9-4.8 8.5-4.8C38 7.5 43 12 43 18.5 43 28 34 35 24 42z' fill='%23FF8FB0'/%3E%3C/g%3E%3C/svg%3E") right -12px top 68%/42px 42px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.22' transform='rotate(-8 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cpath d='M24 4l6 13 14 1.6-10.4 9.6 3 14L24 35l-12.6 7.2 3-14L4 18.6 18 17z' fill='%23FFC83D'/%3E%3C/g%3E%3C/svg%3E") left 70px bottom 10px/24px 24px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.045 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/160px 160px,
+    radial-gradient(rgba(255,255,255,.05) 1px,transparent 1.5px) 0 0/22px 22px,
+    linear-gradient(180deg,#183322 0%,#11281A 100%);}
+html[data-bm-theme="bright"] #s-book::before{background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='rotate(-45 60 60)' opacity='.5'%3E%3Cpath d='M8 48h104l-3 4 3 4-3 4 3 4-3 4 3 4H8l3-4-3-4 3-4-3-4 3-4-3-4z' fill='%23F9B4C8'/%3E%3Cpath d='M8 52h104' stroke='%23fff' stroke-opacity='.5' stroke-width='2'/%3E%3Cg fill='%23fff' fill-opacity='.35'%3E%3Ccircle cx='30' cy='60' r='3'/%3E%3Ccircle cx='55' cy='64' r='3'/%3E%3Ccircle cx='80' cy='58' r='3'/%3E%3Ccircle cx='100' cy='64' r='2.4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") left -34px bottom -34px/120px 120px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='rotate(45 60 60)' opacity='.5'%3E%3Cpath d='M8 48h104l-3 4 3 4-3 4 3 4-3 4 3 4H8l3-4-3-4 3-4-3-4 3-4-3-4z' fill='%23FFD27A'/%3E%3Cpath d='M8 52h104' stroke='%23fff' stroke-opacity='.5' stroke-width='2'/%3E%3Cg fill='%23fff' fill-opacity='.35'%3E%3Ccircle cx='30' cy='60' r='3'/%3E%3Ccircle cx='55' cy='64' r='3'/%3E%3Ccircle cx='80' cy='58' r='3'/%3E%3Ccircle cx='100' cy='64' r='2.4'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") right -34px bottom -34px/120px 120px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.5' transform='rotate(-14 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cg fill='%23E3A15C'%3E%3Cellipse cx='24' cy='32' rx='10' ry='8.5'/%3E%3Cellipse cx='11' cy='20' rx='4' ry='5'/%3E%3Cellipse cx='19' cy='12' rx='4' ry='5.4'/%3E%3Cellipse cx='29' cy='12' rx='4' ry='5.4'/%3E%3Cellipse cx='37' cy='20' rx='4' ry='5'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E") left -10px top 46%/40px 40px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.5' transform='rotate(12 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cpath d='M24 4l6 13 14 1.6-10.4 9.6 3 14L24 35l-12.6 7.2 3-14L4 18.6 18 17z' fill='%23FFC83D'/%3E%3C/g%3E%3C/svg%3E") right -8px top 30%/34px 34px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.5' transform='rotate(10 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cpath d='M24 42C14 35 5 28 5 18.5 5 12 10 7.5 15.5 7.5c3.6 0 6.6 1.8 8.5 4.8 1.9-3 4.9-4.8 8.5-4.8C38 7.5 43 12 43 18.5 43 28 34 35 24 42z' fill='%23FF8FB0'/%3E%3C/g%3E%3C/svg%3E") right -12px top 68%/42px 42px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48' height='48' viewBox='0 0 48 48'%3E%3Cg opacity='.5' transform='rotate(-8 24 24)'%3E%3Crect x='2' y='2' width='44' height='44' rx='12' fill='%23fff' fill-opacity='.0'/%3E%3Cpath d='M24 4l6 13 14 1.6-10.4 9.6 3 14L24 35l-12.6 7.2 3-14L4 18.6 18 17z' fill='%23FFC83D'/%3E%3C/g%3E%3C/svg%3E") left 70px bottom 10px/24px 24px no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.32 0 0 0 0 0.18 0 0 0 0.1 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E") 0 0/160px 160px,
+    radial-gradient(rgba(160,120,70,.13) 1px,transparent 1.5px) 0 0/22px 22px,
+    linear-gradient(180deg,#FFF9EE 0%,#FBF0DC 100%);}
+/* sticker-album photo corners on each book entry */
+.bk{position:relative}
+.bk::before{content:'';position:absolute;inset:6px;border-radius:14px;pointer-events:none;
+  --pc:rgba(255,255,255,.10);
+  background:linear-gradient(135deg,var(--pc) 50%,transparent 50%) top left/14px 14px no-repeat,
+    linear-gradient(225deg,var(--pc) 50%,transparent 50%) top right/14px 14px no-repeat,
+    linear-gradient(315deg,var(--pc) 50%,transparent 50%) bottom right/14px 14px no-repeat,
+    linear-gradient(45deg,var(--pc) 50%,transparent 50%) bottom left/14px 14px no-repeat}
+html[data-bm-theme="bright"] .bk::before{--pc:rgba(196,150,96,.30)}
+#s-book .bk,#s-book .badges div,#s-book .ad{background:rgba(24,56,37,.9)}
+html[data-bm-theme="bright"] #s-book .bk,html[data-bm-theme="bright"] #s-book .badges div,html[data-bm-theme="bright"] #s-book .ad{background:rgba(255,255,255,.86)}
+</style>
 </head>
 <body>
 
@@ -355,15 +421,14 @@ h1{color:#E8590C}
       <span class="pill" id="homeStars">⭐ 0 / 9</span>
     </div>
     <div class="hero" id="hero"><img class="mo" src="baby-mo-poses/baby-mo-pose-35.webp" alt="Baby Mo"></div>
-    <div><span class="kicker">🐾 Baby Mo · Hewan</span></div>
+    <div><span class="kicker"><span data-ic="paw"></span>Baby Mo · Hewan</span></div>
     <h1>Sahabat Hewan Mo</h1>
-    <p class="sub">Rawat kucing dan hewan di peternakan kecil Baby Mo. Beri makan, beri minum, bersihkan, dan sayangi mereka setiap hari!</p>
-    <div class="friends" id="friends"></div>
+    <p class="sub">Beri makan dan sayangi hewan bersama Mo!</p>
     <div class="mnote" id="mnote" aria-live="polite"></div>
-    <div class="row"><button class="btn-pri" id="goFarm">🐾 Mulai Merawat</button></div>
-    <div class="row" style="margin-top:10px"><button class="btn-sec" id="goBook">📖 Buku Sahabat</button></div>
+    <div class="row"><button class="btn-pri" id="goFarm"><span data-ic="paw"></span>Mulai Merawat</button></div>
+    <div class="row" style="margin-top:10px"><button class="btn-sec" id="goBook"><span data-ic="book"></span>Buku Sahabat</button></div>
     <div class="quote">
-      <b>📖 Renungan</b>
+      <b><span data-ic="book"></span>Renungan</b>
       <span id="quoteTxt">"Tidak ada seekor binatang pun di bumi dan tidak ada burung yang terbang dengan kedua sayapnya, melainkan umat-umat seperti kamu."</span>
       <small>QS. Al-An'am: 38</small>
     </div>
@@ -375,8 +440,8 @@ h1{color:#E8590C}
   <div class="hud">
     <button class="icon-btn" id="farmX" aria-label="Keluar">✕</button>
     <div class="day" id="dayLbl">Hari 1</div>
-    <button class="pill" id="basketBtn">🧺 <b id="basketN">0</b></button>
-    <button class="pill" id="sleepBtn">🌙 Tidur</button>
+    <button class="pill" id="basketBtn"><span data-ic="basket"></span><b id="basketN">0</b></button>
+    <button class="pill" id="sleepBtn"><span data-ic="moon"></span>Tidur</button>
   </div>
   <div class="stagewrap">
     <div class="stageframe"><div class="stagefill" aria-hidden="true"></div><div class="stage" id="stage">
@@ -432,12 +497,12 @@ h1{color:#E8590C}
       <div class="pop" id="pop"></div>
     </div></div>
   </div>
-  <div class="tools" id="tools">
-    <button class="tool" data-t="feed"><span>🥣</span>Makan</button>
-    <button class="tool" data-t="water"><span>💧</span>Minum</button>
-    <button class="tool" data-t="clean"><span>🧽</span>Bersih</button>
-    <button class="tool" data-t="pet"><span>🤲</span>Elus</button>
-    <button class="tool" data-t="collect"><span>🧺</span>Ambil</button>
+  <div class="tools" id="tools" role="toolbar">
+    <button class="tool" data-t="feed"><span data-ic="feed"></span>Makan</button>
+    <button class="tool" data-t="water"><span data-ic="water"></span>Minum</button>
+    <button class="tool" data-t="clean"><span data-ic="clean"></span>Bersih</button>
+    <button class="tool" data-t="pet"><span data-ic="pet"></span>Elus</button>
+    <button class="tool" data-t="collect"><span data-ic="collect"></span>Ambil</button>
   </div>
 </section>
 
@@ -449,7 +514,7 @@ h1{color:#E8590C}
       <span class="pill" id="bookStars">⭐ 0 / 9</span>
     </div>
     <h1 style="margin-top:0">Buku Sahabat</h1>
-    <div class="tabs2"><button class="on" data-b="animals">🐾 Hewan</button><button data-b="adab">🤲 Adab</button></div>
+    <div class="tabs2"><button class="on" data-b="animals"><span data-ic="paw"></span>Hewan</button><button data-b="adab"><span data-ic="heart"></span>Adab</button></div>
     <div class="book" id="book"></div>
     <div class="adabs" id="adabs" style="display:none"></div>
     <button class="linkbtn" id="resetBtn">Mulai dari awal</button>
@@ -467,6 +532,28 @@ function L(id,en){ return window.BM_LANG==="en" ? en : id; }
 function kit(){ return window.BabyMo || {}; }
 function sfx(n){ try{ kit().sfx && kit().sfx(n); }catch(e){} }
 var $ = function(id){ return document.getElementById(id); };
+/* ═══ UI icons — two-tone symbols (replace the emoji on tools, header, home and book) ═══ */
+var SH='opacity=".55" fill="none" stroke="#fff" stroke-linecap="round"';
+var ICO={
+  plant:'<ellipse cx="24" cy="40" rx="17" ry="5.5" fill="#8A5A34"/><ellipse cx="24" cy="38.4" rx="12.5" ry="3" fill="#B07A47"/><path d="M24 38V22" stroke="#2E8B3E" stroke-width="3.4" stroke-linecap="round"/><path d="M24 25C24 15 16 10 7 11c0 9 7 15 17 14z" fill="#3FA85B"/><path d="M24 23c2-8 9-13 17-12-1 9-8 13-17 12z" fill="#7CCB6B"/><path d="M10.5 13.6c4 1 7.4 4 9.4 8" stroke-width="1.8" '+SH+'/>',
+  water:'<path d="M24 5C17 14 10 21.5 10 29.5 10 37.5 16.3 43 24 43s14-5.5 14-13.5C38 21.5 31 14 24 5z" fill="#2F8FE0"/><path d="M24 11c-5 7-9.5 12.5-9.5 18.5 0 5.4 4 9.5 9.5 9.5s9.5-4.1 9.5-9.5C33.5 23.5 29 18 24 11z" fill="#5FB4F5"/><path d="M17.6 29c0-3 1.4-6 3.6-9" stroke-width="2.6" '+SH.replace('.55','.8')+'/>',
+  moon:'<path d="M31 5.5A19 19 0 1 0 42.5 33 15.5 15.5 0 0 1 31 5.5z" fill="#F0A92A"/><path d="M28.5 9.5A15 15 0 1 0 38 33.5 15.5 15.5 0 0 1 28.5 9.5z" fill="#FFD24D"/><path d="M12.5 20.5a12 12 0 0 0 3 12" stroke-width="2.4" '+SH+'/><path d="M38 9l1.3 3.2 3.2 1.3-3.2 1.3L38 18l-1.3-3.2-3.2-1.3 3.2-1.3z" fill="#FFE47A"/>',
+  basket:'<path d="M13.5 23c0-8.5 4.7-14 10.5-14s10.5 5.5 10.5 14" stroke="#9A6236" stroke-width="3.4" fill="none" stroke-linecap="round"/><circle cx="18.5" cy="21" r="6.2" fill="#E8343A"/><circle cx="16.6" cy="19" r="1.8" fill="#fff" opacity=".6"/><circle cx="29.5" cy="21.5" r="5.6" fill="#FF9A3C"/><path d="M29.5 16c1-2.6 3-3.8 5-4" stroke="#3FA85B" stroke-width="2.4" stroke-linecap="round" fill="none"/><path d="M7.5 25h33l-3.6 14.4A4.5 4.5 0 0 1 32.5 43h-17a4.5 4.5 0 0 1-4.4-3.6z" fill="#C98A4B"/><path d="M12 31.5h24M13.4 37h21.2" stroke="#9A6236" stroke-width="1.7" opacity=".55"/><rect x="5" y="22.5" width="38" height="6" rx="3" fill="#E7AE68"/><path d="M8.5 24.6h14" stroke-width="1.6" '+SH.replace('.55','.6')+'/>',
+  book:'<path d="M24 12.5C19 9 12 8.4 4.5 9.4v28.2c7.5-1 14.5-.3 19.5 3z" fill="#2FA35B"/><path d="M24 12.5c5-3.5 12-4.1 19.5-3.1v28.2c-7.5-1-14.5-.3-19.5 3z" fill="#1E8A47"/><path d="M24 14.6c-4-2.6-9.6-3.1-15.3-2.6v22.2c5.7-.4 11.3.1 15.3 2.6z" fill="#FFF8EA"/><path d="M24 14.6c4-2.6 9.6-3.1 15.3-2.6v22.2c-5.7-.4-11.3.1-15.3 2.6z" fill="#F1E2C4"/><path d="M12.5 18.5h7.5M12.5 23h7.5M12.5 27.5h5M28 18.5h7.5M28 23h7.5M28 27.5h5" stroke="#C9B28A" stroke-width="1.7" stroke-linecap="round"/>',
+  sparkle:'<path d="M22 5c1.7 9.6 4.4 12.3 14 14-9.6 1.7-12.3 4.4-14 14-1.7-9.6-4.4-12.3-14-14 9.6-1.7 12.3-4.4 14-14z" fill="#F5A623"/><path d="M22 11c1.1 5.6 2.8 7.3 8.4 8.4-5.6 1.1-7.3 2.8-8.4 8.4-1.1-5.6-2.8-7.3-8.4-8.4 5.6-1.1 7.3-2.8 8.4-8.4z" fill="#FFD84D"/><path d="M36 30c.9 4.6 2.2 5.9 6.8 6.8-4.6.9-5.9 2.2-6.8 6.8-.9-4.6-2.2-5.9-6.8-6.8 4.6-.9 5.9-2.2 6.8-6.8z" fill="#FFC83D"/>',
+  gift:'<rect x="8" y="21" width="32" height="21" rx="3.5" fill="#E8344E"/><rect x="6" y="15" width="36" height="9" rx="3" fill="#FF6B7A"/><rect x="21" y="15" width="6" height="27" fill="#FFC83D"/><path d="M24 15c-3-6.5-12-8.5-12-3.2 0 3.2 6.5 3.2 12 3.2zM24 15c3-6.5 12-8.5 12-3.2 0 3.2-6.5 3.2-12 3.2z" fill="#FFD84D"/><path d="M9.5 18.5h9" stroke-width="1.8" '+SH+'/>'
+};
+ICO.feed='<path d="M10.5 22c2-7.4 7-11 13.5-11s11.5 3.6 13.5 11z" fill="#E7B04A"/><g fill="#B97A2A"><circle cx="17" cy="19" r="2"/><circle cx="23" cy="15.5" r="2"/><circle cx="29.5" cy="18" r="2"/><circle cx="24" cy="20.5" r="1.8"/></g><path d="M5 23.5h38c0 10-8.2 18-19 18s-19-8-19-18z" fill="#D9604A"/><path d="M8 26h32c-1.4 6.6-7.6 12-16 12S9.4 32.6 8 26z" fill="#F07B5A"/><rect x="4" y="21" width="40" height="5" rx="2.5" fill="#FF9F80"/><path d="M12 30.5c1.4 2.4 3.6 4 6 5" stroke-width="2.2" '+SH+'/>';
+ICO.clean='<g fill="#CFEBFF"><circle cx="37" cy="12" r="6"/><circle cx="28.5" cy="7.5" r="3.6"/><circle cx="42" cy="22" r="3"/></g><g fill="#fff" opacity=".85"><circle cx="35" cy="10" r="1.6"/><circle cx="27.6" cy="6.5" r="1"/></g><rect x="5" y="21" width="32" height="20" rx="5.5" fill="#F2B52E"/><rect x="5" y="17" width="32" height="9" rx="4.5" fill="#3FA85B"/><rect x="5" y="17" width="32" height="4.5" rx="2.25" fill="#6CC76A"/><g fill="#D99A1A"><circle cx="13" cy="32" r="1.8"/><circle cx="21" cy="35.5" r="1.6"/><circle cx="29" cy="31" r="1.8"/><circle cx="17" cy="38" r="1.2"/></g>';
+ICO.pet='<path d="M10 4.5l.9 2.2 2.2.9-2.2.9-.9 2.2-.9-2.2-2.2-.9 2.2-.9z" fill="#FFC83D"/><path d="M38 6.5c-1.6-3-6-2.4-6 1 0 3 4.2 5 6 6.5 1.8-1.5 6-3.5 6-6.5 0-3.4-4.4-4-6 -1z" fill="#FF6B8A"/><path d="M13 27h26v4c0 7.6-5.8 13-13 13s-13-5.4-13-13z" fill="#E39A66"/><rect x="13" y="13" width="6.2" height="18" rx="3.1" fill="#F2B98C"/><rect x="19.4" y="10" width="6.2" height="21" rx="3.1" fill="#F7C9A2"/><rect x="25.8" y="12" width="6.2" height="19" rx="3.1" fill="#F2B98C"/><rect x="32.2" y="16" width="5.8" height="15" rx="2.9" fill="#F7C9A2"/><path d="M14.5 30c-2.5-3.5-5.5-5-7.5-3.6-1.6 1.2-.6 3.4 1.2 5.4l5.6 6.4z" fill="#F2B98C"/><path d="M21 13v7" stroke-width="1.8" '+SH+'/>';
+ICO.play='<path d="M36 36c4 2 6 4.6 8 7.5" stroke="#C93A64" stroke-width="2.2" stroke-linecap="round" fill="none"/><circle cx="23" cy="24" r="16" fill="#C93A64"/><circle cx="22" cy="23" r="13" fill="#E8507A"/><g stroke="#FF9DBB" stroke-width="2" fill="none" stroke-linecap="round"><path d="M10.5 18c6 1 15 6 20 16"/><path d="M14 12c6 3 13 10 15 20"/><path d="M9 26c7 0 15 4 19 11"/><path d="M27 9.5c-3 5-4 12-2.4 20"/></g><path d="M13 17a12 12 0 0 1 5-5" stroke-width="2.4" '+SH.replace('.55','.7')+'/>';
+ICO.collect=ICO.basket.replace('<circle cx="18.5" cy="21" r="6.2" fill="#E8343A"/><circle cx="16.6" cy="19" r="1.8" fill="#fff" opacity=".6"/><circle cx="29.5" cy="21.5" r="5.6" fill="#FF9A3C"/><path d="M29.5 16c1-2.6 3-3.8 5-4" stroke="#3FA85B" stroke-width="2.4" stroke-linecap="round" fill="none"/>',
+  '<ellipse cx="19" cy="20" rx="5.4" ry="7" fill="#F6E7CF"/><ellipse cx="17.8" cy="18" rx="1.6" ry="2.4" fill="#fff"/><ellipse cx="29.5" cy="21" rx="5" ry="6.4" fill="#E9C9A0"/><ellipse cx="28.4" cy="19.2" rx="1.4" ry="2.1" fill="#fff" opacity=".7"/>');
+ICO.paw='<ellipse cx="24" cy="33" rx="11" ry="9.5" fill="#C9803E"/><ellipse cx="22.5" cy="31.5" rx="7.5" ry="6" fill="#E3A15C"/><ellipse cx="10.5" cy="21" rx="4.2" ry="5.4" fill="#C9803E" transform="rotate(-20 10.5 21)"/><ellipse cx="18.5" cy="13" rx="4.4" ry="5.8" fill="#E3A15C"/><ellipse cx="29.5" cy="13" rx="4.4" ry="5.8" fill="#C9803E"/><ellipse cx="37.5" cy="21" rx="4.2" ry="5.4" fill="#E3A15C" transform="rotate(20 37.5 21)"/><path d="M17.5 30a5 5 0 0 1 3.4-3.4" stroke-width="2" '+SH+'/>';
+ICO.heart='<path d="M24 42C14 35 5 28 5 18.5 5 12 10 7.5 15.5 7.5c3.6 0 6.6 1.8 8.5 4.8 1.9-3 4.9-4.8 8.5-4.8C38 7.5 43 12 43 18.5 43 28 34 35 24 42z" fill="#E8456B"/><path d="M24 37.5c-8-5.8-14.5-11.4-14.5-18.6 0-4 3-7 6.4-7 2.8 0 5 1.6 6.6 4.4 1-.2 1.3 21 1.5 21.2z" fill="#FF7896"/><path d="M11 16.5a5 5 0 0 1 3.6-3.8" stroke-width="2.2" '+SH.replace('.55','.75')+'/>';
+ICO.lock='<path d="M15 21v-5a9 9 0 0 1 18 0v5" stroke="#8C9A92" stroke-width="4" fill="none"/><rect x="9" y="20" width="30" height="22" rx="5" fill="#9AA7A0"/><rect x="9" y="20" width="30" height="9" rx="4.5" fill="#B9C4BE"/><circle cx="24" cy="31" r="3" fill="#5E6B64"/><path d="M24 33v4" stroke="#5E6B64" stroke-width="2.6" stroke-linecap="round"/>';
+function ic(n){ return ICO[n] ? '<svg class="gi" viewBox="0 0 48 48" aria-hidden="true" focusable="false">'+ICO[n]+'</svg>' : ''; }
+document.querySelectorAll("[data-ic]").forEach(function(e){ e.innerHTML=ic(e.getAttribute("data-ic")); });
 var wait = function(ms){ return new Promise(function(r){ setTimeout(r,ms); }); };
 
 /* ═════ Baby Mo poses (existing renders) + a small motion between them ═════ */
@@ -806,7 +893,7 @@ function renderTools(){
   var a=sel?actions(sel):{}, sg=sel?suggest(sel):null;
   document.querySelectorAll(".tool").forEach(function(t){ var k=t.dataset.t; t.classList.toggle("off",!a[k]); t.classList.toggle("go",sg===k); });
   var petBtn=document.querySelector('.tool[data-t="pet"]');
-  petBtn.innerHTML = sel==="kucing" ? '<span>🧶</span>'+L("Main","Play") : '<span>🤲</span>'+L("Elus","Stroke");
+  petBtn.innerHTML = sel==="kucing" ? '<span>'+ic("play")+'</span>'+L("Main","Play") : '<span>'+ic("pet")+'</span>'+L("Elus","Stroke");
   $("sleepBtn").classList.toggle("go", allCared() && !busy);
   if(!todLock) setTod(allCared()?"golden":"day");   /* every friend cared for → the sun starts to set */
   if(busy) return;
@@ -976,7 +1063,7 @@ async function sleep(){
   if(needy.length){
     var go=await choose({ img:"pose-40", title:L("Masih ada yang lapar","Someone is still hungry"),
       text:L(needy.map(pname).join(", ")+" belum makan atau minum.",needy.map(pname).join(", ")+" hasn't had food or water yet."),
-      adab:"lapar", yes:L("🌙 Tidur saja","🌙 Sleep anyway"), no:L("🥣 Rawat dulu","🥣 Care first") });
+      adab:"lapar", yes:ic("moon")+L("Tidur saja","Sleep anyway"), no:ic("feed")+L("Rawat dulu","Care first") });
     if(!go){ sel=needy[0]; selectAnimal(needy[0]); return; }
   }
   busy=true; todLock=true; renderTools(); sel=null; Object.keys(spotEls).forEach(function(j){ spotEls[j].classList.remove("sel"); });
@@ -1141,7 +1228,7 @@ function renderBook(){
   $("book").innerHTML=h;
   var g='';
   ADAB_ORDER.forEach(function(id,i){ var a=ADAB[id], got=D.adab[id];
-    g+='<div class="ad'+(got?'':' lock')+'"><b>'+(got?'🤲 ':'🔒 ')+(i+1)+'. '+(got?a.t[E]:L("Belum terbuka","Not found yet"))+'</b><p>'+a.s[E]+'</p>'+(a.r?'<small>'+a.r+'</small>':'')+'</div>'; });
+    g+='<div class="ad'+(got?'':' lock')+'"><b>'+ic(got?"heart":"lock")+(i+1)+'. '+(got?a.t[E]:L("Belum terbuka","Not found yet"))+'</b><p>'+a.s[E]+'</p>'+(a.r?'<small>'+a.r+'</small>':'')+'</div>'; });
   $("adabs").innerHTML=g;
   renderStars();
 }
@@ -1151,9 +1238,9 @@ document.querySelectorAll(".tabs2 button").forEach(function(b){ b.addEventListen
 
 /* ═════ home ═════ */
 function renderHome(){
-  $("friends").innerHTML=ORDER.map(function(k){ return '<span class="'+(D.have.indexOf(k)>=0?'on':'')+'">'+ANIMALS[k].e+'</span>'; }).join('');
+  if($("friends")) $("friends").innerHTML=ORDER.map(function(k){ return '<span class="'+(D.have.indexOf(k)>=0?'on':'')+'">'+ANIMALS[k].e+'</span>'; }).join('');
   var started=D.day>1||D.have.some(function(k){ return D.st[k].fed; });
-  $("goFarm").textContent=started?"🐾 "+L("Lanjut · Hari ","Continue · Day ")+D.day:"🐾 "+L("Mulai Merawat","Start Caring");
+  $("goFarm").innerHTML=ic("paw")+(started?L("Lanjut · Hari ","Continue · Day ")+D.day:L("Mulai Merawat","Start Caring"));
   var mn=$("mnote");
   if(D.morning){ var k=firstNeedy(); mn.className="mnote morn"; mn.innerHTML="☀️ "+L("Selamat pagi! "+pname(k)+" lapar, ayo beri makan.","Good morning! "+pname(k)+" is hungry — time for breakfast!")+(D.morning.gap>=2?"<small>"+L("Sahabat-sahabatmu kangen kamu 💗","Your animal friends missed you 💗")+"</small>":""); }
   else if(D.careDay===todayStr()){ mn.className="mnote"; mn.innerHTML="✅ "+L("Semua sahabat sudah dirawat hari ini.","Every friend is cared for today.")+"<small>"+L("Datang lagi besok pagi, mereka akan lapar lagi 🌅","Come back tomorrow morning — they'll be hungry again 🌅")+"</small>"; }

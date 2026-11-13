@@ -10,5 +10,6 @@
   "Petani Cilik! Semua tanaman sudah kamu panen. Masya Allah!": "Little Farmer! You've harvested every plant. Masha Allah!",
   "Sayang makhluk Allah": "Kind to Allah's creatures", "Suka berbagi": "Loves to share",
   "Mulai kebun baru": "Start a new garden", "Keluar": "Exit",
-  "Ketuk petak tanah untuk memilih.": "Tap a garden bed to choose it.", "Hari 1 ☀️": "Day 1 ☀️"
+  "Ketuk petak tanah untuk memilih.": "Tap a garden bed to choose it.", "Hari 1 ☀️": "Day 1 ☀️", "Hari 1": "Day 1",
+  "Tanam, siram, lalu panen bersama Ais!": "Plant, water and harvest with Ais!"
 }]);
