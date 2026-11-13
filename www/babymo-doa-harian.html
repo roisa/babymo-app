@@ -624,7 +624,11 @@ html[data-bm-theme="classic"] .dh-pic{background:#1F2638;box-shadow:inset 0 0 0 
 #dhDay .t-siang{--tc:rgba(30,130,230,.8)}#dhDay .t-siang.on{background:linear-gradient(180deg,#5CC2FF,#2D8CF0)}
 #dhDay .t-sore{--tc:rgba(230,80,120,.8)}#dhDay .t-sore.on{background:linear-gradient(180deg,#FF8FA3,#F05A7E)}
 #dhDay .t-malam{--tc:rgba(100,70,220,.8)}#dhDay .t-malam.on{background:linear-gradient(180deg,#9A86FF,#6A4FE0)}
-html[data-bm-theme="classic"] #dhDay .dh-tab:not(.on){background:rgba(255,255,255,.09);color:#F2F5FA;box-shadow:inset 0 0 0 1px rgba(255,255,255,.12)}
+html[data-bm-theme="classic"] #dhDay .dh-tab:not(.on){color:#F2F5FA;
+  /* filled night-blue glass (not see-through), so Mo tucked behind the row reads as standing behind the tiles */
+  background:linear-gradient(180deg,rgba(255,255,255,.14),rgba(255,255,255,0) 46%),linear-gradient(180deg,#3A44A6 0%,#2C3488 100%);
+  -webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.28),inset 0 0 0 1px rgba(255,255,255,.14),0 14px 24px -16px rgba(5,8,40,.75)}
 #dhDay #dhNow{color:#fff!important;text-shadow:0 1px 2px rgba(0,0,0,.18);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),inset 0 -6px 0 rgba(0,0,0,.14),0 12px 22px -12px rgba(40,40,90,.6)!important;font-family:'Fredoka','Nunito',sans-serif!important;font-weight:700!important;border-radius:26px!important}
 #dhDay #dhNow.s-pagi{background:linear-gradient(180deg,#FFB547,#FF8A2B)!important}
 #dhDay #dhNow.s-siang{background:linear-gradient(180deg,#5CC2FF,#2D8CF0)!important}
