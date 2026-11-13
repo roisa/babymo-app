@@ -526,6 +526,18 @@ html[data-bm-theme="dark"] #gameover .panel::before,html[data-bm-theme="classic"
 /* light theme: let a little of the scene show through */
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #gameover .panel{background:rgba(255,255,255,.78)}
 </style>
+<style id="fb-polish">
+/* ── Forehand Beat polish: two-tone symbols (fbIc) in place of the UI emoji ── */
+.fb-i{width:1.2em;height:1.2em;display:inline-block;vertical-align:-.25em;flex:none;overflow:visible;filter:drop-shadow(0 1.5px 1.2px rgba(30,60,20,.22))}
+.fi{display:contents}
+.heart .fb-i{width:22px;height:22px;display:block;filter:none}
+#tap-hint .fb-i{width:1.35em;height:1.35em;margin-right:.35em;vertical-align:-.32em}
+.tagline .fb-i{width:.95em;height:.95em;vertical-align:-.12em}
+.hint .emoji .fb-i{width:20px;height:20px;vertical-align:-5px}
+#go-stars .fb-i{width:.95em;height:.95em;margin-right:.18em;vertical-align:-.12em}
+#bm-coach .c-ico .fb-i{width:36px;height:36px;vertical-align:0}
+#bm-coach .c-txt small .fb-i{width:1.15em;height:1.15em;vertical-align:-.22em;filter:none}
+</style>
 </head>
 <body>
   <div id="frame">
@@ -542,9 +554,9 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #gameover .panel
         </div>
       </div>
       <div class="hud-pill" id="hearts-pill" aria-label="Lives">
-        <span class="heart" id="heart-1">❤️</span>
-        <span class="heart" id="heart-2">❤️</span>
-        <span class="heart" id="heart-3">❤️</span>
+        <span class="heart" id="heart-1"><span class="fi" data-fi="heart"></span></span>
+        <span class="heart" id="heart-2"><span class="fi" data-fi="heart"></span></span>
+        <span class="heart" id="heart-3"><span class="fi" data-fi="heart"></span></span>
       </div>
       <div id="ctrl-cluster">
         <button class="icon-btn" id="sound-btn" aria-label="Suara">🔊</button>
@@ -559,7 +571,7 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #gameover .panel
     <div id="combo"></div>
 
     <!-- Tap to jump hint -->
-    <div id="tap-hint">👆 Ketuk untuk lompat · Ketuk 3× untuk terbang!</div>
+    <div id="tap-hint"><span class="fi" data-fi="tap"></span>Ketuk untuk lompat · Ketuk 3× untuk terbang!</div>
 
     <!-- Home screen -->
     <div id="home" class="screen">
@@ -569,9 +581,9 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #gameover .panel
       <div class="float-ball" style="bottom:18%; right:20%; width:24px; height:24px; animation-delay:1.8s;"></div>
 
       <div class="logo-wrap"><img id="logo-img" alt="Baby Mo" /></div>
-      <div class="tagline">Forehand <span class="accent">Beat</span> 🎾</div>
+      <div class="tagline">Forehand <span class="accent">Beat</span> <span class="fi" data-fi="ball"></span></div>
       <button class="big-btn" id="start-btn">Ketuk untuk Mulai</button>
-      <div class="hint"><span class="emoji">❤️</span> 3 nyawa &nbsp;·&nbsp; <span class="emoji">✨</span> Ketuk 3× untuk terbang!</div>
+      <div class="hint"><span class="emoji" data-fi="heart"></span> 3 nyawa &nbsp;·&nbsp; <span class="emoji" data-fi="sparkle"></span> Ketuk 3× untuk terbang!</div>
       <a href="index.html" style="margin-top:8px;font-family:'Nunito',sans-serif;font-size:13px;font-weight:700;color:var(--forest-deep);opacity:0.7;text-decoration:none;padding:8px 14px;">← Game Hub</a>
     </div>
 
@@ -600,7 +612,7 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #gameover .panel
             <div class="l">Skor</div>
           </div>
           <div class="stat-card gold">
-            <div class="v" id="go-stars">⭐ 0</div>
+            <div class="v" id="go-stars"><span class="fi" data-fi="star"></span>0</div>
             <div class="l">Bintang</div>
           </div>
           <div class="stat-card best">
@@ -625,6 +637,54 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #gameover .panel
   <!-- Embedded music -->
   <audio id="music" preload="auto"></audio>
 
+<script>
+/* Forehand Beat — two-tone symbols that replace the UI emoji (how-to-play rows, home tips, HUD hearts, tap hint).
+   48×48, flat rounded shapes: a darker base, a lighter top and a soft white shine, drawn the same on every phone.
+   fbIc(name) returns the inline <svg>; [data-fi] placeholders in the HTML are filled on load. */
+(function(){
+  "use strict";
+  var W="#FFFFFF";
+  function s(n,inner){ return '<svg class="fb-i fb-i-'+n+'" viewBox="0 0 48 48" aria-hidden="true" focusable="false">'+inner+'</svg>'; }
+  function shine(x,y,rx,ry,r,o){ return '<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="#fff" opacity="'+(o||.6)+'" transform="rotate('+(r==null?-35:r)+' '+x+' '+y+')"/>'; }
+  function two(shapes,dark,light,dy){ return '<g fill="'+dark+'" transform="translate(0 '+(dy||1.8)+')">'+shapes+'</g><g fill="'+light+'">'+shapes+'</g>'; }
+  function ball(dark,light){
+    return '<circle cx="24" cy="24" r="19" fill="'+dark+'"/><circle cx="22" cy="21.5" r="16" fill="'+light+'"/>'+
+      '<path d="M9.5 12.5c6.6 4.4 8.6 13.6 4.4 23.6M38 12.4c-6.8 4.6-8.4 14-4 23.4" stroke="'+W+'" stroke-width="2.8" stroke-linecap="round" fill="none" opacity=".92"/>'+
+      shine(16.5,13.5,5,2.8);
+  }
+  function spark(cx,cy,r,dark,light){
+    var p=function(dy){ return 'M'+cx+' '+(cy-r+dy)+'C'+(cx+r*.16)+' '+(cy-r*.16+dy)+' '+(cx+r*.16)+' '+(cy-r*.16+dy)+' '+(cx+r)+' '+(cy+dy)+'C'+(cx+r*.16)+' '+(cy+r*.16+dy)+' '+(cx+r*.16)+' '+(cy+r*.16+dy)+' '+cx+' '+(cy+r+dy)+
+      'C'+(cx-r*.16)+' '+(cy+r*.16+dy)+' '+(cx-r*.16)+' '+(cy+r*.16+dy)+' '+(cx-r)+' '+(cy+dy)+'C'+(cx-r*.16)+' '+(cy-r*.16+dy)+' '+(cx-r*.16)+' '+(cy-r*.16+dy)+' '+cx+' '+(cy-r+dy)+'z'; };
+    return '<path d="'+p(r*.1)+'" fill="'+dark+'"/><path d="'+p(0)+'" fill="'+light+'"/>';
+  }
+  var SKIN=["#E48A4C","#FFC58E"];
+  var STAR="M24 12.4l3.4 6.9 7.6 1.1-5.5 5.4 1.3 7.6L24 29.8l-6.8 3.6 1.3-7.6-5.5-5.4 7.6-1.1z";
+  var HEART="M24 41.5C10.5 32.6 4.5 25.4 4.5 17.4 4.5 11.2 9.2 6.5 15 6.5c3.8 0 7 2 9 5.2 2-3.2 5.2-5.2 9-5.2 5.8 0 10.5 4.7 10.5 10.9 0 8-6 15.2-19.5 24.1z";
+  var I={
+    ball: s("ball",ball("#9DBE16","#D8F24A")),
+    heart: s("heart",'<path d="'+HEART+'" fill="#C8263F" transform="translate(0 1.8)"/><path d="'+HEART+'" fill="#FF4D67"/>'+
+      '<path d="M24 37.6C13 30 8.4 24.2 8.4 17.8c0-4 2.9-7.2 6.6-7.2 3 0 5.6 1.9 7.2 5.4h3.6c1.6-3.5 4.2-5.4 7.2-5.4 3.7 0 6.6 3.2 6.6 7.2 0 6.4-4.6 12.2-15.6 19.8z" fill="#FF7187"/>'+shine(14,15,4.4,2.6,-40,.7)),
+    tap: s("tap",'<circle cx="23.6" cy="9.6" r="7.6" fill="none" stroke="#6CC247" stroke-width="2.4" opacity=".6"/>'+
+      two('<rect x="20.4" y="6.6" width="6.6" height="24" rx="3.3"/><rect x="15" y="22" width="22" height="20.5" rx="8.5"/><rect x="27.4" y="18.6" width="5.4" height="9" rx="2.7"/><rect x="32.4" y="20.6" width="5" height="9" rx="2.5"/><rect x="8.4" y="22.6" width="5.4" height="13" rx="2.7" transform="rotate(-34 11 29)"/>',SKIN[0],SKIN[1])+
+      shine(23.7,10.5,1.6,3,0,.55)),
+    sparkle: s("sparkle",spark(20,26,16.5,"#E89A00","#FFC83D")+spark(37.5,10.5,7.5,"#E0457E","#FF8FB8")+spark(38.5,36.5,5.6,"#2F86D0","#7CC8FF")),
+    jump: s("jump",'<path d="M7 26C11 9 27 3 39 15" stroke="#4FA42F" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="1 5.6" fill="none"/>'+
+      '<rect x="18" y="41" width="28" height="5" rx="2.5" fill="#C24E0C"/><rect x="18" y="40" width="28" height="4.6" rx="2.3" fill="#E0661A"/>'+
+      '<path d="M28.6 14h6.8l7 27H21.6z" fill="#E0661A"/><path d="M29.4 14h5.2l6 25.4H24z" fill="#FF8A3D"/>'+
+      '<path d="M26.6 23h10.8l1.4 5.4H25.2z" fill="#fff"/><path d="M29 14h6" stroke="#C24E0C" stroke-width="2" stroke-linecap="round"/>'+shine(29,22,1.2,4.4,15,.45)+
+      '<g transform="translate(-1 14) scale(.4)">'+ball("#9DBE16","#D8F24A")+'</g>'),
+    coin: s("coin",'<circle cx="24" cy="25.8" r="19" fill="#C27C00"/><circle cx="24" cy="24" r="19" fill="#F5A800"/><circle cx="24" cy="24" r="14.6" fill="#FFC83D"/>'+
+      '<circle cx="24" cy="24" r="14.6" fill="none" stroke="#E09B00" stroke-width="1.6"/>'+
+      '<path d="'+STAR+'" fill="#E09B00" transform="translate(0 1.4)"/><path d="'+STAR+'" fill="#FFF6D0"/>'+shine(14.6,13.4,4,2.2,-40,.75)),
+    star: s("star",'<path d="M24 4.5l5.7 11.6 12.8 1.9-9.3 9 2.2 12.7L24 33.7l-11.4 6 2.2-12.7-9.3-9 12.8-1.9z" fill="#F59E0B" transform="translate(0 1.6)"/>'+
+      '<path d="M24 4.5l5.7 11.6 12.8 1.9-9.3 9 2.2 12.7L24 33.7l-11.4 6 2.2-12.7-9.3-9 12.8-1.9z" fill="#FFC83D"/><path d="M24 9.5l3.8 7.8 8.6 1.2" stroke="#FFE899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>')
+  };
+  window.FB_ICON=I;
+  window.fbIc=function(n){ return I[n]||""; };
+  function fill(){ document.querySelectorAll("[data-fi]").forEach(function(e){ if(!e.querySelector("svg")) e.innerHTML=window.fbIc(e.getAttribute("data-fi")); }); }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",fill); else fill();
+})();
+</script>
 <script>
 /* ═══════════════════════════════════════════════════════════════════════════
    BABY MO · FOREHAND BEAT
@@ -2435,7 +2495,7 @@ function gameOver() {
   } catch(e) { state.bestScore = Math.max(state.bestScore, state.score); }
   // populate panel
   document.getElementById('go-score').textContent = state.score;
-  document.getElementById('go-stars').textContent = '⭐ ' + state.stars;
+  document.getElementById('go-stars').innerHTML = fbIc('star') + state.stars;
   document.getElementById('go-best').textContent = state.bestScore;
   // encouraging message
   const msgs = [
@@ -2549,9 +2609,19 @@ document.getElementById('start-btn').addEventListener('click', () => {
         { icon: '⭐', text: 'Ambil koin bintang', sub: 'Bonus +5 skor!' }
       ],
       button: 'Ayo mulai! ▶'
-    }, startGame);
+    }, startGame) && fbCoachIcons(['tap', 'sparkle', 'jump', 'coin']);
   } else startGame();
 });
+/* replace the emoji in the "how to play" rows with the two-tone symbols (same tile, same size) */
+function fbCoachIcons(names) {
+  const box = document.getElementById('bm-coach');
+  if (!box) return;
+  box.querySelectorAll('.c-ico').forEach((el, i) => { if (names[i]) el.innerHTML = fbIc(names[i]); });
+  box.querySelectorAll('.c-txt small').forEach(el => {
+    const t = el.textContent;
+    if (/\u2764\uFE0F?\s*$/.test(t)) { el.textContent = t.replace(/\s*\u2764\uFE0F?\s*$/, ' '); el.insertAdjacentHTML('beforeend', fbIc('heart')); }
+  });
+}
 document.getElementById('replay-btn').addEventListener('click', startGame);
 document.getElementById('home-btn').addEventListener('click', quitToHome);
 document.getElementById('resume-btn').addEventListener('click', resumeGame);

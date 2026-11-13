@@ -272,19 +272,95 @@ html[data-bm-theme="dark"] #s-result .card::before,html[data-bm-theme="classic"]
 /* light theme: let a little of the scene show through */
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #s-result .card{background:rgba(255,255,255,.72)}
 </style>
+<style id="tn-polish">
+/* ── Tennis Academy polish: two-tone tennis symbols (tnIc) in place of the UI emoji, a tidy "how to play"
+      row on the lesson intro, and a faint court with a net behind the map and the lesson intro ── */
+.tn-i{width:1.25em;height:1.25em;display:inline-block;vertical-align:-.27em;flex:none;overflow:visible;margin-inline-end:.38em;
+  filter:drop-shadow(0 1.5px 1.2px rgba(10,40,30,.22))}
+.ti{display:contents}
+.kicker .tn-i,.pill .tn-i,.btn-pri .tn-i,.btn-sec .tn-i,.node .num .tn-i,.lcard .li .tn-i,#howIcon .tn-i,.node .st .tn-i,.hud .title .tn-i{margin:0}
+.kicker .tn-i{width:1.5em;height:1.5em;margin:-.2em 0}
+.pill .tn-i{width:1.3em;height:1.3em}
+.node .num .tn-i{width:1.3em;height:1.3em}
+.node .st{display:inline-flex;gap:1px;align-items:center}
+.node .st .tn-i{width:1.2em;height:1.2em;filter:none}
+.node .st .tn-i-star{filter:drop-shadow(0 1px 1px rgba(150,90,0,.3))}
+.node .dtag .tn-i{width:1.15em;height:1.15em;margin-inline-end:.25em}
+.lcard .li .tn-i{width:1.2em;height:1.2em}
+.lcard .lt small .tn-i{width:1.4em;height:1.4em;margin-inline-end:.3em;vertical-align:-.4em}
+.fact .ft .tn-i{width:1.55em;height:1.55em;vertical-align:-.45em;margin-inline-end:.3em}
+.fhpick .lbl .tn-i{width:1.3em;height:1.3em;margin-inline-end:.3em}
+.fhpick button .tn-i{width:1.35em;height:1.35em;margin-inline-end:.25em;vertical-align:-.32em}
+.btn-pri .tn-i,.btn-sec .tn-i{width:1.3em;height:1.3em}
+.controls .side small .tn-i{width:1.25em;height:1.25em;margin-inline-end:.2em;vertical-align:-.35em;filter:none}
+.hud .title{display:flex;align-items:center;justify-content:center;gap:6px}
+.hud .title>span{min-width:0;overflow:hidden;text-overflow:ellipsis}
+/* the "how to play" line: the symbol sits in its own soft tile so the row reads as one instruction */
+.howto{padding:10px 12px;border-radius:18px;background:rgba(31,169,113,.10);border:1px solid rgba(31,169,113,.22)}
+.howto #howIcon{flex:0 0 48px;width:48px;height:48px;border-radius:15px;display:grid;place-items:center;font-size:30px;
+  background:var(--card2);box-shadow:0 4px 10px -6px rgba(10,60,40,.45)}
+html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) .howto{background:#EAF8F0;border-color:#BFE8CF}
+/* never show an empty lesson: if the text is not there yet, hide the empty boxes instead of a bare bar and a lone icon */
+#introTitle:empty,#introTip:empty,.howto:has(#introHow:empty){display:none}
+
+/* faint court behind the map and the lesson intro (fixed, behind the screens, never takes taps) */
+#tn-court{position:fixed;left:0;right:0;bottom:0;height:min(40vh,360px);z-index:0;pointer-events:none;display:none}
+body:has(#s-map.on) #tn-court,body:has(#s-intro.on) #tn-court{display:block}
+#tn-court svg{width:100%;height:100%;display:block}
+#tn-court .sf{fill:#12A15A;opacity:.10}
+#tn-court .ln{stroke:#fff;opacity:.95}
+#tn-court .lns{stroke:#12A15A;opacity:.10}
+#tn-court .mesh{stroke:#1B4A35;opacity:.16}
+#tn-court .netb{fill:#12A15A;opacity:.05}
+#tn-court .tape{stroke:#fff}
+#tn-court .tapes{stroke:#12A15A;opacity:.16}
+#tn-court .post{fill:#9DB3C2;opacity:.55}
+#tn-court .grass{fill:#12A15A;opacity:.08}
+#tn-court .tb{opacity:.75}
+html[data-bm-theme="dark"] #tn-court .sf,html[data-bm-theme="classic"] #tn-court .sf{fill:#3FD08C;opacity:.06}
+html[data-bm-theme="dark"] #tn-court .ln,html[data-bm-theme="classic"] #tn-court .ln{opacity:.075}
+html[data-bm-theme="dark"] #tn-court .lns,html[data-bm-theme="classic"] #tn-court .lns,
+html[data-bm-theme="dark"] #tn-court .tapes,html[data-bm-theme="classic"] #tn-court .tapes{opacity:0}
+html[data-bm-theme="dark"] #tn-court .mesh,html[data-bm-theme="classic"] #tn-court .mesh{stroke:#BFE8CF;opacity:.07}
+html[data-bm-theme="dark"] #tn-court .netb,html[data-bm-theme="classic"] #tn-court .netb{fill:#000;opacity:.12}
+html[data-bm-theme="dark"] #tn-court .tape,html[data-bm-theme="classic"] #tn-court .tape{opacity:.16}
+html[data-bm-theme="dark"] #tn-court .post,html[data-bm-theme="classic"] #tn-court .post{fill:#6F8C80;opacity:.35}
+html[data-bm-theme="dark"] #tn-court .grass,html[data-bm-theme="classic"] #tn-court .grass{fill:#000;opacity:.10}
+html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court .tb{opacity:.35}
+/* leave room under the last card so the net can be seen when scrolled to the end */
+#s-map .wrap,#s-intro .wrap{padding-bottom:28px}
+</style>
 </head>
 <body>
+
+<!-- faint court + net behind the map and the lesson intro (decoration only) -->
+<div id="tn-court" aria-hidden="true"><svg viewBox="0 0 400 240" preserveAspectRatio="xMidYMax slice">
+  <defs><pattern id="tnNetMesh" width="7" height="7" patternUnits="userSpaceOnUse"><path class="mesh" d="M0 0H7M0 0V7" stroke-width="1" fill="none"/></pattern></defs>
+  <polygon class="sf" points="130,30 270,30 410,240 -10,240"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <g class="lns" stroke-width="6"><path d="M130 30H270M130 30L-10 240M270 30L410 240M150 30L40 240M250 30L360 240M116 95H284M200 95V240"/></g>
+    <g class="ln" stroke-width="3"><path d="M130 30H270M130 30L-10 240M270 30L410 240M150 30L40 240M250 30L360 240M116 95H284M200 95V240"/></g>
+  </g>
+  <rect class="grass" x="-20" y="212" width="440" height="40"/>
+  <path class="netb" d="M8 174Q200 182 392 174V213H8Z"/>
+  <path d="M8 174Q200 182 392 174V213H8Z" fill="url(#tnNetMesh)"/>
+  <path class="tapes" d="M8 175.5Q200 183.5 392 175.5" stroke-width="7" fill="none"/>
+  <path class="tape" d="M8 174Q200 182 392 174" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <rect class="post" x="3" y="166" width="7" height="50" rx="2.5"/><rect class="post" x="390" y="166" width="7" height="50" rx="2.5"/>
+  <g class="tb"><circle cx="40" cy="226" r="7" fill="#D4F046"/><path d="M35.5 221.5c3 2 3.6 6 1.6 9.5M44.5 221.5c-3 2-3.6 6-1.6 9.5" stroke="#fff" stroke-width="1.4" fill="none"/>
+    <circle cx="356" cy="229" r="5.5" fill="#D4F046"/></g>
+</svg></div>
 
 <!-- ═══════════ MAP ═══════════ -->
 <section class="screen on" id="s-map">
   <div class="wrap">
     <div class="topbar">
       <a class="w-back" href="./index.html">← Game Hub</a>
-      <span class="pill" id="mapStars">⭐ 0 / 15</span>
+      <span class="pill" id="mapStars"><span class="ti" data-ti="star"></span>0 / 21</span>
     </div>
     <div class="hero">
       <img src="adam-tennis-v2/wave-1.webp" alt="">
-      <div><span class="kicker">🎾 Baby Mo · Tenis</span></div>
+      <div><span class="kicker"><span class="ti" data-ti="racket"></span>Baby Mo · Tenis</span></div>
       <h1>Akademi Tenis Kak Adam</h1>
       <p class="sub">Belajar tenis langkah demi langkah bersama Kak Adam — dari bola merah sampai pertandingan pertamamu!</p>
       <div class="balls">
@@ -295,7 +371,7 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #s-result .card{
     </div>
     <div class="loopbox" id="loopBox"></div>
     <div class="path" id="path"></div>
-    <button class="btn-pri cert-link" id="certBtn" style="display:none">🏅 Lihat Sertifikatku</button>
+    <button class="btn-pri cert-link" id="certBtn" style="display:none"><span class="ti" data-ti="medal"></span>Lihat Sertifikatku</button>
   </div>
 </section>
 
@@ -304,27 +380,27 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #s-result .card{
   <div class="wrap">
     <div class="topbar">
       <button class="w-back" id="introBack">← Peta</button>
-      <span class="pill" id="introBall">🎾</span>
+      <span class="pill" id="introBall"><span class="ti" data-ti="ball"></span></span>
     </div>
     <div class="card">
       <img class="pose" id="introPose" src="adam-tennis-v2/hold-ball.webp" alt="">
       <span class="kicker" id="introKicker">Latihan 1</span>
       <h2 id="introTitle"></h2>
       <div class="bubble" id="introTip"></div>
-      <div class="howto"><span id="howIcon">👆</span><div id="introHow"></div></div>
-      <div class="fact"><span class="ft">💡 Tahukah kamu?</span><span id="introFact"></span></div>
+      <div class="howto"><span id="howIcon"></span><div id="introHow"></div></div>
+      <div class="fact"><span class="ft"><span class="ti" data-ti="bulb"></span>Tahukah kamu?</span><span id="introFact"></span></div>
       <div class="fhpick" id="fhPick">
-        <span class="lbl">🎾 Gaya forehand Kak Adam</span>
+        <span class="lbl"><span class="ti" data-ti="racket"></span>Gaya forehand Kak Adam</span>
         <div class="opts">
-          <button data-fh="mix">🎲 Acak<small>ganti-ganti</small></button>
-          <button data-fh="one">✋ Satu tangan<small>jangkauan jauh</small></button>
-          <button data-fh="two">🙌 Dua tangan<small>lebih kuat</small></button>
+          <button data-fh="mix"><span class="ti" data-ti="dice"></span>Acak<small>ganti-ganti</small></button>
+          <button data-fh="one"><span class="ti" data-ti="hand"></span>Satu tangan<small>jangkauan jauh</small></button>
+          <button data-fh="two"><span class="ti" data-ti="hands"></span>Dua tangan<small>lebih kuat</small></button>
         </div>
       </div>
     </div>
     <div class="row">
       <button class="btn-sec" id="introSay">🔊 Dengar</button>
-      <button class="btn-pri" id="introGo">🎾 Ayo Main!</button>
+      <button class="btn-pri" id="introGo"><span class="ti" data-ti="ball"></span>Ayo Main!</button>
     </div>
   </div>
 </section>
@@ -440,7 +516,7 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #s-result .card{
       <div class="stars" id="resStars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
       <p class="sub" id="resLine" style="margin:0 auto"></p>
       <div class="res-drill" id="resDrill" hidden></div>
-      <div class="fact"><span class="ft">🎾 Yang kamu pelajari</span><span id="resLearn"></span></div>
+      <div class="fact"><span class="ft"><span class="ti" data-ti="racket"></span>Yang kamu pelajari</span><span id="resLearn"></span></div>
     </div>
     <div class="bm-wa">
       <button class="bm-wa-pri" id="resNext">Lanjut →</button>
@@ -474,10 +550,101 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #s-result .card{
 </section>
 
 <script>
+/* Tennis Academy — two-tone symbols that replace the UI emoji (balls, racket, lesson moves, lock, stars…).
+   48×48, flat rounded shapes: a darker base, a lighter top and a soft white shine, drawn the same on every phone.
+   tnIc(name) returns the inline <svg>; [data-ti] placeholders in the HTML are filled on load. */
+(function(){
+  "use strict";
+  var W="#FFFFFF";
+  function s(n,inner){ return '<svg class="tn-i tn-i-'+n+'" viewBox="0 0 48 48" aria-hidden="true" focusable="false">'+inner+'</svg>'; }
+  function shine(x,y,rx,ry,r,o){ return '<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="#fff" opacity="'+(o||.6)+'" transform="rotate('+(r||-35)+' '+x+' '+y+')"/>'; }
+  /* draw the same shapes twice: dark copy nudged down (the 3D base), light copy on top */
+  function two(shapes,dark,light,dy){ return '<g fill="'+dark+'" transform="translate(0 '+(dy||1.8)+')">'+shapes+'</g><g fill="'+light+'">'+shapes+'</g>'; }
+  function ball(dark,light){
+    return '<circle cx="24" cy="24" r="19" fill="'+dark+'"/><circle cx="22" cy="21.5" r="16" fill="'+light+'"/>'+
+      '<path d="M9.5 12.5c6.6 4.4 8.6 13.6 4.4 23.6M38 12.4c-6.8 4.6-8.4 14-4 23.4" stroke="'+W+'" stroke-width="2.8" stroke-linecap="round" fill="none" opacity=".92"/>'+
+      shine(16.5,13.5,5,2.8);
+  }
+  /* an open hand (palm towards us), right hand: thumb on the left */
+  var HAND='<rect x="13" y="21" width="23" height="21" rx="9.5"/><rect x="13.2" y="9.5" width="5.4" height="19" rx="2.7"/><rect x="19.2" y="5.6" width="5.4" height="21" rx="2.7"/>'+
+    '<rect x="25.2" y="6.6" width="5.4" height="20" rx="2.7"/><rect x="31" y="10.6" width="5.2" height="17" rx="2.6"/><rect x="4.6" y="20.5" width="5.6" height="15" rx="2.8" transform="rotate(-38 7.4 28)"/>';
+  var SKIN=["#E48A4C","#FFC58E"];
+  var STAR="M24 4.5l5.7 11.6 12.8 1.9-9.3 9 2.2 12.7L24 33.7l-11.4 6 2.2-12.7-9.3-9 12.8-1.9z";
+  var I={
+    ball: s("ball",ball("#9DBE16","#D8F24A")),
+    "ball-red": s("ball",ball("#D2382A","#FF6A55")),
+    "ball-orange": s("ball",ball("#DD6A0E","#FFA247")),
+    "ball-green": s("ball",ball("#8DB012","#D4F046")),
+    racket: s("racket",'<g transform="translate(26.5 23.5) rotate(-40) scale(1.06) translate(-24 -22)">'+
+      '<rect x="21.6" y="28" width="4.8" height="17" rx="2.4" fill="#0B6E3E"/><rect x="21.2" y="35.5" width="5.6" height="9.5" rx="2.6" fill="#E8590C"/><rect x="22.4" y="36.5" width="1.6" height="7.5" rx=".8" fill="#FFA247"/>'+
+      '<path d="M21 26.5h6l-1.4 3h-3.2z" fill="#0B6E3E"/>'+
+      '<ellipse cx="24" cy="15" rx="8.7" ry="10.7" fill="#EAFBF2"/>'+
+      '<path d="M20 5.5v19M24 4.3v21.4M28 5.5v19M16.3 10h15.4M15.3 15h17.4M16.3 20h15.4" stroke="#9ED9B9" stroke-width="1.2"/>'+
+      '<ellipse cx="24" cy="15.8" rx="8.7" ry="10.7" fill="none" stroke="#0B6E3E" stroke-width="3.2"/>'+
+      '<ellipse cx="24" cy="15" rx="8.7" ry="10.7" fill="none" stroke="#1FB870" stroke-width="3.2"/>'+
+      '<path d="M17.6 9.4a9 10.5 0 0 1 6.4-4.7" stroke="#fff" stroke-width="1.6" stroke-linecap="round" fill="none" opacity=".75"/></g>'+
+      '<g transform="translate(3 27.5) scale(.42)">'+ball("#9DBE16","#D8F24A")+'</g>'),
+    bulb: s("bulb",'<path d="M24 5.5a13 13 0 0 0-7.6 23.6c1.6 1.2 2.6 2.8 2.6 4.6V35h10v-1.3c0-1.8 1-3.4 2.6-4.6A13 13 0 0 0 24 5.5z" fill="#E89A00"/>'+
+      '<circle cx="23.4" cy="17.6" r="10.4" fill="#FFD43D"/>'+shine(19,12.6,3.4,2.2)+
+      '<path d="M21 34v-6.5l3 2.4 3-2.4V34" stroke="#B36B00" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'+
+      '<rect x="18" y="34.5" width="12" height="4.6" rx="2.2" fill="#9AA8B8"/><rect x="19.6" y="38.6" width="8.8" height="4.4" rx="2.2" fill="#6F7E90"/>'+
+      '<path d="M6 17.5h3.4M38.6 17.5H42M10.2 6.6l2.4 2.4M37.8 6.6l-2.4 2.4" stroke="#FFC83D" stroke-width="2.6" stroke-linecap="round"/>'),
+    dice: s("dice",'<rect x="7" y="9.5" width="34" height="32" rx="9" fill="#0B8048"/><rect x="7" y="7" width="34" height="32" rx="9" fill="#22B873"/>'+
+      '<path d="M12 12.5c2-2.6 5-3.5 8-3.5h8" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none" opacity=".55"/>'+
+      '<g fill="#fff"><circle cx="15.5" cy="15.5" r="3.1"/><circle cx="32.5" cy="15.5" r="3.1"/><circle cx="24" cy="23" r="3.1"/><circle cx="15.5" cy="30.5" r="3.1"/><circle cx="32.5" cy="30.5" r="3.1"/></g>'),
+    hand: s("hand",two(HAND,SKIN[0],SKIN[1])+shine(22,30,5,3,-20,.45)),
+    hands: s("hands",'<g transform="translate(-1 4) rotate(-14 14 30) scale(.62)">'+two(HAND,SKIN[0],SKIN[1],2.6)+'</g>'+
+      '<g transform="translate(49 4) scale(-1 1) rotate(-14 14 30) scale(.62)">'+two(HAND,SKIN[0],SKIN[1],2.6)+'</g>'+
+      '<path d="M24 3v4.4M17 5.4l1.8 3.6M31 5.4l-1.8 3.6" stroke="#FFC83D" stroke-width="2.4" stroke-linecap="round"/>'),
+    tap: s("tap",'<circle cx="23.6" cy="9.6" r="7.6" fill="none" stroke="#3FD08C" stroke-width="2.4" opacity=".55"/>'+
+      two('<rect x="20.4" y="6.6" width="6.6" height="24" rx="3.3"/><rect x="15" y="22" width="22" height="20.5" rx="8.5"/><rect x="27.4" y="18.6" width="5.4" height="9" rx="2.7"/><rect x="32.4" y="20.6" width="5" height="9" rx="2.5"/><rect x="8.4" y="22.6" width="5.4" height="13" rx="2.7" transform="rotate(-34 11 29)"/>',SKIN[0],SKIN[1])+
+      shine(23.7,10.5,1.6,3,0,.55)),
+    fist: s("fist",'<path d="M3 18h6M2 25h6M3 32h6" stroke="#3FD08C" stroke-width="2.6" stroke-linecap="round" opacity=".7"/>'+
+      two('<rect x="11" y="13" width="30" height="25" rx="10"/><circle cx="16.6" cy="15.8" r="5"/><circle cx="23.6" cy="14.4" r="5.2"/><circle cx="30.6" cy="14.6" r="5"/><circle cx="36.6" cy="16.6" r="4.6"/>',SKIN[0],SKIN[1])+
+      '<rect x="13.5" y="27" width="19" height="7.4" rx="3.7" fill="#F2A468"/><path d="M20.4 17.4v4.4M27.4 17.4v4.4M34 18.6v3.6" stroke="#E48A4C" stroke-width="1.8" stroke-linecap="round"/>'+shine(20,17.5,3,1.8)),
+    shoe: s("shoe",'<rect x="4" y="33.5" width="41" height="8" rx="4" fill="#B9C6D6"/><rect x="4" y="32" width="41" height="7" rx="3.5" fill="#FFFFFF"/>'+
+      '<path d="M5 33c0-7 .8-13.4 3.4-19h9.6c1.2 4.4 4.4 6.6 9.6 7.6l9.6 2.2c4.4 1 7.4 4 7.4 9.2z" fill="#1F5FCC"/>'+
+      '<path d="M7 31c0-6 .6-11.4 2.8-15.8h7c1.4 4.4 4.6 6.6 9.6 7.6l9.4 2.2c3 .7 5.4 2.6 6.4 5.6z" fill="#3E86F2"/>'+
+      '<path d="M18.6 21.6l3-3.4M23 23.6l3-3.4M27.4 25l2.6-3" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/>'+shine(12,20,3,1.8,-70,.5)),
+    rocket: s("rocket",'<g transform="rotate(42 24 24)">'+
+      '<path d="M19.6 36.5c1 4 2.6 6.6 4.4 8.4 1.8-1.8 3.4-4.4 4.4-8.4z" fill="#FFB020"/><path d="M21.8 36.5c.6 2.6 1.3 4.2 2.2 5.4.9-1.2 1.6-2.8 2.2-5.4z" fill="#FFE27A"/>'+
+      '<path d="M16.4 27.5l-5.6 6.4v4.6l6.6-3.6zM31.6 27.5l5.6 6.4v4.6l-6.6-3.6z" fill="#D2382A"/>'+
+      '<path d="M24 3.5c-6 4.6-8.4 12.4-8.4 21.4v12h16.8v-12c0-9-2.4-16.8-8.4-21.4z" fill="#C9D5E4"/>'+
+      '<path d="M24 3.5c-4.8 4.6-6.8 12.4-6.8 21.4v12H28c0-5 0-8.2 0-12 0-9-1.4-16.8-4-21.4z" fill="#FFFFFF"/>'+
+      '<path d="M24 3.5c-2.8 2.1-4.8 5-6.1 8.5h12.2c-1.3-3.5-3.3-6.4-6.1-8.5z" fill="#FF5A4A"/>'+
+      '<circle cx="24" cy="20" r="4.6" fill="#1F5FCC"/><circle cx="24" cy="20" r="3" fill="#7CC8FF"/><circle cx="22.8" cy="18.8" r="1" fill="#fff"/></g>'),
+    trophy: s("trophy",'<path d="M13 10H7.5v4c0 5 3 8 7.6 8.6M35 10h5.5v4c0 5-3 8-7.6 8.6" stroke="#E09B00" stroke-width="3.4" fill="none" stroke-linecap="round"/>'+
+      '<path d="M12.5 6.5h23v9.4c0 7-5 12.6-11.5 12.6S12.5 22.9 12.5 15.9z" fill="#E09B00"/><path d="M14.5 6.5h19v8.4c0 6-4.2 10.8-9.5 10.8s-9.5-4.8-9.5-10.8z" fill="#FFC83D"/>'+
+      '<rect x="20.6" y="28" width="6.8" height="7" fill="#E09B00"/><rect x="14" y="35" width="20" height="7.5" rx="3" fill="#B36B00"/><rect x="16" y="35" width="16" height="4" rx="2" fill="#E09B00"/>'+shine(19,11.5,2.2,4,-12,.6)),
+    arrows: s("arrows",'<path d="M3.5 25l10-9.5v6h21v-6l10 9.5-10 9.5v-6h-21v6z" fill="#0B8048"/><path d="M3.5 23l10-9.5v6h21v-6l10 9.5-10 9.5v-6h-21v6z" fill="#22B873"/><path d="M14.5 21.5h19" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".55"/>'),
+    lock: s("lock",'<path d="M15.4 22v-5.4a8.6 8.6 0 0 1 17.2 0V22" stroke="#7F8EA0" stroke-width="4.4" fill="none" stroke-linecap="round"/>'+
+      '<rect x="10" y="21" width="28" height="22" rx="7" fill="#E09B00"/><rect x="10" y="19.5" width="28" height="20.5" rx="7" fill="#FFC83D"/>'+
+      '<circle cx="24" cy="28.4" r="3.2" fill="#8A5200"/><rect x="22.6" y="29" width="2.8" height="6.4" rx="1.4" fill="#8A5200"/>'+shine(15.5,23.5,3,1.6,-20,.6)),
+    star: s("star",'<path d="'+STAR+'" fill="#F59E0B" transform="translate(0 1.6)"/><path d="'+STAR+'" fill="#FFC83D"/><path d="M24 9.5l3.8 7.8 8.6 1.2" stroke="#FFE899" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>'),
+    "star-off": s("star-off",'<path d="'+STAR+'" fill="currentColor" opacity=".16" stroke="currentColor" stroke-opacity=".38" stroke-width="2.4" stroke-linejoin="round"/>'),
+    medal: s("medal",'<path d="M12 3h9l6 15h-9z" fill="#2F74EA"/><path d="M36 3h-9l-6 15h9z" fill="#FF5A4A"/>'+
+      '<circle cx="24" cy="30" r="13.5" fill="#E09B00"/><circle cx="24" cy="29" r="12" fill="#FFC83D"/><circle cx="24" cy="29" r="8.6" fill="#FFB020"/>'+
+      '<path d="M24 22.6l2 4.1 4.5.6-3.3 3.2.8 4.5-4-2.1-4 2.1.8-4.5-3.3-3.2 4.5-.6z" fill="#FFF3C4"/>'+shine(17.5,23,2.6,1.6)),
+    target: s("target",'<circle cx="24" cy="25.6" r="19" fill="#C42F22"/><circle cx="24" cy="24" r="19" fill="#FF5A4A"/><circle cx="24" cy="24" r="13.4" fill="#fff"/><circle cx="24" cy="24" r="8" fill="#FF5A4A"/><circle cx="24" cy="24" r="3" fill="#fff"/>'+shine(14,13,4,2.2)),
+    infinity: s("infinity",'<path d="M24 24c-3.6-5-6.6-8-10.6-8a8 8 0 0 0 0 16c4 0 7-3 10.6-8s6.6-8 10.6-8a8 8 0 0 1 0 16c-4 0-7-3-10.6-8z" fill="none" stroke="#7C57D6" stroke-width="6.4" transform="translate(0 1.6)"/>'+
+      '<path d="M24 24c-3.6-5-6.6-8-10.6-8a8 8 0 0 0 0 16c4 0 7-3 10.6-8s6.6-8 10.6-8a8 8 0 0 1 0 16c-4 0-7-3-10.6-8z" fill="none" stroke="#5BC6E8" stroke-width="6.4"/>'+
+      '<path d="M9.6 21a5.4 5.4 0 0 1 4-2.2" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".7" fill="none"/>')
+  };
+  window.TN_ICON=I;
+  window.tnIc=function(n){ return I[n]||""; };
+  function fill(){ document.querySelectorAll("[data-ti]").forEach(function(e){ if(!e.firstElementChild) e.innerHTML=window.tnIc(e.getAttribute("data-ti")); }); }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",fill); else fill();
+  window.tnFill=fill;
+})();
+</script>
+<script>
 (function(){
 "use strict";
 /* ───────── content ───────── */
 var BALL = { red:"#FF5A4A", orange:"#FF9A3C", green:"#D4F046" };
+/* two-tone symbols (tnIc) for each station on the map, and for the "how to play" line on its intro */
+var SICON = { pantul:"ball-red", bh:"hands", sisi:"arrows", voli:"fist", kaki:"shoe", servis:"rocket", tanding:"trophy" };
+var HICON = { pantul:"tap", bh:"hands", sisi:"arrows", voli:"fist", kaki:"shoe", servis:"rocket", tanding:"ball" };
 var STATIONS = [
   { key:"pantul", tipEn:"The red ball is big and slow. Wait for it to <b>bounce once</b> in front of me, then <b>hit!</b>", icon:"🔴", ball:"red", title:"Tunggu Pantulannya!", short:"Pukul setelah bola memantul",
     tip:"Bola merah itu besar dan pelan. Tunggu bola <b>memantul sekali</b> di depan Kakak, baru <b>pukul!</b>",
@@ -587,29 +754,29 @@ function renderMap(){
     if(open && !DATA.stars[i] && !nextSet){ b.classList.add("next"); nextSet=true; }
     var col=BALL[st.ball];
     var isDrill = graduated() && i===drillIndex();
-    b.innerHTML=(isDrill?'<span class="dtag">🎯 '+(drillDone()?"✓ ":"")+T("Hari ini")+'</span>':'')+'<span class="num" style="background:'+col+'33">'+(open?st.icon:"🔒")+'<b>'+(i+1)+'</b></span>'+
+    b.innerHTML=(isDrill?'<span class="dtag">'+tnIc("target")+(drillDone()?"✓ ":"")+T("Hari ini")+'</span>':'')+'<span class="num" style="background:'+col+'33">'+tnIc(open?SICON[st.key]:"lock")+'<b>'+(i+1)+'</b></span>'+
       '<span class="t"><b>'+st.title+'</b><small>'+st.short+'</small></span>'+
-      '<span class="st">'+("⭐".repeat(DATA.stars[i])+"☆".repeat(3-DATA.stars[i]))+'</span>';
+      '<span class="st">'+(tnIc("star").repeat(DATA.stars[i])+tnIc("star-off").repeat(3-DATA.stars[i]))+'</span>';
     if(open) b.addEventListener("click",function(){ sfx("tap"); PENDING=isDrill&&!drillDone()?"drill":null; openIntro(i); });
     p.appendChild(b);
   });
-  $("mapStars").textContent="⭐ "+total+" / "+(STATIONS.length*3);
+  $("mapStars").innerHTML=tnIc("star")+total+" / "+(STATIONS.length*3);
   $("certBtn").style.display = (DATA.grad || DATA.stars.every(function(s){return s>0;})) ? "" : "none";
   renderLoop(); applyRacket();
 }
 function renderLoop(){
   var box=$("loopBox"); box.innerHTML="";
   if(!graduated()){
-    box.innerHTML='<div class="lcard locked"><span class="li">🔒</span><span class="lt"><small>'+L("Setelah sertifikat","After the certificate")+'</small><b>'+L("Latihan Harian & Rally Tanpa Henti","Daily Drill & Endless Rally")+'</b><span>'+L("Dapatkan bintang di semua latihan untuk membukanya!","Earn a star in every station to unlock them!")+'</span></span></div>';
+    box.innerHTML='<div class="lcard locked"><span class="li">'+tnIc("lock")+'</span><span class="lt"><small>'+L("Setelah sertifikat","After the certificate")+'</small><b>'+L("Latihan Harian & Rally Tanpa Henti","Daily Drill & Endless Rally")+'</b><span>'+L("Dapatkan bintang di semua latihan untuk membukanya!","Earn a star in every station to unlock them!")+'</span></span></div>';
     return;
   }
   var i=drillIndex(), st=STATIONS[i], done=drillDone();
   var a=document.createElement("button"); a.className="lcard"+(done?" done":""); a.type="button";
-  a.innerHTML='<span class="li">'+st.icon+'</span><span class="lt"><small>🎯 '+L("Latihan Harian Kak Adam","Kak Adam's Daily Drill")+'</small><b>'+T(st.title)+'</b><span>'+L("Target: ","Target: ")+drillTarget(i)+(done?" ✅":" · +2 ⭐")+'</span></span><span class="lgo">'+(done?L("Lagi","Again"):L("Mulai","Go"))+'</span>';
+  a.innerHTML='<span class="li">'+tnIc(SICON[st.key])+'</span><span class="lt"><small>'+tnIc("target")+L("Latihan Harian Kak Adam","Kak Adam's Daily Drill")+'</small><b>'+T(st.title)+'</b><span>'+L("Target: ","Target: ")+drillTarget(i)+(done?" ✅":" · +2 ⭐")+'</span></span><span class="lgo">'+(done?L("Lagi","Again"):L("Mulai","Go"))+'</span>';
   a.addEventListener("click",function(){ sfx("tap"); PENDING=done?null:"drill"; openIntro(i); });
   box.appendChild(a);
   var e=document.createElement("button"); e.className="lcard endless"; e.type="button";
-  e.innerHTML='<span class="li">♾️</span><span class="lt"><small>'+L("Lawan Raka","Versus Raka")+'</small><b>'+L("Rally Tanpa Henti","Endless Rally")+'</b><span>'+(LOOP.best?L("Rekor: ","Best: ")+LOOP.best+" "+L("pukulan","hits"):L("Berapa lama kamu bisa rally?","How long can you keep the rally going?"))+'</span></span><span class="lgo">'+L("Main","Play")+'</span>';
+  e.innerHTML='<span class="li">'+tnIc("infinity")+'</span><span class="lt"><small>'+L("Lawan Raka","Versus Raka")+'</small><b>'+L("Rally Tanpa Henti","Endless Rally")+'</b><span>'+(LOOP.best?L("Rekor: ","Best: ")+LOOP.best+" "+L("pukulan","hits"):L("Berapa lama kamu bisa rally?","How long can you keep the rally going?"))+'</span></span><span class="lgo">'+L("Main","Play")+'</span>';
   e.addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(err){} startStation(6,"endless"); });
   box.appendChild(e);
 }
@@ -620,15 +787,15 @@ var READY="fh-two-1"; /* ready position: knees bent, racket in front, both hands
 var INTRO_POSE=["hold-ball","backhand-two-3",READY,"punch-6","shuffle-3","serve-blue-1","wave-3"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
-  $("introKicker").textContent = PENDING==="drill" ? "🎯 "+L("Target hari ini: ","Today's target: ")+drillTarget(i) : "Latihan "+(i+1);
+  $("introKicker").innerHTML = PENDING==="drill" ? tnIc("target")+'<span>'+L("Target hari ini: ","Today's target: ")+drillTarget(i)+'</span>' : '<span>Latihan '+(i+1)+'</span>';
   $("introTitle").textContent=st.title;
   $("introTip").innerHTML=(window.BM_LANG==="en"?st.tipEn:st.tip);
   $("introHow").textContent=st.how;
-  $("howIcon").textContent=st.howIcon;
+  $("howIcon").innerHTML=tnIc(HICON[st.key]||"tap");
   $("introFact").textContent=st.fact;
   $("introPose").src="adam-tennis-v2/"+INTRO_POSE[i]+".webp";
   $("fhPick").style.display = /^(pantul|sisi|kaki|tanding)$/.test(st.key) ? "" : "none"; markFh();
-  $("introBall").textContent={red:"🔴 Bola merah",orange:"🟠 Bola oranye",green:"🟢 Bola hijau"}[st.ball];
+  $("introBall").innerHTML=tnIc("ball-"+st.ball)+'<span>'+{red:"Bola merah",orange:"Bola oranye",green:"Bola hijau"}[st.ball]+'</span>';
   show("s-intro");
 }
 /* pick a soft, friendly voice: known gentle voices first, never a known deep one */
@@ -777,7 +944,7 @@ function startStation(i, mode){
   show("s-play");
   say("Bismillah"); setTimeout(function(){ if(G) pop("Bismillah 🤲","tip",900); },60);
   if(G.endless){ setupEndless(); return; }
-  if(G.drill) $("playTitle").textContent="🎯 "+T(st.title);
+  if(G.drill) $("playTitle").innerHTML=tnIc("target")+'<span>'+T(st.title)+'</span>';
   ({pantul:setupPantul,bh:setupBh,sisi:setupSisi,voli:setupVoli,kaki:setupKaki,servis:setupServis,tanding:setupTanding})[st.key]();
 }
 
@@ -785,9 +952,9 @@ function startStation(i, mode){
 function lives(){ var d=$("dots").children; for(var k=0;k<d.length;k++){ d[k].className = k<G.lives ? "life" : "no"; } }
 function setupEndless(){
   G.mode="sides"; G.lives=3; G.score=0; G.total=0; G.speed=SPEED.green;
-  $("playTitle").textContent="♾️ "+L("Rally Tanpa Henti","Endless Rally");
-  dots(3); lives(); $("playCount").textContent="🎾 0";
-  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>🙌 dua tangan</small></button>');
+  $("playTitle").innerHTML=tnIc("infinity")+'<span>'+L("Rally Tanpa Henti","Endless Rally")+'</span>';
+  dots(3); lives(); $("playCount").innerHTML=tnIc("ball")+"0";
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>'+tnIc("hands")+'dua tangan</small></button>');
   $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
   $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
   stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
@@ -796,7 +963,7 @@ function setupEndless(){
 }
 function endlessShot(ok){
   if(ok){
-    G.score++; $("playCount").textContent="🎾 "+G.score;
+    G.score++; $("playCount").innerHTML=tnIc("ball")+G.score;
     if(G.score===LOOP.best+1 && LOOP.best>0) setTimeout(function(){ if(G) pop(L("Rekor baru! 🏆","New best! 🏆"),"good",1000); },420);
     G.speed=Math.max(.95, SPEED.green-G.score*.02);
     setTimeout(function(){ if(G&&!G.over){ TS.hit(.6); pop("Raka mengembalikan!","tip",800); } },850);
@@ -837,7 +1004,7 @@ function nextBall(fn,ms){ setTimeout(function(){ if(G && !G.over) fn(); }, ms||7
 /* ── 1. Wait for the bounce ── */
 function setupPantul(){
   G.total=BALLS_PER; dots(G.total); dot(-1,""); $("dots").children[0].classList.add("now"); count();
-  controls('<button class="btn-pri" id="hitBtn">🎾 PUKUL!</button>');
+  controls('<button class="btn-pri" id="hitBtn">'+tnIc("ball")+'PUKUL!</button>');
   $("hitBtn").addEventListener("click",function(){ tapHit("fh"); });
   stage.onclick=function(){ tapHit("fh"); };
   pop("Siap?","tip",900); nextBall(feed,1100);
@@ -895,7 +1062,7 @@ function done(ok){
 /* ── 2. Two-handed backhand only ── */
 function setupBh(){
   G.mode="bh"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
-  controls('<button class="btn-pri" id="hitBtn">🙌 BACKHAND!</button>');
+  controls('<button class="btn-pri" id="hitBtn">'+tnIc("hands")+'BACKHAND!</button>');
   $("hitBtn").addEventListener("click",function(){ tapHit("bh"); });
   stage.onclick=function(){ tapHit("bh"); };
   pop("Dua tangan, siap?","tip",1000); nextBall(function(){ feed("bh"); },1200);
@@ -904,7 +1071,7 @@ function setupBh(){
 /* ── 3. Forehand & backhand ── */
 function setupSisi(){
   G.mode="sides"; G.total=BALLS_PER; dots(G.total); $("dots").children[0].classList.add("now"); count();
-  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>🙌 dua tangan</small></button>');
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>'+tnIc("hands")+'dua tangan</small></button>');
   $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
   $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
   stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
@@ -983,7 +1150,7 @@ function voliControls(){
     $("bhBtn").addEventListener("click",function(){ tapVoli("bh"); });
     stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapVoli(e.clientX<r.left+r.width/2?"fh":"bh"); };
   } else {
-    controls('<button class="btn-pri" id="hitBtn">👊 VOLI!</button>');
+    controls('<button class="btn-pri" id="hitBtn">'+tnIc("fist")+'VOLI!</button>');
     $("hitBtn").addEventListener("click",function(){ tapVoli(ph); });
     stage.onclick=function(){ tapVoli(ph); };
   }
@@ -1033,7 +1200,7 @@ function tapVoli(side){
 function setupServis(){
   G.total=6; G.chance=1; dots(G.total); $("dots").children[0].classList.add("now"); count();
   $("meter").classList.add("on"); adamTo("S"); $("adam").classList.add("serve"); /* feet just behind the baseline */
-  controls('<button class="btn-pri" id="srvBtn">🚀 SERVIS!</button>');
+  controls('<button class="btn-pri" id="srvBtn">'+tnIc("rocket")+'SERVIS!</button>');
   $("srvBtn").addEventListener("click",serveHit);
   stage.onclick=serveHit;
   pop("Siap?","tip",900); nextBall(toss,1100);
@@ -1082,8 +1249,8 @@ function serveResult(ok,msg){
 var CALL=["Love","15","30","40"];
 function setupTanding(){
   G.mode="sides"; G.a=0; G.r=0; G.total=0; G.rally=0; $("dots").innerHTML=""; $("score").classList.add("on"); showScore();
-  $("playCount").textContent="🎾";
-  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>🙌 dua tangan</small></button>');
+  $("playCount").innerHTML=tnIc("ball");
+  controls('<button class="btn-pri side" id="fhBtn"><span class="lb">← Forehand</span><small>bola di kiri</small></button><button class="btn-pri side" id="bhBtn"><span class="lb">Backhand →</span><small>'+tnIc("hands")+'dua tangan</small></button>');
   $("fhBtn").addEventListener("click",function(){ tapHit("fh"); });
   $("bhBtn").addEventListener("click",function(){ tapHit("bh"); });
   stage.onclick=function(e){ var r=stage.getBoundingClientRect(); tapHit(e.clientX<r.left+r.width/2?"fh":"bh"); };
