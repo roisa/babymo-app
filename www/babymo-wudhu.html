@@ -684,6 +684,88 @@ html[data-bm-theme="classic"] #completeScreen .bm-wa-s,html[data-bm-theme="dark"
 html[data-bm-theme="classic"] #s-complete .bm-wa-s,html[data-bm-theme="dark"] #s-complete .bm-wa-s{background:rgba(255,255,255,.10)!important;border-color:rgba(255,255,255,.2)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.22),0 8px 18px -12px rgba(0,0,0,.6)!important}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){.mo-peek+.done-card{background:var(--card)!important}}
 </style>
+<style id="wu-polish">
+/* Polish (Nov 2026): two-tone SVG icons instead of emoji, a shorter home (Lightning as a small chip,
+   compact "Wudu before prayer" row) and a faint bathroom-tile backdrop for Put Wudu in Order */
+.wo-ic{width:1.25em;height:1.25em;flex:0 0 auto;vertical-align:-.25em;filter:drop-shadow(0 1.5px 1.5px rgba(10,60,120,.22))}
+#oTitle{display:flex;align-items:center;justify-content:center;gap:6px}
+#oTitle .wo-ic{width:26px;height:26px}
+.levels button{display:inline-flex;align-items:center;gap:6px}
+.levels button .wo-ic{width:22px;height:22px}
+.levels button.on .wo-ic{filter:drop-shadow(0 1px 2px rgba(0,40,90,.35))}
+.ostat .big{display:inline-flex;align-items:center;gap:6px}
+.ostat .big .wo-ic{width:24px;height:24px}
+.ostat .big>span{padding:0;background:none!important;box-shadow:none;font:inherit;color:inherit}
+#oBest{display:inline-flex;align-items:center;gap:4px}#oBest[hidden]{display:none}
+#oBest .wo-ic,#kilatBest .wo-ic{width:16px;height:16px;vertical-align:-3px;margin-right:3px}
+
+/* home: Lightning Challenge becomes a smaller secondary chip */
+#s-home .wu-actions{gap:10px;margin-top:14px}
+#s-home .wu-actions .wu-kilat{justify-self:center;width:auto;min-height:44px;padding:0 18px 0 12px;border-radius:22px;gap:8px;font-size:16px}
+#s-home .wu-actions .wu-kilat .wu-go{display:none}
+#s-home .wu-actions .wu-kilat .wu-bi{width:24px;height:24px}
+#s-home .wu-actions .wu-kilat .lbl{flex-direction:row;align-items:baseline;gap:8px}
+#s-home .wu-kilat .sub{font-size:12px}
+.wu-title{margin:12px 0 2px}
+.wu-chips{margin:8px 0 0}
+
+/* home: compact "Wudu before prayer" card */
+#checkin.ci{margin-top:12px;padding:10px 12px;border-radius:22px}
+#checkin .ci-top h2{display:flex;align-items:center;gap:6px;font-size:16px}
+#checkin .ci-top h2 .wo-ic{width:20px;height:20px}
+#checkin .ci-streak{padding:4px 10px;font-size:12.5px;gap:4px}
+#checkin .ci-streak .wo-ic{width:16px;height:16px}
+#checkin .ci-streak.off .wo-ic{filter:grayscale(1);opacity:.55}
+#checkin .ci-note{font-size:11.5px;font-weight:800;margin:0;opacity:.85}
+#checkin .ci-sub{font-size:12.5px;margin:2px 0 0}
+#checkin .ci-row{margin-top:12px;gap:5px}
+#checkin .ci-p{min-height:54px;border-radius:15px;padding:4px 1px;gap:1px}
+#checkin .ci-p .i{display:block;width:20px;height:20px}
+#checkin .ci-p .i .wo-ic{width:20px;height:20px;display:block}
+#checkin .ci-p .n{font-size:11.5px}
+#checkin .ci-p .t{font-size:10.5px}
+#checkin .ci-p.now::before{top:-8px;font-size:10px;padding:0 6px}
+#checkin .ci-p.on::after{width:16px;height:16px;font:900 10px/16px 'Nunito',sans-serif;right:2px;top:2px}
+#checkin .ci-p.on .wo-ic{filter:drop-shadow(0 1px 1.5px rgba(0,40,90,.35))}
+#checkin .ci-foot{display:flex;align-items:center;gap:8px;margin-top:8px}
+#checkin .ci-week{margin:0;gap:3px;flex:0 0 auto}
+#checkin .ci-week i{width:17px;height:17px;font-size:8.5px}
+#checkin .ci-week i .wo-ic{width:11px;height:11px;filter:brightness(0) invert(1)}
+#checkin .ci-week i.today{box-shadow:0 0 0 1.5px #38BDF8}
+#checkin .ci-btn{flex:1;min-width:0;width:auto;margin:0;min-height:40px;border-radius:20px;font-size:14px;gap:6px;padding:0 10px;line-height:1.1}
+#checkin .ci-btn .wo-ic{width:18px;height:18px}
+#checkin .ci-btn.ok{-webkit-text-fill-color:currentColor!important;text-shadow:none!important} /* was white-on-mint (bm-buttons text fill) */
+#checkin .ci-btn small{font-size:12px;font-weight:800;opacity:.9;white-space:nowrap}
+/* phones: a slightly smaller hero so the whole home fits about one screen */
+@media (max-width:520px) and (max-height:960px){#s-home .wu-hero{width:88%;margin-left:auto;margin-right:auto}
+  .wu-title h1{font-size:clamp(30px,9vw,38px)}
+  #s-home .wu-actions .btn-sec.wu-order{min-height:58px}}
+.why{margin-top:10px;padding:9px 14px;font-size:12.5px;line-height:1.4;border-radius:18px}
+
+/* Put Wudu in Order backdrop (inside the fixed .wu-bg layer, so it never moves the layout) */
+.wu-bg .wo-tiles,.wu-bg .wo-drop{display:none}
+body:has(#s-order.active) .wu-bg .wo-tiles,body:has(#s-order.active) .wu-bg .wo-drop{display:block}
+.wo-tiles{left:0;right:0;bottom:0;width:100%;height:44vh;opacity:.55;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 30%);mask-image:linear-gradient(180deg,transparent 0,#000 30%)}
+.wo-t{fill:#CFE9FA}.wo-g{stroke:#fff}.wo-trim{fill:#fff;opacity:.8}
+.wo-drop{opacity:.45;filter:drop-shadow(0 3px 4px rgba(30,110,200,.18))}
+.wo-drop.d1{width:22px;left:4%;top:24%;transform:rotate(-12deg)}
+.wo-drop.d2{width:14px;left:10%;top:31%;opacity:.35}
+.wo-drop.d3{width:26px;right:4%;top:20%;transform:rotate(10deg)}
+.wo-drop.d4{width:15px;right:11%;top:28%;opacity:.35}
+.wo-drop.d5{width:18px;right:6%;top:46%;opacity:.3}
+body:has(#s-order.active) .wb-cloud.c2,body:has(#s-order.active) .wb-cloud.c3{opacity:.45}
+@media (min-width:760px){.wo-drop.d1{left:8%;width:30px}.wo-drop.d3{right:8%;width:34px}}
+
+/* dark + classic */
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .wo-t{fill:#2F5873}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .wo-g{stroke:#4C7896}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .wo-trim{fill:#BFD6E6;opacity:.35}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .wo-tiles{opacity:.35}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .wo-drop{opacity:.3;filter:none}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .ostat .big>span{background:none!important}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) #checkin .ci-week i .wo-ic{filter:none}
+</style>
 </head>
 <body>
 <!-- shared art for the Wudhu home (kept rendered, never display:none, so gradients resolve) -->
@@ -719,6 +801,22 @@ html[data-bm-theme="classic"] #s-complete .bm-wa-s,html[data-bm-theme="dark"] #s
   <symbol id="wuBulb" viewBox="0 0 40 40"><g stroke="#FFC21A" stroke-width="2.6" stroke-linecap="round"><path d="M20 2v4M6 8l3 3M34 8l-3 3M2 21h4M34 21h4"/></g><path d="M20 8a11 11 0 0 0-6.6 19.8c1.4 1 2.1 2.4 2.1 4V33h9v-1.2c0-1.6.7-3 2.1-4A11 11 0 0 0 20 8Z" fill="url(#wuGold)"/><rect x="15" y="32" width="10" height="6" rx="2.4" fill="#9AA6B8"/><ellipse cx="16" cy="15" rx="2.4" ry="3.6" fill="#fff" opacity=".7" transform="rotate(30 16 15)"/></symbol>
   <symbol id="wuPuzzle" viewBox="0 0 40 40"><path d="M6 12h8a4.5 4.5 0 1 1 8 0h8v8a4.5 4.5 0 1 1 0 8v8h-8a4.5 4.5 0 1 0-8 0H6v-8a4.5 4.5 0 1 0 0-8Z" fill="url(#wuGreenG)" transform="rotate(-14 20 24)"/><path d="M9 15.5h4" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".7" transform="rotate(-14 20 24)"/></symbol>
   <symbol id="wuBolt" viewBox="0 0 40 40"><path d="M24 2 7 23h11l-4 15 19-22H21Z" fill="url(#wuBoltG)" stroke="#F08A00" stroke-width="1.4" stroke-linejoin="round"/><path d="M20.5 7 12 19" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".75"/></symbol>
+  <!-- two-tone UI symbols (replace emoji icons) -->
+  <linearGradient id="wuDeepG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5CC8FA"/><stop offset="1" stop-color="#1366C9"/></linearGradient>
+  <linearGradient id="wuFlameG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFC94A"/><stop offset="1" stop-color="#F2631C"/></linearGradient>
+  <linearGradient id="wuDuskG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFB36B"/><stop offset="1" stop-color="#F0603A"/></linearGradient>
+  <linearGradient id="wuMoonG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFF0A6"/><stop offset="1" stop-color="#F5B819"/></linearGradient>
+  <symbol id="wuPuzzleB" viewBox="0 0 40 40"><g transform="rotate(-14 20 24)"><path d="M6 12h8a4.5 4.5 0 1 1 8 0h8v8a4.5 4.5 0 1 1 0 8v8h-8a4.5 4.5 0 1 0-8 0H6v-8a4.5 4.5 0 1 0 0-8Z" fill="url(#wuDeepG)"/><path d="M6 12h8a4.5 4.5 0 1 1 8 0h8v8a4.5 4.5 0 1 1 0 8v1H6v-1a4.5 4.5 0 1 0 0-8Z" fill="#fff" opacity=".18"/><path d="M9 15.5h5" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".8"/></g></symbol>
+  <symbol id="wuSprout" viewBox="0 0 40 40"><path d="M20 38c-6.4 0-11-4.4-11-10.2C9 21.6 20 11 20 11s11 10.6 11 16.8C31 33.6 26.4 38 20 38Z" fill="url(#wuDropG)"/><path d="M20 12V5" stroke="#2E9E48" stroke-width="2.4" stroke-linecap="round"/><path d="M20 7c-1-4-5-5.4-8.6-4.6C12.2 6 15.6 8 20 7Z" fill="url(#wuGreenG)"/><path d="M20 6.4c1.4-3.6 5.4-4.6 8.6-3.4-1.2 3.4-4.8 5-8.6 3.4Z" fill="url(#wuGreenG)"/><ellipse cx="15.6" cy="28" rx="2.2" ry="4" fill="#fff" opacity=".75" transform="rotate(16 15.6 28)"/></symbol>
+  <symbol id="wuStar" viewBox="0 0 40 40"><path d="M20 3.5l4.9 10 11 1.5-8 7.7 1.9 10.9L20 28.4l-9.8 5.2 1.9-10.9-8-7.7 11-1.5Z" fill="url(#wuGold)" stroke="#F08A00" stroke-width="1.2" stroke-linejoin="round"/><path d="M20 8.5l3.4 6.9 7.6 1.1L20 20Z" fill="#fff" opacity=".45"/><path d="M33 3v6M30 6h6" stroke="#38B6F5" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="wuTimer" viewBox="0 0 40 40"><rect x="16" y="2" width="8" height="5" rx="2" fill="#1366C9"/><path d="M29.5 9.5l3-3" stroke="#1366C9" stroke-width="3" stroke-linecap="round"/><circle cx="20" cy="23" r="15" fill="url(#wuDeepG)"/><circle cx="20" cy="23" r="10.5" fill="#fff"/><path d="M20 23V16.5M20 23l4.5 3" stroke="#1366C9" stroke-width="2.6" stroke-linecap="round"/><circle cx="20" cy="23" r="1.8" fill="#1366C9"/><path d="M10 17a11 11 0 0 1 6-6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".7" fill="none"/></symbol>
+  <symbol id="wuTrophy" viewBox="0 0 40 40"><path d="M11 9H5c0 7 3 10 8 10M29 9h6c0 7-3 10-8 10" stroke="#F59E0B" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M10 5h20v8c0 7-4.5 11-10 11S10 20 10 13Z" fill="url(#wuGold)"/><rect x="17.5" y="23" width="5" height="7" fill="#F59E0B"/><rect x="11" y="30" width="18" height="6" rx="2.4" fill="url(#wuDeepG)"/><path d="M14 8v6" stroke="#fff" stroke-width="2.4" stroke-linecap="round" opacity=".75"/></symbol>
+  <symbol id="wuFlame" viewBox="0 0 40 40"><path d="M20 38c-7.5 0-12-5-12-11.2 0-6.6 5.4-9.4 6.6-16.8 3.4 2.4 4.6 6 4.4 9 2.4-1.4 3.4-5 3-9C28 13.6 32 19.6 32 26.8 32 33 27.5 38 20 38Z" fill="url(#wuFlameG)"/><path d="M20 37c-3.6 0-6-2.4-6-5.6 0-3.6 3-5 4-9 3.6 2.8 8 5.4 8 9 0 3.2-2.4 5.6-6 5.6Z" fill="#FFE27A"/><path d="M12.5 24c.6-2.6 2-4.4 3-6" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".6"/></symbol>
+  <symbol id="wuFajr" viewBox="0 0 40 40"><path d="M7 27a13 13 0 0 1 26 0Z" fill="url(#wuDuskG)"/><path d="M12 22a9 9 0 0 1 6-6" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".6" fill="none"/><g stroke="#FFB020" stroke-width="2.4" stroke-linecap="round"><path d="M20 5v4M8 10l2.6 2.6M32 10l-2.6 2.6"/></g><rect x="3" y="27" width="34" height="4" rx="2" fill="url(#wuDeepG)"/><rect x="9" y="33" width="22" height="3" rx="1.5" fill="#7DD3FC"/></symbol>
+  <symbol id="wuDhuhr" viewBox="0 0 40 40"><g stroke="#FFB020" stroke-width="2.6" stroke-linecap="round"><path d="M20 2.5v4.5M20 33v4.5M2.5 20H7M33 20h4.5M7.6 7.6l3.2 3.2M29.2 29.2l3.2 3.2M7.6 32.4l3.2-3.2M29.2 10.8l3.2-3.2"/></g><circle cx="20" cy="20" r="9.5" fill="url(#wuGold)"/><ellipse cx="17" cy="16.5" rx="2.6" ry="3.6" fill="#fff" opacity=".6" transform="rotate(35 17 16.5)"/></symbol>
+  <symbol id="wuAsr" viewBox="0 0 40 40"><g stroke="#FFB020" stroke-width="2.4" stroke-linecap="round"><path d="M15 3v4M5 13h4M7.6 5.6l2.8 2.8M22.4 5.6l-2.8 2.8"/></g><circle cx="15" cy="14" r="7.5" fill="url(#wuGold)"/><path d="M11 33a6.5 6.5 0 0 1 .8-12.9 9 9 0 0 1 16.6 2.2A5.4 5.4 0 0 1 29 33Z" fill="#fff"/><path d="M11 33a6.5 6.5 0 0 1-.4-.1h18.8A5.4 5.4 0 0 0 29 33Z" fill="#BFE6FA"/><path d="M11 33a6.5 6.5 0 0 1 .8-12.9 9 9 0 0 1 16.6 2.2A5.4 5.4 0 0 1 29 33Z" fill="none" stroke="#7DC3EE" stroke-width="1.6"/></symbol>
+  <symbol id="wuMaghrib" viewBox="0 0 40 40"><path d="M8 25a12 12 0 0 1 24 0Z" fill="url(#wuDuskG)"/><path d="M13 21a8 8 0 0 1 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".6" fill="none"/><rect x="3" y="25" width="34" height="4" rx="2" fill="#8B6CE0"/><path d="M14 29l-1 6h3l1-6ZM23 29l1 6h3l-1-6Z" fill="#8B6CE0" opacity=".55"/><path d="M20 4v5" stroke="#FFB020" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="wuIsha" viewBox="0 0 40 40"><path d="M25 5a14 14 0 1 0 10.5 22A12 12 0 0 1 25 5Z" fill="url(#wuMoonG)"/><path d="M11 13a11 11 0 0 1 6-6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" opacity=".65" fill="none"/><path d="M31 9l1.3 2.7 2.7 1.3-2.7 1.3L31 17l-1.3-2.7-2.7-1.3 2.7-1.3Z" fill="#38B6F5"/></symbol>
 </defs></svg>
 <!-- soft sky backdrop for the home: clouds, faint mosques, leafy corners, grass -->
 <div class="wu-bg" aria-hidden="true">
@@ -730,6 +828,13 @@ html[data-bm-theme="classic"] #s-complete .bm-wa-s,html[data-bm-theme="dark"] #s
   <svg class="wb-grass" viewBox="0 0 400 60" preserveAspectRatio="none"><path d="M0 60V30Q60 6 130 22T260 18T400 26V60Z" class="g1"/><path d="M0 60V42Q90 22 200 36T400 38V60Z" class="g2"/></svg>
   <svg class="wb-leaves l" viewBox="0 0 120 140"><path d="M10 140C0 100 10 60 50 40c4 40-10 80-40 100Z" fill="url(#wuLeafG)"/><path d="M14 140c10-40 40-60 80-58-14 34-44 54-80 58Z" fill="url(#wuLeafG2)"/><path d="M0 120C-10 90 0 70 20 60c6 26 0 48-20 60Z" fill="url(#wuLeafG2)"/><path d="M14 132q14-40 32-82M20 136q30-24 66-48" stroke="#fff" stroke-width="2" fill="none" opacity=".35" stroke-linecap="round"/></svg>
   <svg class="wb-leaves r" viewBox="0 0 120 140"><path d="M10 140C0 100 10 60 50 40c4 40-10 80-40 100Z" fill="url(#wuLeafG)"/><path d="M14 140c10-40 40-60 80-58-14 34-44 54-80 58Z" fill="url(#wuLeafG2)"/><path d="M0 120C-10 90 0 70 20 60c6 26 0 48-20 60Z" fill="url(#wuLeafG2)"/><path d="M14 132q14-40 32-82M20 136q30-24 66-48" stroke="#fff" stroke-width="2" fill="none" opacity=".35" stroke-linecap="round"/></svg>
+  <!-- Put Wudu in Order: faint bathroom tiles + a few water drops (same look as the Learn Wudu scene) -->
+  <svg class="wo-tiles" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice"><defs><pattern id="woTilePat" width="34" height="32" patternUnits="userSpaceOnUse"><rect width="34" height="32" class="wo-t"/><path d="M0 1h34M1 0v32" class="wo-g" stroke-width="2"/></pattern></defs><rect y="10" width="400" height="290" fill="url(#woTilePat)"/><rect class="wo-trim" y="4" width="400" height="8" rx="3"/></svg>
+  <svg class="wo-drop d1" viewBox="0 0 24 24"><use href="#wuDrop"/></svg>
+  <svg class="wo-drop d2" viewBox="0 0 24 24"><use href="#wuDrop"/></svg>
+  <svg class="wo-drop d3" viewBox="0 0 24 24"><use href="#wuDrop"/></svg>
+  <svg class="wo-drop d4" viewBox="0 0 24 24"><use href="#wuDrop"/></svg>
+  <svg class="wo-drop d5" viewBox="0 0 24 24"><use href="#wuDrop"/></svg>
 </div>
 <div class="app">
 
@@ -933,7 +1038,7 @@ html[data-bm-theme="classic"] #s-complete .bm-wa-s,html[data-bm-theme="dark"] #s
   <section class="screen" id="s-order">
     <div class="topbar">
       <button class="back-btn btn-sec" onclick="show('s-home')">← Menu</button>
-      <div class="grow" id="oTitle">🧩 Urutkan Wudhu</div>
+      <div class="grow" id="oTitle"><svg class="wo-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuPuzzleB"/></svg><span>Urutkan Wudhu</span></div>
       <span style="width:72px"></span>
     </div>
     <div class="order-head">
@@ -941,10 +1046,10 @@ html[data-bm-theme="classic"] #s-complete .bm-wa-s,html[data-bm-theme="dark"] #s
       <p id="oP">Ketuk langkah wudhu sesuai urutannya!</p>
     </div>
     <div class="levels">
-      <button id="lvEasy" class="on" onclick="startOrder(5)">🌱 Mudah · 5<span class="lv-st" id="lvEasySt"></span></button>
-      <button id="lvHard" onclick="startOrder(10)">🌟 Hebat · 10<span class="lv-st" id="lvHardSt"></span></button>
+      <button id="lvEasy" class="on" onclick="startOrder(5)"><svg class="wo-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuSprout"/></svg><span>Mudah · 5</span><span class="lv-st" id="lvEasySt"></span></button>
+      <button id="lvHard" onclick="startOrder(10)"><svg class="wo-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuStar"/></svg><span>Hebat · 10</span><span class="lv-st" id="lvHardSt"></span></button>
     </div>
-    <div class="ostat"><span class="big" id="oTime">⏱ 0:00</span><span id="oBest" hidden></span><span class="pen" id="oPen" hidden></span></div>
+    <div class="ostat"><span class="big"><svg class="wo-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuTimer"/></svg><span id="oTime">0:00</span></span><span id="oBest" hidden></span><span class="pen" id="oPen" hidden></span></div>
     <div class="track" id="oTrack"></div>
     <div class="hint" id="oHint"></div>
     <div class="cards" id="oCards"></div>
@@ -1153,7 +1258,7 @@ function setTimer(on){
   clearInterval(tick); tick = null;
   if(!on) return;
   t0 = Date.now();
-  var upd = function(){ var ms = Date.now() - t0 + (mode === 'kilat' ? mistakes * 2000 : 0); document.getElementById('oTime').textContent = '⏱ ' + (mode === 'kilat' ? fmt1(ms) : fmt(ms)); };
+  var upd = function(){ var ms = Date.now() - t0 + (mode === 'kilat' ? mistakes * 2000 : 0); document.getElementById('oTime').textContent = (mode === 'kilat' ? fmt1(ms) : fmt(ms)); };
   upd(); tick = setInterval(upd, 100);
 }
 function startKilat(){ mode = 'kilat'; startOrder(10, true); }
@@ -1162,11 +1267,11 @@ function startOrder(n, kilat){
   level = n || level || 5; want = 0; mistakes = 0;
   var r = wLoad(), K = mode === 'kilat';
   document.querySelector('#s-order .levels').style.display = K ? 'none' : '';
-  document.getElementById('oTitle').textContent = K ? '⚡ ' + L('Tantangan Kilat', 'Lightning Challenge') : '🧩 ' + L('Urutkan Wudhu', 'Put Wudu in Order');
+  document.getElementById('oTitle').innerHTML = '<svg class="wo-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#' + (K ? 'wuBolt' : 'wuPuzzleB') + '"/></svg><span>' + (K ? L('Tantangan Kilat', 'Lightning Challenge') : L('Urutkan Wudhu', 'Put Wudu in Order')) + '</span>';
   document.getElementById('oH').textContent = K ? L('Secepat kilat! ⚡', 'Fast as lightning! ⚡') : L('Mana yang duluan?', 'Which comes first?');
   document.getElementById('oP').textContent = K ? L('Urutkan 10 langkah secepatnya. Salah = +2 detik.', 'Order all 10 steps fast. A miss adds 2 seconds.') : L('Ketuk langkah wudhu sesuai urutannya!', 'Tap the wudu steps in the right order!');
   var best = K ? r.kilat.best : (r.order[level] && r.order[level].best), ob = document.getElementById('oBest');
-  ob.hidden = !best; ob.textContent = best ? '🏆 ' + (K ? fmt1(best) : fmt(best)) : '';
+  ob.hidden = !best; ob.innerHTML = best ? TROPHY + (K ? fmt1(best) : fmt(best)) : '';
   document.getElementById('oPen').hidden = true;
   renderRecords();
   document.getElementById('lvEasy').classList.toggle('on', level === 5);
@@ -1261,17 +1366,19 @@ function fmt1(ms){ return (ms/1000).toFixed(1) + L(' dtk',' s'); }
 function dkey(d){ return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0'); }
 function todayKey(){ try{ if(window.BabyMo && BabyMo.daily) return BabyMo.daily.today(); }catch(e){} return dkey(new Date()); }
 function shiftKey(k, n){ try{ if(window.BabyMo && BabyMo.daily) return BabyMo.daily.shift(k, n); }catch(e){} var p = k.split('-'); return dkey(new Date(+p[0], p[1]-1, +p[2] + n)); }
+var TROPHY = '<svg class="wo-ic" viewBox="0 0 40 40" aria-hidden="true"><use href="#wuTrophy"/></svg>';
+function wIc(id, c){ return '<svg class="' + (c || 'wo-ic') + '" viewBox="0 0 ' + (id === 'wuDrop' ? 24 : 40) + ' ' + (id === 'wuDrop' ? 24 : 40) + '" aria-hidden="true"><use href="#' + id + '"/></svg>'; }
 function starsHtml(n){ return '★'.repeat(n) + '☆'.repeat(3-n); }
 function renderRecords(){
   var r = wLoad();
   [[5,'lvEasySt'],[10,'lvHardSt']].forEach(function(x){ var o = r.order[x[0]], el = document.getElementById(x[1]); if(el) el.textContent = o ? starsHtml(o.stars) + ' · ' + fmt(o.best) : ''; });
-  var kb = document.getElementById('kilatBest'); if(kb) kb.textContent = r.kilat.best ? '🏆 ' + fmt1(r.kilat.best) : '';
+  var kb = document.getElementById('kilatBest'); if(kb) kb.innerHTML = r.kilat.best ? TROPHY + fmt1(r.kilat.best) : '';
 }
 
 /* Prayer slots: today's times from Sholat (mo_prayer_cache_v1) when the
    child set a location there, else the same default times as Sholat Bareng Mo. */
-var PR = [{k:'Fajr', n:['Subuh','Fajr'], i:'🌅', d:'04:35'}, {k:'Dhuhr', n:['Dzuhur','Dhuhr'], i:'☀️', d:'12:00'}, {k:'Asr', n:['Ashar','Asr'], i:'🌤️', d:'15:15'},
-          {k:'Maghrib', n:['Maghrib','Maghrib'], i:'🌇', d:'17:55'}, {k:'Isha', n:['Isya','Isha'], i:'🌙', d:'19:10'}];
+var PR = [{k:'Fajr', n:['Subuh','Fajr'], i:'wuFajr', d:'04:35'}, {k:'Dhuhr', n:['Dzuhur','Dhuhr'], i:'wuDhuhr', d:'12:00'}, {k:'Asr', n:['Ashar','Asr'], i:'wuAsr', d:'15:15'},
+          {k:'Maghrib', n:['Maghrib','Maghrib'], i:'wuMaghrib', d:'17:55'}, {k:'Isha', n:['Isya','Isha'], i:'wuIsha', d:'19:10'}];
 function prayerTimes(){
   var out = PR.map(function(p){ return p.d; });
   try{
@@ -1295,23 +1402,23 @@ function renderCheckin(){
   var box = document.getElementById('checkin'); if(!box) return;
   var r = wLoad(), t = todayKey(), done = r.ci[t] || [], times = prayerTimes(), cs = curSlot(times), st = ciStreak(r);
   var best = Math.max(r.ciBest || 0, st);
-  var h = '<div class="ci-top"><h2>💧 ' + L('Wudhu sebelum sholat','Wudu before prayer') + '</h2>'
-    + '<span class="ci-streak' + (st ? '' : ' off') + '">🔥 ' + st + ' ' + L('hari','day' + (st === 1 ? '' : 's')) + '</span></div>'
-    + '<div class="ci-sub">' + (done.length ? L('Hari ini kamu sudah wudhu ' + done.length + '× — MasyaAllah! 💙', 'You did wudu ' + done.length + '× today — MashaAllah! 💙')
-        : L('Sudah wudhu? Ketuk waktunya ya. Lupa juga tidak apa-apa 😊', 'Did wudu? Tap the prayer time. Forgot? That\'s okay 😊')) + '</div><div class="ci-row">';
+  var h = '<div class="ci-top"><h2>' + wIc('wuDrop') + '<span>' + L('Wudhu sebelum sholat','Wudu before prayer') + '</span></h2>'
+    + '<span class="ci-streak' + (st ? '' : ' off') + '">' + wIc('wuFlame') + st + ' ' + L('hari','day' + (st === 1 ? '' : 's'))
+    + (best > 1 ? '<small class="ci-note">· ' + L('rekor ' + best, 'best ' + best) + '</small>' : '') + '</span></div>'
+    + (done.length ? '<div class="ci-sub">' + L('Hari ini kamu sudah wudhu ' + done.length + '× — MasyaAllah! 💙', 'You did wudu ' + done.length + '× today — MashaAllah! 💙') + '</div>' : '')
+    + '<div class="ci-row" role="group" aria-label="' + L('Sudah wudhu? Ketuk waktunya ya. Lupa juga tidak apa-apa', 'Did wudu? Tap the prayer time. Forgot? That\'s okay') + '">';
   PR.forEach(function(p, i){
     var on = done.indexOf(i) >= 0, now = i === cs.i;
     h += '<button class="ci-p' + (on ? ' on' : '') + (now ? ' now' : '') + '" data-i="' + i + '" data-now="' + (cs.next ? L('Nanti','Next') : L('Sekarang','Now')) + '" aria-pressed="' + on + '">'
-      + '<span class="i">' + p.i + '</span><span class="n">' + p.n[EN ? 1 : 0] + '</span><span class="t">' + times[i] + '</span></button>';
+      + '<span class="i">' + wIc(p.i) + '</span><span class="n">' + p.n[EN ? 1 : 0] + '</span><span class="t">' + times[i] + '</span></button>';
   });
   var curOn = done.indexOf(cs.i) >= 0;
-  h += '</div><button class="ci-btn btn-primary' + (curOn ? ' ok' : '') + '" id="ciBtn">'
-    + (curOn ? '✓ ' + L('Sudah wudhu untuk ' + PR[cs.i].n[0], 'Wudu done for ' + PR[cs.i].n[1]) : '💧 ' + L('Aku sudah wudhu!', 'I did wudu!') + ' · ' + PR[cs.i].n[EN ? 1 : 0]) + '</button>';
-  h += '<div class="ci-week" aria-hidden="true">';
+  h += '</div><div class="ci-foot"><div class="ci-week" aria-hidden="true">';
   for(var d = 6; d >= 0; d--){ var k = shiftKey(t, -d), p2 = k.split('-'), dt = new Date(+p2[0], p2[1]-1, +p2[2]);
     var lbl = (EN ? ['S','M','T','W','T','F','S'] : ['M','S','S','R','K','J','S'])[dt.getDay()];
-    h += '<i class="' + ((r.ci[k] || []).length ? 'on' : '') + (d === 0 ? ' today' : '') + '">' + ((r.ci[k] || []).length ? '💧' : lbl) + '</i>'; }
-  h += '</div>' + (best > 1 ? '<div class="ci-note">' + L('Rekor: ' + best + ' hari berturut-turut', 'Best: ' + best + ' days in a row') + '</div>' : '');
+    h += '<i class="' + ((r.ci[k] || []).length ? 'on' : '') + (d === 0 ? ' today' : '') + '">' + ((r.ci[k] || []).length ? wIc('wuDrop') : lbl) + '</i>'; }
+  h += '</div><button class="ci-btn btn-primary' + (curOn ? ' ok' : '') + '" id="ciBtn">'
+    + (curOn ? '✓ ' + L('Sudah wudhu ' + PR[cs.i].n[0], 'Done for ' + PR[cs.i].n[1]) : wIc('wuDrop') + '<span>' + L('Aku sudah wudhu!', 'I did wudu!') + ' <small>· ' + PR[cs.i].n[EN ? 1 : 0] + '</small></span>') + '</button></div>';
   box.innerHTML = h;
   box.querySelectorAll('.ci-p').forEach(function(b){ b.onclick = function(){ checkIn(+b.dataset.i, true); }; });
   document.getElementById('ciBtn').onclick = function(){ checkIn(cs.i, false); };

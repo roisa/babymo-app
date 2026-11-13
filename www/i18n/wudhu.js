@@ -32,7 +32,7 @@
   "Aku niat berwudhu untuk menghilangkan hadas kecil, karena Allah Ta'ala.": "I intend to perform wudu to remove minor impurity, for the sake of Allah the Most High.",
   "Aku bersaksi tiada Tuhan selain Allah Yang Maha Esa, tiada sekutu bagi-Nya, dan aku bersaksi bahwa Muhammad adalah hamba dan utusan-Nya.": "I bear witness that there is no god but Allah alone, with no partner, and I bear witness that Muhammad is His servant and Messenger.",
   "Mana yang duluan?": "Which comes first?", "Ketuk langkah wudhu sesuai urutannya!": "Tap the wudu steps in the right order!",
-  "🌱 Mudah · 5": "🌱 Easy · 5", "🌟 Hebat · 10": "🌟 Amazing · 10", "Hmm, wudhu dimulai dari niat dulu ya 🤲": "Hmm, wudu starts with the intention 🤲",
+  "🌱 Mudah · 5": "🌱 Easy · 5", "🌟 Hebat · 10": "🌟 Amazing · 10", "Mudah · 5": "Easy · 5", "Hebat · 10": "Amazing · 10", "Hmm, wudhu dimulai dari niat dulu ya 🤲": "Hmm, wudu starts with the intention 🤲",
   "MasyaAllah, wudhumu selesai! 💧": "MashaAllah, your wudu is done! 💧", "Badan sudah bersih — sekarang siap sholat!": "You're all clean — now you're ready to pray!",
   "🕌 Lanjut Sholat": "🕌 Go Pray", "🧩 Urutkan": "🧩 Order Game", "🔄 Ulang": "🔄 Again", "📤 Bagikan": "📤 Share",
   "Hebat! Urutannya benar semua! 🎉": "Amazing! You got the whole order right! 🎉", "Kamu hafal urutan wudhu!": "You know the order of wudu!",

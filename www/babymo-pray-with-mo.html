@@ -774,6 +774,46 @@ html[data-bm-theme="dark"] #celebOverlay .bm-next::before,html[data-bm-theme="cl
 html[data-bm-theme="dark"] #celebOverlay .modal-highlight,html[data-bm-theme="classic"] #celebOverlay .modal-highlight{background:rgba(255,200,80,.14);border-color:rgba(255,220,140,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#celebOverlay .modal-card{background:var(--sheet)!important}}
 </style>
+<style id="pw-polish">
+/* Polish (Nov 2026): glass touch on the Prayer Steps cards and "More" tiles, and a kid-friendly
+   home backdrop: faint prayer-mat pattern + a soft mosque skyline fixed at the bottom */
+.sp-card,.more-tile{position:relative;isolation:isolate;
+  --rim:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35);
+  -webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
+.sp-card::before,.more-tile::before{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%)}
+html:not([data-bm-theme="classic"]):not([data-bm-theme="dark"]) :is(.sp-card,.more-tile){background:rgba(255,255,255,.74)}
+/* the Mo pose tile stays a solid, rounded picture above the glass */
+.sp-pose{position:relative;z-index:1}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) :is(.sp-card,.more-tile){
+  --rim:inset 0 1px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) :is(.sp-card,.more-tile)::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%)}
+
+/* backdrop pieces live in the fixed .pw-bg layer (z-index 0, no pointer events, never moves layout) */
+.pw-mat,.pw-skyline{display:none;position:absolute;left:0;width:100%}
+body[data-view="home"] .pw-mat,body[data-view="home"] .pw-skyline{display:block}
+.pw-mat{top:0;height:100%;opacity:.42;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0,transparent 22%,#000 48%,#000 80%,transparent 100%);mask-image:linear-gradient(180deg,transparent 0,transparent 22%,#000 48%,#000 80%,transparent 100%)}
+.pm-arch{fill:none;stroke:#D6A85C;stroke-width:1.4;opacity:.32}
+.pm-arch2{fill:none;stroke:#7CC0E8;stroke-width:1.1;opacity:.3}
+.pm-dot{fill:#E7B867;opacity:.32}
+.pm-line{stroke:#D6A85C;stroke-width:1;stroke-dasharray:3 5;opacity:.28}
+.pw-skyline{bottom:calc(58px + env(safe-area-inset-bottom));height:clamp(90px,15vh,150px);transition:opacity .5s ease}
+.psk-far{fill:#CFE4F7;opacity:.7}
+.psk-near{fill:#B0D2EF;opacity:.8}
+.psk-win{fill:#fff;opacity:.55}
+body.pw-ground-in .pw-skyline{opacity:0}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .pw-mat{opacity:.35}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .pm-arch{stroke:#FFD27A;opacity:.2}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .pm-arch2{stroke:#7FB6E8;opacity:.16}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .pm-dot{fill:#FFD27A;opacity:.2}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .pm-line{stroke:#FFD27A;opacity:.14}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .psk-far{fill:#1E3561;opacity:.75}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .psk-near{fill:#263F70;opacity:.8}
+:is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .psk-win{fill:#FFD27A;opacity:.45}
+@media (prefers-reduced-motion:reduce){.pw-skyline{transition:none}}
+</style>
 </head>
 <body>
 
@@ -855,6 +895,17 @@ html[data-bm-theme="dark"] #celebOverlay .modal-highlight,html[data-bm-theme="cl
     <use class="pw-cl-b" href="#pwCloud" x="470" y="140" width="96" height="40"/>
     <use class="pw-cl-c" href="#pwCloud" x="610" y="96" width="110" height="46"/>
     <use class="pw-cl-b" href="#pwCloud" x="300" y="176" width="70" height="30"/>
+  </svg>
+  <!-- home: faint prayer-mat pattern + a soft mosque skyline fixed at the bottom
+       (fades away when the courtyard mosque at the end of the page scrolls in) -->
+  <svg class="pw-mat" aria-hidden="true"><defs><pattern id="pwMatPat" width="64" height="88" patternUnits="userSpaceOnUse">
+    <path d="M10 84V40a22 22 0 0 1 44 0v44" class="pm-arch"/><path d="M18 84V42a14 14 0 0 1 28 0v42" class="pm-arch2"/>
+    <path d="M32 50l5 7-5 7-5-7Z" class="pm-dot"/><path d="M0 86h64" class="pm-line"/><circle cx="32" cy="18" r="2.4" class="pm-dot"/></pattern></defs>
+    <rect width="100%" height="100%" fill="url(#pwMatPat)"/></svg>
+  <svg class="pw-skyline" viewBox="0 0 800 100" preserveAspectRatio="xMidYMax slice">
+    <path class="psk-far" d="M0 100V82h30V70a14 14 0 0 1 28 0v12h40V60h8l4-12 4 12h8v22h70V74a22 20 0 0 1 44 0v8h120V66a26 24 0 0 1 52 0v16h90V58h8l4-12 4 12h8v24h60V72a18 16 0 0 1 36 0v10h64V68h20v14h58V100Z"/>
+    <path class="psk-near" d="M0 100V90h52V30l7-16 7 16v60h18V64h6a40 38 0 0 1 80 0h6v26h44V76h56v14h28V12l6-14 6 14v38h16a14 13 0 0 1 26 0h4a60 54 0 0 1 108 0h4a14 13 0 0 1 26 0h16V12l6-14 6 14v78h26V74h44v16h18V68h8a35 32 0 0 1 70 0h8v22h12V38l6-14 6 14v52h64V100Z"/>
+    <g class="psk-win"><rect x="388" y="72" width="8" height="12" rx="4"/><rect x="404" y="70" width="10" height="20" rx="5"/><rect x="422" y="72" width="8" height="12" rx="4"/><rect x="118" y="72" width="7" height="10" rx="3.5"/><rect x="664" y="74" width="7" height="10" rx="3.5"/></g>
   </svg>
 </div>
 
@@ -1886,5 +1937,10 @@ function upd(){raf=0;var home=document.body.dataset.view==='home'||!document.bod
 window.addEventListener('scroll',function(){if(!raf)raf=requestAnimationFrame(upd)},{passive:true});})();
 </script>
 <script>(function(){var W=['baby-mo-yeyy','baby-mo-yes','baby-mo-pose-41','baby-mo-pose-26','baby-mo-pose-37'];function pick(){document.querySelectorAll('img.peek-cheer').forEach(function(i){i.src='baby-mo-poses/'+W[Math.floor(Math.random()*W.length)]+'.webp';});}pick();new MutationObserver(function(m){m.forEach(function(r){var t=r.target;if(t.querySelector&&t.querySelector('img.peek-cheer')&&/(^| )(open|active|on)( |$)/.test(t.className)&&!/hidden/.test(t.className))t.querySelectorAll('img.peek-cheer').forEach(function(i){i.src='baby-mo-poses/'+W[Math.floor(Math.random()*W.length)]+'.webp';});});}).observe(document.body,{attributes:true,subtree:true,attributeFilter:['class']});})();</script>
+<script>
+/* hide the fixed skyline once the real courtyard mosque at the end of the page is on screen */
+(function(){var g=document.querySelector('.pw-ground');if(!g||!('IntersectionObserver' in window))return;
+new IntersectionObserver(function(e){document.body.classList.toggle('pw-ground-in',e[0].isIntersecting);},{rootMargin:'0px 0px -40px 0px'}).observe(g);})();
+</script>
 </body>
 </html>
