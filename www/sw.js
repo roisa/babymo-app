@@ -24,6 +24,7 @@ const SHELL = [
   "/bm-theme.js",
   "/bm-prayer.js",
   "/doa-scenes.js",
+  "/act-icons.js",
   "/icons/scene/lantern.svg",
   "/icons/scene/tap-hand.svg",
   "/icons/scene/tasbih.svg",
