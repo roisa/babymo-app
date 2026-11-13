@@ -1257,6 +1257,16 @@ html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="da
 .ce-top img{width:128px;aspect-ratio:1/1}
 @media (max-height:500px) and (orientation:landscape){.ce-top img{width:96px}}
 </style>
+<style>
+/* ── Glass touch on the result cards: each card keeps its own colour, border and shape, and gains a soft
+      frost, a bright top edge, a faint inner rim and a sheen across the top (lighter than the Wudhu/Pray glass) ── */
+#completeScreen .c-card{position:relative;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
+#completeScreen .c-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35),inset 0 0 18px rgba(255,255,255,.16)}
+html[data-bm-theme="dark"] #completeScreen .c-card::after,html[data-bm-theme="classic"] #completeScreen .c-card::after{background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
+</style>
 </head>
 <body>
 
