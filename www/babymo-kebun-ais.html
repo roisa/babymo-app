@@ -77,8 +77,15 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .bed{position:absolute;top:36%;width:30%;height:30%;cursor:pointer;z-index:2}
 .bed[data-i="0"]{left:3%}.bed[data-i="1"]{left:35%}.bed[data-i="2"]{left:67%}
 .bed svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
-.bed::before{content:'';position:absolute;left:-2%;right:-2%;bottom:-3%;height:34%;border-radius:22px;background:rgba(255,236,120,.0);transition:background .25s,box-shadow .25s}
-.bed.sel::before{background:rgba(255,236,120,.38);box-shadow:0 0 0 3px #FFE066,0 0 18px 4px rgba(255,224,102,.7)}
+.bed::before{content:'';position:absolute;left:-16%;right:-16%;bottom:-18%;height:46%;border-radius:50%;pointer-events:none;
+  background:radial-gradient(closest-side,rgba(255,240,150,1),rgba(255,214,80,.6) 50%,rgba(255,214,80,0));opacity:0;transform:scale(.7);transition:opacity .3s,transform .4s cubic-bezier(.3,1.5,.5,1)}
+/* the selected bed glows: a warm pool of light on the ground + a soft golden halo tracing the bed and plant */
+.bed.sel::before{opacity:1;transform:none;animation:bedPool 1.8s ease-in-out infinite}
+.bed svg{transition:filter .3s}
+.bed.sel svg{filter:drop-shadow(0 0 2.5px #FFF6B8) drop-shadow(0 0 10px rgba(255,212,60,1)) drop-shadow(0 0 22px rgba(255,190,40,.75));animation:bedHalo 1.8s ease-in-out infinite}
+@keyframes bedHalo{50%{filter:drop-shadow(0 0 3.5px #FFF9CC) drop-shadow(0 0 14px rgba(255,212,60,1)) drop-shadow(0 0 30px rgba(255,190,40,.95))}}
+@keyframes bedPool{50%{opacity:.75;transform:scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.bed.sel svg,.bed.sel::before{animation:none}}
 .bed .pl{transform-origin:60px 126px;transition:transform .5s}
 .bed .pl.thirsty{transform:skewX(8deg) scaleY(.92);filter:saturate(.45) brightness(1.05)}
 .bed .pl.grow{animation:grow .7s cubic-bezier(.3,1.6,.5,1)}
