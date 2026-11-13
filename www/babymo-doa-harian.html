@@ -1139,6 +1139,20 @@ html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di,html[data-bm
 #learnScreen .dua-card .dua-desc{margin-top:2px}
 @media (max-width:360px){#learnScreen .dua-card .dua-title{font-size:19px!important}#learnScreen .dua-card .dua-title .di{--s:38px}}
 </style>
+<style>
+/* Title symbol: just the glyph in the du'a's own colours — no orb, no ring */
+#learnScreen .dua-card .dua-title .di{--s:40px!important;background:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important}
+#learnScreen .dua-card .dua-title .di svg{width:100%!important;height:100%!important;filter:drop-shadow(0 3px 4px color-mix(in srgb,var(--c2) 35%,transparent))!important}
+#learnScreen .dua-card .dua-title .di .w{fill:var(--c2)}
+#learnScreen .dua-card .dua-title .di .ws{stroke:var(--c2)}
+#learnScreen .dua-card .dua-title .di .k{fill:var(--c1)}
+#learnScreen .dua-card .dua-title .di .ks{stroke:var(--c1)}
+html[data-bm-theme] #learnScreen .dua-card .dua-title .di{background:none!important;box-shadow:none!important}
+html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .w,html[data-bm-theme="dark"] #learnScreen .dua-card .dua-title .di .w{fill:var(--c1)}
+html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .ws,html[data-bm-theme="dark"] #learnScreen .dua-card .dua-title .di .ws{stroke:var(--c1)}
+html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .k,html[data-bm-theme="dark"] #learnScreen .dua-card .dua-title .di .k{fill:#fff}
+html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .ks,html[data-bm-theme="dark"] #learnScreen .dua-card .dua-title .di .ks{stroke:#fff}
+</style>
 </head>
 <body>
 
