@@ -1277,6 +1277,41 @@ html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="da
 html[data-bm-theme="dark"] #completeScreen .c-card::after,html[data-bm-theme="classic"] #completeScreen .c-card::after{background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%);
   box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
 </style>
+<style>
+/* ── Du'a quiz, tidy layout (option A): one card, one question, upper-body Mo peeking over the card,
+      round speaker beside the Arabic, answers = picture + word, no extra sparkles ── */
+#quizScreen{--qmh:290px}
+@media(min-width:600px){#quizScreen{--qmh:330px}}
+#quizScreen .q-title .q-spk,#quizScreen .q-title .q-ic,#quizScreen .q-stimulus .q-spk{display:none!important}
+#quizScreen .q-stimulus{position:relative;flex-direction:column;align-items:stretch;gap:0;padding:16px 14px 14px;margin:calc(var(--qmh)*.53) 0 14px}
+/* Mo: the full pose image sits above the card and is cut at his waist exactly on the card's top edge */
+#quizScreen .q-mo{--mw:var(--qmh);position:absolute!important;z-index:1;width:var(--qmh);height:var(--qmh);left:calc(50% - var(--qmh)/2);top:calc(var(--qmh)*-.69);margin:0!important;
+  -webkit-mask-image:linear-gradient(#000 calc(69% - 1px),transparent 69%);mask-image:linear-gradient(#000 calc(69% - 1px),transparent 69%);transform-origin:50% 69%;pointer-events:none}
+#quizScreen .q-mo.pop{animation:qMoPeekPop .7s cubic-bezier(.34,1.56,.64,1)}
+#quizScreen .q-mo.oops{animation:qMoPeekNo .5s ease}
+@keyframes qMoPeekPop{0%{transform:none}40%{transform:scale(1.07) rotate(-3deg)}75%{transform:scale(.98)}100%{transform:none}}
+@keyframes qMoPeekNo{0%,100%{transform:none}25%{transform:rotate(-4deg)}75%{transform:rotate(3deg)}}
+#quizScreen .q-stim-body{gap:10px;align-items:stretch}
+#quizScreen .q-stim-label{display:none!important}
+/* the one question lives inside the card */
+#quizScreen .q-stim-body .q-prompt{margin:0!important;padding:0!important;background:none!important;box-shadow:none!important;border-radius:0;isolation:auto}
+#quizScreen .q-stim-body .q-prompt::before,#quizScreen .q-stim-body .q-prompt::after,#quizScreen .q-stim-body .q-prompt .q-star,#quizScreen .q-prompt-en,#quizScreen .q-prompt-text>span[aria-hidden]{display:none!important}
+#quizScreen .q-stim-body .q-prompt-text{font-size:19px;line-height:1.25;text-wrap:balance}
+@media(min-width:600px){#quizScreen .q-stim-body .q-prompt-text{font-size:22px}}
+#quizScreen .q-ar-row{display:flex;align-items:center;gap:10px;width:100%}
+#quizScreen .q-ar-row .q-stim-arabic{flex:1 1 auto;min-width:0}
+#quizScreen .q-ar-row .q-play-btn{order:2;flex:0 0 52px;width:52px;height:52px;min-height:0;padding:0!important;border-radius:50%!important;display:grid;place-items:center;gap:0;font-size:0!important}
+#quizScreen .q-ar-row .q-play-btn>span:not(#qPlayIcon){display:none}
+#quizScreen #qPlayIcon{display:grid;place-items:center;font-size:0}
+#quizScreen #qPlayIcon svg{width:24px;height:24px;display:block}
+@media(min-width:600px){#quizScreen .q-ar-row .q-play-btn{flex-basis:60px;width:60px;height:60px}}
+/* answers: the picture and the word, nothing else */
+#quizScreen .q-choice .qc-emoji,#quizScreen .q-choice .di{display:none!important}
+#quizScreen .qc-tag{justify-content:center;min-height:36px;padding:4px 6px}
+#quizScreen .qc-label{text-align:center;font-size:13.5px}
+@media(min-width:600px){#quizScreen .qc-label{font-size:16px}}
+@media(max-height:700px){#quizScreen{--qmh:220px}}
+</style>
 </head>
 <body>
 
@@ -2659,6 +2694,26 @@ function showToast(e, t){
   var _lq=window.loadQuestion; if(_lq) window.loadQuestion=function(qi){ var r=_lq.apply(this,arguments); Q.whoosh(); return r; };
   // fanfare on the results card
   var _sc=window.showComplete; if(_sc) window.showComplete=function(){ var r=_sc.apply(this,arguments); setTimeout(Q.win,250); return r; };
+})();
+</script>
+<script>
+/* Du'a quiz tidy layout: move the question into the card, put the speaker beside the Arabic */
+(function(){
+  var body=document.querySelector('#quizScreen .q-stim-body'), pr=document.querySelector('#quizScreen .q-prompt'),
+      ar=document.getElementById('qStimArabic'), btn=document.getElementById('qPlayBtn');
+  if(!body||!pr||!ar||!btn) return;
+  body.insertBefore(pr, body.firstChild);
+  var row=document.createElement('div'); row.className='q-ar-row';
+  ar.parentNode.insertBefore(row, ar); row.appendChild(ar); row.appendChild(btn);
+  var SPK='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="#fff"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"/></svg>',
+      PAUSE='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="5" width="4" height="14" rx="1.6" fill="#fff"/><rect x="13.5" y="5" width="4" height="14" rx="1.6" fill="#fff"/></svg>';
+  var EN=function(){ return (document.documentElement.lang||'').indexOf('en')===0; };
+  window.setQuizPlayState=function(state){
+    var ic=document.getElementById('qPlayIcon'); if(!ic) return;
+    var on=state==='playing'; btn.classList.toggle('speaking',on); ic.innerHTML=on?PAUSE:SPK;
+    btn.setAttribute('aria-label', on?(EN()?'Stop':'Berhenti'):(EN()?'Listen again':'Dengar lagi'));
+  };
+  window.setQuizPlayState(btn.classList.contains('speaking')?'playing':'idle');
 })();
 </script>
 </body>
