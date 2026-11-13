@@ -750,6 +750,28 @@ span.mo-peek>img{position:absolute!important;left:0!important;top:var(--pt,-22.6
 #celebOverlay{flex-direction:column}
 #celebOverlay .modal-card{padding-top:22px}
 </style>
+<style>
+/* ── Liquid glass celebration card (iOS 26 style), same recipe as the Wudhu result: see-through frosted
+      panel, specular top edge, fine light rim, soft inner glow; the "Coba juga" card and star pill match ── */
+#celebOverlay .modal-card,#celebOverlay .bm-next{isolation:isolate;
+  background:linear-gradient(160deg,rgba(255,255,255,.62),rgba(255,255,255,.34))!important;
+  -webkit-backdrop-filter:blur(26px) saturate(185%);backdrop-filter:blur(26px) saturate(185%);
+  border:1px solid rgba(255,255,255,.65)!important;
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 -1px 0 rgba(255,255,255,.25),inset 0 0 22px rgba(255,255,255,.22),0 24px 48px -26px rgba(20,50,90,.55),0 2px 6px -2px rgba(20,50,90,.12)!important}
+#celebOverlay .modal-card::before,#celebOverlay .bm-next::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.55) 0,rgba(255,255,255,.12) 22%,rgba(255,255,255,0) 45%),radial-gradient(120% 60% at 15% 0%,rgba(255,255,255,.35),transparent 60%)}
+#celebOverlay .modal-highlight{background:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.7);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 6px 14px -10px rgba(20,50,90,.45)}
+/* dark / classic: smoky glass that lets the night colours through */
+html[data-bm-theme="dark"] #celebOverlay .modal-card,html[data-bm-theme="classic"] #celebOverlay .modal-card,
+html[data-bm-theme="dark"] #celebOverlay .bm-next,html[data-bm-theme="classic"] #celebOverlay .bm-next{
+  background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05))!important;border-color:rgba(255,255,255,.22)!important;
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.32),inset 0 -1px 0 rgba(255,255,255,.06),inset 0 0 24px rgba(255,255,255,.05),0 26px 50px -24px rgba(0,0,0,.7)!important}
+html[data-bm-theme="dark"] #celebOverlay .modal-card::before,html[data-bm-theme="classic"] #celebOverlay .modal-card::before,
+html[data-bm-theme="dark"] #celebOverlay .bm-next::before,html[data-bm-theme="classic"] #celebOverlay .bm-next::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.16) 0,rgba(255,255,255,.04) 24%,rgba(255,255,255,0) 46%),radial-gradient(120% 60% at 15% 0%,rgba(255,255,255,.10),transparent 60%)}
+html[data-bm-theme="dark"] #celebOverlay .modal-highlight,html[data-bm-theme="classic"] #celebOverlay .modal-highlight{background:rgba(255,200,80,.14);border-color:rgba(255,220,140,.28);box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){#celebOverlay .modal-card{background:var(--sheet)!important}}
+</style>
 </head>
 <body>
 
