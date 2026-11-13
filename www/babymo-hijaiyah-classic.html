@@ -512,8 +512,48 @@ html[data-bm-theme="dark"] #sResult .res-card::after,html[data-bm-theme="classic
 /* light theme: let a little of the scene show through */
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #sResult .res-card{background:rgba(255,255,255,.72)}
 </style>
+<style>
+/* ── Kid-friendly backdrop (home, lesson, quiz, Letter Catch): faint letter balloons drifting at the sides and soft
+      hills along the bottom, the same world as the welcome screen. Behind everything, no taps, no layout. ── */
+.hjw{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;display:none}
+body:has(#sHome.active) .hjw-page,body:has(#sIntro.active) .hjw-page,body:has(#sQuiz.active) .hjw-page{display:block}
+.hjw-tk{position:absolute;z-index:-1;display:block}
+.hjw svg{position:absolute;display:block;overflow:visible}
+.hjw-l{left:-22px;top:44%;width:76px;height:228px;opacity:.38}
+.hjw-r{right:-24px;top:30%;width:84px;height:299px;opacity:.38}
+.hjw-hills{left:0;bottom:0;width:100%;height:clamp(90px,15vh,170px);opacity:.5}
+.hjw-tk .hjw-l{top:84px;width:68px;height:204px}
+.hjw-tk .hjw-r{top:60px;width:72px;height:256px}
+.hjw .ha{fill:#A9DCC4}.hjw .hb{fill:#A5DE8C}.hjw .hc{fill:#8FD474}
+.hjw-str{fill:none;stroke:#7A8BA6;stroke-width:1.3;stroke-linecap:round;opacity:.7}
+.hjw-t{font-family:'Scheherazade New',serif;font-size:24px;font-weight:700;fill:#fff;text-anchor:middle;dominant-baseline:central}
+.hjw-b{animation:hjwBob var(--d,8s) ease-in-out var(--dl,0s) infinite;transform-box:fill-box;transform-origin:50% 100%}
+@keyframes hjwBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-7px) rotate(2deg)}}
+@media (prefers-reduced-motion:reduce){.hjw-b{animation:none}}
+/* night: same scene, dimmer, moonlit colours */
+html[data-bm-theme="classic"] .hjw-l,html[data-bm-theme="classic"] .hjw-r,html[data-bm-theme="dark"] .hjw-l,html[data-bm-theme="dark"] .hjw-r{opacity:.24}
+html[data-bm-theme="classic"] .hjw-hills,html[data-bm-theme="dark"] .hjw-hills{opacity:.75}
+html[data-bm-theme="classic"] .hjw .ha,html[data-bm-theme="dark"] .hjw .ha{fill:#1C3A3A}
+html[data-bm-theme="classic"] .hjw .hb,html[data-bm-theme="dark"] .hjw .hb{fill:#173330}
+html[data-bm-theme="classic"] .hjw .hc,html[data-bm-theme="dark"] .hjw .hc{fill:#122A24}
+html[data-bm-theme="classic"] .hjw-str,html[data-bm-theme="dark"] .hjw-str{stroke:#C9D6E8}
+
+/* ── Glass touch: XP panel + Letter Box (home), the letter card (lesson) and the question card (quiz).
+      Each keeps its own colour and shape; adds frost, a bright top edge, a faint rim and a sheen. Mo never stands behind these. ── */
+#sHome .home-hdr-stats,#sHome .kotak,#sIntro .letter-card,#sQuiz .q-card{position:relative;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
+#sHome .home-hdr-stats::after,#sHome .kotak::after,#sIntro .letter-card::after,#sQuiz .q-card::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35)}
+html[data-bm-theme="dark"] #sHome .home-hdr-stats::after,html[data-bm-theme="dark"] #sHome .kotak::after,html[data-bm-theme="dark"] #sIntro .letter-card::after,html[data-bm-theme="dark"] #sQuiz .q-card::after,
+html[data-bm-theme="classic"] #sHome .home-hdr-stats::after,html[data-bm-theme="classic"] #sHome .kotak::after,html[data-bm-theme="classic"] #sIntro .letter-card::after,html[data-bm-theme="classic"] #sQuiz .q-card::after{
+  background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
+html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #sIntro .letter-card,html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #sQuiz .q-card{background:rgba(255,255,255,.76)}
+</style>
 </head>
 <body>
+<!-- kid-friendly backdrop for home / lesson / quiz (letter balloons at the sides + hills, like the welcome) -->
+<div class="hjw hjw-page" aria-hidden="true"><svg class="hjw-l" viewBox="0 0 80 240" focusable="false"><g class="hjw-b" style="--d:7.5s;--dl:-1s"><path class="hjw-str" d="M40 76.1c-6 14 6 26 -2 44"/><ellipse cx="40" cy="44" rx="24" ry="27.1" fill="#FF6B6B"/><path d="M36 70.1h8l-4 5z" fill="#FF6B6B"/><ellipse cx="30.9" cy="32.6" rx="7.2" ry="6.0" fill="#fff" opacity=".55" transform="rotate(-28 30.9 32.6)"/><text x="40" y="44" class="hjw-t">جَ</text></g><g class="hjw-b" style="--d:8.5s;--dl:-4s"><path class="hjw-str" d="M28 196.5c-6 14 6 26 -2 44"/><ellipse cx="28" cy="170" rx="19" ry="21.5" fill="#51CF66"/><path d="M24 190.5h8l-4 5z" fill="#51CF66"/><ellipse cx="20.8" cy="161.0" rx="5.7" ry="4.7" fill="#fff" opacity=".55" transform="rotate(-28 20.8 161.0)"/><text x="28" y="170" class="hjw-t">دَ</text></g></svg><svg class="hjw-r" viewBox="0 0 90 320" focusable="false"><g class="hjw-b" style="--d:8s;--dl:-2.5s"><path class="hjw-str" d="M50 69.9c-6 14 6 26 -2 44"/><ellipse cx="50" cy="40" rx="22" ry="24.9" fill="#FCC419"/><path d="M46 63.900000000000006h8l-4 5z" fill="#FCC419"/><ellipse cx="41.6" cy="29.5" rx="6.6" ry="5.5" fill="#fff" opacity=".55" transform="rotate(-28 41.6 29.5)"/><text x="50" y="40" class="hjw-t">سَ</text></g><g class="hjw-b" style="--d:9s;--dl:-6s"><path class="hjw-str" d="M58 193.2c-6 14 6 26 -2 44"/><ellipse cx="58" cy="160" rx="25" ry="28.2" fill="#4DABF7"/><path d="M54 187.2h8l-4 5z" fill="#4DABF7"/><ellipse cx="48.5" cy="148.2" rx="7.5" ry="6.2" fill="#fff" opacity=".55" transform="rotate(-28 48.5 148.2)"/><text x="58" y="160" class="hjw-t">مَ</text></g><g class="hjw-b" style="--d:7s;--dl:-3s"><path class="hjw-str" d="M30 286.2c-6 14 6 26 -2 44"/><ellipse cx="30" cy="262" rx="17" ry="19.2" fill="#B197FC"/><path d="M26 280.2h8l-4 5z" fill="#B197FC"/><ellipse cx="23.5" cy="253.9" rx="5.1" ry="4.2" fill="#fff" opacity=".55" transform="rotate(-28 23.5 253.9)"/><text x="30" y="262" class="hjw-t">نَ</text></g></svg><svg class="hjw-hills" viewBox="0 0 400 120" preserveAspectRatio="none" focusable="false"><path class="ha" d="M0 40C70 14 140 20 210 32S330 12 400 24V120H0Z"/><path class="hb" d="M0 70C80 44 170 48 250 62S350 52 400 58V120H0Z"/><path class="hc" d="M0 96C110 76 280 80 400 92V120H0Z"/></svg></div>
 
 <div class="stars" id="starsBg"></div>
 <div class="toast" id="toast"><div class="toast-e" id="toastE"></div><div class="toast-t" id="toastT">Betul!</div></div>
@@ -1540,6 +1580,7 @@ function showToast(e,t){
 </div>
 <!-- ═══ Tangkap Huruf ═══ -->
 <div class="hp-ov" id="tkOv">
+  <div class="hjw hjw-tk" aria-hidden="true"><svg class="hjw-l" viewBox="0 0 80 240" focusable="false"><g class="hjw-b" style="--d:7.5s;--dl:-1s"><path class="hjw-str" d="M40 76.1c-6 14 6 26 -2 44"/><ellipse cx="40" cy="44" rx="24" ry="27.1" fill="#FF6B6B"/><path d="M36 70.1h8l-4 5z" fill="#FF6B6B"/><ellipse cx="30.9" cy="32.6" rx="7.2" ry="6.0" fill="#fff" opacity=".55" transform="rotate(-28 30.9 32.6)"/><text x="40" y="44" class="hjw-t">جَ</text></g><g class="hjw-b" style="--d:8.5s;--dl:-4s"><path class="hjw-str" d="M28 196.5c-6 14 6 26 -2 44"/><ellipse cx="28" cy="170" rx="19" ry="21.5" fill="#51CF66"/><path d="M24 190.5h8l-4 5z" fill="#51CF66"/><ellipse cx="20.8" cy="161.0" rx="5.7" ry="4.7" fill="#fff" opacity=".55" transform="rotate(-28 20.8 161.0)"/><text x="28" y="170" class="hjw-t">دَ</text></g></svg><svg class="hjw-r" viewBox="0 0 90 320" focusable="false"><g class="hjw-b" style="--d:8s;--dl:-2.5s"><path class="hjw-str" d="M50 69.9c-6 14 6 26 -2 44"/><ellipse cx="50" cy="40" rx="22" ry="24.9" fill="#FCC419"/><path d="M46 63.900000000000006h8l-4 5z" fill="#FCC419"/><ellipse cx="41.6" cy="29.5" rx="6.6" ry="5.5" fill="#fff" opacity=".55" transform="rotate(-28 41.6 29.5)"/><text x="50" y="40" class="hjw-t">سَ</text></g><g class="hjw-b" style="--d:9s;--dl:-6s"><path class="hjw-str" d="M58 193.2c-6 14 6 26 -2 44"/><ellipse cx="58" cy="160" rx="25" ry="28.2" fill="#4DABF7"/><path d="M54 187.2h8l-4 5z" fill="#4DABF7"/><ellipse cx="48.5" cy="148.2" rx="7.5" ry="6.2" fill="#fff" opacity=".55" transform="rotate(-28 48.5 148.2)"/><text x="58" y="160" class="hjw-t">مَ</text></g><g class="hjw-b" style="--d:7s;--dl:-3s"><path class="hjw-str" d="M30 286.2c-6 14 6 26 -2 44"/><ellipse cx="30" cy="262" rx="17" ry="19.2" fill="#B197FC"/><path d="M26 280.2h8l-4 5z" fill="#B197FC"/><ellipse cx="23.5" cy="253.9" rx="5.1" ry="4.2" fill="#fff" opacity=".55" transform="rotate(-28 23.5 253.9)"/><text x="30" y="262" class="hjw-t">نَ</text></g></svg><svg class="hjw-hills" viewBox="0 0 400 120" preserveAspectRatio="none" focusable="false"><path class="ha" d="M0 40C70 14 140 20 210 32S330 12 400 24V120H0Z"/><path class="hb" d="M0 70C80 44 170 48 250 62S350 52 400 58V120H0Z"/><path class="hc" d="M0 96C110 76 280 80 400 92V120H0Z"/></svg></div>
   <div class="hp-top"><button class="hp-x" id="tkX" type="button" aria-label="Keluar"><span class="hj-ic" data-i="close"></span></button><div class="hp-title"><span class="hj-ic" data-i="balloon"></span><span id="tkTitle">Tangkap Huruf</span></div><span class="hp-pill tk-time"><span class="hj-ic" data-i="timer"></span><b id="tkTime">40</b></span></div>
   <div class="tk-target" id="tkTarget"><span class="tk-mini" id="tkMini" aria-hidden="true"><span class="tk-mb"><span class="tk-in"><span class="tk-g" id="tkMiniG"></span></span><i class="tk-str"></i></span></span><span id="tkLbl">Tangkap</span><b id="tkAr">ب</b><span id="tkName">Ba</span><span class="hp-pill tk-score" id="tkScoreP"><span class="hj-ic" data-i="star"></span><b id="tkScore">0</b></span></div>
   <div class="tk-field" id="tkField">

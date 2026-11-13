@@ -9,7 +9,7 @@
   "· ejaan latin": "· Latin spelling", "· Arab ✓": "· Arabic ✓", "Suara Arab belum ada di HP ini.": "This phone has no Arabic voice yet.",
   "Sementara Baby Mo membaca dengan ejaan latin (ba, bi, bu). Untuk suara Arab asli, tambahkan bahasa Arab di pengaturan HP (Android: Setelan → Bahasa; iPhone: Pengaturan → Aksesibilitas → Konten Lisan → Suara).": "For now Baby Mo reads with Latin spelling (ba, bi, bu). For a real Arabic voice, add Arabic in your phone settings (Android: Settings → Languages; iPhone: Settings → Accessibility → Spoken Content → Voices).",
   "Cara main": "How to play", "Ayo jelajah! ▶": "Let's explore! ▶", "Geser joystick kiri": "Move the left joystick", "untuk berjalan": "to walk",
-  "Geser layar kanan": "Swipe the right side", "untuk melihat sekeliling": "to look around", "Tombol GALI · 🧱 BANGUN": "DIG · 🧱 BUILD buttons",
+  "Geser layar kanan": "Swipe the right side", "untuk melihat sekeliling": "to look around", "Tombol GALI · 🧱 BANGUN": "DIG · 🧱 BUILD buttons", "Tombol GALI & BANGUN": "DIG & BUILD buttons",
   "ambil atau pasang balok": "take or place blocks", "Dekati kotak emas": "Go near the gold boxes", "dengar hurufnya & kumpulkan 28!": "hear the letter & collect all 28!",
   "Gerakkan mouse": "Move the mouse", "untuk berjalan · Spasi untuk lompat": "to walk · Space to jump", "Klik kiri gali · klik kanan bangun": "Left-click digs · right-click builds",
   "Klik kiri: gali · Klik kanan: bangun · WASD jalan · Spasi lompat": "Left-click: dig · Right-click: build · WASD walk · Space jump",
