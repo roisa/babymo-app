@@ -475,6 +475,21 @@ html[data-bm-theme="classic"] #album{background:rgba(5,22,10,.82);}
 .al-st.got{border-width:1.5px;}
 </style>
 <script src="bm-icons.js" defer></script>
+<style>
+/* 13 Nov 2026 — reward card: upper-body Mo, the pose's name, grey share button */
+.intro-card .mo-stage{height:124px;margin-top:0;padding:0;overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
+.intro-card .mo-reveal-img{position:absolute;max-width:none;object-fit:contain;transform-origin:50% 100%;animation:moBobUp 2.6s ease-in-out infinite}
+@keyframes moBobUp{50%{transform:translateY(-4px) rotate(-1.5deg)}}
+.intro-card .mo-glow-ring{display:none}
+.pose-chip{display:block;width:fit-content;max-width:92%;margin:-2px auto 10px;padding:6px 14px;border-radius:999px;
+  background:#FFF1D6;color:#8A4B00;font:700 14px/1.2 'Nunito',sans-serif;box-shadow:0 0 0 1px rgba(214,140,0,.2)}
+html[data-bm-theme="classic"] .pose-chip{background:rgba(255,214,107,.16);color:#FFE3A1;box-shadow:0 0 0 1px rgba(255,214,107,.25)}
+.info-row{display:none!important}
+.play-btn.play-share{background:#ECEEF2!important;color:#5B6472!important;-webkit-text-fill-color:#5B6472;border:none!important;box-shadow:none!important;font-weight:800}
+html[data-bm-theme="classic"] .play-btn.play-share{background:rgba(255,255,255,.08)!important;color:#B9C0CC!important;-webkit-text-fill-color:#B9C0CC;box-shadow:none!important}
+@media (prefers-reduced-motion:reduce){.intro-card .mo-reveal-img{animation:none}}
+</style>
 </head>
 <body>
 
@@ -566,15 +581,11 @@ html[data-bm-theme="classic"] #album{background:rgba(5,22,10,.82);}
     <div class="intro-content">
       <div class="intro-name">Baby Mo! <span class="wave-hand">👋</span></div>
 
-      <div class="speech-bubble">
-        <div class="bubble-text">Halo! Aku Baby Mo! 😄</div>
-        <div class="bubble-sub">Assalamu'alaikum, teman baru! 🌙</div>
-      </div>
+      <div class="pose-chip" id="poseChip" hidden></div>
 
-      <div class="info-row">
-        <div class="info-pill pill-green">🌙 Belajar Islam</div>
-        <div class="info-pill pill-orange">🎮 Suka Bermain</div>
-        <div class="info-pill pill-gold">⭐ Selalu Semangat</div>
+      <div class="speech-bubble">
+        <div class="bubble-text" id="bubbleText">Halo! Aku Baby Mo! 😄</div>
+        <div class="bubble-sub" id="bubbleSub">Assalamu'alaikum, teman baru! 🌙</div>
       </div>
 
       <div class="stk-new" id="stkNew"></div>
@@ -814,7 +825,8 @@ function onComplete(){
   const isNewSticker = recordSticker();
   if (isNewSticker) { try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('puzzle','sticker',1); }catch(e){} }
   renderStickerNote(isNewSticker); renderChrome();
-  const moImg = document.querySelector('.mo-reveal-img'); if (moImg) moImg.src = poseSrc(CUR_POSE, true);
+  const moImg = document.querySelector('.mo-reveal-img'); if (moImg){ moImg.src = poseSrc(CUR_POSE, true); fitUpperBody(moImg, CUR_POSE); }
+  fillMoIntro();
   // Grid gets gold border
   document.getElementById('grid').classList.add('complete');
   document.getElementById('puzzleGlow').style.opacity = '1';
@@ -1093,6 +1105,49 @@ function closeCeleb(){
   document.getElementById('celebOverlay').classList.remove('show');
   try{ if (moIntroAudio) moIntroAudio.pause(); }catch(e){}
 }
+/* What Baby Mo is doing in each picture (shown on the reward card). */
+const POSE_NAMES = {
+  'alright':['Mo mengedip: siap!','Mo winks: all set!'], 'idea':['Mo punya ide!','Mo has an idea!'], 'ok':['Mo bilang oke','Mo says OK'],
+  'pose-01':['Mo melambai: halo!','Mo waves hello!'], 'pose-02':['Mo melompat gembira','Mo jumps for joy'], 'pose-04':['Mo siap bermain','Mo is ready to play'],
+  'pose-05':['Mo sedang berdoa','Mo is making du\'a'], 'pose-06':['Mo duduk santai','Mo sits and relaxes'], 'pose-07':['Mo tertawa senang','Mo laughs happily'],
+  'pose-08':['Mo menunjuk ke sana!','Mo points over there!'], 'pose-11':['Mo melompat tinggi','Mo jumps up high'], 'pose-12':['Mo duduk manis','Mo sits nicely'],
+  'pose-13':['Mo duduk sambil melambai','Mo sits and waves'], 'pose-14':['Mo berdiri tegap','Mo stands up tall'], 'pose-15':['Mo menunjukkan jalan','Mo shows the way'],
+  'pose-16':['Mo mengedip ceria','Mo gives a cheeky wink'], 'pose-18':['Mo duduk sambil berpikir','Mo sits and thinks'], 'pose-20':['Mo terbang seperti pesawat','Mo flies like a plane'],
+  'pose-21':['Mo bilang: keren!','Mo says: cool!'], 'pose-22':['Mo menunggu giliran','Mo waits for his turn'], 'pose-23':['Mo berlutut manis','Mo kneels nicely'],
+  'pose-24':['Mo melambai pelan','Mo gives a little wave'], 'pose-25':['Mo mengedip: oke!','Mo winks: OK!'], 'pose-26':['Mo bertepuk tangan','Mo claps his hands'],
+  'pose-27':['Mo bersemangat!','Mo is all fired up!'], 'pose-28':['Mo mendengarkan baik-baik','Mo listens carefully'], 'pose-29':['Mo tersenyum lebar','Mo gives a big smile'],
+  'pose-30':['Mo menari riang','Mo dances happily'], 'pose-31':['Mo terkejut: wah!','Mo is surprised: wow!'], 'pose-32':['Mo melangkah ceria','Mo steps out happily'],
+  'pose-34':['Mo membungkuk menyapa','Mo bows to say hello'], 'pose-35':['Mo tersenyum manis','Mo smiles sweetly'], 'pose-37':['Mo tersipu malu','Mo feels a little shy'],
+  'pose-41':['Mo membuka tangan lebar','Mo opens his arms wide'], 'pose-42':['Mo berjalan-jalan','Mo goes for a walk'], 'run':['Mo berlari kencang','Mo runs fast'],
+  'thank-you':['Mo berterima kasih','Mo says thank you'], 'wow':['Mo kagum: wow!','Mo is amazed: wow!'], 'yes':['Mo bilang: ya!','Mo says: yes!'], 'yeyy':['Mo bersorak: yeay!','Mo cheers: yay!']
+};
+/* Reward card: show Mo from the waist up (saves space), sized from the pose's bbox. */
+function fitUpperBody(img, p){
+  const H = 124, fh = p[4] - p[2], top = p[2] - 14, cut = p[2] + fh * 0.62, k = H / (cut - top), size = 480 * k;
+  img.style.width = img.style.height = size.toFixed(1) + 'px';
+  img.style.top = (-top * k).toFixed(1) + 'px';
+  img.style.left = 'calc(50% - ' + (((p[1] + p[3]) / 2) * k).toFixed(1) + 'px)';
+}
+/* First time: Mo introduces himself. After that: say hello again and tell what pose this is. */
+function fillMoIntro(){
+  const L = (id, en) => PZ_EN ? en : id;
+  let met = false; try{ met = localStorage.getItem('bm_puzzle_met') === '1'; localStorage.setItem('bm_puzzle_met', '1'); }catch(e){}
+  const name = (POSE_NAMES[CUR_POSE[0]] || [])[PZ_EN ? 1 : 0];
+  const chip = document.getElementById('poseChip');
+  if (chip){ chip.hidden = !name; chip.textContent = name ? '📸 ' + name : ''; }
+  let child = ''; try{ child = (localStorage.getItem('mo_child_name') || '').trim(); }catch(e){}
+  const t = document.getElementById('bubbleText'), s = document.getElementById('bubbleSub');
+  if (!met){
+    t.textContent = L('Halo! Aku Baby Mo! 😄', "Hi! I'm Baby Mo! 😄");
+    s.textContent = L("Assalamu'alaikum, teman baru! 🌙", "Assalamu'alaikum, new friend! 🌙");
+  } else {
+    const hi = [L('Ketemu lagi! 😄', 'Found me again! 😄'), L('Hore, kamu berhasil! 🎉', 'Hooray, you did it! 🎉'), L('Kamu jago menyusun! ⭐', "You're a great puzzler! ⭐")];
+    t.textContent = child ? L("Assalamu'alaikum, " + child + '! 😄', "Assalamu'alaikum, " + child + '! 😄') : hi[Math.floor(Math.random() * hi.length)];
+    s.textContent = IS_TODAY ? L('Ini gaya Mo hari ini. Besok ada gaya baru!', "This is Mo's pose for today. A new one tomorrow!")
+                             : L('Gaya Mo yang lain. Kumpulkan semuanya di album!', 'Another Mo pose. Collect them all in your album!');
+  }
+}
+
 function recordSticker(){
   const d = pzLoad(), name = CUR_POSE[0];
   let isNew = false;
