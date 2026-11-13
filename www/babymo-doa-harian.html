@@ -1189,6 +1189,38 @@ html[data-bm-theme="classic"] .tsm button.on,html[data-bm-theme="dark"] .tsm but
 @keyframes actTap{0%,30%,100%{transform:rotate(-6deg) translate(0,0)}40%{transform:rotate(-6deg) translate(-2px,-4px) scale(.9)}50%{transform:rotate(-6deg) translate(0,0)}}
 @media (prefers-reduced-motion:reduce){#sceneCard .act-hand{transform:rotate(-6deg)}}
 </style>
+<style>
+/* ── compact du'a card: description + star hint live in a bubble behind the stars ── */
+#learnScreen .dua-card .dua-desc{display:none}
+#learnScreen .dua-card .dua-title{margin-bottom:12px!important}
+#learnScreen .arabic-box #rdRow{position:absolute;z-index:4;display:inline-flex;align-items:center;gap:4px;margin:0;padding:5px 8px 5px 9px;border-radius:999px;cursor:pointer;
+  background:#fff;box-shadow:0 6px 14px -8px rgba(160,100,0,.55),inset 0 0 0 1.5px rgba(255,190,40,.55);-webkit-tap-highlight-color:transparent}
+#learnScreen .arabic-box #rdRow .rd-txt{display:none}
+#learnScreen .arabic-box #rdRow .pips{height:18px}
+#learnScreen .arabic-box #rdRow .pips svg{width:18px;height:18px}
+#learnScreen .arabic-box #rdRow .rd-i{display:grid;place-items:center;width:16px;height:16px;margin-left:2px;border-radius:50%;background:#F2B63C;color:#fff;font:900 11px/1 Georgia,serif;font-style:italic}
+#learnScreen .arabic-box #rdRow:active{transform:scale(.95)}
+/* A · sticker on the top edge */
+#learnScreen[data-stars="a"] .arabic-box #rdRow{top:-15px;right:14px}
+#learnScreen[data-stars="a"] .arabic-box{margin-top:6px}
+#learnScreen[data-stars="a"] .arabic-box::before{display:none}
+/* the bubble */
+#learnScreen .arabic-box .rd-pop{position:absolute;z-index:5;right:8px;width:min(270px,88%);padding:12px 14px;border-radius:18px;background:#fff;color:#33445A;text-align:left;
+  box-shadow:0 18px 34px -14px rgba(60,40,10,.45),inset 0 0 0 1.5px rgba(255,190,40,.45);animation:rdPop .22s cubic-bezier(.3,1.4,.5,1)}
+#learnScreen .arabic-box .rd-pop[hidden]{display:none}
+#learnScreen[data-stars="a"] .arabic-box .rd-pop{top:22px}
+#learnScreen .rd-pop p{margin:0;font:700 14px/1.4 'Nunito',sans-serif}
+#learnScreen .rd-pop .rd-ph{margin-top:6px;font-weight:800;color:#9A6400;font-size:13px}
+@keyframes rdPop{from{opacity:0;transform:translateY(-4px) scale(.96)}to{opacity:1;transform:none}}
+html[data-bm-theme="classic"] #learnScreen .arabic-box #rdRow,html[data-bm-theme="dark"] #learnScreen .arabic-box #rdRow,
+html[data-bm-theme="classic"] #learnScreen .arabic-box .rd-pop,html[data-bm-theme="dark"] #learnScreen .arabic-box .rd-pop{background:#2A3350;color:#E6ECF7}
+html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="dark"] #learnScreen .rd-pop .rd-ph{color:#FFD36B}
+/* the little Qur'an stand comes alive while the du'a is read: a gentle rock and a warm glow */
+#learnScreen .arabic-box .ab-rehal{transform-origin:50% 90%;transition:filter .4s}
+#learnScreen .arabic-box.reading .ab-rehal{animation:rehalRead 2.4s ease-in-out infinite;filter:drop-shadow(0 4px 4px rgba(120,70,20,.25)) drop-shadow(0 0 10px rgba(255,200,60,.85))}
+@keyframes rehalRead{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-3px) rotate(-4deg)}50%{transform:translateY(-1px) rotate(0)}75%{transform:translateY(-3px) rotate(4deg)}}
+@media (prefers-reduced-motion:reduce){#learnScreen .arabic-box.reading .ab-rehal{animation:none}}
+</style>
 </head>
 <body>
 
@@ -2231,8 +2263,28 @@ function showToast(e, t){
   }
   function renderReads(d,fresh){
     var n=starsOf(d.id);
-    document.getElementById('rdRow').innerHTML=doaStars(n,'',fresh)+'<span class="rd-txt">'+(n>=3?T('Bintang emas! Kamu hafal doa ini!'):T('Baca 3× untuk bintang emas'))+'</span>';
+    document.getElementById('rdRow').innerHTML=doaStars(n,'',fresh)+'<span class="rd-txt">'+(n>=3?T('Bintang emas! Kamu hafal doa ini!'):T('Baca 3× untuk bintang emas'))+'</span><i class="rd-i" aria-hidden="true">i</i>';
+    placeStars(); closeStarPop();
   }
+  /* Stars sit on the Arabic box (compact); the du'a's description and the star hint open in a small
+     bubble when the stars are tapped. */
+  var STARPOS='a';
+  function placeStars(){
+    var r=document.getElementById('rdRow'), box=document.querySelector('#learnScreen .arabic-box'); if(!r||!box) return;
+    var ls=document.getElementById('learnScreen'); ls.setAttribute('data-stars',STARPOS);
+    if(r.parentNode!==box){ box.appendChild(r); r.setAttribute('role','button'); r.setAttribute('tabindex','0');
+      var pop=document.createElement('div'); pop.className='rd-pop'; pop.id='rdPop'; pop.hidden=true; box.appendChild(pop);
+      var tog=function(e){ e.stopPropagation(); pop.hidden?openStarPop():closeStarPop(); };
+      r.addEventListener('click',tog); r.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); tog(e); } });
+      document.addEventListener('click',function(e){ if(!pop.hidden&&!pop.contains(e.target)) closeStarPop(); });
+    }
+    r.setAttribute('aria-label',(r.querySelector('.rd-txt')||{}).textContent||'');
+  }
+  function openStarPop(){ var p=document.getElementById('rdPop'); if(!p) return;
+    var dsc=(document.getElementById('duaDesc')||{}).textContent||'', h=(document.querySelector('#rdRow .rd-txt')||{}).textContent||'';
+    p.innerHTML='<p class="rd-pd"></p><p class="rd-ph"></p>'; p.firstChild.textContent=dsc; p.lastChild.textContent='⭐ '+h;
+    p.hidden=false; document.getElementById('rdRow').setAttribute('aria-expanded','true'); }
+  function closeStarPop(){ var p=document.getElementById('rdPop'); if(p) p.hidden=true; var r=document.getElementById('rdRow'); if(r) r.setAttribute('aria-expanded','false'); }
 
   /* ─── celebration: confetti, Baby Mo cheering, a star fills in ─── */
   function confetti(k){
