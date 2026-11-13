@@ -1236,7 +1236,7 @@ html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="da
 </style>
 <style>
 /* symbol flight: title symbol -> popup tile */
-.fly-sym{position:fixed;z-index:700;pointer-events:none;display:grid;place-items:center;filter:drop-shadow(0 6px 10px rgba(60,40,140,.35)) drop-shadow(0 0 12px rgba(255,220,120,.7))}
+.fly-sym{position:fixed;z-index:700;pointer-events:none;will-change:transform;display:grid;place-items:center;filter:drop-shadow(0 6px 10px rgba(60,40,140,.35)) drop-shadow(0 0 12px rgba(255,220,120,.7))}
 .fly-sym .di{--s:100%!important;width:100%!important;height:100%!important;background:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important;opacity:1!important;transform:none!important}
 .fly-sym .di::before{display:none}
 .fly-sym .di svg{width:100%!important;height:100%!important}
@@ -1245,6 +1245,7 @@ html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="da
 .fly-sym.land .di .w{fill:#fff}.fly-sym.land .di .ws{stroke:#fff}.fly-sym.land .di .k{fill:var(--k)}.fly-sym.land .di .ks{stroke:var(--k)}
 #learnScreen .dua-card .dua-title .di{transition:opacity .25s,transform .25s}
 #learnScreen .dua-card .dua-title .di.di-gone{opacity:.18;transform:scale(.8)}
+.ce-top .di svg{transition:opacity .14s linear}
 .ce-top .di.ce-wait svg{opacity:0}
 .ce-top .di.ce-got{animation:ceGot .6s cubic-bezier(.3,1.6,.5,1)!important;overflow:visible}
 .ce-top .di.ce-got::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:3px solid rgba(255,214,90,.9);animation:ceRing .6s ease-out forwards;pointer-events:none}
@@ -2349,28 +2350,40 @@ function showToast(e, t){
      turning white as it lands; the tile gives a little gulp and a ring of light */
   function flySymbol(card){
     var src=document.querySelector('#learnScreen .dua-card .dua-title .di'), tile=card.querySelector('.ce-top .di');
-    if(!src||!tile||!tile.animate) return;
+    if(!src||!tile) return;
     if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     var sr=src.getBoundingClientRect(); if(sr.bottom<0||sr.top>innerHeight||!sr.width) return;
     tile.classList.add('ce-wait');
     var fly=document.createElement('div'); fly.className='fly-sym'; fly.appendChild(src.cloneNode(true));
-    fly.style.cssText='left:'+sr.left+'px;top:'+sr.top+'px;width:'+sr.width+'px;height:'+sr.height+'px';
+    var w0=sr.width, x0=sr.left+w0/2, y0=sr.top+sr.height/2;
+    fly.style.cssText='left:'+(x0-w0/2)+'px;top:'+(y0-w0/2)+'px;width:'+w0+'px;height:'+w0+'px';
     document.body.appendChild(fly); src.classList.add('di-gone');
-    var done=false, end=function(){ if(done) return; done=true; fly.remove(); tile.classList.remove('ce-wait'); tile.classList.add('ce-got'); src.classList.remove('di-gone');
-        setTimeout(function(){ tile.classList.remove('ce-got'); },700); };
-    setTimeout(function(){
-      var tsv=tile.querySelector('svg'), tr=(tsv||tile).getBoundingClientRect();
-      var dx=tr.left+tr.width/2-(sr.left+sr.width/2), dy=tr.top+tr.height/2-(sr.top+sr.height/2), k=tr.width/sr.width;
-      var mx=dx*.45, my=Math.max(24-sr.top,Math.min(0,dy)-70);   // the arc never leaves the screen
-      var an=fly.animate([
-        {transform:'translate(0,0) scale(1) rotate(0)',offset:0},
-        {transform:'translate(0,-14px) scale(1.25) rotate(-8deg)',offset:.18},
-        {transform:'translate('+mx+'px,'+my+'px) scale('+(1+k)/1.6+') rotate(-14deg)',offset:.55},
-        {transform:'translate('+dx+'px,'+dy+'px) scale('+k+') rotate(-6deg)',offset:1}],
-        {duration:820,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
-      setTimeout(function(){ fly.classList.add('land'); },520);
-      an.onfinish=end; setTimeout(end,1200);
-    },380);
+    // one continuous quadratic curve: it rises first, then glides down into the tile.
+    // The tile is popping in (scaling about its centre), so its centre is read live each frame.
+    var D=950, t0=null, landed=false;
+    var ease=function(t){ return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2; };
+    var step=function(now){
+      if(t0===null) t0=now;
+      var t=Math.min(1,(now-t0)/D), e=ease(t);
+      var tr=tile.getBoundingClientRect(), x2=tr.left+tr.width/2, y2=tr.top+tr.height/2;
+      var w2=(tile.offsetWidth||84)*.62, k=w2/w0;
+      var x1=x0+(x2-x0)*.35, y1=Math.max(28,Math.min(y0,y2)-90);
+      // move by distance along the curve (arc length), so the speed follows the easing only and never stalls at the top
+      var N=40, P=[[x0,y0]], L=[0];
+      for(var i=1;i<=N;i++){ var q=i/N, v=1-q, px=v*v*x0+2*v*q*x1+q*q*x2, py=v*v*y0+2*v*q*y1+q*q*y2;
+        L.push(L[i-1]+Math.hypot(px-P[i-1][0],py-P[i-1][1])); P.push([px,py]); }
+      var want=e*L[N], j=1; while(j<N&&L[j]<want) j++;
+      var f=(want-L[j-1])/((L[j]-L[j-1])||1), x=P[j-1][0]+(P[j][0]-P[j-1][0])*f, y=P[j-1][1]+(P[j][1]-P[j-1][1])*f;
+      var sc=1+(k-1)*e+.18*Math.sin(Math.PI*t), rot=-6*e-9*Math.sin(Math.PI*t);
+      fly.style.transform='translate('+(x-x0)+'px,'+(y-y0)+'px) scale('+sc+') rotate('+rot+'deg)';
+      if(!landed&&t>.68){ landed=true; fly.classList.add('land'); }
+      if(t<1) requestAnimationFrame(step); else finish();
+    };
+    var finished=false, finish=function(){ if(finished) return; finished=true;
+      tile.classList.remove('ce-wait'); tile.classList.add('ce-got');
+      fly.style.transition='opacity .14s linear'; fly.style.opacity='0'; setTimeout(function(){ fly.remove(); },160);
+      src.classList.remove('di-gone'); setTimeout(function(){ tile.classList.remove('ce-got'); },700); };
+    requestAnimationFrame(step); setTimeout(finish,D+600);
   }
 
   /* ─── one du'a ─── */
