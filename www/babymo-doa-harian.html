@@ -1153,6 +1153,26 @@ html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .ws,html[dat
 html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .k,html[data-bm-theme="dark"] #learnScreen .dua-card .dua-title .di .k{fill:#fff}
 html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .ks,html[data-bm-theme="dark"] #learnScreen .dua-card .dua-title .di .ks{stroke:#fff}
 </style>
+<style>
+/* Read / Tasbih switch (bottom-right of the scene) */
+.tsm{position:absolute;right:12px;bottom:48px;z-index:6;display:flex;gap:3px;padding:4px;border-radius:999px;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(14px) saturate(160%);backdrop-filter:blur(14px) saturate(160%);box-shadow:inset 0 1px 0 rgba(255,255,255,.9),0 10px 22px -12px rgba(40,30,110,.6)}
+.tsm[hidden]{display:none}
+.tsm button{display:inline-flex;align-items:center;justify-content:center;gap:0;width:46px;min-height:42px;padding:0;border:0;border-radius:999px;background:transparent;color:#4A3F8F;font:800 14px/1 'Nunito',sans-serif;cursor:pointer;transition:background .25s,color .25s,box-shadow .25s,transform .2s}
+.tsm button svg,.tsm button img{width:24px;height:24px;flex:none}
+.tsm button span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.tsm button.on{background:#fff;color:#2D2370;box-shadow:0 4px 10px -4px rgba(60,40,140,.45),inset 0 0 0 1px rgba(110,90,220,.18)}
+.tsm button:active{transform:scale(.95)}
+html[data-bm-theme="classic"] .tsm,html[data-bm-theme="dark"] .tsm{background:rgba(26,30,64,.66)}
+html[data-bm-theme="classic"] .tsm button,html[data-bm-theme="dark"] .tsm button{color:#CFC8FF}
+html[data-bm-theme="classic"] .tsm button.on,html[data-bm-theme="dark"] .tsm button.on{background:rgba(255,255,255,.16);color:#fff;box-shadow:inset 0 0 0 1px rgba(255,255,255,.18)}
+#learnScreen.tsm-count .dua-card,#learnScreen.tsm-count .sound-section{display:none!important}
+#learnScreen.tsm-read #tsb{display:none!important}
+#learnScreen.tsm-count #tsb{animation:tsmIn .35s ease-out}
+#learnScreen.tsm-read .dua-card{animation:tsmIn .35s ease-out}
+@keyframes tsmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#learnScreen.tsm-count #tsb,#learnScreen.tsm-read .dua-card{animation:none}}
+.tsb-h img{width:36px!important;height:36px!important}
+</style>
 </head>
 <body>
 
@@ -1184,6 +1204,7 @@ html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .ks,html[dat
   </div>
   <div class="timeline" id="tlRow"></div>
   <div class="scene-card" id="sceneCard">
+    <div class="tsm" id="tsMode" role="tablist" hidden><button type="button" role="tab" data-m="read"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.5C10 5 7.2 4.5 4 5v13c3.2-.5 6 0 8 1.5 2-1.5 4.8-2 8-1.5V5c-3.2-.5-6 0-8 1.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M12 6.5v13" stroke="currentColor" stroke-width="2"/></svg><span></span></button><button type="button" role="tab" data-m="count"><img src="icons/scene/tasbih-v2.svg" alt="" draggable="false"><span></span></button></div>
     <div class="scene-bg" id="sceneBg"></div>
     <div class="scene-overlay"></div>
     <div class="scene-emojis">
@@ -2273,12 +2294,29 @@ function showToast(e, t){
     try{ if(!hp){ hp=document.createElement('label'); hp.setAttribute('aria-hidden','true'); hp.style.cssText='position:fixed;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;opacity:0'; hp.innerHTML='<input type="checkbox" switch tabindex="-1">'; document.body.appendChild(hp); } hp.click(); }catch(e){}
   }
   function bead(c,t){ if(!muted()) playTone(c>=t?988:700+(c%11)*12,.06,'sine',.12); }
+  /* Read / Tasbih switch: on a tasbih du'a, show either the du'a (and its reading controls) or the
+     bead counter in the same place under the scene, so nothing needs scrolling */
+  function setTsMode(m){
+    var sw=document.getElementById('tsMode'), ls=document.getElementById('learnScreen'); if(!sw||!ls) return;
+    ls.classList.remove('tsm-read','tsm-count');
+    if(!m){ sw.hidden=true; return; }
+    sw.hidden=false; ls.classList.add('tsm-'+m);
+    var bs=sw.querySelectorAll('button');
+    bs[0].lastChild.textContent=L('Baca','Read'); bs[1].lastChild.textContent=L('Tasbih','Tasbih'); bs[0].setAttribute('aria-label',L('Baca doa','Read the du\'a')); bs[1].setAttribute('aria-label',L('Hitung tasbih','Count the tasbih')); bs[0].title=bs[0].getAttribute('aria-label'); bs[1].title=bs[1].getAttribute('aria-label');
+    bs.forEach(function(b){ var on=b.getAttribute('data-m')===m; b.classList.toggle('on',on); b.setAttribute('aria-selected',on?'true':'false'); });
+    sw.setAttribute('data-m',m);
+  }
+  document.addEventListener('click',function(e){ var b=e.target.closest&&e.target.closest('#tsMode button'); if(!b) return;
+    var m=b.getAttribute('data-m'); if(document.getElementById('tsMode').getAttribute('data-m')===m) return;
+    setTsMode(m); try{ if(!muted()) playTone(m==='count'?880:660,.06,'triangle',.12); }catch(_){}
+    if(m==='count'){ try{ if(typeof stopSpeech==='function') stopSpeech(); }catch(_){} } });
   function renderTasbih(d){
     var box=document.getElementById('tsb'); TS.tok++;
+    setTsMode(d.tasbih?'read':null);
     if(!d.tasbih){ box.hidden=true; box.innerHTML=''; TS.d=null; return; }
     TS.d=d; TS.ph=0; TS.c=0; TS.busy=false; TS.done=false;
-    box.innerHTML='<div class="tsb-h"><img src="icons/scene/tasbih.svg" alt="" draggable="false">'+T('Ayo bertasbih!')+'</div>'
-      +'<div class="tsb-seg" role="group"><button type="button" data-m="full"><img src="icons/scene/tasbih.svg" alt="" draggable="false">33 · 33 · 34</button><button type="button" data-m="short">⭐ '+T('Versi pendek')+'</button></div>'
+    box.innerHTML='<div class="tsb-h"><img src="icons/scene/tasbih-v2.svg" alt="" draggable="false">'+T('Ayo bertasbih!')+'</div>'
+      +'<div class="tsb-seg" role="group"><button type="button" data-m="full"><img src="icons/scene/tasbih-v2.svg" alt="" draggable="false">33 · 33 · 34</button><button type="button" data-m="short">⭐ '+T('Versi pendek')+'</button></div>'
       +'<div class="tsb-steps" id="tsbSteps"></div>'
       +'<button class="tsb-btn" id="tsbBtn" type="button"><svg id="tsbRing" viewBox="0 0 200 200" aria-hidden="true"></svg><span class="tsb-in"><span class="tsb-ar" id="tsbAr"></span><span class="tsb-lt" id="tsbLt"></span><span class="tsb-num" id="tsbNum">0</span><span class="tsb-of" id="tsbOf"></span></span><img class="tsb-hand" src="icons/scene/tap-hand.svg" alt="" aria-hidden="true" draggable="false"></button>'
       +'<div class="tsb-foot"><span class="tsb-mo"><img src="baby-mo-render2/mo2-hand-chest.webp" alt="" draggable="false"></span><div class="tsb-ft"><div class="tsb-mean" id="tsbMean"></div><div class="tsb-tot" id="tsbTot"></div></div></div>'
