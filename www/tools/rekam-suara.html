@@ -210,6 +210,7 @@ html:not([data-bm-theme="classic"]) .rec{background:#fff;box-shadow:0 14px 28px 
 .tips li{list-style:none;display:flex;gap:10px;color:var(--ink-2);font-size:14px;line-height:1.45;font-weight:700;margin:6px 0}
 @media (max-width:420px){ h1{font-size:26px;margin-top:8px} .lead{font-size:14px} .stage{min-height:120px} .txt.ar.big{font-size:88px} .txt.ar.mid{font-size:48px} .txt.ar.long{font-size:28px} .txt.lat{font-size:25px} .ctrl{gap:20px} }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.xlink{display:inline-flex;align-items:center;gap:6px;margin:10px 0 2px;padding:8px 14px;border-radius:999px;font:800 13.5px/1 'Nunito',sans-serif;color:var(--ink);text-decoration:none}
 </style>
 </head>
 <body>
@@ -232,6 +233,7 @@ html:not([data-bm-theme="classic"]) .rec{background:#fff;box-shadow:0 14px 28px 
   </div>
   <h1 data-t="h1"></h1>
   <p class="lead" data-t="lead"></p>
+  <a class="xlink glass spring" href="rekam-cerita.html">📖 <span data-t="xlink"></span> →</a>
   <div class="prog"><span id="totTxt"></span><div class="bar"><i id="barA"></i><i class="t" id="barT"></i></div></div>
   <div class="err" id="err"></div>
 
@@ -314,7 +316,7 @@ const store = { get(k,d){ try{ const v=localStorage.getItem('bm_rekam_'+k); retu
 let EN = false;
 try{ EN = (new URLSearchParams(location.search).get('lang') || localStorage.getItem('bm_lang')) === 'en'; }catch(e){}
 const T = {
-  home:['Beranda','Home'], title:['Rekam Suara','Record Voice'], h1:['Suara asli untuk Baby Mo','A real voice for Baby Mo'],
+  home:['Beranda','Home'], xlink:['Rekam cerita (Mode Buku)','Record stories (Book Mode)'], title:['Rekam Suara','Record Voice'], h1:['Suara asli untuk Baby Mo','A real voice for Baby Mo'],
   lead:['Semua suara aplikasi ada di sini. Ketuk tombol merah, bacakan, ketuk lagi, dengarkan, lalu setujui. Hening dipotong dan volume disamakan otomatis; rekaman tersimpan di perangkat ini.',
         'Every clip the app plays is here. Tap the red button, read, tap again, listen, then approve. Silence is trimmed and loudness matched automatically; takes stay on this device.'],
   ref:['Clip sekarang','Current clip'], play:['Dengar','Play'], del:['Hapus','Delete'], approve:['Setujui','Approve'], approved:['Disetujui','Approved'],
