@@ -1216,10 +1216,23 @@ html[data-bm-theme="classic"] #learnScreen .arabic-box #rdRow,html[data-bm-theme
 html[data-bm-theme="classic"] #learnScreen .arabic-box .rd-pop,html[data-bm-theme="dark"] #learnScreen .arabic-box .rd-pop{background:#2A3350;color:#E6ECF7}
 html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="dark"] #learnScreen .rd-pop .rd-ph{color:#FFD36B}
 /* the little Qur'an stand comes alive while the du'a is read: a gentle rock and a warm glow */
-#learnScreen .arabic-box .ab-rehal{transform-origin:50% 90%;transition:filter .4s}
-#learnScreen .arabic-box.reading .ab-rehal{animation:rehalRead 2.4s ease-in-out infinite;filter:drop-shadow(0 4px 4px rgba(120,70,20,.25)) drop-shadow(0 0 10px rgba(255,200,60,.85))}
-@keyframes rehalRead{0%,100%{transform:translateY(0) rotate(0)}25%{transform:translateY(-3px) rotate(-4deg)}50%{transform:translateY(-1px) rotate(0)}75%{transform:translateY(-3px) rotate(4deg)}}
-@media (prefers-reduced-motion:reduce){#learnScreen .arabic-box.reading .ab-rehal{animation:none}}
+/* while the du'a is read, the Qur'an stand stays still with a soft warm glow, and tiny gold stars drift up from it */
+#learnScreen .arabic-box .ab-rehal{transition:filter .6s}
+#learnScreen .arabic-box.reading .ab-rehal{filter:drop-shadow(0 4px 4px rgba(120,70,20,.25)) drop-shadow(0 0 8px rgba(255,205,70,.7))}
+#learnScreen .rh-stars{position:absolute;left:-15px;bottom:14px;width:50px;height:70px;pointer-events:none;z-index:1}
+#learnScreen .rh-stars i{position:absolute;bottom:0;width:9px;height:9px;opacity:0;
+  background:radial-gradient(circle,#FFF6C2 0,#FFD34D 45%,rgba(255,200,40,0) 72%);
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%)}
+#learnScreen .arabic-box.reading .rh-stars i{animation:rhUp 2.8s ease-out infinite}
+#learnScreen .rh-stars i:nth-child(1){left:22px;animation-delay:0s!important}
+#learnScreen .rh-stars i:nth-child(2){left:12px;width:7px;height:7px;animation-delay:.55s!important}
+#learnScreen .rh-stars i:nth-child(3){left:31px;width:11px;height:11px;animation-delay:1.1s!important}
+#learnScreen .rh-stars i:nth-child(4){left:18px;width:6px;height:6px;animation-delay:1.65s!important}
+#learnScreen .rh-stars i:nth-child(5){left:28px;width:8px;height:8px;animation-delay:2.2s!important}
+@keyframes rhUp{0%{opacity:0;transform:translate(0,0) scale(.4)}20%{opacity:1;transform:translate(-2px,-12px) scale(1)}60%{opacity:.85;transform:translate(3px,-38px) scale(.9) rotate(30deg)}100%{opacity:0;transform:translate(-1px,-64px) scale(.5) rotate(60deg)}}
+@media (prefers-reduced-motion:reduce){#learnScreen .arabic-box.reading .rh-stars i{animation:none}}
+/* a little more air above the first Arabic line, so the word highlight never touches the box edge */
+#learnScreen .arabic-box{padding-top:26px!important}
 </style>
 </head>
 <body>
@@ -1272,7 +1285,7 @@ html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="da
     <div class="arabic-box">
       <div class="arabic-text" id="arabicText">الْحَمْدُ لِلَّهِ الَّذِي أَحْيَانَا</div>
       <div class="latin-text" id="latinText">Alhamdulillāhil-ladhī ahyānā...</div>
-      <svg class="ab-rehal" viewBox="0 0 64 52" aria-hidden="true" focusable="false"><defs><linearGradient id="rhW" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D99A5E"/><stop offset="1" stop-color="#A9683A"/></linearGradient><linearGradient id="rhP" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2FB673"/><stop offset="1" stop-color="#138A52"/></linearGradient></defs><path d="M8 50 32 30 56 50" fill="none" stroke="url(#rhW)" stroke-width="6" stroke-linecap="round"/><path d="M14 50 32 36 50 50" fill="none" stroke="#8A5530" stroke-width="2" stroke-linecap="round" opacity=".5"/><path d="M32 34 4 20V8l28 12z" fill="url(#rhP)"/><path d="M32 34l28-14V8L32 20z" fill="url(#rhP)"/><path d="M32 30 7 18V9l25 11zM32 30l25-12V9L32 20z" fill="#FFF8E6"/><path d="M11 13l16 7M11 17l16 7M37 20l16-7M37 24l16-7" stroke="#E2C78E" stroke-width="1.6" stroke-linecap="round"/><path d="M32 20v14" stroke="#0E6E40" stroke-width="1.4"/><circle cx="48" cy="6" r="2" fill="#FFC94A"/></svg>
+      <svg class="ab-rehal" viewBox="0 0 64 52" aria-hidden="true" focusable="false"><defs><linearGradient id="rhW" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D99A5E"/><stop offset="1" stop-color="#A9683A"/></linearGradient><linearGradient id="rhP" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#2FB673"/><stop offset="1" stop-color="#138A52"/></linearGradient></defs><path d="M8 50 32 30 56 50" fill="none" stroke="url(#rhW)" stroke-width="6" stroke-linecap="round"/><path d="M14 50 32 36 50 50" fill="none" stroke="#8A5530" stroke-width="2" stroke-linecap="round" opacity=".5"/><path d="M32 34 4 20V8l28 12z" fill="url(#rhP)"/><path d="M32 34l28-14V8L32 20z" fill="url(#rhP)"/><path d="M32 30 7 18V9l25 11zM32 30l25-12V9L32 20z" fill="#FFF8E6"/><path d="M11 13l16 7M11 17l16 7M37 20l16-7M37 24l16-7" stroke="#E2C78E" stroke-width="1.6" stroke-linecap="round"/><path d="M32 20v14" stroke="#0E6E40" stroke-width="1.4"/><circle cx="48" cy="6" r="2" fill="#FFC94A"/></svg><span class="rh-stars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
     </div>
     <div class="mean-row">
       <span class="mean-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 20.5S3.5 15.6 3.5 9.6A4.6 4.6 0 0 1 12 7.2a4.6 4.6 0 0 1 8.5 2.4c0 6-8.5 10.9-8.5 10.9z"/><ellipse cx="8.4" cy="9.4" rx="1.8" ry="1.1" fill="#fff" opacity=".6" transform="rotate(-30 8.4 9.4)"/></svg></span>
