@@ -260,6 +260,18 @@ html[data-bm-theme="dark"] .adam-stand::after,html[data-bm-theme="classic"] .ada
 .adam-stand+.card{position:relative;z-index:1}
 @media (prefers-reduced-motion:reduce){.adam-stand>img.pose,.adam-stand::after{animation:none!important}}
 </style>
+<style>
+/* ── Glass touch on the result cards: each card keeps its own colour, border and shape, and gains a soft
+      frost, a bright top edge, a faint inner rim and a sheen across the top (lighter than the Wudhu/Pray glass) ── */
+#s-result .card{position:relative;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
+#s-result .card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35),inset 0 0 18px rgba(255,255,255,.16)}
+html[data-bm-theme="dark"] #s-result .card::before,html[data-bm-theme="classic"] #s-result .card::before{background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
+/* light theme: let a little of the scene show through */
+html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #s-result .card{background:rgba(255,255,255,.72)}
+</style>
 </head>
 <body>
 

@@ -514,6 +514,18 @@ html[data-bm-theme="dark"] .bm-wa-s,html[data-bm-theme="classic"] .bm-wa-s{backg
 /* this game has no dark theme: keep the pills light on its white panel */
 html[data-bm-theme] #gameover .bm-wa-s{background:rgba(255,255,255,.92)!important;color:#2A3446!important;border-color:rgba(20,30,60,.10)!important;box-shadow:0 6px 14px -10px rgba(20,30,60,.45)!important}
 </style>
+<style>
+/* ── Glass touch on the result cards: each card keeps its own colour, border and shape, and gains a soft
+      frost, a bright top edge, a faint inner rim and a sheen across the top (lighter than the Wudhu/Pray glass) ── */
+#gameover .panel{position:relative;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
+#gameover .panel::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35),inset 0 0 18px rgba(255,255,255,.16)}
+html[data-bm-theme="dark"] #gameover .panel::before,html[data-bm-theme="classic"] #gameover .panel::before{background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
+/* light theme: let a little of the scene show through */
+html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #gameover .panel{background:rgba(255,255,255,.78)}
+</style>
 </head>
 <body>
   <div id="frame">

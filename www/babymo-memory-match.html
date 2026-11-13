@@ -569,6 +569,19 @@ html[data-bm-theme="dark"] .bm-wa-s,html[data-bm-theme="classic"] .bm-wa-s{backg
 .bm-wa svg.wi{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
 .bm-wa-pri svg.wi{width:20px;height:20px}
 </style>
+<style>
+/* ── Glass touch on the result cards: each card keeps its own colour, border and shape, and gains a soft
+      frost, a bright top edge, a faint inner rim and a sheen across the top (lighter than the Wudhu/Pray glass) ── */
+.success-card,.success-card .sticker-box{position:relative;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
+.success-card::before,.success-card .sticker-box::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35),inset 0 0 18px rgba(255,255,255,.16)}
+html[data-bm-theme="dark"] .success-card::before,html[data-bm-theme="classic"] .success-card::before,html[data-bm-theme="dark"] .success-card .sticker-box::before,html[data-bm-theme="classic"] .success-card .sticker-box::before{background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
+/* light theme: let a little of the scene show through */
+html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) .success-card{background:rgba(255,255,255,.68)}
+html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) .success-card .sticker-box{background:linear-gradient(135deg,rgba(255,246,214,.8),rgba(255,239,224,.8))}
+</style>
 </head>
 <body>
 <div id="app">

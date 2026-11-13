@@ -1178,11 +1178,14 @@
         var st = document.createElement("style"); st.id = "bm-next-style";
         st.textContent =
           ".bm-next{display:flex;align-items:center;gap:12px;width:100%;max-width:360px;box-sizing:border-box;margin:16px auto 8px;padding:10px 12px;" +
-          "border-radius:20px;background:rgba(255,255,255,.9);border:1px solid #fff;text-decoration:none;color:#152230;text-align:left;" +
-          "box-shadow:0 0 0 .5px rgba(21,34,48,.08),0 12px 24px -14px rgba(30,60,110,.45);font-family:'Nunito',system-ui,sans-serif;" +
+          "border-radius:20px;background:rgba(255,255,255,.72);border:1px solid rgba(255,255,255,.9);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);isolation:isolate;text-decoration:none;color:#152230;text-align:left;" +
+          "box-shadow:inset 0 1.5px 0 #fff,0 0 0 .5px rgba(21,34,48,.08),0 12px 24px -14px rgba(30,60,110,.45);font-family:'Nunito',system-ui,sans-serif;" +
           "animation:bmNext .5s .6s both cubic-bezier(.2,.9,.25,1.2);position:relative;z-index:2;}" +
           "@keyframes bmNext{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}" +
           ".bm-next:active{transform:scale(.97)}" +
+          // glass sheen across the top of the card
+          ".bm-next::before{content:\"\";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;background:linear-gradient(180deg,rgba(255,255,255,.55) 0,rgba(255,255,255,.1) 30%,rgba(255,255,255,0) 55%)}" +
+          "html[data-bm-theme=classic] .bm-next::before,html[data-bm-theme=dark] .bm-next::before{background:linear-gradient(180deg,rgba(255,255,255,.1) 0,rgba(255,255,255,0) 50%)}" +
           ".bm-next img{width:48px;height:48px;border-radius:12px;flex:0 0 48px;box-shadow:0 6px 12px -6px rgba(0,0,0,.4)}" +
           ".bm-next .t{flex:1;min-width:0}.bm-next .e{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#E8590C}" +
           ".bm-next .n{display:block;font-size:16px;font-weight:900;line-height:1.2}.bm-next .h{display:block;font-size:13px;font-weight:700;color:#5A6878}" +
