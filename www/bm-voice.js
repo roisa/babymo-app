@@ -184,9 +184,20 @@
   }
   function playClips(it) {
     var a = audio(), u = it.u, i = 0, started = false, done = false, wd = 0, my = gen;
-    var finish = function () { if (done) return; done = true; clearTimeout(wd); a.onended = a.onerror = a.onplaying = null; if (cur === it) cur = null; fire(u, "end"); pump(); };
+    var finish = function () { if (done) return; done = true; clearTimeout(wd); a.onended = a.onerror = a.onplaying = a.ontimeupdate = null; if (cur === it) cur = null; fire(u, "end"); pump(); };
+    // the clip counts as started on ANY sign of playback: iOS can report "playing" late or not at all
+    // on a reused <audio>, and a long clip then looked "failed" while it was audibly playing
+    var begin = function () {
+      if (started || done) return; started = true; fire(u, "start");
+      clearTimeout(wd);
+      var d = a.duration; d = (isFinite(d) && d > 0) ? d : 20;
+      wd = setTimeout(finish, Math.max(0, d - (a.currentTime || 0)) * 1000 / (a.playbackRate || 1) + 1500);
+    };
+    var progressing = function () { try { return (a.currentTime || 0) > 0.05 || (!a.paused && a.readyState >= 3); } catch (e) { return false; } };
     var fallback = function () {            // the clip can't play → the phone's own voice says it
-      if (done) return; done = true; clearTimeout(wd); a.onended = a.onerror = a.onplaying = null;
+      if (done) return;
+      if (progressing()) { begin(); return; }   // it IS playing: never speak the same line a second time
+      done = true; clearTimeout(wd); a.onended = a.onerror = a.onplaying = a.ontimeupdate = null;
       try { a.pause(); } catch (e) {}
       if (my !== gen) return;
       it.urls = null; var after = function () { if (cur === it) cur = null; pump(); };
@@ -199,12 +210,8 @@
       var url = it.urls[i++];
       clearTimeout(wd);
       wd = setTimeout(started ? finish : fallback, 6000);       // blocked / never loads: don't hang the page
-      a.onplaying = function () {
-        if (!started) { started = true; fire(u, "start"); }
-        clearTimeout(wd);
-        var d = a.duration; d = (isFinite(d) && d > 0) ? d : 20;
-        wd = setTimeout(finish, d * 1000 / (a.playbackRate || 1) + 1500);
-      };
+      a.onplaying = function () { begin(); };
+      a.ontimeupdate = function () { if (!started && (a.currentTime || 0) > 0.05) begin(); };
       a.onended = function () { if (done) return; i < it.urls.length ? setTimeout(next, 140) : finish(); };
       a.onerror = function () { started ? next() : fallback(); };
       try {
@@ -215,6 +222,7 @@
         try { a.preservesPitch = a.webkitPreservesPitch = a.mozPreservesPitch = true; } catch (e) {}
         a.volume = (u.volume >= 0 && u.volume <= 1) ? u.volume : 1;
         var p = a.play();
+        if (p && p.then) p.then(function () { if (my === gen) begin(); }, function () {});
         if (p && p.catch) p.catch(function (e) { if (done || my !== gen) return; if (e && e.name === "AbortError") return; started ? finish() : fallback(); });
       } catch (e) { started ? finish() : fallback(); }
     };
@@ -231,7 +239,7 @@
   ss.cancel = function () {
     gen++;
     var was = cur, rest = q; cur = null; q = []; native = 0; waits = [];
-    if (A) { try { A.onended = A.onerror = A.onplaying = null; A.pause(); } catch (e) {} }
+    if (A) { try { A.onended = A.onerror = A.onplaying = A.ontimeupdate = null; A.pause(); } catch (e) {} }
     try { origCancel(); } catch (e) {}
     // like the phone engine: the cut-off utterance and the queued ones report an error
     setTimeout(function () {
