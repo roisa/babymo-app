@@ -1196,7 +1196,6 @@ html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .ks,html[dat
       <img id="sceneMo" src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo"/>
     </div>
   </div>
-  <div class="tsb" id="tsb" hidden></div>
   <div class="dua-card">
     <div class="dua-title" id="duaTitle">Doa Bangun Tidur</div>
     <div class="dua-desc" id="duaDesc">Baby Mo baru bangun tidur di pagi hari!</div>
@@ -1233,6 +1232,7 @@ html[data-bm-theme="classic"] #learnScreen .dua-card .dua-title .di .ks,html[dat
     </div>
     <div class="no-audio-note" id="audioNote"></div>
   </div>
+  <div class="tsb" id="tsb" hidden></div>
   <div class="nav-row">
     <button class="nav-btn-sec" id="navPrev" onclick="prevDua()">← Kembali</button>
     <button class="nav-btn-pri" id="navNext" onclick="nextDua()">Lanjut →</button>
@@ -2248,15 +2248,7 @@ function showToast(e, t){
       var p0=pos, t=window.playDoaAction?playDoaAction(d.id):0;
       if(!t){ if(!muted()) playTone(784,.12,'triangle',.2); spawnParticles(6); setSceneMoExpression('celebrate'); t=350; }
       setTimeout(function(){ if(pos!==p0 || PLAY[pos]!==idx || !document.getElementById('learnScreen').classList.contains('active')) return;
-        // after the motion, glide down to what the child reads next: the tasbih counter, else the Arabic
-        var tg=document.querySelector('#learnScreen .dua-card');
-        if(tg){ var r=tg.getBoundingClientRect(), vh=window.innerHeight||document.documentElement.clientHeight;
-          if(r.top>24||r.top<-4){ var still=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
-            // the learn screen scrolls inside its own box; fall back to the window
-            var sc=tg.parentElement; while(sc&&sc!==document.body){ var o=getComputedStyle(sc).overflowY; if((o==='auto'||o==='scroll')&&sc.scrollHeight>sc.clientHeight+4) break; sc=sc.parentElement; }
-            var off=12;
-            if(sc&&sc!==document.body){ var top=sc.scrollTop+r.top-sc.getBoundingClientRect().top-off; try{ sc.scrollTo({top:Math.max(0,top),behavior:still?'auto':'smooth'}); }catch(e){ sc.scrollTop=top; } }
-            else { try{ window.scrollTo({top:Math.max(0,window.scrollY+r.top-off),behavior:still?'auto':'smooth'}); }catch(e){ window.scrollTo(0,window.scrollY+r.top-off); } } } }
+        // no auto-scroll: the child keeps seeing the scene while Mo reads the du'a
         readFull(function(){ earn(d); }); },t); };
     var last=pos===PLAY.length-1;
     document.getElementById('navPrev').textContent=pos===0?L('🏠 Menu','🏠 Menu'):L('← Kembali','← Back');
