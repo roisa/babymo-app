@@ -94,6 +94,11 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
   background:#2E8A57;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.court{position:absolute;inset:0;width:100%;height:100%}
 /* short landscape screens: size the court by its height so it keeps its 400x560 shape (the ball and Kak Adam are placed in court units) */
+/* keep the court's true 400x560 shape whenever the play area is shorter than that (iPad, where bm-fit lays the
+   page out at a phone-like size, and Safari's toolbars shorten it further): shrink the width instead of
+   squashing the height, so Kak Adam (sized by width) stays on his spot, e.g. behind the net in the volley */
+.stagewrap{container-type:size}
+@supports (width:1cqh){.stage{width:min(100%,calc(100cqh * 400 / 560));max-height:none}}
 @media (orientation:landscape) and (max-height:600px){.stage{width:auto;height:100%;max-width:100%}}
 .adam{position:absolute;width:38%;left:50%;top:6.5%;transform:translateX(-50%);transition:left .32s cubic-bezier(.3,.8,.3,1);pointer-events:none;z-index:3}
 .adam.serve{top:1.48%}
