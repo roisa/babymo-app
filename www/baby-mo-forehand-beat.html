@@ -483,6 +483,17 @@ html[data-bm-theme="classic"] #frame .big-btn.secondary { color: #152230 !import
 #bm-mo.top { top: calc(max(env(safe-area-inset-top), 18px) + 78px) !important; }
 </style>
 <script src="bm-icons.js" defer></script>
+<style>
+/* Mo peeks out from behind the result card (render 1, upper body), rising from behind it and
+   gently bobbing. --ph = crop height / width, --pt = how far the image is pulled up. */
+.mo-peek{position:relative;z-index:0;display:block;width:var(--pw,230px);height:calc(var(--pw,230px)*var(--ph,.53));margin:0 auto calc(var(--pov,18px)*-1);overflow:hidden;pointer-events:none;flex:none}
+span.mo-peek>img{position:absolute!important;left:0!important;top:var(--pt,-22.6%)!important;width:100%!important;height:auto!important;max-width:none!important;max-height:none!important;aspect-ratio:auto!important;margin:0!important;object-fit:contain!important;filter:drop-shadow(0 6px 14px rgba(20,30,80,.22))!important;animation:moPeekUp .85s cubic-bezier(.3,1.45,.5,1) .15s both,moPeekBob 2.8s ease-in-out 1.1s infinite!important;transform-origin:50% 100%}
+.mo-peek+*{position:relative;z-index:1}
+@keyframes moPeekUp{from{transform:translateY(80%)}to{transform:translateY(0)}}
+@keyframes moPeekBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-2.5deg)}}
+@media (prefers-reduced-motion:reduce){span.mo-peek>img{animation:none!important}}
+#gameover{gap:0!important}
+</style>
 </head>
 <body>
   <div id="frame">
@@ -547,6 +558,7 @@ html[data-bm-theme="classic"] #frame .big-btn.secondary { color: #152230 !import
 
     <!-- Game over screen -->
     <div id="gameover" class="screen hidden">
+      <span class="mo-peek" style="--pw:210px"><img class="peek-cheer" src="baby-mo-poses/baby-mo-yeyy.webp" alt="Baby Mo"></span>
       <div class="panel">
         <h1 id="go-title">Hebat!</h1>
         <div class="sub" id="go-sub">Coba lagi, yuk? 💚</div>
@@ -2532,5 +2544,6 @@ try { document.fonts.load('800 34px Fredoka').then(() => rebuildBackground(), ()
 requestAnimationFrame(loop);
 </script>
 <script src="/bm-kit.js" defer></script>
+<script>(function(){var W=['baby-mo-yeyy','baby-mo-yes','baby-mo-pose-41','baby-mo-pose-26','baby-mo-pose-37'];function pick(){document.querySelectorAll('img.peek-cheer').forEach(function(i){i.src='baby-mo-poses/'+W[Math.floor(Math.random()*W.length)]+'.webp';});}pick();new MutationObserver(function(m){m.forEach(function(r){var t=r.target;if(t.querySelector&&t.querySelector('img.peek-cheer')&&/(^| )(open|active|on)( |$)/.test(t.className)&&!/hidden/.test(t.className))t.querySelectorAll('img.peek-cheer').forEach(function(i){i.src='baby-mo-poses/'+W[Math.floor(Math.random()*W.length)]+'.webp';});});}).observe(document.body,{attributes:true,subtree:true,attributeFilter:['class']});})();</script>
 </body>
 </html>
