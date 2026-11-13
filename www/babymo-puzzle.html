@@ -518,11 +518,46 @@ html[data-bm-theme="dark"] #introCard::after,html[data-bm-theme="classic"] #intr
 /* light theme: let a little of the scene show through */
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #introCard{background:linear-gradient(170deg,rgba(255,255,255,.84) 0%,rgba(255,248,234,.84) 60%,rgba(255,241,214,.84) 100%)}
 </style>
+<style id="pz-scenery">
+/* 13 Nov 2026 polish — kid-friendly scenery: soft sky + clouds at the top, a faint strip of grass and
+   flowers at the bottom (night sky in dark). Fixed, behind the page (z-index 0), no pointer events,
+   no layout shift, no motion. */
+.pz-scene{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.pz-scene svg{position:absolute;display:block}
+.pz-scene .pz-cl{top:0;width:min(46vw,230px);height:auto;opacity:.75}
+.pz-scene .pz-l{left:0}.pz-scene .pz-r{right:0}
+.pz-scene .pz-grass{left:0;bottom:0;width:100%;height:46px;opacity:.6}
+.pz-scene .pz-fl{bottom:0;width:96px;height:52px;opacity:.6}
+.pz-scene .pz-fl-l{left:0}.pz-scene .pz-fl-r{right:0}
+.pz-scene .night{display:none}
+.pz-scene .cl{fill:#FFFFFF}.pz-scene .cl2{fill:#EAF4FF}
+.pz-scene .g1{fill:#BFE8C3}.pz-scene .g2{fill:#A3DDAD}
+.pz-scene .f1{fill:#FF9FB8}.pz-scene .f2{fill:#FFD166}.pz-scene .f3{fill:#C3B5FF}.pz-scene .fc{fill:#FFF3B0}.pz-scene .st{fill:#6FC27E}
+html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) .pz-scene{
+  background:linear-gradient(180deg,rgba(186,224,255,.55) 0%,rgba(214,236,255,.25) 26%,rgba(255,255,255,0) 46%)}
+html[data-bm-theme="dark"] .pz-scene .day,html[data-bm-theme="classic"] .pz-scene .day{display:none}
+html[data-bm-theme="dark"] .pz-scene .night,html[data-bm-theme="classic"] .pz-scene .night{display:inline}
+html[data-bm-theme="dark"] .pz-scene,html[data-bm-theme="classic"] .pz-scene{
+  background:linear-gradient(180deg,rgba(18,26,74,.55) 0%,rgba(18,26,74,.2) 28%,rgba(18,26,74,0) 48%)}
+html[data-bm-theme="dark"] .pz-scene .pz-cl,html[data-bm-theme="classic"] .pz-scene .pz-cl{opacity:.42}
+html[data-bm-theme="dark"] .pz-scene .cl,html[data-bm-theme="classic"] .pz-scene .cl{fill:#3A4580}
+html[data-bm-theme="dark"] .pz-scene .cl2,html[data-bm-theme="classic"] .pz-scene .cl2{fill:#2C3670}
+html[data-bm-theme="dark"] .pz-scene .pz-grass,html[data-bm-theme="classic"] .pz-scene .pz-grass,html[data-bm-theme="dark"] .pz-scene .pz-fl,html[data-bm-theme="classic"] .pz-scene .pz-fl{opacity:.45}
+html[data-bm-theme="dark"] .pz-scene .g1,html[data-bm-theme="classic"] .pz-scene .g1{fill:#1E4A36}
+html[data-bm-theme="dark"] .pz-scene .g2,html[data-bm-theme="classic"] .pz-scene .g2{fill:#173B2B}
+html[data-bm-theme="dark"] .pz-scene .f1,html[data-bm-theme="classic"] .pz-scene .f1{fill:#B66A86}
+html[data-bm-theme="dark"] .pz-scene .f2,html[data-bm-theme="classic"] .pz-scene .f2{fill:#B9974A}
+html[data-bm-theme="dark"] .pz-scene .f3,html[data-bm-theme="classic"] .pz-scene .f3{fill:#7D72B8}
+html[data-bm-theme="dark"] .pz-scene .fc,html[data-bm-theme="classic"] .pz-scene .fc{fill:#C9BE7A}
+html[data-bm-theme="dark"] .pz-scene .st,html[data-bm-theme="classic"] .pz-scene .st{fill:#2F6B48}
+</style>
 </head>
 <body>
 
 <!-- Starfield -->
 <div id="stars"></div>
+<!-- Kid-friendly scenery (behind everything) -->
+<div class="pz-scene" aria-hidden="true"><svg class="pz-cl pz-l" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="cl" transform="translate(34 58) scale(1.0)"><ellipse cx="0" cy="0" rx="46" ry="15"/><circle cx="-16" cy="-10" r="16"/><circle cx="10" cy="-16" r="21"/><circle cx="30" cy="-5" r="13"/></g><g class="cl2" transform="translate(70 160) scale(0.5)"><ellipse cx="0" cy="0" rx="46" ry="15"/><circle cx="-16" cy="-10" r="16"/><circle cx="10" cy="-16" r="21"/><circle cx="30" cy="-5" r="13"/></g><g class="night"><circle cx="120" cy="30" r="1.6" fill="#FFF3C4"/><circle cx="150" cy="96" r="1.2" fill="#FFF3C4"/><circle cx="20" cy="120" r="1.4" fill="#FFF3C4"/></g></svg><svg class="pz-cl pz-r" viewBox="0 0 200 180" aria-hidden="true" focusable="false"><g class="cl" transform="translate(150 40) scale(0.85)"><ellipse cx="0" cy="0" rx="46" ry="15"/><circle cx="-16" cy="-10" r="16"/><circle cx="10" cy="-16" r="21"/><circle cx="30" cy="-5" r="13"/></g><g class="cl2" transform="translate(120 150) scale(0.55)"><ellipse cx="0" cy="0" rx="46" ry="15"/><circle cx="-16" cy="-10" r="16"/><circle cx="10" cy="-16" r="21"/><circle cx="30" cy="-5" r="13"/></g><g class="night"><path d="M178 92a14 14 0 1 0 11.5 20 11 11 0 1 1-11.5-20z" fill="#F4D77A" opacity=".85"/><circle cx="60" cy="24" r="1.8" fill="#FFF3C4"/><circle cx="96" cy="80" r="1.3" fill="#FFF3C4"/></g></svg><svg class="pz-grass" viewBox="0 0 400 52" preserveAspectRatio="none" aria-hidden="true" focusable="false"><path class="g1" d="M0 22 Q60 6 130 18 T260 16 T400 12 V52 H0z"/><path class="g2" d="M0 36 Q90 22 200 34 T400 30 V52 H0z"/></svg><svg class="pz-fl pz-fl-l" viewBox="0 0 96 52" aria-hidden="true" focusable="false"><g transform="translate(14 34)"><rect class="st" x="-1.2" y="0" width="2.4" height="18" rx="1.2"/><g class="f1"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/></g><circle class="fc" cx="0" cy="1" r="2.6"/></g><g transform="translate(40 39)"><rect class="st" x="-1.2" y="0" width="2.4" height="13" rx="1.2"/><g class="f2"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/></g><circle class="fc" cx="0" cy="1" r="2.6"/></g><g transform="translate(68 36)"><rect class="st" x="-1.2" y="0" width="2.4" height="16" rx="1.2"/><g class="f3"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/></g><circle class="fc" cx="0" cy="1" r="2.6"/></g></svg><svg class="pz-fl pz-fl-r" viewBox="0 0 96 52" aria-hidden="true" focusable="false"><g transform="translate(28 37)"><rect class="st" x="-1.2" y="0" width="2.4" height="15" rx="1.2"/><g class="f2"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/></g><circle class="fc" cx="0" cy="1" r="2.6"/></g><g transform="translate(54 33)"><rect class="st" x="-1.2" y="0" width="2.4" height="19" rx="1.2"/><g class="f1"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/></g><circle class="fc" cx="0" cy="1" r="2.6"/></g><g transform="translate(82 39)"><rect class="st" x="-1.2" y="0" width="2.4" height="13" rx="1.2"/><g class="f3"><circle cx="0" cy="-5" r="4"/><circle cx="5" cy="-1" r="4"/><circle cx="3" cy="5" r="4"/><circle cx="-3" cy="5" r="4"/><circle cx="-5" cy="-1" r="4"/></g><circle class="fc" cx="0" cy="1" r="2.6"/></g></svg></div>
 
 <!-- Floating ambient particles -->
 <div class="float-p" style="left:8%;top:20%;--pd:3.2s;--pdl:.5s;--ps:18px;">🌙</div>
