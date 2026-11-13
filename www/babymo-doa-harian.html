@@ -1234,6 +1234,23 @@ html[data-bm-theme="classic"] #learnScreen .rd-pop .rd-ph,html[data-bm-theme="da
 /* a little more air above the first Arabic line, so the word highlight never touches the box edge */
 #learnScreen .arabic-box{padding-top:26px!important}
 </style>
+<style>
+/* symbol flight: title symbol -> popup tile */
+.fly-sym{position:fixed;z-index:700;pointer-events:none;display:grid;place-items:center;filter:drop-shadow(0 6px 10px rgba(60,40,140,.35)) drop-shadow(0 0 12px rgba(255,220,120,.7))}
+.fly-sym .di{--s:100%!important;width:100%!important;height:100%!important;background:none!important;box-shadow:none!important;border-radius:0!important;overflow:visible!important;opacity:1!important;transform:none!important}
+.fly-sym .di::before{display:none}
+.fly-sym .di svg{width:100%!important;height:100%!important}
+.fly-sym .di .w{fill:var(--c2);transition:fill .3s}.fly-sym .di .ws{stroke:var(--c2);transition:stroke .3s}
+.fly-sym .di .k{fill:var(--c1);transition:fill .3s}.fly-sym .di .ks{stroke:var(--c1);transition:stroke .3s}
+.fly-sym.land .di .w{fill:#fff}.fly-sym.land .di .ws{stroke:#fff}.fly-sym.land .di .k{fill:var(--k)}.fly-sym.land .di .ks{stroke:var(--k)}
+#learnScreen .dua-card .dua-title .di{transition:opacity .25s,transform .25s}
+#learnScreen .dua-card .dua-title .di.di-gone{opacity:.18;transform:scale(.8)}
+.ce-top .di.ce-wait svg{opacity:0}
+.ce-top .di.ce-got{animation:ceGot .6s cubic-bezier(.3,1.6,.5,1)!important;overflow:visible}
+.ce-top .di.ce-got::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:3px solid rgba(255,214,90,.9);animation:ceRing .6s ease-out forwards;pointer-events:none}
+@keyframes ceGot{0%{transform:rotate(-6deg) scale(1)}35%{transform:rotate(-6deg) scale(1.16)}70%{transform:rotate(-6deg) scale(.96)}100%{transform:rotate(-6deg) scale(1)}}
+@keyframes ceRing{from{opacity:1;transform:scale(.9)}to{opacity:0;transform:scale(1.35)}}
+</style>
 </head>
 <body>
 
@@ -2319,6 +2336,7 @@ function showToast(e, t){
       +'<div class="ce-n">'+trTitle(d)+' · '+T('Dibaca '+n+'×')+(bonus?'<br>⭐ '+T('Bonus Doa Hari Ini!'):'')+'</div>'
       +'<div class="ce-btns"><button class="ce-again" type="button">🔁 '+T('Baca lagi')+'</button><button class="ce-next" type="button">'+nextTxt+'</button></div>';
     document.getElementById('cele').classList.add('on');
+    flySymbol(c);
     confetti(gold?60:36); if(gold) setTimeout(function(){ confetti(30); },500);
     sfx('win');
     c.querySelector('.ce-again').onclick=function(){ closeCele(); renderReads(d); if(!muted()) playTone(523,0.06); readFull(function(){ earn(d); }); };
@@ -2327,6 +2345,33 @@ function showToast(e, t){
     c.querySelector('.ce-x').onclick=function(){ closeCele(); sfx('tap'); };
   }
   function closeCele(){ document.getElementById('cele').classList.remove('on'); }
+  /* the du'a's title symbol lifts off the card and flies in an arc into the popup's icon tile,
+     turning white as it lands; the tile gives a little gulp and a ring of light */
+  function flySymbol(card){
+    var src=document.querySelector('#learnScreen .dua-card .dua-title .di'), tile=card.querySelector('.ce-top .di');
+    if(!src||!tile||!tile.animate) return;
+    if(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var sr=src.getBoundingClientRect(); if(sr.bottom<0||sr.top>innerHeight||!sr.width) return;
+    tile.classList.add('ce-wait');
+    var fly=document.createElement('div'); fly.className='fly-sym'; fly.appendChild(src.cloneNode(true));
+    fly.style.cssText='left:'+sr.left+'px;top:'+sr.top+'px;width:'+sr.width+'px;height:'+sr.height+'px';
+    document.body.appendChild(fly); src.classList.add('di-gone');
+    var done=false, end=function(){ if(done) return; done=true; fly.remove(); tile.classList.remove('ce-wait'); tile.classList.add('ce-got'); src.classList.remove('di-gone');
+        setTimeout(function(){ tile.classList.remove('ce-got'); },700); };
+    setTimeout(function(){
+      var tsv=tile.querySelector('svg'), tr=(tsv||tile).getBoundingClientRect();
+      var dx=tr.left+tr.width/2-(sr.left+sr.width/2), dy=tr.top+tr.height/2-(sr.top+sr.height/2), k=tr.width/sr.width;
+      var mx=dx*.45, my=Math.max(24-sr.top,Math.min(0,dy)-70);   // the arc never leaves the screen
+      var an=fly.animate([
+        {transform:'translate(0,0) scale(1) rotate(0)',offset:0},
+        {transform:'translate(0,-14px) scale(1.25) rotate(-8deg)',offset:.18},
+        {transform:'translate('+mx+'px,'+my+'px) scale('+(1+k)/1.6+') rotate(-14deg)',offset:.55},
+        {transform:'translate('+dx+'px,'+dy+'px) scale('+k+') rotate(-6deg)',offset:1}],
+        {duration:820,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
+      setTimeout(function(){ fly.classList.add('land'); },520);
+      an.onfinish=end; setTimeout(end,1200);
+    },380);
+  }
 
   /* ─── one du'a ─── */
   var _load=loadDua;
