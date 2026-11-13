@@ -6,5 +6,6 @@
   "Mulai Merawat": "Start Caring", "Buku Sahabat": "Friends Book", "Renungan": "Reflect", "QS. Al-An'am: 38": "Qur'an 6:38",
   "Makan": "Food", "Minum": "Water", "Bersih": "Clean", "Elus": "Stroke", "Ambil": "Collect", "Main": "Play", "Tidur": "Sleep",
   "Hewan": "Animals", "Adab": "Manners", "Mulai dari awal": "Start over", "Keluar": "Exit",
-  "Ketuk hewan untuk merawatnya.": "Tap an animal to look after it.", "Hari 1": "Day 1"
+  "Ketuk hewan untuk merawatnya.": "Tap an animal to look after it.", "Hari 1": "Day 1",
+  "Beri makan dan sayangi hewan bersama Mo!": "Feed and love the animals with Mo!"
 }]);
