@@ -1379,6 +1379,37 @@ body:not(:has(.celebration.show)):not(:has(.modal.show)) #bm-mo{display:none!imp
 </style>
 <script src="bm-icons.js" defer></script>
 <style id="kb-tap">html,body{touch-action:manipulation}.tile,.tile *{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}</style>
+<style>
+/* 13 Nov 2026 — the question sits in Mo's speech bubble (no separate title cloud, no old
+   emoji hint), the tiles flip like Meet Baby Mo, and the reward shows Mo's upper body. */
+.title-wrap{padding:2px 0 0}
+.kb-mo-row{min-height:118px;max-height:200px;margin:4px 0 -28px}
+.kb-mosque{left:-22px;bottom:40px;width:clamp(70px,22%,110px)}
+.kb-mo{left:3%}
+.kb-q{position:absolute;z-index:2;right:2.5%;top:46%;transform:translateY(-50%);width:min(62%,300px);padding:14px 14px 13px;border-radius:26px;
+  background:var(--kp-plate);text-align:center;box-shadow:0 14px 26px -16px rgba(60,40,160,.55)}
+.kb-q::before{content:'';position:absolute;left:-15px;top:58%;border:11px solid transparent;border-right:18px solid var(--kp-plate);border-left:0;transform:rotate(-12deg)}
+.kb-q .title{margin:0;color:var(--kp-ink)!important;font:600 clamp(20px,6.1vw,27px)/1.1 'Fredoka','Nunito',sans-serif;letter-spacing:-.01em;text-wrap:balance;text-shadow:none}
+.kb-q .title .accent{color:var(--kp-accent)!important;text-shadow:none}
+.kb-q .subtitle{display:inline-block!important;margin:8px auto 0;padding:5px 12px;border-radius:999px;background:var(--kp-sub);color:var(--kp-sub-ink)!important;
+  font:600 12.5px/1.2 'Fredoka','Nunito',sans-serif;letter-spacing:.01em;max-width:100%}
+.kb-q.pop{animation:kbQPop .55s cubic-bezier(.3,1.5,.5,1)}
+@keyframes kbQPop{from{transform:translateY(-50%) scale(.6);opacity:0}}
+html[data-bm-theme="classic"] .kb-q{box-shadow:0 14px 24px -16px rgba(0,0,0,.7)}
+@media (max-height:600px){.kb-mo-row{min-height:104px}.kb-q .title{font-size:clamp(18px,5.6vw,23px)}.kb-q .subtitle{display:none!important}}
+/* flip: same build as Meet Baby Mo (WebKit-safe: both faces carry their own 3D transform) */
+.tile{perspective:700px}
+.tile-inner{transition:transform .55s cubic-bezier(.4,.2,.2,1)!important;will-change:transform}
+.tile-front{isolation:auto!important;-webkit-transform:rotateY(0deg) translateZ(.1px);transform:rotateY(0deg) translateZ(.1px)}
+.tile-back{-webkit-transform:rotateY(180deg) translateZ(.1px);transform:rotateY(180deg) translateZ(.1px);background-color:#EEF0FF}
+.tile.flipped .tile-front .emoji{animation:none}
+/* reward card: Mo's upper body, tucked behind the phrase name */
+.celebration .celeb-stage{height:clamp(170px,25vh,230px);margin-top:2px}
+.celebration .celeb-character-wrap{position:absolute;left:0;right:0;top:0;bottom:-44px;height:auto;align-items:flex-end}
+.celebration .celeb-character{position:relative;top:0;height:100%;width:auto;max-width:92%;object-fit:contain;object-position:bottom;
+  -webkit-mask-image:linear-gradient(#000 88%,transparent);mask-image:linear-gradient(#000 88%,transparent)}
+.celebration .celeb-glow{bottom:-20%}
+</style>
 </head>
 <body>
 <div class="kb-sky" aria-hidden="true">
@@ -1427,13 +1458,11 @@ body:not(:has(.celebration.show)):not(:has(.modal.show)) #bm-mo{display:none!imp
   <!-- Title (per-phrase contextual prompt) -->
   <div class="title-wrap">
     <span class="eyebrow" id="promptEyebrow">Kalimat Thayyibah</span>
-    <h1 class="title" id="promptTitle">Siapa <span class="accent">aku</span>? <span class="emoji">🌟</span></h1>
-    <p class="subtitle" id="promptSub">Ketuk petak untuk membuka rahasia!</p>
   </div>
 
   <!-- Baby Mo making du'a + a hint bubble (the phrase's theme picture) -->
-  <div class="kb-mo-row" aria-hidden="true">
-    <svg class="kb-mosque" viewBox="0 0 130 120">
+  <div class="kb-mo-row">
+    <svg class="kb-mosque" viewBox="0 0 130 120" aria-hidden="true">
       <rect class="kw" x="8" y="34" width="16" height="86" rx="3"/><rect class="kw2" x="5" y="46" width="22" height="6" rx="3"/>
       <path class="kdome" d="M7 34 Q16 14 25 34Z" fill="url(#kbDomeG)"/><rect class="kgold" x="15" y="8" width="2" height="9"/>
       <rect class="kwin" x="13" y="60" width="6" height="12" rx="3"/><rect class="kwin" x="13" y="84" width="6" height="12" rx="3"/>
@@ -1445,8 +1474,11 @@ body:not(:has(.celebration.show)):not(:has(.modal.show)) #bm-mo{display:none!imp
     </svg>
     <svg class="kb-bush kb-bush-ml"><use href="#kbBush"/></svg>
     <svg class="kb-bush kb-bush-mr"><use href="#kbBush"/></svg>
-    <div class="kb-mo" id="kbMo"><img src="baby-mo-render2/mo2-dua-kneel.webp" alt="" draggable="false"></div>
-    <div class="kb-hint"><span class="kb-hint-ray l"></span><span class="kb-hint-ray r"></span><span class="kb-hint-emo" id="kbHint">✨</span></div>
+    <div class="kb-mo" id="kbMo" aria-hidden="true"><img src="baby-mo-render2/mo2-dua-kneel.webp" alt="" draggable="false"></div>
+    <div class="kb-q" id="kbQ">
+      <h1 class="title" id="promptTitle">Siapa <span class="accent">aku</span>?</h1>
+      <p class="subtitle" id="promptSub">Ketuk petak untuk membuka rahasia!</p>
+    </div>
   </div>
 
   <!-- Puzzle -->
@@ -1908,11 +1940,11 @@ function buildPuzzle(phrase, isToday){
   eb.textContent = state.isToday ? '⭐ ' + KL('Kalimat Hari Ini', 'Phrase of the Day') : (phrase.promptEyebrow || 'Kalimat Thayyibah');
   eb.classList.toggle('today', state.isToday);
   document.getElementById('promptTitle').innerHTML =
-    (phrase.promptTitle || 'Siapa <span class="accent">aku</span>?') + ' <span class="emoji">🌟</span>';
+    (phrase.promptTitle || 'Siapa <span class="accent">aku</span>?');
   document.getElementById('promptSub').textContent = phrase.promptSub || 'Ketuk petak untuk membuka rahasia!';
   // hint bubble next to Mo: this phrase's theme picture
-  const hint = document.getElementById('kbHint');
-  if (hint){ hint.textContent = phrase.themeEmoji || '✨'; hint.classList.remove('pop'); void hint.offsetWidth; hint.classList.add('pop'); }
+  const q = document.getElementById('kbQ');
+  if (q){ q.classList.remove('pop'); void q.offsetWidth; q.classList.add('pop'); }
 
   // Pick 9 random emojis
   const emojis = pickN(TILE_EMOJIS, 9);
@@ -1962,7 +1994,7 @@ function buildPuzzle(phrase, isToday){
       const back = document.createElement('div'); back.className='tile-face tile-back';
       const x = (c/2)*100; // 0%, 50%, 100%
       const y = (r/2)*100;
-      back.style.backgroundImage = `url("${phrase.image}")`;
+      back.style.backgroundImage = `url("${kbPicCache[phrase.id] || phrase.image}")`;
       back.style.backgroundPosition = `${x}% ${y}%`;
 
       inner.appendChild(front); inner.appendChild(back);
@@ -1973,6 +2005,63 @@ function buildPuzzle(phrase, isToday){
       grid.appendChild(tile);
     }
   }
+  kbApplyPicture(phrase);
+}
+
+/* The revealed picture: Baby Mo's upper body (render 2 — upper body only), centred on his
+   chest, on a soft scene in the phrase's colours. Built once per phrase with a canvas. */
+const kbPicCache = {}, kbUpperCache = {};
+function kbImg(src){ return new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = src; }); }
+async function kbUpper(p){
+  if (kbUpperCache[p.id]) return kbUpperCache[p.id];
+  const img = await kbImg(p.character);
+  const W = img.naturalWidth, H = img.naturalHeight;
+  const c = document.createElement('canvas'); c.width = W; c.height = H;
+  const x = c.getContext('2d'); x.drawImage(img, 0, 0);
+  const a = x.getImageData(0, 0, W, H).data;
+  let top = H, bot = 0;
+  for (let y = 0; y < H; y++) for (let i = 0; i < W; i++) if (a[(y * W + i) * 4 + 3] > 40) { if (y < top) top = y; if (y > bot) bot = y; break; }
+  const fig = bot - top;
+  // centre on the chest band (ignores raised arms, thought bubbles and sparkles)
+  const b0 = Math.round(top + fig * 0.50), b1 = Math.round(top + fig * 0.58);
+  let L = W, Rr = 0;
+  for (let y = b0; y <= b1; y++) for (let i = 0; i < W; i++) if (a[(y * W + i) * 4 + 3] > 120) { if (i < L) L = i; if (i > Rr) Rr = i; }
+  const cut = Math.round(top + fig * 0.70);           // just below the waist
+  const res = { img, top: Math.max(0, top - Math.round(fig * 0.04)), cut, cx: (L + Rr) / 2, W, H };
+  // transparent upper-body cut-out for the celebration card
+  const crop = document.createElement('canvas'), cw = W, ch = cut - res.top;
+  crop.width = cw; crop.height = ch;
+  crop.getContext('2d').drawImage(img, 0, res.top, W, ch, (cw / 2 - res.cx), 0, W, ch);
+  res.url = crop.toDataURL('image/png');
+  return (kbUpperCache[p.id] = res);
+}
+async function kbPicture(p){
+  if (kbPicCache[p.id]) return kbPicCache[p.id];
+  const u = await kbUpper(p), bg = await kbImg(p.image);
+  const S = 720, c = document.createElement('canvas'); c.width = c.height = S;
+  const x = c.getContext('2d');
+  // scene colours sampled from the phrase picture's corners
+  const s = document.createElement('canvas'); s.width = s.height = 8; const sx = s.getContext('2d'); sx.drawImage(bg, 0, 0, 8, 8);
+  const px = sx.getImageData(0, 0, 8, 8).data, col = (i) => `rgb(${px[i]},${px[i + 1]},${px[i + 2]})`;
+  const g = x.createLinearGradient(0, 0, 0, S); g.addColorStop(0, col(0)); g.addColorStop(1, col((7 * 8 + 7) * 4));
+  x.fillStyle = g; x.fillRect(0, 0, S, S);
+  const r = x.createRadialGradient(S / 2, S * .58, 20, S / 2, S * .58, S * .55);
+  r.addColorStop(0, 'rgba(255,255,255,.85)'); r.addColorStop(1, 'rgba(255,255,255,0)');
+  x.fillStyle = r; x.fillRect(0, 0, S, S);
+  x.fillStyle = 'rgba(255,255,255,.75)';
+  [[.12,.16,7],[.86,.12,5],[.18,.46,4],[.9,.42,6],[.08,.78,5],[.92,.74,4]].forEach(([a, b, rr]) => { x.beginPath(); x.arc(a * S, b * S, rr, 0, 7); x.fill(); });
+  // Mo: upper body, chest centred, rising from the bottom edge
+  const ch = u.cut - u.top, k = (S * 0.8) / ch;
+  x.imageSmoothingQuality = 'high';
+  x.shadowColor = 'rgba(60,40,120,.18)'; x.shadowBlur = 18; x.shadowOffsetY = 8;
+  x.drawImage(u.img, 0, u.top, u.W, ch, S / 2 - u.cx * k, S - ch * k, u.W * k, ch * k);
+  return (kbPicCache[p.id] = c.toDataURL('image/jpeg', 0.9));
+}
+function kbApplyPicture(p){
+  kbPicture(p).then((url) => {
+    if (state.current && state.current.id !== p.id) return;
+    document.querySelectorAll('.tile-back').forEach((b) => { b.style.backgroundImage = `url("${url}")`; });
+  }).catch(() => {});
 }
 
 function onTileClick(tile){
@@ -2086,7 +2175,8 @@ function showCelebration(){
   const charImg = document.getElementById('celebCharImg');
   // Each kalimat's Mo is a Render 2 pose (baby-mo-render2/, 480px square, feet on a
   // common baseline) — the same file on phones and tablets.
-  charImg.src = p.character || p.image;
+  charImg.src = (kbUpperCache[p.id] && kbUpperCache[p.id].url) || p.character || p.image;
+  if (!kbUpperCache[p.id]) kbUpper(p).then((u) => { charImg.src = u.url; }).catch(() => {});
   charImg.alt = p.title;
   const themeEmoji = document.getElementById('themeEmoji');
   themeEmoji.textContent = p.themeEmoji || '✨';

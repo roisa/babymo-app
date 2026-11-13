@@ -1247,9 +1247,64 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
 .toast{border-radius:999px;font-family:var(--f-display);font-weight:600;}
 </style>
 <script src="bm-icons.js" defer></script>
+<style>
+/* 13 Nov 2026 — modern word pictures + a lively, kid-friendly sky */
+.wa{display:inline-grid;place-items:center;width:1.15em;height:1.15em;vertical-align:middle;line-height:0;flex:0 0 auto}
+.wa svg,.wa img{width:100%;height:100%;display:block}
+.wa-pic{border-radius:30%;overflow:hidden;background:linear-gradient(160deg,#E4F2FF 0%,#FFF2DE 100%);box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
+.wa-pic.wa-islam{background:linear-gradient(160deg,#EDE6FF 0%,#E1F7EE 100%)}
+.wa-pic.wa-family{background:linear-gradient(160deg,#FFE6EE 0%,#FFF3DC 100%)}
+.wa-pic img{object-fit:cover;object-position:top}
+.card-emoji{height:auto!important;flex-basis:auto!important}
+.card-emoji .wa{width:58px;height:58px}
+.lc-go .wa{width:22px;height:22px}
+body:has(.view-game.active) .bw-let,body:has(.view-complete.active) .bw-let{display:none}
+.lc-pic .wa{width:78%;height:78%}
+.word-emoji .wa{width:1.25em;height:1.25em}
+.word-emoji .wa-pic{box-shadow:0 10px 22px -12px rgba(30,60,110,.45),inset 0 0 0 3px rgba(255,255,255,.8)}
+.chip-ico .wa,.sec-icon .wa,.section-emoji .wa,.complete-section-tag .wa,.toast-emoji .wa,.cta .wa{width:1.1em;height:1.1em}
+.learned-emoji .wa{width:1.4em;height:1.4em}
+.hero .mascot img,.complete-hero .mascot img{border-radius:50%;background:radial-gradient(circle at 50% 40%,#FFFFFF 0%,#E3F4EC 70%);box-shadow:0 12px 26px -14px rgba(16,120,80,.5)}
+.hero h1 .sparkle .wa{width:.85em;height:.85em}
+/* sky layer */
+.app{position:relative;z-index:1}
+.bw-bg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;
+  background:linear-gradient(180deg,#CFE8FF 0%,#E9F4FF 38%,#F6FBF3 72%,#EAF7E4 100%)}
+.bw-cloud{position:absolute;width:120px;height:38px;border-radius:999px;background:#fff;opacity:.85;filter:drop-shadow(0 6px 10px rgba(80,120,170,.12))}
+.bw-cloud::before,.bw-cloud::after{content:'';position:absolute;background:#fff;border-radius:50%}
+.bw-cloud::before{width:54px;height:54px;left:16px;top:-26px}.bw-cloud::after{width:40px;height:40px;left:58px;top:-18px}
+.bw-cloud.c1{top:9%;left:-130px;animation:bwDrift 46s linear infinite}
+.bw-cloud.c2{top:24%;left:-130px;transform:scale(.7);animation:bwDrift 62s linear -20s infinite}
+.bw-cloud.c3{top:52%;left:-130px;transform:scale(.85);opacity:.6;animation:bwDrift 75s linear -45s infinite}
+@keyframes bwDrift{to{left:110%}}
+.bw-let{position:absolute;font:700 30px/1 'Noto Naskh Arabic','Amiri',serif;color:#fff;width:52px;height:52px;display:grid;place-items:center;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,rgba(255,255,255,.55),rgba(255,255,255,0) 60%),var(--c);opacity:.5;box-shadow:inset 0 -4px 8px rgba(0,0,0,.08);
+  animation:bwFloat 7s ease-in-out infinite}
+.bw-let.l1{--c:#FF9FB8;left:6%;top:30%}.bw-let.l2{--c:#8FD1FF;right:7%;top:20%;animation-delay:-2s}
+.bw-let.l3{--c:#FFD166;left:10%;top:66%;animation-delay:-4s}.bw-let.l4{--c:#9EE3B5;right:9%;top:58%;animation-delay:-1s}
+.bw-let.l5{--c:#C3B5FF;left:46%;top:84%;animation-delay:-3s;width:40px;height:40px;font-size:24px}
+@keyframes bwFloat{50%{transform:translateY(-14px) rotate(6deg)}}
+.bw-tw{position:absolute;width:10px;height:10px;background:#FFD23F;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:bwTw 3.2s ease-in-out infinite}
+.bw-tw.t1{left:22%;top:14%}.bw-tw.t2{right:24%;top:40%;animation-delay:-1s}.bw-tw.t3{left:30%;top:48%;animation-delay:-2s;width:7px;height:7px}.bw-tw.t4{right:16%;top:76%;animation-delay:-.5s}
+@keyframes bwTw{50%{transform:scale(.4) rotate(45deg);opacity:.4}}
+.bw-hills{position:absolute;left:0;right:0;bottom:0;width:100%;height:16vh}
+.bw-hills .h1{fill:#BFE8C3}.bw-hills .h2{fill:#9ADBA6}
+html[data-bm-theme="classic"] .bw-bg{background:linear-gradient(180deg,#141A4A 0%,#1B2160 45%,#16264A 100%)}
+html[data-bm-theme="classic"] .bw-cloud{opacity:.12}
+html[data-bm-theme="classic"] .bw-let{opacity:.25}
+html[data-bm-theme="classic"] .bw-hills .h1{fill:#1E3A44}html[data-bm-theme="classic"] .bw-hills .h2{fill:#1A3238}
+html[data-bm-theme="classic"] .wa-pic{background:linear-gradient(160deg,#2B3180,#24305A)}
+@media (prefers-reduced-motion:reduce){.bw-cloud,.bw-let,.bw-tw{animation:none}}
+</style>
 </head>
 
 <body>
+<div class="bw-bg" aria-hidden="true">
+  <i class="bw-cloud c1"></i><i class="bw-cloud c2"></i><i class="bw-cloud c3"></i>
+  <span class="bw-let l1">ب</span><span class="bw-let l2">ت</span><span class="bw-let l3">م</span><span class="bw-let l4">س</span><span class="bw-let l5">ن</span>
+  <i class="bw-tw t1"></i><i class="bw-tw t2"></i><i class="bw-tw t3"></i><i class="bw-tw t4"></i>
+  <svg class="bw-hills" viewBox="0 0 400 120" preserveAspectRatio="none"><path class="h1" d="M0 70 Q80 30 170 60 T400 50 V120 H0z"/><path class="h2" d="M0 95 Q110 60 220 88 T400 80 V120 H0z"/></svg>
+</div>
 <div class="safe-top" aria-hidden="true"></div>
 <div class="app">
 
@@ -1266,13 +1321,13 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
     <header class="hero">
       <div class="mascot">
         <div class="mascot-glow"></div>
-        <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo mascot" />
+        <img src="word-art/mo-hero.webp" alt="Baby Mo" />
       </div>
-      <h1>Susun Huruf <span class="sparkle" aria-hidden="true">✨</span></h1>
+      <h1>Susun Huruf <span class="sparkle" aria-hidden="true"><span class="wa wa-ico"><svg viewBox="0 0 64 64"><path d="M32 4c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z" fill="#FFC928"/><path d="M50 40c1 6 3 8 9 9-6 1-8 3-9 9-1-6-3-8-9-9 6-1 8-3 9-9z" fill="#FFE07A"/></svg></span></span></h1>
       <div class="section-preview" id="sectionChips">
-        <button class="preview-chip" type="button" data-target="family"><span>❤️</span> 8 Keluarga</button>
-        <button class="preview-chip" type="button" data-target="islam"><span>🌙</span> 7 Islam</button>
-        <button class="preview-chip" type="button" data-target="nature"><span>🌿</span> 6 Alam</button>
+        <button class="preview-chip" type="button" data-target="family"><span class="chip-ico"><span class="wa wa-ico"><svg viewBox="0 0 64 64"><path d="M32 55S8 41 8 24a12 12 0 0 1 24-5 12 12 0 0 1 24 5c0 17-24 31-24 31z" fill="#FF5C7A"/><path d="M17 21a6 6 0 0 1 7-5" stroke="#FFC2CE" stroke-width="4" stroke-linecap="round" fill="none"/></svg></span></span> 8 Keluarga</button>
+        <button class="preview-chip" type="button" data-target="islam"><span class="chip-ico"><span class="wa wa-ico"><svg viewBox="0 0 64 64"><path d="M36 6a26 26 0 1 0 22 40A21 21 0 1 1 36 6z" fill="#FFC928"/><path d="M48 14l1.8 3.8L54 19.6l-4.2 1.8L48 25.6l-1.8-4.2L42 19.6l4.2-1.8z" fill="#FFE07A"/></svg></span></span> 7 Islam</button>
+        <button class="preview-chip" type="button" data-target="nature"><span class="chip-ico"><span class="wa wa-ico"><svg viewBox="0 0 64 64"><path d="M12 52C10 28 26 10 54 10c1 26-14 42-38 42" fill="#3CC46E"/><path d="M14 50C24 38 34 28 46 20" stroke="#E6FBEF" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg></span></span> 6 Alam</button>
       </div>
     </header>
 
@@ -1286,7 +1341,7 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
     <div class="topbar">
       <button class="btn-soft" type="button" id="btnExitGame" aria-label="Kembali ke Menu">← Menu</button>
       <div class="game-progress">
-        <span class="sec-icon" id="gameSecIcon">❤️</span>
+        <span class="sec-icon" id="gameSecIcon"></span>
         <span id="gameStep">1 / 8</span>
       </div>
     </div>
@@ -1296,7 +1351,7 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
     <div class="speed-bar" id="speedBar" hidden><i></i></div>
 
     <div class="word-card" id="gameWordCard">
-      <div class="word-emoji" id="gameEmoji" aria-hidden="true">❤️</div>
+      <div class="word-emoji" id="gameEmoji" aria-hidden="true"></div>
       <div class="word-latin" id="gameLatin">Ummi</div>
       <div class="word-meaning" id="gameMeaning">ibu</div>
       <div class="word-ghost" id="gameGhost" lang="ar">أُمِّي</div>
@@ -1326,10 +1381,10 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
     <header class="complete-hero">
       <div class="mascot">
         <div class="mascot-glow"></div>
-        <img src="Logo_Baby_Mo_Transparant.webp" alt="Baby Mo mascot" />
+        <img src="word-art/mo-hero.webp" alt="Baby Mo" />
       </div>
       <div class="complete-section-tag" id="completeSectionTag">
-        <span aria-hidden="true">❤️</span><span id="completeSectionName">Keluarga</span>
+        <span aria-hidden="true"><span class="wa wa-ico"><svg viewBox="0 0 64 64"><path d="M32 55S8 41 8 24a12 12 0 0 1 24-5 12 12 0 0 1 24 5c0 17-24 31-24 31z" fill="#FF5C7A"/><path d="M17 21a6 6 0 0 1 7-5" stroke="#FFC2CE" stroke-width="4" stroke-linecap="round" fill="none"/></svg></span></span><span id="completeSectionName">Keluarga</span>
       </div>
       <div class="complete-arabic" lang="ar">مَا شَاءَ ٱللَّٰه</div>
       <h1 class="complete-title">Masya Allah! ✨</h1>
@@ -1367,9 +1422,9 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
 <div class="cta-backdrop" id="ctaBackdrop" aria-hidden="true"></div>
 <div class="cta-wrap" id="ctaWrap">
   <button class="cta" type="button" id="ctaStart" aria-label="Mulai Belajar — Bismillah">
-    <span class="emoji-left" aria-hidden="true">🌙</span>
+    <span class="emoji-left" aria-hidden="true"><span class="wa wa-ico"><svg viewBox="0 0 64 64"><path d="M36 6a26 26 0 1 0 22 40A21 21 0 1 1 36 6z" fill="#FFC928"/><path d="M48 14l1.8 3.8L54 19.6l-4.2 1.8L48 25.6l-1.8-4.2L42 19.6l4.2-1.8z" fill="#FFE07A"/></svg></span></span>
     Mulai Belajar — Bismillah
-    <span class="emoji-right" aria-hidden="true">✨</span>
+    <span class="emoji-right" aria-hidden="true"><span class="wa wa-ico"><svg viewBox="0 0 64 64"><path d="M32 4c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z" fill="#FFC928"/><path d="M50 40c1 6 3 8 9 9-6 1-8 3-9 9-1-6-3-8-9-9 6-1 8-3 9-9z" fill="#FFE07A"/></svg></span></span>
   </button>
   <div class="cta-hint">21 Kata · 3 Kelompok</div>
 </div>
@@ -1377,11 +1432,51 @@ html[data-bm-theme="bright"] .sr-card{background:rgba(255,255,255,.88)!important
 <div class="sr-modal" id="srModal" hidden><div class="sr-card" id="srCard"></div></div>
 
 <div class="toast" id="toast" role="status" aria-live="polite">
-  <span class="toast-emoji" aria-hidden="true">✨</span>
+  <span class="toast-emoji" aria-hidden="true"></span>
   Masya Allah!
 </div>
 
 <script>
+/* 13 Nov 2026 — word pictures. Family words show the family (Umi, Abi, Kak Adam, Ais) and the
+   du'a/manners words show Baby Mo in a matching pose, upper body only (word-art/*.webp, cut from
+   render 1 where it exists, render 2 upper body otherwise). Things and nature get modern flat
+   icons. "Allah" is shown with an abstract 8-point star only — never a depiction. */
+const WORD_PICS = {
+  'Ummi': 'umi', 'Abbi': 'abi', 'Akhi': 'adam', 'Ukhti': 'ais',
+  "Tha'am": 'mo-meal', 'Bism': 'mo-bism', "Du'a": 'mo-dua', 'Kitab': 'mo-read', 'Salam': 'mo-salam', 'Syukran': 'mo-thanks'
+};
+const WORD_ICONS = {
+  "Bayt": 'house', "Maa'": 'water', 'Nawm': 'sleep', 'Allah': 'star8', 'Masjid': 'mosque',
+  'Syams': 'sun', 'Qamar': 'moon', 'Najm': 'star', 'Zahrah': 'flower', 'Samak': 'fish', 'Thayr': 'bird'
+};
+const BW_ICONS = {
+  house: '<svg viewBox="0 0 64 64"><path d="M10 30 32 11l22 19" fill="none" stroke="#F0645A" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 29 32 15l17 14v22a4 4 0 0 1-4 4H19a4 4 0 0 1-4-4z" fill="#FFF3DD"/><path d="M15 44h34v7a4 4 0 0 1-4 4H19a4 4 0 0 1-4-4z" fill="#FFE2B0"/><rect x="27" y="36" width="10" height="19" rx="4" fill="#C9874B"/><circle cx="34.5" cy="46" r="1.3" fill="#FFE2B0"/><rect x="40" y="32" width="7" height="7" rx="2" fill="#7CC8F2"/><rect x="17" y="32" width="7" height="7" rx="2" fill="#7CC8F2"/></svg>',
+  water: '<svg viewBox="0 0 64 64"><path d="M17 12h30l-4 42a4 4 0 0 1-4 4H25a4 4 0 0 1-4-4z" fill="#E6F6FF" stroke="#9ED6F5" stroke-width="2.5"/><path d="M19.6 28h24.8l-2.6 26a3 3 0 0 1-3 2.6H25.2a3 3 0 0 1-3-2.6z" fill="#3FA9F5"/><path d="M19.6 28c6 3 18.8 3 24.8 0" fill="none" stroke="#9AD8FF" stroke-width="2"/><circle cx="28" cy="40" r="2.2" fill="#BFE6FF"/><circle cx="35" cy="47" r="1.6" fill="#BFE6FF"/><path d="M23 16v8" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/></svg>',
+  sleep: '<svg viewBox="0 0 64 64"><path d="M37 8a20 20 0 1 0 19 26A16 16 0 1 1 37 8z" fill="#FFCF3F"/><path d="M37 8a20 20 0 0 0-12 4 16 16 0 0 1 20 22 16 16 0 0 0 11 0A16 16 0 1 1 37 8z" fill="#FFB800" opacity=".35"/><text x="40" y="22" font-family="Fredoka,Nunito,sans-serif" font-weight="700" font-size="13" fill="#7C6CF0">z</text><text x="48" y="14" font-family="Fredoka,Nunito,sans-serif" font-weight="700" font-size="9" fill="#9C8FF5">z</text><path d="M8 50c0-5 4-8 9-8 2-5 7-7 12-5 3-3 9-3 12 1 5 0 8 3 8 7 0 4-3 7-7 7H15c-4 0-7-1-7-2z" fill="#EEF0FF"/><path d="M12 53h34" stroke="#D6DAFA" stroke-width="2" stroke-linecap="round"/></svg>',
+  star8: '<svg viewBox="0 0 64 64"><g transform="translate(32 32)"><rect x="-17" y="-17" width="34" height="34" rx="5" fill="#F7B500"/><rect x="-17" y="-17" width="34" height="34" rx="5" fill="#FFC93A" transform="rotate(45)"/><circle r="11" fill="#FFF3C4"/><circle r="6" fill="#FFE07A"/></g><circle cx="12" cy="12" r="2" fill="#FFD95A"/><circle cx="54" cy="52" r="2.4" fill="#FFD95A"/><circle cx="53" cy="11" r="1.6" fill="#FFE68F"/></svg>',
+  mosque: '<svg viewBox="0 0 64 64"><rect x="9" y="22" width="7" height="34" rx="2.5" fill="#FFF3DD"/><path d="M8.5 22 12.5 12l4 10z" fill="#1FA67A"/><rect x="11" y="28" width="3" height="6" rx="1.5" fill="#7CC8F2"/><rect x="20" y="34" width="36" height="22" rx="3" fill="#FFF3DD"/><path d="M22 35c0-11 7-17 16-17s16 6 16 17z" fill="#22B07D"/><path d="M28 26c2-3 5-5 9-5" stroke="#7FE0B7" stroke-width="2.5" stroke-linecap="round" fill="none"/><rect x="37" y="11" width="2" height="8" fill="#F5B400"/><path d="M41 7a3.6 3.6 0 1 0 0 6 4.6 4.6 0 1 1 0-6z" fill="#F5B400"/><path d="M33 56V47a5 5 0 0 1 10 0v9z" fill="#C9874B"/><rect x="24" y="41" width="5" height="7" rx="2.5" fill="#7CC8F2"/><rect x="47" y="41" width="5" height="7" rx="2.5" fill="#7CC8F2"/></svg>',
+  sun: '<svg viewBox="0 0 64 64"><g stroke="#FFB21E" stroke-width="5" stroke-linecap="round"><path d="M32 5v7M32 52v7M5 32h7M52 32h7M12.9 12.9l5 5M46.1 46.1l5 5M12.9 51.1l5-5M46.1 17.9l5-5"/></g><circle cx="32" cy="32" r="15" fill="#FFC928"/><circle cx="32" cy="32" r="15" fill="#FF9F1C" opacity=".25"/><circle cx="26.5" cy="26.5" r="4.5" fill="#FFE68A"/></svg>',
+  moon: '<svg viewBox="0 0 64 64"><path d="M38 6a26 26 0 1 0 20 38A21 21 0 1 1 38 6z" fill="#FFCF3F"/><circle cx="25" cy="38" r="3" fill="#F5B400" opacity=".45"/><circle cx="33" cy="50" r="2" fill="#F5B400" opacity=".45"/><path d="M50 12l1.6 3.4L55 17l-3.4 1.6L50 22l-1.6-3.4L45 17l3.4-1.6z" fill="#A99BF0"/><circle cx="56" cy="30" r="2" fill="#A99BF0"/></svg>',
+  star: '<svg viewBox="0 0 64 64"><path d="M32 6.5l7.6 15.4 17 2.5-12.3 12 2.9 16.9L32 45.3l-15.2 8 2.9-16.9-12.3-12 17-2.5z" fill="#FFC928" stroke="#FFB21E" stroke-width="3" stroke-linejoin="round"/><path d="M25 25l5-1" stroke="#FFF1B0" stroke-width="3.5" stroke-linecap="round"/><circle cx="54" cy="52" r="2.6" fill="#FFD95A"/><circle cx="10" cy="50" r="1.8" fill="#FFD95A"/></svg>',
+  flower: '<svg viewBox="0 0 64 64"><path d="M32 40v18" stroke="#2FAE5E" stroke-width="4" stroke-linecap="round"/><path d="M32 52c-8 0-13-4-14-10 7 0 12 3 14 10z" fill="#3CC46E"/><path d="M33 49c6-1 10-4 11-9-6 0-10 3-11 9z" fill="#5FD88A"/><g fill="#FF8FB3"><circle cx="32" cy="14" r="9"/><circle cx="44" cy="23" r="9"/><circle cx="39.5" cy="37" r="9"/><circle cx="24.5" cy="37" r="9"/><circle cx="20" cy="23" r="9"/></g><circle cx="32" cy="27" r="8" fill="#FFD23F"/><circle cx="29.5" cy="24.5" r="2.4" fill="#FFF1A6"/></svg>',
+  fish: '<svg viewBox="0 0 64 64"><path d="M48 32 60 21v22z" fill="#FF8A3D"/><ellipse cx="30" cy="32" rx="22" ry="15" fill="#FFA24D"/><path d="M14 26c8-6 22-7 32 0" stroke="#FFC98F" stroke-width="3" stroke-linecap="round" fill="none"/><path d="M33 20c-3 6-3 18 0 24" stroke="#F07A2A" stroke-width="2.5" fill="none" stroke-linecap="round"/><circle cx="19" cy="29" r="4" fill="#fff"/><circle cx="18.2" cy="29.4" r="2.2" fill="#2B2140"/><path d="M11 36c2 1 4 1 6 0" stroke="#C25E17" stroke-width="2" stroke-linecap="round" fill="none"/><circle cx="8" cy="18" r="2.4" fill="#9ED6F5"/><circle cx="4" cy="11" r="1.6" fill="#9ED6F5"/></svg>',
+  bird: '<svg viewBox="0 0 64 64"><path d="M14 38c0-13 9-22 21-22 9 0 15 6 15 14v6c0 11-9 18-20 18-9 0-16-6-16-16z" fill="#4DB6F7"/><path d="M22 44c8 4 18 3 24-4-4 10-21 13-24 4z" fill="#BFE6FF"/><path d="M24 34c5-6 15-7 20-2-6 0-13 4-16 10z" fill="#2E8FD8"/><circle cx="40" cy="25" r="3.4" fill="#fff"/><circle cx="40.8" cy="25.4" r="1.9" fill="#2B2140"/><path d="M49 26l9 3-9 3z" fill="#FFB21E"/><path d="M28 54v5M34 54v5" stroke="#FF9F1C" stroke-width="2.6" stroke-linecap="round"/><circle cx="35" cy="31" r="2.4" fill="#FF9FB8" opacity=".7"/></svg>',
+  heart: '<svg viewBox="0 0 64 64"><path d="M32 55S8 41 8 24a12 12 0 0 1 24-5 12 12 0 0 1 24 5c0 17-24 31-24 31z" fill="#FF5C7A"/><path d="M17 21a6 6 0 0 1 7-5" stroke="#FFC2CE" stroke-width="4" stroke-linecap="round" fill="none"/></svg>',
+  crescent: '<svg viewBox="0 0 64 64"><path d="M36 6a26 26 0 1 0 22 40A21 21 0 1 1 36 6z" fill="#FFC928"/><path d="M48 14l1.8 3.8L54 19.6l-4.2 1.8L48 25.6l-1.8-4.2L42 19.6l4.2-1.8z" fill="#FFE07A"/></svg>',
+  leaf: '<svg viewBox="0 0 64 64"><path d="M12 52C10 28 26 10 54 10c1 26-14 42-38 42" fill="#3CC46E"/><path d="M14 50C24 38 34 28 46 20" stroke="#E6FBEF" stroke-width="3.5" stroke-linecap="round" fill="none"/></svg>',
+  lock: '<svg viewBox="0 0 64 64"><path d="M20 28v-7a12 12 0 0 1 24 0v7" fill="none" stroke="#9AA6B8" stroke-width="6" stroke-linecap="round"/><rect x="12" y="27" width="40" height="30" rx="9" fill="#FFC928"/><rect x="12" y="27" width="40" height="10" rx="5" fill="#FFE07A"/><circle cx="32" cy="42" r="4.2" fill="#B07A00"/><path d="M32 44v6" stroke="#B07A00" stroke-width="3.5" stroke-linecap="round"/></svg>',
+  bolt: '<svg viewBox="0 0 64 64"><path d="M36 4 12 36h16l-4 24 26-34H33z" fill="#FFC928" stroke="#FF9F1C" stroke-width="3" stroke-linejoin="round"/></svg>',
+  sparkle: '<svg viewBox="0 0 64 64"><path d="M32 4c2 14 6 18 20 20-14 2-18 6-20 20-2-14-6-18-20-20 14-2 18-6 20-20z" fill="#FFC928"/><path d="M50 40c1 6 3 8 9 9-6 1-8 3-9 9-1-6-3-8-9-9 6-1 8-3 9-9z" fill="#FFE07A"/></svg>'
+};
+const SEC_ICONS = { family: 'heart', islam: 'crescent', nature: 'leaf' };
+function bwIcon(name){ return '<span class="wa wa-ico">' + (BW_ICONS[name] || BW_ICONS.sparkle) + '</span>'; }
+function secIcon(sec){ return bwIcon(SEC_ICONS[sec && sec.id] || 'sparkle'); }
+function wordArt(w){
+  const pic = WORD_PICS[w.latin];
+  if (pic) return '<span class="wa wa-pic wa-' + w.section + '"><img src="word-art/' + pic + '.webp" alt="" draggable="false"></span>';
+  return '<span class="wa wa-ico wa-' + w.section + '">' + (BW_ICONS[WORD_ICONS[w.latin]] || BW_ICONS.sparkle) + '</span>';
+}
+
 const SECTIONS = [
   { id: 'family', emoji: '❤️', name: 'Keluarga' },
   { id: 'islam',  emoji: '🌙', name: 'Islam' },
@@ -1584,7 +1679,7 @@ function decorateMenu() {
   kc.className = 'loop-card' + (done ? ' done' : '');
   // Layout: pill on top · [picture | Arabic, Latin, meaning | button] · bonus line
   kc.innerHTML = '<span class="lc-k">✨ ' + L('Kata Hari Ini', 'Word of the Day') + '</span>'
-    + '<div class="lc-row"><div class="lc-pic">' + w.emoji + (done ? '<span class="kw-bonus">⭐</span>' : '') + '</div>'
+    + '<div class="lc-row"><div class="lc-pic">' + wordArt(w) + (done ? '<span class="kw-bonus">⭐</span>' : '') + '</div>'
     + '<div class="lc-tx"><div class="lc-ar" lang="ar">' + w.arabic + '</div>'
     + '<div class="lc-t">' + w.latin + '</div><div class="lc-m">' + w.meaning + '</div></div>'
     + '<button class="lc-go" type="button" id="kotdGo">' + (done ? '🔄' : L('Susun ▶', 'Build ▶')) + '</button></div>'
@@ -1595,14 +1690,14 @@ function decorateMenu() {
   const n = doneCount(r), sc = document.getElementById('speedCard'), open = n >= WORDS.length;
   sc.className = 'loop-card speed' + (open ? '' : ' locked');
   sc.innerHTML = '<span class="lc-k">⚡ ' + L('Ronde Kilat', 'Speed Round') + '</span>'
-    + '<div class="lc-row"><div class="lc-pic">' + (open ? '⚡' : '🔒') + '</div><div class="lc-tx">'
+    + '<div class="lc-row"><div class="lc-pic">' + bwIcon(open ? 'bolt' : 'lock') + '</div><div class="lc-tx">'
     + '<div class="lc-t">' + (open ? L('Susun 5 kata sebelum waktunya habis!', 'Build 5 words before time runs out!') : L('Selesaikan semua 21 kata dulu', 'Finish all 21 words first')) + '</div>'
     + (open ? '<div class="lc-s">' + (r.speed.best ? '🏆 ' + L('Skor terbaik: ', 'Best score: ') + r.speed.best : L('Belum ada skor — ayo coba!', 'No score yet — give it a go!')) + '</div>'
             : '<div class="lc-bar"><i style="width:' + Math.round(100 * n / WORDS.length) + '%"></i></div><div class="lc-s">' + n + ' / ' + WORDS.length + ' ' + L('kata', 'words') + '</div>')
-    + '</div><button class="lc-go" type="button" id="speedGo"' + (open ? '' : ' aria-disabled="true"') + '>' + (open ? L('Main ▶', 'Play ▶') : '🔒') + '</button></div>';
+    + '</div><button class="lc-go" type="button" id="speedGo"' + (open ? '' : ' aria-disabled="true"') + '>' + (open ? L('Main ▶', 'Play ▶') : bwIcon('lock')) + '</button></div>';
   sc.hidden = false;
   document.getElementById('speedGo').onclick = function (e) {
-    if (!open) { showToast(L('Selesaikan 21 kata dulu ya!', 'Finish the 21 words first!'), '🔒'); return; }
+    if (!open) { showToast(L('Selesaikan 21 kata dulu ya!', 'Finish the 21 words first!'), bwIcon('lock')); return; }
     spawnSparkles(e.currentTarget, 3); setTimeout(startSpeed, 160);
   };
 }
@@ -1713,7 +1808,7 @@ function getSectionPosition(wordIdx) {
 const toastEl = document.getElementById('toast');
 let toastTimer = null;
 function showToast(text, emoji) {
-  if (typeof emoji === 'undefined') emoji = '✨';
+  if (typeof emoji === 'undefined') emoji = bwIcon('sparkle');
   toastEl.innerHTML = '<span class="toast-emoji">' + emoji + '</span>' + text;
   toastEl.classList.remove('show');
   void toastEl.offsetWidth;
@@ -1756,7 +1851,7 @@ function renderMenu() {
     sectionEl.setAttribute('aria-labelledby', 'sec-' + sec.id);
     sectionEl.innerHTML =
       '<div class="section-header">' +
-        '<span class="section-emoji" aria-hidden="true">' + sec.emoji + '</span>' +
+        '<span class="section-emoji" aria-hidden="true">' + secIcon(sec) + '</span>' +
         '<h2 class="section-title" id="sec-' + sec.id + '">' + sec.name + '</h2>' +
         '<span class="section-count">' + words.length + ' Kata</span>' +
         '<div class="section-line" aria-hidden="true"></div>' +
@@ -1776,7 +1871,7 @@ function renderMenu() {
       btn.style.animationDelay = delay + 's';
       btn.innerHTML =
         '<span class="card-spark" aria-hidden="true">✦</span>' +
-        '<span class="card-emoji" aria-hidden="true">' + w.emoji + '</span>' +
+        '<span class="card-emoji" aria-hidden="true">' + wordArt(w) + '</span>' +
         '<div class="card-arabic" lang="ar">' + w.arabic + '</div>' +
         '<div class="card-latin">' + w.latin + '</div>' +
         '<div class="card-meaning">' + w.meaning + '</div>';
@@ -1811,7 +1906,7 @@ function renderWord() {
   state.wordWrong = 0;
   if (state.mode === 'speed') speedHead();
 
-  document.getElementById('gameSecIcon').textContent = sec.emoji;
+  document.getElementById('gameSecIcon').innerHTML = secIcon(sec);
   document.getElementById('gameStep').textContent = state.mode === 'daily' ? '✨ ' + L('Kata Hari Ini', 'Word of the Day')
     : state.mode === 'speed' ? '⚡ ' + L('Ronde Kilat', 'Speed Round') : (pos.position + 1) + ' / ' + pos.total;
 
@@ -1826,7 +1921,7 @@ function renderWord() {
   dotsEl.innerHTML = dotsHtml;
 
   document.getElementById('gameWordCard').classList.remove('speaking-word');
-  document.getElementById('gameEmoji').textContent = word.emoji;
+  document.getElementById('gameEmoji').innerHTML = wordArt(word);
   document.getElementById('gameLatin').textContent = word.latin;
   document.getElementById('gameMeaning').textContent = word.meaning;
   document.getElementById('gameGhost').textContent = word.arabic;
@@ -2089,7 +2184,7 @@ function showCompletion() {
   const next = getNextSection(completedSectionId);
 
   const tagEl = document.getElementById('completeSectionTag');
-  tagEl.firstElementChild.textContent = sec.emoji;
+  tagEl.firstElementChild.innerHTML = secIcon(sec);
   document.getElementById('completeSectionName').textContent = sec.name;
 
   const sub = document.getElementById('completeSub');
@@ -2111,7 +2206,7 @@ function showCompletion() {
   const list = document.getElementById('learnedList');
   list.innerHTML = state.completedWords.map(function (w) {
     return '<div class="learned">' +
-      '<span class="learned-emoji" aria-hidden="true">' + w.emoji + '</span>' +
+      '<span class="learned-emoji" aria-hidden="true">' + wordArt(w) + '</span>' +
       '<span class="learned-arabic" lang="ar">' + w.arabic + '</span>' +
       '<span class="learned-latin">' + w.latin + '</span>' +
       '</div>';
@@ -2124,10 +2219,10 @@ function showCompletion() {
     setTimeout(function () { startGame(getFirstIdxOfSection(completedSectionId)); }, 180);
   };
   if (next) {
-    btnNext.textContent = next.emoji + ' Lanjut ' + next.name;
+    btnNext.innerHTML = secIcon(next) + ' Lanjut ' + next.name;
     btnNext.onclick = function (e) {
       spawnSparkles(e.currentTarget, 4);
-      showToast(next.name + '!', next.emoji);
+      showToast(next.name + '!', secIcon(next));
       setTimeout(function () { startGame(getFirstIdxOfSection(next.id)); }, 700);
     };
   } else {
