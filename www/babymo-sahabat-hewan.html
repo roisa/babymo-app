@@ -68,7 +68,10 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 .spot{position:absolute;transform:translate(-50%,-94%);cursor:pointer;z-index:2}
 .spot .farm-a{width:100%;height:auto;display:block}
 .spot.back{z-index:2}.spot.front{z-index:5}
-.spot .tag{position:absolute;left:50%;top:-12%;transform:translateX(-50%);font-size:11px;font-weight:900;color:#fff;background:rgba(20,50,30,.62);padding:2px 8px;border-radius:999px;white-space:nowrap;pointer-events:none}
+/* name tags: under each animal's feet (never on the need bubble / hearts / zzz above the head),
+   on their own layer above Mo so he never hides them */
+.ptag{position:absolute;z-index:7;transform:translate(-50%,6px);font-size:11px;font-weight:900;color:#fff;background:rgba(20,50,30,.66);padding:2px 9px;border-radius:999px;white-space:nowrap;pointer-events:none;box-shadow:0 2px 6px -2px rgba(0,0,0,.25)}
+.ptag.locked{display:none}
 .spot.locked{display:none}
 .chicks{position:absolute;z-index:5;display:flex;gap:2px;transform:translate(-50%,-94%);pointer-events:none}
 .chicks .farm-a{width:28px}
@@ -711,15 +714,17 @@ function renderStars(){ var t="⭐ "+starCount()+" / "+STAR_MAX; $("homeStars").
 var spotEls={};
 function pct(v,of){ return (v/of*100)+"%"; }
 function buildSpots(){
-  var h="";
+  var h="", tags="";
   ORDER.forEach(function(k){
     var a=ANIMALS[k];
     var vb=FarmKit.rig(k).vb.join(" "), lay=function(c,inner){ return '<svg class="lay '+c+'" viewBox="'+vb+'" overflow="visible" aria-hidden="true">'+inner+'</svg>'; };
     /* the selection disc is split: its back half is drawn behind the animal, its front half over the legs */
     h+='<div class="spot '+a.row+'" data-k="'+k+'" style="left:'+pct(a.x,400)+';top:'+pct(a.y,560)+';width:'+pct(a.w,400)+'"><div class="wob"><div class="flip'+(a.face<0?' mir':'')+'">'+
       lay("lay-b",ringSVG(k,"b")+'<g class="feed"></g>')+FarmKit.animal(k)+lay("lay-f",ringSVG(k,"f")+'<g class="feed"></g>')+
-      '</div></div><div class="tag">'+pname(k)+'</div></div>';
+      '</div></div></div>';
+    tags+='<div class="ptag" data-k="'+k+'" style="left:'+pct(a.x,400)+';top:'+pct(a.y,560)+'">'+pname(k)+'</div>';
   });
+  h+=tags;
   h+='<div class="chicks" id="chicks" style="left:'+pct(140,400)+';top:'+pct(440,560)+'"></div>';
   $("spots").innerHTML=h;
   document.querySelectorAll(".spot").forEach(function(el){ spotEls[el.dataset.k]=el; el.addEventListener("click",function(){ selectAnimal(el.dataset.k); }); });
@@ -735,6 +740,7 @@ function renderAnimal(k, force){
   var el=spotEls[k]; if(!el) return;
   var on=D.have.indexOf(k)>=0;
   el.classList.toggle("locked",!on);
+  var tg=document.querySelector('.ptag[data-k="'+k+'"]'); if(tg) tg.classList.toggle("locked",!on);
   if(!on) return;
   FarmKit.setState(el.querySelector(".farm-a"), force||moodOf(k));
 }
