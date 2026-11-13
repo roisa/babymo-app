@@ -483,6 +483,18 @@ html[data-bm-theme="dark"] #doneScreen .dn::before,html[data-bm-theme="classic"]
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #doneScreen .dn{background:rgba(255,255,255,.7)}
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #doneScreen .recap{background:rgba(255,255,255,.7)}
 </style>
+<style id="dj-sheet-glass">
+/* 13 Nov 2026 polish — glass touch on the stop sheet that slides up over the map (the map shows softly through) */
+.sheet{position:relative;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%);
+  background:rgba(19,41,31,.8)}
+.sheet::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.12) 0,rgba(255,255,255,.03) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
+html[data-bm-theme="bright"] .sheet{background:rgba(255,255,255,.78)}
+html[data-bm-theme="bright"] .sheet::before{
+  background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%);
+  box-shadow:inset 0 1.5px 0 rgba(255,255,255,.95),inset 0 0 0 1px rgba(255,255,255,.35)}
+</style>
 </head>
 <body>
 <!-- shared gradients for the drawn icons (one copy, referenced by id) -->
