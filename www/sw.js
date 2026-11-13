@@ -27,6 +27,7 @@ const SHELL = [
   "/icons/scene/lantern.svg",
   "/icons/scene/tap-hand.svg",
   "/icons/scene/tasbih.svg",
+  "/icons/scene/tasbih-v2.svg",
   "/icons/scene/house.svg",
   "/icons/scene/mosque-mini.svg",
   "/icons/scene/book-cushion.svg",
