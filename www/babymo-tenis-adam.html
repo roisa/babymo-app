@@ -335,6 +335,30 @@ html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court
 /* leave room under the last card so the net can be seen when scrolled to the end */
 #s-map .wrap,#s-intro .wrap{padding-bottom:28px}
 </style>
+<style>
+/* Lesson intro, simpler (option A): small lesson line, title with a bulb that opens the "did you know" fact,
+   one how-to line, compact forehand choices, round Listen button next to a wide Let's Play.
+   The longer tip is still read aloud by Listen. */
+#s-intro .kicker{background:none!important;border:none!important;padding:0!important;margin-top:4px;font-size:12px;letter-spacing:.1em;opacity:.8}
+#s-intro .itl{display:flex;align-items:center;justify-content:center;gap:10px;margin:2px 0 2px}
+#s-intro .itl h2{margin:0}
+#s-intro .ibulb{flex:none;width:42px;height:42px;border-radius:50%;border:none;cursor:pointer;display:grid;place-items:center;padding:0;
+  background:linear-gradient(180deg,#FFE58A,#FFC83D);box-shadow:0 6px 12px -6px rgba(200,140,0,.7),inset 0 1px 0 rgba(255,255,255,.6);animation:ibulbGlow 2.6s ease-in-out infinite}
+#s-intro .ibulb .tn-i{width:26px;height:26px;margin:0}
+#s-intro .ibulb[aria-expanded="true"]{animation:none;box-shadow:0 0 0 3px rgba(255,200,61,.45)}
+@keyframes ibulbGlow{0%,100%{box-shadow:0 6px 12px -6px rgba(200,140,0,.7),0 0 0 0 rgba(255,200,61,.0)}50%{box-shadow:0 6px 12px -6px rgba(200,140,0,.7),0 0 0 6px rgba(255,200,61,.22)}}
+#s-intro #introFactBox{position:relative;margin:8px auto 2px;max-width:94%;text-align:center;font-weight:700;font-size:14.5px;line-height:1.4;border-style:solid}
+#s-intro #introFactBox[hidden]{display:none}
+#s-intro #introTip{display:none}
+#s-intro .fhpick .lbl{font-size:13px}
+#s-intro .fhpick button small{display:none}
+#s-intro .fhpick button{min-height:46px}
+#s-intro .row #introSay{flex:0 0 58px;width:58px;min-height:58px;height:58px;padding:0;border-radius:50%}
+#s-intro .row #introSay .say-ic{width:26px;height:26px;color:var(--green)}
+@media (prefers-reduced-motion:reduce){#s-intro .ibulb{animation:none}}
+@media (max-height:760px){#s-intro .card .pose{width:140px;height:140px}}
+@media (max-height:600px){#s-intro .card .pose{width:104px;height:104px}#s-intro .itl h2{font-size:26px}}
+</style>
 </head>
 <body>
 
@@ -390,10 +414,10 @@ html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court
     <div class="card">
       <img class="pose" id="introPose" src="adam-tennis-v2/hold-ball.webp" alt="">
       <span class="kicker" id="introKicker">Latihan 1</span>
-      <h2 id="introTitle"></h2>
+      <div class="itl"><h2 id="introTitle"></h2><button class="ibulb" id="introBulb" type="button" aria-expanded="false"><span class="ti" data-ti="bulb"></span></button></div>
+      <div class="fact" id="introFactBox" hidden><span id="introFact"></span></div>
       <div class="bubble" id="introTip"></div>
       <div class="howto"><span id="howIcon"></span><div id="introHow"></div></div>
-      <div class="fact"><span class="ft"><span class="ti" data-ti="bulb"></span>Tahukah kamu?</span><span id="introFact"></span></div>
       <div class="fhpick" id="fhPick">
         <span class="lbl"><span class="ti" data-ti="racket"></span>Gaya forehand Kak Adam</span>
         <div class="opts">
@@ -404,7 +428,7 @@ html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court
       </div>
     </div>
     <div class="row">
-      <button class="btn-sec" id="introSay">🔊 Dengar</button>
+      <button class="btn-sec" id="introSay" aria-label="Dengar"><svg class="say-ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.6 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
       <button class="btn-pri" id="introGo"><span class="ti" data-ti="ball"></span>Ayo Main!</button>
     </div>
   </div>
@@ -797,7 +821,7 @@ function openIntro(i){
   $("introTip").innerHTML=(window.BM_LANG==="en"?st.tipEn:st.tip);
   $("introHow").textContent=st.how;
   $("howIcon").innerHTML=tnIc(HICON[st.key]||"tap");
-  $("introFact").textContent=st.fact;
+  $("introFact").textContent=st.fact; $("introFactBox").hidden=true; $("introBulb").setAttribute("aria-expanded","false"); $("introBulb").setAttribute("aria-label",L("Tahukah kamu?","Did you know?")); $("introSay").setAttribute("aria-label",L("Dengar","Listen"));
   $("introPose").src="adam-tennis-v2/"+INTRO_POSE[i]+".webp";
   $("fhPick").style.display = /^(pantul|sisi|kaki|tanding)$/.test(st.key) ? "" : "none"; markFh();
   $("introBall").innerHTML=tnIc("ball-"+st.ball)+'<span>'+{red:"Bola merah",orange:"Bola oranye",green:"Bola hijau"}[st.ball]+'</span>';
@@ -1363,6 +1387,7 @@ $("certShare").addEventListener("click",function(){ try{
 
 /* ───────── wiring ───────── */
 $("introBack").addEventListener("click",function(){ renderMap(); show("s-map"); });
+$("introBulb").addEventListener("click",function(){ sfx("tap"); var b=$("introFactBox"), open=b.hidden; b.hidden=!open; this.setAttribute("aria-expanded",open?"true":"false"); if(open) say(T(STATIONS[CUR].fact)); });
 $("introSay").addEventListener("click",function(){ var st=STATIONS[CUR]; say(T(st.title)+". "+(window.BM_LANG==="en"?st.tipEn:st.tip).replace(/<[^>]+>/g,"")+" "+T(st.how)); });
 function markFh(){ var c=fhChoice(); $("fhPick").querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-fh")===c); }); }
 $("fhPick").querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){
