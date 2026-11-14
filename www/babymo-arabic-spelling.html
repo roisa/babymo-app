@@ -1404,11 +1404,26 @@ html[data-bm-theme="classic"] .cat-row .preview-chip{background:rgba(255,255,255
 @media (prefers-reduced-motion:reduce){.cat-bar{transition:none}}
 </style>
 <style id="bw-cats2">
-.cat-more{display:inline-flex;align-items:center;gap:2px;min-height:38px;padding:0 10px;border-radius:999px;border:1px solid rgba(16,185,129,.3);background:rgba(255,255,255,.85);color:#0E8F64;cursor:pointer;font:800 12px var(--f-body,inherit)}
-.cat-more svg{width:20px;height:20px;transition:transform .25s ease}
-.cat-more.open svg{transform:rotate(180deg)}
-.cat-more:active{transform:scale(.94)}
-html[data-bm-theme="classic"] .cat-more{background:rgba(255,255,255,.08);color:#7FE0B7;border-color:rgba(127,224,183,.3)}
+/* "more categories": the hidden chips slide + fade in one by one; a single round arrow that bobs and glows */
+.cat-extra{flex:0 0 100%;display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .5s cubic-bezier(.3,.8,.3,1),opacity .35s ease;margin-top:-7px}
+.cat-extra-in{overflow:hidden;display:flex;flex-wrap:wrap;justify-content:center;gap:7px;min-height:0}
+.cat-chips.open .cat-extra{grid-template-rows:1fr;opacity:1;margin-top:0}
+.cat-extra .preview-chip{opacity:0;transform:translateY(-8px) scale(.94);transition:opacity .3s ease,transform .35s cubic-bezier(.3,1.4,.5,1)}
+.cat-chips.open .cat-extra .preview-chip{opacity:1;transform:none}
+.cat-chips.open .cat-extra .preview-chip:nth-child(1){transition-delay:0.09s}.cat-chips.open .cat-extra .preview-chip:nth-child(2){transition-delay:0.13s}.cat-chips.open .cat-extra .preview-chip:nth-child(3){transition-delay:0.17s}.cat-chips.open .cat-extra .preview-chip:nth-child(4){transition-delay:0.21s}.cat-chips.open .cat-extra .preview-chip:nth-child(5){transition-delay:0.25s}.cat-chips.open .cat-extra .preview-chip:nth-child(6){transition-delay:0.29s}.cat-chips.open .cat-extra .preview-chip:nth-child(7){transition-delay:0.33s}.cat-chips.open .cat-extra .preview-chip:nth-child(8){transition-delay:0.37s}.cat-chips.open .cat-extra .preview-chip:nth-child(9){transition-delay:0.41s}.cat-chips.open .cat-extra .preview-chip:nth-child(10){transition-delay:0.45s}.cat-chips.open .cat-extra .preview-chip:nth-child(11){transition-delay:0.49s}
+.cat-more{position:relative;flex:0 0 auto;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;padding:0;cursor:pointer;margin-top:2px;
+  border:1px solid rgba(255,255,255,.9);color:#0E9F6E;
+  background:radial-gradient(circle at 50% 30%,#fff,rgba(236,253,245,.92));
+  box-shadow:0 8px 18px -8px rgba(16,150,100,.55),inset 0 1px 0 #fff;transition:transform .2s ease}
+.cat-more::before{content:"";position:absolute;inset:-4px;border-radius:50%;border:2px solid rgba(16,185,129,.45);animation:catRing 2.2s ease-out infinite;pointer-events:none}
+@keyframes catRing{0%{transform:scale(.9);opacity:.9}70%,100%{transform:scale(1.35);opacity:0}}
+.cat-more svg{width:24px;height:24px;transition:transform .45s cubic-bezier(.3,1.4,.5,1);animation:catBob 1.6s ease-in-out infinite}
+@keyframes catBob{0%,100%{translate:0 -1px}50%{translate:0 3px}}
+.cat-chips.open .cat-more svg{transform:rotate(180deg);animation:none}
+.cat-chips.open .cat-more::before{animation:none;opacity:0}
+.cat-more:hover{transform:translateY(-1px)}.cat-more:active{transform:scale(.9)}
+html[data-bm-theme="classic"] .cat-more{background:rgba(255,255,255,.1);color:#7FE0B7;border-color:rgba(127,224,183,.35);box-shadow:0 8px 18px -8px rgba(0,0,0,.6)}
+@media (prefers-reduced-motion:reduce){.cat-more::before,.cat-more svg{animation:none}.cat-extra,.cat-extra .preview-chip{transition:none}}
 </style>
 </head>
 
@@ -2677,13 +2692,18 @@ function buildCatChips() {
   const pick = SECTIONS.filter(function (x) { return done(x.id) === 0; })
     .concat(SECTIONS.filter(function (x) { const d = done(x.id); return d > 0 && d < 1; }).sort(function (a, b) { return done(a.id) - done(b.id); }))
     .concat(SECTIONS.filter(function (x) { return done(x.id) === 1; })).slice(0, 3);
-  const shown = catOpen ? SECTIONS : pick;
-  const more = '<button class="cat-more' + (catOpen ? ' open' : '') + '" type="button" id="catMore" aria-expanded="' + catOpen + '" aria-label="' + (catOpen ? L('Tutup kategori', 'Fewer categories') : L('Lihat semua kategori', 'See all categories')) + '">'
-    + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 6l5 5 5-5M7 13l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>'
-    + (catOpen ? '' : '<small>+' + (SECTIONS.length - 3) + '</small>') + '</button>';
-  document.getElementById('sectionChips').innerHTML = shown.map(chip).join('') + more;
+  const rest = SECTIONS.filter(function (x) { return pick.indexOf(x) < 0; });
+  const more = '<button class="cat-more" type="button" id="catMore" aria-expanded="' + catOpen + '" aria-label="' + (catOpen ? L('Tutup kategori', 'Fewer categories') : L('Lihat semua kategori', 'See all categories')) + '">'
+    + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9.5l6 6 6-6" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>';
+  const box = document.getElementById('sectionChips');
+  box.innerHTML = pick.map(chip).join('') + '<div class="cat-extra" id="catExtra"><div class="cat-extra-in">' + rest.map(chip).join('') + '</div></div>' + more;
+  box.classList.toggle('open', catOpen);
   document.getElementById('catRow').innerHTML = SECTIONS.map(chip).join('');
-  document.getElementById('catMore').onclick = function (e) { e.stopPropagation(); catOpen = !catOpen; buildCatChips(); };
+  document.getElementById('catMore').onclick = function (e) {
+    e.stopPropagation(); catOpen = !catOpen; spawnSparkles(this, 2);
+    box.classList.toggle('open', catOpen); this.setAttribute('aria-expanded', catOpen);
+    this.setAttribute('aria-label', catOpen ? L('Tutup kategori', 'Fewer categories') : L('Lihat semua kategori', 'See all categories'));
+  };
 }
 buildCatChips();
 document.addEventListener('click', function (e) {
