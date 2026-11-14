@@ -1425,6 +1425,76 @@ html[data-bm-theme="classic"] .cat-row .preview-chip{background:rgba(255,255,255
 html[data-bm-theme="classic"] .cat-more{background:rgba(255,255,255,.1);color:#7FE0B7;border-color:rgba(127,224,183,.35);box-shadow:0 8px 18px -8px rgba(0,0,0,.6)}
 @media (prefers-reduced-motion:reduce){.cat-more::before,.cat-more svg{animation:none}.cat-extra,.cat-extra .preview-chip{transition:none}}
 </style>
+<style id="bw-play">
+/* speaker + again buttons on the word card */
+.word-card{position:relative}
+.say-btn,.again-btn{position:absolute;top:10px;z-index:3;height:40px;border-radius:999px;border:1px solid rgba(255,255,255,.9);display:inline-flex;align-items:center;justify-content:center;gap:4px;cursor:pointer;
+  background:rgba(255,255,255,.92);color:#0E9F6E;box-shadow:0 6px 14px -8px rgba(16,120,80,.5)}
+.say-btn{right:10px;width:40px}.say-btn svg{width:22px;height:22px}
+.again-btn{left:10px;padding:0 12px 0 9px;font:800 13px var(--f-body,inherit);opacity:0;pointer-events:none;transform:scale(.8);transition:opacity .3s,transform .3s}
+.again-btn svg{width:18px;height:18px}
+.word-done .again-btn{opacity:1;pointer-events:auto;transform:none}
+.say-btn:active,.again-btn:active{transform:scale(.9)}
+.say-btn{animation:sayPulse 2.4s ease-in-out infinite}@keyframes sayPulse{50%{box-shadow:0 0 0 6px rgba(16,185,129,.18),0 6px 14px -8px rgba(16,120,80,.5)}}
+/* levels: medium hides the letter shadows and shows the word clearly; hard hides the word, speaks it, adds extra letters */
+.hard-ask{display:none;font:800 15px var(--f-body,inherit);color:#0E8F64;margin-top:10px}
+.lvl-medium .slot-ghost,.lvl-hard .slot-ghost{visibility:hidden}
+.lvl-medium .word-ghost{color:#14532D!important;opacity:.9}
+.lvl-hard .word-ghost,.lvl-hard #gameLatin{display:none}
+.lvl-hard .hard-ask{display:block}
+.lvl-hard.word-done .word-ghost{display:block;color:#14532D!important}
+.lvl-box{margin:16px auto 4px;max-width:460px;text-align:center}
+.lvl-k{font:800 11.5px var(--f-body,inherit);letter-spacing:.12em;text-transform:uppercase;color:var(--text-soft);margin-bottom:6px}
+.lvl-seg{display:flex;gap:6px;padding:5px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid rgba(16,185,129,.18);box-shadow:inset 0 1px 0 #fff}
+.lvl-b{flex:1;min-height:46px;border:0;border-radius:999px;background:transparent;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;color:var(--text);font:700 13px var(--f-body,inherit);transition:background .25s,color .25s,transform .2s}
+.lvl-b .lvl-st{display:flex;gap:1px}.lvl-b .lvl-st .wa{width:12px;height:12px}
+.lvl-b.on{background:linear-gradient(135deg,#34D399,#10B981);color:#fff;box-shadow:0 6px 14px -8px rgba(16,150,100,.7)}
+.lvl-b:active{transform:scale(.95)}
+.lvl-d{font-size:12.5px;color:var(--text-soft);margin-top:6px;font-weight:700}
+/* letters join into the word */
+#gameSlots{position:relative;transition:gap .45s ease}
+#gameSlots.joining{gap:0!important}
+#gameSlots.joining .slot{transition:all .45s ease;border-color:transparent!important;background:transparent!important;box-shadow:none!important}
+#gameSlots.joined .slot{opacity:0;transform:scale(.7)}
+.joined-word{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--f-arabic);font-weight:700;font-size:64px;line-height:1;direction:rtl;color:#0B6B3A;
+  opacity:0;transform:scale(.6);transition:opacity .45s ease,transform .55s cubic-bezier(.3,1.5,.5,1);pointer-events:none;text-shadow:0 4px 0 rgba(255,255,255,.9),0 10px 20px rgba(16,120,80,.25)}
+#gameSlots.joined .joined-word{opacity:1;transform:none}
+/* solid celebration bubble + picture burst */
+.toast{background:rgba(255,255,255,.97)!important;color:#14532D!important;border:2px solid #FCD34D!important;box-shadow:0 18px 40px -14px rgba(16,90,60,.45)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+.toast .toast-emoji .wa{width:38px;height:38px}
+html[data-bm-theme="classic"] .toast{background:#1F2A6E!important;color:#fff!important}
+.icon-burst{position:fixed;z-index:60;width:40px;height:40px;margin:-20px 0 0 -20px;pointer-events:none;animation:iconBurst 1.4s cubic-bezier(.2,.8,.3,1) forwards}
+.icon-burst .wa{width:40px!important;height:40px!important;display:block}
+@keyframes iconBurst{0%{transform:translate(0,0) scale(.3) rotate(0);opacity:0}15%{opacity:1}70%{opacity:1}100%{transform:translate(var(--x),var(--y)) scale(1) rotate(var(--r));opacity:0}}
+/* round break + album */
+.round-card{text-align:center;max-width:360px}
+.round-mo{width:120px;height:120px;object-fit:contain;margin:-60px auto 0;display:block;filter:drop-shadow(0 10px 12px rgba(0,0,0,.18))}
+.round-card h3{font:700 24px var(--f-display,inherit);margin:6px 0 10px;color:var(--text)}
+.round-stk{display:flex;justify-content:center;gap:6px;margin-bottom:10px}
+.round-stk span .wa{width:46px;height:46px;display:block;animation:stkPop .5s cubic-bezier(.3,1.6,.5,1) both}
+.round-stk span:nth-child(2) .wa{animation-delay:.08s}.round-stk span:nth-child(3) .wa{animation-delay:.16s}.round-stk span:nth-child(4) .wa{animation-delay:.24s}.round-stk span:nth-child(5) .wa{animation-delay:.32s}
+@keyframes stkPop{from{transform:scale(0) rotate(-20deg)}}
+.round-card p{color:var(--text-soft);font-weight:700;margin:0 0 14px}
+.round-go{width:100%;min-height:54px;border:0;border-radius:999px;background:linear-gradient(135deg,#34D399,#0EA5A0);color:#fff;font:800 17px var(--f-body,inherit);display:flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;box-shadow:0 10px 20px -10px rgba(16,150,100,.7)}
+.round-go .wa{width:22px;height:22px}
+.round-rest{margin-top:8px;width:100%;min-height:46px;border-radius:999px;border:1px solid rgba(16,185,129,.25);background:transparent;color:var(--text);font:700 15px var(--f-body,inherit);cursor:pointer}
+.loop-card.album .alb-peek{display:flex;width:74px;flex-wrap:wrap;gap:2px}.loop-card.album .alb-peek span .wa{width:34px;height:34px;display:block}
+html[data-bm-theme="bright"] .loop-card.album{background:linear-gradient(150deg,#FFF1F6,#F3EEFF);border-color:#F5B5CF}
+.album-card{max-width:520px;width:calc(100% - 24px);max-height:86vh;overflow-y:auto;text-align:left}
+.alb-hd{display:flex;align-items:center;gap:10px;position:sticky;top:-16px;background:inherit;padding:4px 0 10px;z-index:2}
+.alb-hd h3{font:700 22px var(--f-display,inherit);margin:0;color:var(--text)}.alb-hd span{font-weight:800;color:#0E8F64}
+.alb-x{margin-left:auto;width:38px;height:38px;border-radius:50%;border:0;background:rgba(127,127,127,.15);font-size:16px;cursor:pointer;color:var(--text)}
+.alb-sec{margin-top:12px}.alb-st{display:flex;align-items:center;gap:6px;margin-bottom:6px}.alb-st .wa{width:22px;height:22px}.alb-st b{color:var(--text)}.alb-st small{color:var(--text-soft);font-weight:800}
+.alb-badge{margin-left:auto;display:inline-flex;align-items:center;gap:4px;padding:3px 10px 3px 6px;border-radius:999px;background:linear-gradient(135deg,#FFE27A,#FFC21A);color:#6B4400;font-weight:800;font-size:12px}
+.alb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(64px,1fr));gap:8px}
+.alb-s{border:0;border-radius:16px;background:rgba(127,127,127,.08);padding:6px 2px 4px;display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer}
+.alb-s .wa{width:42px;height:42px;display:block;filter:grayscale(1) brightness(1.15);opacity:.35}
+.alb-s.on{background:#fff;box-shadow:0 6px 12px -8px rgba(30,60,110,.45)}.alb-s.on .wa{filter:none;opacity:1}
+.alb-s small{font-size:10.5px;font-weight:800;color:var(--text-soft)}
+html[data-bm-theme="classic"] .alb-s.on{background:rgba(255,255,255,.12)}
+.preview-chip.chip-done{border-color:#FCD34D!important}
+@media (prefers-reduced-motion:reduce){.say-btn,.round-stk span .wa{animation:none}#gameSlots,.joined-word{transition:none}}
+</style>
 </head>
 
 <body>
@@ -1484,7 +1554,9 @@ html[data-bm-theme="classic"] .cat-more{background:rgba(255,255,255,.1);color:#7
       <div class="section-preview cat-chips" id="sectionChips"></div>
     </header>
 
+    <div class="lvl-box" id="lvlBox"></div>
     <div class="loop-card" id="kotd" hidden></div>
+    <div class="loop-card album" id="albumCard"></div>
     <div class="loop-card speed" id="speedCard" hidden></div>
     <div class="cat-bar" id="catBar" aria-label="Kategori"><div class="cat-row" id="catRow"></div></div>
     <div id="menuSections"></div>
@@ -1505,6 +1577,9 @@ html[data-bm-theme="classic"] .cat-more{background:rgba(255,255,255,.1);color:#7
     <div class="speed-bar" id="speedBar" hidden><i></i></div>
 
     <div class="word-card" id="gameWordCard">
+      <button class="say-btn" type="button" id="btnSay" aria-label="Dengarkan kata"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z" fill="currentColor"/><path d="M15.2 9a4 4 0 0 1 0 6M17.6 6.6a7.4 7.4 0 0 1 0 10.8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>
+      <button class="again-btn" type="button" id="btnAgain" aria-label="Ulangi kata ini"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12a7 7 0 1 0 2.1-5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><path d="M5 4.5V9h4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Lagi</span></button>
+      <div class="hard-ask" id="hardAsk">Dengarkan, lalu susun!</div>
       <div class="word-emoji" id="gameEmoji" aria-hidden="true"></div>
       <div class="word-latin" id="gameLatin">Ummi</div>
       <div class="word-meaning" id="gameMeaning">ibu</div>
@@ -1585,6 +1660,8 @@ html[data-bm-theme="classic"] .cat-more{background:rgba(255,255,255,.1);color:#7
   <div class="cta-hint">106 Kata · 12 Kelompok</div>
 </div>
 
+<div class="sr-modal" id="roundModal" hidden><div class="sr-card round-card" id="roundCard"></div></div>
+<div class="sr-modal" id="albumModal" hidden><div class="sr-card album-card" id="albumBody"></div></div>
 <div class="sr-modal" id="srModal" hidden><div class="sr-card" id="srCard"></div></div>
 
 <div class="toast" id="toast" role="status" aria-live="polite">
@@ -2092,6 +2169,7 @@ function dailyDone() { try { return !!(window.BabyMo && BabyMo.daily && BabyMo.d
 function decorateMenu() {
   const r = kLoad();
   try { buildCatChips(); } catch (e) {}
+  try { renderAlbumCard(); renderLevels(); } catch (e) {}
   document.querySelectorAll('#menuSections .card').forEach(function (btn) {
     const w = WORDS[+btn.dataset.wordIndex], st = r.words[wordKey(w)] || 0;
     let row = btn.querySelector('.card-stars');
@@ -2125,7 +2203,7 @@ function decorateMenu() {
   sc.className = 'loop-card speed' + (open ? '' : ' locked');
   sc.innerHTML = '<span class="lc-k">' + bwIcon('bolt') + ' ' + L('Ronde Kilat', 'Speed Round') + '</span>'
     + '<div class="lc-row"><div class="lc-pic">' + bwIcon(open ? 'bolt' : 'lock') + '</div><div class="lc-tx">'
-    + '<div class="lc-t">' + (open ? L('Susun 5 kata sebelum waktunya habis!', 'Build 5 words before time runs out!') : L('Selesaikan 21 kata dulu', 'Finish 21 words first')) + '</div>'
+    + '<div class="lc-t">' + (open ? L('Susun 5 kata sebelum waktunya habis!', 'Build 5 words before time runs out!') : L('Susun 5 kata secepat kilat! Buka setelah 21 kata', 'Build 5 words at lightning speed! Opens after 21 words')) + '</div>'
     + (open ? '<div class="lc-s">' + (r.speed.best ? bwIcon('trophy') + ' ' + L('Skor terbaik: ', 'Best score: ') + r.speed.best : L('Belum ada skor — ayo coba!', 'No score yet — give it a go!')) + '</div>'
             : '<div class="lc-bar"><i style="width:' + Math.min(100, Math.round(100 * n / SPEED_UNLOCK)) + '%"></i></div><div class="lc-s">' + Math.min(n, SPEED_UNLOCK) + ' / ' + SPEED_UNLOCK + ' ' + L('kata', 'words') + '</div>')
     + '</div><button class="lc-go" type="button" id="speedGo"' + (open ? '' : ' aria-disabled="true"') + '>' + (open ? L('Main ▶', 'Play ▶') : bwIcon('lock')) + '</button></div>';
@@ -2322,6 +2400,7 @@ function renderMenu() {
 /* ----- Game ----- */
 function startGame(startIdx) {
   if (typeof startIdx !== 'number') startIdx = 0;
+  state.roundN = 0;
   cancelSpeech(); stopSpeed();
   state.mode = 'learn';
   state.currentIdx = startIdx;
@@ -2338,6 +2417,11 @@ function renderWord() {
   const pos = getSectionPosition(state.currentIdx);
   state.filled = word.letters.map(function () { return false; });
   state.wordWrong = 0;
+  state.tok = (state.tok || 0) + 1;
+  const vg = document.getElementById('viewGame');
+  vg.classList.remove('word-done', 'lvl-easy', 'lvl-medium', 'lvl-hard'); vg.classList.add('lvl-' + kLevel());
+  const sl = document.getElementById('gameSlots'); sl.classList.remove('joining', 'joined');
+  if (kLevel() === 'hard') { const t0 = state.tok; setTimeout(function () { if (t0 === state.tok) speakArabic(word.arabic, { rate: 0.8 }); }, 650); }
   if (state.mode === 'speed') speedHead();
 
   document.getElementById('gameSecIcon').innerHTML = secIcon(sec);
@@ -2374,7 +2458,8 @@ function renderWord() {
   markNextSlot();
   const poolEl = document.getElementById('gamePool');
   poolEl.innerHTML = '';
-  const shuffled = word.letters
+  const extra = kLevel() === 'hard' ? DISTRACT.filter(function (l) { return word.letters.indexOf(l) < 0; }).sort(function () { return Math.random() - 0.5; }).slice(0, 2) : [];
+  const shuffled = word.letters.concat(extra)
     .map(function (l, idx) { return { l: l, idx: idx }; })
     .sort(function () { return Math.random() - 0.5; });
   shuffled.forEach(function (entry) {
@@ -2557,22 +2642,28 @@ function onWordComplete() {
   });
 
   showToast('Masya Allah! <span class="toast-stars">' + bwStars(saved.stars) + '</span>', bwIcon('sparkle'));
+  document.getElementById('viewGame').classList.add('word-done');
+  if (window.BabyMo && BabyMo.react) try { BabyMo.react('win', { star: false, sound: false }); } catch (e) {}
+  if (saved.isNew) setTimeout(function () { if (tok === state.tok) showToast(L('Stiker baru!', 'New sticker!'), wordArt(word)); }, 1750);
+  const tok = state.tok;
 
   setTimeout(function () {
+    if (tok !== state.tok) return;
     speakWordSequence(
       word,
-      function () {
+      function () { setTimeout(function () {
+        if (tok !== state.tok) return;
         if (state.mode === 'daily') { finishDaily(word); return; }
-        const nextIdx = state.currentIdx + 1;
-        const sameSection = nextIdx < WORDS.length &&
-                            WORDS[nextIdx].section === word.section;
-        if (sameSection) {
+        const list = getSectionWords(word.section), nw = list[list.indexOf(word) + 1];
+        if (nw) {
+          const nextIdx = WORDS.indexOf(nw);
+          if (state.mode === 'learn' && ++state.roundN >= ROUND_N) { showRoundBreak(nextIdx); return; }
           state.currentIdx = nextIdx;
           renderWord();
         } else {
           showCompletion();
         }
-      },
+      }, 900); },
       function (letterIndex) {
         const slot = document.querySelector('.slot[data-index="' + letterIndex + '"]');
         if (!slot) return;
@@ -2582,7 +2673,9 @@ function onWordComplete() {
         setTimeout(function () { slot.classList.remove('speaking'); }, 600);
       },
       function () {
-        spawnCelebration(word.emoji);
+        if (tok !== state.tok) return;
+        joinLetters(word);
+        iconBurst(word);
         const card = document.getElementById('gameWordCard');
         card.classList.add('speaking-word');
         setTimeout(function () { card.classList.remove('speaking-word'); }, 1600);
@@ -2684,8 +2777,8 @@ let catOpen = false;
 function buildCatChips() {
   const r = kLoad();
   function chip(sec) {
-    const n = getSectionWords(sec.id).length;
-    return '<button class="preview-chip" type="button" data-target="' + sec.id + '"><span class="chip-ico">' + secIcon(sec) + '</span><b>' + n + '</b> <span>' + sec.name + '</span></button>';
+    const ws = getSectionWords(sec.id), n = ws.length, d = ws.filter(function (w) { return r.words[wordKey(w)]; }).length;
+    return '<button class="preview-chip' + (d === n ? ' chip-done' : '') + '" type="button" data-target="' + sec.id + '"><span class="chip-ico">' + secIcon(sec) + '</span><b>' + (d ? d + '/' + n : n) + '</b> <span>' + sec.name + '</span></button>';
   }
   function done(id) { const ws = getSectionWords(id); return ws.filter(function (w) { return r.words[wordKey(w)]; }).length / ws.length; }
   // unplayed first (in list order), then the least-finished ones
@@ -2730,11 +2823,117 @@ document.addEventListener('click', function (e) {
   window.addEventListener('scroll', onScroll, { passive: true }); window.addEventListener('resize', onScroll);
 })();
 
+
+/* ===== Gameplay upgrade: levels, rounds, joining letters, sticker album ===== */
+const ROUND_N = 5;
+const DISTRACT = ['ب','ت','س','م','ن','ل','ر','د','ك','ف','ق','ج','ه','و','ي','ع'];
+const LVKEY = 'bm_kata_level';
+function kLevel() { try { const v = localStorage.getItem(LVKEY); return v === 'medium' || v === 'hard' ? v : 'easy'; } catch (e) { return 'easy'; } }
+function setLevel(v) { try { localStorage.setItem(LVKEY, v); } catch (e) {} renderLevels(); }
+const LEVELS = [
+  { id: 'easy',   ic: 'star5', t: ['Mudah', 'Easy'],     d: ['Huruf ada bayangannya', 'Letter shadows help you'] },
+  { id: 'medium', ic: 'star5', t: ['Sedang', 'Medium'],  d: ['Baca katanya, tanpa bayangan', 'Read the word, no shadows'] },
+  { id: 'hard',   ic: 'star5', t: ['Sulit', 'Hard'],     d: ['Dengar katanya + huruf pengecoh', 'Listen + extra letters'] }
+];
+function renderLevels() {
+  const cur = kLevel(), box = document.getElementById('lvlBox'); if (!box) return;
+  box.innerHTML = '<div class="lvl-k">' + L('Tingkat', 'Level') + '</div><div class="lvl-seg" role="radiogroup">' + LEVELS.map(function (x, i) {
+    return '<button type="button" role="radio" aria-checked="' + (x.id === cur) + '" class="lvl-b' + (x.id === cur ? ' on' : '') + '" data-lv="' + x.id + '"><span class="lvl-st">' + Array(i + 2).join(bwIcon('star5')) + '</span><b>' + L(x.t[0], x.t[1]) + '</b></button>';
+  }).join('') + '</div><div class="lvl-d">' + L(LEVELS.find(function (x) { return x.id === cur; }).d[0], LEVELS.find(function (x) { return x.id === cur; }).d[1]) + '</div>';
+  box.querySelectorAll('.lvl-b').forEach(function (b) { b.onclick = function () { setLevel(b.dataset.lv); spawnSparkles(b, 3); }; });
+}
+function firstOpenIdx() {
+  const r = kLoad();
+  for (let i = 0; i < SECTIONS.length; i++) {
+    const w = getSectionWords(SECTIONS[i].id).find(function (x) { return !r.words[wordKey(x)]; });
+    if (w) return WORDS.indexOf(w);
+  }
+  return 0;
+}
+/* the separate letters slide together into the real, joined word */
+function joinLetters(word) {
+  const sl = document.getElementById('gameSlots');
+  let j = sl.querySelector('.joined-word');
+  if (!j) { j = document.createElement('div'); j.className = 'joined-word'; j.lang = 'ar'; sl.appendChild(j); }
+  j.textContent = word.arabic;
+  sl.classList.add('joining');
+  setTimeout(function () { sl.classList.add('joined'); }, 420);
+}
+/* themed celebration: the word's own picture bursts out of the card */
+function iconBurst(word) {
+  if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const card = document.getElementById('gameEmoji').getBoundingClientRect();
+  const cx = card.left + card.width / 2, cy = card.top + card.height / 2;
+  for (let i = 0; i < 9; i++) {
+    const el = document.createElement('div'); el.className = 'icon-burst'; el.innerHTML = wordArt(word);
+    const a = (i / 9) * Math.PI * 2 + Math.random() * .4, d = 90 + Math.random() * 70;
+    el.style.left = cx + 'px'; el.style.top = cy + 'px';
+    el.style.setProperty('--x', Math.cos(a) * d + 'px'); el.style.setProperty('--y', Math.sin(a) * d * .8 - 30 + 'px');
+    el.style.setProperty('--r', (Math.random() - .5) * 60 + 'deg'); el.style.animationDelay = i * 35 + 'ms';
+    document.body.appendChild(el); setTimeout(function () { el.remove(); }, 1700);
+  }
+}
+/* short rounds: a breather every 5 words */
+function showRoundBreak(nextIdx) {
+  const done = state.completedWords.slice(-ROUND_N), m = document.getElementById('roundModal');
+  const sec = getSection(WORDS[nextIdx].section), list = getSectionWords(sec.id), left = list.length - list.indexOf(WORDS[nextIdx]);
+  document.getElementById('roundCard').innerHTML =
+    '<img class="round-mo" src="baby-mo-poses/baby-mo-yeyy.webp" alt="">'
+    + '<h3>' + L('Hebat! 5 kata selesai', 'Great! 5 words done') + '</h3>'
+    + '<div class="round-stk">' + done.map(function (w) { return '<span>' + wordArt(w) + '</span>'; }).join('') + '</div>'
+    + '<p>' + L('Masih ada ' + left + ' kata ' + sec.name, left + ' more ' + (window.BM_T ? BM_T(sec.name) : sec.name) + ' words to go') + '</p>'
+    + '<button class="round-go" type="button" id="roundGo">' + bwIcon('crescent') + ' ' + L('Lanjut 5 kata lagi', 'Next 5 words') + '</button>'
+    + '<button class="round-rest" type="button" id="roundRest">' + L('Istirahat dulu', 'Take a break') + '</button>';
+  m.hidden = false;
+  try { window.BabyMo && BabyMo.react && BabyMo.react('win'); } catch (e) {}
+  document.getElementById('roundGo').onclick = function () { m.hidden = true; state.roundN = 0; state.currentIdx = nextIdx; renderWord(); };
+  document.getElementById('roundRest').onclick = function () { m.hidden = true; state.roundN = 0; cancelSpeech(); showView('Menu'); };
+}
+/* sticker album: every word built becomes a sticker; a full category earns a gold badge */
+function renderAlbumCard() {
+  const r = kLoad(), got = WORDS.filter(function (w) { return r.words[wordKey(w)]; });
+  const c = document.getElementById('albumCard'); if (!c) return;
+  c.innerHTML = '<span class="lc-k">' + bwIcon('star5') + ' ' + L('Album Stikerku', 'My Sticker Album') + '</span>'
+    + '<div class="lc-row"><div class="alb-peek">' + (got.length ? got.slice(-4).map(function (w) { return '<span>' + wordArt(w) + '</span>'; }).join('') : '<span class="alb-empty">' + bwIcon('star5off') + '</span>') + '</div>'
+    + '<div class="lc-tx"><div class="lc-t">' + got.length + ' / ' + WORDS.length + ' ' + L('stiker', 'stickers') + '</div>'
+    + '<div class="lc-bar"><i style="width:' + Math.round(100 * got.length / WORDS.length) + '%"></i></div></div>'
+    + '<button class="lc-go" type="button" id="albumGo">' + L('Lihat', 'Open') + '</button></div>';
+  document.getElementById('albumGo').onclick = openAlbum;
+}
+function openAlbum() {
+  const r = kLoad(), m = document.getElementById('albumModal');
+  const got = WORDS.filter(function (w) { return r.words[wordKey(w)]; }).length;
+  document.getElementById('albumBody').innerHTML = '<div class="alb-hd"><h3>' + L('Album Stikerku', 'My Sticker Album') + '</h3><span>' + got + ' / ' + WORDS.length + '</span>'
+    + '<button type="button" class="alb-x" id="albumX" aria-label="' + L('Tutup', 'Close') + '">✕</button></div>'
+    + SECTIONS.map(function (sec) {
+      const ws = getSectionWords(sec.id), d = ws.filter(function (w) { return r.words[wordKey(w)]; }).length;
+      return '<div class="alb-sec"><div class="alb-st">' + secIcon(sec) + '<b>' + sec.name + '</b><small>' + d + '/' + ws.length + '</small>' + (d === ws.length ? '<span class="alb-badge">' + bwIcon('trophy') + L('Lengkap!', 'Complete!') + '</span>' : '') + '</div>'
+        + '<div class="alb-grid">' + ws.map(function (w) { const on = !!r.words[wordKey(w)]; return '<button type="button" class="alb-s' + (on ? ' on' : '') + '" data-i="' + WORDS.indexOf(w) + '" aria-label="' + (on ? w.latin : '?') + '">' + wordArt(w) + (on ? '<small>' + w.latin + '</small>' : '<small>?</small>') + '</button>'; }).join('') + '</div></div>';
+    }).join('');
+  m.hidden = false;
+  document.getElementById('albumX').onclick = function () { m.hidden = true; };
+  m.onclick = function (e) { if (e.target === m) m.hidden = true; };
+  m.querySelectorAll('.alb-s').forEach(function (b) { b.onclick = function () {
+    const w = WORDS[+b.dataset.i];
+    if (b.classList.contains('on')) { speakArabic(w.arabic, { rate: .8 }); spawnSparkles(b, 3); }
+    else { m.hidden = true; startGame(+b.dataset.i); }
+  }; });
+}
+document.getElementById('btnSay').addEventListener('click', function (e) {
+  e.stopPropagation(); const w = WORDS[state.currentIdx]; if (!w) return;
+  speakArabic(w.arabic, { rate: .8 }); const c = document.getElementById('gameWordCard');
+  c.classList.add('speaking-word'); setTimeout(function () { c.classList.remove('speaking-word'); }, 1400);
+});
+document.getElementById('btnAgain').addEventListener('click', function (e) {
+  e.stopPropagation(); cancelSpeech(); state.completedWords.pop(); if (state.roundN) state.roundN--; renderWord();
+});
+renderLevels(); renderAlbumCard();
+
 document.getElementById('ctaStart').addEventListener('click', function (e) {
   cancelSpeech();
   spawnSparkles(e.currentTarget, 4);
   showToast('Bismillah!', bwIcon('crescent'));
-  setTimeout(function () { startGame(0); }, 700);
+  setTimeout(function () { startGame(firstOpenIdx()); }, 700);
 });
 
 document.getElementById('btnExitGame').addEventListener('click', function () {
