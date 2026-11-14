@@ -710,7 +710,7 @@
           '<g class="swing"><path d="M212-130v52" stroke="#8A6A4B" stroke-width="2"/><circle class="glow" cx="212" cy="-60" r="40" fill="url(#dsLampG)"/><path d="M194-62a18 16 0 0 1 36 0z" fill="#FF9A6A"/><path d="M198-66a14 10 0 0 1 10-8" stroke="#fff" stroke-width="3" fill="none" opacity=".6" stroke-linecap="round"/><circle cx="212" cy="-60" r="5" fill="#FFF3B0"/></g>' +
           band(40, "url(#dsFl)") + floorShine(40) +
           // table + cloth
-          shadow(110, 100, 150, 10) + '<rect x="0" y="54" width="12" height="50" rx="4" fill="#B97D4A"/><rect x="214" y="54" width="12" height="50" rx="4" fill="#B97D4A"/>' +
+          shadow(110, 100, 150, 10) + '<rect x="0" y="36" width="12" height="68" rx="4" fill="#B97D4A"/><rect x="214" y="36" width="12" height="68" rx="4" fill="#B97D4A"/>' +
           '<rect x="-30" y="22" width="276" height="22" rx="10" fill="url(#dsTop)"/>' +
           '<path d="M-34 16h284v20c-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-20 0-7 8-13 8-24 0z" fill="url(#dsCloth)"/>' +
           '<rect x="-34" y="14" width="284" height="6" rx="3" fill="#fff" opacity=".5"/>' +
