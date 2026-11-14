@@ -506,30 +506,33 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
           <g fill="url(#acTree)"><circle cx="160" cy="150" r="12"/><circle cx="176" cy="152" r="9"/><circle cx="250" cy="146" r="10"/></g>
           <!-- fence -->
           <g stroke="#3E8F6E" stroke-width="1.2" opacity=".55"><path d="M0 172H400M0 160H400"/><path d="M0 160v12M20 160v12M40 160v12M60 160v12M80 160v12M100 160v12M120 160v12M140 160v12M160 160v12M180 160v12M200 160v12M220 160v12M240 160v12M260 160v12M280 160v12M300 160v12M320 160v12M340 160v12M360 160v12M380 160v12M400 160v12"/></g>
-          <!-- court in perspective, seen from behind our baseline: green apron, teal court, real lines
-               (doubles + singles sidelines, far baseline, both service lines, centre service line, net across) -->
-          <path d="M70 168H330L460 300H-60Z" class="apron"/>
-          <path d="M100 176H300L370 300H30Z" fill="url(#acCourt)"/>
-          <g stroke="#fff" stroke-width="2.6" fill="none" stroke-linejoin="round">
-            <path d="M100 176H300L370 300M100 176L30 300"/>
-            <path d="M116 176L50 300M284 176L350 300"/>
-            <path d="M108.5 190H291.5M75.5 252H324.5"/>
-            <path d="M200 190V252"/><path d="M200 176v4"/>
+          <!-- court seen from the side at three-quarter view (like the reference): the court runs left→right, the net
+               crosses it on the right going away from us; real markings: baselines, doubles + singles sidelines,
+               the service line and the centre service line meeting the net -->
+          <path d="M8 170H420V300H-70Z" class="apron"/>
+          <path d="M22 178H420V298H-38Z" fill="url(#acCourt)"/>
+          <g stroke="#fff" stroke-width="2.6" fill="none" stroke-linejoin="round" stroke-linecap="round">
+            <path d="M22 178H420M-38 298H420"/>
+            <path d="M18 186H420M-30 282H420" stroke-width="2.2"/>
+            <path d="M22 178L-38 298"/>
+            <path d="M196 186L213 282"/>
+            <path d="M204.5 234H343"/>
+            <path d="M14 238l8 0" stroke-width="2.2"/>
           </g>
-          <!-- the net across the court -->
+          <!-- the net: far post small, near post big; mesh, white tape, shadow -->
           <g>
-            <path d="M83 206H317V224H83Z" fill="rgba(20,40,70,.22)"/>
-            <g stroke="rgba(30,50,90,.5)" stroke-width=".7"><path d="M83 210.5H317M83 215H317M83 219.5H317"/><path d="M93 206v18M103 206v18M113 206v18M123 206v18M133 206v18M143 206v18M153 206v18M163 206v18M173 206v18M183 206v18M193 206v18M203 206v18M213 206v18M223 206v18M233 206v18M243 206v18M253 206v18M263 206v18M273 206v18M283 206v18M293 206v18M303 206v18M313 206v18"/></g>
-            <path d="M80 205.5Q200 208 320 205.5" stroke="#fff" stroke-width="3.2" fill="none" stroke-linecap="round"/>
-            <rect x="75" y="200" width="4.5" height="26" rx="1.6" fill="#E8EEF5"/><rect x="320.5" y="200" width="4.5" height="26" rx="1.6" fill="#E8EEF5"/>
-            <ellipse cx="200" cy="226" rx="118" ry="3" fill="rgba(0,0,0,.08)"/>
+            <path d="M330 178L330 160L357 270L357 298Z" fill="rgba(20,40,70,.22)"/>
+            <g stroke="rgba(30,50,90,.45)" stroke-width=".7"><path d="M330 164L357 278M330 168L357 286M330 172L357 292"/><path d="M333 160v18M336 172v19M339 184v20M342 196v21M345 209v22M348 221v23M351 233v24M354 246v25"/></g>
+            <path d="M330 160L357 270" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            <rect x="328" y="156" width="4" height="24" rx="1.5" fill="#E8EEF5"/><rect x="355" y="264" width="6" height="36" rx="2" fill="#E8EEF5"/>
+            <path d="M332 178L362 298" stroke="rgba(0,0,0,.1)" stroke-width="4"/>
           </g>
-          <!-- ball cart on the apron, spare balls, a bouncing ball -->
-          <g transform="translate(338 200) scale(.78)"><path d="M0 0h48l-5 30H5z" fill="none" stroke="#2E6BE6" stroke-width="2.6"/><path d="M6 6h36M4 14h40M5 22h38" stroke="#2E6BE6" stroke-width="1" opacity=".5"/>
+          <!-- ball cart past the net, spare balls, a bouncing ball -->
+          <g transform="translate(376 190) scale(.7)"><path d="M0 0h48l-5 30H5z" fill="none" stroke="#2E6BE6" stroke-width="2.8"/><path d="M6 6h36M4 14h40M5 22h38" stroke="#2E6BE6" stroke-width="1" opacity=".5"/>
             <g fill="url(#acBall)"><circle cx="10" cy="-2" r="7"/><circle cx="24" cy="-5" r="7"/><circle cx="38" cy="-2" r="7"/><circle cx="17" cy="-12" r="7"/><circle cx="31" cy="-12" r="7"/></g>
             <circle cx="8" cy="34" r="3.5" fill="#2E6BE6"/><circle cx="40" cy="34" r="3.5" fill="#2E6BE6"/></g>
-          <ellipse cx="34" cy="268" rx="10" ry="3" fill="rgba(0,0,0,.15)"/><circle class="ac-bounce" cx="34" cy="258" r="9" fill="url(#acBall)"/>
-          <circle cx="372" cy="276" r="8" fill="url(#acBall)"/><ellipse cx="372" cy="285" rx="8" ry="2.4" fill="rgba(0,0,0,.15)"/>
+          <ellipse cx="78" cy="268" rx="10" ry="3" fill="rgba(0,0,0,.15)"/><circle class="ac-bounce" cx="78" cy="258" r="9" fill="url(#acBall)"/>
+          <circle cx="296" cy="270" r="8" fill="url(#acBall)"/><ellipse cx="296" cy="279" rx="8" ry="2.4" fill="rgba(0,0,0,.15)"/>
           <!-- life: grass tufts and flowers on the apron, birds, butterflies -->
           <g fill="#6CBF5E"><path d="M8 232l3-8 3 8zM14 234l2-6 2 6zM384 236l3-8 3 8zM392 240l2-6 2 6z"/></g>
           <g><circle cx="22" cy="236" r="3" fill="#FF8FB1"/><circle cx="22" cy="236" r="1.2" fill="#FFE066"/><circle cx="380" cy="248" r="3" fill="#FFD23F"/><circle cx="380" cy="248" r="1.2" fill="#fff"/></g>
