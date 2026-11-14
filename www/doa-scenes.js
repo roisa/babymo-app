@@ -363,8 +363,8 @@
     "@keyframes lhHop{0%,100%{transform:none}35%{transform:scale(1.05,.92)}70%{transform:translateY(calc(var(--u,1px)*-8))}}",
 
     /* 5 · riding: the seatbelt slides across and clicks, the engine starts, the town rolls by */
-    pre(".v-belt", "stroke-dashoffset:84"), run(".v-belt", "animation:vBelt .5s cubic-bezier(.4,0,.2,1) .05s both"),
-    "@keyframes vBelt{from{stroke-dashoffset:84}to{stroke-dashoffset:0}}",
+    pre(".v-belt", "stroke-dashoffset:72"), run(".v-belt", "animation:vBelt .5s cubic-bezier(.4,0,.2,1) .05s both"),
+    "@keyframes vBelt{from{stroke-dashoffset:72}to{stroke-dashoffset:0}}",
     pre(".v-speed,.v-puff", "opacity:0"),
     run(".v-wheel", "animation:dsSpin .6s linear 1.05s infinite"),
     run(".v-dash", "animation:dsDash .9s linear 1.05s infinite"),
@@ -374,8 +374,8 @@
     run(".v-speed", "animation:dsSpeed .8s ease-in 1.1s infinite"), run(".v-speed.v2", "animation-delay:1.37s"), run(".v-speed.v3", "animation-delay:1.64s"),
     run(".v-puff", "animation:vPuff 1.1s ease-out var(--d,1s) infinite"),
     "@keyframes vPuff{0%{opacity:0;transform:scale(.4)}25%{opacity:.85}100%{opacity:0;transform:translate(-28px,-12px) scale(1.5)}}",
-    run(".v-bump", "animation:vStart .55s ease-out .8s both,dsBump .45s ease-in-out 1.35s infinite alternate"),
-    "@keyframes vStart{0%,100%{transform:none}30%{transform:translate(5px,-5px) rotate(-1.6deg)}65%{transform:translate(-2px,0) rotate(.6deg)}}",
+    run(".v-bump", "animation:vStart 1.1s cubic-bezier(.2,.7,.3,1) .5s both,dsBump .45s ease-in-out 1.6s infinite alternate"),
+    "@keyframes vStart{0%{transform:translateX(-150px)}70%{transform:translateX(6px) rotate(-.8deg)}85%{transform:translateX(-2px) rotate(.3deg)}100%{transform:none}}",
     mo("vehicle", "animation:dsBump .45s ease-in-out 1.35s infinite alternate"),
     "#sceneCard.ds.acted[data-scene=vehicle] .scene-fx{animation:dsBump .45s ease-in-out 1.35s infinite alternate}",
 
@@ -908,12 +908,14 @@
           '<g transform="translate(-56 92)">' + shadow(0, 0, 10, 2.4) + '<rect x="-2.5" y="-90" width="5" height="90" fill="#A9B2BE"/><circle cx="0" cy="-90" r="14" fill="#3A8EE6" stroke="#fff" stroke-width="3"/><path d="M-6-90h12M2-95l5 5-5 5" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></g>' +
           sparkle(266, -40, 0.8, "twinkle", "#fff") + sparkle(120, -84, 0.6, "twinkle t2", "#fff") + tree(470, 92, 1);
       },
-      // front layer: the seatbelt across Mo, buckled with a click
+      // front layer: a soft seatbelt strap across Mo (shoulder to hip), clicked into a metal buckle
       fx: function () {
-        return '<path class="v-belt" d="M322 34L366 90" stroke="#34405A" stroke-width="8" stroke-linecap="round" stroke-dasharray="84"/>' +
-          '<path class="axfade" style="--d:.45s;--t:.2s" d="M322 34L366 90" stroke="#6A7A9A" stroke-width="2" stroke-linecap="round" stroke-dasharray="3 4"/>' +
-          at("axpop", 0.5, '<rect x="356" y="80" width="20" height="13" rx="4" fill="#C9D1DC" stroke="#8792A2" stroke-width="1.6" transform="rotate(52 366 86)"/><rect x="361" y="84" width="10" height="5" rx="2" fill="#E5484D" transform="rotate(52 366 86)"/>') +
-          burst(366, 86, 13, "#FFE07A", 0.55);
+        var P = "M326 30Q340 58 364 86";
+        return '<path class="v-belt" d="' + P + '" stroke="#2F3A52" stroke-width="10" stroke-linecap="round" fill="none" stroke-dasharray="72"/>' +
+          '<path class="axfade" style="--d:.45s;--t:.2s" d="' + P + '" stroke="#5B6A8C" stroke-width="2" stroke-linecap="round" fill="none" opacity=".9"/>' +
+          '<path class="axfade" style="--d:.45s;--t:.2s" d="M324 31Q338 58 361 87" stroke="#7F8DAE" stroke-width="1.2" fill="none" stroke-dasharray="2 3" opacity=".7"/>' +
+          at("axpop", 0.5, '<g transform="translate(366 88) rotate(48)"><rect x="-11" y="-7" width="22" height="14" rx="4" fill="#DDE3EC" stroke="#8A95A6" stroke-width="1.6"/><rect x="-6" y="-3" width="12" height="6" rx="2" fill="#E5484D"/><rect x="-9" y="-6" width="18" height="3" rx="1.5" fill="#fff" opacity=".7"/></g>') +
+          burst(366, 88, 13, "#FFE07A", 0.55);
       }
     },
 
