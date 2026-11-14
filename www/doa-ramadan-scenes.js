@@ -389,10 +389,12 @@
           '<g fill="#fff">' + stars(SKYSTARS) + "</g>" + crescent(352, -94, 13, 0.36, -40, "url(#dsGold)") +
           '<circle cx="352" cy="-94" r="36" fill="url(#dsRmGlow)" opacity=".6"/>' +
           '<path d="M-800-6Q0-20 140-8T420-10Q800-20 1200-6V300H-800Z" fill="#2E2A72"/>' +
-          mosque(150, 40, 0.98, "dsRmDomeG", "#FFE08A", "") +
-          '<circle class="glow" cx="150" cy="16" r="40" fill="url(#dsRmGlow)" opacity=".7"/>' +
           band(40, "url(#dsRwYard)") + floorShine(40) +
           '<g opacity=".35">' + [0, 1, 2, 3, 4, 5, 6, 7, 8].map(function (k) { return '<path d="M' + (k * 56 - 40) + ' 40L' + (k * 76 - 140) + ' 180" stroke="#7E78D0" stroke-width="2"/>'; }).join("") + '<path d="M-800 80H1200M-800 130H1200" stroke="#7E78D0" stroke-width="2"/></g>' +
+          // the mosque stands ON the courtyard (its base in the yard, with a soft ground shadow)
+          '<ellipse cx="150" cy="62" rx="96" ry="8" fill="#24215E" opacity=".45"/>' +
+          mosque(150, 60, 0.98, "dsRmDomeG", "#FFE08A", "") +
+          '<circle class="glow" cx="150" cy="36" r="40" fill="url(#dsRmGlow)" opacity=".7"/>' +
           // a porch beam with three lanterns that light up one by one (× 3 dhikr)
           '<path d="M-10-112Q200-96 410-112" fill="none" stroke="#B9781C" stroke-width="2"/>' +
           lantern(36, -108, 46, 0.9, "dsRmGa", { dim: true, d: 0.25 }) + lantern(260, -104, 38, 0.9, "dsRmGc", { dim: true, d: 0.95 }) + lantern(392, -110, 50, 0.9, "dsRmGb", { dim: true, d: 1.65 }) +
@@ -564,9 +566,9 @@
       // 8 qadr: a calm breath
       K.mo("r_qadr", "animation:rCalm 1.6s ease-in-out .2s both"),
       // 9 zakat: the sack slides to the booth
-      geo(".rz-sack", "transform-box:view-box;transform:translate(-112px,-86px)"), pre(".rz-sack", "transform:none"),
+      geo(".rz-sack", "transform-box:view-box;transform:translate(-112px,-74px)"), pre(".rz-sack", "transform:none"),
       run(".rz-sack", "animation:rzSack 1.05s cubic-bezier(.45,.05,.35,1) .1s both"),
-      "@keyframes rzSack{0%{transform:none}20%{transform:translate(-8px,-6px)}70%{transform:translate(-96px,-110px)}85%{transform:translate(-112px,-82px)}93%{transform:translate(-112px,-89px)}100%{transform:translate(-112px,-86px)}}",
+      "@keyframes rzSack{0%{transform:none}20%{transform:translate(-8px,-6px)}70%{transform:translate(-96px,-104px)}85%{transform:translate(-112px,-70px)}93%{transform:translate(-112px,-77px)}100%{transform:translate(-112px,-74px)}}",
       // 10 Eid: Mo hops in for the hug; Abi, Umi and Ais lean in
       geo(".re-abi,.re-umi,.re-ais", "transform-box:fill-box;transform-origin:50% 100%"),
       run(".re-abi", "animation:pAbi .7s " + SPRING + " .9s both"), run(".re-umi", "animation:pUmi .7s " + SPRING + " .85s both"), run(".re-ais", "animation:lhHop .5s " + SPRING + " .8s both"),
