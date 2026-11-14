@@ -211,10 +211,13 @@
           '<g class="rh-cloud" opacity="0">' + cloud(116, -54, 0.8, "", 0.95, "#B48BC8") + "</g>" +
           bird(250, -56, 0.8, "#3A2A5A") + bird(272, -46, 0.6, "#3A2A5A", "k2") +
           // far hills with a little town and its mosque
+          // each building sits just into the far ridge (the hill is drawn over its base)
+          '<g fill="#4A2F78"><g transform="translate(0 -2)"><rect x="28" y="-16" width="44" height="24" rx="3"/><path d="M32-16a18 18 0 0 1 36 0z"/><path d="M50-34v-7" stroke="#4A2F78" stroke-width="1.6"/></g>' +
+          '<g transform="translate(0 -4)"><rect x="78" y="-42" width="7" height="50" rx="2.5"/><path d="M76-42l5.5-10 5.5 10z"/></g>' +
+          '<g transform="translate(0 -5)"><rect x="164" y="-6" width="30" height="18" rx="2"/><path d="M160-6l19-12 19 12z"/></g>' +
+          '<g transform="translate(0 -10)"><rect x="214" y="-2" width="24" height="14" rx="2"/><path d="M211-2l15-9 15 9z"/></g></g>' +
+          '<g fill="#FFD87A"><rect x="45" y="-10" width="9" height="12" rx="4.5"/><rect class="glow" x="170" y="-5" width="6" height="6" rx="1"/><rect class="glow" x="182" y="-5" width="6" height="6" rx="1"/><rect class="glow" x="222" y="-8" width="6" height="5" rx="1"/></g>' +
           '<path d="M-800 18Q-100-6 0 10Q90-10 170 4Q260-12 330 2Q380-8 420 0Q700-14 1200 6V300H-800Z" fill="url(#dsRhH1)"/>' +
-          '<g fill="#4A2F78"><rect x="28" y="-16" width="44" height="22" rx="3"/><path d="M32-16a18 18 0 0 1 36 0z"/><rect x="78" y="-42" width="7" height="48" rx="2.5"/><path d="M76-42l5.5-10 5.5 10z"/><path d="M50-34v-7" stroke="#4A2F78" stroke-width="1.6"/>' +
-          '<rect x="164" y="-6" width="30" height="16" rx="2"/><path d="M160-6l19-12 19 12z"/><rect x="214" y="-2" width="24" height="12" rx="2"/><path d="M211-2l15-9 15 9z"/></g>' +
-          '<g fill="#FFD87A"><rect x="45" y="-8" width="9" height="12" rx="4.5"/><rect class="glow" x="170" y="0" width="6" height="6" rx="1"/><rect class="glow" x="182" y="0" width="6" height="6" rx="1"/><rect class="glow" x="222" y="2" width="6" height="5" rx="1"/></g>' +
           '<path d="M-800 40Q-100 20 0 34Q120 14 240 30Q330 18 420 28Q700 14 1200 30V300H-800Z" fill="url(#dsRhH2)"/>' +
           // Mo's hill
           '<path d="M-800 90Q-60 70 60 96Q190 118 300 112Q380 108 460 98Q800 80 1200 96V300H-800Z" fill="url(#dsRhH3)"/>' + floorShine(300) +
