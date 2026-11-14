@@ -363,7 +363,7 @@
           lantern(26, -120, 30, 0.8, "dsRmGb", {}) + lantern(380, -120, 36, 0.8, "dsRmGc", {}) +
           band(40, "url(#dsRhFl)") + floorShine(40) +
           // Umi, the host, behind a long table full of iftar food
-          person("family/umi-welcome.webp", 98, 60, 168, 173 / 420, [0, 0, 1, 1], "rh-umi") +
+          person("family/umi-welcome.webp", 98, 98, 172, 173 / 420, [0, 0, 1, 1], "rh-umi") +
           shadow(176, 108, 150, 9) +
           '<rect x="34" y="62" width="10" height="44" rx="4" fill="url(#dsRmWoodD)"/><rect x="262" y="62" width="10" height="44" rx="4" fill="url(#dsRmWoodD)"/>' +
           '<rect x="22" y="50" width="262" height="14" rx="6" fill="url(#dsRmWood)"/><path d="M28 48h250l6 22H22z" fill="url(#dsRhCl)"/><path d="M26 70h256" stroke="#FFB0C8" stroke-width="3" stroke-dasharray="6 5"/>' +
