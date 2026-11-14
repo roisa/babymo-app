@@ -362,6 +362,22 @@ html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court
 @media (max-height:760px){#s-intro .intro-stand{height:176px}#s-intro .intro-stand>img.pose{height:190px!important}}
 @media (max-height:600px){#s-intro .intro-stand{height:132px}#s-intro .intro-stand>img.pose{height:144px!important}#s-intro .intro-stand::after{width:110px;margin-left:-55px}#s-intro .intro-stand+.card{padding-top:12px}#s-intro .itl{margin:0}#s-intro .itl h2{font-size:26px}}
 </style>
+<style>
+/* ── tennis consistency pass ── */
+/* every pose is drawn at the same body scale (some art frames were drawn smaller): set on load, see ADAM_SCALE */
+img[data-adam-pose]{transform-origin:50% 93.3%}
+.adam img{transform-origin:50% 93.3%}
+/* serve: he is far away at the baseline, so a little smaller, and the toss stays below the top edge */
+.adam.serve{scale:.85;transform-origin:50% 93.3%}
+/* feedback pops sit on the near side of the court, clear of Kak Adam, the net and the ball; text sized to the court */
+.pop{top:70%;font-size:clamp(17px,5.2cqw,25px)}
+.pop.tip{font-size:clamp(15px,4.4cqw,19px)}
+.stage.vnet .pop{top:70%}
+/* serve power bar on the left, above the bench (it covered the umpire chair) */
+.meter{right:auto;left:10px;top:16%;bottom:52%}
+/* certificate buttons on one line */
+#certShare,#certMap{white-space:nowrap}
+</style>
 </head>
 <body>
 
@@ -394,12 +410,7 @@ html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court
       <img src="adam-tennis-v2/wave-1.webp" alt="">
       <div><span class="kicker"><span class="ti" data-ti="racket"></span>Baby Mo · Tenis</span></div>
       <h1>Akademi Tenis Kak Adam</h1>
-      <p class="sub">Belajar tenis langkah demi langkah bersama Kak Adam — dari bola merah sampai pertandingan pertamamu!</p>
-      <div class="balls">
-        <span class="bchip"><i style="background:#FF5A4A"></i>Bola merah</span>
-        <span class="bchip"><i style="background:#FF9A3C"></i>Bola oranye</span>
-        <span class="bchip"><i style="background:#C8E83A"></i>Bola hijau</span>
-      </div>
+      <p class="sub">Belajar tenis bersama Kak Adam!</p>
     </div>
     <div class="loopbox" id="loopBox"></div>
     <div class="path" id="path"></div>
@@ -554,7 +565,7 @@ html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court
       <div class="stars" id="resStars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
       <p class="sub" id="resLine" style="margin:0 auto"></p>
       <div class="res-drill" id="resDrill" hidden></div>
-      <div class="fact"><span class="ft"><span class="ti" data-ti="racket"></span>Yang kamu pelajari</span><span id="resLearn"></span></div>
+      <span id="resLearn" hidden></span>
     </div>
     <div class="bm-wa">
       <button class="bm-wa-pri" id="resNext">Lanjut →</button>
@@ -579,10 +590,10 @@ html[data-bm-theme="dark"] #tn-court .tb,html[data-bm-theme="classic"] #tn-court
       <p>sudah menyelesaikan latihan bola merah, oranye, dan hijau, lalu bertanding dengan sportif. Masya Allah!</p>
       <div class="seal"><i style="background:#FF5A4A"></i><i style="background:#FF9A3C"></i><i style="background:#C8E83A"></i></div>
     </div>
-    <div class="rackets" id="rackets"><div class="rl">🎾 Hadiah: warna raket baru!</div><div class="ro"></div></div>
+    <div class="rackets" id="rackets"><div class="rl">🎾 Hadiah: pilih warna tombol raketmu!</div><div class="ro"></div></div>
     <div class="row">
-      <button class="btn-sec" id="certShare">📤 Bagikan</button>
-      <button class="btn-pri" id="certMap">🗺 Peta Latihan</button>
+      <button class="btn-sec" id="certShare">Bagikan</button>
+      <button class="btn-pri" id="certMap">Peta Latihan</button>
     </div>
   </div>
 </section>
@@ -701,7 +712,7 @@ var STATIONS = [
     learn:"Forehand dipukul dari sisi tangan yang memegang raket, backhand dari sisi lainnya. Backhand dua tangan lebih kuat dan stabil untuk anak-anak." },
   { key:"voli", tipEn:"Now I stand <b>close to the net</b>. A volley means hitting the ball <b>before it bounces</b>! Hold the <b>racket in front of your face</b> like a STOP sign, then <b>punch it short</b> — no big swing. <b>Don't wait for the bounce!</b>", icon:"👊", ball:"red", title:"Voli di Net", short:"Pukul sebelum bola memantul",
     tip:"Sekarang Kakak berdiri <b>dekat net</b>. Voli artinya memukul bola <b>sebelum memantul</b>! <b>Raket di depan wajah</b> seperti tanda STOP, lalu <b>pukul pendek seperti meninju</b> — jangan ayun besar. <b>Jangan tunggu memantul!</b>",
-    how:"Ketuk VOLI saat bola terbang sampai di depan Kak Adam — sebelum memantul! Mulai sisi forehand, lalu backhand, lalu campur.", howIcon:"👊",
+    how:"Ketuk VOLI saat bola sampai di depan Kak Adam — sebelum memantul!", howIcon:"👊",
     fact:"Pemain tenis maju ke net untuk voli supaya lawan punya lebih sedikit waktu. Voli itu pukulan pendek: langkah maju, pergelangan tangan kokoh, dan bola dipukul di depan badan.",
     learn:"Voli artinya memukul bola sebelum memantul, biasanya dekat net. Raket siap di depan wajah, pukul pendek seperti meninju di depan badan, lalu kembali ke posisi siap." },
   { key:"kaki", tipEn:"The orange ball is faster! Look for the <b>circle</b> where the ball will land, then <b>move your feet</b> there before it arrives.", icon:"👟", ball:"orange", title:"Kaki Lincah", short:"Bergerak dulu, baru memukul",
@@ -716,8 +727,8 @@ var STATIONS = [
     learn:"Servis dipukul di titik tertinggi lemparan dan harus masuk ke kotak servis lawan." },
   { key:"tanding", tipEn:"Time for a match against <b>Raka</b>! You're watching from Raka's side. Return every ball with a forehand or backhand.", icon:"🏆", ball:"green", title:"Pertandingan Pertama", short:"Main satu game melawan Raka",
     tip:"Waktunya bertanding melawan <b>Raka</b>! Kamu melihat dari sisi Raka. Kembalikan setiap bola dengan forehand atau backhand.",
-    how:"Menangkan satu game. Skor tenis: Love (0), 15, 30, 40, lalu Game!", howIcon:"🎾",
-    fact:"Dalam tenis, nol disebut 'love'. Kalau skor 40-40 namanya 'deuce' — pemain harus menang dua poin berturut-turut.",
+    how:"Menangkan satu game melawan Raka!", howIcon:"🎾",
+    fact:"Skor tenis: Love (0), 15, 30, 40, lalu Game! Kalau skor 40-40 namanya 'deuce' — pemain harus menang dua poin berturut-turut.",
     learn:"Skor tenis: love, 15, 30, 40, game. Menang atau kalah, pertandingan selalu ditutup dengan salaman di net." }
 ];
 var SPEED = { red:2.3, orange:1.75, green:1.45 };   // seconds per incoming ball
@@ -1243,7 +1254,7 @@ function setupServis(){
   stage.onclick=serveHit;
   pop("Siap?","tip",900); nextBall(toss,1100);
 }
-var TOSS={x:209, base:194, hand:278, peak:100}; /* tuned to the blue-racket serve frames, Adam at the serving spot */ /* tuned to the blue-racket serve frames */
+var SRV_S=.85, TOSS={x:168+(209-168)*SRV_S, base:194, hand:278*SRV_S, peak:100*SRV_S}; /* tuned to the blue-racket serve frames, Adam at the serving spot */ /* tuned to the blue-racket serve frames */
 function toss(){
   if(!G||G.over) return;
   G.tossing=true; G.tp=0; pose("serve-blue-2");
@@ -1415,5 +1426,17 @@ document.addEventListener("visibilitychange",function(){ if(!document.hidden && 
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
+<script>
+/* Kak Adam's art frames come at three body scales; scale each pose so he is the same size everywhere (feet stay put) */
+(function(){
+  var S={"wave-1":1.22,"wave-3":1.22,"hold-ball":1.1,"win-fist-r":1.1,"celebrate-3":1.13,"sad-miss":1.1,"oops-1":1.12,"oops-2":1.06,
+    "shuffle-1":1.2,"shuffle-2":1.2,"shuffle-3":1.2,"shuffle-4":1.2,"shuffle-5":1.2,"shuffle-6":1.2};
+  function fix(img){ var m=/adam-tennis-v2\/([\w-]+)\.webp/.exec(img.getAttribute('src')||''); if(!m) return;
+    img.setAttribute('data-adam-pose',m[1]); var k=S[m[1]]||1; img.style.scale=k===1?'':String(k); }
+  document.addEventListener('load',function(e){ if(e.target&&e.target.tagName==='IMG') fix(e.target); },true);
+  new MutationObserver(function(ms){ ms.forEach(function(m){ if(m.target.tagName==='IMG') fix(m.target); }); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['src']});
+  document.querySelectorAll('img').forEach(fix);
+})();
+</script>
 </body>
 </html>
