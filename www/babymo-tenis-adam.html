@@ -512,29 +512,48 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
           <path d="M0 150Q70 112 150 134T300 118T400 128" stroke="#fff" stroke-width="2" fill="none" opacity=".35"/>
           <g class=""><ellipse cx="265.25" cy="148.15" rx="14.3" ry="3.6400000000000006" fill="rgba(20,60,30,.22)" filter="url(#acSoft)"/><path d="M260.44 133.2h3.12l0.78 14.95h-4.68z" fill="url(#acTrunk)"/><circle cx="256.15" cy="129.95" r="9.1" fill="url(#acLeafD)"/><circle cx="268.5" cy="130.6" r="8.84" fill="url(#acLeafD)"/><circle cx="262" cy="124.75" r="11.049999999999999" fill="url(#acLeaf)"/><ellipse cx="258.1" cy="120.2" rx="3.9" ry="2.34" fill="#fff" opacity=".28"/></g><g class=""><ellipse cx="302.5" cy="139.5" rx="11.0" ry="2.8000000000000003" fill="rgba(20,60,30,.22)" filter="url(#acSoft)"/><path d="M298.8 128.0h2.4l0.6 11.5h-3.5999999999999996z" fill="url(#acTrunk)"/><circle cx="295.5" cy="125.5" r="7.0" fill="url(#acLeafD)"/><circle cx="305.0" cy="126.0" r="6.800000000000001" fill="url(#acLeafD)"/><circle cx="300" cy="121.5" r="8.5" fill="url(#acLeaf)"/><ellipse cx="297.0" cy="118.0" rx="3.0" ry="1.7999999999999998" fill="#fff" opacity=".28"/></g>
           <path d="M0 168Q90 140 190 160T400 150V210H0Z" fill="url(#acH2)"/>
-          <!-- clubhouse: front, side wall and roof faces, glass with reflections, a soft ground shadow -->
-          <g transform="translate(26 112)">
-            <ellipse cx="60" cy="66" rx="70" ry="7" fill="rgba(30,60,40,.28)" filter="url(#acSoft)"/>
-            <path d="M22-20v-34" stroke="#8A6A4B" stroke-width="2.2"/><path class="ac-flag" d="M22-54h22l-5 6 5 6H22z" fill="#2E6BE6"/><path d="M30-48l1.4 2.8 3 .4-2.2 2 .6 3-2.8-1.5-2.8 1.5.6-3-2.2-2 3-.4z" fill="#fff"/>
-            <path d="M104 4L122-6V52L104 64z" fill="url(#acSide)"/>
-            <rect x="0" y="0" width="104" height="64" rx="4" fill="url(#acWall)"/>
-            <path d="M0 0h104v6H0z" fill="rgba(160,110,60,.18)"/>
-            <path d="M52-26L130-14 122-6 104 4z" fill="url(#acRoofS)"/>
-            <path d="M-8 4L52-26 112 4z" fill="url(#acRoof)"/><path d="M52-26L112 4" stroke="#FFC79A" stroke-width="1.5" opacity=".6"/><path d="M-8 4h120" stroke="#B9531F" stroke-width="3.4" stroke-linecap="round"/>
-            <path d="M40 10a12 12 0 0 1 24 0v8H40z" fill="url(#acGlass)" stroke="#fff" stroke-width="2"/>
-            <rect x="8" y="14" width="22" height="18" rx="3" fill="url(#acGlass)" stroke="#fff" stroke-width="2"/><rect x="74" y="14" width="22" height="18" rx="3" fill="url(#acGlass)" stroke="#fff" stroke-width="2"/>
-            <path d="M11 29l8-12M15 29l6-9M77 29l8-12M81 29l6-9" stroke="#fff" stroke-width="1.6" opacity=".7"/>
-            <path d="M40 26h24v32l-12-6-12 6z" fill="#2E6BE6"/><path d="M58 26h6v32l-6-3z" fill="#1F55C4"/><path d="M52 32l2.6 5.2 5.7.8-4.1 4 1 5.7-5.2-2.7-5.2 2.7 1-5.7-4.1-4 5.7-.8z" fill="#fff"/>
-            <rect x="-2" y="60" width="126" height="6" rx="2" fill="#E2CDA8"/>
+          <!-- fence with posts -->
+          <g><path d="M0 160H400M0 166H400" stroke="#3E8F6E" stroke-width="1" opacity=".45"/><path d="M0 172H400" stroke="#2E7A5C" stroke-width="2" opacity=".6"/>
+            <g fill="#2E7A5C" opacity=".75"><rect x="0" y="156" width="2.4" height="18" rx="1"/><rect x="80" y="156" width="2.4" height="18" rx="1"/><rect x="160" y="156" width="2.4" height="18" rx="1"/><rect x="240" y="156" width="2.4" height="18" rx="1"/><rect x="320" y="156" width="2.4" height="18" rx="1"/><rect x="398" y="156" width="2.4" height="18" rx="1"/></g>
+            <path d="M0 160L80 172M80 160L160 172M160 160L240 172M240 160L320 172M320 160L400 172M0 172L80 160M80 172L160 160M160 172L240 160M240 172L320 160M320 172L400 160" stroke="#3E8F6E" stroke-width=".5" opacity=".3"/></g>
+          <!-- clubhouse (like the reference): cream two-level house, terracotta hip roof with a front gable and deep eaves,
+               a big arched window with mullions, a blue shield with a white star, side windows with sills, a flag on the roof -->
+          <g transform="translate(24 84) scale(.92)">
+            <ellipse cx="72" cy="88" rx="84" ry="8" fill="rgba(30,60,40,.28)" filter="url(#acSoft)"/>
+            <!-- flagpole on the roof -->
+            <path d="M24 2V-40" stroke="#8A6A4B" stroke-width="2.2" stroke-linecap="round"/><circle cx="24" cy="-41" r="2" fill="#FFC21A"/>
+            <path class="ac-flag" d="M25-39h24l-5 7 5 7H25z" fill="#2E6BE6"/><path d="M34-35l1.5 3 3.3.5-2.4 2.3.6 3.3-3-1.6-3 1.6.6-3.3-2.4-2.3 3.3-.5z" fill="#fff"/>
+            <!-- side wall in shade -->
+            <path d="M136 18L152 10V76L136 84z" fill="url(#acSide)"/>
+            <!-- main front wall -->
+            <rect x="0" y="18" width="136" height="66" rx="3" fill="url(#acWall)"/>
+            <path d="M0 18h136v8H0z" fill="rgba(150,100,50,.16)"/>
+            <rect x="-2" y="80" width="156" height="6" rx="2" fill="#E2CDA8"/><path d="M-2 80h156" stroke="#CDB48A" stroke-width="1"/>
+            <!-- hip roof with tiles + front gable -->
+            <path d="M-10 20L22-6H128L160 14 152 20z" fill="url(#acRoofS)"/>
+            <path d="M-10 20L22-6H114L146 20z" fill="url(#acRoof)"/>
+            <g stroke="#C8622C" stroke-width="1" opacity=".55"><path d="M-2 14H140M6 7H132M14 0H124"/><path d="M10 20L30-6M30 20L46-6M50 20L62-6M90 20L82-6M110 20L98-6M130 20L114-6"/></g>
+            <path d="M44 20L68-14 92 20z" fill="#F08A4A"/><path d="M68-14L92 20" stroke="#C8622C" stroke-width="1.4"/><path d="M50 18L68-8 86 18z" fill="#FFF3DF"/>
+            <circle cx="68" cy="6" r="5" fill="#FFF8EC" stroke="#E2B27A" stroke-width="1.4"/><path d="M68 3v3l2 1.4" stroke="#B9814A" stroke-width="1" fill="none" stroke-linecap="round"/>
+            <path d="M-12 21H150" stroke="#B9531F" stroke-width="3.6" stroke-linecap="round"/><path d="M-10 24H148" stroke="rgba(120,60,20,.18)" stroke-width="3"/>
+            <!-- big arched window -->
+            <path d="M50 64V40a18 18 0 0 1 36 0v24z" fill="url(#acGlass)" stroke="#fff" stroke-width="3"/>
+            <path d="M68 22v42M50 44h36" stroke="#fff" stroke-width="2.2"/><path d="M55 40a13 13 0 0 1 26 0" stroke="#fff" stroke-width="1.6" fill="none"/>
+            <path d="M54 60l10-16M58 62l8-12" stroke="#fff" stroke-width="1.6" opacity=".6"/>
+            <!-- side windows with mullions and sills -->
+            <g><rect x="12" y="36" width="24" height="22" rx="2" fill="url(#acGlass)" stroke="#fff" stroke-width="2.4"/><path d="M24 36v22M12 47h24" stroke="#fff" stroke-width="1.6"/><rect x="10" y="58" width="28" height="3.5" rx="1.5" fill="#E2CDA8"/></g>
+            <g><rect x="100" y="36" width="24" height="22" rx="2" fill="url(#acGlass)" stroke="#fff" stroke-width="2.4"/><path d="M112 36v22M100 47h24" stroke="#fff" stroke-width="1.6"/><rect x="98" y="58" width="28" height="3.5" rx="1.5" fill="#E2CDA8"/></g>
+            <!-- blue shield banner with a white star -->
+            <path d="M54 62h28v14c0 6-6 10-14 13-8-3-14-7-14-13z" fill="#2E6BE6" stroke="#fff" stroke-width="2"/><path d="M76 62h6v14c0 4-3 7-6 9z" fill="#1F55C4"/>
+            <path d="M68 66l3 6 6.5.9-4.7 4.6 1.1 6.5-5.9-3.1-5.9 3.1 1.1-6.5-4.7-4.6 6.5-.9z" fill="#fff"/>
+            <!-- bushes in front -->
+            <g><circle cx="6" cy="80" r="9" fill="url(#acLeafD)"/><circle cx="16" cy="78" r="10" fill="url(#acLeaf)"/><circle cx="122" cy="79" r="10" fill="url(#acLeaf)"/><circle cx="134" cy="81" r="8" fill="url(#acLeafD)"/><circle cx="40" cy="82" r="6" fill="url(#acLeafD)"/><circle cx="98" cy="82" r="6" fill="url(#acLeafD)"/>
+              <circle cx="13" cy="74" r="2" fill="#FF8FB1"/><circle cx="126" cy="74" r="2" fill="#FFD23F"/></g>
           </g>
           <g><ellipse cx="20" cy="178.25" rx="17.6" ry="3.3" fill="rgba(20,60,30,.2)" filter="url(#acSoft)"/><circle cx="11.2" cy="172.2" r="7.699999999999999" fill="url(#acLeafD)"/><circle cx="28.8" cy="172.75" r="7.15" fill="url(#acLeafD)"/><circle cx="20" cy="170" r="11" fill="url(#acLeaf)"/></g><g><ellipse cx="122" cy="180.75" rx="14.4" ry="2.6999999999999997" fill="rgba(20,60,30,.2)" filter="url(#acSoft)"/><circle cx="114.8" cy="175.8" r="6.3" fill="url(#acLeafD)"/><circle cx="129.2" cy="176.25" r="5.8500000000000005" fill="url(#acLeafD)"/><circle cx="122" cy="174" r="9" fill="url(#acLeaf)"/></g>
           <!-- trees -->
           <g class="ac-sway"><g class=""><ellipse cx="382.5" cy="162.3" rx="28.6" ry="7.280000000000001" fill="rgba(20,60,30,.22)" filter="url(#acSoft)"/><path d="M372.88 132.4h6.24l1.56 29.9h-9.36z" fill="url(#acTrunk)"/><circle cx="364.3" cy="125.9" r="18.2" fill="url(#acLeafD)"/><circle cx="389.0" cy="127.2" r="17.68" fill="url(#acLeafD)"/><circle cx="376" cy="115.5" r="22.099999999999998" fill="url(#acLeaf)"/><ellipse cx="368.2" cy="106.4" rx="7.8" ry="4.68" fill="#fff" opacity=".28"/></g></g>
           <g><ellipse cx="168" cy="166.75" rx="14.4" ry="2.6999999999999997" fill="rgba(20,60,30,.2)" filter="url(#acSoft)"/><circle cx="160.8" cy="161.8" r="6.3" fill="url(#acLeafD)"/><circle cx="175.2" cy="162.25" r="5.8500000000000005" fill="url(#acLeafD)"/><circle cx="168" cy="160" r="9" fill="url(#acLeaf)"/></g><g><ellipse cx="232" cy="164.0" rx="12.8" ry="2.4" fill="rgba(20,60,30,.2)" filter="url(#acSoft)"/><circle cx="225.6" cy="159.6" r="5.6" fill="url(#acLeafD)"/><circle cx="238.4" cy="160.0" r="5.2" fill="url(#acLeafD)"/><circle cx="232" cy="158" r="8" fill="url(#acLeaf)"/></g>
-          <!-- fence with posts -->
-          <g><path d="M0 160H400M0 166H400" stroke="#3E8F6E" stroke-width="1" opacity=".45"/><path d="M0 172H400" stroke="#2E7A5C" stroke-width="2" opacity=".6"/>
-            <g fill="#2E7A5C" opacity=".75"><rect x="0" y="156" width="2.4" height="18" rx="1"/><rect x="80" y="156" width="2.4" height="18" rx="1"/><rect x="160" y="156" width="2.4" height="18" rx="1"/><rect x="240" y="156" width="2.4" height="18" rx="1"/><rect x="320" y="156" width="2.4" height="18" rx="1"/><rect x="398" y="156" width="2.4" height="18" rx="1"/></g>
-            <path d="M0 160L80 172M80 160L160 172M160 160L240 172M240 160L320 172M320 160L400 172M0 172L80 160M80 172L160 160M160 172L240 160M240 172L320 160M320 172L400 160" stroke="#3E8F6E" stroke-width=".5" opacity=".3"/></g>
           <!-- court seen from the side at three-quarter view (like the reference): the court runs left→right, the net
                crosses it on the right going away from us; real markings: baselines, doubles + singles sidelines,
                the service line and the centre service line meeting the net -->
