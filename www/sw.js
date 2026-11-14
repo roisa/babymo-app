@@ -272,6 +272,7 @@ const SHELL = [
   "/baby-mo-poses/baby-mo-pose-34.webp",
   "/baby-mo-poses/baby-mo-pose-35.webp",
   "/baby-mo-poses/baby-mo-pose-20.png",
+  "/baby-mo-poses/baby-mo-yes.png",
   "/baby-mo-poses/baby-mo-pose-37.webp",
   "/baby-mo-poses/baby-mo-pose-41.webp",
   "/baby-mo-poses/baby-mo-pose-42.webp",
