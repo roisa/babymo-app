@@ -11,6 +11,7 @@
   "dengan nama": "in the name of", "allah": "Allah", "doa": "du'a (prayer)", "masjid": "mosque", "buku": "book", "salam": "peace", "terima kasih": "thank you",
   "matahari": "sun", "bulan": "moon", "bintang": "star", "bunga": "flower", "ikan": "fish", "burung": "bird",
   "kata": "words",
+  "Dengarkan, lalu susun!": "Listen, then build!", "Lagi": "Again", "Dengarkan kata": "Listen to the word", "Ulangi kata ini": "Do this word again",
   "baju": "shirt",
   "sepatu": "shoes",
   "topi": "hat",
