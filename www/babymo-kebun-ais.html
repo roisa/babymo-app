@@ -480,6 +480,13 @@ html[data-bm-theme="classic"] .hm-play{box-shadow:inset 0 1.5px 0 rgba(255,255,2
 .kb-foot2 svg{width:100%;height:100%;display:block}
 html[data-bm-theme="classic"] .kb-foot2{opacity:.65}
 </style>
+<style id="kb-btn">
+/* Ais's button: no white outline ring, just the soft green glow */
+#goGarden.hm-play{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.6),inset 0 -4px 10px rgba(0,90,35,.28),0 16px 30px -10px rgba(20,140,60,.65)!important;animation:kbGlow 2.6s ease-in-out infinite!important}
+@keyframes kbGlow{50%{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.6),inset 0 -4px 10px rgba(0,90,35,.28),0 18px 34px -10px rgba(20,160,70,.8)}}
+html[data-bm-theme="classic"] #goGarden.hm-play{box-shadow:inset 0 1.5px 0 rgba(255,255,255,.5),inset 0 -4px 10px rgba(0,90,35,.3),0 16px 30px -10px rgba(0,0,0,.6)!important}
+@media (prefers-reduced-motion:reduce){#goGarden.hm-play{animation:none!important}}
+</style>
 </head>
 <body>
 
