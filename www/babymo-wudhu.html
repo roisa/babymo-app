@@ -775,6 +775,23 @@ body:has(#s-order.active) .wb-cloud.c2,body:has(#s-order.active) .wb-cloud.c3{op
 #gStage[data-fx="feet"] .f-feet,#gStage[data-fx="dua"] .f-dua,.wg-fx>g.f-all,
 #gStage:is([data-fx="mouth"],[data-fx="nose"],[data-fx="face"],[data-fx="head"],[data-fx="ears"]) .f-floor{visibility:visible}
 </style>
+<style>
+/* step tip as Mo talking: Mo's upper body (cut at the waist) next to a speech bubble whose words pop in */
+#s-guide .tip.mo-talk{display:flex;align-items:flex-end;gap:2px;margin-top:12px;padding:0;min-height:0;border-radius:0;background:none!important;box-shadow:none!important;color:inherit}
+#s-guide .mo-talk .mt-mo{position:relative;flex:0 0 76px;width:76px;height:62px;overflow:hidden;align-self:flex-end;transform-origin:50% 100%}
+#s-guide .mo-talk .mt-mo img{position:absolute!important;left:-18px!important;top:-16px!important;width:112px!important;height:112px!important;max-width:none!important;object-fit:contain;filter:drop-shadow(0 4px 6px rgba(30,60,110,.18))}
+#s-guide .mo-talk.talking .mt-mo{animation:mtTalk .36s ease-in-out infinite alternate}
+@keyframes mtTalk{from{transform:translateY(0) rotate(0)}to{transform:translateY(-2px) rotate(-2deg)}}
+#s-guide .mo-talk .mt-bub{position:relative;flex:1 1 auto;min-width:0;margin-bottom:8px;padding:10px 14px;border-radius:20px 20px 20px 6px;background:#FFF8E1;color:#6B4200;
+  font-weight:800;font-size:14.5px;line-height:1.35;text-align:left;box-shadow:0 0 0 1.5px #FFE7A6 inset,0 10px 18px -14px rgba(120,80,0,.55)}
+#s-guide .mo-talk .mt-bub::before{content:'';position:absolute;left:-9px;bottom:6px;width:16px;height:16px;background:inherit;border-radius:0 0 0 14px;
+  box-shadow:inset 1.5px -1.5px 0 #FFE7A6;transform:skewX(-20deg);clip-path:polygon(0 100%,100% 0,100% 100%)}
+#s-guide .mo-talk .mt-w{display:inline-block;opacity:0;transform:translateY(6px) scale(.9);animation:mtWord .32s cubic-bezier(.3,1.5,.5,1) forwards}
+@keyframes mtWord{to{opacity:1;transform:none}}
+html[data-bm-theme="classic"] #s-guide .mo-talk .mt-bub,html[data-bm-theme="dark"] #s-guide .mo-talk .mt-bub{background:#3A3220;color:#FDE3B5;box-shadow:0 0 0 1.5px rgba(253,186,116,.3) inset}
+html[data-bm-theme="classic"] #s-guide .mo-talk .mt-bub::before,html[data-bm-theme="dark"] #s-guide .mo-talk .mt-bub::before{box-shadow:inset 1.5px -1.5px 0 rgba(253,186,116,.3)}
+@media (prefers-reduced-motion:reduce){#s-guide .mo-talk .mt-w{animation:none;opacity:1;transform:none}#s-guide .mo-talk.talking .mt-mo{animation:none}}
+</style>
 </head>
 <body>
 <!-- shared art for the Wudhu home (kept rendered, never display:none, so gradients resolve) -->
@@ -1036,7 +1053,7 @@ body:has(#s-order.active) .wb-cloud.c2,body:has(#s-order.active) .wb-cloud.c3{op
     </div>
     <div class="counter" id="gCount"></div>
     <button class="wash-btn" id="gWash" onclick="wash()"><svg class="wg-play" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="15" fill="#fff"/><path d="M13 10.5v11l9-5.5Z" fill="#1E80E6"/></svg><span id="gWashL">💧 Basuh!</span></button>
-    <div class="tip"><img src="baby-mo-poses/baby-mo-idea.webp" alt=""><span id="gTip"></span></div>
+    <div class="tip mo-talk"><span class="mt-mo" aria-hidden="true"><img src="baby-mo-poses/baby-mo-idea.webp" alt=""></span><div class="mt-bub"><span id="gTip" data-no-i18n></span></div></div>
     <div class="nav">
       <button class="btn-sec" id="gPrev" onclick="go(cur-1)">← Sebelumnya</button>
       <button class="btn-primary" id="gNext" onclick="next()">Lanjut →</button>
@@ -1181,6 +1198,15 @@ function restartFx(st){
     requestAnimationFrame(function(){ for(var k=0;k<els.length;k++) els[k].style.animation = ''; });
   }catch(e){}
 }
+/* Mo "says" the step tip: the words pop into his speech bubble one by one while he bobs */
+var moSayT=null;
+function moSay(txt){
+  var el=document.getElementById('gTip'), box=el&&el.closest('.mo-talk'); if(!el) return;
+  var t=(window.BM_T?BM_T(txt):txt)||'';
+  el.setAttribute('aria-label',t); el.innerHTML='';
+  t.split(/\s+/).forEach(function(w,i){ var sp=document.createElement('span'); sp.className='mt-w'; sp.style.animationDelay=(.15+i*.09)+'s'; sp.textContent=w; sp.setAttribute('aria-hidden','true'); el.appendChild(sp); el.appendChild(document.createTextNode(' ')); });
+  if(box){ box.classList.remove('talking'); void box.offsetWidth; box.classList.add('talking'); clearTimeout(moSayT); moSayT=setTimeout(function(){ box.classList.remove('talking'); }, 400+t.split(/\s+/).length*90); }
+}
 function startGuide(){ show('s-guide'); soundUI(); go(0); try{ BabyMo.track && BabyMo.track('wudhu_guide_start'); }catch(e){} }
 function go(i){
   if(i < 0 || i >= STEPS.length) return;
@@ -1205,7 +1231,7 @@ function go(i){
   document.getElementById('gTag').textContent = s.count > 1 ? s.count + '×' : '1×';
   document.getElementById('gTitle').textContent = s.title;
   document.getElementById('gText').textContent = s.text;
-  document.getElementById('gTip').textContent = s.tip;
+  moSay(s.tip);
   var ac = document.getElementById('gArabic');
   if(s.ar){ ac.hidden = false; var $ = function(id){ return document.getElementById(id); };
     $('gAr').textContent = s.ar; $('gLat').textContent = s.lat; $('gArti').textContent = '"' + s.arti + '"'; $('gSrc').textContent = s.src || ''; }
