@@ -1440,6 +1440,20 @@ html[data-bm-theme="dark"] .celeb-meaning::before,html[data-bm-theme="classic"] 
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) .celeb-meaning{background:rgba(255,255,255,.8)}
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #celebPractice{background:linear-gradient(180deg,rgba(255,252,238,.84),rgba(255,245,214,.84))}
 </style>
+<style>
+/* just-opened tile, gentler: no yellow box or check badge (the badge hung over the next tile). A soft warm light
+   blooms from the middle of the revealed piece and a small sparkle twinkles, both fading within ~0.8s */
+.tile::before{inset:0!important;border:none!important;border-radius:inherit!important;box-shadow:none!important;
+  background:radial-gradient(circle at 50% 50%,rgba(255,250,220,.95) 0,rgba(255,236,160,.55) 30%,rgba(255,236,160,0) 68%)!important;mix-blend-mode:screen}
+.tile::after{left:50%!important;top:50%!important;bottom:auto!important;width:40px!important;height:40px!important;margin:-20px 0 0 -20px!important;border-radius:0!important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 2c1.6 9 3.2 12.4 18 18-14.8 5.6-16.4 9-18 18-1.6-9-3.2-12.4-18-18C16.8 14.4 18.4 11 20 2z' fill='%23FFF6C8' stroke='%23FFD23F' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat!important;
+  filter:drop-shadow(0 0 6px rgba(255,210,60,.9))!important}
+.tile:nth-child(n+7)::after{top:50%!important}
+.tile.flipped::before{animation:kbBloom .8s ease-out .28s both!important}
+.tile.flipped::after{animation:kbTwinkle .8s cubic-bezier(.3,1.4,.5,1) .3s both!important}
+@keyframes kbBloom{0%{opacity:0;transform:scale(.4)}35%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.15)}}
+@keyframes kbTwinkle{0%{opacity:0;transform:scale(0) rotate(-30deg)}40%{opacity:1;transform:scale(1.1) rotate(0)}70%{opacity:1;transform:scale(.9) rotate(10deg)}100%{opacity:0;transform:scale(.4) rotate(25deg)}}
+</style>
 </head>
 <body>
 <div class="kb-sky" aria-hidden="true">
