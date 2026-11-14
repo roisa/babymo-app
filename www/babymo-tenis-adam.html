@@ -396,7 +396,6 @@ html[data-bm-theme="dark"] .ac-bg path[fill="#9FD3FF"],html[data-bm-theme="dark"
 .ac-fly{offset-rotate:0deg;animation:acFly 7s ease-in-out infinite}.ac-fly.f1{offset-path:path("M30 210 C80 170 120 230 170 196 S250 170 220 220 S90 240 30 210")}.ac-fly.f2{offset-path:path("M360 190 C330 150 280 210 300 236 S380 230 360 190");animation-duration:6s}
 @keyframes acFly{to{offset-distance:100%}}
 .ac-fly path:not([stroke]){transform-box:fill-box;transform-origin:50% 50%;animation:acFlap .25s ease-in-out infinite alternate}@keyframes acFlap{to{transform:scaleX(.4)}}
-.ac-bunting g{transform-box:fill-box;transform-origin:50% 0;animation:acSway 2.6s ease-in-out infinite alternate}
 .ac-bg .m1{stop-color:#B9C9F0}.ac-bg .m2{stop-color:#D6E4F8}.ac-bg .h1a{stop-color:#C6EBA8}.ac-bg .h1b{stop-color:#9ED384}.ac-bg .h2a{stop-color:#AEE08E}.ac-bg .h2b{stop-color:#86C96E}
 html[data-bm-theme="dark"] .ac-bg .m1,html[data-bm-theme="classic"] .ac-bg .m1{stop-color:#2C3A78}html[data-bm-theme="dark"] .ac-bg .m2,html[data-bm-theme="classic"] .ac-bg .m2{stop-color:#3A4A86}
 html[data-bm-theme="dark"] .ac-bg .h1a,html[data-bm-theme="classic"] .ac-bg .h1a{stop-color:#2E5A4A}html[data-bm-theme="dark"] .ac-bg .h1b,html[data-bm-theme="classic"] .ac-bg .h1b{stop-color:#224538}
@@ -448,7 +447,7 @@ html[data-bm-theme="dark"] #s-map .node,html[data-bm-theme="classic"] #s-map .no
 html[data-bm-theme="dark"] #s-map .lcard.locked,html[data-bm-theme="classic"] #s-map .lcard.locked{background:rgba(255,210,122,.08)}
 html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::after{opacity:.35}
 @media (min-width:600px){.ac-scene{height:340px}.ac-adam img{height:290px}}
-@media (prefers-reduced-motion:reduce){.ac-birds,.ac-fly,.ac-fly path,.ac-bunting g,.ac-cloud,.ac-flag,.ac-sway,.ac-bounce,.ac-adam img,.ac-shadow,.ac-pow,.ac-leaves,.ac-sign{animation:none!important}.ac-pow{opacity:1}}
+@media (prefers-reduced-motion:reduce){.ac-birds,.ac-fly,.ac-fly path,.ac-cloud,.ac-flag,.ac-sway,.ac-bounce,.ac-adam img,.ac-shadow,.ac-pow,.ac-leaves,.ac-sign{animation:none!important}.ac-pow{opacity:1}}
 </style>
 </head>
 <body>
@@ -563,9 +562,9 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
             <path d="M22 178H420M-38 298H420"/>
             <path d="M18 186H420M-30 282H420" stroke-width="2.2"/>
             <path d="M22 178L-38 298"/>
-            <path d="M196 186L213 282"/>
-            <path d="M204.5 234H343"/>
-            <path d="M14 238l8 0" stroke-width="2.2"/>
+            <path d="M164 186L149 282"/>
+            <path d="M156.5 234H345"/>
+            <path d="M-6 234h9" stroke-width="2.2"/>
           </g>
           <!-- the net: far post small, near post big; mesh, white tape, shadow -->
           <g>
@@ -587,9 +586,6 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
           <g class="ac-birds" fill="none" stroke="#3A4A6A" stroke-width="1.6" stroke-linecap="round"><path d="M170 74q5-5 10 0q5-5 10 0"/><path d="M196 62q4-4 8 0q4-4 8 0"/><path d="M150 88q3-3 6 0q3-3 6 0"/></g>
           <g class="ac-fly f1"><path d="M0 0c-6-8-14-4-8 3 6 4 8-3 8-3zM0 0c6-8 14-4 8 3-6 4-8-3-8-3z" fill="#FF8FB1"/><path d="M0-3v6" stroke="#6A3A4A" stroke-width="1.2"/></g>
           <g class="ac-fly f2"><path d="M0 0c-5-7-12-4-7 2 5 4 7-2 7-2zM0 0c5-7 12-4 7 2-5 4-7-2-7-2z" fill="#FFD23F"/><path d="M0-3v6" stroke="#6A4A1A" stroke-width="1.2"/></g>
-          <!-- bunting from the clubhouse flagpole to the tree -->
-          <g class="ac-bunting"><path d="M48 74Q200 104 368 106" stroke="#B9814A" stroke-width="1.2" fill="none"/>
-            <g><path d="M78 80l8 1-5 9z" fill="#FF8FA3"/><path d="M110 86l8 1-5 9z" fill="#FFD23F"/><path d="M142 91l8 1-5 9z" fill="#7CC8FF"/><path d="M174 95l8 1-5 9z" fill="#C8E83A"/><path d="M206 98l8 1-5 9z" fill="#FF8FA3"/><path d="M238 101l8 0-5 9z" fill="#FFD23F"/><path d="M270 103l8 0-4 9z" fill="#7CC8FF"/><path d="M302 104l8 0-4 9z" fill="#C8E83A"/><path d="M334 105l8 0-4 9z" fill="#FF8FA3"/></g></g>
         </svg>
         <div class="ac-adam"><span class="ac-shadow"></span><img src="adam-tennis-v2/win-fist-r.webp" alt=""><svg class="ac-pow" viewBox="0 0 40 40"><g stroke="#FFC21A" stroke-width="5" stroke-linecap="round"><path d="M6 20V6"/><path d="M18 22l9-12"/><path d="M22 32l14-6"/></g></svg></div>
         <svg class="ac-leaves" viewBox="0 0 120 110"><g fill="url(#acTree)"><ellipse cx="20" cy="20" rx="50" ry="34"/><ellipse cx="70" cy="8" rx="40" ry="24"/></g><path d="M0 40Q30 50 52 74" stroke="#8A6A4B" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#7CC85A"><ellipse cx="60" cy="66" rx="11" ry="6" transform="rotate(30 60 66)"/><ellipse cx="44" cy="78" rx="9" ry="5" transform="rotate(-20 44 78)"/></g></svg>
