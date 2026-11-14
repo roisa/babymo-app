@@ -378,6 +378,67 @@ img[data-adam-pose]{transform-origin:50% 93.3%}
 /* certificate buttons on one line */
 #certShare,#certMap{white-space:nowrap}
 </style>
+<style>
+/* ══ Academy front page: an illustrated tennis-club scene, Kak Adam fist-pumping on the court, a wooden sign title ══ */
+#s-map{background:linear-gradient(180deg,#BFE3FF 0,#DDF0FF 340px,#E9F7DF 620px,#D5EFC4 100%)}
+#s-map .wrap{position:relative;z-index:1}
+body:has(#s-map.on) #tn-court{display:none!important}
+#s-map .topbar{position:relative;z-index:4}
+.ac-hero{position:relative;width:calc(100% + 32px);margin:-62px -16px 0;text-align:center}
+.ac-scene{position:relative;height:300px;overflow:hidden}
+.ac-bg{position:absolute;inset:0;width:100%;height:100%}
+.ac-bg .s1{stop-color:#8FCBFF}.ac-bg .s2{stop-color:#DDF0FF}.ac-bg .u1{stop-color:#FFF6C8}.ac-bg .u2{stop-color:rgba(255,246,200,0)}
+.ac-bg .hill1{fill:#BFE3A6}.ac-bg .hill2{fill:#A6D98C}.ac-bg .c1{stop-color:#58B8B0}.ac-bg .c2{stop-color:#3E9C98}
+.ac-stars{display:none}html[data-bm-theme="dark"] .ac-stars,html[data-bm-theme="classic"] .ac-stars{display:inline}
+html[data-bm-theme="dark"] .ac-bg path[fill="#9FD3FF"],html[data-bm-theme="dark"] .ac-bg rect[fill="#9FD3FF"],html[data-bm-theme="classic"] .ac-bg path[fill="#9FD3FF"],html[data-bm-theme="classic"] .ac-bg rect[fill="#9FD3FF"]{fill:#FFE29A}
+.ac-cloud{animation:acDrift 14s ease-in-out infinite alternate}.ac-cloud.c-b{animation-duration:18s}
+@keyframes acDrift{to{transform:translateX(-24px)}}
+.ac-flag{transform-box:fill-box;transform-origin:0 50%;animation:acFlag 1.6s ease-in-out infinite alternate}
+@keyframes acFlag{to{transform:scaleX(.82) skewY(6deg)}}
+.ac-sway{transform-box:fill-box;transform-origin:50% 100%;animation:acSway 4s ease-in-out infinite alternate}
+@keyframes acSway{to{transform:rotate(3deg)}}
+.ac-bounce{animation:acBounce 1.1s cubic-bezier(.5,0,.5,1) infinite}
+@keyframes acBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+.ac-adam{position:absolute;left:50%;bottom:6px;width:200px;height:260px;margin-left:-100px}
+.ac-adam img{position:absolute;left:50%;bottom:0;height:260px;transform:translateX(-50%);transform-origin:50% 93%;filter:drop-shadow(0 8px 8px rgba(20,60,60,.25));animation:acCheer 2.4s ease-in-out infinite}
+@keyframes acCheer{0%,100%{transform:translateX(-50%)}40%{transform:translateX(-50%) translateY(-8px)}55%{transform:translateX(-50%) translateY(0) scale(1.02,.98)}}
+.ac-shadow{position:absolute;left:50%;bottom:8px;width:120px;height:18px;margin-left:-60px;border-radius:50%;background:radial-gradient(closest-side,rgba(20,50,50,.35),transparent);animation:acShadow 2.4s ease-in-out infinite}
+@keyframes acShadow{40%{transform:scale(.8);opacity:.7}}
+.ac-pow{position:absolute;right:6px;top:22px;width:40px;height:40px;animation:acPow 2.4s ease-in-out infinite}
+@keyframes acPow{0%,30%{opacity:0;transform:scale(.6)}45%,70%{opacity:1;transform:scale(1)}100%{opacity:0}}
+.ac-leaves{position:absolute;left:-10px;top:-6px;width:120px;height:110px;pointer-events:none;transform-origin:0 0;animation:acSway 5s ease-in-out infinite alternate}
+.ac-title{position:relative;margin-top:-10px;padding:0 16px}
+.ac-title .kicker{background:#fff;border:none;box-shadow:0 6px 14px -8px rgba(30,60,110,.45);position:relative;z-index:2}
+.ac-sign{position:relative;margin:6px auto 0;max-width:330px;padding:14px 34px 26px;border-radius:30px;
+  background:linear-gradient(180deg,#D9925A 0,#C77B45 55%,#B56A37 100%);
+  box-shadow:inset 0 2px 0 rgba(255,255,255,.35),inset 0 -6px 0 rgba(0,0,0,.12),0 10px 0 #8E5128,0 18px 24px -12px rgba(80,40,10,.55);animation:acSign .7s cubic-bezier(.3,1.5,.5,1) both}
+.ac-sign::before{content:"";position:absolute;inset:8px 14px;border-radius:22px;background:repeating-linear-gradient(176deg,rgba(255,255,255,0) 0 14px,rgba(120,60,20,.12) 14px 16px);pointer-events:none}
+@keyframes acSign{from{transform:scale(.8) rotate(-3deg);opacity:0}}
+.ac-sign h1{position:relative;margin:0;color:#fff!important;font:700 30px/1.08 'Fredoka',sans-serif;text-shadow:0 3px 0 #8E5128,0 0 1px #8E5128;text-wrap:balance}
+.ac-laurel{position:absolute;top:50%;width:22px;height:56px;margin-top:-34px}.ac-laurel.l{left:8px}.ac-laurel.r{right:8px;transform:scaleX(-1)}
+.ac-ribbon{position:relative;margin:-20px auto 10px;width:fit-content;max-width:92%;padding:8px 26px;background:#FFF3D6;border-radius:6px;box-shadow:0 6px 0 #E8CFA0;transform:rotate(-1.5deg)}
+.ac-ribbon::before,.ac-ribbon::after{content:"";position:absolute;top:8px;width:18px;height:100%;background:#F2DDB2;z-index:-1}
+.ac-ribbon::before{left:-12px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,40% 50%)}.ac-ribbon::after{right:-12px;clip-path:polygon(0 0,100% 0,60% 50%,100% 100%,0 100%)}
+.ac-ribbon .sub{margin:0;color:#1E3A6E;font:700 15px 'Fredoka',sans-serif}
+#s-map .lcard.locked{border:2.5px solid #FFD27A;border-style:solid;background:#FFFBF0;box-shadow:0 10px 22px -16px rgba(200,140,0,.6);opacity:1}
+#s-map .node{border:none;border-radius:24px;background:#fff;box-shadow:0 12px 24px -18px rgba(30,60,110,.45),0 0 0 1px rgba(30,60,110,.04)}
+#s-map .node.next{box-shadow:0 0 0 3px #C8E83A,0 12px 24px -14px rgba(120,160,0,.5)}
+/* leafy bushes peeking in at the bottom corners */
+#s-map::after{content:"";position:fixed;left:0;right:0;bottom:0;height:110px;pointer-events:none;z-index:0;
+  background:radial-gradient(60px 50px at 0 100%,#7CC85A 98%,transparent 100%),radial-gradient(44px 40px at 40px 100%,#9BDB6E 98%,transparent 100%),radial-gradient(60px 50px at 100% 100%,#7CC85A 98%,transparent 100%),radial-gradient(44px 40px at calc(100% - 40px) 100%,#9BDB6E 98%,transparent 100%)}
+/* night (dark theme) */
+html[data-bm-theme="dark"] #s-map,html[data-bm-theme="classic"] #s-map{background:linear-gradient(180deg,#1B2350 0,#243068 340px,#173A2C 620px,#0F2A20 100%)}
+html[data-bm-theme="dark"] .ac-bg .s1,html[data-bm-theme="classic"] .ac-bg .s1{stop-color:#1B2350}html[data-bm-theme="dark"] .ac-bg .s2,html[data-bm-theme="classic"] .ac-bg .s2{stop-color:#3A4790}
+html[data-bm-theme="dark"] .ac-bg .u1,html[data-bm-theme="classic"] .ac-bg .u1{stop-color:#FFF3C4}
+html[data-bm-theme="dark"] .ac-bg .hill1,html[data-bm-theme="classic"] .ac-bg .hill1{fill:#2E5A4A}html[data-bm-theme="dark"] .ac-bg .hill2,html[data-bm-theme="classic"] .ac-bg .hill2{fill:#24493C}
+html[data-bm-theme="dark"] .ac-bg .c1,html[data-bm-theme="classic"] .ac-bg .c1{stop-color:#2E7A76}html[data-bm-theme="dark"] .ac-bg .c2,html[data-bm-theme="classic"] .ac-bg .c2{stop-color:#215E5C}
+html[data-bm-theme="dark"] .ac-cloud,html[data-bm-theme="classic"] .ac-cloud{opacity:.25}
+html[data-bm-theme="dark"] #s-map .node,html[data-bm-theme="classic"] #s-map .node{background:rgba(255,255,255,.08)}
+html[data-bm-theme="dark"] #s-map .lcard.locked,html[data-bm-theme="classic"] #s-map .lcard.locked{background:rgba(255,210,122,.08)}
+html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::after{opacity:.35}
+@media (min-width:600px){.ac-scene{height:340px}.ac-adam img{height:290px}}
+@media (prefers-reduced-motion:reduce){.ac-cloud,.ac-flag,.ac-sway,.ac-bounce,.ac-adam img,.ac-shadow,.ac-pow,.ac-leaves,.ac-sign{animation:none!important}.ac-pow{opacity:1}}
+</style>
 </head>
 <body>
 
@@ -406,11 +467,61 @@ img[data-adam-pose]{transform-origin:50% 93.3%}
       <a class="w-back" href="./index.html">← Game Hub</a>
       <span class="pill" id="mapStars"><span class="ti" data-ti="star"></span>0 / 21</span>
     </div>
-    <div class="hero">
-      <img src="adam-tennis-v2/wave-1.webp" alt="">
-      <div><span class="kicker"><span class="ti" data-ti="racket"></span>Baby Mo · Tenis</span></div>
-      <h1>Akademi Tenis Kak Adam</h1>
-      <p class="sub">Belajar tenis bersama Kak Adam!</p>
+    <div class="ac-hero">
+      <div class="ac-scene" aria-hidden="true">
+        <svg class="ac-bg" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice">
+          <defs>
+            <linearGradient id="acSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="s1"/><stop offset="1" class="s2"/></linearGradient>
+            <linearGradient id="acCourt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="c1"/><stop offset="1" class="c2"/></linearGradient>
+            <linearGradient id="acRoof" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F59A5E"/><stop offset="1" stop-color="#E0763A"/></linearGradient>
+            <linearGradient id="acWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFF6E6"/><stop offset="1" stop-color="#F3E1C4"/></linearGradient>
+            <radialGradient id="acTree" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#9BDB6E"/><stop offset="1" stop-color="#4FA84A"/></radialGradient>
+            <radialGradient id="acBall" cx=".35" cy=".3" r=".8"><stop offset="0" stop-color="#F4FF9C"/><stop offset=".6" stop-color="#D6F23F"/><stop offset="1" stop-color="#9DC21A"/></radialGradient>
+            <radialGradient id="acSun" cx=".5" cy=".5" r=".5"><stop offset="0" class="u1"/><stop offset="1" class="u2"/></radialGradient>
+          </defs>
+          <rect width="400" height="300" fill="url(#acSky)"/>
+          <circle cx="330" cy="40" r="60" fill="url(#acSun)"/><g class="ac-stars" fill="#fff"><circle cx="60" cy="30" r="1.6"/><circle cx="150" cy="70" r="1.2"/><circle cx="220" cy="24" r="1.5"/><circle cx="260" cy="90" r="1.1"/><circle cx="380" cy="100" r="1.3"/><circle cx="20" cy="90" r="1.2"/></g>
+          <g class="ac-cloud c-a"><ellipse cx="300" cy="66" rx="34" ry="12" fill="#fff"/><circle cx="288" cy="60" r="14" fill="#fff"/><circle cx="308" cy="56" r="17" fill="#fff"/></g>
+          <g class="ac-cloud c-b"><ellipse cx="120" cy="44" rx="24" ry="8" fill="#fff" opacity=".9"/><circle cx="114" cy="40" r="10" fill="#fff" opacity=".9"/><circle cx="128" cy="38" r="11" fill="#fff" opacity=".9"/></g>
+          <path d="M0 150Q70 112 150 134T300 118T400 128V200H0Z" class="hill1"/>
+          <path d="M0 168Q90 140 190 160T400 150V210H0Z" class="hill2"/>
+          <!-- clubhouse with a star banner and a waving flag -->
+          <g transform="translate(26 112)">
+            <path d="M22-20v-34" stroke="#8A6A4B" stroke-width="2.2"/><path class="ac-flag" d="M22-54h22l-5 6 5 6H22z" fill="#2E6BE6"/><path d="M30-48l1.4 2.8 3 .4-2.2 2 .6 3-2.8-1.5-2.8 1.5.6-3-2.2-2 3-.4z" fill="#fff"/>
+            <rect x="0" y="0" width="104" height="64" rx="6" fill="url(#acWall)"/>
+            <path d="M-8 4L52-24 112 4z" fill="url(#acRoof)"/><path d="M-8 4h120" stroke="#C8622C" stroke-width="3" stroke-linecap="round"/>
+            <path d="M40 10a12 12 0 0 1 24 0v8H40z" fill="#9FD3FF" stroke="#fff" stroke-width="2"/>
+            <rect x="8" y="14" width="22" height="18" rx="3" fill="#9FD3FF" stroke="#fff" stroke-width="2"/><rect x="74" y="14" width="22" height="18" rx="3" fill="#9FD3FF" stroke="#fff" stroke-width="2"/>
+            <path d="M40 26h24v32l-12-6-12 6z" fill="#2E6BE6"/><path d="M52 32l2.6 5.2 5.7.8-4.1 4 1 5.7-5.2-2.7-5.2 2.7 1-5.7-4.1-4 5.7-.8z" fill="#fff"/>
+            <ellipse cx="6" cy="60" rx="10" ry="12" fill="url(#acTree)"/><ellipse cx="98" cy="60" rx="10" ry="12" fill="url(#acTree)"/>
+          </g>
+          <!-- trees and bushes -->
+          <g class="ac-sway"><circle cx="372" cy="120" r="26" fill="url(#acTree)"/><circle cx="390" cy="140" r="20" fill="url(#acTree)"/><rect x="368" y="138" width="6" height="26" fill="#8A6A4B"/></g>
+          <g fill="url(#acTree)"><circle cx="160" cy="150" r="12"/><circle cx="176" cy="152" r="9"/><circle cx="250" cy="146" r="10"/></g>
+          <!-- fence -->
+          <g stroke="#3E8F6E" stroke-width="1.2" opacity=".55"><path d="M0 172H400M0 160H400"/><path d="M0 160v12M20 160v12M40 160v12M60 160v12M80 160v12M100 160v12M120 160v12M140 160v12M160 160v12M180 160v12M200 160v12M220 160v12M240 160v12M260 160v12M280 160v12M300 160v12M320 160v12M340 160v12M360 160v12M380 160v12M400 160v12"/></g>
+          <!-- court in perspective -->
+          <path d="M-60 300L60 174H340L460 300Z" fill="url(#acCourt)"/>
+          <g stroke="#fff" stroke-width="3" fill="none" opacity=".95"><path d="M-30 300L70 180H330L430 300"/><path d="M36 220H364"/><path d="M200 180V300" opacity=".6"/></g>
+          <!-- the net on the right -->
+          <g transform="translate(322 158)"><rect x="0" y="-4" width="4" height="40" rx="1.5" fill="#E8EEF5"/><path d="M4 0H90" stroke="#fff" stroke-width="3"/><path d="M4 0H90V30H4Z" fill="rgba(20,40,70,.18)"/><g stroke="rgba(30,50,90,.45)" stroke-width=".8"><path d="M4 8H90M4 16H90M4 24H90"/><path d="M12 0v30M20 0v30M28 0v30M36 0v30M44 0v30M52 0v30M60 0v30M68 0v30M76 0v30M84 0v30"/></g></g>
+          <!-- ball cart full of balls -->
+          <g transform="translate(262 196)"><path d="M0 0h48l-5 30H5z" fill="none" stroke="#2E6BE6" stroke-width="2.4"/><path d="M6 6h36M4 14h40M5 22h38" stroke="#2E6BE6" stroke-width="1" opacity=".5"/>
+            <g fill="url(#acBall)"><circle cx="10" cy="-2" r="7"/><circle cx="24" cy="-5" r="7"/><circle cx="38" cy="-2" r="7"/><circle cx="17" cy="-12" r="7"/><circle cx="31" cy="-12" r="7"/></g>
+            <circle cx="8" cy="34" r="3.5" fill="#2E6BE6"/><circle cx="40" cy="34" r="3.5" fill="#2E6BE6"/></g>
+          <ellipse cx="76" cy="252" rx="10" ry="3" fill="rgba(0,0,0,.15)"/><circle class="ac-bounce" cx="76" cy="242" r="9" fill="url(#acBall)"/>
+          <circle cx="352" cy="262" r="9" fill="url(#acBall)"/><ellipse cx="352" cy="272" rx="9" ry="2.6" fill="rgba(0,0,0,.15)"/>
+        </svg>
+        <div class="ac-adam"><span class="ac-shadow"></span><img src="adam-tennis-v2/win-fist-r.webp" alt=""><svg class="ac-pow" viewBox="0 0 40 40"><g stroke="#FFC21A" stroke-width="5" stroke-linecap="round"><path d="M6 20V6"/><path d="M18 22l9-12"/><path d="M22 32l14-6"/></g></svg></div>
+        <svg class="ac-leaves" viewBox="0 0 120 110"><g fill="url(#acTree)"><ellipse cx="20" cy="20" rx="50" ry="34"/><ellipse cx="70" cy="8" rx="40" ry="24"/></g><path d="M0 40Q30 50 52 74" stroke="#8A6A4B" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#7CC85A"><ellipse cx="60" cy="66" rx="11" ry="6" transform="rotate(30 60 66)"/><ellipse cx="44" cy="78" rx="9" ry="5" transform="rotate(-20 44 78)"/></g></svg>
+      </div>
+      <div class="ac-title">
+        <span class="kicker"><span class="ti" data-ti="racket"></span>Baby Mo · Tenis</span>
+        <div class="ac-sign"><svg class="ac-laurel l" viewBox="0 0 24 60"><g fill="#FFC21A"><path d="M14 58C4 44 4 22 14 4" stroke="#E0A400" stroke-width="2" fill="none"/><ellipse cx="9" cy="14" rx="4" ry="7" transform="rotate(-30 9 14)"/><ellipse cx="7" cy="27" rx="4" ry="7" transform="rotate(-20 7 27)"/><ellipse cx="7" cy="40" rx="4" ry="7" transform="rotate(-10 7 40)"/><ellipse cx="17" cy="20" rx="3.5" ry="6" transform="rotate(30 17 20)"/><ellipse cx="16" cy="34" rx="3.5" ry="6" transform="rotate(30 16 34)"/></g></svg>
+          <h1>Akademi Tenis Kak Adam</h1>
+          <svg class="ac-laurel r" viewBox="0 0 24 60"><g fill="#FFC21A"><path d="M14 58C4 44 4 22 14 4" stroke="#E0A400" stroke-width="2" fill="none"/><ellipse cx="9" cy="14" rx="4" ry="7" transform="rotate(-30 9 14)"/><ellipse cx="7" cy="27" rx="4" ry="7" transform="rotate(-20 7 27)"/><ellipse cx="7" cy="40" rx="4" ry="7" transform="rotate(-10 7 40)"/><ellipse cx="17" cy="20" rx="3.5" ry="6" transform="rotate(30 17 20)"/><ellipse cx="16" cy="34" rx="3.5" ry="6" transform="rotate(30 16 34)"/></g></svg></div>
+        <div class="ac-ribbon"><p class="sub">Belajar tenis bersama Kak Adam!</p></div>
+      </div>
     </div>
     <div class="loopbox" id="loopBox"></div>
     <div class="path" id="path"></div>
