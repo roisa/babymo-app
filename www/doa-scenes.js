@@ -806,7 +806,7 @@
           shadow(214, 86, 26, 5) + '<rect x="192" y="40" width="44" height="46" rx="8" fill="url(#dsWood)"/>' + gloss(192, 40, 44, 46, 6, 0.35) + lamp(214, 40, 1, true, true) +
           // the light switch on the wall
           '<rect x="241" y="-24" width="16" height="24" rx="4" fill="#E6E0FF"/><rect x="245" y="-19" width="8" height="14" rx="2" fill="#B9AEE8"/><rect class="s-sw" x="246" y="-12" width="6" height="6" rx="1.6" fill="#fff"/>' +
-          plant(-46, 52, 1, "") + plant(444, 52, 1, "") +
+          plant(444, 52, 1, "") +
           // lamp light warms the room before; after the click it goes dark (the window keeps its moonlight)
           '<rect class="axout" opacity="0" style="--d:.1s;--t:.4s" x="-800" y="-900" width="2000" height="1500" fill="#FFD98A" fill-opacity=".12"/>' +
           '<path class="axfade" style="--d:.12s;--t:.7s" fill-rule="evenodd" fill="#0B0E38" fill-opacity=".38" d="M-800-900h2000v1500h-2000zM88-100h22a48 48 0 0 1 48 48a48 48 0 0 1-48 48h-22a48 48 0 0 1-48-48a48 48 0 0 1 48-48z"/>' +
@@ -1126,7 +1126,7 @@
             star(46, -82, 3.6, "twinkle", "#fff") + star(58, -40, 2.8, "twinkle t2", "#FFE29A") + star(116, -30, 2.6, "twinkle t3", "#fff"), "#8C90E8") +
           star(170, -96, 3.6, "twinkle t4", "#FFE29A") + star(220, -70, 2.6, "twinkle", "#fff") + star(158, -50, 2.2, "twinkle t3", "#fff") + star(390, -96, 3, "twinkle t2", "#FFE29A") +
           band(40, "url(#dsFl)") + floorShine(40) +
-          bed(-90, 30, 150, "url(#dsQuilt)", "#E2D8FF", "url(#dsWood)", false) +
+          bed(-50, 30, 130, "url(#dsQuilt)", "#E2D8FF", "url(#dsWood)", false) +
           // the prayer-bead loop on a little round rug
           rug(166, 66, 70, 11, "#5A4FB0", "#9C8CF0") +
           '<circle class="glow" cx="166" cy="8" r="56" fill="url(#dsBeadGlow)"/>' +
@@ -1147,7 +1147,7 @@
           burst(166, 6, 44, "#FFE29A", 1.75) +
           lamp(262, 40, 1, true) +
           sparkle(240, -30, 0.8, "twinkle", "#FFE29A") + sparkle(110, -6, 0.55, "twinkle t2", "#fff") +
-          plant(-46, 52, 1, "") + plant(444, 52, 1, "");
+          plant(444, 52, 1, "");
       }
     }
   };
