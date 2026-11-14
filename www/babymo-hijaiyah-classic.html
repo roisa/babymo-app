@@ -550,6 +550,29 @@ html[data-bm-theme="classic"] #sHome .home-hdr-stats::after,html[data-bm-theme="
   box-shadow:inset 0 1.5px 0 rgba(255,255,255,.24),inset 0 0 0 1px rgba(255,255,255,.06)}
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #sIntro .letter-card,html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #sQuiz .q-card{background:rgba(255,255,255,.76)}
 </style>
+<style>
+/* Welcome scene: size the garden stage from its width so it always keeps its 360x250 shape. When the screen
+   capped the width but not the height, the drawing re-centred inside a taller box while Mo stayed pinned to
+   the top, so he floated above his shadow. */
+.hf-stage{--hfh:clamp(150px,calc(100vh - 522px - max(0px,min(100vw - 32px,400px) - 358px)*.48),300px);height:auto!important;width:min(100%,calc(var(--hfh) * 360 / 250))}
+@media (max-height:700px){.hf-stage{--hfh:clamp(150px,calc(100vh - 482px),300px)}}
+@media (min-width:600px){.hf-stage{--hfh:clamp(150px,calc(100vh - 610px),330px)}}
+/* "tap a letter" is shown by a little hand tapping the tiles in turn (the text stays for screen readers) */
+#sWelcome .hf-tap{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;margin:0;padding:0}
+#sWelcome .w-strip{position:relative;overflow:visible;margin-top:10px}
+#sWelcome .w-strip-letter.hint{animation:tileHint 1.1s cubic-bezier(.3,1.5,.5,1)}
+@keyframes tileHint{0%,30%{transform:none}48%{transform:translateY(3px) scale(.94)}70%{transform:scale(1.16)}100%{transform:none}}
+.wl-hand{position:absolute;top:0;left:0;width:34px;height:40px;pointer-events:none;z-index:3;filter:drop-shadow(0 4px 4px rgba(20,60,30,.3));
+  transition:transform .55s cubic-bezier(.4,0,.2,1),opacity .3s;opacity:0}
+.wl-hand.on{opacity:1}
+.wl-hand i{display:block;width:100%;height:100%;transform-origin:40% 10%;animation:wlTap 1.1s ease-in-out}
+.wl-hand svg{display:block;width:100%;height:100%}
+.wl-hand::before{content:'';position:absolute;left:5px;top:-6px;width:14px;height:14px;border-radius:50%;border:2px solid rgba(255,255,255,.95);opacity:0;animation:wlRing 1.1s ease-out}
+.wl-hand.again i,.wl-hand.again::before{animation-name:none}
+@keyframes wlTap{0%,20%{transform:translateY(8px) rotate(-8deg)}45%{transform:translateY(-2px) rotate(-8deg) scale(.94)}60%,100%{transform:translateY(8px) rotate(-8deg)}}
+@keyframes wlRing{0%,40%{opacity:0;transform:scale(.4)}50%{opacity:1}100%{opacity:0;transform:scale(1.8)}}
+@media (prefers-reduced-motion:reduce){.wl-hand i,.wl-hand::before,#sWelcome .w-strip-letter.hint{animation:none!important}.wl-hand{transition:none}}
+</style>
 </head>
 <body>
 <!-- kid-friendly backdrop for home / lesson / quiz (letter balloons at the sides + hills, like the welcome) -->
@@ -3063,6 +3086,32 @@ html[data-bm-theme="classic"] #sHome #lessonPath>button,html[data-bm-theme="clas
   else title();
   /* everything static with a data-i icon */
   HJI.fill();
+})();
+</script>
+<script>
+/* welcome: a small pointing hand taps the letter tiles one after another (the tapped tile pops bigger)
+   until the child taps a letter themselves */
+(function(){
+  var HAND='<svg viewBox="0 0 64 76" aria-hidden="true"><defs><linearGradient id="wlS" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#FFE6D2"/><stop offset="1" stop-color="#F5B88E"/></linearGradient><linearGradient id="wlC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4FD887"/><stop offset="1" stop-color="#169E51"/></linearGradient></defs><g stroke="#D3855B" stroke-width="1.7" stroke-linejoin="round"><rect x="15" y="3" width="12.5" height="38" rx="6.25" fill="url(#wlS)"/><circle cx="33" cy="32.5" r="5.6" fill="url(#wlS)"/><circle cx="41.2" cy="34" r="5.4" fill="url(#wlS)"/><circle cx="48" cy="37.2" r="5" fill="url(#wlS)"/><path d="M14 36c0-2 1.4-3.2 3.4-3.2H45c4.4 0 7.6 3.4 7.6 7.6v6.8C52.6 54 46.8 59 39 59H24c-5.6 0-10-4.4-10-10z" fill="url(#wlS)"/><path d="M12.5 44.5c0-3.2 2.6-5.4 5.8-5.4h12.2c2.9 0 4.9 2 4.9 4.6s-2 4.6-4.9 4.6H18.6c-3.4 0-6.1-1.5-6.1-3.8z" fill="url(#wlS)"/><rect x="17" y="57" width="31" height="15" rx="4.5" fill="url(#wlC)" stroke="none"/><path d="M19 9.5a3.4 3.4 0 0 1 4-1.6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none" opacity=".8"/></g></svg>';
+  var strip=document.getElementById('wStrip'); if(!strip) return;
+  var hand=document.createElement('span'); hand.className='wl-hand'; hand.setAttribute('aria-hidden','true'); hand.innerHTML='<i>'+HAND+'</i>';
+  strip.appendChild(hand);
+  var k=0, timer=null, stopped=false, reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function tiles(){ return strip.querySelectorAll('.w-strip-letter'); }
+  function step(){
+    if(stopped) return; var t=tiles(); if(!t.length){ timer=setTimeout(step,400); return; }
+    var scr=document.getElementById('sWelcome'); if(!scr||!scr.classList.contains('active')){ timer=setTimeout(step,1200); return; }
+    var el=t[k%t.length]; k++;
+    var x=el.offsetLeft+el.offsetWidth*.5-8, y=el.offsetTop+el.offsetHeight*.42;
+    hand.style.transform='translate('+x+'px,'+y+'px)'; hand.classList.add('on');
+    if(reduce) return;
+    setTimeout(function(){ if(stopped) return; var i=hand.querySelector('i'); i.style.animation='none'; void i.offsetWidth; i.style.animation='';
+      hand.classList.remove('again'); el.classList.remove('hint'); void el.offsetWidth; el.classList.add('hint'); },560);
+    timer=setTimeout(step,2300);
+  }
+  function stop(){ stopped=true; clearTimeout(timer); hand.classList.remove('on'); tiles().forEach(function(e){ e.classList.remove('hint'); }); }
+  strip.addEventListener('click',stop,true);
+  setTimeout(step,1400);
 })();
 </script>
 </body>
