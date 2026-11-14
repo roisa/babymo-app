@@ -894,15 +894,22 @@
           // exhaust puffs once the engine starts
           [0.95, 1.3, 1.65].map(function (d, i) { return '<circle class="v-puff" opacity="0" style="--d:' + d + 's" cx="' + (26 - i * 3) + '" cy="' + (12 - i) + '" r="' + (5 + i) + '" fill="#fff"/>'; }).join("") +
           // the car
-          '<g transform="translate(34 -36)"><g class="v-bump">' + shadow(92, 92, 92, 7) +
-          '<path d="M6 70v-18c0-12 8-20 20-22l30-4 26-26c5-5 11-6 18-6h44c8 0 14 3 18 8l20 24h12c16 2 24 12 24 26v18c0 6-4 10-10 10H16C10 80 6 76 6 70z" fill="url(#dsCar)"/>' +
-          '<path d="M64 26l26-24h22v24zM120 26V2h20c4 0 7 2 9 4l18 20z" fill="url(#dsWin)"/>' +
-          '<path d="M70 22l14-13h5L76 22z M126 22V8h4v14z" fill="#fff" opacity=".6"/>' +
-          '<path d="M20 36c40-6 120-8 186-2" stroke="#fff" stroke-width="5" fill="none" opacity=".4" stroke-linecap="round"/>' +
-          '<path d="M116 26v48" stroke="#B8323A" stroke-width="2.4"/><rect x="128" y="38" width="14" height="4" rx="2" fill="#8E2229"/>' +
-          '<ellipse cx="208" cy="44" rx="7" ry="5.5" fill="#FFF7C2"/><rect x="2" y="44" width="8" height="10" rx="3" fill="#FF9A3C"/>' +
-          '<rect x="8" y="66" width="208" height="8" rx="4" fill="#B8323A" opacity=".6"/>' +
-          [52, 172].map(function (x) { return '<g transform="translate(' + x + ' 78)"><g class="v-wheel"><circle r="19" fill="#2B2F3A"/><circle r="10" fill="#D5DAE2"/><path d="M0-9v18M-9 0h18" stroke="#9AA2AE" stroke-width="3"/><circle r="3.5" fill="#6A7280"/></g></g>'; }).join("") +
+          '<g transform="translate(30 -26) scale(.9)"><g class="v-bump">' + shadow(92, 92, 92, 7) +
+          // the car faces RIGHT (the way it drives): long hood + sloped windscreen + headlight + mirror at the front (right),
+          // short boot, upright rear window and red tail light at the back (left)
+          '<path d="M8 72V52c0-10 6-17 16-18l30-3 14-1 20-26c2-3 5-4 9-4h46c5 0 9 2 12 5l26 25 36 4c14 1 23 10 23 22v15c0 5-4 9-9 9H17c-5 0-9-4-9-9z" fill="url(#dsCar)"/>' +
+          '<path d="M80 28l15-20c1-2 3-3 5-3h24v23zM130 28V5h16c3 0 5 1 7 3l20 20z" fill="url(#dsWin)"/>' +
+          '<path d="M136 24V9h4v15zM88 24l10-13h5l-10 13z" fill="#fff" opacity=".55"/>' +
+          '<path d="M24 38c50-5 140-6 200 0" stroke="#fff" stroke-width="5" fill="none" opacity=".4" stroke-linecap="round"/>' +
+          '<path d="M127 30v44" stroke="#B8323A" stroke-width="2.4"/><rect x="138" y="40" width="14" height="4" rx="2" fill="#8E2229"/><rect x="98" y="40" width="14" height="4" rx="2" fill="#8E2229"/>' +
+          // side mirror by the windscreen
+          '<path d="M172 28h9c2 0 3 1 3 3v3h-12z" fill="#B8323A"/>' +
+          // headlight + grille at the front, red tail light at the back
+          '<path d="M232 44c4 0 7 3 7 7v2h-12c-2 0-3-1-3-3v-1c0-3 4-5 8-5z" fill="#FFF7C2" stroke="#E8C65A" stroke-width="1.2"/><path d="M243 50l12-4M243 54h13M243 58l12 4" stroke="#FFF3B0" stroke-width="2" stroke-linecap="round" opacity=".7"/>' +
+          '<rect x="226" y="58" width="12" height="7" rx="2.5" fill="#8E2229" opacity=".55"/>' +
+          '<rect x="6" y="42" width="8" height="12" rx="3" fill="#E5484D"/><rect x="6" y="42" width="8" height="4" rx="2" fill="#FF8A8A"/>' +
+          '<rect x="10" y="68" width="226" height="8" rx="4" fill="#B8323A" opacity=".6"/>' +
+          [56, 192].map(function (x) { return '<g transform="translate(' + x + ' 78)"><g class="v-wheel"><circle r="19" fill="#2B2F3A"/><circle r="10" fill="#D5DAE2"/><path d="M0-9v18M-9 0h18" stroke="#9AA2AE" stroke-width="3"/><circle r="3.5" fill="#6A7280"/></g></g>'; }).join("") +
           "</g></g>" +
           // traffic sign
           '<g transform="translate(-56 92)">' + shadow(0, 0, 10, 2.4) + '<rect x="-2.5" y="-90" width="5" height="90" fill="#A9B2BE"/><circle cx="0" cy="-90" r="14" fill="#3A8EE6" stroke="#fff" stroke-width="3"/><path d="M-6-90h12M2-95l5 5-5 5" stroke="#fff" stroke-width="3" fill="none" stroke-linecap="round"/></g>' +
