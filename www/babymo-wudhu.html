@@ -766,6 +766,15 @@ body:has(#s-order.active) .wb-cloud.c2,body:has(#s-order.active) .wb-cloud.c3{op
 :is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) .ostat .big>span{background:none!important}
 :is(html[data-bm-theme="classic"],html[data-bm-theme="dark"]) #checkin .ci-week i .wo-ic{filter:none}
 </style>
+<style>
+/* per-step effects: keep every effect group rendered but invisible (instead of display:none) so iOS Safari keeps
+   their SVG animations alive; only the current step's group is visible */
+.wg-fx>g{display:inline;visibility:hidden}
+#gStage[data-fx="niat"] .f-niat,#gStage[data-fx="hands"] .f-hands,#gStage[data-fx="mouth"] .f-mouth,#gStage[data-fx="nose"] .f-nose,
+#gStage[data-fx="face"] .f-face,#gStage[data-fx="arms"] .f-arms,#gStage[data-fx="head"] .f-head,#gStage[data-fx="ears"] .f-ears,
+#gStage[data-fx="feet"] .f-feet,#gStage[data-fx="dua"] .f-dua,.wg-fx>g.f-all,
+#gStage:is([data-fx="mouth"],[data-fx="nose"],[data-fx="face"],[data-fx="head"],[data-fx="ears"]) .f-floor{visibility:visible}
+</style>
 </head>
 <body>
 <!-- shared art for the Wudhu home (kept rendered, never display:none, so gradients resolve) -->
@@ -1162,6 +1171,16 @@ function sfx(t){ try{ if(window.BabyMo && BabyMo.sfx) BabyMo.sfx(t); }catch(e){}
 
 /* ── GUIDE ── */
 var cur = 0, taps = 0, alt = false;
+/* iOS Safari doesn't (re)start CSS animations on SVG shapes that were hidden, so the water/sparkle motion froze
+   there: restart every effect animation each time a step is shown */
+function restartFx(st){
+  try{
+    var els = st.querySelectorAll('.wg-fx *');
+    for(var k=0;k<els.length;k++) els[k].style.animation = 'none';
+    void st.getBoundingClientRect();
+    requestAnimationFrame(function(){ for(var k=0;k<els.length;k++) els[k].style.animation = ''; });
+  }catch(e){}
+}
 function startGuide(){ show('s-guide'); soundUI(); go(0); try{ BabyMo.track && BabyMo.track('wudhu_guide_start'); }catch(e){} }
 function go(i){
   if(i < 0 || i >= STEPS.length) return;
@@ -1172,6 +1191,7 @@ function go(i){
   document.getElementById('gNum').textContent = i + 1;
   talk(false);
   var st = document.getElementById('gStage'); st.setAttribute('data-fx', LOOK[i][1]);
+  restartFx(st);
   st.classList.toggle('wg-tap', !!s.ar);
   if(s.ar){ st.setAttribute('role', 'button'); st.tabIndex = 0; st.setAttribute('aria-label', s.sayAr ? 'Ketuk Mo untuk dengar doa' : 'Ketuk Mo untuk dengar ' + s.title); }
   else { st.removeAttribute('role'); st.removeAttribute('tabindex'); st.removeAttribute('aria-label'); }
