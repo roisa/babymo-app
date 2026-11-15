@@ -3114,5 +3114,32 @@ html[data-bm-theme="classic"] #sHome #lessonPath>button,html[data-bm-theme="clas
   setTimeout(step,1400);
 })();
 </script>
+<style>
+/* Letter Box: 7 columns must fit a 375px phone. Each tile's min size came from the Arabic glyph's line box
+   (aspect-ratio turns that height into a min width), so the RTL grid spilled off the left edge. */
+#sHome .kotak-g{grid-template-columns:repeat(7,minmax(0,1fr))}
+#sHome .kotak-g span{min-width:0;line-height:1}
+</style>
+<script>
+/* Quiz on short screens (iPhone SE, iPad Pro 13" which lays out at ~540x720): after an answer the feedback bar and
+   its Next button land below the fold. Bring them into view, and start every new question at the top. */
+(function(){
+  var scr=document.getElementById('sQuiz'); if(!scr) return;
+  function reduce(){ try{ return matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; } }
+  var _lq=loadQuestion;
+  loadQuestion=function(qi){ scr.scrollTop=0; return _lq.apply(this,arguments); };
+  var _ha=handleAnswer;
+  handleAnswer=function(btn,choice,q){ var r=_ha.apply(this,arguments);
+    setTimeout(function(){ var nx=document.querySelector('#feedbackBar.show .fb-next'); if(!nx) return;
+      var b=nx.getBoundingClientRect(), sb=scr.getBoundingClientRect();
+      var dy=b.bottom>sb.bottom-8 ? (b.bottom-sb.bottom)+16 : 0;
+      if(dy) scr.scrollTo({top:scr.scrollTop+dy,behavior:reduce()?'auto':'smooth'});
+      /* the companion pops up bottom-left with the same words as Mo's bubble; never let it sit over Next */
+      var mo=document.getElementById('bm-mo');
+      if(mo&&mo.classList.contains('show')){ var m=mo.getBoundingClientRect(), t=b.top-dy, bt=b.bottom-dy;
+        if(m.bottom>t&&m.top<bt&&m.right>b.left&&m.left<b.right) mo.classList.remove('show'); } },380);
+    return r; };
+})();
+</script>
 </body>
 </html>
