@@ -63,6 +63,8 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 #s-garden{padding-bottom:calc(10px + env(safe-area-inset-bottom));overflow:hidden}
 .hud{width:100%;max-width:440px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .hud .day{flex:1;min-width:0;text-align:center;font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* small phones (iPhone SE): the day label wraps onto two short lines instead of being cut off with an ellipsis */
+@media (max-width:400px){.hud{gap:6px}.hud .pill{padding:7px 10px}.hud .day{font-size:13.5px;line-height:1.15;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}}
 .stagewrap{position:relative;width:100%;max-width:440px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 .stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;background:#BFE7FF;box-shadow:0 20px 40px -24px rgba(0,0,0,.6);container-type:inline-size}
 .stage svg.bg{position:absolute;inset:0;width:100%;height:100%}

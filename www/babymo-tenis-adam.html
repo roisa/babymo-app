@@ -268,6 +268,8 @@ html[data-bm-theme="dark"] .adam-stand::after,html[data-bm-theme="classic"] .ada
 <style>
 /* ── Glass touch on the result cards: each card keeps its own colour, border and shape, and gains a soft
       frost, a bright top edge, a faint inner rim and a sheen across the top (lighter than the Wudhu/Pray glass) ── */
+/* result: centre the card in the screen on tall iPads instead of leaving the bottom 2/3 empty (auto margins fall back to 0 when it has to scroll) */
+#s-result>.wrap{margin-block:auto}
 #s-result .card{position:relative;isolation:isolate;-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
 #s-result .card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;z-index:-1;
   background:linear-gradient(180deg,rgba(255,255,255,.5) 0,rgba(255,255,255,.1) 24%,rgba(255,255,255,0) 46%);
