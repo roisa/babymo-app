@@ -1117,7 +1117,7 @@ function renderTools(){
   if(sg==="feed") hint(L(n+" lapar. Ketuk Makan.",n+" is hungry. Tap Food."));
   else if(sg==="water") hint(L(n+" haus. Ketuk Minum.",n+" is thirsty. Tap Water."));
   else if(sg==="clean") hint(L(n+" kotor. Ketuk Bersih.",n+" is dirty. Tap Clean."));
-  else if(sg==="collect") hint(L(pname(sel)+" punya "+ANIMALS[sel].give[2].toLowerCase()+"! Ketuk Ambil.",pname(sel)+" has "+ANIMALS[sel].give[3].toLowerCase()+" for you! Tap Collect."));
+  else if(sg==="collect") hint(L(pname(sel)+" punya "+ANIMALS[sel].give[2].toLowerCase()+"! Ketuk Ambil.",pname(sel)+" has "+(function(g){ g=g.toLowerCase(); return /s$/.test(g)||/^(milk|wool)/.test(g)?g:(/^[aeiou]/.test(g)?"an ":"a ")+g; })(ANIMALS[sel].give[3])+" for you! Tap Collect."));
   else if(sg==="pet") hint(sel==="kucing"?L("Ajak "+n+" bermain!","Play with "+n+"!"):L("Elus "+n+" dengan lembut.","Stroke "+n+" gently."));
   else if(allCared()) hint(L("Semua sahabat sudah dirawat! Ketuk 🌙 Tidur.","Every friend is cared for! Tap 🌙 Sleep."));
   else hint(L(n+" senang! Rawat sahabat yang lain.",n+" is happy! Look after the others."));
