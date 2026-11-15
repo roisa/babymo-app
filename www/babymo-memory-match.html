@@ -499,6 +499,23 @@ html[data-bm-theme="classic"] .stk-sticky-hdr{background:rgba(7,25,18,.82);}
 /* '+N lencana lagi!' was white-on-cream in the light theme */
 html:not([data-bm-theme="classic"]) #earn-extra{color:#B4690E!important;font-size:12px!important}
 </style>
+<style id="bm-stk-scroll">
+/* Badges screen: one scroller with a slim pinned top bar (back button always reachable) */
+#s-stickers{overflow-y:auto!important;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+#s-stickers .stk-bar{position:sticky;top:0;z-index:5;flex-shrink:0;box-sizing:border-box;margin:0;
+  padding:12px 20px 10px;padding-top:calc(12px + env(safe-area-inset-top));
+  background:rgba(255,255,255,.75);-webkit-backdrop-filter:blur(22px) saturate(170%);backdrop-filter:blur(22px) saturate(170%)}
+html[data-bm-theme="classic"] #s-stickers .stk-bar,html[data-bm-theme="dark"] #s-stickers .stk-bar{background:rgba(7,25,18,.82)}
+#s-stickers .stk-sticky-hdr{padding-top:4px;border-bottom:0}
+#s-stickers .stk-scroll{flex:none;overflow:visible;padding-bottom:calc(32px + env(safe-area-inset-bottom))}
+/* dark: stat labels were grey-on-dark-green (unreadable) */
+html[data-bm-theme="classic"] .stat-lbl,html[data-bm-theme="dark"] .stat-lbl{color:rgba(255,255,255,.72);opacity:1}
+</style>
+<style id="bm-bright-stk">
+/* light: locked badge slots were white-on-white (tile, dashed edge and hint all invisible) */
+.stk-slot:not(.unlocked){background:rgba(21,34,48,.035);border-color:rgba(21,34,48,.16)}
+.stk-slot:not(.unlocked) .badge-hint{color:#7A8794}
+</style>
 <style id="bm-mm-home">
 /* ── Front page: "card table" hero — Mo between memory cards that flip to show matching pairs ── */
 .brand .brand-ic{width:26px;height:26px;border-radius:8px;flex:none;box-shadow:0 2px 6px rgba(0,0,0,.12)}
@@ -905,13 +922,14 @@ html[data-bm-theme="classic"] .mm-foot{filter:brightness(.55) saturate(.85)}
   <!-- ═══════════════ BADGES SCREEN ═══════════════ -->
   <div class="screen" id="s-stickers">
 
-    <!-- Sticky header section -->
+    <!-- Top bar stays pinned; everything below scrolls as one page (the old pinned
+         header was ~500px tall and left an iPhone SE only ~170px to scroll badges in) -->
+    <div class="s-hdr stk-bar">
+      <button class="back-btn" id="btn-stk-back" style="flex-shrink:0">← Menu</button>
+      <h2>Lencanaku<span class="mm-hi mm-hi-r" data-mm-ic="star"></span></h2>
+      <div style="width:70px;flex-shrink:0"></div>
+    </div>
     <div class="stk-sticky-hdr">
-      <div class="s-hdr">
-        <button class="back-btn" id="btn-stk-back" style="flex-shrink:0">← Menu</button>
-        <h2>Lencanaku<span class="mm-hi mm-hi-r" data-mm-ic="star"></span></h2>
-        <div style="width:70px;flex-shrink:0"></div>
-      </div>
 
       <!-- Big progress count + bar -->
       <div class="prog-hero">
@@ -1443,6 +1461,13 @@ function startGame(mode) {
    ════════════════════════════════════════════ */
 function renderGrid() {
   const grid = document.getElementById('card-grid');
+  sizeGrid();
+  grid.innerHTML = '';
+  renderCards(grid);
+}
+/* Fit the cards to the screen; re-run on resize (iPad windows can be resized mid-game) */
+function sizeGrid() {
+  const grid = document.getElementById('card-grid');
   const cfg = MODES[G.mode];
   const totalCards = cfg.pairs * 2;
   const cols = cfg.cols;
@@ -1467,7 +1492,8 @@ function renderGrid() {
   grid.style.gridAutoRows = `${cardSize}px`;
   grid.style.setProperty('--cs', cardSize + 'px');
   grid.classList.toggle('tiny', cardSize < 84);
-  grid.innerHTML = '';
+}
+function renderCards(grid) {
 
   const backSvg = `<svg class="cb-pattern" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg"><polygon points="20,4 22.5,13 32,13 24.5,18.5 27,28 20,22.5 13,28 15.5,18.5 8,13 17.5,13" fill="rgba(245,197,24,.38)"/></svg>`;
 
@@ -1496,6 +1522,9 @@ function renderGrid() {
     }));
   });
 }
+
+let _gridRT;
+window.addEventListener('resize', ()=>{ clearTimeout(_gridRT); _gridRT = setTimeout(()=>{ if (G && G.mode && document.getElementById('s-game').classList.contains('active')) sizeGrid(); }, 120); });
 
 /* ════════════════════════════════════════════
    ARABIC VOICE (Hijaiyah)
@@ -1819,7 +1848,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   });
 
   // Stickers / badges
-  document.getElementById('btn-stickers').addEventListener('click', ()=>{ SFX.tap(); renderStickers(); goTo('s-stickers'); });
+  document.getElementById('btn-stickers').addEventListener('click', ()=>{ SFX.tap(); renderStickers(); goTo('s-stickers'); document.getElementById('s-stickers').scrollTop=0; });
   document.getElementById('btn-stk-back').addEventListener('click', ()=>{ SFX.tap(); renderThemes(); goTo('s-home'); });
   // A new day while the page stays open: refresh the daily card
   document.addEventListener('visibilitychange', ()=>{ if (!document.hidden) renderDailyCard(); });

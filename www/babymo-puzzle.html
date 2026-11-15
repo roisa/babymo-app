@@ -518,6 +518,17 @@ html[data-bm-theme="dark"] #introCard::after,html[data-bm-theme="classic"] #intr
 /* light theme: let a little of the scene show through */
 html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #introCard{background:linear-gradient(170deg,rgba(255,255,255,.84) 0%,rgba(255,248,234,.84) 60%,rgba(255,241,214,.84) 100%)}
 </style>
+<style id="bm-bright-pz-ring">
+/* light: the progress ring's track was white-on-white, leaving a lone floating number */
+.prog-ring-bg{stroke:rgba(21,34,48,.12)}
+</style>
+<style id="pz-wide">
+/* wide iPad windows: keep the reward sheet phone-width instead of stretching edge to edge */
+.intro-card{max-width:560px;margin-left:auto;margin-right:auto}
+/* the board's 6px frame sat INSIDE the JS-set width (border-box), so the tiles overflowed by 12px:
+   the right column and bottom row were clipped and the picture didn't line up */
+.grid{box-sizing:content-box}
+</style>
 <style id="pz-scenery">
 /* 13 Nov 2026 polish — kid-friendly scenery: soft sky + clouds at the top, a faint strip of grass and
    flowers at the bottom (night sky in dark). Fixed, behind the page (z-index 0), no pointer events,
@@ -691,9 +702,10 @@ let COLS = 3, ROWS = 3, TOTAL = 9;
 let PUZZLE_SIZE = 300, TILE_SIZE = 96;
 let CUR_POSE = null, IS_TODAY = true;
 function sizePuzzle(){
-  const vw = Math.min(window.innerWidth, 420);
-  // leave room for the header, title and hint on short (landscape) screens
-  PUZZLE_SIZE = Math.max(180, Math.min(vw - 32, 340, window.innerHeight - (window.innerHeight < 500 ? 150 : 190)));
+  const vw = Math.min(window.innerWidth, 520);
+  // leave room for the header, title and hint on short (landscape) screens;
+  // bigger phones / iPads get a bigger board (was capped at 340px, leaving a big empty gap)
+  PUZZLE_SIZE = Math.max(180, Math.min(vw - 32, 440, window.innerHeight - (window.innerHeight < 500 ? 150 : 300)));
   TILE_SIZE = (PUZZLE_SIZE - (COLS - 1) * GAP) / COLS;
 }
 
@@ -808,6 +820,23 @@ function buildGrid(){
     }
   }
 }
+
+/* Re-fit the board when the window changes size (resizable iPad windows) without
+   losing the tiles already opened. */
+let _pzRT;
+window.addEventListener('resize', () => { clearTimeout(_pzRT); _pzRT = setTimeout(() => {
+  if (!CUR_POSE) return;
+  const old = PUZZLE_SIZE; sizePuzzle(); if (Math.abs(old - PUZZLE_SIZE) < 1) return;
+  const grid = document.getElementById('grid'), glow = document.getElementById('puzzleGlow'), fit = poseFit(CUR_POSE);
+  grid.style.width = grid.style.height = PUZZLE_SIZE + 'px';
+  glow.style.width = glow.style.height = (PUZZLE_SIZE + 60) + 'px';
+  grid.querySelectorAll('.tile').forEach(t => {
+    const i = +t.dataset.idx, r = Math.floor(i / COLS), c = i % COLS, f = t.querySelector('.tile-front');
+    t.style.width = t.style.height = TILE_SIZE + 'px';
+    if (f){ f.style.backgroundSize = fit.size + 'px ' + fit.size + 'px';
+      f.style.backgroundPosition = (fit.x - c * (TILE_SIZE + GAP)) + 'px ' + (fit.y - r * (TILE_SIZE + GAP)) + 'px'; }
+  });
+}, 120); });
 
 // ═══════════════════════════════════════════
 // TAP HANDLER

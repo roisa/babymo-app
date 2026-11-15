@@ -1378,6 +1378,19 @@ body:not(:has(.celebration.show)):not(:has(.modal.show)) #bm-mo{display:none!imp
 }
 </style>
 <script src="bm-icons.js" defer></script>
+<style id="kb-wide">
+/* wide iPad windows (>=820px): the play column was widened to 680px while the board stays ~410px,
+   so the render-2 Mo floated beside the board with his legs showing and the bubble drifted away.
+   Keep the play column phone-width so Mo stays tucked behind the board (upper body only). */
+@media (min-width:820px){html body .app{max-width:480px!important}}
+/* the reward screen and the modals were letterboxed to 520px, so the play screen (back/reload/mute
+   buttons, Mo) showed - and stayed tappable - down both sides. Cover the whole window and keep the
+   content in the same 520px column with padding instead. */
+@media (min-width:760px){
+  html body .celebration,html body .modal{max-width:none!important}
+  html body .celebration{padding-left:max(16px,calc(50vw - 244px))!important;padding-right:max(16px,calc(50vw - 244px))!important}
+}
+</style>
 <style id="kb-tap">html,body{touch-action:manipulation}.tile,.tile *{touch-action:manipulation;-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}</style>
 <style>
 /* 13 Nov 2026 — the question sits in Mo's speech bubble (no separate title cloud, no old
@@ -2305,7 +2318,7 @@ function openCollection(){
       playsHtml = `<div class="coll-plays">${dotsArr.join('')}${more}</div>`;
     }
     it.innerHTML = `
-      <div class="coll-img" style="background-image:url('${p.image}')"></div>
+      <div class="coll-img"${kbPicCache[p.id] ? ` style="background-image:url('${kbPicCache[p.id]}')"` : ''}></div>
       <span class="coll-num">${p.num}</span>
       <div class="coll-lock">🔒</div>
       ${playsHtml}
@@ -2318,6 +2331,8 @@ function openCollection(){
       });
     }
     grid.appendChild(it);
+    // the same render-2 upper-body picture the puzzle reveals (not the old Kata Baik cut-outs)
+    if (!kbPicCache[p.id]) kbPicture(p).then((url) => { const ci = it.querySelector('.coll-img'); if (ci) ci.style.backgroundImage = `url("${url}")`; }).catch(() => {});
   });
   document.getElementById('collSeenCount').textContent = state.seen.size;
   document.getElementById('collBarFill').style.width = (state.seen.size/PHRASES.length*100) + '%';
@@ -2442,7 +2457,7 @@ function openToday(){
   document.getElementById('todayHead').textContent = KL('Kalimat Hari Ini', 'Phrase of the Day');
   const body = document.getElementById('todayBody');
   body.innerHTML = `<div class="td-card">
-      <div class="td-img" style="background-image:url('${learned ? p.image : ''}')">${learned ? '' : '<div style="height:100%;display:grid;place-items:center;font-size:40px;background:linear-gradient(135deg,#3A5840,#2A4030);border-radius:14px">🎁</div>'}</div>
+      <div class="td-img" style="background-image:url('${learned ? (kbPicCache[p.id] || '') : ''}')">${learned ? '' : '<div style="height:100%;display:grid;place-items:center;font-size:40px;background:linear-gradient(135deg,#3A5840,#2A4030);border-radius:14px">🎁</div>'}</div>
       <div class="td-t">${learned
         ? `<b>${p.title}</b><div class="td-ar">${p.arabic}</div><small>${kbT(p.indo)}</small>`
         : `<b>${KL('Kalimat rahasia hari ini', "Today's secret phrase")}</b><small>${KL('Buka puzzlenya untuk mengetahui kalimat baik hari ini!', "Open the puzzle to find out today's kind words!")}</small>`}</div>
@@ -2456,6 +2471,8 @@ function openToday(){
   pl.addEventListener('click', () => { closeToday(); hideCelebration(); closeCollection(); setTimeout(() => buildPuzzle(p, true), 260); });
   const li = document.getElementById('tdListen'); if (li) li.addEventListener('click', () => audio.playPhrase(p));
   if (learned) wirePractice(document.getElementById('tdPractice'), p, () => { openToday(); updateTodayBtn(); });
+  // render-2 upper-body picture (the old Kata Baik cut-outs are retired)
+  if (learned && !kbPicCache[p.id]) kbPicture(p).then((url) => { const ti = body.querySelector('.td-img'); if (ti) ti.style.backgroundImage = `url("${url}")`; }).catch(() => {});
   document.getElementById('todayModal').classList.add('show');
 }
 function closeToday(){ document.getElementById('todayModal').classList.remove('show'); }
