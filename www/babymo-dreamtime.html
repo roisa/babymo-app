@@ -511,6 +511,70 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 .wardrobe{margin-top:22px}
 @media (max-height:700px){.pjmo{width:230px;height:230px;transform:translateY(-8px)}.pjchk span{width:36px;height:36px;padding:6px}}
 </style>
+<style id="dt-fx">
+/* ═════ Dreamtime visual + motion upgrade ═════ */
+/* night sky behind the steps */
+#s-steps .topbar{position:relative;z-index:3}
+.dt-sky{position:absolute;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.dt-stars i{position:absolute;border-radius:50%;background:#fff;box-shadow:0 0 6px rgba(255,255,255,.8);animation:dtTw 3s ease-in-out infinite}
+@keyframes dtTw{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.15)}}
+.dt-shoot{position:absolute;top:12%;left:-20%;width:90px;height:2px;border-radius:2px;background:linear-gradient(90deg,transparent,#fff);transform:rotate(18deg);opacity:0;animation:dtShoot 9s ease-in 3s infinite}
+@keyframes dtShoot{0%{transform:translate(0,0) rotate(18deg);opacity:0}3%{opacity:1}10%{transform:translate(130vw,42vw) rotate(18deg);opacity:0}100%{opacity:0;transform:translate(130vw,42vw) rotate(18deg)}}
+.dt-moonglow{position:absolute;right:-60px;top:-40px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(255,226,140,.22),rgba(255,226,140,0) 65%)}
+.dt-aurora{position:absolute;left:-30%;right:-30%;top:18%;height:40%;background:radial-gradient(ellipse 50% 40% at 30% 50%,rgba(126,232,220,.10),transparent 70%),radial-gradient(ellipse 50% 40% at 75% 40%,rgba(184,160,255,.14),transparent 70%);animation:dtAur 14s ease-in-out infinite alternate}
+@keyframes dtAur{to{transform:translateX(8%)}}
+.dt-clouds{position:absolute;left:-5%;right:-5%;bottom:0;width:110%;height:120px}
+.dt-clouds .c1{fill:rgba(160,150,255,.10);animation:dtCl 22s ease-in-out infinite alternate}.dt-clouds .c2{fill:rgba(120,110,230,.14);animation:dtCl 30s ease-in-out infinite alternate-reverse}
+@keyframes dtCl{to{transform:translateX(-18px)}}
+/* every phase's controls slide in softly */
+.bplay>*{animation:bpIn .5s cubic-bezier(.3,1.3,.5,1) both}
+@keyframes bpIn{from{opacity:0;transform:translateY(14px) scale(.96)}}
+/* glassy tool buttons with a check badge when done */
+.btool,.bhold{background:linear-gradient(160deg,rgba(255,255,255,.16),rgba(255,255,255,.05))!important;border:1.5px solid rgba(255,255,255,.22)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 12px 26px -14px rgba(0,0,0,.6)!important;position:relative;overflow:visible}
+.btool .ic,.bhold .ic{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.btool:not(.ok) .ic{animation:dtFloat 2.4s ease-in-out infinite}
+@keyframes dtFloat{50%{transform:translateY(-4px) rotate(-4deg)}}
+.btool.ok{animation:dtPop .45s cubic-bezier(.3,1.6,.5,1)!important}
+.btool.ok::after{content:"";position:absolute;top:-8px;right:-8px;width:26px;height:26px;border-radius:50%;background:#3ECFB8 url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M6 12.5l4 4 8-9' fill='none' stroke='white' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/></svg>") center/16px no-repeat;
+  box-shadow:0 4px 10px -2px rgba(30,160,140,.6);animation:dtPop .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes dtPop{0%{transform:scale(.6)}60%{transform:scale(1.1)}100%{transform:none}}
+.bhold:not(.ok){box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 0 rgba(126,232,220,.5),0 12px 26px -14px rgba(0,0,0,.6)!important;animation:dtHold 1.8s ease-in-out infinite}
+@keyframes dtHold{50%{box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 0 0 8px rgba(126,232,220,.0),0 0 22px 2px rgba(126,232,220,.35)}}
+/* brushing track glows, sparkles follow the brush */
+.bzone{background:linear-gradient(160deg,rgba(255,255,255,.10),rgba(255,255,255,.03))!important;border:1.5px solid rgba(255,255,255,.2)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.25)}
+.bzone .btrack{background:linear-gradient(90deg,rgba(126,232,220,.15),rgba(126,232,220,.6),rgba(126,232,220,.15))!important;box-shadow:0 0 10px rgba(126,232,220,.5)}
+.bzone.v .btrack{background:linear-gradient(180deg,rgba(126,232,220,.15),rgba(126,232,220,.6),rgba(126,232,220,.15))!important}
+.br-spark{position:absolute;width:10px;height:10px;margin:-5px;pointer-events:none;background:#BFFAF1;clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);animation:brSp .8s ease-out forwards}
+@keyframes brSp{from{transform:scale(.3) rotate(0);opacity:1}to{transform:scale(1.3) rotate(90deg) translateY(-14px);opacity:0}}
+/* the water drop */
+.wdrop-wrap{display:flex;flex-direction:column;align-items:center;gap:4px}
+.wdrop{position:relative;width:118px;height:146px;border:0!important;padding:0;background:none!important;box-shadow:none!important;cursor:pointer;animation:wdIdle 2.6s ease-in-out infinite!important;transform-origin:50% 92%;-webkit-tap-highlight-color:transparent}
+.wd-svg{width:100%;height:100%;display:block;overflow:visible;filter:drop-shadow(0 12px 18px rgba(46,143,224,.45)) drop-shadow(0 0 16px rgba(126,232,248,.35))}
+@keyframes wdIdle{0%,100%{transform:scale(1,1) translateY(0)}50%{transform:scale(1.03,.97) translateY(2px)}}
+.wdrop.boing{animation:wdBoing .6s cubic-bezier(.3,1.6,.5,1)!important}
+@keyframes wdBoing{0%{transform:scale(1)}25%{transform:scale(1.14,.84)}50%{transform:scale(.92,1.1)}75%{transform:scale(1.04,.97)}100%{transform:scale(1)}}
+.wd-level{transition:transform .6s cubic-bezier(.3,1.4,.5,1)}
+.wd-wave{animation:wdWave 2.2s linear infinite}.wd-wave.w2{animation-duration:3.2s;animation-direction:reverse}
+@keyframes wdWave{to{transform:translateX(30px)}}
+.wd-bub circle{fill:#fff;opacity:.7;animation:wdBub 2.4s ease-in infinite}.wd-bub circle:nth-child(2){animation-delay:-.8s}.wd-bub circle:nth-child(3){animation-delay:-1.6s}
+@keyframes wdBub{from{transform:translateY(0);opacity:.8}to{transform:translateY(-60px);opacity:0}}
+.wd-ring{position:absolute;left:50%;bottom:4px;width:110px;height:26px;margin-left:-55px;border-radius:50%;border:2.5px solid rgba(126,232,248,.8);opacity:0;pointer-events:none}
+.wd-ring.go{animation:wdRing .8s ease-out forwards}.wd-ring.r2.go{animation-delay:.15s}
+@keyframes wdRing{from{transform:scale(.4);opacity:.9}to{transform:scale(1.6);opacity:0}}
+.wd-lbl{font-size:18px!important;color:#BFF3FF;text-shadow:0 2px 10px rgba(46,143,224,.6)}
+.wdrop.ok .wd-svg{filter:drop-shadow(0 12px 18px rgba(46,143,224,.45)) drop-shadow(0 0 26px rgba(126,232,248,.7))}
+.wd-fly{position:fixed;z-index:80;width:12px;height:16px;margin:-8px 0 0 -6px;pointer-events:none;background:radial-gradient(circle at 35% 35%,#fff 0 18%,#9FE7FA 30%,#3EA3EE 100%);
+  border-radius:50% 50% 50% 50%/60% 60% 40% 40%;transform:rotate(var(--r));animation:wdFly .9s cubic-bezier(.2,.7,.4,1) forwards}
+@keyframes wdFly{0%{transform:translate(0,0) rotate(var(--r)) scale(calc(var(--s)*.4));opacity:1}60%{opacity:1}100%{transform:translate(var(--x),calc(var(--y) + 70px)) rotate(var(--r)) scale(var(--s));opacity:0}}
+/* du'a: a soft light sweep on Listen & Repeat, a glow when Aamiin unlocks */
+#playAll{position:relative;overflow:hidden}
+#playAll::after{content:"";position:absolute;top:0;bottom:0;left:-40%;width:30%;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.4),transparent);animation:dtSweep 3s ease-in-out infinite}
+@keyframes dtSweep{0%,55%{left:-40%}100%{left:130%}}
+#doaLanjut:not([disabled]){animation:dtGlowGold 1.8s ease-in-out infinite}
+@keyframes dtGlowGold{50%{box-shadow:0 0 0 6px rgba(255,210,80,.18),0 0 24px rgba(255,210,80,.5)}}
+@media (prefers-reduced-motion:reduce){.dt-stars i,.dt-shoot,.dt-aurora,.dt-clouds path,.bplay>*,.btool .ic,.bhold,.wdrop,.wd-wave,.wd-bub circle,#playAll::after,#doaLanjut{animation:none!important}}
+</style>
 </head>
 <body>
 <!-- shared gradients for the Dreamtime illustrations (kept rendered, never display:none) -->
@@ -688,6 +752,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 
 <!-- ════ STEPS ════ -->
 <div id="s-steps" class="screen" style="background:linear-gradient(165deg,var(--bg3),var(--bg) 55%,var(--bg2));">
+  <div class="dt-sky" aria-hidden="true"><i class="dt-moonglow"></i><i class="dt-aurora"></i><div class="dt-stars" id="dtStars"></div><svg class="dt-clouds" viewBox="0 0 400 120" preserveAspectRatio="none"><path class="c1" d="M0 80Q40 50 90 66Q130 36 180 60Q230 40 270 64Q320 44 360 66Q385 58 400 64V120H0Z"/><path class="c2" d="M0 98Q50 76 110 90Q160 70 220 88Q280 72 330 90Q370 80 400 88V120H0Z"/></svg></div>
   <div class="topbar">
     <button class="home-btn" id="btn-home">🏠</button>
     <div class="ptrack"><div class="pfill" id="pfill"></div></div>
@@ -990,6 +1055,34 @@ function addRipple(el,e,color){
   el.appendChild(r);setTimeout(function(){r.remove();},700);
 }
 
+
+/* ── visual fx: night sky, water splash, brushing sparkles ── */
+(function(){
+  var st=document.getElementById('dtStars'); if(!st) return;
+  var h=''; for(var i=0;i<46;i++){ var z=Math.random(); h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*70).toFixed(1)+'%;width:'+(z<.8?2:3)+'px;height:'+(z<.8?2:3)+'px;animation-delay:-'+(Math.random()*4).toFixed(2)+'s;animation-duration:'+(2.4+Math.random()*2.6).toFixed(2)+'s"></i>'; }
+  h+='<b class="dt-shoot"></b>'; st.innerHTML=h;
+})();
+function splashDrops(btn){
+  if(RM) return;
+  var r=btn.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height*.62;
+  for(var i=0;i<12;i++){
+    var d=document.createElement('i'); d.className='wd-fly';
+    var a=-Math.PI/2+(Math.random()-.5)*Math.PI*1.25, v=70+Math.random()*80;
+    d.style.left=cx+'px'; d.style.top=cy+'px';
+    d.style.setProperty('--x',(Math.cos(a)*v).toFixed(1)+'px'); d.style.setProperty('--y',(Math.sin(a)*v).toFixed(1)+'px');
+    d.style.setProperty('--s',(.5+Math.random()*.7).toFixed(2)); d.style.setProperty('--r',(a*180/Math.PI+90).toFixed(0)+'deg');
+    d.style.animationDelay=(i*14)+'ms'; document.body.appendChild(d); setTimeout(function(x){return function(){x.remove();};}(d),1100);
+  }
+  ['wd-ring','wd-ring r2'].forEach(function(c,k){ var g=btn.querySelectorAll('.wd-ring')[k]; if(!g)return; g.classList.remove('go'); void g.offsetWidth; g.classList.add('go'); });
+}
+function brushTrail(zone, br){
+  if(RM||!zone||!br) return;
+  var zr=zone.getBoundingClientRect(), b=br.getBoundingClientRect();
+  for(var i=0;i<3;i++){ var k=document.createElement('i'); k.className='br-spark';
+    k.style.left=(b.left-zr.left+b.width/2+(Math.random()-.5)*30)+'px'; k.style.top=(b.top-zr.top+b.height/2+(Math.random()-.5)*24)+'px';
+    k.style.animationDelay=(i*60)+'ms'; zone.appendChild(k); setTimeout(function(x){return function(){x.remove();};}(k),900); }
+}
+
 var BUILDERS=[buildBrush,buildPajamas,buildDoa,buildBlanket];
 function runStep(idx){
   setP(idx);
@@ -1145,7 +1238,7 @@ function buildBrush(wrap,done){
     function place(){ if(vert){ br.style.top=pos+'%'; br.style.transform='translate(-50%,-50%) rotate('+(pos>50?110:70)+'deg)'; } else { br.style.left=pos+'%'; br.style.transform='translate(-50%,-50%) rotate('+(pos>50?-26:26)+'deg)'; } }
     function stroke(dir){
       if(dir===lastDir||count>=NEED)return; lastDir=dir; count++;
-      vib(28); playBrushSound(); foam(); foam();
+      vib(28); playBrushSound(); foam(); foam(); brushTrail(zone, br);
       nudge(vert?(dir==='A'?'wu':'wd'):(dir==='A'?'wl':'wr'));
       setMeter(count/NEED, count+'/'+NEED);
       document.getElementById('bglow').style.opacity=(0.25+0.5*count/NEED);
@@ -1164,16 +1257,33 @@ function buildBrush(wrap,done){
   }
   function phLR(){ swipePhase('x'); }
   function phUD(){ swipePhase('y'); }
-  /* 5 — swish: tap the cup three times */
+  /* 5 — swish: tap the water drop three times; it fills up and splashes */
   function phRinse(){
     var n=0;
-    play.innerHTML='<div class="btools"><button class="bcup" id="bcup">'+ic('cup')+'<b class="bhl">Kumur!</b></button></div>'+meter('Kumur-kumur');
+    play.innerHTML='<div class="wdrop-wrap"><button class="wdrop" id="bcup" type="button" aria-label="Kumur">'
+      +'<span class="wd-ring"></span><span class="wd-ring r2"></span>'
+      +'<svg class="wd-svg" viewBox="0 0 120 150" aria-hidden="true"><defs>'
+      +'<clipPath id="wdClip"><path d="M60 8C60 8 16 66 16 98a44 44 0 0 0 88 0C104 66 60 8 60 8Z"/></clipPath>'
+      +'<radialGradient id="wdGlass" cx=".38" cy=".38" r=".75"><stop offset="0" stop-color="#E8FBFF" stop-opacity=".55"/><stop offset=".6" stop-color="#9FE3F7" stop-opacity=".28"/><stop offset="1" stop-color="#5BB8E8" stop-opacity=".45"/></radialGradient>'
+      +'<linearGradient id="wdWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7EE8F8"/><stop offset="1" stop-color="#2E8FE0"/></linearGradient></defs>'
+      +'<path d="M60 8C60 8 16 66 16 98a44 44 0 0 0 88 0C104 66 60 8 60 8Z" fill="url(#wdGlass)"/>'
+      +'<g clip-path="url(#wdClip)"><g class="wd-level" id="wdLevel" style="transform:translateY(64px)">'
+      +'<path class="wd-wave" d="M-60 86Q-45 80 -30 86T0 86T30 86T60 86T90 86T120 86T150 86T180 86V160H-60Z" fill="url(#wdWater)"/>'
+      +'<path class="wd-wave w2" d="M-60 90Q-45 85 -30 90T0 90T30 90T60 90T90 90T120 90T150 90T180 90V160H-60Z" fill="#2477C9" opacity=".35"/>'
+      +'<g class="wd-bub"><circle cx="44" cy="128" r="3"/><circle cx="70" cy="134" r="2.2"/><circle cx="58" cy="140" r="1.6"/></g></g></g>'
+      +'<path d="M60 8C60 8 16 66 16 98a44 44 0 0 0 88 0C104 66 60 8 60 8Z" fill="none" stroke="#DFF8FF" stroke-width="3" opacity=".9"/>'
+      +'<path d="M36 92C34 74 44 56 54 42" stroke="#fff" stroke-width="7" stroke-linecap="round" fill="none" opacity=".85"/>'
+      +'<circle cx="34" cy="106" r="4.5" fill="#fff" opacity=".8"/><ellipse cx="80" cy="120" rx="10" ry="4" fill="#fff" opacity=".25" transform="rotate(-30 80 120)"/>'
+      +'</svg></button><b class="bhl wd-lbl" id="wdLbl">Kumur!</b></div>'+meter('Kumur-kumur');
     setMeter(0,'0/3');
-    var cup=document.getElementById('bcup');
+    var cup=document.getElementById('bcup'), lvl=document.getElementById('wdLevel'), lbl=document.getElementById('wdLbl');
     cup.addEventListener('click',function(e){
-      if(n>=3)return; n++; vib(30); bubbleSound(); addRipple(cup,e,'rgba(126,232,220,.3)'); nudge('sw');
+      if(n>=3)return; n++; vib(30); bubbleSound(); nudge('sw');
+      cup.classList.remove('boing'); void cup.offsetWidth; cup.classList.add('boing');
+      lvl.style.transform='translateY('+(64-n*24)+'px)';
+      splashDrops(cup);
       setMeter(n/3, n+'/3');
-      if(n>=3){ cup.classList.add('ok'); cup.innerHTML=ic('drops')+'<b class="bhl">Buang airnya</b>'; setTimeout(next,850); }
+      if(n>=3){ cup.classList.add('ok'); lbl.textContent='Buang airnya'; sparkleSound(); setTimeout(next,1100); }
     });
   }
   /* 6 — clean and done */
