@@ -214,6 +214,9 @@ html[data-bm-theme="classic"] #checkin .ci-btn.ok{background:rgba(110,231,183,.1
   .hero img{max-height:240px}
 }
 @media (min-width:760px){.cards.kilat{grid-template-columns:repeat(4,1fr)}}
+/* iPad: the 10-card "Amazing" order level in 2 columns made each card ~150px and the board ~1800px
+   tall; use 3 columns like the Lightning Challenge so most of the board is on screen */
+@media (min-width:480px){.cards:not(.kilat):has(>:nth-child(6)){grid-template-columns:repeat(3,1fr);gap:8px}.cards:not(.kilat):has(>:nth-child(6)) .ocard b{font-size:13px}}
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <script src="bm-icons.js" defer></script>
@@ -530,6 +533,11 @@ body:has(#s-guide.active) .wb-cloud.c2{top:38%}
 #s-guide .nav .btn-sec{background:#fff!important;color:#5A6676!important;box-shadow:0 10px 20px -14px rgba(30,80,140,.5),0 0 0 1px rgba(30,80,140,.06)!important}
 #s-guide .nav .btn-primary{background:linear-gradient(180deg,#5EDB6A 0%,#2DBE4E 55%,#1EA142 100%)!important;--bm-glow:rgba(30,160,66,.55)}
 .app:has(#s-guide.active){padding-bottom:0}
+/* iPad (laid out ~540 wide by bm-fit): a 5/4 scene is ~390px tall and pushed Mo's tip and the Wash!
+   button under the pinned Previous/Next bar. Cap the scene height to what the screen can spare; the
+   scene art is centred and sliced, so a wider-than-5/4 card just shows more of the courtyard. */
+#gStage.wg-stage{width:100%;box-sizing:border-box;max-height:max(220px,calc(100vh - 420px))}
+@supports (height:100dvh){#gStage.wg-stage{max-height:max(220px,calc(100dvh - 420px))}}
 @media (max-height:700px){#gStage.wg-stage{aspect-ratio:3/2}.wg-pill .step-title{font-size:19px}#s-guide .step-text{font-size:15px}}
 
 /* du'a audio: tap-to-listen scene, sound wave from Mo's mouth, glowing du'a card */

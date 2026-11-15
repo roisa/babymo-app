@@ -197,6 +197,10 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .snum{font-size:11.5px!important;letter-spacing:2px!important;}
 /* bm-fit: let the night sky run edge to edge on tablets */
 @media(min-width:760px){.screen{background:transparent!important;}}
+/* wide iPad window: the bedroom art is a phone-width box over the night sky, so soften its
+   left/right/bottom edges into the sky instead of showing hard rectangle edges */
+@media(min-width:760px){.dh-scene{background:transparent}.dh-scene::after{display:none}
+  .dh-scene{-webkit-mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,#000 66%,transparent);-webkit-mask-composite:source-in;mask-image:linear-gradient(90deg,transparent,#000 14%,#000 86%,transparent),linear-gradient(180deg,#000 66%,transparent);mask-composite:intersect}}
 </style>
 <style id="bm-dream-loop">
 /* Nightly bedtime streak (moon that fills night by night) + story of the night.
