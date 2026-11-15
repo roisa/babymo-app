@@ -1483,6 +1483,39 @@ function buildTray(lv){
   updateTrayItem=function(id){ _ut(id); prog(); };
 })();
 
+// ── find-list labels: on narrow phones whole words used to be chopped mid-word ("Sanda/ls", "Lanter/n").
+//    Shrink the row's label font just enough for its longest word (one size for the whole row), and if a very
+//    long word still can't fit at the smallest size, give it a soft hyphen at a syllable break ("Water-/melon"). ──
+(function(){
+  const items=document.getElementById('tray-items'), MIN=9, V=/[aeiouyAEIOUY]/;
+  const meas=document.createElement('span'); meas.setAttribute('aria-hidden','true');
+  meas.style.cssText='position:absolute;left:-9999px;top:0;visibility:hidden;white-space:nowrap;pointer-events:none';
+  function wordW(w,font){ meas.style.font=font; meas.textContent=w; return meas.getBoundingClientRect().width; }
+  function shy(w){ /* split nearest the middle between V|CV or VC|CV, both halves >= 3 letters */
+    let best=-1;
+    for(let i=3;i<=w.length-3;i++){ const a=w[i-1],b=w[i],c=w[i+1]||'';
+      const ok=(!V.test(b)&&V.test(c)&&(V.test(a)||(i>=2&&!V.test(a)&&V.test(w[i-2]))))||w[i-1]==='-';
+      if(ok&&(best<0||Math.abs(i-w.length/2)<Math.abs(best-w.length/2))) best=i; }
+    return best<0?w:(w[best-1]==='-'?w:w.slice(0,best)+'­'+w.slice(best));
+  }
+  function fit(){
+    const lbls=[...items.querySelectorAll('.ti-lbl')]; if(!lbls.length||!items.offsetParent) return;
+    document.body.appendChild(meas);
+    lbls.forEach(l=>{ if(l.dataset.t==null) l.dataset.t=l.textContent; l.textContent=l.dataset.t; l.style.removeProperty('font-size'); });
+    const cs=getComputedStyle(lbls[0]), base=parseFloat(cs.fontSize); let k=1;
+    lbls.forEach(l=>{ const W=l.clientWidth; if(!W) return; l.dataset.t.split(/\s+/).forEach(w=>{ const ww=wordW(w,cs.font); if(ww>W) k=Math.min(k,W/ww); }); });
+    const fs=Math.max(MIN,Math.floor(base*k*2)/2);
+    if(fs<base) lbls.forEach(l=>l.style.setProperty('font-size',fs+'px','important'));
+    const f2=getComputedStyle(lbls[0]).font;
+    lbls.forEach(l=>{ const W=l.clientWidth; const words=l.dataset.t.split(/(\s+)/);
+      if(words.some(w=>w.trim()&&wordW(w,f2)>W)) l.textContent=words.map(w=>w.trim()&&wordW(w,f2)>W?shy(w):w).join(''); });
+    meas.remove();
+  }
+  const _bt=buildTray; buildTray=function(lv){ _bt(lv); requestAnimationFrame(fit); };
+  let rt=0; addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(fit,120); });
+  if(document.fonts&&document.fonts.ready) document.fonts.ready.then(fit);
+})();
+
 // =============================================
 // HINT
 // =============================================

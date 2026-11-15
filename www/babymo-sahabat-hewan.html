@@ -60,6 +60,8 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 #s-farm{padding-bottom:calc(10px + env(safe-area-inset-bottom));overflow:hidden}
 .hud{width:100%;max-width:440px;display:flex;align-items:center;gap:8px;margin-bottom:8px}
 .hud .day{flex:1;min-width:0;text-align:center;font-weight:900;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* small phones (iPhone SE): the day label wraps onto two short lines instead of being cut off with an ellipsis */
+@media (max-width:400px){.hud{gap:6px}.hud .pill{padding:7px 10px}.hud .day{font-size:13.5px;line-height:1.15;white-space:normal;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}}
 .stagewrap{position:relative;width:100%;max-width:440px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center}
 .stage{position:relative;width:100%;aspect-ratio:400/560;max-height:100%;border-radius:26px;overflow:hidden;background:#BFE7FF;box-shadow:0 20px 40px -24px rgba(0,0,0,.6)}
 .stage svg.bg{position:absolute;inset:0;width:100%;height:100%}
@@ -1053,7 +1055,7 @@ function renderAll(){
 }
 
 /* ═════ Baby Mo position ═════ */
-var MO = { x:200, y:396, w:142 };   /* idle: between the back row and the front row */
+var MO = { x:152, y:396, w:142 };   /* idle: between the back row and the front row, left of the sheep so its name tag never sits on his face */
 function moPlace(x,y,w,anim){
   var m=$("mo"); m.style.transitionDuration=anim?"":"0ms";
   m.style.left=pct(x,400); m.style.top=pct(y,560); m.style.width=pct(w,400);
@@ -1115,7 +1117,7 @@ function renderTools(){
   if(sg==="feed") hint(L(n+" lapar. Ketuk Makan.",n+" is hungry. Tap Food."));
   else if(sg==="water") hint(L(n+" haus. Ketuk Minum.",n+" is thirsty. Tap Water."));
   else if(sg==="clean") hint(L(n+" kotor. Ketuk Bersih.",n+" is dirty. Tap Clean."));
-  else if(sg==="collect") hint(L(pname(sel)+" punya "+ANIMALS[sel].give[2].toLowerCase()+"! Ketuk Ambil.",pname(sel)+" has "+ANIMALS[sel].give[3].toLowerCase()+" for you! Tap Collect."));
+  else if(sg==="collect") hint(L(pname(sel)+" punya "+ANIMALS[sel].give[2].toLowerCase()+"! Ketuk Ambil.",pname(sel)+" has "+(function(g){ g=g.toLowerCase(); return /s$/.test(g)||/^(milk|wool)/.test(g)?g:(/^[aeiou]/.test(g)?"an ":"a ")+g; })(ANIMALS[sel].give[3])+" for you! Tap Collect."));
   else if(sg==="pet") hint(sel==="kucing"?L("Ajak "+n+" bermain!","Play with "+n+"!"):L("Elus "+n+" dengan lembut.","Stroke "+n+" gently."));
   else if(allCared()) hint(L("Semua sahabat sudah dirawat! Ketuk 🌙 Tidur.","Every friend is cared for! Tap 🌙 Sleep."));
   else hint(L(n+" senang! Rawat sahabat yang lain.",n+" is happy! Look after the others."));
@@ -1469,7 +1471,7 @@ $("hmRefl").addEventListener("click",function(){ var q=$("hmQuote"), open=q.hidd
 /* ═════ wiring ═════ */
 function enterFarm(){
   catchUp();
-  show("s-farm"); clearFeeders(); renderAll(); setTod(allCared()?"golden":"day",true); moPlace(200,396,142,false); pose("idle");
+  show("s-farm"); clearFeeders(); renderAll(); setTod(allCared()?"golden":"day",true); moPlace(152,396,142,false); pose("idle");
   if(D.morning && D.seen.intro){ playMorning(); return; }
   if(!D.seen.intro){ D.morning=null; D.seen.intro=1; save(); pose("wave"); say(L("Assalamu'alaikum! Ayo rawat sahabat-sahabat kita!","Assalamu'alaikum! Let's look after our animal friends!"));
     pop("👋 "+L("Assalamu'alaikum! Ayo rawat sahabat hewan!","Assalamu'alaikum! Let's care for our animal friends!"),2000); }
