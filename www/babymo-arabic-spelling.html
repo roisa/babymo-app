@@ -1495,6 +1495,23 @@ html[data-bm-theme="classic"] .alb-s.on{background:rgba(255,255,255,.12)}
 .preview-chip.chip-done{border-color:#FCD34D!important}
 @media (prefers-reduced-motion:reduce){.say-btn,.round-stk span .wa{animation:none}#gameSlots,.joined-word{transition:none}}
 </style>
+<style id="bw-fit">
+/* Slots: a 5- or 6-letter word stays on ONE right-to-left row on every phone (it used to wrap onto a second
+   line on 375-390px screens, which breaks the reading order and pushed the letter pool off the screen). */
+#gameSlots{flex-wrap:nowrap}
+#gameSlots .slot{box-sizing:border-box;flex:0 0 auto;width:min(66px,calc((100% - 8px - (var(--n,4) - 1) * 10px) / var(--n,4)));height:auto;aspect-ratio:66/82;min-height:0}
+@media (max-width:360px){#gameSlots .slot{width:min(58px,calc((100% - 8px - (var(--n,4) - 1) * 10px) / var(--n,4)))}}
+/* short phones (iPhone SE): tighten the vertical rhythm so the letter pool stays on screen */
+@media (max-height:700px){
+  #viewGame .word-card{margin:10px 0 18px;padding-top:16px;padding-bottom:16px}
+  #gameSlots{margin-bottom:20px}
+  #viewGame .pool-label{margin-bottom:10px}
+}
+/* sticker album header: keep title + count on one line and the close button a full 44px tap target */
+.alb-hd h3{font-size:clamp(18px,5.4vw,22px);white-space:nowrap}
+.alb-hd span{white-space:nowrap}
+.alb-hd .alb-x{flex:none;width:44px;height:44px}
+</style>
 </head>
 
 <body>
@@ -2446,6 +2463,7 @@ function renderWord() {
 
   const slotsEl = document.getElementById('gameSlots');
   slotsEl.innerHTML = '';
+  slotsEl.style.setProperty('--n', word.letters.length);
   word.letters.forEach(function (letter, i) {
     const slot = document.createElement('div');
     slot.className = 'slot';
