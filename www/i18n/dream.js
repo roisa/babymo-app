@@ -31,7 +31,7 @@
   "😁 Bersih!": "😁 Clean!", "Bersih ✓": "Clean ✓", "Ketuk setiap item untuk memakainya!": "Tap each item to put it on!",
   "Baju Tidur": "Pajama Top", "Celana Tidur": "Pajama Pants", "Ambil Boneka": "Grab Teddy", "Sudah! ✓": "Done! ✓", "Siap untuk tidur!": "Ready for bed!",
   "Dengarkan doanya, lalu tirukan pelan-pelan ya sayang 🌙": "Listen to the du'a, then repeat it slowly, sweetheart 🌙",
-  "▶ Dengar Semua & Tirukan": "▶ Listen & Repeat", "▶ Dengar Semua &amp; Tirukan": "▶ Listen & Repeat", "▶ Sedang diputar...": "▶ Playing...", "🔁 Dengar Lagi": "🔁 Listen Again",
+  "▶ Dengar Semua & Tirukan": "▶ Listen & Repeat", "▶ Dengar Semua &amp; Tirukan": "▶ Listen & Repeat", "▶ Sedang diputar...": "▶ Playing...", "Sedang diputar...": "Playing...", "Dengar Lagi": "Listen Again", "Dengar Semua & Tirukan": "Listen & Repeat", "🔁 Dengar Lagi": "🔁 Listen Again",
   "Dengan nama-Mu ya Allah aku hidup": "In Your name, O Allah, I live", "dan dengan nama-Mu aku mati": "and in Your name I die",
   "Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati": "In Your name, O Allah, I live and in Your name I die",
   "Masya Allah, kamu sudah hafal doanya! 🌟": "Masha Allah, you know the du'a! 🌟", "Aamiin 🤲 — Lanjut Tidur": "Aamiin 🤲 — Go to Sleep", "Aamiin ya Rabb...": "Aamiin, ya Rabb...",
