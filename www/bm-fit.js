@@ -20,7 +20,14 @@
     var a = Math.min(screen.width, screen.height), b = Math.max(screen.width, screen.height);
     var o = (typeof window.orientation === "number") ? Math.abs(window.orientation) === 90
           : (screen.orientation && /landscape/.test(screen.orientation.type));
-    return o ? [b, a] : [a, b];
+    var s = o ? [b, a] : [a, b];
+    // iPadOS can show the app in a window smaller than the screen (Split View,
+    // Slide Over, Stage Manager, resizable windows). Fit to the window, not the
+    // screen, or the scaled page spills out of it. outerWidth/outerHeight are the
+    // window in points and don't change with our viewport scale.
+    var ow = window.outerWidth, oh = window.outerHeight;
+    if (ow > 0 && oh > 0 && (ow < s[0] - 2 || oh < s[1] - 2)) return [ow, oh];
+    return s;
   }
   var last = "";
   function apply() {
@@ -44,6 +51,8 @@
   }
   apply();
   window.addEventListener("orientationchange", function () { setTimeout(apply, 60); setTimeout(apply, 400); });
+  // a window being resized (iPadOS multitasking) re-fits too
+  var rt = 0; window.addEventListener("resize", function () { clearTimeout(rt); rt = setTimeout(apply, 120); });
   if (screen.orientation && screen.orientation.addEventListener) screen.orientation.addEventListener("change", function () { setTimeout(apply, 60); });
   window.BM_FIT = apply;
 })();
