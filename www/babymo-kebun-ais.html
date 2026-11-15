@@ -1343,7 +1343,7 @@ $("resetBtn").addEventListener("click",function(){
 $("sleepBtn").addEventListener("click",function(){ sfx("tap"); sleep(); });
 $("basketBtn").addEventListener("click",function(){ sfx("tap"); openBasket(); });
 document.querySelectorAll(".tool").forEach(function(t){ t.addEventListener("click",function(){ doTool(t.dataset.t); }); });
-beds.forEach(function(el,i){ el.addEventListener("click",function(e){ if(e.target.closest && e.target.closest(".cat")) rescueCat(i); else selectBed(i); }); });
+beds.forEach(function(el,i){ el.addEventListener("click",function(e){ /* a caterpillar is tiny for little fingers: a tap anywhere on its bed moves it */ if(D.beds[i] && D.beds[i].cat) rescueCat(i); else selectBed(i); }); });
 $("aisHit").addEventListener("click",async function(e){ e.stopPropagation(); if(busy) return; busy=true; pose("splash",true); SND.splash(); say(L("Hihi!","Hehe!")); await wait(900); pose("idle",true); busy=false; });
 $("modal").addEventListener("click",function(e){ if(e.target.id==="modal" && $("mcard").querySelector("[data-close]")) closeModal(); });
 (function stars(){ var n=$("night"),h=''; for(var k=0;k<28;k++) h+='<i style="left:'+(Math.random()*100).toFixed(1)+'%;top:'+(Math.random()*45).toFixed(1)+'%;animation-delay:'+(Math.random()*1.4).toFixed(2)+'s"></i>'; n.innerHTML=h; })();
