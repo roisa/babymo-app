@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="time adventure">
+  <defs>
+    <linearGradient id="ta-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9FDEFF"/><stop offset="1" stop-color="#3D8FE0"/></linearGradient>
+    <linearGradient id="ta-sheen" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".38"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <clipPath id="ta-sq"><rect width="100" height="100" rx="23"/></clipPath>
+  </defs>
+  <g clip-path="url(#ta-sq)">
+    <rect width="100" height="100" fill="url(#ta-bg)"/>
+    <path d="M0 78 C 30 66 60 72 100 64 V100 H0Z" fill="#6AD385"/>
+    <circle cx="50" cy="46" r="31" fill="#FF9A3D"/>
+    <circle cx="50" cy="46" r="25" fill="#FFF8EC"/>
+    <g stroke="#8C7D5C" stroke-width="3" stroke-linecap="round">
+      <path d="M50 24v4M50 64v4M28 46h4M68 46h4"/>
+    </g>
+    <path d="M50 46 L40 38" stroke="#FF8A2A" stroke-width="6" stroke-linecap="round"/>
+    <path d="M50 46 L61 29" stroke="#3A8EF0" stroke-width="4.5" stroke-linecap="round"/>
+    <circle cx="50" cy="46" r="4" fill="#FFD23F"/>
+    <rect width="100" height="50" fill="url(#ta-sheen)"/>
+  </g>
+</svg>
