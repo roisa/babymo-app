@@ -10668,5 +10668,887 @@
   ],
   "ok": false,
   "file": "www/voice/lines-8f266354.mp3"
+ },
+ {
+  "text": "عَائِلَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "A'ilah — keluarga",
+  "heard": [
+   "عائله",
+   "عاءله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-de85874f.mp3"
+ },
+ {
+  "text": "صَدِيق",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Shadiq — teman",
+  "heard": [
+   "صديق",
+   "صديقي",
+   "صديقه"
+  ],
+  "ok": true,
+  "file": "www/voice/app-8b393467.mp3"
+ },
+ {
+  "text": "هَدِيَّة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hadiyyah — hadiah",
+  "heard": [
+   "هديه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-e98e7a31.mp3"
+ },
+ {
+  "text": "طِفْل",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Thifl — anak",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-5bd93fa4.mp3"
+ },
+ {
+  "text": "حُبّ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hubb — cinta",
+  "heard": [
+   "حب",
+   "حبه",
+   "حبي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-f9c8d551.mp3"
+ },
+ {
+  "text": "رَضِيع",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Radhi' — bayi",
+  "heard": [
+   "رضيع",
+   "رضيه",
+   "رضيعه"
+  ],
+  "ok": true,
+  "file": "www/voice/app-20d07500.mp3"
+ },
+ {
+  "text": "صَلَاة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Shalah — salat",
+  "heard": [
+   "صلاه",
+   "الصلاه",
+   "صلاح"
+  ],
+  "ok": false,
+  "file": "www/voice/app-af5af875.mp3"
+ },
+ {
+  "text": "صَوْم",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Shawm — puasa",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-a9e7c74c.mp3"
+ },
+ {
+  "text": "قُرْآن",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qur'an — Al-Qur'an",
+  "heard": [
+   "قران",
+   "القران",
+   "قراند"
+  ],
+  "ok": false,
+  "file": "www/voice/app-942a2042.mp3"
+ },
+ {
+  "text": "زَكَاة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Zakah — zakat",
+  "heard": [
+   "زكاه",
+   "زكي",
+   "ذكي"
+  ],
+  "ok": false,
+  "file": "www/voice/app-2e484197.mp3"
+ },
+ {
+  "text": "وُضُوء",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Wudhu' — wudu",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-2256e918.mp3"
+ },
+ {
+  "text": "كَعْبَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ka'bah — Ka'bah",
+  "heard": [
+   "شعبي",
+   "شعبان",
+   "كعبه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-731fafbb.mp3"
+ },
+ {
+  "text": "عِيد",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "'Id — hari raya",
+  "heard": [
+   "عيد",
+   "يا عيد",
+   "عيدي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-4688632e.mp3"
+ },
+ {
+  "text": "شَجَرَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Syajarah — pohon",
+  "heard": [
+   "شجره",
+   "الشجره"
+  ],
+  "ok": false,
+  "file": "www/voice/app-7daef420.mp3"
+ },
+ {
+  "text": "مَطَر",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Mathar — hujan",
+  "heard": [
+   "مطر",
+   "متر",
+   "مطر مطر"
+  ],
+  "ok": true,
+  "file": "www/voice/app-72e8c59f.mp3"
+ },
+ {
+  "text": "بَحْر",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Bahr — laut",
+  "heard": [
+   "بحر",
+   "البحر",
+   "بحره"
+  ],
+  "ok": true,
+  "file": "www/voice/app-81545502.mp3"
+ },
+ {
+  "text": "جَبَل",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Jabal — gunung",
+  "heard": [
+   "جبل"
+  ],
+  "ok": true,
+  "file": "www/voice/app-adbdd000.mp3"
+ },
+ {
+  "text": "سَمَاء",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Sama' — langit",
+  "heard": [
+   "اسمع",
+   "سمع"
+  ],
+  "ok": false,
+  "file": "www/voice/app-ce482b02.mp3"
+ },
+ {
+  "text": "أَرْض",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ardh — bumi",
+  "heard": [
+   "قرد",
+   "ورد"
+  ],
+  "ok": false,
+  "file": "www/voice/app-fb62b10c.mp3"
+ },
+ {
+  "text": "قِطَّة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qiththah — kucing",
+  "heard": [
+   "قطه",
+   "بطه",
+   "خطه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-9bd3404b.mp3"
+ },
+ {
+  "text": "بَقَرَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Baqarah — sapi",
+  "heard": [
+   "بقره",
+   "البقره",
+   "بقر"
+  ],
+  "ok": true,
+  "file": "www/voice/app-1b3fcb3f.mp3"
+ },
+ {
+  "text": "أَرْنَب",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Arnab — kelinci",
+  "heard": [
+   "ارنب",
+   "الارنب"
+  ],
+  "ok": false,
+  "file": "www/voice/app-e7644663.mp3"
+ },
+ {
+  "text": "دَجَاجَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Dajajah — ayam",
+  "heard": [
+   "دجاجه",
+   "الدجاجه",
+   "دجاج"
+  ],
+  "ok": true,
+  "file": "www/voice/app-2f902526.mp3"
+ },
+ {
+  "text": "خَرُوف",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Kharuf — domba",
+  "heard": [
+   "خروف",
+   "الخروف",
+   "خروفي"
+  ],
+  "ok": true,
+  "file": "www/voice/app-1e3643d8.mp3"
+ },
+ {
+  "text": "تَمْر",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tamr — kurma",
+  "heard": [
+   "سمر",
+   "سامر"
+  ],
+  "ok": false,
+  "file": "www/voice/app-eccd94a7.mp3"
+ },
+ {
+  "text": "حَلِيب",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Halib — susu",
+  "heard": [
+   "حليب",
+   "الحليب"
+  ],
+  "ok": true,
+  "file": "www/voice/app-18bee3b2.mp3"
+ },
+ {
+  "text": "عَسَل",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "'Asal — madu",
+  "heard": [
+   "عسل",
+   "يا عسل",
+   "معسل"
+  ],
+  "ok": true,
+  "file": "www/voice/app-cc66a968.mp3"
+ },
+ {
+  "text": "بَيْض",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Baydh — telur",
+  "heard": [
+   "طيب",
+   "ضد",
+   "ضيق"
+  ],
+  "ok": false,
+  "file": "www/voice/app-2e4028ae.mp3"
+ },
+ {
+  "text": "أَرُزّ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Aruzz — nasi",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-cda9c685.mp3"
+ },
+ {
+  "text": "بُرْتُقَال",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Burtuqal — jeruk",
+  "heard": [
+   "برتقال",
+   "البرتقال"
+  ],
+  "ok": true,
+  "file": "www/voice/app-4e962b15.mp3"
+ },
+ {
+  "text": "أُذُن",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Udzun — telinga",
+  "heard": [
+   "اوزون",
+   "موزون",
+   "موزونه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-507defd5.mp3"
+ },
+ {
+  "text": "أَنْف",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Anf — hidung",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-8a516a24.mp3"
+ },
+ {
+  "text": "فَم",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Fam — mulut",
+  "heard": [
+   "فين",
+   "فيلم"
+  ],
+  "ok": false,
+  "file": "www/voice/app-ced729d4.mp3"
+ },
+ {
+  "text": "رِجْل",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Rijl — kaki",
+  "heard": [
+   "رجل",
+   "يا رجل",
+   "رجله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-c6fdc728.mp3"
+ },
+ {
+  "text": "رَأْس",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ra's — kepala",
+  "heard": [
+   "رقص",
+   "راس"
+  ],
+  "ok": false,
+  "file": "www/voice/app-e9c9e046.mp3"
+ },
+ {
+  "text": "قَلْب",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qalb — jantung",
+  "heard": [
+   "قلب",
+   "قلبي",
+   "قلبه"
+  ],
+  "ok": true,
+  "file": "www/voice/app-f25037f0.mp3"
+ },
+ {
+  "text": "بَاب",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Bab — pintu",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-e06fa334.mp3"
+ },
+ {
+  "text": "سَرِير",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Sarir — tempat tidur",
+  "heard": [
+   "سرير",
+   "سريع",
+   "جرير"
+  ],
+  "ok": true,
+  "file": "www/voice/app-dc9e4fa7.mp3"
+ },
+ {
+  "text": "كُرْسِيّ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Kursi — kursi",
+  "heard": [
+   "كرسي",
+   "كرسيه",
+   "كورسيه"
+  ],
+  "ok": true,
+  "file": "www/voice/app-99526951.mp3"
+ },
+ {
+  "text": "كُوب",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Kub — gelas",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-78a16c14.mp3"
+ },
+ {
+  "text": "مِفْتَاح",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Miftah — kunci",
+  "heard": [
+   "مفتاح",
+   "المفتاح"
+  ],
+  "ok": true,
+  "file": "www/voice/app-cb192385.mp3"
+ },
+ {
+  "text": "سَاعَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Sa'ah — jam",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-9606fea9.mp3"
+ },
+ {
+  "text": "نَافِذَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Nafidzah — jendela",
+  "heard": [
+   "نافذه",
+   "نافذ",
+   "نافع"
+  ],
+  "ok": true,
+  "file": "www/voice/app-b83eb8c4.mp3"
+ },
+ {
+  "text": "مِصْبَاح",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Mishbah — lampu",
+  "heard": [
+   "مسبح",
+   "مصباح",
+   "مسباح"
+  ],
+  "ok": true,
+  "file": "www/voice/app-85f81354.mp3"
+ },
+ {
+  "text": "قَلَم",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qalam — pena",
+  "heard": [
+   "قلم",
+   "القلم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-8d98699a.mp3"
+ },
+ {
+  "text": "مَدْرَسَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Madrasah — sekolah",
+  "heard": [
+   "مدرسه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-804b108a.mp3"
+ },
+ {
+  "text": "كُرَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Kurah — bola",
+  "heard": [
+   "كوره",
+   "كره",
+   "بكره"
+  ],
+  "ok": false,
+  "file": "www/voice/app-f6aa9b1b.mp3"
+ },
+ {
+  "text": "حَقِيبَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Haqibah — tas",
+  "heard": [
+   "حقيبه",
+   "حقيبه يد",
+   "حقيبه عين"
+  ],
+  "ok": false,
+  "file": "www/voice/app-36baf470.mp3"
+ },
+ {
+  "text": "مُعَلِّم",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Mu'allim — guru",
+  "heard": [
+   "معلم",
+   "انت معلم",
+   "يا معلم"
+  ],
+  "ok": true,
+  "file": "www/voice/app-bcff5e3c.mp3"
+ },
+ {
+  "text": "مِسْطَرَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Mistharah — penggaris",
+  "heard": [
+   "مسطره",
+   "مستر",
+   "مستر بن"
+  ],
+  "ok": false,
+  "file": "www/voice/app-d757fc21.mp3"
+ },
+ {
+  "text": "أَحْمَر",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ahmar — merah",
+  "heard": [
+   "احمر",
+   "الاحمر",
+   "واحمر"
+  ],
+  "ok": false,
+  "file": "www/voice/app-badce5a0.mp3"
+ },
+ {
+  "text": "أَزْرَق",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Azraq — biru",
+  "heard": [
+   "ازرق",
+   "البرق",
+   "الازرق"
+  ],
+  "ok": false,
+  "file": "www/voice/app-ee434d93.mp3"
+ },
+ {
+  "text": "أَخْضَر",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Akhdhar — hijau",
+  "heard": [
+   "اخضر",
+   "الاخضر",
+   "يا اخضر"
+  ],
+  "ok": false,
+  "file": "www/voice/app-7cfd7435.mp3"
+ },
+ {
+  "text": "أَصْفَر",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ashfar — kuning",
+  "heard": [
+   "اصفر",
+   "وصفه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-80ef1c29.mp3"
+ },
+ {
+  "text": "أَبْيَض",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Abyadh — putih",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/app-1dbc4c84.mp3"
+ },
+ {
+  "text": "أَسْوَد",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Aswad — hitam",
+  "heard": [
+   "اسود",
+   "الاسود",
+   "بس اسود"
+  ],
+  "ok": false,
+  "file": "www/voice/app-3f3d4a0a.mp3"
+ },
+ {
+  "text": "سَيَّارَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Sayyarah — mobil",
+  "heard": [
+   "تجرع",
+   "سياره"
+  ],
+  "ok": false,
+  "file": "www/voice/app-34b97836.mp3"
+ },
+ {
+  "text": "قِطَار",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qithar — kereta",
+  "heard": [
+   "قطار",
+   "قطاع",
+   "القطار"
+  ],
+  "ok": true,
+  "file": "www/voice/app-96e60a8f.mp3"
+ },
+ {
+  "text": "سَفِينَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Safinah — kapal",
+  "heard": [
+   "سفينه",
+   "السفينه",
+   "سفير"
+  ],
+  "ok": false,
+  "file": "www/voice/app-9bccbea2.mp3"
+ },
+ {
+  "text": "دَرَّاجَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Darrajah — sepeda",
+  "heard": [
+   "دراجه",
+   "دراجات"
+  ],
+  "ok": false,
+  "file": "www/voice/app-469b3a8a.mp3"
+ },
+ {
+  "text": "حَافِلَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hafilah — bus",
+  "heard": [
+   "حفله",
+   "حاسبه",
+   "حافله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-83801ffc.mp3"
+ },
+ {
+  "text": "قَمِيص",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qamish — baju",
+  "heard": [
+   "قميص",
+   "خميس"
+  ],
+  "ok": true,
+  "file": "www/voice/app-319b1f0d.mp3"
+ },
+ {
+  "text": "حِذَاء",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hidza' — sepatu",
+  "heard": [
+   "فيفا",
+   "فيفاء",
+   "فيفا فيفا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-622e31cc.mp3"
+ },
+ {
+  "text": "قُبَّعَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Qubba'ah — topi",
+  "heard": [
+   "صباح",
+   "صبح"
+  ],
+  "ok": false,
+  "file": "www/voice/app-3e87438c.mp3"
+ },
+ {
+  "text": "جَوْرَب",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Jawrab — kaus kaki",
+  "heard": [
+   "جوري",
+   "جورب",
+   "جورج"
+  ],
+  "ok": true,
+  "file": "www/voice/app-37aedb80.mp3"
+ },
+ {
+  "text": "حِجَاب",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hijab — jilbab",
+  "heard": [
+   "حجاب"
+  ],
+  "ok": true,
+  "file": "www/voice/app-10c22a1f.mp3"
+ },
+ {
+  "text": "نَظَّارَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Nazhzharah — kacamata",
+  "heard": [
+   "نظاره",
+   "نظارات"
+  ],
+  "ok": false,
+  "file": "www/voice/app-96c6e201.mp3"
+ },
+ {
+  "text": "حُوت",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hut — paus",
+  "heard": [
+   "شوت",
+   "حوت",
+   "سوت"
+  ],
+  "ok": true,
+  "file": "www/voice/app-24cec7d5.mp3"
+ },
+ {
+  "text": "سُلَحْفَاة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Sulahfah — penyu",
+  "heard": [
+   "سلحفاه",
+   "الاحساء",
+   "في الاحساء"
+  ],
+  "ok": false,
+  "file": "www/voice/app-c54b9072.mp3"
+ },
+ {
+  "text": "سَرَطَان",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Sarathan — kepiting",
+  "heard": [
+   "سرطان",
+   "بروتون"
+  ],
+  "ok": true,
+  "file": "www/voice/app-9d3c4e5e.mp3"
+ },
+ {
+  "text": "أُخْطُبُوط",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ukhthubuth — gurita",
+  "heard": [
+   "اخطبوط"
+  ],
+  "ok": false,
+  "file": "www/voice/app-0a5cfb03.mp3"
+ },
+ {
+  "text": "دُلْفِين",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Dulfin — lumba-lumba",
+  "heard": [
+   "دوسي",
+   "دوس"
+  ],
+  "ok": false,
+  "file": "www/voice/app-b301d752.mp3"
+ },
+ {
+  "text": "صَدَفَة",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Shadafah — kerang",
+  "heard": [
+   "صدفه",
+   "الصدفه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-49f32fd3.mp3"
  }
 ]
