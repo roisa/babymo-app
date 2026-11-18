@@ -1745,7 +1745,7 @@
   // Apple Kids Category (1.3 / 5.1.4): anything that leaves the app or
   // shares content sits behind a grown-up question. Only inside the
   // Capacitor app; on the website everything behaves exactly as before.
-  //   BabyMo.parentGate(onPass[, onCancel])  — onPass runs inside the
+  //   BabyMo.parentGate(onPass[, onCancel[, always]])  — always=true asks on the website too; onPass runs inside the
   //   tap on the right answer, so navigator.share() still has a gesture.
   // Also guarded automatically in the app: navigator.share(), window.open()
   // to another host, and taps on <a> links that leave the app (other
@@ -1827,9 +1827,9 @@
     setTimeout(function () { g.bg.remove(); g.sheet.remove(); }, 380);
     if (cb) cb();
   }
-  function parentGate(onPass, onCancel) {
+  function parentGate(onPass, onCancel, always) {
     if (typeof onPass !== "function") onPass = function () {};
-    if (!isApp() || gateOpen) { onPass(); return; }
+    if ((!isApp() && !always) || gateOpen) { onPass(); return; }
     try {
       if (gateEl) closeGate();
       gateCss();
