@@ -485,6 +485,15 @@ body::before{
   color:var(--cream-faint); font-size:11px; font-weight:600;
 }
 .foot .br{color:var(--gold-lt); font-weight:900; font-size:13px; margin-bottom:4px;}
+/* App Store badge: website only (html.bm-web), behind the grown-up question */
+.as-badge{display:none}
+html.bm-web .as-badge{display:inline-flex;align-items:center;gap:8px;margin:12px auto 4px;padding:7px 16px 7px 12px;min-height:48px;border-radius:14px;background:#000;color:#fff;text-decoration:none;border:1px solid rgba(255,255,255,.3);box-shadow:0 10px 24px -14px rgba(0,0,0,.7);transition:transform .2s}
+html.bm-web .as-badge:active{transform:scale(.96)}
+.as-badge svg{width:24px;height:24px;flex:none}
+.as-badge span{display:block;text-align:left;line-height:1.1}
+.as-badge small{display:block;font-size:10px;font-weight:600;opacity:.85}
+.as-badge b{display:block;font-size:17px;font-weight:700;letter-spacing:-.01em}
+.foot .as-badge + .foot-link{display:block}
 .foot .foot-link{display:inline-block;margin-top:8px;color:var(--cream-faint);text-decoration:underline;text-underline-offset:2px;font-size:11px;}
 .foot .ar{font-family:var(--font-ar); font-size:16px; color:var(--gold); direction:rtl; opacity:.8; margin:6px 0 8px;}
 
@@ -1780,6 +1789,7 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
       <div class="foot">
         <div class="ar">اَللَّهُمَّ انْفَعْنَا بِمَا عَلَّمْتَنَا</div>
         <div data-i18n="foot_game">Ya Allah, manfaatkanlah ilmu yang telah Engkau ajarkan kepada kami</div>
+        <a class="as-badge" href="https://apps.apple.com/app/baby-mo-islamic-kids-games/id6831891898" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M16.37 12.3c-.02-2.22 1.82-3.29 1.9-3.34-1.04-1.52-2.65-1.72-3.22-1.75-1.36-.14-2.67.81-3.36.81-.7 0-1.76-.79-2.9-.77-1.49.02-2.87.87-3.64 2.2-1.56 2.7-.4 6.68 1.11 8.87.74 1.07 1.62 2.27 2.77 2.23 1.12-.05 1.54-.72 2.89-.72 1.34 0 1.73.72 2.9.7 1.2-.02 1.96-1.08 2.69-2.16.85-1.24 1.2-2.45 1.21-2.51-.03-.01-2.33-.89-2.35-3.56ZM14.17 5.78c.61-.75 1.03-1.78.92-2.81-.88.04-1.96.6-2.59 1.33-.57.65-1.07 1.71-.94 2.72.99.08 2-.5 2.61-1.24Z"/></svg><span><small data-i18n="as_small">Unduh di</small><b>App Store</b></span></a>
         <a class="foot-link" href="https://babymo.id/privacy" target="_blank" rel="noopener">Kebijakan Privasi · Privacy Policy</a>
       </div>
         </section>
@@ -2194,6 +2204,7 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
         <div class="br"><img class="br-logo" src="brand/babymo-logo.png" alt="">Baby Mo · id</div>
         <div class="ar">جَزَاكُمُ اللَّهُ خَيْرًا</div>
         <div>Made with 💚 for our little ones</div>
+        <a class="as-badge" href="https://apps.apple.com/app/baby-mo-islamic-kids-games/id6831891898" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M16.37 12.3c-.02-2.22 1.82-3.29 1.9-3.34-1.04-1.52-2.65-1.72-3.22-1.75-1.36-.14-2.67.81-3.36.81-.7 0-1.76-.79-2.9-.77-1.49.02-2.87.87-3.64 2.2-1.56 2.7-.4 6.68 1.11 8.87.74 1.07 1.62 2.27 2.77 2.23 1.12-.05 1.54-.72 2.89-.72 1.34 0 1.73.72 2.9.7 1.2-.02 1.96-1.08 2.69-2.16.85-1.24 1.2-2.45 1.21-2.51-.03-.01-2.33-.89-2.35-3.56ZM14.17 5.78c.61-.75 1.03-1.78.92-2.81-.88.04-1.96.6-2.59 1.33-.57.65-1.07 1.71-.94 2.72.99.08 2-.5 2.61-1.24Z"/></svg><span><small data-i18n="as_small">Unduh di</small><b>App Store</b></span></a>
         <a class="foot-link" href="https://babymo.id/privacy" target="_blank" rel="noopener">Kebijakan Privasi · Privacy Policy</a>
       </div>
     </section>
@@ -2300,7 +2311,7 @@ const I18N={
   g_kebun:{id:'Kebun Ais',en:'Ais Garden'},g_kebun_sub:{id:'Berkebun',en:'Garden'},
   cat_huruf_t:{id:'Huruf Hijaiyah',en:'Hijaiyah Letters'},cat_huruf_s:{id:'28 huruf Arab, suara & kuis',en:'28 Arabic letters, sound & quizzes'},
   g_huruf:{id:'Huruf Hijaiyah',en:'Hijaiyah Letters'},g_huruf_sub:{id:'Huruf Arab',en:'Arabic letters'},
-  about_brand:{id:'Brand',en:'Brand'},about_mission:{id:'Misi',en:'Mission'},
+  about_brand:{id:'Brand',en:'Brand'},as_small:{id:'Unduh di',en:'Download on the'},about_mission:{id:'Misi',en:'Mission'},
   about_mission_s:{id:'Belajar Islam sambil bermain',en:'Learn Islam through play'},
   comp_title:{id:'Sholat Bareng <em>Mo</em>',en:'Pray with <em>Mo</em>'},
   comp_sub:{id:'Waktu sholat, streak & kiblat — semua di sini',en:'Prayer times, streak & qibla — all in one place'},
@@ -2543,6 +2554,19 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
+<script>
+/* App Store badge: shown on the website only (never inside the iOS app); a grown-up answers the gate first. */
+document.addEventListener('DOMContentLoaded',function(){
+  var B=window.BabyMo||{}; if(window.Capacitor||location.protocol==='capacitor:'||(B.isApp&&B.isApp())) return;
+  document.documentElement.classList.add('bm-web');
+  document.querySelectorAll('.as-badge').forEach(function(a){
+    a.addEventListener('click',function(e){
+      if(!B.parentGate) return; e.preventDefault();
+      B.parentGate(function(){ window.open(a.href,'_blank','noopener'); },null,true);
+    });
+  });
+});
+</script>
 <script src="/bm-prayertimes.js" defer></script>
 <script src="/bm-prayer.js" defer></script>
 <script>
