@@ -4,6 +4,33 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <script src="bm-fit.js"></script>
+<script>
+/* Season (Umm al-Qura date on the device): sets html.season-ramadan / season-eid before first paint; bm-season.js draws the rest.
+   Preview: ?season=ramadan&rday=12 | eid | pre&rday=3 | auto */
+(function(){
+  function hp(dt){ try{ var o={}; new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',{year:'numeric',month:'numeric',day:'numeric'}).formatToParts(dt).forEach(function(x){ if(x.type==='year'||x.type==='month'||x.type==='day') o[x.type]=parseInt(x.value,10); }); return o.month?o:null; }catch(e){ return null; } }
+  function until(m){ var dt=new Date(); for(var i=0;i<62;i++){ var h=hp(dt); if(h&&h.month===m&&h.day===1) return i; dt=new Date(dt.getTime()+864e5); } return 0; }
+  function calc(){
+    var h=hp(new Date()); if(!h) return {name:''};
+    if(h.month===9){ var len=29, s=new Date(Date.now()+(30-h.day)*864e5), e=hp(s); if(e&&e.month===9) len=30; return {name:'ramadan',day:h.day,len:len,left:until(10),year:h.year}; }
+    if(h.month===10&&h.day<=3) return {name:'eid',day:h.day,year:h.year};
+    if(h.month===8&&h.day>=25) return {name:'pre',left:until(9),year:h.year};
+    return {name:''};
+  }
+  window.BM_SEASON_CALC=calc;
+  var S=calc();
+  try{
+    var q=new URLSearchParams(location.search), p=q.get('season');
+    if(p==='auto') sessionStorage.removeItem('bm_season_preview');
+    else if(p) sessionStorage.setItem('bm_season_preview',JSON.stringify({n:p,d:+q.get('rday')||12}));
+    var pv=JSON.parse(sessionStorage.getItem('bm_season_preview')||'null');
+    if(pv){ var y=(hp(new Date())||{year:1448}).year; S=pv.n==='ramadan'?{name:'ramadan',day:pv.d,len:30,left:30-pv.d+1,year:y}:pv.n==='eid'?{name:'eid',day:1,year:y}:pv.n==='pre'?{name:'pre',left:pv.d,year:y}:{name:''}; }
+  }catch(e){}
+  window.BM_SEASON=S;
+  if(S.name==='ramadan'||S.name==='eid') document.documentElement.classList.add('season-'+S.name);
+})();
+</script>
+<script src="bm-season.js" defer></script>
 <script src="voice/manifest.js"></script>
 <script src="bm-voice.js"></script>
 <meta name="description" content="Kumpulan game &amp; aktivitas islami untuk anak: panduan sholat, doa harian, hijaiyah, kata baik &amp; puzzle seru bersama Baby Mo. Gratis &amp; ramah anak.">
