@@ -122,7 +122,7 @@
   // display names [id, en] and hero character.
   var SHARE_GAMES = {
     "baby-mo-forehand-beat": { icon: "forehand-beat", c: ["#BEF264", "#3F6212"], n: ["Forehand Beat", "Forehand Beat"] },
-    "babymo-tenis-adam": { icon: "tenis-adam", c: ["#60A5FA", "#1D4ED8"], n: ["Akademi Tenis Kak Adam", "Kak Adam's Tennis Academy"], hero: ["/adam-tennis-v2/celebrate-3.webp", "/adam-tennis-v2/win-fist-r.webp"] },
+    "babymo-tenis-adam": { icon: "tenis-adam", c: ["#60A5FA", "#1D4ED8"], n: ["Akademi Tenis Kak Adam", "Kak Adam's Tennis Academy"], hero: ["/adam-render2/adam2-result-3.webp", "/adam-render2/adam2-react-win-fist.webp"] },
     "babymo-kebun-ais": { icon: "kebun-ais", c: ["#86EFAC", "#16A34A"], n: ["Kebun Kecil Ais", "Ais's Little Garden"], hero: ["/ais-garden/arms-wide-joy.webp", "/ais-garden/jump-joy.webp"] },
     "babymo-memory-match": { icon: "memory-match", c: ["#FCD34D", "#B45309"], n: ["Memory Match", "Memory Match"] },
     "babymo-look-and-find": { icon: "cari-baby-mo", c: ["#FDBA74", "#C2410C"], n: ["Cari Baby Mo", "Find Baby Mo"] },

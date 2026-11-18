@@ -451,6 +451,22 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
 @media (min-width:600px){.ac-scene{height:340px}.ac-adam img{height:290px}}
 @media (prefers-reduced-motion:reduce){.ac-birds,.ac-fly,.ac-fly path,.ac-cloud,.ac-flag,.ac-sway,.ac-bounce,.ac-adam img,.ac-shadow,.ac-pow,.ac-leaves,.ac-sign{animation:none!important}.ac-pow{opacity:1}}
 </style>
+<style id="adam-r2">
+/* Kak Adam render 2: square 480x480 frames, feet on y=438 (91.25%), one body scale for every tennis pose.
+   Sizes keep his standing height and his feet exactly where the old frames put them. */
+.adam{width:43.6%;top:11.03%}
+.adam.serve{top:6.02%}
+.adam.net{width:50.5%;top:19.09%}
+.adam img,img[data-adam-pose],.adam.serve{transform-origin:50% 91.25%}
+.adam::after{bottom:7%}
+.adam-stand>img.pose{height:200px!important;margin:0 0 -18px -100px!important;transform-origin:50% 91%}
+#s-intro .intro-stand>img.pose{margin:0 auto -18px!important}
+@media (max-height:760px){#s-intro .intro-stand>img.pose{height:160px!important}}
+@media (max-height:600px){#s-intro .intro-stand>img.pose{height:120px!important}}
+.ac-adam img{height:200px;transform-origin:50% 91%}
+@media (min-width:600px){.ac-adam img{height:224px}}
+.cert img{width:170px;height:170px;object-fit:contain}
+</style>
 </head>
 <body>
 
@@ -589,7 +605,7 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
           <g class="ac-fly f1"><path d="M0 0c-6-8-14-4-8 3 6 4 8-3 8-3zM0 0c6-8 14-4 8 3-6 4-8-3-8-3z" fill="#FF8FB1"/><path d="M0-3v6" stroke="#6A3A4A" stroke-width="1.2"/></g>
           <g class="ac-fly f2"><path d="M0 0c-5-7-12-4-7 2 5 4 7-2 7-2zM0 0c5-7 12-4 7 2-5 4-7-2-7-2z" fill="#FFD23F"/><path d="M0-3v6" stroke="#6A4A1A" stroke-width="1.2"/></g>
         </svg>
-        <div class="ac-adam"><span class="ac-shadow"></span><img src="adam-tennis-v2/win-fist-r.webp" alt=""><svg class="ac-pow" viewBox="0 0 40 40"><g stroke="#FFC21A" stroke-width="5" stroke-linecap="round"><path d="M6 20V6"/><path d="M18 22l9-12"/><path d="M22 32l14-6"/></g></svg></div>
+        <div class="ac-adam"><span class="ac-shadow"></span><img src="adam-render2/adam2-react-win-fist.webp" alt=""><svg class="ac-pow" viewBox="0 0 40 40"><g stroke="#FFC21A" stroke-width="5" stroke-linecap="round"><path d="M6 20V6"/><path d="M18 22l9-12"/><path d="M22 32l14-6"/></g></svg></div>
         <svg class="ac-leaves" viewBox="0 0 120 110"><g fill="url(#acTree)"><ellipse cx="20" cy="20" rx="50" ry="34"/><ellipse cx="70" cy="8" rx="40" ry="24"/></g><path d="M0 40Q30 50 52 74" stroke="#8A6A4B" stroke-width="7" fill="none" stroke-linecap="round"/><g fill="#7CC85A"><ellipse cx="60" cy="66" rx="11" ry="6" transform="rotate(30 60 66)"/><ellipse cx="44" cy="78" rx="9" ry="5" transform="rotate(-20 44 78)"/></g></svg>
       </div>
       <div class="ac-title">
@@ -613,7 +629,7 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
       <button class="w-back" id="introBack">← Peta</button>
       <span class="pill" id="introBall"><span class="ti" data-ti="ball"></span></span>
     </div>
-    <div class="adam-stand intro-stand"><img class="pose" id="introPose" src="adam-tennis-v2/hold-ball.webp" alt=""></div>
+    <div class="adam-stand intro-stand"><img class="pose" id="introPose" src="adam-render2/adam2-teach-red-ball.webp" alt=""></div>
     <div class="card">
       <span class="kicker" id="introKicker">Latihan 1</span>
       <div class="itl"><h2 id="introTitle"></h2><button class="ibulb" id="introBulb" type="button" aria-expanded="false"><span class="ti" data-ti="bulb"></span></button></div>
@@ -734,7 +750,7 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
       <div class="score" id="score"><div>Kak Adam<b id="scA">0</b></div><div>Raka<b id="scR">0</b></div></div>
       <div class="meter" id="meter"><div class="zone"></div><div class="lvl" id="meterLvl"></div></div>
       <div class="marker" id="marker"></div>
-      <div class="adam" id="adam"><img id="adamImg" src="adam-tennis-v2/fh-two-1.webp" alt=""></div>
+      <div class="adam" id="adam"><img id="adamImg" src="adam-render2/adam2-track-1.webp" alt=""></div>
       <div class="bshadow" id="bshadow"></div>
       <div class="ball" id="ball"></div>
       <div class="pop" id="pop"></div>
@@ -747,7 +763,7 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
 <!-- ═══════════ RESULT ═══════════ -->
 <section class="screen" id="s-result">
   <div class="wrap">
-    <div class="adam-stand"><img class="pose" id="resPose" src="adam-tennis-v2/win-fist-r.webp" alt=""></div>
+    <div class="adam-stand"><img class="pose" id="resPose" src="adam-render2/adam2-result-3.webp" alt=""></div>
     <div class="card">
       <h2 id="resTitle">Hebat!</h2>
       <div class="stars" id="resStars"><span>⭐</span><span>⭐</span><span>⭐</span></div>
@@ -770,7 +786,7 @@ html[data-bm-theme="dark"] #s-map::after,html[data-bm-theme="classic"] #s-map::a
   <div class="wrap">
     <div class="topbar"><button class="w-back" id="certBack">← Peta</button><span></span></div>
     <div class="cert" id="certCard">
-      <img src="adam-tennis-v2/celebrate-3.webp" alt="">
+      <img src="adam-render2/adam2-result-certificate.webp" alt="">
       <div class="kicker" style="background:#fff;color:#12A15A;border-color:#BFE8CF">🎾 Akademi Tenis Kak Adam</div>
       <h2>Sertifikat Pemain Tenis Cilik</h2>
       <p>Diberikan kepada</p>
@@ -1020,8 +1036,8 @@ function renderLoop(){
 
 /* ───────── intro ───────── */
 var CUR=0;
-var READY="fh-two-1"; /* ready position: knees bent, racket in front, both hands on the grip */
-var INTRO_POSE=["hold-ball","backhand-two-3",READY,"punch-6","shuffle-3","serve-blue-1","wave-3"];
+var READY="track-1"; /* ready position: knees bent, racket in front, both hands on the grip */
+var INTRO_POSE=["teach-red-ball","backhand-two-3","teach-point","volley-fh-1","teach-feet","serve-focus","teach-green-ball"];
 function openIntro(i){
   CUR=i; var st=STATIONS[i];
   $("introKicker").innerHTML = PENDING==="drill" ? tnIc("target")+'<span>'+L("Target hari ini: ","Today's target: ")+drillTarget(i)+'</span>' : '<span>Latihan '+(i+1)+'</span>';
@@ -1030,8 +1046,8 @@ function openIntro(i){
   $("introHow").textContent=st.how;
   $("howIcon").innerHTML=tnIc(HICON[st.key]||"tap");
   $("introFact").textContent=st.fact; $("introFactBox").hidden=true; $("introBulb").setAttribute("aria-expanded","false"); $("introBulb").setAttribute("aria-label",L("Tahukah kamu?","Did you know?")); $("introSay").setAttribute("aria-label",L("Dengar","Listen"));
-  $("introPose").src="adam-tennis-v2/"+INTRO_POSE[i]+".webp";
-  $("fhPick").style.display = /^(pantul|sisi|kaki|tanding)$/.test(st.key) ? "" : "none"; markFh();
+  $("introPose").src="adam-render2/adam2-"+INTRO_POSE[i]+".webp";
+  $("fhPick").style.display = "none";
   $("introBall").innerHTML=tnIc("ball-"+st.ball)+'<span>'+{red:"Bola merah",orange:"Bola oranye",green:"Bola hijau"}[st.ball]+'</span>';
   show("s-intro");
 }
@@ -1061,38 +1077,37 @@ function say(text){
 }
 
 /* ───────── Adam sprite ───────── */
-var FR={}; [READY,"punch-1","punch-2","punch-3","punch-6","win-fist-r","oops-2b","sad-miss","wave-1","wave-3","celebrate-3","hold-ball"].concat(
-  [3,4,5,6].map(function(n){return "backhand-two-"+n;}),
-  [1,2,3,4,5,6].map(function(n){return "shuffle-"+n;}),[1,2,3,4,5,6].map(function(n){return "serve-blue-"+n;}),[3,4,5,6].map(function(n){return "fh-one-"+n;}),[3,4,5,6].map(function(n){return "fh-two-"+n;})
-).forEach(function(n){ var im=new Image(); im.src="adam-tennis-v2/"+n+".webp"; FR[n]=im; });
+var YAY=["yay-nod","yay-fist","yay-thumb","yay-hop","yay-point","yay-clap"], TRY=["try-shake","try-thumb","try-giggle","try-fist","try-think","try-breath"];
+function pick(a){ return a[Math.floor(Math.random()*a.length)]; }
+var FR={}; [READY,"track-2","track-3","split-3","split-4","split-5","backhand-two-3","backhand-two-4","backhand-two-5","backhand-two-6",
+  "fh-one-3","fh-one-4","fh-one-5","fh-one-6","volley-fh-1","volley-fh-2","volley-fh-3","volley-bh-1","volley-bh-2","volley-bh-3",
+  "react-oops-wince","react-oops-surprise","react-oops-lunge","react-win-fist","serve-bounce","serve-catch","serve-focus","serve-ace","serve-fault","serve-double-fault",
+  "serve-swing-2","serve-swing-3","serve-swing-4","serve-swing-5","serve-swing-6","match-point-win","match-point-calm","match-handshake"].concat(YAY,TRY,
+  [1,2,3,4].map(function(n){return "run-r-"+n;}),[1,2,3,4].map(function(n){return "run-l-"+n;})
+).forEach(function(n){ var im=new Image(); im.src="adam-render2/adam2-"+n+".webp"; FR[n]=im; });
 var animTimer=null;
-function pose(n){ clearInterval(animTimer); $("adamImg").src="adam-tennis-v2/"+n+".webp"; }
+function pose(n){ clearInterval(animTimer); $("adamImg").src="adam-render2/adam2-"+n+".webp"; }
 function play(seq,ms,then){
   clearInterval(animTimer); var k=0;
-  $("adamImg").src="adam-tennis-v2/"+seq[0]+".webp";
-  animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-tennis-v2/"+seq[k]+".webp"; }, ms);
+  $("adamImg").src="adam-render2/adam2-"+seq[0]+".webp";
+  animTimer=setInterval(function(){ k++; if(k>=seq.length){ clearInterval(animTimer); if(then) then(); return; } $("adamImg").src="adam-render2/adam2-"+seq[k]+".webp"; }, ms);
 }
 /* volley: a short punch, no big swing. Forehand side: racket up beside his head (punch-3), punch out in front (fh-one-4).
    Backhand side: racket up across his body (punch-2), punch forward at chest height (punch-6). Both in his right hand. */
-var VREADY="punch-1"; /* net ready position: knees bent, racket up in front */
+var VREADY="split-5"; /* net ready position: knees bent, racket up in front */
 function punch(side,then){
-  play(side==="bh"?["punch-2","punch-6","punch-6","punch-6"]:["punch-3","fh-one-4","fh-one-4","fh-one-4"],80,function(){
+  play(side==="bh"?["volley-bh-1","volley-bh-2","volley-bh-3","volley-bh-3"]:["volley-fh-1","volley-fh-2","volley-fh-3","volley-fh-3"],80,function(){
     setTimeout(function(){ if(G && G.volley && G.recover && !G.flight && !G.over) pose(VREADY); },260); if(then) then(); }); /* recover to ready */
 }
 function swing(side,then){
   if(G && G.volley){ punch(side,then); return; }
-  if(side==="bh"){ play(["backhand-two-3","backhand-two-3","backhand-two-4","backhand-two-5","backhand-two-6"],75,then); return; } /* two-handed backhand, finishing over his shoulder, smiling */
+  if(side==="bh"){ play(["backhand-two-3","backhand-two-4","backhand-two-5","backhand-two-6"],80,then); return; } /* two-handed backhand, finishing over his shoulder, smiling */
   var st=(G&&G.fh)||"one", b=FH_SET[st];
   play([b+3,b+4,b+5,b+6],80,then); }
 /* forehand styles: one-handed or two-handed, each ending on its smiling follow-through */
-var FH_SET={ one:"fh-one-", two:"fh-two-" }, FH_KEY="bm_tenis_fh_style";
+var FH_SET={ one:"fh-one-", two:"fh-one-" }, FH_KEY="bm_tenis_fh_style";
 function fhChoice(){ try{ return localStorage.getItem(FH_KEY)||"mix"; }catch(e){ return "mix"; } }
-function pickFh(){
-  var c=fhChoice();
-  if(c==="two") return "two";
-  if(c==="one") return "one";
-  return Math.random()<.5?"one":"two";
-}
+function pickFh(){ return "one"; } /* render 2 has one forehand (one-handed) */
 var ADAMX={L:30,C:50,R:70,S:42}; /* S: serving spot, behind the baseline just right of the centre mark */
 function adamTo(lane){ $("adam").style.left=ADAMX[lane]+"%"; }
 
@@ -1221,7 +1236,7 @@ function finishEndless(){
   stage.onclick=null;
   say(T(s>=1?"Alhamdulillah! Masya Allah!":"Alhamdulillah. Ayo coba lagi!"));
   $("resTitle").textContent = (isBest&&sc>0?"🏆 ":"")+sc+" "+L("pukulan berturut!","hits in the rally!");
-  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-2b")+".webp";
+  $("resPose").src="adam-render2/adam2-"+["result-0","result-1","result-2","result-3"][Math.max(0,Math.min(3,s))]+".webp";
   var spans=$("resStars").children; for(var k3=0;k3<3;k3++) spans[k3].classList.remove("on");
   for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
   $("resLine").textContent = isBest&&sc>0 ? L("Rekor baru! Hebat sekali!","A new best! Amazing!") : L("Rekormu: ","Your best: ")+LOOP.best;
@@ -1250,9 +1265,13 @@ function feed(side){
   if(!G||G.over) return;
   G.side=side||"fh"; G.tapped=false; G.p=0;
   if(G.side==="fh"){ G.fh=pickFh(); G.hitX = G.fh==="two" ? 186 : 145; } else G.hitX=224; /* two hands meet the ball closer to the body, in front of him */
-  pose(READY); TS.feed(); lastH=null;
+  G.prep=0; play(["split-3","split-4","split-5",READY],90); TS.feed(); lastH=null;
   G.flight=animate(G.speed*1.25,function(p){
     G.p=p; var b=incoming(p,G.hitX); place(b.gx,b.gy,b.h,b.s);
+    if(!G.tapped){ /* follow the ball: watch the bounce, then turn early */
+      if(G.prep<1 && p>.38 && STATIONS[G.i].key==="pantul"){ G.prep=1; pose("track-2"); }
+      if(G.prep<2 && p>.62){ G.prep=2; pose(G.side==="bh"?"backhand-two-3":"track-3"); }
+    }
     if(p>1.18){ miss(G.tapped?null:"Terlalu lambat!"); return false; }
   });
 }
@@ -1270,7 +1289,7 @@ function tapHit(side){
 }
 function hit(side){
   G.hits++; G.recover=true; if(G.volley) TS.volley(); else TS.hit(1); setTimeout(function(){ sfx("correct"); },160);
-  swing(side); /* every swing ends on its own smiling follow-through */
+  swing(side,function(){ setTimeout(function(){ if(G && !G.flight && !G.volley) pose(pick(YAY)); },220); }); /* follow-through, then a quick happy reaction */
   var from=G.o?G.o.x:G.hitX, to=lerp(120,280,Math.random()), o=G.o;
   pop(G.volley?["Pok! Voli bagus!","Masya Allah!","Pukulan pendek, mantap!","Keren!"][G.hits%4]:["Pukulan bagus!","Masya Allah!","Mantap!","Keren!"][G.hits%4],"good");
   ballEl.style.zIndex="";
@@ -1280,13 +1299,15 @@ function hit(side){
 function missFly(msg){
   TS.hit(.7); setTimeout(function(){ sfx("wrong"); },150); pop(msg,"bad",1200);
   var from=G.o?G.o.x:G.hitX, o=G.o;
-  setTimeout(function(){ pose("oops-2b"); },320);
+  setTimeout(function(){ if(G && !G.flight) pose(pick(["react-oops-wince","react-oops-surprise"])); },360);
+  setTimeout(function(){ if(G && !G.flight) pose(pick(TRY)); },1050);
   animate(.6,function(p){ var b=outgoing(Math.min(p,1),from,from,false,o); place(b.gx,b.gy,b.h,b.s); if(p>=1.15){ hideBall(); return false; } });
   done(false);
 }
 function miss(msg){
   if(G.flight){ G.flight=null; }
-  hideBall(); sfx("wrong"); if(msg) pop(msg,"bad",1200); pose("sad-miss");
+  hideBall(); sfx("wrong"); if(msg) pop(msg,"bad",1200); pose("react-oops-lunge");
+  setTimeout(function(){ if(G && !G.flight) pose(pick(TRY)); },700);
   done(false);
 }
 function done(ok){
@@ -1326,8 +1347,9 @@ function setupKaki(){
 }
 function move(l){
   if(!G||G.over||l===G.lane) return;
+  var dir=LANEX[l]>LANEX[G.lane]?"r":"l";
   G.lane=l; sfx("tap"); adamTo(l);
-  play(["shuffle-2","shuffle-3","shuffle-4","shuffle-5"],70,function(){ pose(READY); });
+  play(["run-"+dir+"-1","run-"+dir+"-2","run-"+dir+"-3","run-"+dir+"-4"],80,function(){ play(["split-4","split-5",READY],90); });
 }
 function feedLane(){
   if(!G||G.over) return;
@@ -1368,7 +1390,7 @@ done=function(ok){
    Balls 1-3 come to the forehand side, 4-5 to the backhand side, 6-8 mixed. */
 var VOLI_PLAN=["fh","fh","fh","bh","bh","mix","mix","mix"];
 var NETY=290;                       /* Adam's feet when he plays at the net (the net tape is at ~299) */
-var VHIT={ fh:{x:178,y:223}, bh:{x:233,y:179} }; /* racket strings at contact in fh-one-4 / punch-6, stage units */
+var VHIT={ fh:{x:168,y:212}, bh:{x:226,y:204} }; /* racket strings at contact in volley-fh-2 / volley-bh-2, stage units */
 var VPB=1.2;                        /* if nobody hits it, the ball bounces just behind him at this point of the flight */
 var VWIN=[.66,1.1];                 /* the volley window: the ball is close in front of him, still in the air (matched to what kids see) */
 function volleyFlight(p,side){
@@ -1422,7 +1444,7 @@ function tapVoli(side){
   var p=G.p;
   if(p<.15) return; /* ignore taps right as the ball is fed */
   G.tapped=true; G.recover=false; $("laneTip").textContent=""; ballEl.classList.remove("vnow");
-  var whiff=function(msg){ G.whiff=true; swing(side); sfx("wrong"); pop(msg,"bad",1300); setTimeout(function(){ if(G&&G.volley) pose("oops-2b"); },420); }; /* air swing: the ball flies on past him */
+  var whiff=function(msg){ G.whiff=true; swing(side); sfx("wrong"); pop(msg,"bad",1300); setTimeout(function(){ if(G&&G.volley) pose("react-oops-wince"); },420); }; /* air swing: the ball flies on past him */
   if(p>VPB){ G.flight.stop(); G.flight=null; G.o={x:G.b.gx,y:G.b.gy,h:G.b.h,s:G.b.s}; swing(side); missFly("Voli itu sebelum memantul!"); return; }
   if(p<VWIN[0]){ whiff("Terlalu cepat! Tunggu bola dekat."); return; }
   if(p>VWIN[1]){ whiff("Pukul di depan badan!"); return; }
@@ -1442,25 +1464,29 @@ function setupServis(){
   stage.onclick=serveHit;
   pop("Siap?","tip",900); nextBall(toss,1100);
 }
-var SRV_S=.85, TOSS={x:168+(209-168)*SRV_S, base:194, hand:278*SRV_S, peak:100*SRV_S}; /* tuned to the blue-racket serve frames, Adam at the serving spot */ /* tuned to the blue-racket serve frames */
-function toss(){
+var SRV_S=.85, TOSS={x:168+7*SRV_S, base:194, hand:245*SRV_S, peak:88*SRV_S}; /* tuned to the blue-racket serve frames, Adam at the serving spot */ /* tuned to the blue-racket serve frames */
+function toss(){ /* the serve routine: bounce the ball, catch it, focus, then toss */
   if(!G||G.over) return;
-  G.tossing=true; G.tp=0; pose("serve-blue-2");
+  play(["serve-bounce","serve-catch","serve-bounce","serve-catch","serve-focus","serve-focus"],330,toss2);
+}
+function toss2(){
+  if(!G||G.over) return;
+  G.tossing=true; G.tp=0; pose("serve-swing-2");
   $("laneTip").textContent=T(G.chance===1?"Kesempatan pertama":"Kesempatan kedua");
   var x=TOSS.x, base=TOSS.base, peak=TOSS.peak, dur=1.5; /* the ball leaves his tossing hand and rises above the racket */
   G.flight=animate(dur,function(p){
     G.tp=p; var up=peak*Math.sin(Math.PI*Math.min(p,1)), h=TOSS.hand+up;
     place(x,base,h,.5); $("meterLvl").style.height=(up/peak*100)+"%";
-    if(p>.35 && $("adamImg").src.indexOf("serve-blue-3")<0) pose("serve-blue-3");
+    if(p>.35 && $("adamImg").src.indexOf("serve-swing-3")<0) pose("serve-swing-3");
     if(p>=1.02){ G.tossing=false; G.flight=null; serveResult(false,"Bolanya jatuh — pukul saat paling tinggi!"); return false; }
   });
 }
 function serveHit(){
-  if(!G||!G.tossing) return;
+  if(!G||!G.tossing) return; /* ignored during the bounce-and-focus routine */
   G.tossing=false; if(G.flight) G.flight.stop(); G.flight=null;
   var top=Math.sin(Math.PI*G.tp); // 0..1 height
   var good=top>=.82;
-  play(["serve-blue-4","serve-blue-5","serve-blue-6"],90);
+  play(["serve-swing-4","serve-swing-5","serve-swing-6"],90);
   var tx=lerp(232,282,Math.random()); /* crosscourt into the deuce box */
   TS.hit(good?1.1:.8);
   if(good){
@@ -1474,9 +1500,9 @@ function serveHit(){
 }
 function serveResult(ok,msg){
   $("meterLvl").style.height="0%";
-  if(ok){ G.hits++; pop(msg,"good",1000); setTimeout(function(){ pose("win-fist-r"); },300); dot(G.n,"ok"); G.n++; G.chance=1; }
-  else if(G.chance===1){ sfx("wrong"); pop("Fault! "+T(msg),"bad",1500); pose("oops-2b"); G.chance=2; nextBall(toss,1700); return; }
-  else { sfx("wrong"); pop("Double fault!","bad",1300); pose("sad-miss"); dot(G.n,"no"); G.n++; G.chance=1; }
+  if(ok){ G.hits++; pop(msg,"good",1000); setTimeout(function(){ pose("serve-ace"); },300); dot(G.n,"ok"); G.n++; G.chance=1; }
+  else if(G.chance===1){ sfx("wrong"); pop("Fault! "+T(msg),"bad",1500); pose("serve-fault"); G.chance=2; nextBall(toss,1700); return; }
+  else { sfx("wrong"); pop("Double fault!","bad",1300); pose("serve-double-fault"); dot(G.n,"no"); G.n++; G.chance=1; }
   count();
   if(G.n>=G.total){ G.over=true; finishAfter(1400); return; }
   nextBall(toss,1500);
@@ -1518,7 +1544,8 @@ function point(who){
   G.rally=0; if(who==="a") G.a++; else G.r++;
   showScore(); sfx(who==="a"?"star":"wrong");
   var won=(G.a>=4&&G.a-G.r>=2), lost=(G.r>=4&&G.r-G.a>=2);
-  if(won||lost){ G.over=true; G.won=won; pop(won?"Game! Kak Adam menang!":"Game untuk Raka!",won?"good":"bad",1600); pose(won?"celebrate-3":"sad-miss"); setTimeout(function(){ pop("Salaman di net 🤝","tip",1400); pose("wave-3"); },1700); finishAfter(3300); return; }
+  if(won||lost){ G.over=true; G.won=won; pop(won?"Game! Kak Adam menang!":"Game untuk Raka!",won?"good":"bad",1600); pose(won?"react-win-fist":"match-point-calm"); setTimeout(function(){ pop("Salaman di net 🤝","tip",1400); pose("match-handshake"); },1700); finishAfter(3300); return; }
+  setTimeout(function(){ if(G && !G.over && !G.flight) pose(who==="a"?"match-point-win":"match-point-calm"); },350);
   var t=teach(); pop(t||(who==="a"?"Poin untuk Kak Adam!":"Poin untuk Raka"), t?"tip":(who==="a"?"good":"bad"), t?1800:1000);
   nextBall(function(){ feed(Math.random()<.5?"fh":"bh"); }, t?2100:1500);
 }
@@ -1548,7 +1575,7 @@ function finish(){
   if(s>prev){ DATA.stars[G.i]=s; save(DATA); try{ kit().addStars && kit().addStars(s-prev); }catch(e){} }
   stage.onclick=null;
   $("resTitle").textContent = s===3?"Masya Allah, sempurna!":s>=1?"Hebat, kamu berhasil!":"Ayo coba lagi!";
-  $("resPose").src="adam-tennis-v2/"+(s>=2?"celebrate-3":s===1?"win-fist-r":"oops-2b")+".webp";
+  $("resPose").src="adam-render2/adam2-"+["result-0","result-1","result-2","result-3"][Math.max(0,Math.min(3,s))]+".webp";
   var spans=$("resStars").children; for(var k=0;k<3;k++){ spans[k].classList.remove("on"); }
   for(var j=0;j<s;j++){ (function(j){ setTimeout(function(){ spans[j].classList.add("on"); sfx("star"); },350+j*300); })(j); }
   if(st.key==="tanding") $("resLine").textContent = G.won ? T("Kak Adam menang game!")+" "+label(G.a,G.r).join("–") : T("Raka menang kali ini. Pemain hebat tidak menyerah!");
@@ -1600,7 +1627,7 @@ $("introSay").addEventListener("click",function(){ var st=STATIONS[CUR]; say(T(s
 function markFh(){ var c=fhChoice(); $("fhPick").querySelectorAll("button").forEach(function(b){ b.classList.toggle("on", b.getAttribute("data-fh")===c); }); }
 $("fhPick").querySelectorAll("button").forEach(function(b){ b.addEventListener("click",function(){
   var c=b.getAttribute("data-fh"); try{ localStorage.setItem(FH_KEY,c); }catch(e){} sfx("tap"); markFh();
-  $("introPose").src="adam-tennis-v2/"+(c==="two"?"fh-two-3":c==="one"?"fh-one-3":READY)+".webp";
+  $("introPose").src="adam-render2/adam2-"+"fh-one-3"+".webp";
   say(T(c==="two"?"Forehand dua tangan: lebih kuat dan stabil!":c==="one"?"Forehand satu tangan: jangkauan lebih panjang!":"Acak: gaya forehand Kak Adam ganti-ganti!"));
 }); });
 $("introGo").addEventListener("click",function(){ sfx("tap"); try{ speechSynthesis.cancel(); }catch(e){} startStation(CUR, PENDING); });
@@ -1614,17 +1641,6 @@ document.addEventListener("visibilitychange",function(){ if(!document.hidden && 
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
-<script>
-/* Kak Adam's art frames come at three body scales; scale each pose so he is the same size everywhere (feet stay put) */
-(function(){
-  var S={"wave-1":1.22,"wave-3":1.22,"hold-ball":1.1,"win-fist-r":1.1,"celebrate-3":1.13,"sad-miss":1.1,"oops-1":1.12,"oops-2":1.06,
-    "shuffle-1":1.2,"shuffle-2":1.2,"shuffle-3":1.2,"shuffle-4":1.2,"shuffle-5":1.2,"shuffle-6":1.2};
-  function fix(img){ var m=/adam-tennis-v2\/([\w-]+)\.webp/.exec(img.getAttribute('src')||''); if(!m) return;
-    img.setAttribute('data-adam-pose',m[1]); var k=S[m[1]]||1; img.style.scale=k===1?'':String(k); }
-  document.addEventListener('load',function(e){ if(e.target&&e.target.tagName==='IMG') fix(e.target); },true);
-  new MutationObserver(function(ms){ ms.forEach(function(m){ if(m.target.tagName==='IMG') fix(m.target); }); }).observe(document.body,{subtree:true,attributes:true,attributeFilter:['src']});
-  document.querySelectorAll('img').forEach(fix);
-})();
-</script>
+
 </body>
 </html>
