@@ -1,8 +1,8 @@
 # Kak Adam — Render 2 pose library
 
-Kak Adam's second render series (curly brown hair; royal-blue tracksuit with white stripes and a white star, plus pyjama and school outfits). 96 poses cut from 16 sheets.
+Kak Adam's second render series (curly brown hair; royal-blue tracksuit with white stripes and a white star, plus pyjama and school outfits). 186 poses cut from 31 sheets.
 
-Framing matches `../baby-mo-render2/`: 480×480 transparent WebP, feet / lowest point on y≈438, centred. Each sheet was scaled as one, so poses from the same group keep the same size relative to each other; Kak Adam should still be shown a little taller than Mo and Ais. The tennis game still uses `../adam-tennis-v2/`.
+Framing matches `../baby-mo-render2/`: 480×480 transparent WebP, feet / lowest point on y≈438, centred. Each sheet was scaled as one, so poses from the same group keep the same size relative to each other; Kak Adam should still be shown a little taller than Mo and Ais. The tennis game still uses `../adam-tennis-v2/`. The `idle-b` and `split-b` sets came out with darker, straighter hair (and a shield badge on idle-b), so they are alternates; prefer `idle` and `split`.
 
 A few cut-outs lost their scenery when the background was removed: the bed in `bed-sleep-right` / `bed-asleep` (head and shoulders only), the window in `wake-curtain`, and the sinks in `clean-brush-teeth` / `clean-wash-hands`. Put them on a scene or behind a card when used.
 
@@ -181,3 +181,168 @@ A few cut-outs lost their scenery when the background was removed: the bed in `b
 | `adam2-manners-drink-sitting.webp` | Drinking water while sitting cross-legged |
 | `adam2-manners-wipe-sweat.webp` | Wiping sweat, towel on his shoulders |
 | `adam2-manners-think.webp` | Finger on chin, thinking |
+
+## Tennis: playing with the ball (no ball drawn)
+
+| File | Pose |
+|---|---|
+| `adam2-ballplay-look.webp` | Standing, open hand, looking at it |
+| `adam2-ballplay-reach.webp` | Reaching out to let go |
+| `adam2-ballplay-crouch.webp` | Crouching, hand down |
+| `adam2-ballplay-smile.webp` | Smiling, open hand up |
+| `adam2-ballplay-balance.webp` | Racket held flat, tongue out |
+| `adam2-ballplay-tap.webp` | Racket up, open hand, delighted |
+
+## Tennis: bounce and catch
+
+| File | Pose |
+|---|---|
+| `adam2-bounce-1.webp` | Holding the ball |
+| `adam2-bounce-2.webp` | Dropping the ball |
+| `adam2-bounce-3.webp` | Watching it bounce |
+| `adam2-bounce-4.webp` | Caught it! |
+| `adam2-bounce-5.webp` | Balancing the ball on the racket |
+| `adam2-bounce-6.webp` | Tapping the ball up |
+
+## Tennis: smash and stretch shots
+
+| File | Pose |
+|---|---|
+| `adam2-smash-1.webp` | Smash setup, pointing up |
+| `adam2-smash-2.webp` | Smash jump |
+| `adam2-smash-3.webp` | Smash hit |
+| `adam2-smash-4.webp` | Landing, happy |
+| `adam2-smash-reach-high.webp` | High reach for a lob |
+| `adam2-smash-reach-low.webp` | Low lunge reach |
+
+## Tennis: full serve swing
+
+| File | Pose |
+|---|---|
+| `adam2-serve-swing-1.webp` | Ready, ball hand forward |
+| `adam2-serve-swing-2.webp` | Tossing the ball |
+| `adam2-serve-swing-3.webp` | Trophy pose |
+| `adam2-serve-swing-4.webp` | Reaching up |
+| `adam2-serve-swing-5.webp` | Hitting at the top |
+| `adam2-serve-swing-6.webp` | Follow-through |
+
+## Tennis: forehand swing
+
+| File | Pose |
+|---|---|
+| `adam2-fh-one-1.webp` | Ready |
+| `adam2-fh-one-2.webp` | Turning, racket back |
+| `adam2-fh-one-3.webp` | Racket back high |
+| `adam2-fh-one-4.webp` | Hitting |
+| `adam2-fh-one-5.webp` | Follow-through |
+| `adam2-fh-one-6.webp` | Finish |
+
+## Tennis: two-handed backhand
+
+| File | Pose |
+|---|---|
+| `adam2-backhand-two-1.webp` | Ready |
+| `adam2-backhand-two-2.webp` | Racket back low |
+| `adam2-backhand-two-3.webp` | Racket high on the left |
+| `adam2-backhand-two-4.webp` | Hitting the ball |
+| `adam2-backhand-two-5.webp` | Follow-through |
+| `adam2-backhand-two-6.webp` | Finish over the shoulder |
+
+## Tennis: quick-feet shuffle
+
+| File | Pose |
+|---|---|
+| `adam2-shuffle-1.webp` | Low ready |
+| `adam2-shuffle-2.webp` | Step right |
+| `adam2-shuffle-3.webp` | Small hop |
+| `adam2-shuffle-4.webp` | Low again |
+| `adam2-shuffle-5.webp` | Step left |
+| `adam2-shuffle-6.webp` | Wide lunge |
+
+## Tennis: split step and ready
+
+| File | Pose |
+|---|---|
+| `adam2-split-1.webp` | Standing tall |
+| `adam2-split-2.webp` | Bending |
+| `adam2-split-3.webp` | Hop |
+| `adam2-split-4.webp` | Landing wide |
+| `adam2-split-5.webp` | Low ready |
+| `adam2-split-6.webp` | Ready, eyes on the ball |
+
+## Tennis: split step (alternate, darker hair)
+
+| File | Pose |
+|---|---|
+| `adam2-split-b-1.webp` | Split step frame 1 |
+| `adam2-split-b-2.webp` | Split step frame 2 |
+| `adam2-split-b-3.webp` | Split step frame 3 |
+| `adam2-split-b-4.webp` | Split step frame 4 |
+| `adam2-split-b-5.webp` | Split step frame 5 |
+| `adam2-split-b-6.webp` | Split step frame 6 |
+
+## Tennis: breathing idle loop
+
+| File | Pose |
+|---|---|
+| `adam2-idle-1.webp` | Neutral |
+| `adam2-idle-2.webp` | Breathing in |
+| `adam2-idle-3.webp` | Head tilt |
+| `adam2-idle-4.webp` | Breathing out |
+| `adam2-idle-5.webp` | Blink |
+| `adam2-idle-6.webp` | Looking aside |
+
+## Tennis: idle loop (alternate, darker hair, shield badge)
+
+| File | Pose |
+|---|---|
+| `adam2-idle-b-1.webp` | Idle frame 1 |
+| `adam2-idle-b-2.webp` | Idle frame 2 |
+| `adam2-idle-b-3.webp` | Idle frame 3 |
+| `adam2-idle-b-4.webp` | Idle frame 4 |
+| `adam2-idle-b-5.webp` | Idle frame 5 |
+| `adam2-idle-b-6.webp` | Idle frame 6 |
+
+## Tennis: walk cycle to the right, racket on shoulder
+
+| File | Pose |
+|---|---|
+| `adam2-walk-1.webp` | Walk frame 1 |
+| `adam2-walk-2.webp` | Walk frame 2 |
+| `adam2-walk-3.webp` | Walk frame 3 |
+| `adam2-walk-4.webp` | Walk frame 4 |
+| `adam2-walk-5.webp` | Walk frame 5 |
+| `adam2-walk-6.webp` | Walk frame 6 |
+
+## Tennis: run cycle to the right
+
+| File | Pose |
+|---|---|
+| `adam2-run-r-1.webp` | Run frame 1 |
+| `adam2-run-r-2.webp` | Run frame 2 |
+| `adam2-run-r-3.webp` | Run frame 3 |
+| `adam2-run-r-4.webp` | Run frame 4 |
+| `adam2-run-r-5.webp` | Run frame 5 |
+| `adam2-run-r-6.webp` | Run frame 6 |
+
+## Tennis: run cycle to the left
+
+| File | Pose |
+|---|---|
+| `adam2-run-l-1.webp` | Run frame 1 |
+| `adam2-run-l-2.webp` | Run frame 2 |
+| `adam2-run-l-3.webp` | Run frame 3 |
+| `adam2-run-l-4.webp` | Run frame 4 |
+| `adam2-run-l-5.webp` | Run frame 5 |
+| `adam2-run-l-6.webp` | Run frame 6 |
+
+## Tennis: reactions
+
+| File | Pose |
+|---|---|
+| `adam2-react-stand.webp` | Standing relaxed, open hand |
+| `adam2-react-oops-wince.webp` | Missed: wincing lean |
+| `adam2-react-oops-surprise.webp` | Missed: surprised lunge |
+| `adam2-react-oops-lunge.webp` | Big surprised lunge |
+| `adam2-react-sad.webp` | A little sad after a miss |
+| `adam2-react-win-fist.webp` | Winning jump, fist up |
