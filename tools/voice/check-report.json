@@ -11550,5 +11550,55 @@
   ],
   "ok": false,
   "file": "www/voice/app-49f32fd3.mp3"
+ },
+ {
+  "text": "Voli di Net. Sekarang Kakak berdiri dekat net. Voli artinya memukul bola sebelum memantul! Raket di depan wajah seperti tanda STOP, lalu pukul pendek seperti meninju — jangan ayun besar. Jangan tunggu memantul! Ketuk VOLI saat bola sampai di depan Kak Adam — sebelum memantul!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "berdiri artinya",
+   "artinya"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6175e1e1.mp3"
+ },
+ {
+  "text": "Pertandingan Pertama. Waktunya bertanding melawan Raka! Kamu melihat dari sisi Raka. Kembalikan setiap bola dengan forehand atau backhand. Menangkan satu game melawan Raka!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d4ff9d1e.mp3"
+ },
+ {
+  "text": "Net Volley. Now I stand close to the net. A volley means hitting the ball before it bounces! Hold the racket in front of your face like a STOP sign, then punch it short — no big swing. Don't wait for the bounce! Tap VOLLEY when the ball reaches Kak Adam — before it bounces!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "net Vale now I stand close to the net avali means hitting the ball before it bounces hold the racket in front of your face like a stop sign then punch it short no big swing don't wait for the bounce",
+   "net volley now I stand close to the net avali means hitting the ball before it bounces hold the racket in front of your face like a stop sign then punch it short no big swing don't wait for the bounce",
+   "net Vale now I stand close to the net avali means hitting the ball before it bounces hold the racket in front of your face like a stop sign then punch it short no big swing don't wait for the bounced",
+   " tap Vale when the ball reaches CAC atom before it bounces",
+   " tap Vale when the ball reaches CAC Adam before it bounces",
+   " tap volley when the ball reaches CAC atom before it bounces"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a713d444.mp3"
+ },
+ {
+  "text": "First Match. Time for a match against Raka! You're watching from Raka's side. Return every ball with a forehand or backhand. Win one game against Raka!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pos latihan / station intro",
+  "heard": [
+   "first match time for a match against raqqa you're watching from raqqa side return every ball with a forehand or backhand win 1 game against raqqa",
+   "first match time for a match against raqqa you're watching from raqqa side returned every ball with a forehand or backhand win 1 game against raqqa",
+   "first match time for a match against raqqa you're watching from raqqa side return every ball with a forehand or backhand Wynn 1 game against raqqa"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-689b8600.mp3"
  }
 ]
