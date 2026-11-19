@@ -5,7 +5,11 @@
    child's location, cached times and streak carry over:
      mo_cached_loc, mo_manual_city, mo_prayer_streaks_v1
    Prayer times and the qibla are computed ON THE DEVICE
-   (bm-prayertimes.js, Kemenag RI parameters) — nothing is sent anywhere. */
+   (bm-prayertimes.js: Kemenag RI in Indonesia, the local method elsewhere,
+   or the method a parent picks) — nothing is sent anywhere.
+   The location sheet searches an offline world city list (bm-cities.js,
+   GeoNames, loaded on first use); a GPS spot is named after the nearest
+   town in that list, also on the device. */
 (function () {
   "use strict";
   var root = document.getElementById("prayerHub"); if (!root) return;
@@ -35,7 +39,7 @@
     '<svg viewBox="0 0 40 40" aria-hidden="true"><path d="M22 5a14 14 0 1 0 12 22 11.5 11.5 0 0 1-12-22z" fill="#8C7CF2" stroke="#6A55D8" stroke-width="1.5"/><path d="M31 6l1.4 3 3.2.5-2.3 2.2.6 3.2-2.9-1.5-2.9 1.5.6-3.2-2.3-2.2 3.2-.5z" fill="#FFC93D"/><circle cx="35" cy="20" r="1.6" fill="#FFC93D"/></svg>'
   ];
   var KAABA = { lat: 21.4225, lng: 39.8262 };
-  var CITIES = [
+  var CITIES = [ /* quick picks (Indonesia) */
     { n: "Jakarta", i: "🏙️", lat: -6.2088, lng: 106.8456 }, { n: "Bandung", i: "🌋", lat: -6.9175, lng: 107.6191 },
     { n: "Surabaya", i: "🦈", lat: -7.2575, lng: 112.7521 }, { n: "Malang", i: "🍎", lat: -7.9778, lng: 112.5347 },
     { n: "Yogyakarta", i: "🏛️", lat: -7.7956, lng: 110.3695 }, { n: "Semarang", i: "⛵", lat: -6.9667, lng: 110.4167 },
@@ -43,6 +47,9 @@
     { n: "Denpasar", i: "🌺", lat: -8.65, lng: 115.2167 }, { n: "Palembang", i: "🌉", lat: -2.9909, lng: 104.7566 },
     { n: "Banjarmasin", i: "🛶", lat: -3.3186, lng: 114.5944 }
   ];
+  CITIES.forEach(function (c) { c.cc = "ID"; c.tz = c.lng > 125 ? "Asia/Jayapura" : c.lng > 114.4 || (c.lng > 113 && c.lat < -5) ? "Asia/Makassar" : "Asia/Jakarta"; });
+  /* world quick picks, shown when the place is outside Indonesia */
+  var WORLD = [["Mecca", "SA"], ["Medina", "SA"], ["Kuala Lumpur", "MY"], ["Singapore", "SG"], ["Istanbul", "TR"], ["Dubai", "AE"], ["Cairo", "EG"], ["London", "GB"]];
   var Q = [
     ["إِنَّ مَعَ الْعُسْرِ يُسْرًا", "Sesungguhnya sesudah kesulitan itu ada kemudahan.", "Indeed, with hardship comes ease.", "QS. Al-Insyirah: 6"],
     ["وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا", "Barangsiapa bertakwa kepada Allah, niscaya Dia akan memberinya jalan keluar.", "Whoever is mindful of Allah, He will make a way out for them.", "QS. At-Talaq: 2"],
@@ -110,6 +117,7 @@
   function locName() {
     var m = get("mo_manual_city", null);
     if (m && loc && Math.abs(m.lat - loc.lat) < .01) return m.n;
+    if (loc && loc.near) return T("Dekat ", "Near ") + loc.near;
     /* no reverse geocoding (that would send the location off the device):
        label GPS spots by the device's time zone instead — WIB/WITA/WIT. */
     var z = ""; try { z = window.BMPrayerTimes ? BMPrayerTimes.zoneLabel() : ""; } catch (e) {}
@@ -121,13 +129,15 @@
   }
   function fetchTimes() {
     if (!loc) { render(); return; }
-    try { apply(BMPrayerTimes.timings(new Date(), loc.lat, loc.lng)); } catch (e) { render(); }
-    render._d = dkey(new Date());
+    try { apply(BMPrayerTimes.timings(null, loc.lat, loc.lng)); } catch (e) { render(); }
+    render._d = dkey(BMPrayerTimes.now());
     computeQibla();
   }
   function setLoc(l, name) {
-    loc = { lat: l.lat, lng: l.lng }; put("mo_cached_loc", loc);
-    if (name) put("mo_manual_city", { n: name, lat: l.lat, lng: l.lng });
+    loc = { lat: l.lat, lng: l.lng };
+    if (l.cc) loc.cc = l.cc; if (l.tz) loc.tz = l.tz; if (l.near) loc.near = l.near;
+    put("mo_cached_loc", loc);
+    if (name) put("mo_manual_city", { n: name, lat: l.lat, lng: l.lng, cc: l.cc || "" });
     if (!name) { try { localStorage.removeItem("mo_manual_city"); } catch (e) {} }
     try { localStorage.removeItem("mo_reverse_city"); localStorage.removeItem("mo_prayer_cache_v1"); } catch (e) {}
     times = null; fetchTimes();
@@ -135,13 +145,103 @@
   function useMyLocation() {
     if (!navigator.geolocation) { toast(T("Lokasi tidak didukung di perangkat ini", "Location isn't supported on this device")); openCities(); return; }
     toast(T("⏳ Mencari lokasi…", "⏳ Finding your location…"));
-    navigator.geolocation.getCurrentPosition(function (p) { setLoc({ lat: p.coords.latitude, lng: p.coords.longitude }); toast(T("🎉 Lokasi aktif!", "🎉 Location on!")); },
+    navigator.geolocation.getCurrentPosition(function (p) {
+        var l = { lat: p.coords.latitude, lng: p.coords.longitude };
+        setLoc(l); toast(T("🎉 Lokasi aktif!", "🎉 Location on!"));
+        nameSpot(l);
+      },
       function () { toast(T("Lokasi tidak bisa dipakai — pilih kota saja ya", "Couldn't use your location — pick a city instead")); openCities(); },
       { enableHighAccuracy: false, timeout: 8000, maximumAge: 300000 });
   }
 
+
+  /* ── offline world cities (bm-cities.js, loaded on first use) ── */
+  var CD = null, cdWait = [];
+  var norm = function (x) { return String(x).normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/[^a-z0-9]+/g, " ").trim(); };
+  /* names Indonesian families type, and the names we show */
+  var ALIAS = { "george town|MY": "penang pulau pinang", "mecca|SA": "makkah mekah mekkah makah", "medina|SA": "madinah al madinah", "cairo|EG": "kairo", "south tangerang|ID": "tangerang selatan tangsel",
+    "jeddah|SA": "jedah jiddah", "riyadh|SA": "riyad", "the hague|NL": "den haag", "seoul|KR": "seoul", "beijing|CN": "peking", "jerusalem|IL": "al quds", "east jerusalem|PS": "al quds baitul maqdis" };
+  var SHOW = { "Mecca|SA": "Makkah", "Medina|SA": "Madinah" };
+  function cityShow(c) { return SHOW[c.n + "|" + c.cc] || c.n; }
+  function loadCities(cb) {
+    if (CD) { cb(CD); return; }
+    cdWait.push(cb); if (cdWait.length > 1) return;
+    var done = function () {
+      var D = window.BMCitiesData; if (!D) { cdWait = []; return; }
+      var list = D.rows.split(";").map(function (r) {
+        var f = r.split("|"), c = { n: f[0], cc: f[1], lat: +f[2], lng: +f[3], tz: D.tz[+f[4]] || "", p: +f[5] };
+        c.nn = norm(c.n); c.al = ALIAS[c.nn + "|" + c.cc] || ""; c.k = (c.nn + " " + c.al).trim(); return c;
+      });
+      var cn = {}; for (var cc in D.cc) { var nm = D.cc[cc].split("|"); cn[cc] = { en: nm[0], id: nm[1] || nm[0], k: norm(D.cc[cc].replace("|", " ")) }; }
+      CD = { list: list, cn: cn };
+      var w = cdWait; cdWait = []; w.forEach(function (f) { f(CD); });
+    };
+    if (window.BMCitiesData) { done(); return; }
+    var sc = document.createElement("script"); sc.src = "/bm-cities.js?v=1"; sc.async = true;
+    sc.onload = done; sc.onerror = function () { cdWait = []; toast(T("Daftar kota belum bisa dibuka", "The city list couldn't open")); };
+    document.head.appendChild(sc);
+  }
+  var flag = function (cc) { return cc && cc.length === 2 ? String.fromCodePoint(127397 + cc.charCodeAt(0), 127397 + cc.charCodeAt(1)) : "🌍"; };
+  var cname = function (cc) { var c = CD && CD.cn[cc]; return c ? c[L()] : cc; };
+  function nearest(lat, lng) {
+    var best = null, bd = 1e9, cl = Math.cos(lat * Math.PI / 180);
+    /* the biggest town within ~20 km (so a London street reads "London", not a borough),
+       else simply the nearest */
+    var big = null, bp = -1, bk = 0, r2 = Math.pow(20 / 111, 2);
+    CD.list.forEach(function (c) {
+      var dx = (c.lng - lng) * cl, dy = c.lat - lat, d = dx * dx + dy * dy;
+      if (d < bd) { bd = d; best = c; }
+      if (d < r2 && c.p > bp) { bp = c.p; big = c; bk = d; }
+    });
+    if (big) return { c: big, km: Math.sqrt(bk) * 111 };
+    return best ? { c: best, km: Math.sqrt(bd) * 111 } : null;
+  }
+  /* name a GPS spot after the nearest town (on the device) and learn its country */
+  function nameSpot(l) {
+    loadCities(function () {
+      var r = nearest(l.lat, l.lng); if (!r || !loc || Math.abs(loc.lat - l.lat) > 1e-6) return;
+      var before = BMPrayerTimes.settings(loc.lat, loc.lng).method;
+      /* a GPS spot keeps the phone's own clock (no tz saved) */
+      loc.cc = r.c.cc; delete loc.tz; if (r.km < 40) loc.near = cityShow(r.c); else delete loc.near;
+      put("mo_cached_loc", loc);
+      if (BMPrayerTimes.settings(loc.lat, loc.lng).method !== before) fetchTimes(); else render();
+      if (sh.classList.contains("open") && sh.dataset.kind === "loc") openCities();
+    });
+  }
+  function searchCities(q, cc) {
+    var nq = norm(q), out = [], seen = {};
+    var push = function (c) { var key = c.n + "|" + c.cc; if (seen[key]) return; seen[key] = 1; out.push(c); };
+    var L0 = CD.list, i, c;
+    if (!nq) { for (i = 0; i < L0.length && out.length < 60; i++) if (L0[i].cc === cc) push(L0[i]); return out; }
+    var tiers = [[], [], []], w = " " + nq;
+    for (i = 0; i < L0.length; i++) {
+      c = L0[i]; if (cc && c.cc !== cc) continue;
+      var k = c.k;
+      if (c.nn === nq || (c.al && (" " + c.al + " ").indexOf(" " + nq + " ") >= 0)) tiers[0].push(c);
+      else if (k.indexOf(nq) === 0 || (" " + k).indexOf(w) >= 0) tiers[1].push(c);
+      else if (nq.length >= 3 && k.indexOf(nq) > 0) tiers[2].push(c);
+      if (tiers[0].length + tiers[1].length > 80) break;
+    }
+    tiers.forEach(function (t) { t.forEach(function (x) { if (out.length < 40) push(x); }); });
+    return out;
+  }
+  function searchCountries(q) {
+    var nq = norm(q); if (nq.length < 2) return [];
+    var r = []; for (var cc in CD.cn) { var k = " " + CD.cn[cc].k; if (k.indexOf(" " + nq) >= 0 || cc.toLowerCase() === nq) r.push(cc); }
+    return r.slice(0, 4);
+  }
+  /* is the place's clock different from the phone's right now? */
+  function tzDiffers(tz) {
+    if (!tz) return false;
+    try {
+      var now = new Date(), f = new Intl.DateTimeFormat("en-US", { timeZone: tz, hour: "numeric", minute: "numeric", hourCycle: "h23" }).formatToParts(now);
+      var g = function (t) { return +f.find(function (x) { return x.type === t; }).value; };
+      return (g("hour") * 60 + g("minute")) % 1440 !== now.getHours() * 60 + now.getMinutes();
+    } catch (e) { return false; }
+  }
+
   /* index of the prayer whose time has started (-1 = before Subuh) */
-  function curIdx() { if (!mins) return -1; var n = new Date(), nm = n.getHours() * 60 + n.getMinutes(); for (var i = 4; i >= 0; i--) if (mins[i] <= nm) return i; return -1; }
+  function curIdx() { if (!mins) return -1; var n = BMPrayerTimes.now(), nm = n.getHours() * 60 + n.getMinutes(); for (var i = 4; i >= 0; i--) if (mins[i] <= nm) return i; return -1; }
 
   /* ── UI ── */
   var css = '' +
@@ -204,6 +304,28 @@
     '.ph-cities{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}' +
     '.ph-city{min-height:48px;border:none;border-radius:16px;cursor:pointer;display:flex;align-items:center;gap:8px;padding:0 12px;font:800 14.5px/1 inherit;font-family:inherit;color:var(--cream);background:var(--surface-2)}' +
     '.ph-city.on{box-shadow:0 0 0 2px #10A765}' +
+    '.ph-search{display:flex;align-items:center;gap:8px;min-height:50px;padding:0 14px;border-radius:18px;background:var(--surface-2);margin-bottom:8px}' +
+    '.ph-search input{flex:1;min-width:0;border:none;outline:none;background:transparent;color:var(--cream);font:800 16px/1.2 inherit;font-family:inherit;padding:12px 0}' +
+    '.ph-search input::placeholder{color:var(--cream-dim);font-weight:700}' +
+    '.ph-search:focus-within{box-shadow:0 0 0 2px #0A9488}' +
+    '.ph-res{min-height:120px}' +
+    '.ph-sub{margin:12px 2px 6px;font-size:12.5px;font-weight:900;color:var(--cream-dim)}' +
+    '.ph-hint{margin:10px 2px 4px;font-size:13px;font-weight:700;line-height:1.4;color:var(--cream-dim)}' +
+    '.ph-credit{margin:6px 2px 0;font-size:11.5px;font-weight:700;color:var(--cream-dim);opacity:.8}' +
+    '.ph-row{width:100%;display:flex;align-items:center;gap:12px;min-height:54px;padding:6px 12px;margin-bottom:6px;border:none;border-radius:16px;cursor:pointer;text-align:left;font-family:inherit;color:var(--cream);background:var(--surface-2)}' +
+    '.ph-row .f{font-size:24px;line-height:1;flex:0 0 28px;text-align:center}' +
+    '.ph-row .b{flex:1;min-width:0}.ph-row .b b{display:block;font-size:15px;font-weight:900;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
+    '.ph-row .b span{display:block;font-size:12.5px;font-weight:700;color:var(--cream-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}' +
+    '.ph-row .ok{font-weight:900;font-size:17px;color:#10A765}.ph-row.on{box-shadow:0 0 0 2px #10A765}.ph-row.cc .ok{color:var(--cream-dim)}' +
+    '.ph-row:active,.ph-city:active{transform:scale(.97)}' +
+    '.ph-ccx{display:inline-flex;align-items:center;gap:6px;min-height:38px;padding:0 14px;margin:0 0 8px;border:none;border-radius:19px;cursor:pointer;font:900 14px/1 inherit;font-family:inherit;color:#fff;background:#0A9488}' +
+    '.ph-set{margin-top:14px;border-radius:18px;background:var(--surface-2);padding:2px 14px}' +
+    '.ph-set summary{list-style:none;cursor:pointer;min-height:50px;display:flex;flex-direction:column;justify-content:center;padding:8px 0}' +
+    '.ph-set summary::-webkit-details-marker{display:none}' +
+    '.ph-set summary span{font-size:15px;font-weight:900}.ph-set summary small{font-size:12.5px;font-weight:700;color:var(--cream-dim);margin-top:2px}' +
+    '.ph-set label{display:block;font-size:12.5px;font-weight:900;color:var(--cream-dim);margin:8px 0}' +
+    '.ph-set select{display:block;width:100%;margin-top:5px;min-height:46px;padding:0 12px;border-radius:14px;border:1px solid var(--hairline-strong);background:var(--bg-elev);color:var(--cream);font:800 15px/1.2 inherit;font-family:inherit}' +
+    '.ph-tz{margin:8px 0 0;text-align:center;font-size:12.5px;font-weight:800;opacity:.8}' +
     '.ph-gps{width:100%;margin-bottom:10px;min-height:50px;border:none;border-radius:18px;cursor:pointer;color:#fff;font:900 15px/1 inherit;font-family:inherit;background:linear-gradient(120deg,#10A765,#0A9488 52%,#0A7FB0)}' +
     '.ph-compass{position:relative;width:240px;height:240px;margin:6px auto 10px}' +
     '.ph-dial{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,#fff 0%,#F2F6FC 70%,#E3EBF6 100%);box-shadow:inset 0 0 0 5px #0A9488,inset 0 0 0 9px #fff,0 14px 30px -14px rgba(20,60,110,.5);transition:transform .25s linear}' +
@@ -230,6 +352,7 @@
     '@keyframes phBurst{to{transform:translate(var(--dx),var(--dy)) rotate(260deg);opacity:0}}';
   var st = document.createElement("style"); st.id = "bm-prayer-css"; st.textContent = css; document.head.appendChild(st);
 
+  var pad2 = function (n) { return (n < 10 ? "0" : "") + n; };
   var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]; }); };
   function hijri(d, numeric) {
     try {
@@ -240,12 +363,13 @@
         .replace("Shaʻban", "Sya'ban").replace("Ramadan", "Ramadhan").replace("Shawwal", "Syawal").replace("Dhuʻl-Qiʻdah", "Dzulqa'dah").replace("Dhuʻl-Hijjah", "Dzulhijjah").replace(" AH", " H");
     } catch (e) { return numeric ? null : ""; }
   }
-  var isNight = function () { var h = new Date().getHours(); return h >= 18 || h < 5; };
+  var isNight = function () { var h = (window.BMPrayerTimes ? BMPrayerTimes.now() : new Date()).getHours(); return h >= 18 || h < 5; };
 
   function render() {
     refreshStreaks();
     var names = NAMES[L()], name = locName();
     var card = '<div class="ph-top"><button class="ph-loc" data-act="city">' + SV.pin + '<span>' + esc(name || T("Pilih kota", "Choose city")) + '</span><span class="car">▾</span></button><div class="ph-hijri">' + SV.cal + '<span>' + esc(hijri(new Date())) + "</span></div></div>";
+    if (loc && times && BMPrayerTimes.differsFromDevice()) card += '<div class="ph-tz">🕰️ ' + T("Jam setempat ", "Local time in ") + esc(name || "") + " · " + pad2(BMPrayerTimes.now().getHours()) + ":" + pad2(BMPrayerTimes.now().getMinutes()) + "</div>";
     card += '<div class="ph-card' + (isNight() ? " night" : "") + '">';
     if (!loc || !times) {
       card += '<div class="ph-empty"><img src="mo-pray-assets/mo-doa.webp" alt=""><h3>' +
@@ -254,7 +378,7 @@
         '</p><div class="row"><button class="pri" data-act="gps">📍 ' + T("Pakai lokasiku", "Use my location") + '</button><button class="sec" data-act="city">🏙️ ' + T("Pilih kota", "Pick a city") + "</button></div></div></div>";
       root.innerHTML = card; return;
     }
-    var now = new Date(), nm = now.getHours() * 60 + now.getMinutes(), ci = curIdx(), s = stats(), t = today();
+    var now = BMPrayerTimes.now(), nm = now.getHours() * 60 + now.getMinutes(), ci = curIdx(), s = stats(), t = today();
     var nx = -1, nmin = Infinity;
     mins.forEach(function (m, i) { if (m > nm && m < nmin) { nmin = m; nx = i; } });
     var after = nx === -1; if (after) { nx = 0; nmin = mins[0] + 1440; }
@@ -309,17 +433,94 @@
   document.body.appendChild(bg); document.body.appendChild(sh);
   var onClose = null;
   function openSheet(title, html, after) {
+    sh.dataset.kind = "";
     sh.innerHTML = '<div class="ph-grab"></div><div class="ph-sh-head"><h3>' + title + '</h3><button class="ph-x" data-act="close" aria-label="' + T("Tutup", "Close") + '">✕</button></div>' + html;
     bg.classList.add("open"); sh.classList.add("open"); if (after) after();
   }
   function closeSheet() { bg.classList.remove("open"); sh.classList.remove("open"); if (onClose) { onClose(); onClose = null; } }
   bg.addEventListener("click", closeSheet);
 
+  var pk = { cc: "", q: "", shown: [] };
   function openCities() {
-    var m = get("mo_manual_city", null);
+    pk.q = ""; pk.cc = "";
     openSheet("📍 " + T("Lokasi sholat", "Prayer location"),
-      '<button class="ph-gps" data-act="gps">📍 ' + T("Pakai lokasiku sekarang", "Use my current location") + '</button><div class="ph-cities">' +
-      CITIES.map(function (c, i) { return '<button class="ph-city' + (m && m.n === c.n ? " on" : "") + '" data-act="pick" data-i="' + i + '"><span>' + c.i + "</span>" + c.n + "</button>"; }).join("") + "</div>");
+      '<button class="ph-gps" data-act="gps">📍 ' + T("Pakai lokasiku sekarang", "Use my current location") + "</button>" +
+      '<label class="ph-search"><span aria-hidden="true">🔍</span><input id="phFind" type="search" autocomplete="off" autocorrect="off" spellcheck="false" enterkeyhint="search" placeholder="' +
+        T("Cari kota atau negara…", "Search a city or country…") + '" aria-label="' + T("Cari kota atau negara", "Search a city or country") + '"></label>' +
+      '<div id="phCC"></div><div id="phRes" class="ph-res"></div>' + methodHtml(), function () {
+        var inp = document.getElementById("phFind");
+        inp.addEventListener("input", function () { pk.q = inp.value; renderRes(); });
+        sh.querySelectorAll(".ph-set select").forEach(function (el) { el.addEventListener("change", onMethod); });
+        renderRes();
+      });
+    sh.dataset.kind = "loc";
+  }
+  function cityRow(c, i, on) {
+    return '<button class="ph-row' + (on ? " on" : "") + '" data-act="pickw" data-i="' + i + '"><span class="f">' + flag(c.cc) + '</span><span class="b"><b>' + esc(cityShow(c)) +
+      "</b><span>" + esc(cname(c.cc)) + "</span></span>" + (on ? '<span class="ok">✓</span>' : "") + "</button>";
+  }
+  function renderRes() {
+    var box = document.getElementById("phRes"), ccb = document.getElementById("phCC"); if (!box) return;
+    var m = get("mo_manual_city", null), isOn = function (c) { return !!(m && Math.abs(m.lat - c.lat) < .01 && Math.abs(m.lng - c.lng) < .01); };
+    if (!CD) {
+      /* before the list loads: the Indonesian quick picks, as before */
+      box.innerHTML = '<div class="ph-cities">' + CITIES.map(function (c, i) { return '<button class="ph-city' + (m && m.n === c.n ? " on" : "") + '" data-act="pick" data-i="' + i + '"><span>' + c.i + "</span>" + c.n + "</button>"; }).join("") +
+        '</div><p class="ph-hint">' + T("Memuat daftar kota dunia…", "Loading the world city list…") + "</p>";
+      loadCities(renderRes); return;
+    }
+    ccb.innerHTML = pk.cc ? '<button class="ph-ccx" data-act="ccx">' + flag(pk.cc) + " " + esc(cname(pk.cc)) + ' <span aria-hidden="true">✕</span></button>' : "";
+    var html = "", q = pk.q.trim();
+    pk.shown = [];
+    if (!q && !pk.cc) {
+      var home = (loc && loc.cc) || "ID";
+      if (home === "ID") {
+        html += '<p class="ph-sub">' + T("Kota populer", "Popular cities") + '</p><div class="ph-cities">' +
+          CITIES.map(function (c, i) { return '<button class="ph-city' + (m && m.n === c.n ? " on" : "") + '" data-act="pick" data-i="' + i + '"><span>' + c.i + "</span>" + c.n + "</button>"; }).join("") + "</div>";
+      } else {
+        html += '<p class="ph-sub">' + flag(home) + " " + esc(cname(home)) + "</p>";
+        searchCities("", home).slice(0, 8).forEach(function (c) { html += cityRow(c, pk.shown.push(c) - 1, isOn(c)); });
+      }
+      html += '<p class="ph-sub">' + T("Kota di dunia", "Around the world") + "</p>";
+      WORLD.forEach(function (w) { var c = CD.list.filter(function (x) { return x.n === w[0] && x.cc === w[1]; })[0]; if (c) html += cityRow(c, pk.shown.push(c) - 1, isOn(c)); });
+      html += '<p class="ph-hint">' + T("Tidak ada kotamu? Ketik nama kota atau negara di atas.", "Can't see your town? Type a city or country above.") + "</p>";
+    } else {
+      if (!pk.cc) searchCountries(q).forEach(function (cc) {
+        html += '<button class="ph-row cc" data-act="cc" data-cc="' + cc + '"><span class="f">' + flag(cc) + '</span><span class="b"><b>' + esc(cname(cc)) + "</b><span>" +
+          T("Lihat kota-kota di negara ini", "See the cities in this country") + '</span></span><span class="ok">›</span></button>';
+      });
+      var res = searchCities(pk.cc ? q : q, pk.cc);
+      res.forEach(function (c) { html += cityRow(c, pk.shown.push(c) - 1, isOn(c)); });
+      if (!html) html = '<p class="ph-hint">' + T("Belum ketemu. Coba kota besar terdekat, atau pakai lokasimu.", "Nothing found. Try the nearest big city, or use your location.") + "</p>";
+    }
+    box.innerHTML = html;
+  }
+  function methodHtml() {
+    var S = BMPrayerTimes.settings(loc && loc.lat, loc && loc.lng), lang = L(), mn = function (k) { return esc(BMPrayerTimes.methodName(k, lang)); };
+    var auto = BMPrayerTimes.methodFor(S.cc), autoAsr = BMPrayerTimes.asrFor(S.cc);
+    var asrName = function (a) { return a === "hanafi" ? "Hanafi" : T("Syafi'i (jumhur)", "Shafi'i (majority)"); };
+    var o = '<option value="auto"' + (S.auto ? " selected" : "") + ">" + T("Otomatis · ", "Automatic · ") + mn(auto) + "</option>";
+    BMPrayerTimes.METHOD_ORDER.forEach(function (k) { o += '<option value="' + k + '"' + (!S.auto && S.method === k ? " selected" : "") + ">" + mn(k) + "</option>"; });
+    var a = '<option value="auto"' + (S.autoAsr ? " selected" : "") + ">" + T("Otomatis · ", "Automatic · ") + asrName(autoAsr) + "</option>" +
+      '<option value="shafii"' + (!S.autoAsr && S.asr === "shafii" ? " selected" : "") + ">" + T("Syafi'i, Maliki, Hanbali", "Shafi'i, Maliki, Hanbali") + "</option>" +
+      '<option value="hanafi"' + (!S.autoAsr && S.asr === "hanafi" ? " selected" : "") + ">Hanafi</option>";
+    return '<details class="ph-set"><summary><span>⚙️ ' + T("Cara menghitung", "Calculation method") + '</span><small id="phMSum">' + mn(S.method) + " · " + T("Ashar ", "Asr ") + asrName(S.asr) + "</small></summary>" +
+      '<label>' + T("Metode", "Method") + '<select data-k="method">' + o + "</select></label>" +
+      '<label>' + T("Waktu Ashar", "Asr time") + '<select data-k="asr">' + a + "</select></label>" +
+      '<p class="ph-hint">' + T("Waktu dihitung di HP tanpa internet. Kalau berbeda dengan jadwal masjid di dekatmu, ikuti jadwal masjid ya.",
+        "Times are worked out on the phone, with no internet. If they differ from your local mosque's timetable, follow the mosque.") + "</p>" +
+      '<p class="ph-credit">' + T("Data kota", "City data") + " © GeoNames (CC BY 4.0)</p></details>";
+  }
+  function onMethod(e) {
+    var o = {}; o[e.target.dataset.k] = e.target.value; BMPrayerTimes.saveSettings(o);
+    var S = BMPrayerTimes.settings(loc && loc.lat, loc && loc.lng), sum = document.getElementById("phMSum");
+    if (sum) sum.textContent = BMPrayerTimes.methodName(S.method, L()) + " · " + T("Ashar ", "Asr ") + (S.asr === "hanafi" ? "Hanafi" : T("Syafi'i (jumhur)", "Shafi'i (majority)"));
+    try { localStorage.removeItem("mo_prayer_cache_v1"); } catch (x) {}
+    times = null; fetchTimes();
+  }
+  function pickWorld(c) {
+    var nm = cityShow(c);
+    setLoc({ lat: c.lat, lng: c.lng, cc: c.cc, tz: c.tz }, nm); closeSheet();
+    toast("📍 " + nm + T(" dipilih!", " selected!") + (tzDiffers(c.tz) ? T(" Waktu sholat pakai jam setempat.", " Prayer times use the local clock there.") : ""));
   }
   function computeQibla() {
     if (!loc) { qibla = null; return; }
@@ -416,6 +617,9 @@
     if (a === "city") openCities();
     else if (a === "gps") { closeSheet(); useMyLocation(); }
     else if (a === "pick") { var c = CITIES[+b.dataset.i]; setLoc(c, c.n); closeSheet(); toast("📍 " + c.n + T(" dipilih!", " selected!")); }
+    else if (a === "pickw") { var w = pk.shown[+b.dataset.i]; if (w) pickWorld(w); }
+    else if (a === "cc") { pk.cc = b.dataset.cc; pk.q = ""; var fi = document.getElementById("phFind"); if (fi) { fi.value = ""; fi.placeholder = T("Cari kota di ", "Search in ") + cname(pk.cc) + "…"; } renderRes(); }
+    else if (a === "ccx") { pk.cc = ""; var fx = document.getElementById("phFind"); if (fx) fx.placeholder = T("Cari kota atau negara…", "Search a city or country…"); renderRes(); }
     else if (a === "cell") { if (+b.dataset.i === curIdx() && !b.classList.contains("done")) doCheck(b); }
     else if (a === "check") doCheck(b);
     else if (a === "qibla") openQibla();
@@ -436,8 +640,11 @@
   /* re-render when the hub switches language, and every 30 s for the countdown */
   window.bmPrayerRender = function () { render(); renderTools(); };
   setInterval(function () { if (times) render(); }, 30000);
-  document.addEventListener("visibilitychange", function () { if (!document.hidden) { if (times && dkey(new Date()) !== (render._d || "")) fetchTimes(); else render(); } });
+  document.addEventListener("visibilitychange", function () { if (!document.hidden) { if (times && dkey(BMPrayerTimes.now()) !== (render._d || "")) fetchTimes(); else render(); } });
 
   renderTools(); render(); fetchTimes();
-  render._d = dkey(new Date());
+  render._d = dkey(BMPrayerTimes.now());
+  /* a saved GPS spot from before the world list (no country yet): look it up once on
+     the device, so the method follows the country. Inside Indonesia nothing changes. */
+  if (loc && !loc.cc && !get("mo_manual_city", null)) setTimeout(function () { if (loc && !loc.cc) nameSpot(loc); }, 2500);
 })();

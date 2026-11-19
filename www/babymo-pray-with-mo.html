@@ -1539,7 +1539,7 @@ function spawnConfetti(){
   },i*80)})(i)}
 }
 
-function getCurrentPrayer(){var now=new Date(),mins=now.getHours()*60+now.getMinutes();for(var i=0;i<PRAYERS.length;i++){if(mins<PRAYERS[i].h*60+PRAYERS[i].m)return i}return 0}
+function getCurrentPrayer(){var now=window.BMPrayerTimes?BMPrayerTimes.now():new Date(),mins=now.getHours()*60+now.getMinutes();for(var i=0;i<PRAYERS.length;i++){if(mins<PRAYERS[i].h*60+PRAYERS[i].m)return i}return 0}
 function renderPrayerNow(){
   var p=PRAYERS[getCurrentPrayer()];
   document.getElementById('prayerName').textContent=p.name;
@@ -1547,7 +1547,7 @@ function renderPrayerNow(){
   updateCountdown();
 }
 function updateCountdown(){
-  var idx=getCurrentPrayer(),p=PRAYERS[idx],now=new Date(),target=new Date(now);
+  var idx=getCurrentPrayer(),p=PRAYERS[idx],now=window.BMPrayerTimes?BMPrayerTimes.now():new Date(),target=new Date(now);
   target.setHours(p.h,p.m,0,0);if(target<=now)target.setDate(target.getDate()+1);
   var diff=Math.max(0,Math.floor((target-now)/1000)),h=Math.floor(diff/3600),m=Math.floor((diff%3600)/60),s=diff%60;
   document.getElementById('countdown').textContent=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
@@ -1568,8 +1568,9 @@ function getPrayerCityLabel(){
     if(m&&m.n)return '📍 '+m.n+' · pilihan manual';
     const loc=JSON.parse(localStorage.getItem('mo_cached_loc')||'null');
     if(loc&&typeof loc.lat==='number'){
-      /* no reverse geocoding: label by the device time zone (WIB/WITA/WIT) */
-      const z=window.BMPrayerTimes?BMPrayerTimes.zoneLabel():'';
+      /* no reverse geocoding: the nearest town from the offline list (saved by the
+         Sholat tab), else the device time zone (WIB/WITA/WIT) */
+      const z=loc.near||(window.BMPrayerTimes?BMPrayerTimes.zoneLabel():'');
       return '📍 '+(z||'Lokasimu')+' · otomatis dari lokasimu';
     }
   }catch(e){}
@@ -1886,13 +1887,13 @@ function stopDzikirPlay(){
 
 
 /* Real prayer times for the cached location (set on the hub's Sholat tab),
-   computed on the device (bm-prayertimes.js, Kemenag RI) — no network. */
+   computed on the device (bm-prayertimes.js: Kemenag RI in Indonesia, the local method elsewhere) — no network. */
 function loadRealPrayerTimes(){
   var raw;try{raw=localStorage.getItem('mo_cached_loc');}catch(e){return;}
   if(!raw)return;
   var loc;try{loc=JSON.parse(raw);}catch(e){return;}
   if(!loc||typeof loc.lat!=='number'||!window.BMPrayerTimes)return;
-  var t;try{t=BMPrayerTimes.timings(new Date(),loc.lat,loc.lng);}catch(e){return;}
+  var t;try{t=BMPrayerTimes.timings(null,loc.lat,loc.lng);}catch(e){return;}
   var map={Subuh:t.Fajr,Dzuhur:t.Dhuhr,Ashar:t.Asr,Maghrib:t.Maghrib,Isya:t.Isha};
   PRAYERS.forEach(function(p){
     var v=map[p.name];if(!v)return;

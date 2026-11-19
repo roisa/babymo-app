@@ -20,6 +20,7 @@ const SHELL = [
   "/bm-season.js",
   "/bm-voice.js",
   "/bm-prayertimes.js",
+  "/bm-cities.js?v=1",
   "/voice/manifest.js",
   "/bm-icons.js",
   "/bm-theme.js",
