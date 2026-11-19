@@ -1754,6 +1754,9 @@
   var gateEl = null;
   function isApp() {
     try {
+      // The iOS app serves the bundled web content through its own
+      // babymo:// scheme (see babymo-ios LocalContentSchemeHandler).
+      if (location.protocol === "babymo:") return true;
       var C = window.Capacitor;
       if (C) return typeof C.isNativePlatform === "function" ? !!C.isNativePlatform() : true;
       return location.protocol === "capacitor:";

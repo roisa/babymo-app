@@ -159,9 +159,9 @@ h1{font-family:'Fredoka','Nunito',sans-serif;font-size:32px;line-height:1.1;marg
 </style>
 <link rel="stylesheet" href="bm-buttons.css">
 <style id="bm-mo-room">
-/* Baby Mo's greeting drops in at the top of the map/intro: slide the content down so he never covers Kak Adam */
-#s-map .wrap,#s-intro .wrap{transition:padding-top .35s ease}
-body:has(#bm-mo.top.show) #s-map .wrap,body:has(#bm-mo.top.show) #s-intro .wrap{padding-top:86px}
+/* Baby Mo's greeting floats over the top of the map/intro as a true overlay.
+   It must never resize or push the page content (the jump read as a glitch);
+   it dismisses on its own, so briefly covering the topbar is fine. */
 body:has(#s-map.on) #bm-mo.top,body:has(#s-intro.on) #bm-mo.top{top:calc(env(safe-area-inset-top) + 6px)}
 </style>
 <style id="bm-adam-frames">

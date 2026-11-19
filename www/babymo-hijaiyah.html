@@ -36,7 +36,7 @@ canvas{display:block;position:fixed;inset:0;z-index:0}
   -webkit-backdrop-filter:blur(10px) saturate(150%);backdrop-filter:blur(10px) saturate(150%);
   box-shadow:0 8px 20px -8px rgba(0,0,0,.4)}
 
-#topbar{position:absolute;top:10px;left:10px;right:10px;display:flex;gap:8px;align-items:center;pointer-events:none}
+#topbar{position:absolute;top:calc(10px + env(safe-area-inset-top));left:10px;right:10px;display:flex;gap:8px;align-items:center;pointer-events:none}
 #btnBack{pointer-events:auto;flex:0 0 42px;width:42px;height:42px;border-radius:14px;border:none;
   background:var(--card);border:1.5px solid var(--card-b);color:var(--cream);font-size:17px;display:grid;place-items:center}
 #btnJournal{pointer-events:auto;flex:1;display:flex;align-items:center;gap:9px;padding:8px 12px;min-width:0;border:none;text-align:left;color:var(--cream)}

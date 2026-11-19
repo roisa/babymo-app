@@ -476,10 +476,21 @@ html[data-bm-theme="classic"] #album{background:rgba(5,22,10,.82);}
 </style>
 <script src="bm-icons.js" defer></script>
 <style>
-/* 13 Nov 2026 — reward card: upper-body Mo, the pose's name, grey share button */
-.intro-card .mo-stage{height:124px;margin-top:0;padding:0;overflow:hidden;
-  -webkit-mask-image:linear-gradient(#000 82%,transparent);mask-image:linear-gradient(#000 82%,transparent)}
-.intro-card .mo-reveal-img{position:absolute;max-width:none;object-fit:contain;transform-origin:50% 100%;animation:moBobUp 2.6s ease-in-out infinite}
+/* 19 Nov 2026 — reward card: full-body Mo standing on a podium box, like Kak
+   Adam's stand on the tennis page. Replaces the cropped upper-body look (his
+   head was cut off and sat too close to the screen top). */
+.intro-card .mo-stage{height:192px;margin-top:10px;padding:0;overflow:visible;
+  display:flex;justify-content:center;align-items:flex-end;position:relative}
+.intro-card .mo-stage::before{content:'';position:absolute;left:50%;bottom:0;transform:translateX(-50%);
+  width:158px;height:46px;border-radius:16px;
+  background:linear-gradient(180deg,#FFE8B0 0%,#F6C45E 45%,#DB9612 100%);
+  box-shadow:0 12px 24px -12px rgba(140,90,0,.55),inset 0 2px 0 rgba(255,255,255,.65),inset 0 -5px 10px rgba(140,80,0,.28)}
+.intro-card .mo-stage::after{content:'';position:absolute;left:50%;bottom:36px;transform:translateX(-50%);
+  width:138px;height:14px;border-radius:50%;
+  background:radial-gradient(ellipse,rgba(120,70,0,.30),transparent 70%)}
+.intro-card .mo-reveal-img{position:relative;z-index:1;width:148px;height:148px;max-width:none;object-fit:contain;
+  margin-bottom:34px;transform-origin:50% 100%;animation:moBobUp 2.6s ease-in-out infinite;
+  filter:drop-shadow(0 10px 16px rgba(120,70,0,.35))}
 @keyframes moBobUp{50%{transform:translateY(-4px) rotate(-1.5deg)}}
 .intro-card .mo-glow-ring{display:none}
 .pose-chip{display:block;width:fit-content;max-width:92%;margin:-2px auto 10px;padding:6px 14px;border-radius:999px;
