@@ -1808,9 +1808,13 @@
     document.head.appendChild(st);
   }
   function rnd(a, b) { return a + Math.floor(Math.random() * (b - a + 1)); }
-  function gateQuestion() {
+  function gateQuestion(hard) {
     var a, b, ans, op;
-    if (Math.random() < 0.5) { a = rnd(6, 9); b = rnd(6, 9); ans = a * b; op = " × "; }
+    if (hard) {
+      // two-digit × one-digit: out of reach for little ones, instant for adults
+      a = rnd(13, 29); b = rnd(3, 9); ans = a * b; op = " × ";
+    }
+    else if (Math.random() < 0.5) { a = rnd(6, 9); b = rnd(6, 9); ans = a * b; op = " × "; }
     else { a = rnd(14, 48); b = rnd(13, 39); ans = a + b; op = " + "; }
     var opts = [ans];
     while (opts.length < 4) {
@@ -1830,20 +1834,23 @@
     setTimeout(function () { g.bg.remove(); g.sheet.remove(); }, 380);
     if (cb) cb();
   }
-  function parentGate(onPass, onCancel, always) {
+  //   opts (4th arg): { hard: true }  — two-digit × one-digit question;
+  //                   { sub: "..." }   — custom line under the question
+  function parentGate(onPass, onCancel, always, opts) {
     if (typeof onPass !== "function") onPass = function () {};
     if ((!isApp() && !always) || gateOpen) { onPass(); return; }
+    opts = opts || {};
     try {
       if (gateEl) closeGate();
       gateCss();
-      var en = moLang() === "en", Q = gateQuestion();
+      var en = moLang() === "en", Q = gateQuestion(opts.hard);
       var bg = document.createElement("div"); bg.className = "bm-gate-bg";
       var sh = document.createElement("div"); sh.className = "bm-gate";
       sh.setAttribute("role", "dialog"); sh.setAttribute("aria-modal", "true"); sh.setAttribute("aria-labelledby", "bmGateQ"); sh.tabIndex = -1;
       sh.innerHTML = '<div class="bm-gate-grab"></div><div class="bm-gate-ic" aria-hidden="true">🔒</div>' +
         '<div class="bm-gate-k">' + (en ? "For grown-ups" : "Khusus orang tua") + "</div>" +
         '<h2 id="bmGateQ">' + (en ? "Ask a grown-up: what is " : "Tanya Ayah/Bunda: berapa ") + Q.q + "?</h2>" +
-        '<p class="bm-gate-sub">' + (en ? "Answer to open the link or share." : "Jawab dulu untuk membuka tautan atau berbagi.") + "</p>" +
+        '<p class="bm-gate-sub">' + (opts.sub || (en ? "Answer to open the link or share." : "Jawab dulu untuk membuka tautan atau berbagi.")) + "</p>" +
         '<div class="bm-gate-opts">' + Q.opts.map(function (o) { return '<button type="button" data-v="' + o + '">' + o + "</button>"; }).join("") + "</div>" +
         '<p class="bm-gate-err" aria-live="polite"></p>' +
         '<button type="button" class="bm-gate-x">' + (en ? "Cancel" : "Batal") + "</button>";

@@ -2160,6 +2160,19 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
         </div>
       </div>
 
+      <!-- Parent-gated settings (iOS app): display & sound + child name. The
+           language toggle above stays kid-accessible on purpose. -->
+      <div class="list-group" id="ortuUnlockCard" hidden>
+        <a class="lrow" href="#" id="ortuUnlockRow">
+          <div class="lrow-icon">🔒</div>
+          <div class="lrow-body">
+            <div class="lrow-title" data-i18n="gate_row">Pengaturan orang tua</div>
+            <div class="lrow-sub" data-i18n="gate_row_s">Tampilan, suara & nama si kecil — ketuk untuk membuka</div>
+          </div>
+          <div class="lrow-chev">›</div>
+        </a>
+      </div>
+      <div id="ortuLocked">
       <!-- Display & sound (same settings as the gear menu) -->
       <div class="list-group-title" data-i18n="disp_group">Tampilan &amp; Suara</div>
       <div class="list-group">
@@ -2190,6 +2203,8 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
           <div class="lrow-chev">›</div>
         </a>
       </div>
+
+      </div><!-- /ortuLocked -->
 
       <div class="list-group-title" data-i18n="about_app">Aplikasi</div>
       <div class="list-group">
@@ -2330,7 +2345,7 @@ const I18N={
   doa_dream_s:{id:'Doa & rutinitas tidur',en:'Dua & bedtime routine'},
   foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
   about_title:{id:'Orang Tua',en:'Parents'},disp_group:{id:'Tampilan & Suara',en:'Display & Sound'},theme_row:{id:'Tema',en:'Theme'},theme_auto:{id:'Otomatis',en:'Auto'},theme_light:{id:'☀️ Terang',en:'☀️ Light'},theme_dark:{id:'🌙 Gelap',en:'🌙 Dark'},sound_row:{id:'Suara & musik',en:'Sound & music'},sound_sub:{id:'Efek suara dan bacaan',en:'Sound effects and read-aloud'},sound_on:{id:'Nyala',en:'On'},sound_off:{id:'Mati',en:'Off'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
-  about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
+  gate_row:{id:'Pengaturan orang tua',en:'Parent settings'},gate_row_s:{id:'Tampilan, suara & nama si kecil — ketuk untuk membuka',en:"Display, sound & child's name — tap to unlock"},gate_sub:{id:'Jawab dulu untuk membuka pengaturan.',en:'Answer to open the settings.'},about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
   about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'19 game siap dimainkan',en:'19 games ready to play'},
   cat_tenis_t:{id:'Akademi Tenis Kak Adam',en:"Kak Adam's Tennis Academy"},cat_tenis_s:{id:'Belajar tenis dari bola merah sampai bertanding',en:'Learn tennis from the red ball to your first match'},
   g_tenis:{id:'Tenis Adam',en:'Adam Tennis'},g_tenis_sub:{id:'Olahraga',en:'Sport'},
@@ -2624,6 +2639,32 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
   // quiet daily check so the pill can appear without tapping
   try { var cc = JSON.parse(localStorage.getItem('bm_upd') || 'null'); if (!cc || (Date.now() - cc.t) > 864e5) check(); } catch (e) { check(); }
 })();
+</script>
+<script>
+/* Parent-gated settings (iOS app only): Display & Sound and the child's name
+   hide behind a hard gate (two-digit multiplication); a pass stays good for
+   10 minutes. Language above stays kid-accessible on purpose; the website
+   shows everything ungated. */
+document.addEventListener('DOMContentLoaded', function () {
+  var card = document.getElementById('ortuUnlockCard'), box = document.getElementById('ortuLocked');
+  if (!card || !box) return;
+  var B = window.BabyMo || {};
+  var inApp = !!(B.isApp && B.isApp());
+  function okNow() { try { return Date.now() - (+sessionStorage.getItem('bm_ortu_ok') || 0) < 6e5; } catch (e) { return false; } }
+  function reveal() { box.hidden = false; card.hidden = true; }
+  function lock() { box.hidden = true; card.hidden = false; }
+  if (!inApp || okNow()) { reveal(); return; }
+  lock();
+  document.getElementById('ortuUnlockRow').addEventListener('click', function (e) {
+    e.preventDefault();
+    try { B.sfx && B.sfx('tap'); } catch (err) {}
+    var en = (localStorage.getItem('bm_lang') === 'en');
+    B.parentGate(function () {
+      try { sessionStorage.setItem('bm_ortu_ok', String(Date.now())); } catch (err) {}
+      reveal();
+    }, null, false, { hard: true, sub: en ? 'Answer to open the settings.' : 'Jawab dulu untuk membuka pengaturan.' });
+  });
+});
 </script>
 <script src="/bm-kit.js" defer></script>
 <script>
