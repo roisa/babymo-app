@@ -90,6 +90,8 @@ final class WatchClipPlayer: NSObject, ObservableObject, AVAudioPlayerDelegate {
 /// One du'a: Mo + title, Arabic with the word being read lit up, play and 2× buttons.
 struct DuaPlayerView: View {
     let dua: WatchDua
+    /// Start reading straight away (when opened from the wake-up alert).
+    var autoplay: Bool = false
     @StateObject private var audio = WatchClipPlayer()
 
     private var litIndex: Int {
@@ -164,6 +166,7 @@ struct DuaPlayerView: View {
         }
         .background(BM.sky(dua.skyTop, dua.skyMid))
         .bmScreen()
+        .onAppear { if autoplay && !audio.isPlaying { audio.play(dua.audio) } }
         .onDisappear { audio.stop() }
     }
 }

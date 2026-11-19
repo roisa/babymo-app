@@ -56,6 +56,25 @@ struct HomeView: View {
                 .buttonStyle(.plain)
 
                 NavigationLink {
+                    QiblaView()
+                } label: {
+                    HomeTile(icon: "icon-pray",
+                             title: L("Arah kiblat", "Qibla"),
+                             sub: L("Mo menunjukkan arah kiblat", "Mo shows the way to the Qibla"))
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
+                    WakeUpView()
+                } label: {
+                    HomeTile(icon: "icon-doa",
+                             title: L("Bangun bareng Mo", "Wake up with Mo"),
+                             sub: WakeUp.on ? L("Alarm \(String(format: "%02d:%02d", WakeUp.minutes / 60, WakeUp.minutes % 60))", "Alarm \(String(format: "%02d:%02d", WakeUp.minutes / 60, WakeUp.minutes % 60))")
+                                            : L("Alarm pagi dengan doa", "Morning alarm with a du'a"))
+                }
+                .buttonStyle(.plain)
+
+                NavigationLink {
                     TasbihView()
                 } label: {
                     HomeTile(icon: "icon-tasbih",

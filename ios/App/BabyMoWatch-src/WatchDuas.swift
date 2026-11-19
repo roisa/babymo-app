@@ -113,8 +113,13 @@ enum WatchDuas {
     ]
 
     /// The du'a that fits the time of day best (shown first on the home screen).
-    static var now: WatchDua {
-        let h = Calendar.current.component(.hour, from: Date())
+    static var now: WatchDua { forTime(Date()) }
+
+    static func byId(_ id: String) -> WatchDua? { (all + ramadan).first { $0.id == id } }
+
+    /// Morning: waking up · day: riding (school run, errands) · evening and night: before sleeping.
+    static func forTime(_ date: Date) -> WatchDua {
+        let h = Calendar.current.component(.hour, from: date)
         switch h {
         case 4..<9: return all[4]          // waking up
         case 19..<24, 0..<4: return all[3] // before sleeping

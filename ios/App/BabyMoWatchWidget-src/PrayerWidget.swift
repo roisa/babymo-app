@@ -112,5 +112,7 @@ struct PrayerWidget: Widget {
 struct BabyMoWidgets: WidgetBundle {
     var body: some Widget {
         PrayerWidget()
+        DuaNowWidget()
+        RamadanWidget()
     }
 }
