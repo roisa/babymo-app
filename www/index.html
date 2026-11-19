@@ -2193,11 +2193,11 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
 
       <div class="list-group-title" data-i18n="about_app">Aplikasi</div>
       <div class="list-group">
-        <div class="lrow">
+        <div class="lrow" id="verRow" role="button" tabindex="0">
           <div class="lrow-icon has-art"><img class="lrow-art" src="./icons/ui/version.svg" alt="" draggable="false"></div>
           <div class="lrow-body">
-            <div class="lrow-title" data-i18n="about_ver">Versi</div>
-            <div class="lrow-sub">1.0.0 · iOS Edition</div>
+            <div class="lrow-title"><span data-i18n="about_ver">Versi</span><span id="verNew" hidden style="display:inline-block;background:#FFC93D;color:#4A3200;font-size:10px;font-weight:800;padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:2px">Baru!</span></div>
+            <div class="lrow-sub" id="verSub">1.0.0 · iOS Edition</div>
           </div>
         </div>
         <div class="lrow">
@@ -2578,6 +2578,51 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
     apply(); showToast((LABEL[curLang==='en'?'en':'id'])[next]);
     setTimeout(function(){document.documentElement.classList.remove('theme-anim')},450);
   });
+})();
+</script>
+<script>
+/* Version row (parent menu): the iOS app injects window.BM_APP (real version/
+   build) and a bmUpdate bridge. The row shows the real version; a quiet check
+   against the App Store runs at most once a day (silently skipped offline) and
+   shows a gold "Baru!/New!" pill when an update exists. Tapping checks on
+   demand; when an update is known the tap opens the App Store page behind the
+   native parental gate. The website (no BM_APP) keeps the static row. */
+(function () {
+  var row = document.getElementById('verRow');
+  if (!row || !window.BM_APP) return;
+  var sub = document.getElementById('verSub'), pill = document.getElementById('verNew');
+  var en = function () { try { return localStorage.getItem('bm_lang') === 'en'; } catch (e) { return false; } };
+  var base = BM_APP.version + ' (' + BM_APP.build + ') · iOS';
+  sub.textContent = base;
+  var st = null;
+  try { var c = JSON.parse(localStorage.getItem('bm_upd') || 'null'); if (c && c.r && c.r.ok) st = c.r; } catch (e) {}
+  function paint() {
+    pill.textContent = en() ? 'New!' : 'Baru!';
+    if (st && st.newer) { pill.hidden = false; sub.textContent = base + ' · ' + (en() ? 'Update available: ' : 'Update tersedia: ') + st.latest; }
+    else pill.hidden = true;
+  }
+  paint();
+  window.__bmUpdateResult = function (r) {
+    if (r && r.ok) { st = r; try { localStorage.setItem('bm_upd', JSON.stringify({ t: Date.now(), r: r })); } catch (e) {} }
+    if (row._wait) {
+      row._wait = false;
+      sub.textContent = !(r && r.ok) ? (en() ? 'Could not check - try again online' : 'Tidak bisa memeriksa - coba saat online')
+        : r.newer ? base : (en() ? 'Up to date' : 'Sudah versi terbaru');
+      if (!(r && r.ok && r.newer)) setTimeout(function () { sub.textContent = base; paint(); }, 4000);
+    }
+    paint();
+  };
+  function check() { try { webkit.messageHandlers.bmUpdate.postMessage({ act: 'check' }); } catch (e) {} }
+  row.addEventListener('click', function () {
+    try { window.BabyMo && BabyMo.sfx && BabyMo.sfx('tap'); } catch (e) {}
+    if (st && st.newer && st.url) { try { webkit.messageHandlers.bmUpdate.postMessage({ act: 'open', url: st.url }); } catch (e) {} return; }
+    row._wait = true; sub.textContent = en() ? 'Checking...' : 'Memeriksa...'; check();
+    setTimeout(function () {
+      if (row._wait) { row._wait = false; sub.textContent = en() ? 'Could not check - try again online' : 'Tidak bisa memeriksa - coba saat online'; setTimeout(function () { sub.textContent = base; paint(); }, 4000); }
+    }, 8000);
+  });
+  // quiet daily check so the pill can appear without tapping
+  try { var cc = JSON.parse(localStorage.getItem('bm_upd') || 'null'); if (!cc || (Date.now() - cc.t) > 864e5) check(); } catch (e) { check(); }
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
