@@ -30,6 +30,9 @@ struct RamadanView: View {
                     BMTitle(text: "Ramadan", icon: "icon-ramadan")
                     if let day {
                         countdownCard(now: now, day: day)
+                        FastCard(day: day)
+                    } else if Ramadan.eidDay(on: now) != nil {
+                        EidCard()
                     } else {
                         VStack(spacing: 2) {
                             Text(L("\(Ramadan.daysUntil(from: now)) hari lagi", "\(Ramadan.daysUntil(from: now)) days to go"))

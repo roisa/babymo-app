@@ -80,6 +80,43 @@ Capabilities → + Capability → Background Modes** → tick **Session type: Mi
     target, **Signing & Capabilities → + Capability → App Groups → +** →
     `group.id.babymo.app`. (Without it the complication uses Jakarta.)
 
+### Update 20 Nov (version 1.2): Qibla, Wake up with Mo, Ramadan practice fast, Du'a now
+
+What's new
+- **Qibla with Mo** (`QiblaView.swift`): a dial that turns with the watch's compass; the 🕋 marker
+  sits at the Qibla bearing for the city chosen in Prayer (no GPS — magnetic heading needs no
+  permission). Facing the Qibla (±6°) lights the dial gold, Mo cheers and the wrist gets a tap.
+  Shows the distance to Makkah. Watches without a compass (before Series 5) see the bearing.
+- **Wake up with Mo** (`WakeUp.swift`): a morning alert on chosen days at a chosen time
+  (03:00–10:55). Tapping it opens the waking-up du'a and Mo reads it in his voice. watchOS alerts
+  can't play a custom voice, so the alert itself uses the normal sound and tap.
+- **Ramadan practice fast** (`FastPractice.swift` screens, `FastStore.swift` data): on the Ramadan
+  screen, "Zuhur" (half a day) or "Maghrib" (full) lights today's 🏮; tap an earlier lantern to
+  fix a day. On 1–3 Shawwal the Ramadan screen shows the Eid card with all the lanterns.
+- **Complications / Smart Stack** (`../BabyMoWatchWidget-src/`):
+  - `RamadanWidget.swift` — "Ramadan day 12 · Iftar 17:52 · 🏮 9/30", a countdown before
+    Ramadan, the Eid greeting after; opens the Ramadan screen.
+  - `DuaNowWidget.swift` — "Du'a now" (waking up · riding · before sleep); it rises in the
+    Smart Stack when the moment changes and opens that du'a.
+- Home has two new tiles (Qibla, Wake up with Mo). Widgets and the wake-up alert open the right
+  screen (`babymo://dua/<id>`, `babymo://qibla`, `babymo://ramadan`).
+
+Add in Xcode (once, after `git pull`)
+1. Drag `QiblaView.swift`, `WakeUp.swift`, `FastPractice.swift` and `FastStore.swift` onto the
+   **BabyMoWatch Watch App** group (Copy items off, target = the watch app).
+2. Drag `../BabyMoWatchWidget-src/RamadanWidget.swift` and `DuaNowWidget.swift` onto the
+   **BabyMoWatchWidget** group (target = the widget only).
+3. Select `FastStore.swift` and `WatchDuas.swift` → File inspector → **Target Membership** → also
+   tick **BabyMoWatchWidget** (next to `PrayerTimes.swift` and `WatchTheme.swift`, which are already
+   there).
+4. The App Group `group.id.babymo.app` must be on both targets (step 10 above) so the Ramadan
+   complication sees the lanterns and the city.
+5. Set Version **1.2** and the new build number on the iPhone app, the watch app and the widget.
+
+To try it in the simulator: **Features → Location** isn't needed; the compass only works on a real
+watch (the simulator shows "move your wrist in a figure 8"). To see Ramadan early, change the
+simulator's date to 8 Feb 2027.
+
 If Xcode shows build errors, copy them to Claude and they will be fixed.
 
 When the watch app ships with the iPhone app (same archive), App Store Connect picks it up
