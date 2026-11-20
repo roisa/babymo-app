@@ -1149,7 +1149,6 @@
 
   // ---- "Coba juga" — suggest a related game on the win screen ----
   var NEXT = {
-    "babymo-puzzle":          ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Doa dari pagi sampai malam 🤲"],
     "babymo-doa-harian":      ["dua-journey",  "babymo-dua-game.html",       "Dua Journey",    "Cocokkan doa dengan momennya 🃏"],
     "babymo-dua-game":        ["pray-with-mo", "babymo-pray-with-mo.html",   "Sholat Bareng Mo","Belajar gerakan sholat 🕌"],
     "babymo-arabic-spelling": ["hijaiyah",     "babymo-hijaiyah.html",       "Pulau Hijaiyah", "Cari 28 huruf di pulau 🏝️"],

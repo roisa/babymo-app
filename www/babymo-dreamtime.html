@@ -498,6 +498,12 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 /* hub pill */
 #s-home .dh-hub{text-decoration:none;margin-top:14px;gap:10px;min-height:48px;padding:0 26px;font:600 18px/1 'Fredoka','Nunito',sans-serif!important;color:#fff!important;border-radius:999px}
 .dh-hub svg{width:30px;height:24px}
+/* 20 Nov 2026: the top-left back button is gone; the Game Hub link stays as a
+   quiet, greyish secondary action so the bedtime steps lead. */
+#s-home .dh-hub.dh-glass{background:rgba(255,255,255,.07)!important;border:1px solid rgba(255,255,255,.14)!important;
+  box-shadow:none!important;color:rgba(232,228,255,.62)!important;font-size:16px!important;min-height:42px;padding:0 20px}
+#s-home .dh-hub.dh-glass::before,#s-home .dh-hub.dh-glass::after{display:none!important}
+#s-home .dh-hub.dh-glass svg{filter:grayscale(1);opacity:.6;width:26px;height:20px}
 /* continuous layered cloud band (tiles seamlessly at any width) */
 .dh-clouds{position:relative;display:block;width:100%;height:calc(88px + env(safe-area-inset-bottom));margin-top:-30px;pointer-events:none;z-index:1;flex:0 0 auto}
 /* phones ≤380 wide / short screens: tighten */
@@ -747,7 +753,6 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
         <g class="dh-cheer"><g stroke="#FFD84D" stroke-width="4.5" stroke-linecap="round"><path d="M104 108l-12-10M98 124l-16-2M114 94l-5-14M296 108l12-10M302 124l16-2M286 94l5-14"/></g></g>
       </svg>
     </div>
-    <a class="dh-back" href="./index.html" aria-label="Kembali ke Game Hub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m6-7-7 7 7 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
 
     <div class="dh-body">
       <div class="dh-cloud">

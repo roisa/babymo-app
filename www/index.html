@@ -2370,10 +2370,21 @@ let curLang=localStorage.getItem('bm_lang')||'';
 /* ── Child's name: shared with Pray with Mo & the prayer companion (mo_child_name) ── */
 function childName(){try{return (localStorage.getItem('mo_child_name')||'').trim()}catch(e){return ''}}
 function escHtml(t){return t.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function fitHello(){
+  /* Keep the greeting on one line with the wave attached: shrink the font just
+     enough to fit the bubble (min 15px); a very long name wraps instead. */
+  const t=document.getElementById('moHello'); if(!t) return;
+  t.style.fontSize=''; t.style.whiteSpace='nowrap';
+  let fs=parseFloat(getComputedStyle(t).fontSize)||21;
+  while(t.scrollWidth>t.clientWidth+1 && fs>15){ fs-=0.5; t.style.fontSize=fs+'px'; }
+  if(t.scrollWidth>t.clientWidth+1) t.style.whiteSpace='normal';
+}
+window.addEventListener('resize',function(){ clearTimeout(fitHello._t); fitHello._t=setTimeout(fitHello,120); });
+try{ document.fonts&&document.fonts.ready.then(fitHello); }catch(e){}
 function renderName(){
   const n=childName(), en=curLang==='en';
   const t=document.getElementById('moHello');
-  if(t) t.innerHTML=n?(en?'Hi, <em>':'Halo, <em>')+escHtml(n)+'</em>! 👋':"Assalamu'alaikum! 👋";
+  if(t){ t.innerHTML=n?(en?'Hi, <em>':'Halo, <em>')+escHtml(n)+'</em>!\u00A0👋':"Assalamu'alaikum!\u00A0👋"; fitHello(); }
   const chip=document.getElementById('nameChip'); if(chip) chip.hidden=!!n;
   const sub=document.getElementById('nameRowSub'); if(sub) sub.textContent=n||(en?'Not set yet':'Belum diisi');
 }

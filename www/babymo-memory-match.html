@@ -501,6 +501,10 @@ html:not([data-bm-theme="classic"]) #earn-extra{color:#B4690E!important;font-siz
 </style>
 <style id="bm-stk-scroll">
 /* Badges screen: one scroller with a slim pinned top bar (back button always reachable) */
+/* 20 Nov 2026: overflow-y:auto alone makes overflow-x auto too, so the drifting
+   clouds (they animate to left:115%) gave the home screen ~107px of sideways
+   scroll — one horizontal swipe left it shifted with an empty strip. */
+#s-home,#s-success,.stk-scroll{overflow-x:hidden;overscroll-behavior-x:none}
 #s-stickers{overflow-y:auto!important;overflow-x:hidden;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 #s-stickers .stk-bar{position:sticky;top:0;z-index:5;flex-shrink:0;box-sizing:border-box;margin:0;
   padding:12px 20px 10px;padding-top:calc(12px + env(safe-area-inset-top));
