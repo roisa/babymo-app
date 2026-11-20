@@ -508,7 +508,7 @@
       '<label>' + T("Waktu Ashar", "Asr time") + '<select data-k="asr">' + a + "</select></label>" +
       '<p class="ph-hint">' + T("Waktu dihitung di HP tanpa internet. Kalau berbeda dengan jadwal masjid di dekatmu, ikuti jadwal masjid ya.",
         "Times are worked out on the phone, with no internet. If they differ from your local mosque's timetable, follow the mosque.") + "</p>" +
-      '<p class="ph-credit">' + T("Data kota", "City data") + " © GeoNames (CC BY 4.0)</p></details>";
+      '<p class="ph-credit">' + T("Data kota", "City data") + " © GeoNames (CC BY 4.0), " + T("diringkas", "adapted") + "</p></details>";
   }
   function onMethod(e) {
     var o = {}; o[e.target.dataset.k] = e.target.value; BMPrayerTimes.saveSettings(o);
