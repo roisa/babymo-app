@@ -1765,8 +1765,11 @@
   function isExternalUrl(u) {
     try {
       var x = new URL(String(u), location.href), p = x.protocol;
+      // Same scheme + host as this page = in-app (covers the iOS app's
+      // babymo://localhost pages, whose origin is opaque, so origin can't be used).
+      if (p === location.protocol && x.host === location.host) return false;
       if (p === "http:" || p === "https:") return x.origin !== location.origin;
-      return !/^(data|blob|about|javascript|capacitor|file):$/.test(p);
+      return !/^(data|blob|about|javascript|capacitor|file|babymo):$/.test(p);
     } catch (e) { return false; }
   }
   function gateCss() {

@@ -928,7 +928,7 @@ function onComplete(){
   const isNewSticker = recordSticker();
   if (isNewSticker) { try{ window.BabyMo&&BabyMo.daily&&BabyMo.daily.reward('puzzle','sticker',1); }catch(e){} }
   renderStickerNote(isNewSticker); renderChrome();
-  const moImg = document.querySelector('.mo-reveal-img'); if (moImg){ moImg.src = poseSrc(CUR_POSE, true); fitUpperBody(moImg, CUR_POSE); }
+  const moImg = document.querySelector('.mo-reveal-img'); if (moImg){ moImg.src = poseSrc(CUR_POSE, true); fitFullBody(moImg, CUR_POSE); }
   fillMoIntro();
   // Grid gets gold border
   document.getElementById('grid').classList.add('complete');
@@ -1225,11 +1225,16 @@ const POSE_NAMES = {
   'thank-you':['Mo berterima kasih','Mo says thank you'], 'wow':['Mo kagum: wow!','Mo is amazed: wow!'], 'yes':['Mo bilang: ya!','Mo says: yes!'], 'yeyy':['Mo bersorak: yeay!','Mo cheers: yay!']
 };
 /* Reward card: show Mo from the waist up (saves space), sized from the pose's bbox. */
-function fitUpperBody(img, p){
-  const H = 124, fh = p[4] - p[2], top = p[2] - 14, cut = p[2] + fh * 0.62, k = H / (cut - top), size = 480 * k;
-  img.style.width = img.style.height = size.toFixed(1) + 'px';
-  img.style.top = (-top * k).toFixed(1) + 'px';
-  img.style.left = 'calc(50% - ' + (((p[1] + p[3]) / 2) * k).toFixed(1) + 'px)';
+/* Reward card: full-body Mo standing on the podium (19 Nov redesign). Crops the
+   480x480 pose frame to Mo's box so he fills the stage, feet on the podium.
+   (The old upper-body crop set inline size/offsets that overrode the podium
+   CSS and pushed an enlarged Mo off the top of the screen.) */
+function fitFullBody(img, p){
+  img.style.width = img.style.height = img.style.top = img.style.left = '';
+  const pad = 6, t = Math.max(0, p[2] - pad), r = Math.max(0, 480 - p[3] - pad),
+        b = Math.max(0, 480 - p[4] - 2), l = Math.max(0, p[1] - pad);
+  img.style.objectViewBox = 'inset(' + t + 'px ' + r + 'px ' + b + 'px ' + l + 'px)';
+  img.style.objectPosition = '50% 100%';
 }
 /* First time: Mo introduces himself. After that: say hello again and tell what pose this is. */
 function fillMoIntro(){
