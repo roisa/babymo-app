@@ -500,6 +500,33 @@ html[data-bm-theme="classic"] .pose-chip{background:rgba(255,214,107,.16);color:
 .play-btn.play-share{background:#ECEEF2!important;color:#5B6472!important;-webkit-text-fill-color:#5B6472;border:none!important;box-shadow:none!important;font-weight:800}
 html[data-bm-theme="classic"] .play-btn.play-share{background:rgba(255,255,255,.08)!important;color:#B9C0CC!important;-webkit-text-fill-color:#B9C0CC;box-shadow:none!important}
 @media (prefers-reduced-motion:reduce){.intro-card .mo-reveal-img{animation:none}}
+/* 20 Nov 2026 — "who is Baby Mo" win card: less text, more Mo. A bigger Mo on
+   the podium, one tagline, what Mo loves (picture tiles) and his family &
+   friends (avatars). The greeting bubble and pose chip are hidden. */
+.intro-card .mo-stage{height:184px;margin-top:4px}
+.intro-card .mo-stage::before{width:176px}
+.intro-card .mo-reveal-img{width:150px;height:150px}
+.intro-card .speech-bubble,.intro-card #poseChip{display:none!important}
+.intro-card .intro-name{margin-top:10px}
+.mo-tag{margin:-2px auto 14px;text-align:center;font:800 15px/1.3 'Nunito',sans-serif;color:#8A4B00}
+html[data-bm-theme="dark"] .mo-tag,html[data-bm-theme="classic"] .mo-tag{color:#FFD889}
+.mo-who{display:flex;flex-direction:column;gap:14px;margin:0 0 12px}
+.mo-who h4{margin:0 0 5px;font:800 12px/1 'Nunito',sans-serif;letter-spacing:.06em;text-transform:uppercase;color:#9A7A4A;text-align:center}
+html[data-bm-theme="dark"] .mo-who h4,html[data-bm-theme="classic"] .mo-who h4{color:#C9B28A}
+.mo-likes{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.mo-like{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px 7px;border-radius:18px;
+  background:rgba(255,255,255,.72);box-shadow:0 0 0 1px rgba(214,140,0,.14)}
+html[data-bm-theme="dark"] .mo-like,html[data-bm-theme="classic"] .mo-like{background:rgba(255,255,255,.07);box-shadow:0 0 0 1px rgba(255,214,107,.18)}
+.mo-like img{width:54px;height:54px;object-fit:contain;display:block}
+.mo-like span{font:800 13px/1.1 'Nunito',sans-serif;color:inherit}
+.mo-fam{display:flex;justify-content:center;gap:14px}
+.mo-fam div{display:flex;flex-direction:column;align-items:center;gap:4px;font:700 12px/1.1 'Nunito',sans-serif}
+.mo-fam img{width:46px;height:46px;border-radius:50%;object-fit:cover;object-position:50% 18%;display:block;
+  background:#FFF1D6;box-shadow:0 0 0 2px #FFD27A}
+.intro-card .stk-new{padding:6px 12px;margin-bottom:0}
+.intro-card .stk-new img{width:34px;height:34px}
+.intro-card .stk-new div{font-size:0}
+.intro-card .stk-new div b{font-size:14.5px}
 </style>
 <style>
 /* Win-screen buttons: one big green next step, then a small row (back · extra · share) */
@@ -673,6 +700,7 @@ html[data-bm-theme="dark"] .pz-scene .st,html[data-bm-theme="classic"] .pz-scene
         <div class="bubble-sub" id="bubbleSub">Assalamu'alaikum, teman baru! 🌙</div>
       </div>
 
+      <div class="mo-who" id="moWho"></div>
       <div class="stk-new" id="stkNew"></div>
       <div class="bm-wa">
         <button class="bm-wa-pri" id="pzAgain" type="button">🔁 Main Lagi</button>
@@ -1254,6 +1282,20 @@ function fillMoIntro(){
     s.textContent = IS_TODAY ? L('Ini gaya Mo hari ini. Besok ada gaya baru!', "This is Mo's pose for today. A new one tomorrow!")
                              : L('Gaya Mo yang lain. Kumpulkan semuanya di album!', 'Another Mo pose. Collect them all in your album!');
   }
+  // "Who is Baby Mo": tagline, what Mo loves, family & friends (art from word-art/)
+  const nm = document.querySelector('.intro-name');
+  if (nm && !document.getElementById('moTag')) nm.insertAdjacentHTML('afterend', '<div class="mo-tag" id="moTag"></div>');
+  document.getElementById('moTag').textContent = L('Sahabat kecilmu belajar Islam 🌙', 'Your little friend for learning Islam 🌙');
+  const likes = [['mo-salam', L('Salam', 'Salam')], ['mo-dua', L('Berdoa', 'Praying')], ['mo-read', L('Membaca', 'Reading')]];
+  const fam = [['abi', 'Abi'], ['umi', 'Umi'], ['ais', 'Ais'], ['adam', 'Kak Adam']];
+  const who = document.getElementById('moWho');
+  if (who) who.innerHTML =
+    '<div><h4>' + L('Mo suka…', 'Mo loves…') + '</h4><div class="mo-likes">' +
+      likes.map(x => '<div class="mo-like"><img src="word-art/' + x[0] + '.webp" alt="" loading="lazy"><span>' + x[1] + '</span></div>').join('') +
+    '</div></div>' +
+    '<div><h4>' + L('Keluarga & teman Mo', "Mo's family & friends") + '</h4><div class="mo-fam">' +
+      fam.map(x => '<div><img src="word-art/' + x[0] + '.webp" alt="" loading="lazy">' + x[1] + '</div>').join('') +
+    '</div></div>';
 }
 
 function recordSticker(){
