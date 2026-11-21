@@ -28,4 +28,5 @@ Screens are flat magenta so real app footage can be keyed onto them.
 
 Regenerated on 21 Nov 2026 (`sheets/sheet-04-walk.jpg`, `sheets/sheet-11-fixes.jpg`, cut by
 `tools/cut-render3-fixes.py`, on a flat grey background): the walk cycle, counting three, a clearer idle
-sway left/right with a breathe-in frame, and a two-frame hand wash with its water drops kept.
+sway left/right with a breathe-in frame, and a two-frame hand wash with its water drops kept. `explain-4-three` was replaced again from
+`sheets/sheet-12-three.jpg` (cell 1), the owner's chosen three-finger pose.
