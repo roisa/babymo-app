@@ -629,7 +629,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 
 <style id="dt-v3">
 /* ═══ 22 Nov 2026 — Dreamtime v3: lit rooms for brushing & pajamas, natural Baby Mo frames (mo-dream/) ═══ */
-.room{position:absolute;inset:0;z-index:1;pointer-events:none}
+.room{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden}
 #stepbody{position:relative!important;z-index:2!important}
 #s-steps .topbar{z-index:3}
 .room svg{position:absolute;inset:0;width:100%;height:100%}
@@ -654,7 +654,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 #s-steps.lit .bglow{display:none}
 #s-steps.lit .blabel{bottom:-24px;z-index:5;padding:9px 20px 9px 9px;font-size:17px;background:#FFF3E2;color:#3A2FB0;box-shadow:0 8px 20px -10px rgba(60,50,160,.6),inset 0 1px 0 #fff}
 #s-steps.lit .blabel b{width:30px;height:30px;font-size:16px;background:#8F86F0;margin-right:8px}
-#s-steps.lit .bplay{position:relative;z-index:3;margin:-12px 14px 14px;padding:42px 16px 18px;border-radius:34px;background:#FFF6EA;border:3px solid #fff;box-shadow:0 20px 40px -22px rgba(60,50,160,.55),inset 0 0 0 2px rgba(143,134,240,.18);flex:0 0 auto;min-height:190px}
+#s-steps.lit .bplay{position:relative;z-index:3;margin:-12px 14px 14px;padding:58px 16px 18px;border-radius:34px;background:#FFF6EA;border:3px solid #fff;box-shadow:0 20px 40px -22px rgba(60,50,160,.55),inset 0 0 0 2px rgba(143,134,240,.18);flex:0 0 auto;min-height:190px}
 #s-steps.lit .btools{max-width:360px;gap:14px}
 #s-steps.lit :is(.btool,.bhold,.bzone,.bcup){background:#fff!important;border:3px solid #DCD7FF!important;color:#2A247A!important;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 10px 22px -14px rgba(60,50,160,.55)!important}
 #s-steps.lit .btool{min-height:130px;border-radius:26px!important;font-size:18px!important;gap:8px}
@@ -680,7 +680,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
   #s-steps.lit .bsteps{margin:4px 0 0}
   #s-steps.lit .bsteps i{width:27px;height:27px;font-size:13px}
   #s-steps.lit .bstage{min-height:150px;width:min(70vw,260px)}
-  #s-steps.lit .bplay{padding:34px 12px 12px;margin:-10px 10px 10px;min-height:0}
+  #s-steps.lit .bplay{padding:50px 12px 12px;margin:-10px 10px 10px;min-height:0}
   #s-steps.lit .btool{min-height:100px;font-size:16px!important}
   #s-steps.lit .btool .ic{width:46px;height:46px}
   #s-steps.lit .bstage{min-height:118px}
@@ -749,6 +749,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 #s-steps .wardrobe{display:none}
 .room svg.rm-floor{top:auto;bottom:212px;height:230px}
 .room svg.rm-floor.rm-bath{bottom:0;height:400px}
+#s-steps.nite .pjstage{align-items:flex-end;padding-bottom:14px}
 #s-steps.lit:not(.duaroom) .bsteps{margin:14px 0 14px}
 .bdots{display:flex;justify-content:center;gap:10px;margin-top:4px}
 .bdots i{width:16px;height:16px;border-radius:50%;background:#ECE8FF;box-shadow:inset 0 1px 2px rgba(60,50,160,.15);transition:background .25s,transform .35s cubic-bezier(.3,1.7,.5,1)}
@@ -774,6 +775,13 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 
 /* ── du'a corner (light) ── */
 #s-steps.duaroom .stitle{color:#2E2795!important}
+/* word-by-word highlight while the du'a plays */
+#stageAr .aw{display:inline-block;padding:0 4px;border-radius:12px;transition:background .18s,color .18s,transform .25s cubic-bezier(.3,1.6,.5,1)}
+#stageAr .aw.on{background:#FFE58A;color:#2A2370;transform:translateY(-2px) scale(1.06);box-shadow:0 6px 14px -8px rgba(200,140,20,.8)}
+#stageAr .aw.said{color:#7A72C8}
+#s-steps.duaroom #stageAr.active.sync{background:none!important}
+#stageLat .lw{border-radius:8px;padding:0 2px;transition:background .18s,color .18s}
+#stageLat .lw.on{background:#FFE58A;color:#2A2370}
 #s-steps.duaroom .pfill{background:linear-gradient(90deg,#8C6BFF,#B9A8FF)}
 #s-steps.duaroom .dmrow{position:relative;z-index:1;align-items:flex-end!important;gap:6px!important;margin-bottom:-26px;padding-left:2px}
 #s-steps.duaroom .doamo{flex:0 0 132px;width:132px;height:136px;border:0;border-radius:0;background:none;overflow:hidden}
@@ -1468,16 +1476,18 @@ function roomSVG(k){
       +'<rect x="32" y="99" width="32" height="11" rx="5.5" fill="#C98F58"/><rect x="34" y="99" width="28" height="4" rx="2" fill="#E2B07C"/><rect x="45" y="87" width="6" height="13" rx="3" fill="#E8D7B8"/>'
       +'<g transform="translate(48 63)">'+IC.star5(0,0,26,'#FFD866')+IC.star5(-2,-3,19,'#FFEAA0')
       +'<circle cx="-7" cy="-1" r="2.3" fill="#7A4A1E"/><circle cx="7" cy="-1" r="2.3" fill="#7A4A1E"/><path d="M-5 6Q0 10 5 6" stroke="#7A4A1E" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="-11" cy="5" r="2.6" fill="#FFB38A" opacity=".7"/><circle cx="11" cy="5" r="2.6" fill="#FFB38A" opacity=".7"/></g>'
-      /* bed with headboard, pillow and a starry quilt */
-      +'<ellipse cx="372" cy="212" rx="80" ry="8" fill="#1A1660" opacity=".25"/>'
-      +'<g transform="translate(300 74)"><path d="M0 132V30Q0 0 30 0H130V132Z" fill="#D7A274"/><path d="M10 120V34Q10 12 32 12H130V120Z" fill="#E7BA8C"/><circle cx="6" cy="22" r="9" fill="#D7A274"/>'
-      +'<rect x="22" y="56" width="74" height="30" rx="14" fill="#F4F1FF"/><path d="M28 64q30-8 62 0" stroke="#D8D0FF" stroke-width="3" fill="none"/>'
-      +'<rect x="14" y="80" width="130" height="50" rx="16" fill="#ECE8FF"/>'
-      +'<path d="M30 84Q80 70 140 80V128H30Z" fill="#5B7AEA"/><path d="M30 84Q80 70 140 80V90Q80 80 30 94Z" fill="#7C95F2"/>'
-      +IC.star5(58,104,7,'#E6ECFF')+IC.star5(94,96,6,'#E6ECFF')+IC.star5(118,116,5,'#E6ECFF')
-      +'<rect x="8" y="126" width="140" height="14" rx="7" fill="#B3855F"/><rect x="12" y="138" width="10" height="12" rx="3" fill="#8A5E3E"/></g>'
-      +'<ellipse cx="318" cy="208" rx="34" ry="6" fill="#1A1660" opacity=".3"/>'
-      +'<g id="rmTeddy" style="transition:opacity .5s,transform .5s;transform-origin:318px 200px">'+IC.teddy.replace('<svg','<svg x="280" y="132" width="78" height="78"')+'</g>'
+      /* 27 Nov 2026: a complete side-view bed (headboard, footboard, mattress, quilt), teddy sitting on the quilt — whole on iPad, cropped by the edge on phones */
+      +'<ellipse cx="366" cy="212" rx="120" ry="9" fill="#1A1660" opacity=".28"/>'
+      +'<g transform="translate(256 36) scale(1.24)">'
+      +'<path d="M0 142V28Q0 6 22 6Q44 6 44 28V142Z" fill="#C99366"/><path d="M7 104V30Q7 15 22 15Q37 15 37 30V104Z" fill="#E2B184"/><path d="M13 32Q15 22 24 21" stroke="#fff" stroke-opacity=".35" stroke-width="3" fill="none" stroke-linecap="round"/>'
+      +'<path d="M150 142V72Q150 58 164 58Q178 58 178 72V142Z" fill="#C99366"/><path d="M156 112V74Q156 66 164 66Q172 66 172 74V112Z" fill="#E2B184"/>'
+      +'<rect x="34" y="78" width="124" height="34" rx="13" fill="#ECE8FF"/><rect x="34" y="78" width="124" height="8" rx="4" fill="#fff" opacity=".6"/>'
+      +'<rect x="40" y="58" width="46" height="26" rx="13" fill="#F6F3FF"/><path d="M46 66q20-6 34 0" stroke="#D8D0FF" stroke-width="3" fill="none" stroke-linecap="round"/>'
+      +'<path d="M70 76Q110 66 156 74V114Q112 122 70 112Z" fill="#5B7AEA"/><path d="M70 76Q110 66 156 74V82Q110 74 70 85Z" fill="#7C95F2"/>'
+      +IC.star5(92,96,6,'#E6ECFF')+IC.star5(124,90,5,'#E6ECFF')+IC.star5(140,106,4.5,'#E6ECFF')
+      +'<rect x="24" y="108" width="140" height="13" rx="6.5" fill="#B3855F"/>'
+      +'</g>'
+      +'<g id="rmTeddy" style="transition:opacity .5s,transform .5s;transform-origin:352px 120px">'+IC.teddy.replace('<svg','<svg x="322" y="82" width="62" height="62"')+'</g>'
       +'</svg>';
   }
   /* 23 Nov 2026: soft du'a corner (plant shelf, moon window, little lantern, clouds) */
@@ -1531,6 +1541,7 @@ function runStep(idx){
   body.innerHTML='';
   body.style.cssText='flex:1;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(30px);';
   BUILDERS[idx](body,function(){
+    document.getElementById('pfill').style.width=((idx+1)/4*100)+'%';
     body.style.cssText='flex:1;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(-24px);transition:all .38s ease;';
     setTimeout(function(){
       if(idx+1<BUILDERS.length){runStep(idx+1);}
@@ -1864,10 +1875,10 @@ function buildPajamas(wrap,done){
 function buildDoa(wrap,done){
 
   var PARTS=[
-    {ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا', lat:'Bismika Allāhumma aḥyā', mean:'Dengan nama-Mu ya Allah aku hidup', sAr:'باسمك اللهم أحيا', sId:'Bismika Allāhumma ahyā', clip:'doa-voice/d-sleep-1.mp3?v=algenib2'},
-    {ar:'وَبِاسْمِكَ أَمُوتُ',   lat:'wa bismika amūtu',     mean:'dan dengan nama-Mu aku mati',     sAr:'وباسمك أموت', sId:'wa bismika amūt', clip:'doa-voice/d-sleep-2.mp3?v=algenib2'}
+    {ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا', lat:'Bismika Allāhumma aḥyā', mean:'Dengan nama-Mu ya Allah aku hidup', sAr:'باسمك اللهم أحيا', sId:'Bismika Allāhumma ahyā', clip:'doa-voice/d-sleep-1.mp3?v=algenib2', wt:[0.15,0.48,1.30], lw:[0,1,2]},
+    {ar:'وَبِاسْمِكَ أَمُوتُ',   lat:'wa bismika amūtu',     mean:'dan dengan nama-Mu aku mati',     sAr:'وباسمك أموت', sId:'wa bismika amūt', clip:'doa-voice/d-sleep-2.mp3?v=algenib2', wt:[0.12,0.76], lw:[0,0,1]}
   ];
-  var FULL={ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', lat:'Bismika Allāhumma aḥyā wa bismika amūtu', mean:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati', sAr:'باسمك اللهم أحيا وباسمك أموت', sId:'Bismika Allāhumma ahyā wa bismika amūt', clip:'doa-voice/d-sleep.mp3?v=algenib'};
+  var FULL={ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', lat:'Bismika Allāhumma aḥyā wa bismika amūtu', mean:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati', sAr:'باسمك اللهم أحيا وباسمك أموت', sId:'Bismika Allāhumma ahyā wa bismika amūt', clip:'doa-voice/d-sleep.mp3?v=algenib', wt:[0.68,1.03,1.88,2.50,3.15], lw:[0,1,2,3,3,4]};
   var STEPS=[PARTS[0],PARTS[1],FULL];
   var doneAll=false, playing=false;
   ['dua-start','dua-read','dua-amin'].forEach(function(n){var i=new Image();i.src='mo-dream/mo5-'+n+'.webp';});
@@ -1915,13 +1926,31 @@ function buildDoa(wrap,done){
     if(!ar)return;
     ar.style.opacity='0';lat.style.opacity='0';mn.style.opacity='0';
     setTimeout(function(){
-      ar.textContent=s.ar; lat.textContent=s.lat; mn.textContent=s.mean;
+      /* one span per word (the Arabic text itself is unchanged: words joined by the same spaces) */
+      ar.innerHTML=s.ar.split(' ').map(function(w,i){ return '<span class="aw" data-w="'+i+'">'+w+'</span>'; }).join(' ');
+      lat.innerHTML=s.lat.split(' ').map(function(w,i){ return '<span class="lw" data-w="'+((s.lw||[])[i]!=null?s.lw[i]:-1)+'">'+w+'</span>'; }).join(' ');
+      mn.textContent=s.mean;
       ar.style.opacity='1';lat.style.opacity='1';mn.style.opacity='1';
     },170);
   }
   function dot(i,cls){var d=document.querySelector('.ddot[data-d="'+i+'"]');if(d){d.classList.remove('active','done');if(cls)d.classList.add(cls);}}
   function wave(on){var w=document.getElementById('doaWave');if(w)w.style.display=on?'flex':'none';}
   function arHL(on){var ar=document.getElementById('stageAr');if(ar)ar.classList.toggle('active',on);}
+  /* highlight exactly the word being recited, following the clip's own clock */
+  var syncRaf=0;
+  function markWord(k){
+    document.querySelectorAll('#stageAr .aw').forEach(function(e){ var i=+e.dataset.w; e.classList.toggle('on',i===k); e.classList.toggle('said',k>=0&&i<k); });
+    document.querySelectorAll('#stageLat .lw').forEach(function(e){ e.classList.toggle('on',+e.dataset.w===k); });
+  }
+  function wordSync(s){
+    cancelAnimationFrame(syncRaf); if(!s.wt) return;
+    var ar=document.getElementById('stageAr'); if(ar) ar.classList.add('sync');
+    (function tick(){
+      if(!playing){ markWord(-1); if(ar) ar.classList.remove('sync'); return; }
+      var t=au.currentTime, k=-1; for(var i=0;i<s.wt.length;i++) if(t>=s.wt[i]-0.04) k=i;
+      markWord(k); syncRaf=requestAnimationFrame(tick);
+    })();
+  }
 
   /* One reusable <audio> for every part. It is started inside the tap (iOS /
      WebView autoplay rules then let the SAME element play parts 2 and 3 from
@@ -1937,7 +1966,7 @@ function buildDoa(wrap,done){
     if(s.clip && !s.noClip){
       var fin=false, started=false, lastT=-1, still=0, t0=Date.now();
       var cleanup=function(){ clearInterval(wd); au.onended=au.onerror=au.onplaying=null; };
-      var end=function(){ if(fin) return; fin=true; cleanup(); playing=false; wave(false); arHL(false); if(cb)cb(); };
+      var end=function(){ if(fin) return; fin=true; cleanup(); playing=false; wave(false); arHL(false); markWord(-1); if(cb)cb(); };
       var fb=function(){ if(fin) return; fin=true; cleanup(); try{au.pause();}catch(e){} playing=false; s.noClip=true; speakStep(s,function(){ s.noClip=false; if(cb)cb(); }); };
       var wd=setInterval(function(){
         if(fin) return;
@@ -1947,7 +1976,7 @@ function buildDoa(wrap,done){
         if(au.currentTime!==lastT){ lastT=au.currentTime; still=0; } else if(++still>=10) end();   // truly stalled 5 s
       },500);
       try{ speechSynthesis.cancel(); }catch(e){}
-      au.onplaying=function(){ started=true; };
+      au.onplaying=function(){ started=true; wordSync(s); };
       au.onended=end;
       au.onerror=function(){ started?end():fb(); };
       try{
@@ -2011,7 +2040,7 @@ function buildDoa(wrap,done){
    the room light dims.
 ══════════════════════════════════════════ */
 function buildBlanket(wrap,done){
-  var W=300, H=390, Y0=262, Y1=198, BOT=386;           // quilt top edge: over his lap (legs under the quilt) → tucked up to the shoulders
+  var W=300, H=390, Y0=308, Y1=198, BOT=386;           // quilt top edge: down by his knees → tucked up to the shoulders
   var p=0, v=0, target=0, dragging=false, finished=false, settled=true, raf=0, last=0;
   var fx=150, bulge=0, phase=0, startY=0, startP=0, pxPerUnit=1, lastMoveT=0, lastMoveP=0, fling=0;
 
@@ -2063,6 +2092,12 @@ function buildBlanket(wrap,done){
     +'<div class="bedwrap" id="dz" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Tarik selimut">'
     +'<div class="bedscene" id="bsc">'+room
     +'<div class="bedmo" id="bmo"><img class="awake" src="mo-dream/mo5-night-wave.webp" alt="Baby Mo"><img class="yawn" src="mo-dream/mo5-night-yawn.webp" alt=""><img class="sleep" src="mo-dream/mo5-night-sleep.webp" alt=""></div>'
+    /* thin top sheet over his legs (the frames are upper body): the quilt is what the child pulls up */
+    +'<svg class="bedsheet" viewBox="0 0 300 390" aria-hidden="true"><defs><linearGradient id="bsSheet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6F4FF"/><stop offset="1" stop-color="#D9D3F8"/></linearGradient></defs>'
+    +'<path d="M26 258Q90 242 150 250Q210 242 274 258V376H26Z" fill="url(#bsSheet)"/>'
+    +'<path d="M26 258Q90 242 150 250Q210 242 274 258" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".9"/>'
+    +'<path d="M112 276Q128 262 146 274M156 274Q172 262 188 276" stroke="#C9C1F2" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>'
+    +'<path d="M118 300Q130 290 142 300M160 300Q172 290 184 300" stroke="#C9C1F2" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".6"/></svg>'
     +quilt+fxl
     +'<div class="bedzz"><b>z</b><b>z</b><b>Z</b></div>'
     +'<div class="bedhint" id="bhn"><i class="ar">'+IC.chev.replace('<svg','<svg style="transform:rotate(-90deg)"')+'</i><i class="hh">'+IC.hand+'</i></div>'
@@ -2142,7 +2177,7 @@ function buildBlanket(wrap,done){
 
   function finish(){
     if(finished)return; finished=true; vib([80,40,120]); sparkleSound();
-    hint.classList.add('off'); sc.classList.add('asleep');
+    hint.classList.add('off'); sc.classList.add('asleep'); document.getElementById('pfill').style.width='100%';
     E.dim.setAttribute('opacity','.5'); E.lamp.style.opacity='.12';
     document.getElementById('bmo').classList.add('breathe');
     var t=document.getElementById('blt'); if(t) t.innerHTML=ic('zzz')+'<span>Selamat Tidur!</span>';
