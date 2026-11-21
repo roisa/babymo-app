@@ -20,7 +20,7 @@
    the quilt covers the rest); the old `bed-*` frames were removed.
    **24 Nov 2026 (v5):** the owner's transparent sheets (`art/mo-dream-sheets/v5/`) replaced every frame
    except the brushing loop: files are now `mo-dream/mo5-<name>.webp` (tools, rinse, pj, dua, night);
-   `mo-dream-brush-*` stay until a new brushing sheet arrives. Those PNGs carry a faint glow haze in the
+   the brushing loop is `mo5-brush-*` (the 22 Nov frames re-scaled and re-centred so face width, eye line and shoulders match the v5 set); replace them when a new brushing sheet arrives. Those PNGs carry a faint glow haze in the
    alpha — cut them with `tools/cut-mo-dream-v5.py`, never use them raw on a dark screen. Each set shares one
    stance and position so swapping frames reads as motion. Use them only in Dreamtime; elsewhere
    render 1 stays first.
