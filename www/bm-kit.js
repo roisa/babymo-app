@@ -1828,6 +1828,7 @@
     var g = gateEl; gateEl = null;
     if (!g) return;
     document.removeEventListener("keydown", g.key, true);
+    if (g.vv) try { window.visualViewport.removeEventListener("resize", g.vv); window.visualViewport.removeEventListener("scroll", g.vv); } catch (e) {}
     g.bg.classList.remove("open"); g.sheet.classList.remove("open");
     g.bg.style.pointerEvents = g.sheet.style.pointerEvents = "none";
     var h = g.sheet.querySelector("#bmGateQ"); if (h) h.removeAttribute("id");
@@ -1879,7 +1880,18 @@
           try { input.focus({ preventScroll: true }); } catch (er) {}
         }
       });
-      requestAnimationFrame(function () { bg.classList.add("open"); sh.classList.add("open"); try { input.focus({ preventScroll: true }); } catch (e) { try { sh.focus({ preventScroll: true }); } catch (e2) {} } });
+      // Keep the sheet above the on-screen keyboard: mobile browsers don't move position:fixed
+      // bottom sheets when the keyboard opens, which hid the question and the answer box.
+      if (window.visualViewport) {
+        g.vv = function () {
+          var vv = window.visualViewport, kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+          sh.style.bottom = kb ? kb + "px" : "";
+        };
+        window.visualViewport.addEventListener("resize", g.vv);
+        window.visualViewport.addEventListener("scroll", g.vv);
+      }
+      // No automatic focus: the keyboard only opens when the grown-up taps the answer box.
+      requestAnimationFrame(function () { bg.classList.add("open"); sh.classList.add("open"); try { sh.focus({ preventScroll: true }); } catch (e) {} });
     } catch (e) { if (onCancel) try { onCancel(); } catch (e2) {} }
   }
   // App only: route every way out of the app through the gate.
