@@ -749,6 +749,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 #s-steps .wardrobe{display:none}
 .room svg.rm-floor{top:auto;bottom:212px;height:230px}
 .room svg.rm-floor.rm-bath{bottom:0;height:400px}
+#s-steps.lit:not(.duaroom) .bplay::after{content:"";position:absolute;left:4%;right:4%;bottom:-16px;height:22px;border-radius:50%;background:radial-gradient(closest-side,rgba(40,30,120,.28),transparent);z-index:-1;pointer-events:none}
 @media (max-height:700px){.room svg.rm-floor{bottom:178px}.room svg.rm-floor.rm-bath{bottom:0;height:340px}}
 
 /* ── du'a corner (light) ── */
@@ -1477,11 +1478,33 @@ function roomSVG(k){
   }
   return '';
 }
+/* 25 Nov 2026: stand Mo on the floor. The floor layer follows what Mo really stands on:
+   bedroom → his feet are level with the bed and the nightstand, the skirting sits behind his legs;
+   bathroom → the play panel is the counter he stands behind, so the floor meets it below its middle. */
+var _roomRO=null;
+function alignRoom(){
+  var rm=document.getElementById('room'); if(!rm) return; var fl=rm.querySelector('svg.rm-floor'); if(!fl) return;
+  var rr=rm.getBoundingClientRect(); if(!rr.height) return;
+  var bath=fl.classList.contains('rm-bath'), vbH=bath?400:230, s=Math.min(rr.width/390,1), bottomPx;
+  if(bath){
+    var bp=document.getElementById('bplay'); if(!bp||!bp.offsetHeight) return; var b=bp.getBoundingClientRect();
+    bottomPx = b.top + b.height*.62 + (vbH-306)*s;              // floor line (layer y 306) behind the lower part of the counter
+    if(_roomRO&&!_roomRO._b){ _roomRO.observe(bp); _roomRO._b=1; }
+  } else {
+    var m=document.getElementById('pjmo'); if(!m) return; var r=m.getBoundingClientRect();
+    var feet = r.top + r.height*.963;
+    bottomPx = feet + (vbH-212)*s;                               // bed and nightstand legs (layer y ≈ 212) level with his feet
+  }
+  fl.style.height=vbH+'px'; fl.style.bottom=Math.round(rr.bottom-bottomPx)+'px';
+}
+window.addEventListener('resize',function(){ setTimeout(alignRoom,40); });
 function runStep(idx){
   setP(idx);
   var sc=document.getElementById('s-steps'), rm=document.getElementById('room'), k=ROOMS[idx]||'';
   sc.classList.toggle('lit',k==='bath'||k==='dua'); sc.classList.toggle('nite',k==='bedroom'); sc.classList.toggle('duaroom',k==='dua');
   if(rm) rm.innerHTML=k?roomSVG(k):'';
+  if(window.ResizeObserver){ if(_roomRO) _roomRO.disconnect(); _roomRO=new ResizeObserver(function(){ alignRoom(); }); }
+  [60,700,1400].forEach(function(t){ setTimeout(alignRoom,t); });
   var body=document.getElementById('stepbody');
   body.innerHTML='';
   body.style.cssText='flex:1;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(30px);';
