@@ -2156,12 +2156,12 @@ function buildBlanket(wrap,done){
     +'<div class="bedwrap" id="dz" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Tarik selimut">'
     +'<div class="bedscene" id="bsc">'+room
     +'<div class="bedmo" id="bmo"><img class="awake" src="mo-dream/mo5-night-wave.webp" alt="Baby Mo"><img class="yawn" src="mo-dream/mo5-night-yawn.webp" alt=""><img class="sleep" src="mo-dream/mo5-night-sleep.webp" alt=""></div>'
-    /* thin top sheet over his legs (the frames are upper body): the quilt is what the child pulls up */
-    +'<svg class="bedsheet" viewBox="0 0 300 390" aria-hidden="true"><defs><linearGradient id="bsSheet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F6F4FF"/><stop offset="1" stop-color="#D9D3F8"/></linearGradient></defs>'
-    +'<path d="M26 258Q90 242 150 250Q210 242 274 258V376H26Z" fill="url(#bsSheet)"/>'
-    +'<path d="M26 258Q90 242 150 250Q210 242 274 258" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" opacity=".9"/>'
-    +'<path d="M112 276Q128 262 146 274M156 274Q172 262 188 276" stroke="#C9C1F2" stroke-width="3" fill="none" stroke-linecap="round" opacity=".8"/>'
-    +'<path d="M118 300Q130 290 142 300M160 300Q172 290 184 300" stroke="#C9C1F2" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".6"/></svg>'
+    /* sheer top sheet: Mo's body shows through it; only a soft hem and a gentle sheen say "sheet" */
+    +'<svg class="bedsheet" viewBox="0 0 300 390" aria-hidden="true"><defs><linearGradient id="bsSheet" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F4F1FF" stop-opacity=".22"/><stop offset=".45" stop-color="#ECE8FF" stop-opacity=".38"/><stop offset="1" stop-color="#DCD5FA" stop-opacity=".62"/></linearGradient>'
+    +'<linearGradient id="bsSheen" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#fff" stop-opacity=".22"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient></defs>'
+    +'<path d="M26 262Q90 248 150 254Q210 248 274 262V376H26Z" fill="url(#bsSheet)"/>'
+    +'<path d="M40 300Q150 284 260 300V318Q150 302 40 318Z" fill="url(#bsSheen)"/>'
+    +'<path d="M26 262Q90 248 150 254Q210 248 274 262" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity=".55"/></svg>'
     +quilt+fxl
     +'<div class="bedzz"><b>z</b><b>z</b><b>Z</b></div>'
     +'<div class="bedhint" id="bhn"><i class="ar">'+IC.chev.replace('<svg','<svg style="transform:rotate(-90deg)"')+'</i><i class="hh">'+IC.hand+'</i></div>'
