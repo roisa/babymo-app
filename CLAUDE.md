@@ -17,7 +17,11 @@
    (22 Nov 2026; sheets in `art/mo-dream-sheets/`): brushing teeth (tools, brushing loops, rinse), the
    pajama states (day → top / trousers → full → nightcap → teddy), du'a and bed. The bed and sleep
    screen use the 23 Nov `mo-dream-night-{wave,yawn,sleep}` frames (sheet `6-bedtime.jpg`, upper body,
-   the quilt covers the rest); the old `bed-*` frames were removed. Each set shares one
+   the quilt covers the rest); the old `bed-*` frames were removed.
+   **24 Nov 2026 (v5):** the owner's transparent sheets (`art/mo-dream-sheets/v5/`) replaced every frame
+   except the brushing loop: files are now `mo-dream/mo5-<name>.webp` (tools, rinse, pj, dua, night);
+   `mo-dream-brush-*` stay until a new brushing sheet arrives. Those PNGs carry a faint glow haze in the
+   alpha — cut them with `tools/cut-mo-dream-v5.py`, never use them raw on a dark screen. Each set shares one
    stance and position so swapping frames reads as motion. Use them only in Dreamtime; elsewhere
    render 1 stays first.
 5. **No old "good words" (Kata Baik) poses.** The old blurry Kata Baik Mo cutouts were removed
