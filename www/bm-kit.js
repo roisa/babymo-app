@@ -749,7 +749,8 @@
   function share(opts) {
     // In the iOS app a grown-up answers the parental gate first; the share
     // itself then runs inside the gate's button tap (a fresh user gesture).
-    if (isApp() && !gateOpen) { parentGate(function () { share(opts); }); return; }
+    // Apps with their own native gate (BM_APP.nativeGate) gate the share sheet natively instead.
+    if (isApp() && !nativeGate() && !gateOpen) { parentGate(function () { share(opts); }); return; }
     opts = localize(opts);
     var text = buildMessage(opts);
     var url = opts.url || gameUrl();
@@ -1749,8 +1750,14 @@
   // Also guarded automatically in the app: navigator.share(), window.open()
   // to another host, and taps on <a> links that leave the app (other
   // hosts, target=_blank, mailto:, tel:, sms:, …).
+  // Gate v2 (PARENTAL_GATE_SPEC.md): typed answer to a×b with a,b in 6–9; a wrong answer shows
+  // "Belum tepat · Not quite" and a NEW question; exactly ONE gate per action — so when the native
+  // app shell gates every exit itself (window.BM_APP.nativeGate === true) this web gate stays off.
   var gateOpen = false;   // true while onPass runs → nested calls go through
   var gateEl = null;
+  function nativeGate() {
+    try { return !!(window.BM_APP && window.BM_APP.nativeGate === true); } catch (e) { return false; }
+  }
   function isApp() {
     try {
       // The iOS app serves the bundled web content through its own
@@ -1789,11 +1796,13 @@
       ".bm-gate-k{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:#E8590C}" +
       ".bm-gate h2{margin:6px 0 4px;font-family:'Fredoka','Nunito',sans-serif;font-size:22px;font-weight:700;line-height:1.25}" +
       ".bm-gate-sub{margin:0 0 14px;font-size:14px;font-weight:700;color:#5A6878;line-height:1.35}" +
-      ".bm-gate-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}" +
-      ".bm-gate-opts button{min-height:56px;border:none;border-radius:18px;cursor:pointer;font:800 22px/1 'Nunito',system-ui,sans-serif;color:#152230;" +
-        "background:rgba(255,255,255,.92);box-shadow:0 0 0 .5px rgba(21,34,48,.1),0 8px 18px -12px rgba(30,60,110,.45);-webkit-tap-highlight-color:transparent;touch-action:manipulation}" +
-      ".bm-gate-opts button:active{transform:scale(.96)}" +
-      ".bm-gate-opts button.no{background:#FFE1E1;color:#B42318}" +
+      ".bm-gate-in{display:grid;grid-template-columns:1fr auto;gap:10px}" +
+      ".bm-gate-in input{min-width:0;min-height:56px;border:none;border-radius:18px;padding:0 16px;text-align:center;font:800 26px/1 'Nunito',system-ui,sans-serif;color:#152230;" +
+        "background:rgba(255,255,255,.92);box-shadow:0 0 0 .5px rgba(21,34,48,.1),0 8px 18px -12px rgba(30,60,110,.45);outline:none}" +
+      ".bm-gate-in input:focus{box-shadow:0 0 0 2px #E8590C}" +
+      ".bm-gate-in button{min-height:56px;min-width:96px;border:none;border-radius:18px;cursor:pointer;font:800 18px/1 'Nunito',system-ui,sans-serif;color:#fff;" +
+        "background:#E8590C;-webkit-tap-highlight-color:transparent;touch-action:manipulation}" +
+      ".bm-gate-in button:active{transform:scale(.96)}" +
       ".bm-gate-err{min-height:20px;margin:10px 0 2px;font-size:14px;font-weight:800;color:#B42318}" +
       ".bm-gate-x{width:100%;min-height:50px;margin-top:4px;border:none;border-radius:16px;cursor:pointer;font:800 16px/1 'Nunito',system-ui,sans-serif;color:#0A7FB0;background:transparent}" +
       ".bm-gate.shake{animation:bmGateShake .4s}" +
@@ -1802,30 +1811,24 @@
       "html[data-theme=dark] .bm-gate-grab,html[data-bm-theme=classic] .bm-gate-grab{background:rgba(255,255,255,.25)}" +
       "html[data-theme=dark] .bm-gate-k,html[data-bm-theme=classic] .bm-gate-k{color:#FFB547}" +
       "html[data-theme=dark] .bm-gate-sub,html[data-bm-theme=classic] .bm-gate-sub{color:rgba(242,245,250,.72)}" +
-      "html[data-theme=dark] .bm-gate-opts button,html[data-bm-theme=classic] .bm-gate-opts button{color:#F2F5FA;background:rgba(255,255,255,.12);box-shadow:0 0 0 .5px rgba(255,255,255,.12)}" +
-      "html[data-theme=dark] .bm-gate-opts button.no,html[data-bm-theme=classic] .bm-gate-opts button.no{background:rgba(255,90,90,.25);color:#FFB4B4}" +
+      "html[data-theme=dark] .bm-gate-in input,html[data-bm-theme=classic] .bm-gate-in input{color:#F2F5FA;background:rgba(255,255,255,.12);box-shadow:0 0 0 .5px rgba(255,255,255,.12)}" +
+      "html[data-theme=dark] .bm-gate-in button,html[data-bm-theme=classic] .bm-gate-in button{background:#FFB547;color:#152230}" +
       "html[data-theme=dark] .bm-gate-err,html[data-bm-theme=classic] .bm-gate-err{color:#FF9B9B}" +
       "html[data-theme=dark] .bm-gate-x,html[data-bm-theme=classic] .bm-gate-x{color:#7CC8FF}" +
       "@media (prefers-reduced-motion:reduce){.bm-gate,.bm-gate-bg{transition:none}.bm-gate.shake{animation:none}}";
     document.head.appendChild(st);
   }
   function rnd(a, b) { return a + Math.floor(Math.random() * (b - a + 1)); }
+  // G3: a × b, a and b independent in 6–9 (answers 36–81) — beyond a 6–8-year-old's times tables.
   function gateQuestion() {
-    var a, b, ans, op;
-    if (Math.random() < 0.5) { a = rnd(6, 9); b = rnd(6, 9); ans = a * b; op = " × "; }
-    else { a = rnd(14, 48); b = rnd(13, 39); ans = a + b; op = " + "; }
-    var opts = [ans];
-    while (opts.length < 4) {
-      var c = ans + (Math.random() < 0.5 ? -1 : 1) * rnd(1, 12);
-      if (c > 0 && opts.indexOf(c) < 0) opts.push(c);
-    }
-    for (var i = opts.length - 1; i > 0; i--) { var j = rnd(0, i), t = opts[i]; opts[i] = opts[j]; opts[j] = t; }
-    return { q: a + op + b, ans: ans, opts: opts };
+    var a = rnd(6, 9), b = rnd(6, 9);
+    return { q: a + " × " + b, ans: a * b };
   }
   function closeGate(cb) {
     var g = gateEl; gateEl = null;
     if (!g) return;
     document.removeEventListener("keydown", g.key, true);
+    if (g.vv) try { window.visualViewport.removeEventListener("resize", g.vv); window.visualViewport.removeEventListener("scroll", g.vv); } catch (e) {}
     g.bg.classList.remove("open"); g.sheet.classList.remove("open");
     g.bg.style.pointerEvents = g.sheet.style.pointerEvents = "none";
     var h = g.sheet.querySelector("#bmGateQ"); if (h) h.removeAttribute("id");
@@ -1834,7 +1837,8 @@
   }
   function parentGate(onPass, onCancel, always) {
     if (typeof onPass !== "function") onPass = function () {};
-    if ((!isApp() && !always) || gateOpen) { onPass(); return; }
+    // One gate per action (G2): the native shell's gate covers this action.
+    if ((!isApp() && !always) || nativeGate() || gateOpen) { onPass(); return; }
     try {
       if (gateEl) closeGate();
       gateCss();
@@ -1846,7 +1850,8 @@
         '<div class="bm-gate-k">' + (en ? "For grown-ups" : "Khusus orang tua") + "</div>" +
         '<h2 id="bmGateQ">' + (en ? "Ask a grown-up: what is " : "Tanya Ayah/Bunda: berapa ") + Q.q + "?</h2>" +
         '<p class="bm-gate-sub">' + (en ? "Answer to open the link or share." : "Jawab dulu untuk membuka tautan atau berbagi.") + "</p>" +
-        '<div class="bm-gate-opts">' + Q.opts.map(function (o) { return '<button type="button" data-v="' + o + '">' + o + "</button>"; }).join("") + "</div>" +
+        '<form class="bm-gate-in" novalidate><input type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" autocomplete="off" aria-labelledby="bmGateQ">' +
+        '<button type="submit">' + (en ? "Open" : "Buka") + "</button></form>" +
         '<p class="bm-gate-err" aria-live="polite"></p>' +
         '<button type="button" class="bm-gate-x">' + (en ? "Cancel" : "Batal") + "</button>";
       document.body.appendChild(bg); document.body.appendChild(sh);
@@ -1855,28 +1860,43 @@
       document.addEventListener("keydown", g.key, true);
       bg.addEventListener("click", cancel);
       sh.querySelector(".bm-gate-x").addEventListener("click", cancel);
-      var done = false;
-      sh.querySelector(".bm-gate-opts").addEventListener("click", function (e) {
-        var b = e.target.closest("button[data-v]"); if (!b || done) return;
-        done = true;
-        if (+b.getAttribute("data-v") === Q.ans) {
+      var done = false, input = sh.querySelector(".bm-gate-in input"), title = sh.querySelector("#bmGateQ");
+      input.addEventListener("input", function () { input.value = input.value.replace(/\D/g, "").slice(0, 3); });
+      sh.querySelector(".bm-gate-in").addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (done) return;
+        if (input.value !== "" && +input.value === Q.ans) {
+          done = true;
           closeGate();
           gateOpen = true;
           try { onPass(); } catch (er) {} finally { gateOpen = false; }
         } else {
-          // Wrong answer: blocked. Close after a moment; nothing happens.
-          b.classList.add("no"); sh.classList.add("shake");
+          // G6: wrong answer → blocked; show a NEW question and let the grown-up try again.
+          sh.classList.remove("shake"); void sh.offsetWidth; sh.classList.add("shake");
           sh.querySelector(".bm-gate-err").textContent = en ? "Not quite — please ask a grown-up." : "Belum tepat — minta bantuan Ayah/Bunda ya.";
-          Array.prototype.forEach.call(sh.querySelectorAll(".bm-gate-opts button"), function (x) { x.disabled = true; });
-          setTimeout(function () { if (gateEl === g) cancel(); }, 1300);
+          Q = gateQuestion();
+          title.textContent = (en ? "Ask a grown-up: what is " : "Tanya Ayah/Bunda: berapa ") + Q.q + "?";
+          input.value = "";
+          try { input.focus({ preventScroll: true }); } catch (er) {}
         }
       });
+      // Keep the sheet above the on-screen keyboard: mobile browsers don't move position:fixed
+      // bottom sheets when the keyboard opens, which hid the question and the answer box.
+      if (window.visualViewport) {
+        g.vv = function () {
+          var vv = window.visualViewport, kb = Math.max(0, window.innerHeight - vv.height - vv.offsetTop);
+          sh.style.bottom = kb ? kb + "px" : "";
+        };
+        window.visualViewport.addEventListener("resize", g.vv);
+        window.visualViewport.addEventListener("scroll", g.vv);
+      }
+      // No automatic focus: the keyboard only opens when the grown-up taps the answer box.
       requestAnimationFrame(function () { bg.classList.add("open"); sh.classList.add("open"); try { sh.focus({ preventScroll: true }); } catch (e) {} });
     } catch (e) { if (onCancel) try { onCancel(); } catch (e2) {} }
   }
   // App only: route every way out of the app through the gate.
   function installGateGuards() {
-    if (!isApp()) return;
+    if (!isApp() || nativeGate()) return;   // the native shell guards every exit itself
     try {
       var origOpen = window.open;
       window.open = function (url) {

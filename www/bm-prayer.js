@@ -359,7 +359,8 @@
       if (numeric) { var p = new Intl.DateTimeFormat("en-US-u-ca-islamic-umalqura", { day: "numeric", month: "numeric", year: "numeric" }).formatToParts(d); var g = function (t) { return +p.find(function (x) { return x.type === t; }).value; }; return { d: g("day"), m: g("month"), y: g("year") }; }
       var s = new Intl.DateTimeFormat("en-US-u-ca-islamic-umalqura", { day: "numeric", month: "long", year: "numeric" }).format(d);
       if (L() === "en") return s.replace(" AH", " AH");
-      return s.replace("Rabiʻ I", "Rabiul Awwal").replace("Rabiʻ II", "Rabiul Akhir").replace("Jumada I", "Jumadil Awwal").replace("Jumada II", "Jumadil Akhir")
+      // "… II" before "… I": otherwise "Jumada II" became "Jumadil AwwalI" (and "Rabiʻ II" → "Rabiul AwwalI").
+      return s.replace("Rabiʻ II", "Rabiul Akhir").replace("Rabiʻ I", "Rabiul Awwal").replace("Jumada II", "Jumadil Akhir").replace("Jumada I", "Jumadil Awwal")
         .replace("Shaʻban", "Sya'ban").replace("Ramadan", "Ramadhan").replace("Shawwal", "Syawal").replace("Dhuʻl-Qiʻdah", "Dzulqa'dah").replace("Dhuʻl-Hijjah", "Dzulhijjah").replace(" AH", " H");
     } catch (e) { return numeric ? null : ""; }
   }
