@@ -2333,7 +2333,7 @@ const I18N={
   doa_dream_s:{id:'Doa & rutinitas tidur',en:'Dua & bedtime routine'},
   foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
   about_title:{id:'Orang Tua',en:'Parents'},disp_group:{id:'Tampilan & Suara',en:'Display & Sound'},theme_row:{id:'Tema',en:'Theme'},theme_auto:{id:'Otomatis',en:'Auto'},theme_light:{id:'☀️ Terang',en:'☀️ Light'},theme_dark:{id:'🌙 Gelap',en:'🌙 Dark'},sound_row:{id:'Suara & musik',en:'Sound & music'},sound_sub:{id:'Efek suara dan bacaan',en:'Sound effects and read-aloud'},sound_on:{id:'Nyala',en:'On'},sound_off:{id:'Mati',en:'Off'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
-  about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},
+  about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},about_ver_web:{id:'Versi web · play.babymo.id',en:'Web version · play.babymo.id'},
   about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'19 game siap dimainkan',en:'19 games ready to play'},
   cat_tenis_t:{id:'Akademi Tenis Kak Adam',en:"Kak Adam's Tennis Academy"},cat_tenis_s:{id:'Belajar tenis dari bola merah sampai bertanding',en:'Learn tennis from the red ball to your first match'},
   g_tenis:{id:'Tenis Adam',en:'Adam Tennis'},g_tenis_sub:{id:'Olahraga',en:'Sport'},
@@ -2603,7 +2603,17 @@ document.querySelectorAll('.app-icon, .h-card, .hero-btn, .lrow').forEach(el=>{
    native parental gate. The website (no BM_APP) keeps the static row. */
 (function () {
   var row = document.getElementById('verRow');
-  if (!row || !window.BM_APP) return;
+  if (!row) return;
+  if (!window.BM_APP) {
+    /* the website: no app version to show, so say it's the web version
+       (the old static "1.0.0 · iOS Edition" was wrong on play.babymo.id) */
+    if (/^https?:$/.test(location.protocol)) {
+      var vs = document.getElementById('verSub'); vs.setAttribute('data-i18n', 'about_ver_web');
+      try { vs.textContent = localStorage.getItem('bm_lang') === 'en' ? 'Web version · play.babymo.id' : 'Versi web · play.babymo.id'; } catch (e) {}
+      row.removeAttribute('role'); row.removeAttribute('tabindex');
+    }
+    return;
+  }
   var sub = document.getElementById('verSub'), pill = document.getElementById('verNew');
   var en = function () { try { return localStorage.getItem('bm_lang') === 'en'; } catch (e) { return false; } };
   var base = BM_APP.version + ' (' + BM_APP.build + ') · iOS';
