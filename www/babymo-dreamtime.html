@@ -718,7 +718,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 #s-steps.nite .shint{color:#fff!important;font-weight:800;font-size:15.5px!important;opacity:.95}
 /* Mo stands on a round rug */
 #s-steps.nite .pjglow{display:none}
-#s-steps.nite .pjspot{bottom:1%;width:84%;height:15%;background:radial-gradient(closest-side,#8C80EE 0,#7A6EE6 62%,#6A5ED8 84%,transparent 86%);filter:none;box-shadow:none}
+#s-steps.nite .pjspot{bottom:0;width:58%;height:12%;background:radial-gradient(closest-side,#8C80EE 0,#7A6EE6 62%,#6A5ED8 84%,transparent 86%);filter:none;box-shadow:none}
 #s-steps.nite .pjspot::after{content:"";position:absolute;inset:14% 10%;border-radius:50%;border:2px dashed rgba(255,255,255,.18)}
 #s-steps.nite .pjmo img{filter:drop-shadow(0 14px 16px rgba(20,10,80,.45))}
 #s-steps.nite .pjchk{display:none}
@@ -749,6 +749,10 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 #s-steps .wardrobe{display:none}
 .room svg.rm-floor{top:auto;bottom:212px;height:230px}
 .room svg.rm-floor.rm-bath{bottom:0;height:400px}
+#s-steps.lit:not(.duaroom) .bsteps{margin:14px 0 14px}
+#s-steps.lit:not(.duaroom) .bstage{width:min(76vw,310px)}
+#s-steps.lit:not(.duaroom) #bdone{padding-top:46px}
+@media (max-height:700px){#s-steps.lit:not(.duaroom) .bsteps{margin:8px 0 8px}#s-steps.lit:not(.duaroom) #bdone{padding-top:28px}}
 #s-steps.lit:not(.duaroom) .bplay::after{content:"";position:absolute;left:4%;right:4%;bottom:-16px;height:22px;border-radius:50%;background:radial-gradient(closest-side,rgba(40,30,120,.28),transparent);z-index:-1;pointer-events:none}
 @media (max-height:700px){.room svg.rm-floor{bottom:178px}.room svg.rm-floor.rm-bath{bottom:0;height:340px}}
 
@@ -1001,7 +1005,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
   <div id="sleepcontent" style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;transition:opacity 1.2s;padding:40px;">
 
     <div style="position:relative;display:inline-block;animation:bt 4s ease-in-out infinite;">
-      <img src="mo-dream/mo5-night-sleep.webp" alt="Baby Mo" style="width:170px;height:170px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(110,123,242,.4));"/>
+      <img src="mo-dream/mo5-sleep-full.webp" alt="Baby Mo" style="width:220px;height:220px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(110,123,242,.4));"/>
       <div style="position:absolute;top:5px;right:-8px;pointer-events:none;">
         <span style="display:block;font-size:12px;font-weight:900;color:rgba(200,144,64,.4);animation:zzFloat 1.8s 0s ease infinite;font-family:Nunito,sans-serif;">z</span>
         <span style="display:block;font-size:19px;font-weight:900;color:rgba(200,144,64,.5);animation:zzFloat 2.3s .45s ease infinite;font-family:Nunito,sans-serif;">z</span>
@@ -1438,14 +1442,15 @@ function roomSVG(k){
       +'<path d="M-400 150H800V900H-400Z" fill="url(#rmPlank)"/><rect x="-400" y="144" width="1200" height="10" fill="#9A90F0"/>'
       +(function(){ var l=''; [166,186,214,252].forEach(function(yy,i){ l+='<path d="M-400 '+yy+'H800" stroke="#5A4FC4" stroke-opacity=".5" stroke-width="2"/>'; for(var q=-6;q<10;q++){ var xx=q*64+(i%2?32:0); l+='<path d="M'+xx+' '+yy+'v'+([20,28,38,60][i])+'" stroke="#5A4FC4" stroke-opacity=".35" stroke-width="2"/>'; } }); return l; })()
       /* nightstand with books and a smiling star lamp */
-      +'<circle cx="40" cy="62" r="86" fill="url(#rmGlow)"/>'
-      +'<ellipse cx="26" cy="210" rx="62" ry="7" fill="#1A1660" opacity=".25"/>'
-      +'<g transform="translate(-28 110)"><rect x="0" y="0" width="108" height="13" rx="6.5" fill="#D2C6FA"/><rect x="6" y="11" width="96" height="80" rx="11" fill="#AE9FF0"/><rect x="6" y="11" width="96" height="10" fill="#1A1660" opacity=".1"/>'
+      +'<circle cx="48" cy="60" r="80" fill="url(#rmGlow)"/>'
+      +'<ellipse cx="46" cy="210" rx="62" ry="7" fill="#1A1660" opacity=".25"/>'
+      +'<g transform="translate(-8 110)"><rect x="0" y="0" width="108" height="13" rx="6.5" fill="#D2C6FA"/><rect x="6" y="11" width="96" height="80" rx="11" fill="#AE9FF0"/><rect x="6" y="11" width="96" height="10" fill="#1A1660" opacity=".1"/>'
       +'<rect x="18" y="28" width="72" height="42" rx="9" fill="#6271E6"/><rect x="18" y="28" width="72" height="8" rx="4" fill="#fff" opacity=".18"/><circle cx="54" cy="49" r="6" fill="#F2CC85"/>'
       +'<rect x="12" y="88" width="10" height="14" rx="3" fill="#8C7BD8"/><rect x="86" y="88" width="10" height="14" rx="3" fill="#8C7BD8"/>'
-      +'<rect x="68" y="-14" width="34" height="8" rx="2" fill="#5BBFA8"/><rect x="71" y="-22" width="28" height="8" rx="2" fill="#F08DA8"/><rect x="74" y="-29" width="22" height="7" rx="2" fill="#FFD866"/></g>'
-      +'<g transform="translate(40 72)">'+IC.star5(0,0,30,'#FFD866')+IC.star5(-3,-3,22,'#FFEAA0')
-      +'<circle cx="-8" cy="-2" r="2.6" fill="#7A4A1E"/><circle cx="8" cy="-2" r="2.6" fill="#7A4A1E"/><path d="M-6 6Q0 11 6 6" stroke="#7A4A1E" stroke-width="2.4" fill="none" stroke-linecap="round"/><circle cx="-13" cy="5" r="3" fill="#FFB38A" opacity=".7"/><circle cx="13" cy="5" r="3" fill="#FFB38A" opacity=".7"/><rect x="-11" y="26" width="22" height="12" rx="4" fill="#F0B95A"/></g>'
+      +'<rect x="84" y="-9" width="22" height="9" rx="2" fill="#5BBFA8"/><rect x="86" y="-17" width="19" height="8" rx="2" fill="#F08DA8"/></g>'
+      +'<rect x="32" y="99" width="32" height="11" rx="5.5" fill="#C98F58"/><rect x="34" y="99" width="28" height="4" rx="2" fill="#E2B07C"/><rect x="45" y="87" width="6" height="13" rx="3" fill="#E8D7B8"/>'
+      +'<g transform="translate(48 63)">'+IC.star5(0,0,26,'#FFD866')+IC.star5(-2,-3,19,'#FFEAA0')
+      +'<circle cx="-7" cy="-1" r="2.3" fill="#7A4A1E"/><circle cx="7" cy="-1" r="2.3" fill="#7A4A1E"/><path d="M-5 6Q0 10 5 6" stroke="#7A4A1E" stroke-width="2.2" fill="none" stroke-linecap="round"/><circle cx="-11" cy="5" r="2.6" fill="#FFB38A" opacity=".7"/><circle cx="11" cy="5" r="2.6" fill="#FFB38A" opacity=".7"/></g>'
       /* bed with headboard, pillow and a starry quilt */
       +'<ellipse cx="372" cy="212" rx="80" ry="8" fill="#1A1660" opacity=".25"/>'
       +'<g transform="translate(300 74)"><path d="M0 132V30Q0 0 30 0H130V132Z" fill="#D7A274"/><path d="M10 120V34Q10 12 32 12H130V120Z" fill="#E7BA8C"/><circle cx="6" cy="22" r="9" fill="#D7A274"/>'
@@ -1493,7 +1498,7 @@ function alignRoom(){
   } else {
     var m=document.getElementById('pjmo'); if(!m) return; var r=m.getBoundingClientRect();
     var feet = r.top + r.height*.963;
-    bottomPx = feet + (vbH-212)*s;                               // bed and nightstand legs (layer y ≈ 212) level with his feet
+    bottomPx = feet - 30*s + (vbH-212)*s;                        // bed and nightstand stand against the wall, a step behind his feet
   }
   fl.style.height=vbH+'px'; fl.style.bottom=Math.round(rr.bottom-bottomPx)+'px';
 }
@@ -1989,7 +1994,7 @@ function buildDoa(wrap,done){
    the room light dims.
 ══════════════════════════════════════════ */
 function buildBlanket(wrap,done){
-  var W=300, H=390, Y0=322, Y1=214, BOT=386;           // quilt top edge: down by the feet → tucked under the chin
+  var W=300, H=390, Y0=262, Y1=198, BOT=386;           // quilt top edge: over his lap (legs under the quilt) → tucked up to the shoulders
   var p=0, v=0, target=0, dragging=false, finished=false, settled=true, raf=0, last=0;
   var fx=150, bulge=0, phase=0, startY=0, startP=0, pxPerUnit=1, lastMoveT=0, lastMoveP=0, fling=0;
 

@@ -21,6 +21,7 @@ const SHELL = [
   "/bm-voice.js",
   "/bm-prayertimes.js",
   "/mo-dream/mo5-night-sleep.webp",
+  "/mo-dream/mo5-sleep-full.webp",
   "/mo-dream/mo5-night-wave.webp",
   "/mo-dream/mo5-night-yawn.webp",
   "/mo-dream/mo-dream-brush-back.webp",

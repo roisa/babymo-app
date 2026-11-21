@@ -1152,7 +1152,6 @@
     "babymo-doa-harian":      ["dua-journey",  "babymo-dua-game.html",       "Dua Journey",    "Cocokkan doa dengan momennya 🃏"],
     "babymo-dua-game":        ["pray-with-mo", "babymo-pray-with-mo.html",   "Sholat Bareng Mo","Belajar gerakan sholat 🕌"],
     "babymo-arabic-spelling": ["hijaiyah",     "babymo-hijaiyah.html",       "Pulau Hijaiyah", "Cari 28 huruf di pulau 🏝️"],
-    "babymo-dreamtime":       ["doa-harian",   "babymo-doa-harian.html",     "Doa Harian",     "Ulangi doa sebelum tidur 🌙"],
     "babymo-look-and-find":   ["memory-match", "babymo-memory-match.html",   "Memory Match",   "Balik kartu, ingat letaknya 🧠"],
     "babymo-memory-match":    ["cari-baby-mo", "babymo-look-and-find.html",  "Cari Baby Mo",   "Baby Mo sedang bersembunyi 🔍"],
     "baby-mo-forehand-beat":  ["tenis-adam",   "babymo-tenis-adam.html",     "Tenis Kak Adam", "Belajar tenis bareng Kak Adam 🎾"],
