@@ -8,7 +8,12 @@
    proportions (bigger head, different height), so when render 2 is used, show only the upper body
    (crop at the waist, or tuck the lower half behind a card/scenery) so Mo looks consistent next to
    render 1 and the family.
-3. **No old "good words" (Kata Baik) poses.** The old blurry Kata Baik Mo cutouts were removed
+3. **Render 3 = motion-graphics set, marketing only.** `art/baby-mo-render3/` (60 poses, ChatGPT-made
+   from render-1 references, 21 Nov 2026): talking mouths, blinks, walk, turnaround, tablet/phone/watch
+   with magenta screens, daily routine, hooks, endings. Use it for animated marketing (TikTok, Reels,
+   Promo Studio) as a set — don't mix render 3 and render 1 Mo in the same frame. Not for in-app art,
+   App Store screenshots or banners (render 1 stays first there). Lives outside `www/`, so it never ships.
+4. **No old "good words" (Kata Baik) poses.** The old blurry Kata Baik Mo cutouts were removed
    (`baby-mo-dua-smile`, `babymo-companion/mo-assets/*`). Don't bring them back.
 
 ## Other standing rules
