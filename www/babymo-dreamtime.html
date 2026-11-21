@@ -626,6 +626,85 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 @keyframes aamFly{from{transform:translate(0,0) scale(.4);opacity:1}to{transform:translate(var(--x),var(--y)) scale(1.3) rotate(120deg);opacity:0}}
 @media (prefers-reduced-motion:reduce){#playAll.pa,.pa-ic::after,.pa-wave i,.pa-eq i,#doaLanjut.aam.unlocked,.aam-st i{animation:none!important}}
 </style>
+
+<style id="dt-v3">
+/* ═══ 22 Nov 2026 — Dreamtime v3: lit rooms for brushing & pajamas, natural Baby Mo frames (mo-dream/) ═══ */
+.room{position:absolute;inset:0;z-index:1;pointer-events:none}
+#stepbody{position:relative!important;z-index:2!important}
+#s-steps .topbar{z-index:3}
+.room svg{position:absolute;inset:0;width:100%;height:100%}
+#s-steps.lit{background:#C7D5FF!important}
+#s-steps.lit .dt-sky{display:none}
+#s-steps.lit .home-btn{background:#fff!important;border:none!important;color:#5B4FD6;box-shadow:0 8px 18px -10px rgba(60,50,160,.5)}
+#s-steps.lit .ptrack{background:rgba(255,255,255,.65)!important;height:12px;border:1px solid rgba(255,255,255,.9)}
+#s-steps.lit .pfill{background:linear-gradient(90deg,#2FBF71,#55D98A)}
+#s-steps.lit .topmoon{opacity:.0}
+#s-steps.lit .snum{display:inline-block;margin:6px auto 8px;padding:7px 18px;border-radius:999px;background:rgba(255,255,255,.7);color:#4B44A8!important;letter-spacing:.5px!important;text-transform:none;font-size:14px!important;font-weight:900}
+#s-steps.lit .stitle{color:#3A2FB0!important;font-size:34px!important;text-shadow:0 2px 0 #fff,0 -2px 0 #fff,2px 0 0 #fff,-2px 0 0 #fff,0 6px 14px rgba(60,50,160,.25)}
+#s-steps.lit .stitle .ic{filter:drop-shadow(0 2px 0 #fff)}
+#s-steps.lit .shint{color:#3F3A8F!important;font-weight:800;font-size:15px!important}
+#s-steps.lit .bsteps i{width:34px;height:34px;font-size:15px;background:rgba(255,255,255,.7);color:#4B44A8;box-shadow:0 4px 10px -6px rgba(60,50,160,.5)}
+#s-steps.lit .bsteps i.now{background:#2FBF71;color:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.75),0 6px 14px -6px rgba(47,191,113,.8)}
+#s-steps.lit .bsteps i.ok{background:#9FE3BE;color:#14532D}
+/* Mo stands behind the cream play panel, like a real bathroom counter */
+#s-steps.lit .bstage{width:min(84vw,340px);margin-top:0;min-height:200px;z-index:auto}
+#s-steps.lit .bpose{z-index:1}
+#s-steps.lit .bplay:empty{display:none}
+#s-steps.lit .bpose{-webkit-mask-image:none;mask-image:none;filter:drop-shadow(0 14px 18px rgba(60,50,160,.28))}
+#s-steps.lit .bglow{display:none}
+#s-steps.lit .blabel{bottom:-24px;z-index:5;padding:9px 20px 9px 9px;font-size:17px;background:#FFF3E2;color:#3A2FB0;box-shadow:0 8px 20px -10px rgba(60,50,160,.6),inset 0 1px 0 #fff}
+#s-steps.lit .blabel b{width:30px;height:30px;font-size:16px;background:#8F86F0;margin-right:8px}
+#s-steps.lit .bplay{position:relative;z-index:3;margin:-12px 14px 14px;padding:42px 16px 18px;border-radius:34px;background:#FFF6EA;border:3px solid #fff;box-shadow:0 20px 40px -22px rgba(60,50,160,.55),inset 0 0 0 2px rgba(143,134,240,.18);flex:0 0 auto;min-height:190px}
+#s-steps.lit .btools{max-width:360px;gap:14px}
+#s-steps.lit :is(.btool,.bhold,.bzone,.bcup){background:#fff!important;border:3px solid #DCD7FF!important;color:#2A247A!important;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:0 10px 22px -14px rgba(60,50,160,.55)!important}
+#s-steps.lit .btool{min-height:130px;border-radius:26px!important;font-size:18px!important;gap:8px}
+#s-steps.lit .btool .ic{width:62px;height:62px}
+#s-steps.lit :is(.btool,.bhold,.bzone,.bcup).ok{background:#E8FFF2!important;border-color:#2FBF71!important}
+#s-steps.lit .bzone .btrack{background:#DCD7FF}
+#s-steps.lit .bzone .barr{color:#8F86F0}
+#s-steps.lit .bmeter .bmbar{background:#ECE8FF}
+#s-steps.lit .bmeter .bmtxt{color:#3F3A8F}
+#s-steps.lit .bhl,#s-steps.lit .wd-lbl{color:#3A2FB0}
+#s-steps.lit .bdone-t{color:#1E9E5A!important}
+#s-steps.lit .pjstage .pjglow{opacity:.35}
+#s-steps.lit .pjmo img{filter:drop-shadow(0 14px 18px rgba(60,50,160,.3))}
+#s-steps.lit .pjchk span{background:#fff;border-color:#DCD7FF}
+#s-steps.lit .pjchk span.done{background:#E8FFF2;border-color:#2FBF71}
+#s-steps.lit .pjdone-t{color:#3A2FB0}
+#s-steps.lit .donebanner{text-shadow:0 1px 0 #fff}
+/* short phones (iPhone SE): tighter header, smaller cards so the panel fits */
+@media (max-height:700px){
+  #s-steps.lit .snum{margin:2px auto 4px;padding:5px 14px;font-size:12.5px!important}
+  #s-steps.lit .stitle{font-size:27px!important}
+  #s-steps.lit .shint{font-size:13px!important;margin-top:2px}
+  #s-steps.lit .bsteps{margin:4px 0 0}
+  #s-steps.lit .bsteps i{width:27px;height:27px;font-size:13px}
+  #s-steps.lit .bstage{min-height:150px;width:min(70vw,260px)}
+  #s-steps.lit .bplay{padding:34px 12px 12px;margin:-10px 10px 10px;min-height:0}
+  #s-steps.lit .btool{min-height:100px;font-size:16px!important}
+  #s-steps.lit .btool .ic{width:46px;height:46px}
+  #s-steps.lit .bstage{min-height:118px}
+  #s-steps.lit .bplay{gap:6px}
+  #s-steps.lit .bpastesvg{max-height:74px}
+  #s-steps.lit .bhold{min-height:62px!important}
+  #s-steps.lit .bzone.v{height:104px}
+  #s-steps.lit .bzone.h{height:80px}
+  #s-steps.lit .wdrop{width:92px!important;height:112px!important}
+  #s-steps.lit .wd-svg{width:100%;height:100%}
+}
+/* new pajama frames: cap overlay sits on the new head position */
+.pjcap{left:31%;top:-3.5%;width:38%}
+.pjted{left:8%;top:52%;width:30%}
+/* du'a: Mo in pajamas, upper body, beside the bubble */
+.doamo{position:relative;flex:0 0 96px;width:96px;height:104px;overflow:hidden;border-radius:22px;background:radial-gradient(circle at 50% 40%,rgba(255,216,116,.22),rgba(255,255,255,.04) 70%);border:1px solid rgba(255,255,255,.12)}
+.doamo img{position:absolute;left:-30px;top:-2px;width:156px;height:156px;object-fit:contain}
+.doamo.pop img{animation:bpop .45s cubic-bezier(.3,1.6,.5,1)}
+/* bed: upper-body frames, head on the pillow, the quilt covers the cut-off edge */
+.bedmo img{left:10%;top:17%;width:80%;-webkit-mask-image:linear-gradient(180deg,#000 88%,transparent);mask-image:linear-gradient(180deg,#000 88%,transparent)}
+.bedmo .yawn{opacity:0}
+.bedscene.half .bedmo .yawn{opacity:1}.bedscene.half .bedmo .awake{opacity:0}
+.bedscene.asleep .bedmo .yawn{opacity:0}
+</style>
 </head>
 <body>
 <!-- shared gradients for the Dreamtime illustrations (kept rendered, never display:none) -->
@@ -808,6 +887,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
     <div class="ptrack"><div class="pfill" id="pfill"></div></div>
     <i class="ic topmoon" data-ic="moon"></i>
   </div>
+  <div class="room" id="room" aria-hidden="true"></div>
   <div id="stepbody" style="flex:1;display:flex;flex-direction:column;overflow:hidden;position:relative;z-index:2;"></div>
 </div>
 
@@ -817,7 +897,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
   <div id="sleepcontent" style="position:absolute;inset:0;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;opacity:0;transition:opacity 1.2s;padding:40px;">
 
     <div style="position:relative;display:inline-block;animation:bt 4s ease-in-out infinite;">
-      <img src="baby-mo-poses/baby-mo-pose-09.webp" alt="Baby Mo" style="width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(110,123,242,.4));"/>
+      <img src="mo-dream/mo-dream-bed-sleep.webp" alt="Baby Mo" style="width:170px;height:170px;object-fit:contain;filter:drop-shadow(0 8px 22px rgba(110,123,242,.4));"/>
       <div style="position:absolute;top:5px;right:-8px;pointer-events:none;">
         <span style="display:block;font-size:12px;font-weight:900;color:rgba(200,144,64,.4);animation:zzFloat 1.8s 0s ease infinite;font-family:Nunito,sans-serif;">z</span>
         <span style="display:block;font-size:19px;font-weight:900;color:rgba(200,144,64,.5);animation:zzFloat 2.3s .45s ease infinite;font-family:Nunito,sans-serif;">z</span>
@@ -1153,8 +1233,48 @@ function aamBurst(btn){
 }
 
 var BUILDERS=[buildBrush,buildPajamas,buildDoa,buildBlanket];
+/* 22 Nov 2026: bright rooms for the lit steps (bathroom, bedroom); the du'a and the bed stay in the night sky */
+var ROOMS=['bath','closet','',''];
+function roomSVG(k){
+  var win='<g transform="translate('+(k==='bath'?'292 318':'14 318')+') scale(.84)"><path d="M0 120V52Q0 0 52 0Q104 0 104 52V120Z" fill="#CFD8FF"/><path d="M8 116V54Q8 9 52 9Q96 9 96 54V116Z" fill="#2B2F8F"/>'
+    +'<path d="M8 104Q30 92 52 100Q76 108 96 98V116H8Z" fill="#3E9F79"/><path d="M68 30a15 15 0 1 0 13 21 12 12 0 1 1-13-21Z" fill="#FFE07A"/>'
+    +'<g fill="#FFE9A8"><circle cx="30" cy="40" r="2.4"/><circle cx="44" cy="66" r="1.8"/><circle cx="82" cy="78" r="2"/><circle cx="24" cy="78" r="1.6"/></g>'
+    +'<rect x="-8" y="118" width="120" height="12" rx="6" fill="#E7ECFF"/></g>';
+  if(k==='bath'){
+    var t=''; for(var y=330;y<760;y+=44) t+='<path d="M0 '+y+'H390" stroke="#fff" stroke-opacity=".45" stroke-width="2"/>';
+    for(var x=22;x<390;x+=44) t+='<path d="M'+x+' 310V760" stroke="#fff" stroke-opacity=".35" stroke-width="2"/>';
+    return '<svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rmW" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B9CCFF"/><stop offset=".45" stop-color="#C7D5FF"/><stop offset="1" stop-color="#D9E1FF"/></linearGradient></defs>'
+      +'<rect width="390" height="844" fill="url(#rmW)"/>'+t
+      +'<rect y="760" width="390" height="84" fill="#D3D0F5"/><path d="M0 760H390" stroke="#fff" stroke-width="3" opacity=".7"/>'
+      +win
+      /* shelf with a hanging plant */
+      +'<rect x="-6" y="214" width="92" height="9" rx="4.5" fill="#F2C48E"/><path d="M20 196h40l-4 20H24Z" fill="#F7F1FF"/>'
+      +'<g fill="#5BBF63"><ellipse cx="30" cy="190" rx="10" ry="16" transform="rotate(-30 30 190)"/><ellipse cx="48" cy="186" rx="10" ry="17" transform="rotate(25 48 186)"/><ellipse cx="40" cy="180" rx="8" ry="15"/>'
+      +'<ellipse cx="22" cy="236" rx="7" ry="12" transform="rotate(15 22 236)"/><ellipse cx="28" cy="262" rx="7" ry="12" transform="rotate(-10 28 262)"/><ellipse cx="22" cy="288" rx="6" ry="11"/></g>'
+      /* towel bar */
+      +'<rect x="6" y="470" width="90" height="8" rx="4" fill="#9AA6D6"/><path d="M20 474h56v86q0 8-8 8H28q-8 0-8-8Z" fill="#5B9BF0"/><path d="M20 548h56v12q0 8-8 8H28q-8 0-8-8Z" fill="#E9F2FF"/>'
+      +'<path d="M48 500l4.7 9.5 10.5 1.5-7.6 7.4 1.8 10.4-9.4-4.9-9.4 4.9 1.8-10.4-7.6-7.4 10.5-1.5Z" fill="#E9F2FF"/>'
+      /* sink */
+      +'<path d="M300 560h110v40q0 30-30 30h-50q-30 0-30-30Z" fill="#F5F6FF"/><rect x="292" y="552" width="120" height="16" rx="8" fill="#fff"/>'
+      +'<path d="M346 552v-24q0-8 8-8h14" stroke="#B5BED8" stroke-width="8" fill="none" stroke-linecap="round"/><rect x="306" y="522" width="18" height="30" rx="7" fill="#4FB0F5"/><rect x="311" y="512" width="8" height="12" rx="3" fill="#E0E6FF"/>'
+      +'</svg>';
+  }
+  if(k==='closet'){
+    var d=''; for(var i=0;i<26;i++){ var xx=(i*67)%390, yy=60+(i*131)%640; d+='<circle cx="'+xx+'" cy="'+yy+'" r="3" fill="#fff" opacity=".55"/>'; }
+    return '<svg viewBox="0 0 390 844" preserveAspectRatio="xMidYMid slice"><defs><linearGradient id="rmC" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#D9CCFF"/><stop offset="1" stop-color="#EDE6FF"/></linearGradient></defs>'
+      +'<rect width="390" height="844" fill="url(#rmC)"/>'+d
+      +win
+      /* lamp */
+      +'<g transform="translate(336 300)"><path d="M-22 0Q-20-30 0-32 20-30 22 0Z" fill="#FFB4C8"/><rect x="-3" y="0" width="6" height="40" fill="#E6D8C4"/><rect x="-16" y="40" width="32" height="7" rx="3.5" fill="#C9A27A"/></g>'
+      +'<rect y="770" width="390" height="74" fill="#CBBDF2"/><ellipse cx="195" cy="790" rx="170" ry="26" fill="#B6A6EE" opacity=".8"/>'
+      +'</svg>';
+  }
+  return '';
+}
 function runStep(idx){
   setP(idx);
+  var sc=document.getElementById('s-steps'), rm=document.getElementById('room'), k=ROOMS[idx]||'';
+  sc.classList.toggle('lit',!!k); if(rm) rm.innerHTML=k?roomSVG(k):'';
   var body=document.getElementById('stepbody');
   body.innerHTML='';
   body.style.cssText='flex:1;display:flex;flex-direction:column;overflow:hidden;opacity:0;transform:translateY(30px);';
@@ -1189,21 +1309,24 @@ function sparkleSound(){
 }
 function buildBrush(wrap,done){
   var PH=[
-    {pose:'tools',   t:'Siapkan alatnya',      h:'Ketuk sikat gigi dan pasta gigi',            say:'Siapkan sikat gigi dan pasta gigi, ya.'},
-    {pose:'paste',   t:'Pasta sebesar kacang', h:'Tahan tombol untuk menekan pasta gigi',      say:'Tekan pasta gigi, sebesar biji kacang saja.'},
-    {pose:'brush-lr',t:'Sikat kiri – kanan',   h:'Geser kiri ← → kanan untuk menyikat',        say:'Bismillah. Sikat ke kiri dan ke kanan.'},
-    {pose:'brush-ud',t:'Sikat atas – bawah',   h:'Geser ke atas ↑ ↓ ke bawah',                 say:'Sekarang sikat ke atas dan ke bawah.'},
-    {pose:'rinse',   t:'Kumur-kumur',          h:'Ketuk gelasnya 3 kali untuk berkumur',       say:'Kumur-kumur, lalu buang airnya.'},
-    {pose:'done',    t:'Gigi bersih!',         h:'Alhamdulillah, gigi bersih dan putih',       say:'Alhamdulillah, gigi bersih dan putih!'}
+    {pose:'tools-ready', t:'Siapkan alatnya',      h:'Ketuk sikat gigi dan pasta gigi',            say:'Siapkan sikat gigi dan pasta gigi, ya.'},
+    {pose:'tools-both',  t:'Pasta sebesar kacang', h:'Tahan tombol untuk menekan pasta gigi',      say:'Tekan pasta gigi, sebesar biji kacang saja.'},
+    {pose:'brush-left',  t:'Sikat kiri – kanan',   h:'Geser kiri ← → kanan untuk menyikat',        say:'Bismillah. Sikat ke kiri dan ke kanan.'},
+    {pose:'brush-up',    t:'Sikat atas – bawah',   h:'Geser ke atas ↑ ↓ ke bawah',                 say:'Sekarang sikat ke atas dan ke bawah.'},
+    {pose:'brush-done',  t:'Kumur-kumur',          h:'Ketuk gelasnya 3 kali untuk berkumur',       say:'Kumur-kumur, lalu buang airnya.'},
+    {pose:'rinse-clean', t:'Gigi bersih!',         h:'Alhamdulillah, gigi bersih dan putih',       say:'Alhamdulillah, gigi bersih dan putih!'}
   ];
   var cur=-1, finished=false;
-  ['tools','paste','brush-lr','brush-ud','rinse','done'].forEach(function(n){var i=new Image();i.src='mo-brush/'+n+'.webp';});
+  /* mo-dream/: one Baby Mo frame per moment, all drawn from the same spot so a swap reads as motion */
+  var MOD=function(n){ return 'mo-dream/mo-dream-'+n+'.webp'; };
+  ['tools-ready','tools-brush','tools-paste','tools-both','tools-squeeze','tools-set','brush-left','brush-right','brush-up','brush-down','brush-back','brush-done',
+   'rinse-sip','rinse-gargle','rinse-wipe','rinse-clean','rinse-done'].forEach(function(n){var i=new Image();i.src=MOD(n);});
 
   wrap.innerHTML=
     '<div class="shead"><div class="snum">Langkah 1 dari 4</div><div class="stitle">'+ic('brush')+'Gosok Gigi</div><div class="shint" id="bhint"></div></div>'
     +'<div class="bsteps" id="bsteps">'+PH.map(function(p,i){return '<i data-i="'+i+'">'+(i+1)+'</i>';}).join('')+'</div>'
     +'<div class="bstage"><div class="bglow" id="bglow"></div>'
-    +'<img id="bpose" class="bpose" src="mo-brush/tools.webp" alt="Baby Mo">'
+    +'<img id="bpose" class="bpose" src="mo-dream/mo-dream-tools-ready.webp" alt="Baby Mo">'
     +'<div class="bfoam" id="bfoam"></div><div class="bspark" id="bspark"></div>'
     +'<div class="blabel" id="blabel"></div></div>'
     +'<div class="bplay" id="bplay"></div>'
@@ -1212,8 +1335,10 @@ function buildBrush(wrap,done){
   var pose=document.getElementById('bpose'), play=document.getElementById('bplay');
   function setPose(n){
     pose.classList.remove('pop'); void pose.offsetWidth;
-    pose.src='mo-brush/'+n+'.webp'; pose.classList.add('pop');
+    pose.src=MOD(n); pose.classList.add('pop');
   }
+  /* quick frame swap without the pop (brushing / squeezing loops) */
+  function frame(n){ var u=MOD(n); if(pose.getAttribute('src')!==u) pose.src=u; }
   function nudge(cls){ pose.classList.remove('wl','wr','wu','wd','sw'); void pose.offsetWidth; pose.classList.add(cls); }
   function foam(){
     var f=document.getElementById('bfoam'); if(!f)return;
@@ -1243,8 +1368,8 @@ function buildBrush(wrap,done){
     play.querySelectorAll('.btool').forEach(function(btn){
       btn.addEventListener('click',function(e){
         if(got[btn.dataset.k])return; got[btn.dataset.k]=1; btn.classList.add('ok'); vib(30); bubbleSound(); addRipple(btn,e,'rgba(62,207,184,.3)');
-        nudge(btn.dataset.k==='b'?'wl':'wr');
-        if(got.b&&got.p) setTimeout(next,650);
+        setPose(got.b&&got.p?'tools-both':got.b?'tools-brush':'tools-paste');
+        if(got.b&&got.p) setTimeout(next,850);
       });
     });
   }
@@ -1285,13 +1410,13 @@ function buildBrush(wrap,done){
     function loop(ts){
       if(holding){ if(!last)last=ts; var dt=Math.min(.05,(ts-last)/1000); last=ts; v=Math.min(1,v+dt/1.3); setMeter(v, Math.round(v*100)+'%'); }
       draw(ts);
-      if(v>=1&&!done2){ done2=true; holding=false; tube.classList.remove('sq'); tube.classList.add('up'); hold.classList.add('ok'); hold.innerHTML=ic('check')+'<b class="bhl">Pas, sebesar kacang!</b>'; vib(60); sparkleSound();
+      if(v>=1&&!done2){ done2=true; holding=false; setPose('tools-set'); tube.classList.remove('sq'); tube.classList.add('up'); hold.classList.add('ok'); hold.innerHTML=ic('check')+'<b class="bhl">Pas, sebesar kacang!</b>'; vib(60); sparkleSound();
         setTimeout(function(){ if(!RM) blob.parentNode.classList.add('blobdone'); },250); setTimeout(next,1000); }
       if(holding||Math.abs(sv)>.002||Math.abs(sc-Math.min(PEA,v*1.15))>.002) raf=requestAnimationFrame(loop); else raf=null;
     }
     function kick(){ if(!raf) raf=requestAnimationFrame(loop); }
-    function down(e){ if(v>=1)return; e.preventDefault(); holding=true; last=0; hold.classList.add('press'); tube.classList.add('sq'); nudge('wd'); kick(); }
-    function up(){ holding=false; hold.classList.remove('press'); tube.classList.remove('sq'); }
+    function down(e){ if(v>=1)return; e.preventDefault(); holding=true; last=0; hold.classList.add('press'); tube.classList.add('sq'); frame('tools-squeeze'); kick(); }
+    function up(){ holding=false; hold.classList.remove('press'); tube.classList.remove('sq'); if(v<1) frame('tools-both'); }
     hold.addEventListener('pointerdown',down); hold.addEventListener('pointerup',up); hold.addEventListener('pointerleave',up); hold.addEventListener('pointercancel',up);
     hold.addEventListener('contextmenu',function(e){e.preventDefault();});
     setMeter(0,'0%');
@@ -1308,6 +1433,7 @@ function buildBrush(wrap,done){
     function stroke(dir){
       if(dir===lastDir||count>=NEED)return; lastDir=dir; count++;
       vib(28); playBrushSound(); foam(); foam(); brushTrail(zone, br);
+      frame(vert?(dir==='A'?'brush-up':'brush-down'):(count===3?'brush-back':(dir==='A'?'brush-left':'brush-right')));
       nudge(vert?(dir==='A'?'wu':'wd'):(dir==='A'?'wl':'wr'));
       setMeter(count/NEED, count+'/'+NEED);
       document.getElementById('bglow').style.opacity=(0.25+0.5*count/NEED);
@@ -1347,7 +1473,7 @@ function buildBrush(wrap,done){
     setMeter(0,'0/3');
     var cup=document.getElementById('bcup'), lvl=document.getElementById('wdLevel'), lbl=document.getElementById('wdLbl');
     cup.addEventListener('click',function(e){
-      if(n>=3)return; n++; vib(30); bubbleSound(); nudge('sw');
+      if(n>=3)return; n++; vib(30); bubbleSound(); setPose(['rinse-sip','rinse-gargle','rinse-wipe'][n-1]);
       cup.classList.remove('boing'); void cup.offsetWidth; cup.classList.add('boing');
       lvl.style.transform='translateY('+(64-n*24)+'px)';
       splashDrops(cup);
@@ -1361,6 +1487,7 @@ function buildBrush(wrap,done){
     var s=document.getElementById('bspark');
     for(var i=0;i<10;i++){ var k=document.createElement('span'); k.innerHTML=IC.sparkle; k.style.left=(10+Math.random()*80)+'%'; k.style.top=(8+Math.random()*60)+'%'; k.style.animationDelay=(i*0.08)+'s'; s.appendChild(k); }
     sparkleSound(); vib([40,40,80]);
+    setTimeout(function(){ setPose('rinse-done'); },1100);
     document.querySelectorAll('#bsteps i').forEach(function(d){ d.className='ok'; });
     document.getElementById('bdone').style.display='block';
     finished=true;
@@ -1375,9 +1502,11 @@ function buildBrush(wrap,done){
    the nightcap pops onto his head and the teddy joins him.
 ══════════════════════════════════════════ */
 function buildPajamas(wrap,done){
-  var BASE='baby-mo-poses/baby-mo-pose-22.webp';
-  var PJ={top:'baby-mo-poses/baby-mo-pj-top.webp',pants:'baby-mo-poses/baby-mo-pj-pants.webp',both:'baby-mo-poses/baby-mo-pj-both.webp'};
-  [BASE,PJ.top,PJ.pants,PJ.both].forEach(function(u){var i=new Image();i.src=u;});
+  /* mo-dream/: the same stance in every frame; only the clothes change, in whatever order the child picks */
+  var M=function(n){ return 'mo-dream/mo-dream-'+n+'.webp'; };
+  var BASE=M('pj-day');
+  var PJ={top:M('pj-top'),pants:M('pj-pants'),both:M('pj-both'),cap:M('pj-cap'),teddy:M('pj-teddy')};
+  [BASE,PJ.top,PJ.pants,PJ.both,PJ.cap,PJ.teddy].forEach(function(u){var i=new Image();i.src=u;});
   var HOOK='<svg class="hook" viewBox="0 0 30 16" aria-hidden="true"><path d="M15 9.5V6.2a2.8 2.8 0 1 1 2.8-2.8" fill="none" stroke="#F3EFFF" stroke-width="1.8" stroke-linecap="round"/><path d="M2.5 15.2 15 8.6l12.5 6.6" fill="none" stroke="#F3EFFF" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   var items=[
     {k:'top',  icon:'shirt', label:'Baju Tidur',   hang:true,  at:[47,57]},
@@ -1413,9 +1542,11 @@ function buildPajamas(wrap,done){
   function pop(){ mo.classList.remove('pop'); void mo.offsetWidth; mo.classList.add('pop'); }
   function wear(i){
     var it=items[i]; if(has[it.k])return; has[it.k]=1; count++;
-    if(it.k==='top'||it.k==='pants'){ img.src = has.top&&has.pants ? PJ.both : has.top ? PJ.top : PJ.pants; }
-    if(it.k==='cap') document.getElementById('pjcap').classList.add('on');
-    if(it.k==='teddy') document.getElementById('pjted').classList.add('on');
+    /* full pajamas → the drawn frames take over the nightcap and the teddy; before that they are small overlays */
+    var pj=has.top&&has.pants;
+    img.src = pj ? (has.cap&&has.teddy ? PJ.teddy : has.cap ? PJ.cap : PJ.both) : has.top ? PJ.top : has.pants ? PJ.pants : BASE;
+    document.getElementById('pjcap').classList.toggle('on', !!has.cap && !pj);
+    document.getElementById('pjted').classList.toggle('on', !!has.teddy && !(pj&&has.cap));
     pop(); burst(it.at[0],it.at[1]); bubbleSound(); vib(45);
     var c=document.querySelector('#pjchk span[data-k="'+it.k+'"]'); if(c)c.classList.add('done');
     if(count>=items.length&&!finished){
@@ -1478,6 +1609,9 @@ function buildDoa(wrap,done){
   var FULL={ar:'بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ', lat:'Bismika Allāhumma aḥyā wa bismika amūtu', mean:'Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati', sAr:'باسمك اللهم أحيا وباسمك أموت', sId:'Bismika Allāhumma ahyā wa bismika amūt', clip:'doa-voice/d-sleep.mp3?v=algenib'};
   var STEPS=[PARTS[0],PARTS[1],FULL];
   var doneAll=false, playing=false;
+  ['dua-start','dua-read','dua-amin'].forEach(function(n){var i=new Image();i.src='mo-dream/mo-dream-'+n+'.webp';});
+  function moDua(n){ var m=document.getElementById('doaMo'); if(!m) return; var u='mo-dream/mo-dream-'+n+'.webp'; if(m.getAttribute('src')===u) return;
+    m.src=u; m.parentNode.classList.remove('pop'); void m.offsetWidth; m.parentNode.classList.add('pop'); }
 
   var WAVE='<div style="width:3px;height:6px;border-radius:2px;background:rgba(200,144,64,.55);animation:wv .44s 0s ease-in-out infinite;transform-origin:bottom;"></div>'
     +'<div style="width:3px;height:12px;border-radius:2px;background:rgba(200,144,64,.6);animation:wv .52s .08s ease-in-out infinite;transform-origin:bottom;"></div>'
@@ -1491,7 +1625,7 @@ function buildDoa(wrap,done){
 
       /* Baby Mo + speech bubble */
       +'<div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">'
-      +'<img src="baby-mo-poses/baby-mo-thank-you.webp" alt="Baby Mo" class="mo-head" style="width:50px;height:50px;">'
+      +'<div class="doamo" aria-hidden="true"><img id="doaMo" src="mo-dream/mo-dream-dua-start.webp" alt=""></div>'
       +'<div style="flex:1;background:rgba(44,90,62,.18);border:1px solid rgba(93,170,120,.22);border-radius:0 14px 14px 14px;padding:8px 12px;font-size:12.5px;font-weight:700;color:var(--cream);line-height:1.45;">Dengarkan doanya, lalu tirukan pelan-pelan ya sayang'+ic('moon','','margin-left:4px;width:15px;height:15px')+'</div>'
       +'</div>'
 
@@ -1537,7 +1671,7 @@ function buildDoa(wrap,done){
   var au=window.__dreamAu;
   if(!au){ au=window.__dreamAu=new Audio(); au.preload='auto'; try{au.setAttribute('playsinline','');au.playsInline=true;}catch(e){} }
   function speakStep(s,cb){
-    playing=true; wave(true); arHL(true);
+    playing=true; wave(true); arHL(true); moDua('dua-read');
     /* one voice only: the recorded Arabic du'a (same voice as Doa Harian). Device speech is just a fallback. */
     if(s.clip && !s.noClip){
       var fin=false, started=false, lastT=-1, still=0, t0=Date.now();
@@ -1577,7 +1711,7 @@ function buildDoa(wrap,done){
     pa.disabled=true; pa.classList.add('playing'); pa.innerHTML=paHTML('playing'); pa.style.animation='';
     function go(i){
       if(i>=STEPS.length){
-        doneAll=true;
+        doneAll=true; moDua('dua-amin');
         pa.disabled=false; pa.classList.remove('playing'); pa.classList.add('again'); pa.innerHTML=paHTML('again');
         var lj=document.getElementById('doaLanjut');
         if(lj){lj.disabled=false; lj.style.opacity='1'; lj.classList.add('unlocked'); aamBurst(lj);}
@@ -1597,7 +1731,7 @@ function buildDoa(wrap,done){
     speechSynthesis.cancel(); try{au.pause();}catch(e){}
     wrap.innerHTML=
       '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:32px 24px;text-align:center;">'
-      +'<div style="width:72px;height:72px;margin-bottom:12px;animation:fl 2s ease-in-out infinite;">'+IC.hands+'</div>'
+      +'<img src="mo-dream/mo-dream-dua-amin.webp" alt="Baby Mo" style="width:150px;height:150px;object-fit:contain;margin-bottom:6px;animation:fl 2.4s ease-in-out infinite;filter:drop-shadow(0 10px 18px rgba(0,0,0,.35))">'
       +'<div style="font-size:26px;font-weight:900;color:var(--gold-lt);margin-bottom:8px;">Aamiin ya Rabb...</div>'
       +'<div style="font-family:\'Scheherazade New\',serif;font-size:22px;color:var(--gold);direction:rtl;margin-bottom:10px;">بِاسْمِكَ اللَّهُمَّ أَحْيَا وَبِاسْمِكَ أَمُوتُ</div>'
       +'<div style="font-size:14px;color:var(--cream-dim);line-height:1.6;">Bismika Allāhumma aḥyā wa bismika amūtu<br><span style="font-size:12px;opacity:.7;">Dengan nama-Mu ya Allah aku hidup dan dengan nama-Mu aku mati</span></div>'
@@ -1667,7 +1801,7 @@ function buildBlanket(wrap,done){
     '<div class="shead"><div class="snum">Langkah 4 dari 4</div><div class="stitle" id="blt">'+ic('moon')+'<span>Tarik Selimut</span></div><div class="shint" id="blh">Seret selimut ke atas untuk tidur!</div></div>'
     +'<div class="bedwrap" id="dz" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Tarik selimut">'
     +'<div class="bedscene" id="bsc">'+room
-    +'<div class="bedmo" id="bmo"><img class="awake" src="baby-mo-poses/baby-mo-pose-22.webp" alt="Baby Mo"><img class="sleep" src="baby-mo-poses/baby-mo-pose-07.webp" alt=""></div>'
+    +'<div class="bedmo" id="bmo"><img class="awake" src="mo-dream/mo-dream-bed-wave.webp" alt="Baby Mo"><img class="yawn" src="mo-dream/mo-dream-bed-yawn.webp" alt=""><img class="sleep" src="mo-dream/mo-dream-bed-sleep.webp" alt=""></div>'
     +quilt+fxl
     +'<div class="bedzz"><b>z</b><b>z</b><b>Z</b></div>'
     +'<div class="bedhint" id="bhn"><i class="ar">'+IC.chev.replace('<svg','<svg style="transform:rotate(-90deg)"')+'</i><i class="hh">'+IC.hand+'</i></div>'
@@ -1723,6 +1857,7 @@ function buildBlanket(wrap,done){
     E.dim.setAttribute('opacity',finished?'.5':(cov*.12).toFixed(3));
     dz.setAttribute('aria-valuenow',Math.round(cov*100));
     sc.classList.toggle('asleep',finished||p>.62);
+    sc.classList.toggle('half',!finished&&p>.28&&p<=.62);
   }
   function step(ts){
     var dt=last?Math.min(.034,(ts-last)/1000):1/60; last=ts;

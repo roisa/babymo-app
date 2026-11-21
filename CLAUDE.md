@@ -13,7 +13,12 @@
    with magenta screens, daily routine, hooks, endings. Use it for animated marketing (TikTok, Reels,
    Promo Studio) as a set — don't mix render 3 and render 1 Mo in the same frame. Not for in-app art,
    App Store screenshots or banners (render 1 stays first there). Lives outside `www/`, so it never ships.
-4. **No old "good words" (Kata Baik) poses.** The old blurry Kata Baik Mo cutouts were removed
+4. **Dreamtime frames = `www/mo-dream/`.** 30 in-app poses made with ChatGPT from render-1 references
+   (22 Nov 2026; sheets in `art/mo-dream-sheets/`): brushing teeth (tools, brushing loops, rinse), the
+   pajama states (day → top / trousers → full → nightcap → teddy), du'a and bed. Each set shares one
+   stance and position so swapping frames reads as motion. Use them only in Dreamtime; elsewhere
+   render 1 stays first.
+5. **No old "good words" (Kata Baik) poses.** The old blurry Kata Baik Mo cutouts were removed
    (`baby-mo-dua-smile`, `babymo-companion/mo-assets/*`). Don't bring them back.
 
 ## Other standing rules
