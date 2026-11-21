@@ -4,6 +4,7 @@
   "Gosok Gigi": "Brush Teeth", "Ganti Baju": "Change Clothes", "Baca Doa": "Read the Du'a", "Tarik Selimut": "Pull Up the Blanket", "Tarik selimut": "Pull up the blanket",
   "Selamat Tidur!": "Good Night!", "Baby Mo sudah tidur...": "Baby Mo is asleep...", "Gigi bersih & putih!": "Clean & white teeth!",
   "Ketuk atau seret bajunya ke Baby Mo!": "Tap or drag the clothes onto Baby Mo!", "Topi Tidur": "Nightcap", "Boneka": "Teddy",
+  "Pilih piyama untuk Baby Mo!": "Choose the pajamas for Baby Mo!", "Pakaikan Piyamanya": "Put On the Pajamas",
   "Aamiin — Lanjut Tidur": "Aamiin — Go to Sleep", "Masya Allah, kamu sudah hafal doanya!": "Masha Allah, you know the du'a!",
   "Dengarkan doanya, lalu tirukan pelan-pelan ya sayang": "Listen to the du'a, then repeat it slowly, sweetheart",
   "4 langkah malam bersama Baby Mo": "4 bedtime steps with Baby Mo", "Mimpi yang indah ya": "Sweet dreams", "sayang...": "sweetheart...",
