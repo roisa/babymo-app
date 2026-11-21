@@ -481,7 +481,7 @@ html[lang="id"] .dh-title .t2,html:not([lang="en"]) .dh-title .t2{font-size:clam
 /* start */
 .dh-go{position:relative;display:flex;align-items:center;justify-content:center;gap:4px;width:100%;margin-top:14px}
 .dh-burst{width:28px;height:36px;flex:0 0 auto;animation:dhTw 1.8s ease-in-out infinite}
-#s-home .dh-go .gbtn{flex:0 1 330px;justify-content:center;min-height:62px;padding:0 24px;gap:12px;font:700 clamp(22px,6.4vw,26px)/1 'Fredoka','Nunito',sans-serif;
+#s-home .dh-go .gbtn{flex:0 1 360px;justify-content:center;min-height:62px;padding:0 24px;gap:12px;font:700 clamp(22px,6.4vw,26px)/1 'Fredoka','Nunito',sans-serif;
   background:linear-gradient(180deg,#6BE58A 0%,#2DC25A 55%,#1FA64B 100%);text-shadow:0 1px 2px rgba(0,80,20,.35);animation:dhGlow 2.6s ease-in-out infinite;
   box-shadow:inset 0 16px 14px -12px rgba(255,255,255,.45),inset 0 1px 0 rgba(255,255,255,.6),0 12px 26px -10px rgba(40,200,90,.55)!important}
 @keyframes dhGlow{0%,100%{filter:drop-shadow(0 0 0 rgba(90,230,130,0))}50%{filter:drop-shadow(0 0 12px rgba(90,230,130,.45))}}
@@ -972,16 +972,17 @@ body.dt-hidecheer #bm-mo{display:none!important}
         <g fill="#fff" opacity=".55"><circle cx="252" cy="40" r="1.6"/><circle cx="262" cy="80" r="1.4"/><circle cx="250" cy="124" r="1.6"/><circle cx="264" cy="164" r="1.4"/></g>
         <rect x="228" y="0" width="440" height="10" rx="5" fill="#7A6BD8"/>
         <!-- nightstand, books and star lamp -->
-        <circle cx="38" cy="168" r="90" fill="url(#dhGlow)"/>
+        <circle cx="30" cy="178" r="90" fill="url(#dhGlow)"/>
         <rect x="-6" y="236" width="84" height="80" rx="6" fill="url(#dgWood)"/>
         <rect x="-8" y="228" width="90" height="12" rx="6" fill="#E9B07B"/>
         <rect x="4" y="256" width="62" height="5" rx="2.5" fill="#8B5530" opacity=".5"/>
         <rect x="32" y="276" width="14" height="6" rx="3" fill="#FFD36B"/>
-        <rect x="6" y="216" width="56" height="12" rx="3" fill="#5B7BE6"/><rect x="10" y="218" width="48" height="3" rx="1.5" fill="#fff" opacity=".5"/>
-        <rect x="2" y="205" width="52" height="11" rx="3" fill="#F2C14E"/><rect x="6" y="207" width="44" height="2.6" rx="1.3" fill="#fff" opacity=".55"/>
-        <rect x="42" y="160" width="7" height="40" rx="3.5" fill="url(#dgWood)"/>
-        <ellipse cx="45.5" cy="202" rx="15" ry="4.5" fill="#C98550"/><ellipse cx="45.5" cy="200.5" rx="12" ry="2.6" fill="#E9B07B"/>
-        <g transform="translate(46 138)">
+        <!-- two little books lying beside the lamp, the lamp stands on the nightstand -->
+        <rect x="52" y="219" width="28" height="9" rx="2.5" fill="#5B7BE6"/><rect x="55" y="221" width="22" height="2.4" rx="1.2" fill="#fff" opacity=".5"/>
+        <rect x="55" y="211" width="23" height="8" rx="2.5" fill="#F2C14E"/><rect x="58" y="213" width="17" height="2.2" rx="1.1" fill="#fff" opacity=".55"/>
+        <rect x="23" y="186" width="7" height="38" rx="3.5" fill="url(#dgWood)"/>
+        <ellipse cx="26.5" cy="226" rx="16" ry="4.5" fill="#C98550"/><ellipse cx="26.5" cy="224.5" rx="13" ry="2.6" fill="#E9B07B"/>
+        <g transform="translate(27 162)">
           <path d="M0-34 11-12 35-9 17 7 22 31 0 19-22 31-17 7-35-9-11-12Z" fill="url(#dgGold)" stroke="#FFE6A0" stroke-width="7" stroke-linejoin="round"/>
           <ellipse cx="-9" cy="-14" rx="6" ry="3.5" fill="#fff" opacity=".6" transform="rotate(-30 -9 -14)"/>
           <circle cx="-7" cy="2" r="2.2" fill="#5B3A10"/><circle cx="7" cy="2" r="2.2" fill="#5B3A10"/>
@@ -1036,9 +1037,7 @@ body.dt-hidecheer #bm-mo{display:none!important}
       </div>
 
       <div class="dh-go">
-        <svg class="dh-burst l" viewBox="0 0 40 50" aria-hidden="true"><g stroke="#FFD84D" stroke-width="5" stroke-linecap="round"><path d="M30 10 20 4M32 25H18M30 40l-10 6"/></g></svg>
         <button class="gbtn" id="btn-start"><svg class="dh-tri" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12.5-7.5Z" fill="#fff" stroke="#fff" stroke-width="2" stroke-linejoin="round"/></svg><span>Mulai Tidur</span></button>
-        <svg class="dh-burst r" viewBox="0 0 40 50" aria-hidden="true"><g stroke="#FFD84D" stroke-width="5" stroke-linecap="round"><path d="M10 10 20 4M8 25h14M10 40l10 6"/></g></svg>
       </div>
       <button class="storychip dh-story dh-glass" id="homeStory" type="button">
         <i class="ic dh-sbook" data-ic="book"></i>
