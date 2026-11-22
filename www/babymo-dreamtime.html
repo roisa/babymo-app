@@ -886,6 +886,44 @@ body.dt-hidecheer #bm-mo{display:none!important}
 #s-steps.duaroom .dbub{flex:0 1 auto!important;max-width:205px;font-size:13px!important;margin-bottom:34px!important}
 @media (max-height:700px){#s-steps.duaroom .doamo{height:120px!important}#s-steps.duaroom .dbub{max-width:180px;font-size:12px!important}#s-steps.lit:not(.duaroom) .bstage{min-width:150px}}
 </style>
+
+<style id="dh-calm">
+/* 29 Nov 2026: calmer front page — one hero action */
+/* 3: the moon streak as one slim row (the explanation stays as a tooltip) */
+#s-home .dh-moonbox{padding:8px 14px!important;gap:10px!important;margin-top:12px!important;max-width:360px!important;background:rgba(255,255,255,.06)!important;border:1px solid rgba(255,255,255,.12)!important;box-shadow:none!important}
+#s-home .dh-moonbox .moonsvg{flex:0 0 32px!important;width:32px!important;height:32px!important}
+#s-home .dh-moonbox .mt{border-left:0!important;padding-left:0!important;display:flex!important;align-items:center;gap:8px;flex-wrap:nowrap;flex:1;min-width:0}
+#s-home .dh-moonbox .mt b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+#s-home .dh-moonbox .mdots{flex:0 0 auto}
+#s-home .dh-moonbox .mt b{font-size:15px!important;color:#F3F0FF!important}
+#s-home .dh-moonbox .mt b .ic{display:none}
+#s-home .dh-moonbox .mt small,#s-home .dh-moonbox .mfull{display:none!important}
+#s-home .dh-moonbox .mdots{margin:0 0 0 auto!important;gap:5px!important}
+#s-home .dh-moonbox .mdots i{width:10px!important;height:10px!important}
+@media (max-width:360px){#s-home .dh-moonbox .mt b{font-size:13.5px!important}#s-home .dh-moonbox .mdots{gap:3px!important}#s-home .dh-moonbox .mdots i{width:8px!important;height:8px!important}}
+/* 4: the four steps as a light preview row (no boxes, no badges) */
+#s-home .dh-steps{gap:4px!important;margin-top:14px!important;max-width:340px!important}
+#s-home .dh-tile{background:none!important;border:0!important;box-shadow:none!important;padding:2px!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#s-home .dh-tile::before,#s-home .dh-tile::after{display:none!important}
+#s-home .dh-tile b{display:none!important}
+#s-home .dh-tile .ic{width:34px!important;height:34px!important;opacity:.95}
+#s-home .dh-tile span{font:600 12.5px/1.15 'Fredoka','Nunito',sans-serif!important;color:#CFC9F5!important;text-shadow:none!important}
+/* 5: the green button is the hero */
+#s-home .dh-go{margin-top:24px!important;margin-bottom:6px}
+#s-home .dh-go .gbtn{min-height:68px!important;flex-basis:100%!important;max-width:360px;border-radius:999px!important}
+/* 6: tonight's story as a quiet text link; Game Hub moved to the corner */
+#s-home .dh-story{background:none!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;min-height:40px!important;margin-top:10px!important;justify-content:center!important;width:auto!important}
+#s-home .dh-story::before,#s-home .dh-story::after{display:none!important}
+#s-home .dh-story .dh-play{display:none!important}
+#homeStoryT{color:#CFC9F5!important;font-size:14.5px!important;text-decoration:underline;text-decoration-color:rgba(207,201,245,.4);text-underline-offset:4px}
+#homeStoryT b,#homeStoryT strong{color:#F3F0FF!important}
+#s-home .dh-hubtop{position:absolute!important;z-index:5;top:calc(12px + env(safe-area-inset-top));right:12px;margin:0!important;width:44px;height:44px;min-height:44px!important;padding:0!important;font-size:0!important;justify-content:center}
+#s-home .dh-hubtop span{display:none!important}
+#s-home .dh-hubtop svg{width:24px!important;height:18px!important;opacity:.85!important}
+/* 7: fewer text colours — titles navy, body lavender-white, gold only for the moon */
+#s-home .dh-title .t2{color:#1E2470!important}
+@media (max-height:700px){#s-home .dh-go{margin-top:14px!important}#s-home .dh-go .gbtn{min-height:58px!important}#s-home .dh-steps{margin-top:8px!important}}
+</style>
 </head>
 <body>
 <!-- shared gradients for the Dreamtime illustrations (kept rendered, never display:none) -->
@@ -930,6 +968,7 @@ body.dt-hidecheer #bm-mo{display:none!important}
 
 <!-- ════ HOME ════ -->
 <div id="s-home" class="screen on" style="background:linear-gradient(180deg,#2B2370 0%,#2A2272 40%,#221B5E 75%,#1B1650 100%);">
+  <a class="dt-hub dh-hub dh-glass dh-hubtop" aria-label="Game Hub" href="./index.html"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M9 3h14a8 8 0 0 1 7.8 9.6l-1.3 6.2a3.6 3.6 0 0 1-6.3 1.6L20.5 17h-9l-2.7 3.4a3.6 3.6 0 0 1-6.3-1.6L1.2 12.6A8 8 0 0 1 9 3Z" fill="url(#dgLav)"/><path d="M9 7.5v6M6 10.5h6" stroke="#3B2F8F" stroke-width="2.2" stroke-linecap="round"/><circle cx="21.5" cy="8.5" r="1.7" fill="#F0699B"/><circle cx="24.5" cy="11.5" r="1.7" fill="#5BD8E8"/><circle cx="21.5" cy="14.2" r="1.7" fill="#FFD36B"/><circle cx="18.6" cy="11.5" r="1.7" fill="#8CE6A0"/></svg><span>Game Hub</span></a>
   <div class="dh-wrap">
     <!-- cosy night bedroom -->
     <div class="dh-scene" aria-hidden="true">
@@ -957,13 +996,13 @@ body.dt-hidecheer #bm-mo{display:none!important}
           <path d="M310 100l1.4 3.6 3.6 1.4-3.6 1.4-1.4 3.6-1.4-3.6-3.6-1.4 3.6-1.4Z" fill="#FFF3CC"/>
         </g>
         <g fill="#fff" opacity=".7"><circle cx="276" cy="80" r="1.4"/><circle cx="380" cy="34" r="1.2"/><circle cx="300" cy="140" r="1"/><circle cx="396" cy="80" r="1.1"/></g>
-        <!-- mosque skyline -->
-        <g fill="#1F1966">
+        <!-- mosque skyline (soft, far away) -->
+        <g fill="#3A3196" opacity=".55">
           <path d="M318 196v-34a22 22 0 0 1 44 0v34Z"/><path d="M340 120q3 4 0 8q-3-4 0-8Z"/><rect x="339" y="126" width="2" height="6"/>
           <rect x="300" y="146" width="9" height="50"/><path d="M298 148l6.5-14 6.5 14Z"/><rect x="372" y="152" width="8" height="44"/><path d="M370 154l6-12 6 12Z"/>
           <path d="M256 196v-16a14 14 0 0 1 28 0v16Z"/><rect x="380" y="176" width="40" height="20"/><path d="M420 196v-12a12 12 0 0 1 24 0v12Z"/><rect x="452" y="168" width="7" height="28"/><path d="M450 170l5.5-11 5.5 11Z"/>
         </g>
-        <g fill="#FFD36B"><rect x="333" y="172" width="5" height="9" rx="2.5"/><rect x="343" y="172" width="5" height="9" rx="2.5"/><rect x="267" y="184" width="4" height="7" rx="2"/></g>
+        <g fill="#FFD36B" opacity=".5"><rect x="333" y="172" width="5" height="9" rx="2.5"/><rect x="343" y="172" width="5" height="9" rx="2.5"/><rect x="267" y="184" width="4" height="7" rx="2"/></g>
         <path d="M336 20v176M496 20v176M256 108h400" stroke="url(#dhFrame)" stroke-width="6"/>
         <rect x="240" y="198" width="430" height="12" rx="5" fill="#B7AAF5"/>
         <!-- curtains -->
@@ -1044,7 +1083,7 @@ body.dt-hidecheer #bm-mo{display:none!important}
         <span id="homeStoryT">Cerita malam ini</span>
         <span class="dh-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 6.5v11l9-5.5Z" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></span>
       </button>
-      <a class="dt-hub dh-hub dh-glass" href="./index.html"><svg viewBox="0 0 32 24" aria-hidden="true"><path d="M9 3h14a8 8 0 0 1 7.8 9.6l-1.3 6.2a3.6 3.6 0 0 1-6.3 1.6L20.5 17h-9l-2.7 3.4a3.6 3.6 0 0 1-6.3-1.6L1.2 12.6A8 8 0 0 1 9 3Z" fill="url(#dgLav)"/><path d="M9 7.5v6M6 10.5h6" stroke="#3B2F8F" stroke-width="2.2" stroke-linecap="round"/><circle cx="21.5" cy="8.5" r="1.7" fill="#F0699B"/><circle cx="24.5" cy="11.5" r="1.7" fill="#5BD8E8"/><circle cx="21.5" cy="14.2" r="1.7" fill="#FFD36B"/><circle cx="18.6" cy="11.5" r="1.7" fill="#8CE6A0"/></svg><span>Game Hub</span></a>
+
     </div>
     <svg class="dh-clouds" aria-hidden="true" focusable="false">
       <defs>
