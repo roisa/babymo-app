@@ -145,6 +145,11 @@ const PAGES = {
     g: 'Doa Ramadan', file: 'babymo-doa-harian', q: '&series=ramadan', lits: [],
     fn: () => window.DOA_SERIES_DATA.duas.map(d => [d.desc, 'id', 'kapan dibaca / when: ' + d.title])
   },
+  // Memory Match: the praise Mo says after every pair (celebrateMatch → speakWord, in the game's language)
+  'babymo-memory-match': {
+    g: 'Memory Match', lits: [],
+    fn: (M) => JOY_WORDS.map(w => [w, M, 'pujian setelah cocok / praise after a match'])
+  },
   'index': {
     g: 'Beranda', lits: ['GREETINGS'],
     fn: (M, X) => {
