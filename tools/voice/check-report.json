@@ -11600,5 +11600,1193 @@
   ],
   "ok": false,
   "file": "www/voice/lines-689b8600.mp3"
+ },
+ {
+  "text": "وَعَلَيْكُمُ السَّلَامُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Wa'alaikumussalam — Dan semoga keselamatan juga untukmu",
+  "heard": [
+   "وعليكم السلام",
+   "عليكم السلام",
+   "و عليكم السلام"
+  ],
+  "ok": true,
+  "file": "www/voice/app-bad33c33.mp3"
+ },
+ {
+  "text": "يَرْحَمُكَ اللَّهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Yarhamukallah — Semoga Allah merahmatimu",
+  "heard": [
+   "يرحمك الله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-3520192b.mp3"
+ },
+ {
+  "text": "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "La Haula wala Quwwata — Tiada daya dan kekuatan kecuali dengan pertolongan Allah",
+  "heard": [
+   "لا حول ولا قوه الا بالله",
+   "لاحول ولا قوه الا بالله",
+   "لاحول ولاقوه الا بالله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-f483ee56.mp3"
+ },
+ {
+  "text": "تَوَكَّلْتُ عَلَى اللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tawakkaltu 'alallah — Aku berserah diri kepada Allah",
+  "heard": [
+   "توكلت على الله",
+   "توكل توكل على الله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-d1535ced.mp3"
+ },
+ {
+  "text": "فِي أَمَانِ اللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Fii Amanillah — Semoga dalam lindungan Allah",
+  "heard": [
+   "في امان الله",
+   "فى امان الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-5ace537c.mp3"
+ },
+ {
+  "text": "آمِينَ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Aamiin — Kabulkanlah, ya Allah",
+  "heard": [
+   "امينه",
+   "امين"
+  ],
+  "ok": false,
+  "file": "www/voice/app-84966d00.mp3"
+ },
+ {
+  "text": "نَعُوذُ بِاللَّهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Na'udzubillah — Kami berlindung kepada Allah",
+  "heard": [
+   "نعوذ بالله",
+   "اعوذ بالله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-578743a9.mp3"
+ },
+ {
+  "text": "أَهْلًا وَسَهْلًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ahlan wa Sahlan — Selamat datang",
+  "heard": [
+   "اهلا وسهلا",
+   "اهلا و سهلا",
+   "يا اهلا و سهلا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-0e3c0368.mp3"
+ },
+ {
+  "text": "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "SubhanAllahi wa Bihamdihi — Maha Suci Allah dan segala puji bagi-Nya",
+  "heard": [
+   "سبحان الله وبحمده",
+   "سبحان الله و بحمده"
+  ],
+  "ok": true,
+  "file": "www/voice/app-16ad115b.mp3"
+ },
+ {
+  "text": "حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hasbunallah wa Ni'mal Wakil — Cukuplah Allah bagi kami, Dialah sebaik-baik pelindung",
+  "heard": [
+   "حزب الله ونعم الوكيل",
+   "حبن الله ونعم الوكيل",
+   "حبون الله ونعم الوكيل"
+  ],
+  "ok": false,
+  "file": "www/voice/app-49119849.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ بَارِكْ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Allahumma Barik — Ya Allah, berkahilah",
+  "heard": [
+   "اللهم بارك",
+   "اللهم زد وبارك",
+   "اللهم زد و بارك"
+  ],
+  "ok": true,
+  "file": "www/voice/app-59f6bba0.mp3"
+ },
+ {
+  "text": "يَهْدِيكُمُ اللَّهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Yahdikumullah — Semoga Allah memberimu petunjuk",
+  "heard": [
+   "يهديكم الله",
+   "يهديك الله",
+   "يهديكم والله"
+  ],
+  "ok": true,
+  "file": "www/voice/app-fada19de.mp3"
+ },
+ {
+  "text": "لَا بَأْسَ طَهُورٌ إِنْ شَاءَ اللَّهُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "La Ba'sa Thahurun — Tidak apa-apa, semoga sakitmu menjadi pembersih dosa, insya Allah",
+  "heard": [
+   "لا باس طهور ان شاء الله",
+   "لا باس طهورا ان شاء الله",
+   "ليه باس طهور ان شاء الله"
+  ],
+  "ok": false,
+  "file": "www/voice/app-5442facc.mp3"
+ },
+ {
+  "text": "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Shalawat — Ya Allah, limpahkanlah shalawat kepada Nabi Muhammad",
+  "heard": [
+   "اللهم صلي على محمد",
+   "اللهم صل على محمد",
+   "اللهم صلى على محمد"
+  ],
+  "ok": true,
+  "file": "www/voice/app-8e1b8d46.mp3"
+ },
+ {
+  "text": "وَإِيَّاكُمْ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Wa Iyyakum — Dan untukmu juga",
+  "heard": [
+   "واياكم",
+   "واياك",
+   "و اياكم"
+  ],
+  "ok": false,
+  "file": "www/voice/app-c10dbd11.mp3"
+ },
+ {
+  "text": "اللَّهُ أَعْلَمُ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Allahu A'lam — Allah yang lebih mengetahui",
+  "heard": [
+   "الله اعلم",
+   "والله اعلم",
+   "و الله اعلم"
+  ],
+  "ok": false,
+  "file": "www/voice/app-0716db49.mp3"
+ },
+ {
+  "text": "مَعَ السَّلَامَةِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Ma'as Salamah — Selamat jalan, semoga selamat",
+  "heard": [
+   "مع السلامه",
+   "مع سلامه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-2e75b2df.mp3"
+ },
+ {
+  "text": "صَبَاحَ الْخَيْرِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Shabahul Khair — Selamat pagi",
+  "heard": [
+   "صباح الخير"
+  ],
+  "ok": true,
+  "file": "www/voice/app-d0629818.mp3"
+ },
+ {
+  "text": "مَسَاءَ الْخَيْرِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Masa'ul Khair — Selamat sore",
+  "heard": [
+   "مساء الخير"
+  ],
+  "ok": true,
+  "file": "www/voice/app-95d048e9.mp3"
+ },
+ {
+  "text": "عَفْوًا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "'Afwan — Sama-sama",
+  "heard": [
+   "عفوا"
+  ],
+  "ok": true,
+  "file": "www/voice/app-f92a421f.mp3"
+ },
+ {
+  "text": "لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "La Tahzan — Jangan bersedih, sesungguhnya Allah bersama kita",
+  "heard": [
+   "لا تحزن ان الله معنا",
+   "ليه تحزن ان الله معنا",
+   "لاتحزن ان الله معنا"
+  ],
+  "ok": false,
+  "file": "www/voice/app-f6dd15fc.mp3"
+ },
+ {
+  "text": "حَيَّ عَلَى الصَّلَاةِ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Hayya 'alash Shalah — Mari kita sholat",
+  "heard": [
+   "حي على الصلاه",
+   "حيا على الصلاه",
+   "هيا على الصلاه"
+  ],
+  "ok": false,
+  "file": "www/voice/app-e8430a36.mp3"
+ },
+ {
+  "text": "تَفَضَّلْ",
+  "lang": "ar",
+  "sec": "app",
+  "hint": "Tafaddhal — Silakan",
+  "heard": [
+   "تفضل",
+   "تفضلي",
+   "تفضلوا"
+  ],
+  "ok": true,
+  "file": "www/voice/app-4b56f08d.mp3"
+ },
+ {
+  "text": "Satelit!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Satellite",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-2ddd312d.mp3"
+ },
+ {
+  "text": "Komet!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Comet",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ccba1ccd.mp3"
+ },
+ {
+  "text": "Teleskop!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Telescope",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-5232347d.mp3"
+ },
+ {
+  "text": "Bendera!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Flag",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ea17406d.mp3"
+ },
+ {
+  "text": "Batu Bulan!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Moon Rock",
+  "heard": [
+   "Batubulan",
+   "Batu Bulan"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-6b3a94b4.mp3"
+ },
+ {
+  "text": "Kendi!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Water Jug",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ea464501.mp3"
+ },
+ {
+  "text": "Kadal!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Lizard",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ae4ebcf6.mp3"
+ },
+ {
+  "text": "Unta!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Camel",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-93bb7307.mp3"
+ },
+ {
+  "text": "Pelita!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Oil Lamp",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-b5f02aa2.mp3"
+ },
+ {
+  "text": "Sarung Tangan!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Mittens",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-6809794f.mp3"
+ },
+ {
+  "text": "Syal!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Scarf",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ce972711.mp3"
+ },
+ {
+  "text": "Rusa!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Deer",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-614aa840.mp3"
+ },
+ {
+  "text": "Penguin!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Penguin",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-65a0e485.mp3"
+ },
+ {
+  "text": "Kereta Luncur!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Sled",
+  "heard": [
+   "kereta luncur",
+   "cerita lucu"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-2360bd79.mp3"
+ },
+ {
+  "text": "Layang-layang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Kite",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ed0cc5e6.mp3"
+ },
+ {
+  "text": "Dadu!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Dice",
+  "heard": [
+   "dadu",
+   "Jadu",
+   "Jadoo"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f7efe692.mp3"
+ },
+ {
+  "text": "Robot!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Robot",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-a745c0aa.mp3"
+ },
+ {
+  "text": "Burung Beo!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Parrot",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-61e79726.mp3"
+ },
+ {
+  "text": "Piring Terbang!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Flying Saucer",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-b7da64ca.mp3"
+ },
+ {
+  "text": "Sepatu Es!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Ice Skate",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-ddf7fb20.mp3"
+ },
+ {
+  "text": "Helikopter!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Helicopter",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-390ebb12.mp3"
+ },
+ {
+  "text": "Satellite!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Satelit",
+  "heard": [
+   "satellite",
+   "satelite",
+   "satellit"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-338f0b6b.mp3"
+ },
+ {
+  "text": "Comet!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Komet",
+  "heard": [
+   "comet",
+   "komet",
+   "commet"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d8be50a9.mp3"
+ },
+ {
+  "text": "Flag!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Bendera",
+  "heard": [
+   "flag",
+   "Flagg",
+   "flaig"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-b9ce7069.mp3"
+ },
+ {
+  "text": "Moon Rock!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Batu Bulan",
+  "heard": [
+   "moon rock",
+   "moonrock",
+   "Moon Roc"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-ed58c308.mp3"
+ },
+ {
+  "text": "Water Jug!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kendi",
+  "heard": [
+   "water jug",
+   "water jugg",
+   "watter jug"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-07953835.mp3"
+ },
+ {
+  "text": "Lizard!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kadal",
+  "heard": [
+   "lizard",
+   "Lazard",
+   "Lihzahrd"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-84fdc091.mp3"
+ },
+ {
+  "text": "Camel!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Unta",
+  "heard": [
+   "camel",
+   "Kamel",
+   "Camal"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-aa769701.mp3"
+ },
+ {
+  "text": "Oil Lamp!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Pelita",
+  "heard": [
+   "oil lamp",
+   "oil Lampe",
+   "Oyl lamp"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-4c8eb395.mp3"
+ },
+ {
+  "text": "Mittens!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sarung Tangan",
+  "heard": [
+   "mittens",
+   "mintons",
+   "mitens"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-6fbadcff.mp3"
+ },
+ {
+  "text": "Scarf!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Syal",
+  "heard": [
+   "scarf",
+   "Scarff",
+   "scarfe"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-8cf2518a.mp3"
+ },
+ {
+  "text": "Deer!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Rusa",
+  "heard": [
+   "deer",
+   "dear",
+   "dire"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-fbda53c4.mp3"
+ },
+ {
+  "text": "Penguin!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Penguin",
+  "heard": [
+   "penguin",
+   "penguen",
+   "pengwing"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-959a42f3.mp3"
+ },
+ {
+  "text": "Sled!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kereta Luncur",
+  "heard": [
+   "sled",
+   "sledd"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-bc6f6068.mp3"
+ },
+ {
+  "text": "Dice!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Dadu",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-a9a648de.mp3"
+ },
+ {
+  "text": "Robot!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Robot",
+  "heard": [
+   "robot",
+   "Rabat",
+   "rabbat"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-a9d57da2.mp3"
+ },
+ {
+  "text": "Parrot!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Burung Beo",
+  "heard": [
+   "compare it",
+   "parrot",
+   "repair it"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-9e7bfd98.mp3"
+ },
+ {
+  "text": "Flying Saucer!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Piring Terbang",
+  "heard": [
+   "Flying Saucer"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-3de561c1.mp3"
+ },
+ {
+  "text": "Ice Skate!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sepatu Es",
+  "heard": [
+   "ice skate",
+   "iced skate",
+   "iceee skate"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-b1ceaac0.mp3"
+ },
+ {
+  "text": "Helicopter!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Helikopter",
+  "heard": [
+   "helicopter",
+   "helikopter",
+   "helicoptor"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-b8404186.mp3"
+ },
+ {
+  "text": "Ka'bah!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Kaaba",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-5cf93b9b.mp3"
+ },
+ {
+  "text": "Masjid!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Mosque",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-59dae977.mp3"
+ },
+ {
+  "text": "Boneka!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Teddy",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-08851be2.mp3"
+ },
+ {
+  "text": "Piyama!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "PJs",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-34dc14a2.mp3"
+ },
+ {
+  "text": "Sikat Gigi!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Brush",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-58bf9f35.mp3"
+ },
+ {
+  "text": "Al-Qur'an!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Quran",
+  "heard": [
+   "Alquran",
+   "al-quran",
+   "Al Quran"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-9090e83d.mp3"
+ },
+ {
+  "text": "Gelas!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cup",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-7c340c0c.mp3"
+ },
+ {
+  "text": "Anggur!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Grapes",
+  "heard": [
+   "anggur",
+   "Anggun"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-a787050b.mp3"
+ },
+ {
+  "text": "Pir!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Pear",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-3678b755.mp3"
+ },
+ {
+  "text": "Ceri!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Cherry",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-d8841621.mp3"
+ },
+ {
+  "text": "Kiwi!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Kiwi",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-1819999d.mp3"
+ },
+ {
+  "text": "Persik!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Peach",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-20f61d88.mp3"
+ },
+ {
+  "text": "Lebah!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Bee",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-501e1ba6.mp3"
+ },
+ {
+  "text": "Kelinci!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Rabbit",
+  "heard": [
+   "kirim",
+   "ciri-ciri"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-74d6dd70.mp3"
+ },
+ {
+  "text": "Semut!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Ant",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-52d3c40b.mp3"
+ },
+ {
+  "text": "Hilal!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "New moon",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-983b0328.mp3"
+ },
+ {
+  "text": "Sahur!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Suhoor",
+  "heard": [
+   "tahu"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-eb26fbe7.mp3"
+ },
+ {
+  "text": "Berdoa!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Du'a",
+  "heard": [
+   "berdoa"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-ea3620f7.mp3"
+ },
+ {
+  "text": "Berbuka!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Iftar",
+  "heard": [
+   "berbuka",
+   "terbuka"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-e7e26da9.mp3"
+ },
+ {
+  "text": "Hadiah!",
+  "lang": "id",
+  "sec": "cari",
+  "hint": "Gift",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/cari-02033cd1.mp3"
+ },
+ {
+  "text": "Kaaba!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Ka'bah",
+  "heard": [
+   "cabba",
+   "Kaaba",
+   "Caba"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-4cc18ff5.mp3"
+ },
+ {
+  "text": "Mosque!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Masjid",
+  "heard": [
+   "mosque",
+   "mosq",
+   "mosuke"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-b719b62b.mp3"
+ },
+ {
+  "text": "PJs!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Piyama",
+  "heard": [
+   "PJs",
+   "PJ's",
+   "pjays"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-03737096.mp3"
+ },
+ {
+  "text": "Quran!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Al-Qur'an",
+  "heard": [
+   "Cordon",
+   "Corden",
+   "cordone"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-90a60eeb.mp3"
+ },
+ {
+  "text": "Cup!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Gelas",
+  "heard": [
+   "cup",
+   "kupp",
+   "cupp"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-94215214.mp3"
+ },
+ {
+  "text": "Slippers!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sandal",
+  "heard": [
+   "slippers"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-f7104078.mp3"
+ },
+ {
+  "text": "Mat!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sajadah",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/cari-f1be0c2e.mp3"
+ },
+ {
+  "text": "Grapes!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Anggur",
+  "heard": [
+   "grapes"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-d1499b89.mp3"
+ },
+ {
+  "text": "Melon!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Semangka",
+  "heard": [
+   "melon",
+   "Mellon",
+   "melin"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-42a92908.mp3"
+ },
+ {
+  "text": "Berry!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Stroberi",
+  "heard": [
+   "Barry",
+   "bar",
+   "Barr"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-57dc4ddd.mp3"
+ },
+ {
+  "text": "Pear!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Pir",
+  "heard": [
+   "pair",
+   "pear",
+   "Pare"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-74e5f193.mp3"
+ },
+ {
+  "text": "Cherry!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Ceri",
+  "heard": [
+   "cherry",
+   "Cheri",
+   "chary"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-2bfab50c.mp3"
+ },
+ {
+  "text": "Kiwi!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kiwi",
+  "heard": [
+   "kiwi",
+   "Keowee",
+   "kewe"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-2c6ff2e1.mp3"
+ },
+ {
+  "text": "Peach!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Persik",
+  "heard": [
+   "Peach",
+   "teach",
+   "pietsch"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-6aec4fe2.mp3"
+ },
+ {
+  "text": "Bee!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Lebah",
+  "heard": [
+   "B",
+   "dub-dub",
+   "boooo"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-efd34f9e.mp3"
+ },
+ {
+  "text": "Rabbit!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Kelinci",
+  "heard": [
+   "rabbit",
+   "rabbet",
+   "Rabbitt"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-0c264cb9.mp3"
+ },
+ {
+  "text": "Ant!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Semut",
+  "heard": [
+   "and",
+   "andt",
+   "annd"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-f444ebf0.mp3"
+ },
+ {
+  "text": "New moon!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Hilal",
+  "heard": [
+   "new moon",
+   "Nu Moon",
+   "knew Moon"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-0ef25cc0.mp3"
+ },
+ {
+  "text": "Suhoor!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Sahur",
+  "heard": [
+   "suhur",
+   "suhor",
+   "suor"
+  ],
+  "ok": false,
+  "file": "www/voice/cari-3328eb70.mp3"
+ },
+ {
+  "text": "Iftar!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Berbuka",
+  "heard": [
+   "iftar",
+   "ifar",
+   "iftaar"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-cfcafd8a.mp3"
+ },
+ {
+  "text": "Gift!",
+  "lang": "en",
+  "sec": "cari",
+  "hint": "Hadiah",
+  "heard": [
+   "gift",
+   "gyft",
+   "gifft"
+  ],
+  "ok": true,
+  "file": "www/voice/cari-11b2dbad.mp3"
  }
 ]
