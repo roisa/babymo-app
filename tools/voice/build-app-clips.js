@@ -112,6 +112,21 @@ const PAGES = {
     if (seen.has(k)) continue; seen.add(k);
     cariList.push({ id: idOf('cari', lang, t), t, lang, sec: 'cari', k: 'name', h: lang === 'id' ? en : idn, g: 'Cari Baby Mo: ' + (lang === 'id' ? 'Indonesia' : 'English') });
   }
+  // Memory Match picture cards (classic deck + Buah / Hewan / Ramadan themes): each card says its name when flipped.
+  // Same section and wording style as Cari Baby Mo, so a word both games use ("Apel") is one clip.
+  const mm = fs.readFileSync(WWW + 'babymo-memory-match.html', 'utf8');
+  const cd0 = mm.indexOf('const CARD_DATA'), cd1 = mm.indexOf('};', cd0);
+  const mmNames = mm.slice(cd0, cd1).split('\n').filter(l => !/speak:/.test(l))           // letter cards speak Arabic instead
+    .map(l => l.match(/label:ML\('((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)'\)/)).filter(Boolean).map(m => [m[1], m[2]]);
+  const man = (() => { try { const c = { window: {} }; require('vm').runInNewContext(fs.readFileSync(WWW + 'voice/manifest.js', 'utf8'), c); return c.window.BM_VOICE || {}; } catch (e) { return {}; } })();
+  const th0 = mm.indexOf('const THEMES'), th1 = mm.indexOf('];', th0);
+  for (const m of mm.slice(th0, th1).matchAll(/\['[^']*','((?:[^'\\]|\\.)*)','((?:[^'\\]|\\.)*)'\]/g)) if (!AR.test(m[2])) mmNames.push([m[1], m[2]]);
+  for (const lang of ['id', 'en']) for (let [idn, en] of mmNames) {
+    idn = idn.replace(/\\'/g, "'"); en = en.replace(/\\'/g, "'");
+    const t = (lang === 'id' ? idn : en) + '!', k = keyOf(lang, t);
+    if (seen.has(k) || man[k]) continue; seen.add(k);                                    // already recorded elsewhere in the app
+    cariList.push({ id: idOf('cari', lang, t), t, lang, sec: 'cari', k: 'name', h: lang === 'id' ? en : idn, g: 'Memory Match: ' + (lang === 'id' ? 'Indonesia' : 'English') });
+  }
   const all = appList.concat(cariList);
   const ids = new Set(all.map(x => x.id)); if (ids.size !== all.length) throw new Error('id clash');
   fs.writeFileSync(path.join(__dirname, 'clips-app.json'), '[\n' + all.map(x => JSON.stringify(x)).join(',\n') + '\n]\n');

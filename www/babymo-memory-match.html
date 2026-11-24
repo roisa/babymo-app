@@ -1549,6 +1549,19 @@ function speakArabic(text) {
   } catch(e) {}
 }
 
+/* Every picture card says its name (Indonesian or English, the game's language). bm-voice.js plays the
+   recorded Baby Mo clip when there is one ("id|apel", the same clips as Cari Baby Mo), else the phone's voice. */
+function speakWord(text) {
+  if (SFX.muted()) return;
+  try {
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(String(text).replace(/<[^>]+>/g, ''));
+    u.lang = MM_EN ? 'en-US' : 'id-ID';
+    u.rate = 0.9; u.pitch = 1.1; u.volume = 1;
+    window.speechSynthesis.speak(u);
+  } catch(e) {}
+}
+
 /* ════════════════════════════════════════════
    CARD CLICK HANDLER
    ════════════════════════════════════════════ */
@@ -1563,7 +1576,7 @@ function handleClick(idx) {
   document.querySelector(`[data-idx="${idx}"]`)?.classList.add('flipped');
 
   const cd = cardFace(card.type);
-  if (cd.speak) speakArabic(cd.speak);
+  if (cd.speak) speakArabic(cd.speak); else if (cd.label) speakWord(cd.label);
 
   if (G.selected.length === 2) {
     G.canFlip = false;
