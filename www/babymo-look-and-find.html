@@ -186,6 +186,16 @@ html[data-bm-theme="classic"] .map-node.is-locked .mp-disc{background:#b9c2bd;}
 .scene-wrap{flex:1;width:100%;position:relative;overflow:hidden;cursor:pointer;}
 .scene-svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;}
 
+/* ===== hide rooms (19+): no bubbles, smaller objects, foreground layer, peekaboo Baby Mo ===== */
+.scene-front{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:24;filter:saturate(1.14) brightness(1.1) contrast(1.02);}
+.hide-room .obj-bubble{width:58px;height:58px;font-size:30px;background:none;border-color:transparent;box-shadow:none;animation:none;transform:translate(-50%,-50%);filter:drop-shadow(0 2px 2px rgba(0,0,0,.22));}
+.hide-room .obj-bubble.ob-mo{width:84px;height:84px;background:none;border-color:transparent;box-shadow:none;}
+.hide-room .obj-bubble.ob-peek img{animation:moPeek 4.6s ease-in-out infinite var(--bf-del,0s);}
+@keyframes moPeek{0%,30%{transform:translateY(62%)}42%,70%{transform:translateY(-12%)}78%{transform:translateY(-2%)}90%,100%{transform:translateY(62%)}}
+.hide-room .obj-bubble.hint{background:radial-gradient(circle,rgba(255,215,63,.55),rgba(255,215,63,0) 70%)!important;}
+.hide-room .obj-bubble.mo-reveal{z-index:48!important}
+.hide-room .obj-bubble.mo-reveal img{animation:none;transform:none}
+@media (prefers-reduced-motion:reduce){.hide-room .obj-bubble.ob-peek img{animation:none;transform:translateY(20%)}}
 /* ===== TAP TARGETS (HTML — iOS safe) ===== */
 .obj-bubble{
   position:absolute;transform:translate(-50%,-50%);
@@ -1101,8 +1111,56 @@ const LEVELS=[
     {id:"mangga",label:"Mangga",e:"🥭",cx:50,cy:83},
     {id:"teratai",label:"Teratai",e:"🪷",cx:13,cy:84},
     {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-15.webp",cx:82,cy:36,mo:true}
+  ]},
+  // 19–23: "hide" rooms — small objects without bubbles that blend into the picture, some half behind the
+  // foreground (getFrontSVG), and a peekaboo Baby Mo who pops up from behind something and ducks again.
+  {id:19,name:"Stasiun Bulan",emoji:"🚀",hide:true,desc:"Mo ngumpet di balik kawah! 🌙",sticker:"🚀",msg:"Subhanallah, luasnya langit! 🌍",
+   objects:[
+    {id:"satelit",label:"Satelit",e:"🛰️",cx:45,cy:32},
+    {id:"komet",label:"Komet",e:"☄️",cx:13,cy:13},
+    {id:"teleskop",label:"Teleskop",e:"🔭",cx:83,cy:64},
+    {id:"bendera",label:"Bendera",e:"🚩",cx:38,cy:69},
+    {id:"batu",label:"Batu Bulan",e:"🪨",cx:9,cy:88},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-wow.webp",cx:79,cy:81,mo:true,peek:true}
+  ]},
+  {id:20,name:"Oasis Gurun",emoji:"🐫",hide:true,desc:"Mo muncul di balik bukit pasir! 🌴",sticker:"🐫",msg:"MasyaAllah, segarnya oasis! 🌴",
+   objects:[
+    {id:"kendi",label:"Kendi",e:"🏺",cx:45,cy:76},
+    {id:"kadal",label:"Kadal",e:"🦎",cx:88,cy:63},
+    {id:"kompas",label:"Kompas",e:"🧭",cx:13,cy:93},
+    {id:"unta",label:"Unta",e:"🐫",cx:68,cy:55},
+    {id:"pelita",label:"Pelita",e:"🪔",cx:33,cy:66},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-26.webp",cx:75,cy:83,mo:true,peek:true}
+  ]},
+  {id:21,name:"Taman Salju",emoji:"⛄",hide:true,desc:"Mo sembunyi di tumpukan salju! ❄️",sticker:"⛄",msg:"Brrr, dingin tapi seru! ❄️",
+   objects:[
+    {id:"sarungtangan",label:"Sarung Tangan",e:"🧤",cx:70,cy:91},
+    {id:"syal",label:"Syal",e:"🧣",cx:92,cy:58},
+    {id:"rusa",label:"Rusa",e:"🦌",cx:14,cy:60},
+    {id:"penguin",label:"Penguin",e:"🐧",cx:44,cy:70},
+    {id:"kereta",label:"Kereta Luncur",e:"🛷",cx:89,cy:95},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-pose-01.webp",cx:18,cy:85,mo:true,peek:true}
+  ]},
+  {id:22,name:"Toko Mainan",emoji:"🧸",hide:true,desc:"Cari mainan yang nyelip di rak! 🪀",sticker:"🪀",msg:"Asyik, mainannya rapi lagi! 🧸",
+   objects:[
+    {id:"yoyo",label:"Yoyo",e:"🪀",cx:22,cy:29},
+    {id:"layang",label:"Layang-layang",e:"🪁",cx:88,cy:43},
+    {id:"dadu",label:"Dadu",e:"🎲",cx:50,cy:57},
+    {id:"robot",label:"Robot",e:"🤖",cx:30,cy:85},
+    {id:"puzzle",label:"Puzzle",e:"🧩",cx:62,cy:70},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-yeyy.webp",cx:75,cy:80,mo:true,peek:true}
+  ]},
+  {id:23,name:"Hutan Hujan",emoji:"🦜",hide:true,desc:"Mo ngintip di balik daun! 🌿",sticker:"🦜",msg:"Subhanallah, hutannya hijau! 🌿",
+   objects:[
+    {id:"beo",label:"Burung Beo",e:"🦜",cx:20,cy:36},
+    {id:"monyet",label:"Monyet",e:"🐒",cx:86,cy:41},
+    {id:"katak",label:"Katak",e:"🐸",cx:40,cy:66},
+    {id:"kupu",label:"Kupu-kupu",e:"🦋",cx:60,cy:47},
+    {id:"pisang",label:"Pisang",e:"🍌",cx:27,cy:75},
+    {id:"babymo",label:"Baby Mo",img:"baby-mo-poses/baby-mo-alright.webp",cx:66,cy:85,mo:true,peek:true}
   ]}
 ];
+
 
 // celebratory poses popped on each find + on the win screen
 const CHEER_POSES=['baby-mo-yeyy','baby-mo-wow','baby-mo-yes','baby-mo-alright','baby-mo-thank-you','baby-mo-ok','baby-mo-pose-26','baby-mo-idea'];
@@ -1133,7 +1191,10 @@ const SECRETS={
   11:{e:'🐑',id:'Domba',en:'Sheep',cx:30,cy:19}, 12:{e:'🐳',id:'Paus',en:'Whale',cx:15,cy:19},
   13:{e:'📒',id:'Buku Catatan',en:'Notebook',cx:45,cy:84}, 14:{e:'🧃',id:'Jus',en:'Juice',cx:51,cy:19},
   15:{e:'🦔',id:'Landak',en:'Hedgehog',cx:57,cy:19}, 16:{e:'🍭',id:'Lolipop',en:'Lollipop',cx:85,cy:83},
-  17:{e:'🌻',id:'Bunga Matahari',en:'Sunflower',cx:58,cy:19}, 18:{e:'🍊',id:'Jeruk',en:'Orange',cx:50,cy:19}
+  17:{e:'🌻',id:'Bunga Matahari',en:'Sunflower',cx:58,cy:19}, 18:{e:'🍊',id:'Jeruk',en:'Orange',cx:50,cy:19},
+  19:{e:'🛸',id:'Piring Terbang',en:'Flying Saucer',cx:60,cy:17}, 20:{e:'🫖',id:'Teko',en:'Teapot',cx:24,cy:80},
+  21:{e:'⛸️',id:'Sepatu Es',en:'Ice Skate',cx:26,cy:70}, 22:{e:'🚁',id:'Helikopter',en:'Helicopter',cx:64,cy:31},
+  23:{e:'🐢',id:'Kura-kura',en:'Turtle',cx:70,cy:64}
 };
 const TORCH_UNLOCK=6;          // Mode Senter opens after 6 places
 let X=(()=>{try{const x=JSON.parse(localStorage.getItem('bmo2_x'));if(x&&typeof x==='object')return x;}catch(e){}return{};})();
@@ -1276,7 +1337,8 @@ function svgToScreen(px,py){
 function buildScene(lv){
   const wrap=document.getElementById('scene-wrap');
   // Remove old SVG and bubbles
-  wrap.querySelectorAll('.scene-svg,.obj-bubble').forEach(e=>e.remove());
+  wrap.querySelectorAll('.scene-svg,.scene-front,.obj-bubble').forEach(e=>e.remove());
+  wrap.classList.toggle('hide-room',!!lv.hide);
 
   // Insert SVG background
   const parser=new DOMParser();
@@ -1289,7 +1351,7 @@ function buildScene(lv){
   OBJS.forEach((obj,i)=>{
     if(found.has(obj.id))return;
     const div=document.createElement('div');
-    div.className='obj-bubble'+(obj.mo?' ob-mo':'')+(obj.secret?' ob-secret':'');
+    div.className='obj-bubble'+(obj.mo?' ob-mo':'')+(obj.secret?' ob-secret':'')+(obj.peek?' ob-peek':'');
     div.setAttribute('data-id',obj.id);
     div.setAttribute('data-svgx',(obj.cx/100)*VBW);
     div.setAttribute('data-svgy',(obj.cy/100)*VBH);
@@ -1312,6 +1374,12 @@ function buildScene(lv){
     wrap.appendChild(div);
   });
 
+  // foreground layer above the objects (taps pass through it to the objects behind)
+  const front=getFrontSVG(lv.id);
+  if(front){
+    const fd=parser.parseFromString(`<svg xmlns="http://www.w3.org/2000/svg" class="scene-front" viewBox="0 0 ${VBW} ${VBH}" preserveAspectRatio="xMidYMid slice">${front}</svg>`,'image/svg+xml');
+    wrap.appendChild(fd.documentElement);
+  }
   positionBubbles();
 }
 
@@ -1749,6 +1817,14 @@ function mapBgSVG(ps){
   o+=`<g stroke="#e8f8ff" stroke-width="2.2" fill="none" stroke-linecap="round" opacity=".8">`+_rep(14,i=>`<path class="mw" style="--d:${(2.4+r()*2).toFixed(1)}s" d="M${(W0+40+i*112).toFixed(0)} ${(ry-16+r()*30).toFixed(0)} q8 -5 16 0 q8 5 16 0"/>`)+`</g>`;
   o+=_emo(40,ry+10,'🛶',28,'mb',3.2,0)+_emo(-140,ry+6,'🛶',26,'mb',3.6,.6)+_emo(560,ry,'🛶',26,'mb',3.4,1)+_emo(340,ry+20,'🪷',16,'mb',2.8,.3);
   o+=_tree(330,y(17)+110,1)+_tree(40,y(17)+120,1.1)+_flowers(110,MAP_END.y+40,['#ff7a9a','#ffd166'])+_flowers(266,MAP_END.y+44,['#b197fc','#ff7a9a']);
+  // ---- zones 19–23: moon station, desert oasis, snow park, toy shop, rainforest (landmark on the far side of each stop) ----
+  if(ps.length>22){
+    o+=`<g transform="translate(300 ${y(18)})"><ellipse cx="0" cy="40" rx="46" ry="8" fill="#000" opacity=".12"/><path d="M-10 36 V-20 Q0 -54 10 -20 V36Z" fill="#fff" stroke="#c3cbe4"/><path d="M-10 -20 Q0 -54 10 -20Z" fill="#ff6b6b"/><circle cy="-6" r="5" fill="#5ab8f5" stroke="#fff" stroke-width="2"/><path d="M-10 12 L-20 34 L-10 30Z M10 12 L20 34 L10 30Z" fill="#ff6b6b"/></g>`+_emo(350,y(18)-40,'🌙',22,'mb',3.4,0)+_emo(250,y(18)-60,'⭐',14,'mb',2.6,.5);
+    o+=`<g transform="translate(70 ${y(19)+20})"><ellipse cx="0" cy="26" rx="70" ry="14" fill="#f3c47a"/><ellipse cx="0" cy="24" rx="34" ry="8" fill="#5fc8ea"/></g>`+_emo(40,y(19)+10,'🌴',38,'',0,0)+_emo(104,y(19)+14,'🐫',28,'mb',3.2,0);
+    o+=`<g transform="translate(300 ${y(20)+10})"><ellipse cx="0" cy="30" rx="60" ry="14" fill="#fff" opacity=".9"/></g>`+_emo(296,y(20)+30,'⛄',40,'',0,0)+_pine(350,y(20)+40,.8)+_pine(250,y(20)+46,.7);
+    o+=`<g transform="translate(64 ${y(21)})"><rect x="-26" y="-6" width="52" height="40" rx="5" fill="#ff8a3a"/><path d="M-26 -6 L-34 -26 L30 -26 L26 -6Z" fill="#ffb347"/><circle cy="14" r="9" fill="#fff"/><path d="M0 8 l2 4 l4 1 l-3 3 l1 4 l-4 -2 l-4 2 l1 -4 l-3 -3 l4 -1Z" fill="#ffd166"/></g>`+_emo(64,y(21)-34,'🪀',18,'mb',2.8,0)+_emo(110,y(21)-10,'🧸',22,'mb',3.4,.4);
+    o+=_tree(300,y(22)+20,1.2,['#2f8f4a','#3fa95a','#4fb35c'])+_tree(350,y(22)+50,1,['#2f8f4a','#3fa95a','#4fb35c'])+_emo(320,y(22)-50,'🦜',20,'mfl',5,0);
+  }
   // scattered trees on the far sides (landscape / iPad)
   for(let yy=260;yy<H-80;yy+=150){
     const lx=-120-r()*400,rx=480+r()*400;
@@ -1832,6 +1908,286 @@ function layoutMap(){
 // =============================================
 // SCENE SVGS
 // =============================================
+// 19 — Stasiun Bulan (moon station): Earth rising, rings planet, lunar base, rover, crater rim in front
+function spaceSVG(){const r=_rng(1919);return`<defs>
+<linearGradient id="spSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b0a2e"/><stop offset=".55" stop-color="#241b5e"/><stop offset="1" stop-color="#3b2a7a"/></linearGradient>
+<radialGradient id="spNeb" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#c06bd8" stop-opacity=".45"/><stop offset="1" stop-color="#c06bd8" stop-opacity="0"/></radialGradient>
+<radialGradient id="spNeb2" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#4fc3f7" stop-opacity=".35"/><stop offset="1" stop-color="#4fc3f7" stop-opacity="0"/></radialGradient>
+<radialGradient id="spEarth" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#8fe0ff"/><stop offset=".6" stop-color="#2f8fe0"/><stop offset="1" stop-color="#1b4fa0"/></radialGradient>
+<linearGradient id="spPlan" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffd28a"/><stop offset="1" stop-color="#f08a5d"/></linearGradient>
+<linearGradient id="spGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b9b3d8"/><stop offset="1" stop-color="#8a82b8"/></linearGradient>
+<linearGradient id="spGround2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9d96c8"/><stop offset="1" stop-color="#6f67a3"/></linearGradient>
+<linearGradient id="spDome" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e9f6ff" stop-opacity=".95"/><stop offset="1" stop-color="#9fd4f5" stop-opacity=".75"/></linearGradient>
+<linearGradient id="spMetal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e8ecf8"/><stop offset=".5" stop-color="#ffffff"/><stop offset="1" stop-color="#c3cbe4"/></linearGradient>
+</defs>
+<rect width="375" height="420" fill="url(#spSky)"/>
+<ellipse cx="90" cy="120" rx="150" ry="70" fill="url(#spNeb)"/><ellipse cx="300" cy="70" rx="120" ry="60" fill="url(#spNeb2)"/>
+<g fill="#fff">${_rep(70,i=>{const x=(r()*375).toFixed(0),y=(r()*230).toFixed(0),s=(r()*1.4+.4).toFixed(1);return i%5?`<circle cx="${x}" cy="${y}" r="${s}" opacity="${(.4+r()*.6).toFixed(2)}"/>`:`<circle class="amb-tw" style="--d:${(2+r()*3).toFixed(1)}s;--dl:${(r()*2).toFixed(1)}s" cx="${x}" cy="${y}" r="${(+s+.6).toFixed(1)}"/>`;})}</g>
+<line class="amb-shoot" x1="40" y1="30" x2="110" y2="60" stroke="#fff" stroke-width="2" stroke-linecap="round"/>
+<!-- Earth -->
+<g><circle cx="300" cy="72" r="38" fill="url(#spEarth)"/>
+<path d="M280 52 q10 -8 20 0 q6 8 -4 14 q-12 4 -16 -6Z M310 80 q12 -6 18 4 q-4 12 -16 10 q-8 -6 -2 -14Z M272 84 q6 -4 10 2 q-2 6 -8 6Z" fill="#6cd38a"/>
+<path d="M270 60 q30 -14 60 4" stroke="#fff" stroke-width="5" fill="none" opacity=".55" stroke-linecap="round"/>
+<circle cx="300" cy="72" r="44" fill="none" stroke="#8fe0ff" stroke-width="3" opacity=".25"/></g>
+<!-- ringed planet -->
+<g transform="translate(70 70) rotate(-18)"><ellipse cx="0" cy="0" rx="40" ry="9" fill="none" stroke="#ffe3b0" stroke-width="4" opacity=".7"/><circle r="20" fill="url(#spPlan)"/><path d="M-19 -5 h38 M-17 6 h34" stroke="#e0744a" stroke-width="3" opacity=".5"/><path d="M-40 0 a40 9 0 0 0 80 0" fill="none" stroke="#ffe3b0" stroke-width="4"/></g>
+<circle cx="170" cy="40" r="6" fill="#ff9ec7"/><circle cx="168" cy="38" r="2" fill="#fff" opacity=".6"/>
+<!-- far hills -->
+<path d="M0 250 Q60 222 120 240 Q180 212 250 236 Q310 216 375 232 V420 H0Z" fill="url(#spGround2)"/>
+<!-- lunar base: two domes + tube + antenna -->
+<g transform="translate(250 236)">
+<rect x="-6" y="-58" width="4" height="40" fill="#c3cbe4"/><circle cx="-4" cy="-60" r="5" fill="#ff6b8b" class="amb-glow" style="--d:1.6s"/>
+<path d="M-60 6 a34 34 0 0 1 68 0Z" fill="url(#spDome)" stroke="#fff" stroke-width="2"/>
+<path d="M-48 -8 q14 -20 34 -18" stroke="#fff" stroke-width="3" fill="none" opacity=".8"/>
+<rect x="8" y="-4" width="40" height="10" rx="5" fill="url(#spMetal)"/>
+<path d="M40 6 a24 24 0 0 1 48 0Z" fill="url(#spDome)" stroke="#fff" stroke-width="2"/>
+<rect x="-62" y="4" width="152" height="8" rx="4" fill="#7c74ad"/>
+<rect x="-34" y="-14" width="12" height="18" rx="3" fill="#ffd166"/><rect x="56" y="-8" width="10" height="12" rx="3" fill="#ffd166"/>
+</g>
+<!-- rocket on its pad (left) -->
+<g transform="translate(62 262)">
+<rect x="-30" y="-6" width="60" height="8" rx="3" fill="#7c74ad"/>
+<path d="M-12 -6 L-12 -70 Q0 -110 12 -70 L12 -6Z" fill="url(#spMetal)" stroke="#c3cbe4"/>
+<path d="M-12 -70 Q0 -110 12 -70Z" fill="#ff6b6b"/>
+<circle cx="0" cy="-58" r="7" fill="#5ab8f5" stroke="#fff" stroke-width="2.5"/>
+<path d="M-12 -30 L-24 -8 L-12 -12Z M12 -30 L24 -8 L12 -12Z" fill="#ff6b6b"/>
+<rect x="-4" y="-40" width="8" height="26" rx="2" fill="#ff6b6b" opacity=".85"/>
+</g>
+<!-- near ground with craters -->
+<path d="M0 300 Q80 280 160 296 Q240 280 375 298 V420 H0Z" fill="url(#spGround)"/>
+${[[60,330,26],[190,318,18],[300,350,30],[130,380,16],[230,395,22]].map(c=>`<g><ellipse cx="${c[0]}" cy="${c[1]}" rx="${c[2]}" ry="${c[2]*.36}" fill="#7a72aa"/><ellipse cx="${c[0]}" cy="${c[1]-2}" rx="${c[2]*.8}" ry="${c[2]*.26}" fill="#968ec4"/><path d="M${c[0]-c[2]} ${c[1]} a${c[2]} ${c[2]*.36} 0 0 0 ${c[2]*2} 0" fill="none" stroke="#d8d2f0" stroke-width="2" opacity=".6"/></g>`).join('')}
+${_rep(26,i=>`<circle cx="${(r()*375).toFixed(0)}" cy="${(300+r()*120).toFixed(0)}" r="${(r()*2+1).toFixed(1)}" fill="#7a72aa" opacity=".7"/>`)}
+<!-- rover -->
+<g transform="translate(168 300)"><rect x="-24" y="-20" width="48" height="16" rx="5" fill="#ffd166"/><rect x="-16" y="-30" width="20" height="10" rx="3" fill="#5ab8f5"/>
+<line x1="14" y1="-20" x2="22" y2="-38" stroke="#c3cbe4" stroke-width="2.5"/><circle cx="22" cy="-40" r="4" fill="#ff6b8b"/>
+${[-16,0,16].map(x=>`<circle cx="${x}" cy="-2" r="7" fill="#4a4380"/><circle cx="${x}" cy="-2" r="3" fill="#c3cbe4"/>`).join('')}</g>
+<!-- footprints -->
+<g fill="#7a72aa" opacity=".8">${_rep(6,i=>`<ellipse cx="${210+i*14}" cy="${330+((i%2)*8)}" rx="4" ry="2.5"/>`)}</g>`;}
+// in front: the near crater rim Baby Mo hides behind (right) + floating space rocks
+function spaceFront(){return`
+<path d="M232 420 V372 Q246 344 282 340 Q318 338 338 352 Q362 366 375 362 V420Z" fill="#a49dd0"/>
+<path d="M232 372 Q246 344 282 340 Q318 338 338 352 Q362 366 375 362" fill="none" stroke="#e2dcf6" stroke-width="3" stroke-linecap="round"/>
+<ellipse cx="300" cy="392" rx="22" ry="6" fill="#8a82b8"/><circle cx="256" cy="400" r="4" fill="#8a82b8"/>
+<g class="amb-fl" style="--d:5s"><path d="M18 360 l14 -6 l10 8 l-4 12 l-14 2Z" fill="#8a82b8"/><path d="M22 362 l8 -3" stroke="#d8d2f0" stroke-width="2"/></g>`;}
+
+// 20 — Oasis Gurun: sunset sky, far dunes, caravan silhouettes, palm oasis with pond, tents with lanterns, a near dune in front
+function desertSVG(){const r=_rng(2020);return`<defs>
+<linearGradient id="dsSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6a4fc8"/><stop offset=".45" stop-color="#f08a8a"/><stop offset=".8" stop-color="#ffc979"/><stop offset="1" stop-color="#ffe0a3"/></linearGradient>
+<radialGradient id="dsSun" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#fff4c2"/><stop offset=".5" stop-color="#ffd36b" stop-opacity=".8"/><stop offset="1" stop-color="#ffd36b" stop-opacity="0"/></radialGradient>
+<linearGradient id="dsD1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8a96a"/><stop offset="1" stop-color="#d48a4e"/></linearGradient>
+<linearGradient id="dsD2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f6c886"/><stop offset="1" stop-color="#e9a95f"/></linearGradient>
+<linearGradient id="dsD3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffdca0"/><stop offset="1" stop-color="#f3bf78"/></linearGradient>
+<linearGradient id="dsWater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7fe0e8"/><stop offset="1" stop-color="#2fa6c4"/></linearGradient>
+<linearGradient id="dsTent" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#d94f4f"/><stop offset=".5" stop-color="#f07a5a"/><stop offset="1" stop-color="#c24343"/></linearGradient>
+</defs>
+<rect width="375" height="420" fill="url(#dsSky)"/>
+<g fill="#fff">${_rep(14,i=>`<circle class="amb-tw" style="--d:${(2+r()*3).toFixed(1)}s" cx="${(r()*375).toFixed(0)}" cy="${(r()*80).toFixed(0)}" r="${(r()*1.2+.5).toFixed(1)}" opacity=".8"/>`)}</g>
+<path d="M300 30 a16 16 0 1 0 14 24 a13 13 0 1 1 -14 -24Z" fill="#fff3c4"/>
+<circle cx="120" cy="190" r="70" fill="url(#dsSun)"/><circle cx="120" cy="190" r="30" fill="#fff0b8"/>
+<g class="amb-dr" style="--d:40s"><path d="M200 90 q20 -10 40 0 q20 -6 34 4 q-36 8 -74 -4Z" fill="#ffd3b8" opacity=".7"/><path d="M30 120 q16 -8 32 0 q16 -4 26 4 q-30 6 -58 -4Z" fill="#ffd3b8" opacity=".6"/></g>
+<!-- far dunes + caravan silhouette -->
+<path d="M0 214 Q70 176 150 204 Q230 170 300 196 Q340 186 375 192 V420 H0Z" fill="url(#dsD1)"/>
+<g fill="#9a5a3a" opacity=".75" transform="translate(212 186) scale(.55)">${[0,46,92].map(x=>`<g transform="translate(${x} 0)"><path d="M0 0 q4 -18 12 -18 q6 0 8 6 q10 -14 22 0 q4 -10 10 -14 q6 -2 8 4 l-2 4 q-4 0 -6 4 l0 30 h-4 l0 -16 q-12 6 -26 0 l0 16 h-4 l0 -16 q-10 -4 -10 -14 l-2 16 h-4Z"/></g>`).join('')}</g>
+<path d="M0 252 Q90 214 180 244 Q260 220 375 236 V420 H0Z" fill="url(#dsD2)"/>
+<path d="M60 236 Q120 222 170 240" stroke="#fff1cf" stroke-width="3" fill="none" opacity=".6"/>
+<!-- oasis: pond + palms -->
+<ellipse cx="230" cy="290" rx="92" ry="20" fill="#7fb85a"/>
+<ellipse cx="230" cy="290" rx="70" ry="13" fill="url(#dsWater)"/>
+<path class="amb-wave" style="--d:3s" d="M180 290 q10 -3 20 0 t20 0 M240 294 q8 -3 16 0 t16 0" stroke="#e8fbff" stroke-width="2" fill="none" opacity=".8"/>
+${[[176,284,1],[290,286,1.15],[214,282,.8]].map(([x,y,s])=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M0 0 q-4 -40 4 -78" stroke="#8a5a32" stroke-width="7" fill="none" stroke-linecap="round"/><path d="M0 0 q-4 -40 4 -78" stroke="#b07a48" stroke-width="2.5" fill="none" stroke-dasharray="3 5"/><g class="amb-sw" style="--d:${4+s}s">${[-160,-125,-95,-60,-30,10,40].map((a,i)=>`<g transform="translate(4 -78) rotate(${a})"><path d="M0 0 Q22 -12 46 -4 Q24 4 0 0Z" fill="${i%2?'#3e9b4f':'#4fb35c'}"/><path d="M2 -1 Q22 -6 42 -4" stroke="#7fd07a" stroke-width="1.5" fill="none"/></g>`).join('')}</g><circle cx="0" cy="-74" r="4" fill="#7a4a2a"/><circle cx="7" cy="-73" r="4" fill="#7a4a2a"/></g>`).join('')}
+${_rep(5,i=>`<g transform="translate(${150+i*34} ${300+(i%2)*4})"><path d="M0 0 q-3 -10 0 -16 M0 0 q4 -9 8 -12 M0 0 q-6 -6 -10 -8" stroke="#4f9e46" stroke-width="2" fill="none" stroke-linecap="round"/></g>`)}
+<!-- tents with lanterns (left) -->
+<g transform="translate(70 300)"><ellipse cx="0" cy="4" rx="58" ry="8" fill="#000" opacity=".12"/>
+<path d="M-54 2 L0 -62 L54 2Z" fill="url(#dsTent)"/><path d="M0 -62 L-14 2 H14Z" fill="#6a2a2a"/><path d="M-54 2 L0 -62 L54 2" fill="none" stroke="#ffd36b" stroke-width="2"/>
+${[-30,-10,10,30].map(x=>`<path d="M${x} -${(54-Math.abs(x))*.9} l0 ${(54-Math.abs(x))*.9}" stroke="#ffd36b" stroke-width="1" opacity=".4"/>`).join('')}
+<line x1="0" y1="-62" x2="0" y2="-76" stroke="#7a4a2a" stroke-width="2"/><path d="M0 -76 l12 4 l-12 4Z" fill="#2fbf8f"/>
+<g class="amb-sw" style="--d:3s"><line x1="-40" y1="-26" x2="-40" y2="-14" stroke="#7a4a2a"/><rect x="-46" y="-14" width="12" height="15" rx="3" fill="#ffd36b"/><circle cx="-40" cy="-6" r="10" fill="#ffd36b" opacity=".3" class="amb-glow"/></g></g>
+<!-- near sand -->
+<path d="M0 318 Q100 300 200 322 Q290 306 375 318 V420 H0Z" fill="url(#dsD3)"/>
+<path d="M20 360 q40 -10 80 0 M160 380 q50 -12 100 0 M40 400 q30 -6 60 0" stroke="#e9a95f" stroke-width="2" fill="none" opacity=".7"/>
+${_rep(30,i=>`<circle cx="${(r()*375).toFixed(0)}" cy="${(330+r()*90).toFixed(0)}" r="${(r()*1.4+.6).toFixed(1)}" fill="#d9995a" opacity=".6"/>`)}
+<!-- rug + cushions + teapot -->
+<g transform="translate(118 330)"><path d="M-40 0 L40 0 L52 22 L-52 22Z" fill="#c9455a"/><path d="M-32 4 L32 4 L41 18 L-41 18Z" fill="none" stroke="#ffd36b" stroke-width="2" stroke-dasharray="4 3"/>
+<ellipse cx="-24" cy="4" rx="12" ry="6" fill="#4a6fd8"/><ellipse cx="24" cy="4" rx="12" ry="6" fill="#2fbf8f"/></g>
+<!-- cacti -->
+${[[30,350,1],[340,348,.8]].map(([x,y,s])=>`<g transform="translate(${x} ${y}) scale(${s})"><path d="M-6 0 V-44 a6 6 0 0 1 12 0 V0Z" fill="#4caf63"/><path d="M-6 -20 h-8 v-14 a4 4 0 0 1 8 0Z M6 -26 h8 v-10 a4 4 0 0 0 -8 0Z" fill="#4caf63"/><path d="M0 -44 V0" stroke="#3a9050" stroke-width="2"/><circle cx="0" cy="-48" r="3" fill="#ff7aa0"/></g>`).join('')}`;}
+function desertFront(){return`
+<path d="M170 420 V388 Q210 358 262 356 Q318 354 350 372 Q366 380 375 378 V420Z" fill="#ffe4b0"/>
+<path d="M170 388 Q210 358 262 356 Q318 354 350 372 Q366 380 375 378" fill="none" stroke="#fff4d6" stroke-width="3" stroke-linecap="round"/>
+<path d="M220 400 q30 -8 60 0" stroke="#f0c48a" stroke-width="2" fill="none"/>
+<g transform="translate(16 418)"><path d="M0 0 q10 -20 6 -36 M0 0 q-4 -14 -14 -22" stroke="#7a9a46" stroke-width="3" fill="none" stroke-linecap="round"/></g>`;}
+
+// 21 — Taman Salju: snowy hills, pines, a log cabin with warm windows, frozen pond with skaters' tracks, snowman, falling snow
+function snowSVG(){const r=_rng(2121);return`<defs>
+<linearGradient id="snSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#8fb8f0"/><stop offset=".7" stop-color="#cfe3fb"/><stop offset="1" stop-color="#eaf3ff"/></linearGradient>
+<linearGradient id="snH1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e4eefc"/><stop offset="1" stop-color="#c9d9f2"/></linearGradient>
+<linearGradient id="snH2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#dde8f8"/></linearGradient>
+<linearGradient id="snIce" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#bfe8ff"/><stop offset=".5" stop-color="#e6f7ff"/><stop offset="1" stop-color="#a9dcf5"/></linearGradient>
+<linearGradient id="snLog" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b0703e"/><stop offset="1" stop-color="#8a5530"/></linearGradient>
+<radialGradient id="snWin" cx="50%" cy="50%" r="60%"><stop offset="0" stop-color="#fff3b0"/><stop offset="1" stop-color="#ffb347"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#snSky)"/>
+<circle cx="300" cy="64" r="26" fill="#fffbe6" opacity=".9"/><circle cx="300" cy="64" r="40" fill="#fffbe6" opacity=".25"/>
+<g class="amb-dr" style="--d:46s"><g fill="#fff" opacity=".9"><ellipse cx="80" cy="60" rx="36" ry="12"/><ellipse cx="64" cy="52" rx="18" ry="12"/><ellipse cx="94" cy="50" rx="20" ry="14"/></g></g>
+<!-- far mountains -->
+<path d="M0 200 L60 120 L100 160 L160 90 L220 170 L270 120 L330 180 L375 150 V260 H0Z" fill="#a9c3ea"/>
+<path d="M60 120 L74 138 L64 136 L52 146Z M160 90 L178 116 L164 112 L150 126Z M270 120 L284 138 L272 136 L262 144Z" fill="#fff"/>
+<path d="M0 238 Q90 200 190 226 Q280 202 375 222 V420 H0Z" fill="url(#snH1)"/>
+<!-- pine forest row -->
+${_rep(11,i=>{const x=8+i*36+(i%2)*8,y=236-(i%3)*6,s=.7+(i%3)*.12;return`<g transform="translate(${x} ${y}) scale(${s})"><rect x="-3" y="-8" width="6" height="10" fill="#7a4f2c"/><path d="M0 -62 L18 -30 H8 L22 -8 H-22 L-8 -30 H-18Z" fill="#3f8f6a"/><path d="M0 -62 L10 -44 L0 -40 L-10 -44Z M-14 -26 L-6 -30 H6 L14 -26 L0 -20Z" fill="#fff" opacity=".95"/></g>`;})}
+<!-- log cabin -->
+<g transform="translate(276 262)"><ellipse cx="0" cy="6" rx="64" ry="9" fill="#9fb6da" opacity=".5"/>
+<rect x="-50" y="-44" width="100" height="48" fill="url(#snLog)"/>
+${_rep(5,i=>`<rect x="-50" y="${-44+i*10}" width="100" height="2" fill="#6e4224" opacity=".6"/>`)}
+<path d="M-60 -42 L0 -84 L60 -42Z" fill="#8a4a3a"/><path d="M-64 -40 Q-40 -50 -30 -62 Q0 -88 30 -62 Q40 -50 64 -40 Q60 -34 50 -38 Q30 -54 0 -76 Q-30 -54 -50 -38 Q-60 -34 -64 -40Z" fill="#fff"/>
+<rect x="22" y="-96" width="12" height="26" fill="#9a5a40"/><rect x="20" y="-100" width="16" height="6" rx="2" fill="#fff"/>
+${_rep(3,i=>`<circle class="amb-smoke" style="--d:4s;--dl:${i*1.3}s" cx="28" cy="${-106-i*10}" r="${5+i*2}" fill="#fff"/>`)}
+<rect x="-36" y="-30" width="22" height="18" rx="3" fill="url(#snWin)" stroke="#5a3418" stroke-width="3"/><path d="M-25 -30 V-12 M-36 -21 H-14" stroke="#5a3418" stroke-width="2"/>
+<rect x="8" y="-24" width="18" height="28" rx="3" fill="#6e3a24"/><circle cx="22" cy="-10" r="1.8" fill="#ffd36b"/>
+<path d="M-50 4 Q0 -4 50 4 L56 8 H-56Z" fill="#fff"/>
+<g transform="translate(-6 -38)"><circle r="7" fill="none" stroke="#2f8a50" stroke-width="4"/><path d="M-3 6 l3 6 l3 -6" fill="#e23b3b"/></g></g>
+<!-- frozen pond -->
+<ellipse cx="128" cy="300" rx="96" ry="22" fill="#d6e6f8"/>
+<ellipse cx="128" cy="298" rx="84" ry="16" fill="url(#snIce)"/>
+<path d="M70 296 q30 -10 60 0 t50 0 M86 304 q24 6 48 -2" stroke="#fff" stroke-width="2" fill="none" opacity=".9"/>
+<path d="M60 292 l30 6 M150 290 l40 10" stroke="#9fd0ec" stroke-width="1.5" opacity=".8"/>
+<!-- near snow -->
+<path d="M0 318 Q90 298 190 314 Q290 298 375 312 V420 H0Z" fill="url(#snH2)"/>
+<path d="M30 352 q40 -8 80 0 M200 372 q50 -10 100 0" stroke="#c9d9f2" stroke-width="2" fill="none"/>
+<!-- snowman -->
+<g transform="translate(206 330)"><ellipse cx="0" cy="4" rx="26" ry="6" fill="#b8cbe8" opacity=".6"/>
+<circle cx="0" cy="-16" r="22" fill="#fff" stroke="#dbe6f6" stroke-width="2"/><circle cx="0" cy="-48" r="15" fill="#fff" stroke="#dbe6f6" stroke-width="2"/>
+<circle cx="-5" cy="-51" r="2" fill="#2a2a3a"/><circle cx="5" cy="-51" r="2" fill="#2a2a3a"/><path d="M0 -47 l12 3 l-12 2Z" fill="#ff8a3a"/>
+<path d="M-6 -42 q6 4 12 0" stroke="#2a2a3a" stroke-width="1.5" fill="none"/>
+<path d="M-15 -36 h30 v6 h-30Z" fill="#e23b3b"/><path d="M8 -30 v16 h6 v-16Z" fill="#e23b3b"/>
+<path d="M-14 -60 h28 l-4 -16 h-20Z" fill="#3a3a5a"/><rect x="-18" y="-62" width="36" height="4" rx="2" fill="#3a3a5a"/>
+<circle cx="0" cy="-22" r="2.2" fill="#2a2a3a"/><circle cx="0" cy="-12" r="2.2" fill="#2a2a3a"/>
+<path d="M-20 -24 l-18 -12 M-30 -31 l-4 -8 M20 -24 l18 -14 M30 -32 l6 -6" stroke="#7a4f2c" stroke-width="3" stroke-linecap="round"/></g>
+<!-- snow-covered bushes + bench -->
+${[[40,340],[340,350],[120,372]].map(([x,y])=>`<g transform="translate(${x} ${y})"><circle cx="-12" cy="-8" r="12" fill="#3f8f6a"/><circle cx="10" cy="-8" r="13" fill="#3f8f6a"/><circle cx="0" cy="-14" r="13" fill="#4fa27a"/><path d="M-22 -14 q10 -12 22 -10 q12 -6 22 6 q-12 -4 -22 0 q-12 -4 -22 4Z" fill="#fff"/></g>`).join('')}
+<g transform="translate(300 380)"><rect x="-30" y="-18" width="60" height="6" rx="2" fill="#a86a3c"/><rect x="-30" y="-8" width="60" height="6" rx="2" fill="#a86a3c"/><rect x="-26" y="-4" width="4" height="12" fill="#7a4f2c"/><rect x="22" y="-4" width="4" height="12" fill="#7a4f2c"/><path d="M-32 -20 q30 -6 64 0 v3 h-64Z" fill="#fff"/></g>
+<!-- falling snow -->
+<g fill="#fff">${_rep(46,i=>`<circle class="amb-bub" style="--d:${(5+r()*5).toFixed(1)}s;--dl:${(r()*5).toFixed(1)}s" cx="${(r()*375).toFixed(0)}" cy="${(r()*420).toFixed(0)}" r="${(r()*2+1.2).toFixed(1)}" opacity=".9"/>`)}</g>`;}
+function snowFront(){return`
+<path d="M0 420 V384 Q30 360 72 362 Q112 364 130 380 Q140 388 150 386 V420Z" fill="#ffffff"/>
+<path d="M0 384 Q30 360 72 362 Q112 364 130 380 Q140 388 150 386" fill="none" stroke="#dbe6f6" stroke-width="3"/>
+<path d="M30 396 q20 -6 40 0" stroke="#dbe6f6" stroke-width="2" fill="none"/>`;}
+
+// 22 — Toko Mainan: tall shelves full of drawn toys, a toy train on a looping track, balloons, counter; a big open toy box in front
+function toySVG(){const r=_rng(2222);
+const shelfToys=(y,seed)=>{const rr=_rng(seed);let o='';let x=22;const C=['#ff6b6b','#ffd166','#4ec5b0','#5a8dee','#b28dff','#ff9ec7','#7fd07a'];
+ while(x<345){const k=Math.floor(rr()*5),c=C[Math.floor(rr()*C.length)],c2=C[Math.floor(rr()*C.length)];
+  if(k===0)o+=`<g transform="translate(${x+14} ${y})"><rect x="-12" y="-24" width="24" height="24" rx="3" fill="${c}"/><text x="0" y="-6" font-size="14" font-weight="800" text-anchor="middle" fill="#fff" font-family="Fredoka,sans-serif">${'ABCMO'[Math.floor(rr()*5)]}</text></g>`,x+=30;
+  else if(k===1)o+=`<g transform="translate(${x+12} ${y})"><circle cy="-11" r="11" fill="${c}"/><path d="M-11 -11 h22" stroke="#fff" stroke-width="3"/><circle cx="-4" cy="-15" r="2.5" fill="#fff" opacity=".7"/></g>`,x+=26;
+  else if(k===2)o+=`<g transform="translate(${x+16} ${y})"><rect x="-15" y="-14" width="30" height="10" rx="4" fill="${c}"/><rect x="-8" y="-22" width="14" height="9" rx="3" fill="${c2}"/><circle cx="-8" cy="-3" r="4" fill="#3a3a5a"/><circle cx="8" cy="-3" r="4" fill="#3a3a5a"/></g>`,x+=34;
+  else if(k===3)o+=`<g transform="translate(${x+12} ${y})"><path d="M-10 0 V-26 h20 V0Z" fill="${c}"/><path d="M-10 -26 l10 -8 l10 8Z" fill="${c2}"/><rect x="-4" y="-14" width="8" height="14" fill="#fff" opacity=".8"/></g>`,x+=26;
+  else o+=`<g transform="translate(${x+12} ${y})"><path d="M-9 0 q-2 -22 9 -26 q11 4 9 26Z" fill="${c}"/><circle cy="-28" r="7" fill="${c2}"/><circle cx="-2" cy="-29" r="1.2" fill="#333"/><circle cx="2" cy="-29" r="1.2" fill="#333"/></g>`,x+=26;
+ } return o;};
+return`<defs>
+<linearGradient id="tyWall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffe6f0"/><stop offset="1" stop-color="#ffd3e4"/></linearGradient>
+<linearGradient id="tyWood" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e3a86c"/><stop offset="1" stop-color="#c48246"/></linearGradient>
+<linearGradient id="tyFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9fd6c8"/><stop offset="1" stop-color="#7cc0b0"/></linearGradient>
+<pattern id="tyDots" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="5" cy="5" r="2.2" fill="#fff" opacity=".7"/><circle cx="16" cy="16" r="1.6" fill="#ffb3cf" opacity=".6"/></pattern>
+</defs>
+<rect width="375" height="420" fill="url(#tyWall)"/><rect width="375" height="300" fill="url(#tyDots)"/>
+<!-- bunting -->
+<path d="M0 20 Q94 44 188 20 Q282 44 375 20" stroke="#c48246" stroke-width="1.5" fill="none"/>
+${_rep(13,i=>{const x=8+i*29,y=24+Math.sin(i/12*Math.PI*2)*-0+((i%6)<3?(i%6)*3:(6-(i%6))*3);return`<path d="M${x} ${y} l12 0 l-6 13Z" fill="${['#ff6b6b','#ffd166','#4ec5b0','#5a8dee','#b28dff'][i%5]}"/>`;})}
+<!-- shop sign -->
+<g transform="translate(187 56)"><rect x="-70" y="-15" width="140" height="30" rx="15" fill="#5a8dee"/><rect x="-66" y="-11" width="132" height="22" rx="11" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="4 4"/><text y="7" font-size="17" font-weight="800" text-anchor="middle" fill="#fff" font-family="Fredoka,sans-serif">TOKO MAINAN</text></g>
+<!-- shelves -->
+<rect x="10" y="80" width="355" height="200" rx="6" fill="#f6c08a" opacity=".35"/>
+${[132,192,252].map((y,i)=>shelfToys(y,300+i*17)+`<rect x="10" y="${y}" width="355" height="9" rx="3" fill="url(#tyWood)"/><rect x="10" y="${y+9}" width="355" height="3" fill="#8a5530" opacity=".4"/>`).join('')}
+<rect x="10" y="80" width="8" height="200" fill="url(#tyWood)"/><rect x="357" y="80" width="8" height="200" fill="url(#tyWood)"/>
+<!-- balloons -->
+${[[40,74,'#ff6b6b'],[64,64,'#ffd166'],[318,70,'#4ec5b0'],[342,82,'#b28dff']].map(([x,y,c],i)=>`<g class="amb-fl" style="--d:${3+i*.6}s;--dl:${i*.4}s"><path d="M${x} ${y+16} q-6 20 4 40" stroke="#999" stroke-width="1" fill="none"/><ellipse cx="${x}" cy="${y}" rx="12" ry="15" fill="${c}"/><ellipse cx="${x-4}" cy="${y-5}" rx="3" ry="5" fill="#fff" opacity=".5"/><path d="M${x-3} ${y+15} l3 4 l3 -4Z" fill="${c}"/></g>`).join('')}
+<!-- floor -->
+<rect y="280" width="375" height="140" fill="url(#tyFloor)"/>
+${_rep(9,i=>`<rect x="${i*44-10}" y="280" width="22" height="140" fill="#fff" opacity=".12"/>`)}
+<!-- toy train track oval + train -->
+<ellipse cx="150" cy="330" rx="118" ry="30" fill="none" stroke="#8a5530" stroke-width="10"/>
+<ellipse cx="150" cy="330" rx="118" ry="30" fill="none" stroke="#c48246" stroke-width="6" stroke-dasharray="3 7"/>
+<g transform="translate(112 306)"><rect x="0" y="-22" width="36" height="22" rx="4" fill="#ff6b6b"/><rect x="26" y="-34" width="16" height="16" rx="3" fill="#ff6b6b"/><rect x="29" y="-31" width="10" height="8" rx="2" fill="#bfe8ff"/><rect x="6" y="-30" width="8" height="10" fill="#3a3a5a"/><circle cx="10" cy="-36" r="4" fill="#fff" class="amb-smoke" style="--d:2.6s"/>
+<rect x="-36" y="-18" width="32" height="18" rx="3" fill="#ffd166"/><rect x="-72" y="-18" width="32" height="18" rx="3" fill="#4ec5b0"/>
+${[-66,-46,-30,-10,8,28].map(x=>`<circle cx="${x}" cy="2" r="5" fill="#3a3a5a"/><circle cx="${x}" cy="2" r="2" fill="#ddd"/>`).join('')}</g>
+<!-- rocking horse -->
+<g transform="translate(60 372)"><path d="M-34 6 Q0 22 34 6" stroke="#c48246" stroke-width="6" fill="none" stroke-linecap="round"/>
+<path d="M-18 4 L-12 -18 M18 4 L12 -18" stroke="#c48246" stroke-width="4"/><ellipse cx="0" cy="-24" rx="22" ry="11" fill="#fff4dc" stroke="#c48246" stroke-width="2"/>
+<path d="M14 -30 q10 -18 22 -12 q4 8 -4 12 q-6 2 -10 8Z" fill="#fff4dc" stroke="#c48246" stroke-width="2"/><path d="M18 -40 q-6 -6 -2 -12 q4 4 6 10" fill="#ff9ec7"/><circle cx="29" cy="-32" r="1.6" fill="#333"/>
+<path d="M-6 -34 h14 v-6 h-14Z" fill="#ff6b6b"/></g>
+<!-- counter (right) with cash register + jar of lollipops -->
+<g transform="translate(316 356)"><rect x="-60" y="-50" width="120" height="70" rx="6" fill="#5a8dee"/><rect x="-60" y="-56" width="120" height="10" rx="4" fill="#3f6fd0"/>
+<rect x="-50" y="-38" width="100" height="44" rx="4" fill="#fff" opacity=".15"/><path d="M-60 -20 h120" stroke="#fff" stroke-width="2" stroke-dasharray="6 6" opacity=".5"/>
+<rect x="6" y="-80" width="40" height="26" rx="4" fill="#b28dff"/><rect x="10" y="-76" width="18" height="8" rx="2" fill="#bfe8ff"/>
+<path d="M-40 -56 v-26 q0 -6 6 -6 h16 q6 0 6 6 v26Z" fill="#e8f6ff" opacity=".8" stroke="#bfe0f5"/>${[[-34,-74,'#ff6b6b'],[-24,-78,'#ffd166'],[-28,-66,'#7fd07a']].map(([x,y,c])=>`<circle cx="${x}" cy="${y}" r="5" fill="${c}"/>`).join('')}</g>
+<!-- the toy box's open lid, leaning back (behind Baby Mo) -->
+<g transform="translate(232 420)"><path d="M-10 -70 L-30 -112 L84 -112 L98 -70Z" fill="#ffb347"/><path d="M-22 -104 L76 -104" stroke="#fff" stroke-width="3" opacity=".4"/></g>`;}
+function toyFront(){
+return`
+<g transform="translate(232 420)">
+<rect x="-10" y="-70" width="108" height="72" rx="6" fill="#ff8a3a"/>
+<rect x="-10" y="-70" width="108" height="12" rx="4" fill="#ffb347"/>
+<path d="M-10 -40 h108" stroke="#fff" stroke-width="3" opacity=".35"/>
+<g transform="translate(44 -30)"><circle r="16" fill="#fff"/><path d="M0 -10 l3 7 l7 1 l-5 5 l1 7 l-6 -3 l-6 3 l1 -7 l-5 -5 l7 -1Z" fill="#ffd166"/></g>
+<text x="8" y="-8" font-size="13" font-weight="800" fill="#fff" font-family="Fredoka,sans-serif">TOYS</text></g>`;}
+
+// 23 — Hutan Hujan: layered jungle, waterfall into a pool, vines, giant flowers, mushrooms; big leaves in front at the edges
+function _leaf(x,y,s,rot,c,c2){return`<g transform="translate(${x} ${y}) rotate(${rot}) scale(${s})"><path d="M0 0 Q30 -40 0 -90 Q-30 -40 0 0Z" fill="${c}"/><path d="M0 -2 Q2 -44 0 -86" stroke="${c2}" stroke-width="2.5" fill="none"/>${[-70,-54,-38,-22].map(t=>`<path d="M0 ${t} q12 -6 18 -14 M0 ${t} q-12 -6 -18 -14" stroke="${c2}" stroke-width="1.5" fill="none" opacity=".8"/>`).join('')}</g>`;}
+function jungleSVG(){const r=_rng(2323);return`<defs>
+<linearGradient id="jgSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#bff0c8"/><stop offset="1" stop-color="#7fd0a0"/></linearGradient>
+<linearGradient id="jgFall" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e6fbff"/><stop offset="1" stop-color="#9fe0f0"/></linearGradient>
+<linearGradient id="jgPool" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fd6e6"/><stop offset="1" stop-color="#2fa0c0"/></linearGradient>
+<linearGradient id="jgRock" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#9aa8a0"/><stop offset="1" stop-color="#6a7a70"/></linearGradient>
+<linearGradient id="jgGround" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fb85a"/><stop offset="1" stop-color="#3f9446"/></linearGradient>
+<radialGradient id="jgSun" cx="50%" cy="0%" r="80%"><stop offset="0" stop-color="#fffbd0" stop-opacity=".9"/><stop offset="1" stop-color="#fffbd0" stop-opacity="0"/></radialGradient>
+</defs>
+<rect width="375" height="420" fill="url(#jgSky)"/>
+<path d="M120 0 L200 0 L300 420 L40 420Z" fill="url(#jgSun)" opacity=".5"/>
+<!-- far canopy -->
+${_rep(9,i=>`<circle cx="${i*46}" cy="${60+(i%3)*14}" r="${44+(i%2)*10}" fill="#4caf6a" opacity=".55"/>`)}
+${_rep(9,i=>`<circle cx="${23+i*46}" cy="${110+(i%2)*14}" r="${40+(i%3)*6}" fill="#3e9a5c" opacity=".7"/>`)}
+<!-- cliff + waterfall -->
+<path d="M150 90 Q160 70 200 72 Q246 70 256 96 L270 260 L136 260Z" fill="url(#jgRock)"/>
+<path d="M150 120 q20 -6 40 4 M230 140 q14 -8 28 0 M160 200 q20 -6 34 2" stroke="#5a6a62" stroke-width="3" fill="none" opacity=".6"/>
+<path d="M180 80 Q204 74 226 80 L234 262 L172 262Z" fill="url(#jgFall)"/>
+${_rep(6,i=>`<path class="amb-rain" style="--dl:${(i*.17).toFixed(2)}s" d="M${184+i*8} ${90+i*12} v40" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".8"/>`)}
+<path d="M150 92 Q170 78 200 82 M210 80 Q240 78 256 96" stroke="#3e9a5c" stroke-width="10" fill="none" stroke-linecap="round"/>
+<!-- vines -->
+${[[30,0,150],[110,0,110],[290,0,130],[350,0,170]].map(([x,y,h],i)=>`<g class="amb-sw" style="--d:${4+i}s"><path d="M${x} ${y} q${8-i*4} ${h/2} 0 ${h}" stroke="#4a8a3a" stroke-width="3" fill="none"/>${_rep(5,k=>`<ellipse cx="${x+((k%2)?6:-6)}" cy="${y+20+k*h/5}" rx="7" ry="4" fill="#62bf63" transform="rotate(${(k%2)?30:-30} ${x} ${y+20+k*h/5})"/>`)}</g>`).join('')}
+<!-- pool -->
+<ellipse cx="204" cy="272" rx="110" ry="24" fill="#4a8a5a"/>
+<ellipse cx="204" cy="270" rx="96" ry="18" fill="url(#jgPool)"/>
+${_rep(3,i=>`<ellipse class="amb-rip" style="--dl:${i*.8}s" cx="204" cy="266" rx="${14+i*10}" ry="${4+i*2}" fill="none" stroke="#fff" stroke-width="1.5" opacity=".7"/>`)}
+<g transform="translate(150 278)"><ellipse rx="12" ry="4" fill="#5fbf6a"/><path d="M0 -2 l4 -4 l4 4" fill="#ff9ec7"/></g>
+<!-- mid ground -->
+<path d="M0 286 Q90 268 190 292 Q280 270 375 286 V420 H0Z" fill="url(#jgGround)"/>
+<!-- tree trunks -->
+<path d="M56 300 Q50 200 66 120 L86 120 Q78 200 84 300Z" fill="#8a5a3a"/><path d="M62 260 q10 -6 18 0 M64 200 q8 -4 14 0" stroke="#6a3e24" stroke-width="2" fill="none"/>
+<path d="M316 300 Q322 210 306 130 L328 130 Q340 210 340 300Z" fill="#8a5a3a"/>
+<!-- giant flowers + mushrooms -->
+${[[120,318,'#ff6b8b'],[268,326,'#ffb347']].map(([x,y,c])=>`<g transform="translate(${x} ${y})"><path d="M0 0 v-20" stroke="#3f8a40" stroke-width="3"/>${_rep(5,k=>`<ellipse cx="0" cy="-30" rx="7" ry="13" fill="${c}" transform="rotate(${k*72} 0 -22)"/>`)}<circle cx="0" cy="-22" r="5" fill="#ffd166"/></g>`).join('')}
+${[[170,350,1],[186,356,.7],[30,372,.8]].map(([x,y,s])=>`<g transform="translate(${x} ${y}) scale(${s})"><rect x="-4" y="-14" width="8" height="14" rx="3" fill="#fff4dc"/><path d="M-16 -12 Q0 -34 16 -12Z" fill="#ff6b6b"/><circle cx="-6" cy="-18" r="2.5" fill="#fff"/><circle cx="5" cy="-22" r="2" fill="#fff"/></g>`).join('')}
+<!-- ferns on ground -->
+${_rep(7,i=>_leaf(20+i*56,330+(i%2)*20,.42,(i%2?40:-40),'#4fb35c','#2f8a44'))}
+<!-- path stones -->
+${_rep(5,i=>`<ellipse cx="${150+i*20}" cy="${396-i*14}" rx="12" ry="5" fill="#b8c4b0"/>`)}
+<!-- fireflies / sparkles -->
+${_rep(10,i=>`<circle class="amb-ffly" style="--d:${(3+r()*3).toFixed(1)}s;--dl:${(r()*3).toFixed(1)}s" cx="${(r()*375).toFixed(0)}" cy="${(150+r()*200).toFixed(0)}" r="2" fill="#fffbaa"/>`)}`;}
+function jungleFront(){return`
+${_leaf(-6,430,1.5,30,'#2f8f4a','#1f6a34')}${_leaf(30,440,1.2,8,'#3fa95a','#257a3e')}
+${_leaf(380,430,1.5,-30,'#2f8f4a','#1f6a34')}${_leaf(350,440,1.25,-6,'#3fa95a','#257a3e')}
+${_leaf(-10,60,1.1,120,'#2f8f4a','#1f6a34')}${_leaf(385,40,1.1,-120,'#3fa95a','#257a3e')}
+<g transform="translate(250 420)">${_leaf(0,0,1.0,-14,'#4fb35c','#2f8a44')}${_leaf(22,0,.9,18,'#3fa95a','#257a3e')}${_leaf(-24,6,.8,-40,'#2f8f4a','#1f6a34')}</g>`;}
+
+// foreground layer (drawn above the objects): what Baby Mo and the things hide behind in the newer rooms
+function getFrontSVG(id){
+  if(id===19)return spaceFront();
+  if(id===20)return desertFront();
+  if(id===21)return snowFront();
+  if(id===22)return toyFront();
+  if(id===23)return jungleFront();
+  return '';
+}
 function getSceneSVG(id){
   if(id===1)return bedroomSVG();
   if(id===2)return livingRoomSVG();
@@ -1851,6 +2207,11 @@ function getSceneSVG(id){
   if(id===16)return bakerySVG();
   if(id===17)return rainSVG();
   if(id===18)return floatingSVG();
+  if(id===19)return spaceSVG();
+  if(id===20)return desertSVG();
+  if(id===21)return snowSVG();
+  if(id===22)return toySVG();
+  if(id===23)return jungleSVG();
   return bedroomSVG();
 }
 
