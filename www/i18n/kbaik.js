@@ -4,7 +4,7 @@
   "Kalimat Thayyibah": "Kalimat Thayyibah", "Siapa": "Who", "aku": "am I", "Ketuk petak untuk membuka rahasia!": "Tap the tiles to reveal the secret!",
   "Kembali ke Game Hub": "Back to Game Hub", "Kartu Baru": "New Card", "Progress puzzle": "Puzzle progress", "Suara": "Sound", "Tutup": "Close",
   "📚 Koleksi": "📚 Collection", "🌞 Hari Ini": "🌞 Today", "Hari Ini": "Today", "Kalimat Hari Ini": "Phrase of the Day", "Hari ini": "Today", "Koleksi": "Collection", "Ketuk!": "Tap!", "🌙 Mulai yuk!": "🌙 Let's start!",
-  "Salam Hangat": "Warm Greeting", "Bersyukur": "Being Thankful", "Mohon Ampun": "Asking Forgiveness", "Takjub": "Amazed", "Tauhid": "Oneness of Allah",
+  "Salam Hangat": "Warm Greeting", "Memulai": "Starting Something", "Takbir": "Takbir", "Menjawab Salam": "Answering Salam", "Peduli Teman": "Caring for Friends", "Minta Kekuatan": "Asking for Strength", "Berserah Diri": "Trusting Allah", "Berpisah": "Saying Goodbye", "Mengaminkan": "Saying Aamiin", "Berlindung": "Seeking Protection", "Menyambut Tamu": "Welcoming Guests", "Kalimat sebelum memulai sesuatu": "What we say before starting something", "Kalimat takbir": "Words of takbir", "Kalimat menjawab salam": "How we answer a salam", "Doa untuk teman yang bersin": "A du'a for a friend who sneezes", "Kalimat memohon kekuatan Allah": "Asking Allah for strength", "Kalimat berserah diri kepada Allah": "Putting our trust in Allah", "Doa saat teman pergi": "A du'a when a friend leaves", "Kalimat setelah berdoa": "What we say after a du'a", "Kalimat berlindung kepada Allah": "Seeking Allah's protection", "Kalimat menyambut tamu": "How we welcome guests", "Dengan nama Allah": "In the name of Allah", "Allah Maha Besar": "Allah is the Greatest", "Dan semoga keselamatan juga untukmu": "And peace be upon you too", "Semoga Allah merahmatimu": "May Allah have mercy on you", "Tiada daya dan kekuatan kecuali dengan pertolongan Allah": "There is no power and no strength except with Allah", "Aku berserah diri kepada Allah": "I put my trust in Allah", "Semoga dalam lindungan Allah": "May you be in Allah's protection", "Kabulkanlah, ya Allah": "O Allah, please accept", "Kami berlindung kepada Allah": "We seek refuge in Allah", "Selamat datang": "Welcome", "Bersyukur": "Being Thankful", "Mohon Ampun": "Asking Forgiveness", "Takjub": "Amazed", "Tauhid": "Oneness of Allah",
   "Maha Suci": "Glory to Allah", "Terima Kasih": "Thank You", "Berjanji": "Making a Promise", "Bersabar": "Being Patient", "Mendoakan": "Praying for Others",
   "Kalimat saat berjumpa teman": "What we say when we meet a friend", "Kalimat syukur kepada Allah": "Words of thanks to Allah",
   "Kalimat memohon ampun Allah": "Words asking Allah's forgiveness", "Kagum pada ciptaan Allah": "Amazed by Allah's creation",
@@ -35,5 +35,15 @@
   'Berterima kasih, ku <span class="accent">ucap</span>?': 'To say thank you, I <span class="accent">say</span>?',
   'Saat berjanji, ku <span class="accent">ucap</span>?': 'When I make a promise, I <span class="accent">say</span>?',
   'Saat sedih, ku <span class="accent">ucap</span>?': 'When something sad happens, I <span class="accent">say</span>?',
-  'Doa<span class="accent">ku</span> untuk teman?': '<span class="accent">My</span> du\'a for a friend?'
+  'Doa<span class="accent">ku</span> untuk teman?': '<span class="accent">My</span> du\'a for a friend?',
+  'Sebelum makan, ku <span class="accent">ucap</span>?': 'Before I eat, I <span class="accent">say</span>?',
+  'Mengagungkan Allah, ku <span class="accent">ucap</span>?': 'To glorify Allah, I <span class="accent">say</span>?',
+  'Teman bersin, ku <span class="accent">ucap</span>?': 'When a friend sneezes, I <span class="accent">say</span>?',
+  'Saat berat, ku <span class="accent">ucap</span>?': 'When it\'s hard, I <span class="accent">say</span>?',
+  'Sudah berusaha, ku <span class="accent">ucap</span>?': 'After trying my best, I <span class="accent">say</span>?',
+  'Saat berpisah, ku <span class="accent">ucap</span>?': 'When saying goodbye, I <span class="accent">say</span>?',
+  'Selesai berdoa, ku <span class="accent">ucap</span>?': 'After a du\'a, I <span class="accent">say</span>?',
+  'Saat takut, ku <span class="accent">ucap</span>?': 'When I\'m scared, I <span class="accent">say</span>?',
+  'Ada tamu, ku <span class="accent">ucap</span>?': 'When guests come, I <span class="accent">say</span>?',
+  'Dapat salam, ku <span class="accent">jawab</span>?': 'When someone greets me, I <span class="accent">answer</span>?'
 }, ["#promptTitle"]]);

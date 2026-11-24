@@ -706,7 +706,7 @@ html[data-bm-theme="dark"] .pz-scene .st,html[data-bm-theme="classic"] .pz-scene
       <div class="mo-who" id="moWho"></div>
       <div class="stk-new" id="stkNew"></div>
       <div class="bm-wa">
-        <button class="bm-wa-pri" id="pzAgain" type="button">🔁 Main Lagi</button>
+        <button class="bm-wa-pri" id="pzAgain" type="button">🧩 Gambar Baru</button>
         <div class="bm-wa-row">
           <a href="./index.html" class="bm-wa-s"><svg class="wi" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5"/></svg><span>Hub</span></a>
           <button class="bm-wa-s" id="pzAlbum" type="button">📒 Album</button>
@@ -1206,6 +1206,17 @@ function todayPose(ds){
   const prev = pzBag(cyc - 1)[n - 1]; if (b[0] === prev) { const t = b[0]; b[0] = b[1]; b[1] = t; }
   return POSES[b[day - cyc * n]];
 }
+// A different picture for every new round: pictures not in the album first, never one of the last few
+const PZ_RECENT = 'bm_puzzle_recent';
+function pzRecent(){ try { return JSON.parse(localStorage.getItem(PZ_RECENT) || '[]'); } catch(e){ return []; } }
+function pzRemember(name){ try { const r = pzRecent().filter(x => x !== name); r.unshift(name); localStorage.setItem(PZ_RECENT, JSON.stringify(r.slice(0, 8))); } catch(e){} }
+function nextPose(){
+  const d = pzLoad(), recent = pzRecent(), cur = CUR_POSE && CUR_POSE[0];
+  const fresh = POSES.filter(p => !d.stickers[p[0]] && p[0] !== cur);
+  let pool = fresh.length ? fresh : POSES.filter(p => p[0] !== cur && !recent.includes(p[0]));
+  if (!pool.length) pool = POSES.filter(p => p[0] !== cur);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
 function stickerCount(){ return Object.keys(pzLoad().stickers).length; }
 function bigOpen(){ return stickerCount() >= BIG_AT; }
 function renderChrome(){
@@ -1219,7 +1230,7 @@ function renderChrome(){
   row.querySelectorAll('.size-chip').forEach(b => b.classList.toggle('on', +b.dataset.size === COLS));
 }
 function startPuzzle(pose, today){
-  CUR_POSE = pose; IS_TODAY = !!today;
+  CUR_POSE = pose; IS_TODAY = !!today; pzRemember(pose[0]);
   const d = pzLoad(); COLS = ROWS = (bigOpen() && d.size === 4) ? 4 : 3; TOTAL = COLS * ROWS;
   revealed = 0;
   const g = document.getElementById('grid'); g.classList.remove('complete'); g.style.transform = '';
@@ -1304,15 +1315,15 @@ function fillMoIntro(){
 function recordSticker(){
   const d = pzLoad(), name = CUR_POSE[0];
   let isNew = false;
-  if (IS_TODAY && !d.stickers[name]) { d.stickers[name] = pzToday(); pzSave(d); isNew = true; }
+  if (!d.stickers[name]) { d.stickers[name] = pzToday(); pzSave(d); isNew = true; }
   return isNew;
 }
 function renderStickerNote(isNew){
   const n = stickerCount(), box = document.getElementById('stkNew');
   const unlockBig = isNew && n === BIG_AT;
   box.innerHTML = `<img src="${poseSrc(CUR_POSE, true)}" alt="">` + (isNew
-    ? `<div><b>🎉 ${PL('Stiker baru!', 'New sticker!')} (${n}/${POSES.length})</b>${unlockBig ? PL('Puzzle 4×4 terbuka! Coba yang lebih menantang 💪', '4×4 puzzle unlocked! Try the bigger one 💪') : PL('Besok ada gambar Baby Mo yang baru!', "Tomorrow there's a new Baby Mo picture!")}</div>`
-    : `<div><b>${PL('Album', 'Album')}: ${n}/${POSES.length} ${PL('stiker', 'stickers')}</b>${IS_TODAY ? PL('Stiker hari ini sudah ada. Datang lagi besok!', "Today's sticker is already yours. Come back tomorrow!") : PL('Main lagi dengan gambar dari album.', 'Played a picture from your album.')}</div>`);
+    ? `<div><b>🎉 ${PL('Stiker baru!', 'New sticker!')} (${n}/${POSES.length})</b>${unlockBig ? PL('Puzzle 4×4 terbuka! Coba yang lebih menantang 💪', '4×4 puzzle unlocked! Try the bigger one 💪') : PL('Tekan Gambar Baru untuk pose Mo yang lain!', 'Tap New Picture for another Mo pose!')}</div>`
+    : `<div><b>${PL('Album', 'Album')}: ${n}/${POSES.length} ${PL('stiker', 'stickers')}</b>${PL('Stiker ini sudah ada di albummu. Tekan Gambar Baru!', 'This sticker is already in your album. Tap New Picture!')}</div>`);
 }
 function openAlbum(){
   const d = pzLoad(), n = stickerCount(), tp = todayPose();
@@ -1337,7 +1348,7 @@ function closeAlbum(){ document.getElementById('album').classList.remove('on'); 
 document.getElementById('albumBtn').addEventListener('click', openAlbum);
 document.getElementById('pzAlbum').addEventListener('click', openAlbum);
 document.getElementById('alClose').addEventListener('click', closeAlbum);
-document.getElementById('pzAgain').addEventListener('click', () => { closeCeleb(); setTimeout(() => startPuzzle(CUR_POSE, IS_TODAY), 250); });
+document.getElementById('pzAgain').addEventListener('click', () => { closeCeleb(); setTimeout(() => startPuzzle(nextPose(), false), 250); });
 document.getElementById('sizeRow').querySelectorAll('.size-chip').forEach(b => b.addEventListener('click', () => {
   if (revealed > 0 && revealed < TOTAL) return;           // finish this one first
   const d = pzLoad(); d.size = +b.dataset.size; pzSave(d); startPuzzle(CUR_POSE, IS_TODAY);
@@ -1347,7 +1358,7 @@ document.getElementById('sizeRow').querySelectorAll('.size-chip').forEach(b => b
 // BOOT
 // ═══════════════════════════════════════════
 // bm-kit.js loads deferred: wait for it so today's picture comes from BabyMo.daily
-function boot(){ startPuzzle(todayPose(), true); }
+function boot(){ const tp = todayPose(), d = pzLoad(); if (d.stickers[tp[0]] === pzToday()) startPuzzle(nextPose(), false); else startPuzzle(tp, true); }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 // Subtle ambient sparkle every few seconds
 setInterval(() => {
