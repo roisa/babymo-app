@@ -5,6 +5,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <script src="bm-fit.js"></script>
+<script src="mm-theme-art.js"></script>
 <script src="i18n/memory.js"></script>
 <script src="bm-i18n.js"></script>
 <script src="voice/manifest.js"></script>
@@ -816,6 +817,7 @@ html[data-bm-theme="classic"] .mm-more small{color:rgba(255,255,255,.65)}
 /* keyboard focus */
 .mem-card:focus-visible{outline:3px solid #FFB020;outline-offset:3px;border-radius:var(--radius-card,16px)}
 .mode-card:focus-visible,.mm-play:focus-visible,.mm-more:focus-visible{outline:3px solid #FFB020;outline-offset:3px}
+.th-chip .te svg{width:36px;height:36px;display:block}
 </style>
 </head>
 <body>
@@ -1386,7 +1388,8 @@ function cardFace(type) {
   const t = currentTheme(), i = BASE_ORDER.indexOf(type);
   if (t.id === 'classic' || i < 0) return base;
   if (t.letters) { const l = t.letters[i]; return { label:l[1], speak:l[2], svg:letterSvg(l[0], i), arabic:true }; }
-  const it = t.items[i]; return { label:ML(it[1], it[2]), emoji:it[0] };
+  const it = t.items[i], art = (window.MM_THEME_ART||{})[t.id];
+  return art && art[i] ? { label:ML(it[1], it[2]), svg:art[i] } : { label:ML(it[1], it[2]), emoji:it[0] };
 }
 function renderThemes() {
   const row = document.getElementById('theme-row'); if (!row) return;
@@ -1396,7 +1399,8 @@ function renderThemes() {
     const ok = themeUnlocked(t), b = document.createElement('button');
     b.type = 'button';
     b.className = 'th-chip' + (t.id === cur.id ? ' on' : '') + (ok ? '' : ' locked');
-    b.innerHTML = `<span class="te"${t.id==='huruf'?' data-ar="1"':''}>${t.icon}</span><span class="tn">${ML(t.name[0], t.name[1])}</span>` + (ok ? '' : `<span class="tl">🔒${t.need}</span>`);
+    const tart = t.id==='classic' ? [CARD_DATA.crescent.svg] : (window.MM_THEME_ART||{})[t.id];
+    b.innerHTML = `<span class="te"${t.id==='huruf'?' data-ar="1"':''}>${tart ? tart[0].replace(/id="(\w+)"/g,'id="c$1"').replace(/url\(#(\w+)\)/g,'url(#c$1)') : t.icon}</span><span class="tn">${ML(t.name[0], t.name[1])}</span>` + (ok ? '' : `<span class="tl">🔒${t.need}</span>`);
     b.addEventListener('click', () => {
       SFX.tap();
       if (!ok) { themeNote(ML(`Kumpulkan ${t.need} lencana atau ${t.need*3} ⭐ untuk membuka ${t.name[0]}!`, `Collect ${t.need} badges or ${t.need*3} ⭐ to unlock ${t.name[1]}!`)); return; }

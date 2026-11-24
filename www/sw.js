@@ -129,6 +129,7 @@ const SHELL = [
   "/baby-mo-render2/mo2-excited.webp",
   "/babymo-look-and-find.html",
   "/babymo-memory-match.html",
+  "/mm-theme-art.js",
   "/baby-mo-forehand-beat.html",
   "/babymo-tenis-adam.html",
   "/icons/ui/calendar.svg",
