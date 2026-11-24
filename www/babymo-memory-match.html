@@ -787,6 +787,36 @@ html body .bm-wa.has-next #btn-again::before,html body .bm-wa.has-next #btn-agai
 html[data-bm-theme="classic"] body .bm-wa.has-next #btn-again{background:rgba(255,255,255,.1)!important;color:#EAF2F0!important;-webkit-text-fill-color:#EAF2F0!important}
 @media (prefers-reduced-motion:reduce){.mem-card.oops .card-inn,.mem-card.hint .card-inn{animation:none}}
 </style>
+<style id="mm-home-b">
+.mm-play{display:flex;align-items:center;gap:14px;width:100%;margin:0 0 12px;padding:14px 16px 14px 14px;border:0;border-radius:26px;cursor:pointer;text-align:left;
+  background:linear-gradient(135deg,#2DD47E,#12A15A 55%,#0E8A6E);color:#fff;font-family:'Fredoka','Nunito',sans-serif;
+  box-shadow:0 6px 0 #0B6E4A,0 16px 28px -12px rgba(14,138,110,.7),inset 0 2px 0 rgba(255,255,255,.35);position:relative;overflow:hidden;animation:mmPlayBob 2.6s ease-in-out infinite}
+.mm-play::before{content:"";position:absolute;left:4%;right:4%;top:2px;height:46%;border-radius:22px 22px 40% 40%;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0))}
+.mm-play:active{transform:translateY(4px);box-shadow:0 2px 0 #0B6E4A,0 8px 16px -10px rgba(14,138,110,.7)}
+.mm-play .mp-ic{width:58px;height:58px;flex:none;border-radius:18px;background:#fff;display:grid;place-items:center;box-shadow:0 4px 10px -4px rgba(0,60,40,.5)}
+.mm-play .mp-ic svg{width:44px;height:44px}
+.mm-play .mp-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.mm-play .mp-t b{font-size:28px;font-weight:700;line-height:1.05;text-shadow:0 2px 0 rgba(0,70,45,.3)}
+.mm-play .mp-t small{font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;opacity:.92}
+.mm-play .mp-go{width:48px;height:48px;flex:none;border-radius:50%;display:grid;place-items:center;font-size:22px;background:#FFD23F;color:#7A4A00;box-shadow:0 3px 0 #C99A10}
+@keyframes mmPlayBob{50%{transform:translateY(-3px)}}
+@media (prefers-reduced-motion:reduce){.mm-play{animation:none}}
+.mm-more{grid-column:1/-1;display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:0 16px;border-radius:16px;cursor:pointer;
+  border:1.5px dashed rgba(21,34,48,.18);background:rgba(255,255,255,.6);color:#152230;font-family:'Fredoka','Nunito',sans-serif;font-size:16px;font-weight:600}
+.mm-more small{flex:1;text-align:left;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#5A6878}
+.mm-more .mm-chev{transition:transform .25s}
+.mm-more[aria-expanded="true"] .mm-chev{transform:rotate(180deg)}
+.mm-levels{grid-column:1/-1;display:none;grid-template-columns:inherit;gap:inherit}
+.mm-levels.open{display:grid}
+.mode-card.suggest{box-shadow:0 0 0 3px #2DC76D,0 10px 22px -14px rgba(18,161,90,.6)!important}
+html[data-bm-theme="classic"] .mm-more{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.2);color:#fff}
+html[data-bm-theme="classic"] .mm-more small{color:rgba(255,255,255,.65)}
+.sticker-box.star-win .sk-icon{animation:mmStarSpin 1s .4s cubic-bezier(.3,1.6,.5,1) both}
+@keyframes mmStarSpin{from{transform:scale(0) rotate(-180deg)}to{transform:none}}
+/* keyboard focus */
+.mem-card:focus-visible{outline:3px solid #FFB020;outline-offset:3px;border-radius:var(--radius-card,16px)}
+.mode-card:focus-visible,.mm-play:focus-visible,.mm-more:focus-visible{outline:3px solid #FFB020;outline-offset:3px}
+</style>
 </head>
 <body>
 <div id="app">
@@ -889,6 +919,7 @@ html[data-bm-theme="classic"] body .bm-wa.has-next #btn-again{background:rgba(25
       <p>Ketuk kartu, temukan pasangannya!</p>
     </div>
 
+    <button class="mm-play" id="mm-play" type="button"><span class="mp-ic" id="mp-ic" aria-hidden="true"></span><span class="mp-t"><b id="mp-t">Ayo Main!</b><small id="mp-s">Mudah · 4 kartu</small></span><span class="mp-go" aria-hidden="true">▶</span></button>
     <div class="mode-grid">
       <div class="mode-card daily" data-mode="daily" id="daily-card">
         <div class="mode-icon daily-ic" aria-hidden="true"><i></i><i></i><i></i></div>
@@ -898,6 +929,8 @@ html[data-bm-theme="classic"] body .bm-wa.has-next #btn-again{background:rgba(25
         </div>
         <span class="dl-go" id="daily-go">Main</span>
       </div>
+      <button class="mm-more" id="mm-more" type="button" aria-expanded="false" aria-controls="mm-levels"><span id="mm-more-t">Pilih level lain</span><small id="mm-more-s">untuk Ayah &amp; Bunda</small><span class="mm-chev" aria-hidden="true">▾</span></button>
+      <div class="mm-levels" id="mm-levels">
       <div class="mode-card" data-mode="easy">
         <div class="mode-icon"></div>
         <span class="mode-name">Mudah</span>
@@ -951,6 +984,7 @@ html[data-bm-theme="classic"] body .bm-wa.has-next #btn-again{background:rgba(25
         <span class="mode-name">Dreamtime</span>
         <span class="mode-desc">Waktu tidur · Super tenang</span>
         <span class="mode-badge">✨ Spesial</span>
+      </div>
       </div>
     </div>
     <div class="theme-box" id="theme-box">
@@ -1339,7 +1373,8 @@ const THEMES = [
 ];
 const THEME_KEY = 'bm_mm_theme';
 function themeById(id){ return THEMES.find(t => t.id === id) || THEMES[0]; }
-function themeUnlocked(t){ return Store.getBadges().length >= t.need; }
+function mmStars(){ try{ return +localStorage.getItem('bm_mm_stars')||0; }catch(e){ return 0; } }
+function themeUnlocked(t){ return Store.getBadges().length >= t.need || mmStars() >= t.need*3; }
 function currentTheme(){
   let id = 'classic'; try { id = localStorage.getItem(THEME_KEY) || 'classic'; } catch(e) {}
   const t = themeById(id); return themeUnlocked(t) ? t : THEMES[0];
@@ -1358,20 +1393,20 @@ function renderThemes() {
   const have = Store.getBadges().length, cur = currentTheme();
   row.innerHTML = '';
   THEMES.forEach(t => {
-    const ok = have >= t.need, b = document.createElement('button');
+    const ok = themeUnlocked(t), b = document.createElement('button');
     b.type = 'button';
     b.className = 'th-chip' + (t.id === cur.id ? ' on' : '') + (ok ? '' : ' locked');
     b.innerHTML = `<span class="te"${t.id==='huruf'?' data-ar="1"':''}>${t.icon}</span><span class="tn">${ML(t.name[0], t.name[1])}</span>` + (ok ? '' : `<span class="tl">🔒${t.need}</span>`);
     b.addEventListener('click', () => {
       SFX.tap();
-      if (!ok) { themeNote(ML(`Kumpulkan ${t.need} lencana untuk membuka ${t.name[0]}!`, `Collect ${t.need} badges to unlock ${t.name[1]}!`)); return; }
+      if (!ok) { themeNote(ML(`Kumpulkan ${t.need} lencana atau ${t.need*3} ⭐ untuk membuka ${t.name[0]}!`, `Collect ${t.need} badges or ${t.need*3} ⭐ to unlock ${t.name[1]}!`)); return; }
       try { localStorage.setItem(THEME_KEY, t.id); } catch(e) {}
       renderThemes(); themeNote(ML('Tema dipakai: ', 'Theme on: ') + ML(t.name[0], t.name[1]) + ' ' + (t.id==='huruf'?'🔤':t.icon));
     });
     row.appendChild(b);
   });
-  const next = THEMES.find(t => have < t.need);
-  themeNote(next ? ML(`Tema baru di ${next.need} lencana`, `New theme at ${next.need} badges`) : ML('Semua tema terbuka! 🎉', 'All themes unlocked! 🎉'));
+  const next = THEMES.find(t => !themeUnlocked(t));
+  themeNote(next ? ML(`Tema baru: ${next.need} lencana atau ${next.need*3} ⭐ (kamu punya ${mmStars()} ⭐)`, `New theme: ${next.need} badges or ${next.need*3} ⭐ (you have ${mmStars()} ⭐)`) : ML('Semua tema terbuka! 🎉', 'All themes unlocked! 🎉'));
 }
 function themeNote(txt){ const n = document.getElementById('theme-note'); if (n) n.textContent = txt; }
 
@@ -1585,8 +1620,8 @@ function buildBg() {
    SCREEN MANAGER
    ════════════════════════════════════════════ */
 function goTo(id) {
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('.screen').forEach(s=>{ s.classList.remove('active'); s.inert = true; s.setAttribute('aria-hidden','true'); });
+  const sc=document.getElementById(id); sc.classList.add('active'); sc.inert = false; sc.removeAttribute('aria-hidden');
   document.getElementById('app').setAttribute('data-scr', id);
 }
 
@@ -1979,10 +2014,22 @@ function showWin() {
     extraEl.style.display = 'none';
   }
 
+  // every win earns a star; with no new badge the box shows the star and what it is building towards
+  let stars = mmStars() + 1; try{ localStorage.setItem('bm_mm_stars', stars); }catch(e){}
+  if (newlyEarned.length === 0) {
+    const nextT = THEMES.find(t => !themeUnlocked(t));
+    document.getElementById('earn-icon').textContent = '⭐';
+    document.querySelector('.sk-text > span').textContent = ML('+1 Bintang!', '+1 Star!');
+    document.getElementById('earn-name').textContent = ML(`Bintangmu: ${stars} ⭐`, `Your stars: ${stars} ⭐`);
+    extraEl.textContent = nextT ? ML(`${Math.max(0, nextT.need*3 - stars)} ⭐ lagi untuk tema ${nextT.name[0]}!`, `${Math.max(0, nextT.need*3 - stars)} ⭐ more for the ${nextT.name[1]} theme!`) : ML('Semua tema sudah terbuka! 🎉', 'Every theme is open! 🎉');
+    extraEl.style.display = 'block';
+    document.querySelector('.sticker-box')?.classList.add('star-win');
+  } else document.querySelector('.sticker-box')?.classList.remove('star-win');
+
   // Subtitle + moves
   const subs=['Ingatanmu super! 🌟','AllahuAkbar, pintar sekali! 💫','Hebat sekali, si kecil! ✨','MasyaAllah, kamu cerdas! 🌙','Luar biasa! Terus bersinar! ⭐'];
   document.getElementById('win-sub').textContent = subs[Math.floor(Math.random()*subs.length)];
-  document.getElementById('win-moves-txt').textContent = `Selesai dalam ${G.moves} langkah`;
+  document.getElementById('win-moves-txt').textContent = TODDLER.has(G.mode) ? ML(`⭐ ${G.cards.length/2} pasangan ketemu semua!`, `⭐ All ${G.cards.length/2} pairs found!`) : `Selesai dalam ${G.moves} langkah`;
 
   const wd = document.getElementById('win-daily');
   if (daily) {
@@ -2146,7 +2193,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
     SFX.tap();
     document.getElementById('dt-overlay').classList.remove('on');
     document.getElementById('app').classList.remove('dt');
-    updateBadgePill(); renderDailyCard(); renderThemes();
+    updateBadgePill(); renderDailyCard(); renderThemes(); renderPlayButton();
     goTo('s-home');
   });
 
@@ -2160,12 +2207,12 @@ document.addEventListener('DOMContentLoaded', ()=>{
     document.getElementById('dt-overlay').classList.remove('on');
     document.getElementById('app').classList.remove('dt');
     updateBadgePill(); renderDailyCard(); renderThemes();
-    goTo('s-home');
+    try{renderPlayButton();}catch(e){} goTo('s-home');
   });
 
   // Stickers / badges
   document.getElementById('btn-stickers').addEventListener('click', ()=>{ SFX.tap(); renderStickers(); goTo('s-stickers'); document.getElementById('s-stickers').scrollTop=0; });
-  document.getElementById('btn-stk-back').addEventListener('click', ()=>{ SFX.tap(); renderThemes(); goTo('s-home'); });
+  document.getElementById('btn-stk-back').addEventListener('click', ()=>{ SFX.tap(); renderThemes(); try{renderPlayButton();}catch(e){} goTo('s-home'); });
   // A new day while the page stays open: refresh the daily card
   document.addEventListener('visibilitychange', ()=>{ if (!document.hidden) renderDailyCard(); });
 
@@ -2177,6 +2224,48 @@ document.addEventListener('DOMContentLoaded', ()=>{
   // First-touch audio unlock
   document.getElementById('app').addEventListener('pointerdown', ()=>{}, {once:true});
 });
+
+/* ════════════════════════════════════════════
+   HOME: one big "Ayo Main!" (the level to play next) + the full list folded away for parents
+   ════════════════════════════════════════════ */
+function suggestedMode(){ let m='easy'; try{ m=localStorage.getItem('bm_mm_next')||'easy'; }catch(e){} return MODES[m]?m:'easy'; }
+function renderPlayButton(){
+  const m=suggestedMode(), c=MODES[m]; if(!c) return;
+  document.getElementById('mp-ic').innerHTML=MM_IC(m);
+  document.getElementById('mp-t').textContent=ML('Ayo Main!','Let\'s Play!');
+  document.getElementById('mp-s').textContent=`${modeName(m)} · ${ML(c.pairs*2+' kartu',c.pairs*2+' cards')}`;
+  document.querySelectorAll('.mode-card[data-mode]').forEach(mc=>mc.classList.toggle('suggest', mc.dataset.mode===m));
+}
+function setLevelsOpen(open){
+  const l=document.getElementById('mm-levels'), b=document.getElementById('mm-more'); if(!l||!b) return;
+  l.classList.toggle('open',open); b.setAttribute('aria-expanded',open?'true':'false');
+  document.getElementById('mm-more-t').textContent=open?ML('Tutup daftar level','Hide the levels'):ML('Pilih level lain','Choose another level');
+  try{ localStorage.setItem('bm_mm_levels_open',open?'1':'0'); }catch(e){}
+}
+document.getElementById('mm-play').addEventListener('click',()=>{ SFX.tap(); startGame(suggestedMode()); });
+document.getElementById('mm-more').addEventListener('click',()=>{ SFX.tap(); setLevelsOpen(!document.getElementById('mm-levels').classList.contains('open')); });
+document.getElementById('mm-more-s').textContent=ML('untuk Ayah & Bunda','for parents');
+try{ setLevelsOpen(localStorage.getItem('bm_mm_levels_open')==='1'); }catch(e){ setLevelsOpen(false); }
+renderPlayButton();
+document.querySelectorAll('.screen:not(.active)').forEach(sc=>{ sc.inert=true; sc.setAttribute('aria-hidden','true'); });
+
+/* ════════════════════════════════════════════
+   ACCESSIBILITY: cards and level tiles work with a keyboard / switch / screen reader
+   ════════════════════════════════════════════ */
+function a11yCards(){
+  document.querySelectorAll('#card-grid .mem-card').forEach(el=>{
+    const i=+el.dataset.idx, c=G.cards[i]; if(!c) return;
+    el.setAttribute('role','button'); el.tabIndex=0;
+    const name=String(cardFace(c.type).label||'').replace(/<[^>]+>/g,'');
+    el.setAttribute('aria-label', c.matched ? ML(`${name}, sudah cocok`,`${name}, matched`) : (c.flipped||el.classList.contains('flipped')) ? name : ML(`Kartu ${i+1}, tertutup`,`Card ${i+1}, face down`));
+    el.setAttribute('aria-disabled', c.matched?'true':'false');
+    if(!el.dataset.kb){ el.dataset.kb='1'; el.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); } }); }
+  });
+}
+document.querySelectorAll('.mode-card[data-mode]').forEach(mc=>{ mc.setAttribute('role','button'); mc.tabIndex=0;
+  mc.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); mc.click(); } }); });
+try{ const rb=document.getElementById('reaction-bubble'); rb.setAttribute('role','status'); rb.setAttribute('aria-live','polite'); }catch(e){}
+new MutationObserver(()=>{ if(G&&G.cards) a11yCards(); }).observe(document.getElementById('card-grid'),{subtree:true,attributes:true,attributeFilter:['class'],childList:true});
 </script>
 <script src="/bm-kit.js" defer></script>
 </body>
