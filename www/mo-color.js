@@ -118,6 +118,7 @@
   #moColor .mc-done{background:linear-gradient(120deg,#3D9BFF,#6F5BF2 60%,#9B5DE5)!important;box-shadow:0 6px 0 #4A3FB8,0 14px 22px -12px rgba(80,60,200,.6)!important;display:flex;align-items:center;justify-content:center;gap:8px}
   #moColor .mc-btn{border-radius:22px!important;min-height:60px!important}
   #moColor .mc-meter>b{display:none!important}
+  #moColor .mc-meter{position:relative;z-index:4!important;min-height:40px;margin-bottom:12px!important;flex:none!important}   /* stars sit above the picture and never get covered */
   #moColor .mc-meter.full .mc-track{box-shadow:inset 0 2px 4px rgba(80,50,160,.15),0 0 0 3px #FFD54A,0 0 16px 4px rgba(255,210,63,.55)!important}
   html[data-bm-theme="classic"] #moColor .mc-meter.full .mc-track{box-shadow:inset 0 2px 4px rgba(0,0,0,.35),0 0 0 3px #FFD54A,0 0 16px 4px rgba(255,210,63,.45)!important}
   #moColor .mc-done .kstar{flex:none;filter:drop-shadow(0 2px 2px rgba(40,20,120,.35))}
@@ -743,12 +744,20 @@
     party(T('MasyaAllah, indah! 🌈', 'MashaAllah, beautiful! 🌈'), true);
   }
   function close() { shimmerOff(); wand = null; root.classList.remove('on'); document.documentElement.style.overflow = ''; twinkles = []; glitPts = []; stroke = null; autoRun = false; }
+  /* size the square picture in pixels so it always fits its space (Safari can let an aspect-ratio box grow past it),
+     leaving room for its white frame so it never slides under the stars */
+  function fitPaper() {
+    if (!root) return; const st = root.querySelector('.mc-stage'), pp = root.querySelector('.mc-paper'); if (!st || !pp) return;
+    pp.style.width = pp.style.height = ''; const r = st.getBoundingClientRect();
+    const s = Math.floor(Math.min(r.width - 20, r.height - 22)); if (s > 80) { pp.style.width = pp.style.height = s + 'px'; pp.style.aspectRatio = 'auto'; }
+  }
+  addEventListener('resize', () => { if (root && root.classList.contains('on')) fitPaper(); });
   function open(o) {
     opts = o || {}; if (!root) build();
-    root.querySelector('.mc-title').textContent = opts.title || T('Warnai Baby Mo 🖍️', 'Colour Baby Mo 🖍️');
+    root.querySelector('.mc-title').textContent = opts.title || T('Warnai Baby Mo', 'Colour Baby Mo');
     root.querySelector('.mc-done').innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> ' + T('Selesai!', 'Done!') + ' <svg class="kstar" viewBox="0 0 40 40" width="26" height="26" aria-hidden="true"><defs><linearGradient id="mcDoneG" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE878"/><stop offset="1" stop-color="#FFB41F"/></linearGradient></defs><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="url(#mcDoneG)" stroke="#FFC22E" stroke-width="4" stroke-linejoin="round"/><ellipse cx="15" cy="15.5" rx="3.6" ry="2.2" transform="rotate(-30 15 15.5)" fill="#fff" opacity=".6"/><ellipse cx="16.2" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><ellipse cx="23.8" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><circle cx="13.6" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><circle cx="26.4" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><path d="M17.6 25.2q2.4 2.6 4.8 0" fill="none" stroke="#4A2A12" stroke-width="1.6" stroke-linecap="round"/></svg>';
     root.querySelector('.mc-auto').textContent = T('✨ Sim salabim', '✨ Magic!');
-    root.classList.add('on'); document.documentElement.style.overflow = 'hidden';
+    root.classList.add('on'); document.documentElement.style.overflow = 'hidden'; fitPaper(); requestAnimationFrame(fitPaper);
     const c = cx(colorC); c.fillStyle = '#fff'; c.fillRect(0, 0, N, N); cx(eyeC).clearRect(0, 0, N, N); cx(eyeTargetC).clearRect(0, 0, N, N);
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, N, N); fctx.clearRect(0, 0, N, N); labels = null; stroke = null; undoStack = []; glitPts = []; celebrated = false; halfSaid = false; autoRun = false;
     cur = CRAYONS[0]; root.querySelectorAll('.mc-c').forEach((x, i) => x.classList.toggle('sel', i === 0));
