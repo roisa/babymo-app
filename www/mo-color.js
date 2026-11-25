@@ -499,6 +499,22 @@
         for (let k = 0; k < B; k++) { if (!ok0[k] || ok0[(k + B - 1) % B]) continue; let n = 0; while (n < B && ok0[(k + n) % B]) n++;
           let tight = true; for (let j = 0; j < n; j++) if (te0[(k + j) % B] - tb[(k + j) % B] > sz * .2) { tight = false; break; }
           if (n >= 10 && tight) for (let j = 0; j < n; j++) { ok[(k + j) % B] = 1; te[(k + j) % B] = te0[(k + j) % B]; } }
+        // second look, a little wider (an eyelid drawn further out): a run of >= 5 directions whose eyelid distance
+        // changes smoothly and where the coloured version is mostly white
+        const meas = (k, lim) => { const a = k / B * Math.PI * 2, dx = Math.cos(a), dy = Math.sin(a); let st = 0, wl = 0, gl = 0, rs = 0, t0 = 0;
+          for (let t = 0; t < sz * 1.3; t += .5) { const xx = Math.round(ecx + dx * t), yy = Math.round(ecy + dy * t); if (xx < 0 || yy < 0 || xx >= N || yy >= N) return null; const q = yy * N + xx;
+            if (st === 0) { if (!inB.has(q)) st = 1; else continue; }
+            if (st === 1) { if (inB.has(q)) continue; if (lineWall[q]) { if ((wl += .5) > 6) return null; continue; } st = 2; t0 = t; }
+            if (st === 2) { if (labels[q] >= 0 && labels[q] !== e.bl.L && regions[labels[q]] > sz * sz * .8 && !lineWall[q]) return null;
+              if (lineWall[q]) { if (gl <= 4.5 && rs < 2) { rs++; st = 1; wl = 0; gl = 0; continue; } return gl > 1 ? [t0, t] : null; } if ((gl += .5) > lim) return null; } } return null; };
+        const whiteFrac = (k, t0, t1) => { const a = k / B * Math.PI * 2, dx = Math.cos(a), dy = Math.sin(a); let n = 0, wv = 0; for (let t = t0; t <= t1; t++) { const q = (Math.round(ecy + dy * t) * N + Math.round(ecx + dx * t)) * 4; n++; if (Math.min(d[q], d[q + 1], d[q + 2]) > 195) wv++; } return n ? wv / n : 0; };
+        const m2 = []; for (let k = 0; k < B; k++) m2[k] = ok[k] ? null : meas(k, sz * .42);
+        for (let k = 0; k < B; k++) { if (!m2[k] || m2[(k + B - 1) % B]) continue; let n = 0; while (n < B && m2[(k + n) % B]) n++;
+          let smooth = true, wsum = 0; for (let j = 0; j < n; j++) { const c = m2[(k + j) % B]; wsum += whiteFrac((k + j) % B, c[0], c[1]); if (j && Math.abs((c[1] - c[0]) - (m2[(k + j - 1) % B][1] - m2[(k + j - 1) % B][0])) > 3) smooth = false; }
+          if (n >= 5 && smooth && wsum / n >= .5) for (let j = 0; j < n; j++) { const kk = (k + j) % B; ok[kk] = 1; tb[kk] = m2[kk][0]; te[kk] = m2[kk][1]; } }
+        // bridge holes of up to 3 directions between accepted stretches
+        for (let k = 0; k < B; k++) { if (ok[k] || !ok[(k + B - 1) % B]) continue; let n = 0; while (n < 4 && !ok[(k + n) % B]) n++;
+          if (n <= 3 && ok[(k + n) % B]) { const pa = (k + B - 1) % B, pb = (k + n) % B; for (let j = 0; j < n; j++) { const kk = (k + j) % B, f = (j + 1) / (n + 1); ok[kk] = 1; tb[kk] = tb[pa] + (tb[pb] - tb[pa]) * f; te[kk] = te[pa] + (te[pb] - te[pa]) * f; } } }
         const run = new Uint8Array(B);                                               // keep stretches of >= 6 bins (going round)
         for (let k = 0; k < B; k++) { if (!ok[k] || ok[(k + B - 1) % B]) continue; let n = 0; while (n < B && ok[(k + n) % B]) n++; if (n >= 4) for (let j = 0; j < n; j++) run[(k + j) % B] = 1; }
         if (ok.every(v => v)) run.fill(1);
@@ -506,7 +522,19 @@
           const p = y * N + x, Lp = labels[p]; if (inB.has(p) || Lp < 0 || (Lp !== e.bl.L && regions[Lp] > sz * sz * .8)) continue;
           const a = Math.atan2(y - ecy, x - ecx), k = ((Math.round(a / (Math.PI * 2) * B) % B) + B) % B, r = Math.hypot(x - ecx, y - ecy);
           const q4 = p * 4, gw = Math.min(d[q4], d[q4 + 1], d[q4 + 2]) > 215;
-          if ((run[k] && r >= tb[k] - 1.5 && r <= te[k] + .5) || (gw && tb[k] && r <= tb[k] + 3)) col[p] = 0xFFFFFF; }   // or white in the coloured version, right beside the eye
+          if ((run[k] && r >= tb[k] - 1.5 && r <= te[k] + .5) || (gw && tb[k] && r <= tb[k] + 3)) col[p] = 0xFFFFFF; }
+        // the coloured version's own eye white, lined up on this eye (the whole-page fit can be a few px off here):
+        // the shift that puts its dark pupil best on the page's black eye
+        const ring = []; for (const p of e.bl.px) for (const o of [-4, 4, -4 * N, 4 * N]) { const q = p + o; if (q >= 0 && q < N * N && !inB.has(q) && labels[q] === e.bl.L) ring.push(q); }
+        const dkAt = (q, ox, oy) => { const y = ((q / N) | 0) + oy, x = q % N + ox; if (x < 0 || y < 0 || x >= N || y >= N) return 0; const i = (y * N + x) * 4; return Math.max(d[i], d[i + 1], d[i + 2]) < 110 ? 1 : 0; };
+        let bo = [0, 0], bsc = -1e9;
+        for (let oy = -10; oy <= 10; oy += 2) for (let ox = -10; ox <= 10; ox += 2) { let sc = 0; for (let j = 0; j < e.bl.px.length; j += 3) sc += dkAt(e.bl.px[j], ox, oy); for (let j = 0; j < ring.length; j += 3) sc -= dkAt(ring[j], ox, oy); if (sc > bsc) { bsc = sc; bo = [ox, oy]; } }
+        for (let y = Math.max(1, e.y0 - my); y <= Math.min(N - 2, e.y1 + my); y++) for (let x = Math.max(1, e.x0 - mx); x <= Math.min(N - 2, e.x1 + mx); x++) {
+          const p = y * N + x; if (inB.has(p) || labels[p] < 0 || col[p] === 0xFFFFFF) continue; const Lp = labels[p]; if (Lp !== e.bl.L && regions[Lp] > sz * sz * .8) continue;
+          const gx = x + bo[0], gy = y + bo[1]; if (gx < 0 || gy < 0 || gx >= N || gy >= N) continue; const i = (gy * N + gx) * 4; if (Math.min(d[i], d[i + 1], d[i + 2]) <= 195) continue;
+          let dx = x - ecx, dy = y - ecy; const dl = Math.hypot(dx, dy) || 1; dx /= dl; dy /= dl; let hit = false;
+          for (let t = 1, wl = 0; t <= sz * .5; t++) { const q = Math.round(y - dy * t) * N + Math.round(x - dx * t); if (inB.has(q)) { hit = true; break; } if (lineWall[q]) { if (++wl > 6) break; } else if (wl) break; }   // reaches the eye without crossing a line
+          if (hit) col[p] = 0xFFFFFF; }   // or white in the coloured version, right beside the eye
       }
       for (let i = 0; i < N * N; i++) if (col[i] >= 0) { const o4 = i * 4; o[o4] = col[i] >> 16 & 255; o[o4 + 1] = col[i] >> 8 & 255; o[o4 + 2] = col[i] & 255; }
       // eyes
