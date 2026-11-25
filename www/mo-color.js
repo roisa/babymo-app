@@ -1,14 +1,12 @@
-/* Baby Mo colouring — tap-to-fill colouring pages made for 2–4 year olds (25 Nov 2026).
+/* Baby Mo colouring — brush-and-tap colouring pages made for 2–4 year olds (25 Nov 2026).
    MoColor.open({ src, guide, title, key, onDone })
      src   : black line art on white (PNG, square, thick closed outlines)
-     guide : optional coloured version of the very same page (Mo's real colours). The 🪄 magic crayon fills
-             each shape with the colour it has there; without a guide it picks cheerful colours that never
-             repeat next to each other.
+     guide : optional coloured version of the very same page. The 🪄 magic crayon paints it in: brushing reveals the
+             real colours (with their shading) exactly where the finger goes; without a guide it paints cheerful colours.
      key   : where the finished picture is remembered (localStorage "bm_mo_color" → { key: dataURL })
-   Every tap is a little show: the colour grows out from the finger, the shape twinkles, a xylophone note
-   climbs with each fill and a soft crayon swish plays. Glitter crayons (gold, silver) keep sparkling.
-   Picking a crayon says its colour's name. "✨ Sim salabim" colours the whole picture by magic, shape by shape.
-   When most of the picture is coloured, a celebration pops up by itself. */
+   Drag = brush the colour on (crayons stay inside the shape the stroke started in). Tap = the colour spreads over the
+   shape like wet paint. Every stroke sparkles, plays notes and a soft brush swish; glitter keeps twinkling.
+   "✨ Sim salabim" sweeps a magic brush over the whole picture. A celebration pops up when most of it is coloured. */
 (function () {
   if (window.MoColor) return;
   const EN = window.BM_LANG === 'en', T = (id, en) => EN ? en : id;
@@ -69,8 +67,20 @@
   @keyframes mcFall{to{transform:translateY(110vh) rotate(720deg)}}
   @media (prefers-reduced-motion:reduce){#moColor .mc-conf,#moColor .mc-c.magic.sel svg{animation:none;display:none}}`;
 
-  let root, cvs, ctx, fx, fctx, lineImg, labels, regions, order, start, colorOf, glitterOf, history, cur = CRAYONS[0], rbI = 0, opts = {},
-      busy = false, audio, guideCol = null, guideImg = null, bgL = -1, celebrated = false, fills = 0, twinkles = [], fxOn = false, adj = null;
+  /* ═══ Painting model (brushing) ═══
+     colorC  : the child's colours (white to start)          eyeC : real eye colours revealed by the magic crayon
+     strokeC : soft white dabs of the stroke being painted   maskC: the shape the stroke started in (crayons stay inside it)
+     srcC    : what the current crayon paints (a flat colour, glitter, rainbow bands, or the magic picture)
+     targetC : the magic picture = the coloured version, cleaned so every shape holds only its own colours
+     The view = colorC + (src ∩ stroke ∩ mask) → × line art → eyes. A tap spreads the colour over the shape like
+     wet paint; a drag brushes it on under the finger. */
+  const mk = () => { const c = document.createElement('canvas'); c.width = c.height = N; return c; };
+  const colorC = mk(), eyeC = mk(), strokeC = mk(), maskC = mk(), srcC = mk(), tmpC = mk(), eyeTmpC = mk(), targetC = mk(), eyeTargetC = mk();
+  const cx = c => c.getContext('2d', { willReadFrequently: true });
+  let root, cvs, ctx, fx, fctx, lineImg, labels, regions, order, start, bgL = -1, opts = {}, audio, cur = CRAYONS[0],
+      guideImg = null, guideData = null, guideCol = null, targetReady = false, blobs = [], adj = null,
+      stroke = null, undoStack = [], glitPts = [], twinkles = [], fxOn = false, celebrated = false, halfSaid = false,
+      samplePts = null, autoRun = false, rbShift = 0, noteI = 0;
 
   function el(html) { const d = document.createElement('div'); d.innerHTML = html.trim(); return d.firstChild; }
   function crayonSvg(c) {
@@ -98,7 +108,7 @@
       <div class="mc-pal" role="radiogroup" aria-label="${T('Krayon', 'Crayons')}"></div>
       <div class="mc-row"><button class="mc-btn mc-auto" type="button"></button><button class="mc-btn mc-done" type="button"></button></div></div>`);
     document.body.appendChild(root);
-    cvs = root.querySelector('canvas.art'); ctx = cvs.getContext('2d', { willReadFrequently: true });
+    cvs = root.querySelector('canvas.art'); ctx = cx(cvs);
     fx = root.querySelector('canvas.fx'); fctx = fx.getContext('2d');
     const pal = root.querySelector('.mc-pal');
     CRAYONS.forEach((c, i) => {
@@ -114,7 +124,10 @@
     root.querySelector('.mc-undo').onclick = undo;
     root.querySelector('.mc-done').onclick = finish;
     root.querySelector('.mc-auto').onclick = magicAll;
-    cvs.addEventListener('pointerdown', onTap);
+    cvs.addEventListener('pointerdown', onDown);
+    cvs.addEventListener('pointermove', onMove);
+    cvs.addEventListener('pointerup', onUp);
+    cvs.addEventListener('pointercancel', onUp);
   }
 
   /* ── sound ── */
@@ -126,27 +139,27 @@
     o.connect(g); g.connect(A.destination); o.start(t); o.stop(t + d + .3);
   }
   function chime(fs, gap) { fs.forEach((f, i) => setTimeout(() => tone(f, .1, 'triangle', .14), i * (gap || 70))); }
-  function swish() {                                // a soft crayon scribble
+  function swish(vol) {
     const A = ac(); if (!A) return;
     try { const len = Math.floor(A.sampleRate * .16), b = A.createBuffer(1, len, A.sampleRate), d = b.getChannelData(0);
       for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * Math.sin(Math.PI * i / len) * .5;
-      const s = A.createBufferSource(), f = A.createBiquadFilter(), g = A.createGain(); s.buffer = b; f.type = 'bandpass'; f.frequency.value = 2400; f.Q.value = .8; g.gain.value = .22;
+      const s = A.createBufferSource(), f = A.createBiquadFilter(), g = A.createGain(); s.buffer = b; f.type = 'bandpass'; f.frequency.value = 2200 + Math.random() * 600; f.Q.value = .8; g.gain.value = vol || .2;
       s.connect(f); f.connect(g); g.connect(A.destination); s.start(); } catch (e) {}
   }
+  function note(vol) { tone(PENTA[noteI++ % PENTA.length], .1, 'triangle', vol || .13); }
   function say(t) { try { const u = new SpeechSynthesisUtterance(t); u.lang = EN ? 'en-US' : 'id-ID'; u.pitch = 1.2; speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) {} }
 
-  /* ── split the line art into regions once ── */
+  /* ── the line art → shapes ── */
   function fitDraw(x, img) {
     x.fillStyle = '#fff'; x.fillRect(0, 0, N, N);
     const k = Math.min(N / img.naturalWidth, N / img.naturalHeight), w = img.naturalWidth * k, h = img.naturalHeight * k;
     x.drawImage(img, (N - w) / 2, (N - h) / 2, w, h);
   }
   function analyse(img) {
-    const c = document.createElement('canvas'); c.width = c.height = N; const x = c.getContext('2d', { willReadFrequently: true });
-    fitDraw(x, img); lineImg = c;
+    const c = mk(), x = cx(c); fitDraw(x, img); lineImg = c;
     const d = x.getImageData(0, 0, N, N).data, wall = new Uint8Array(N * N);
     for (let i = 0; i < N * N; i++) { if (d[i * 4] * .3 + d[i * 4 + 1] * .59 + d[i * 4 + 2] * .11 < 160) wall[i] = 1; }
-    const w2 = wall.slice();                        // thicken lines by 1px so tiny gaps don't leak
+    const w2 = wall.slice();
     for (let y = 1; y < N - 1; y++) for (let xx = 1; xx < N - 1; xx++) { const i = y * N + xx; if (!wall[i] && (wall[i - 1] || wall[i + 1] || wall[i - N] || wall[i + N])) w2[i] = 1; }
     labels = new Int32Array(N * N).fill(-1); const st = new Int32Array(N * N); regions = [];
     for (let s = 0; s < N * N; s++) {
@@ -159,116 +172,68 @@
         if (y < N - 1 && !w2[i + N] && labels[i + N] < 0) { labels[i + N] = id; st[sp++] = i + N; } }
       regions.push(n);
     }
-    for (let pass = 0; pass < 2; pass++) for (let i = N; i < N * N - N; i++) if (labels[i] < 0 && !wall[i]) { const a = labels[i - 1] >= 0 ? labels[i - 1] : labels[i + 1] >= 0 ? labels[i + 1] : labels[i - N] >= 0 ? labels[i - N] : labels[i + N]; if (a >= 0) labels[i] = a; }
-    // pixel lists per region (fast fills, twinkle spots)
+    // the colour reaches right under the lines (no white halo next to them)
+    for (let pass = 0; pass < 3; pass++) for (let i = N; i < N * N - N; i++) if (labels[i] < 0 && (pass > 0 || !wall[i])) { const a = labels[i - 1] >= 0 ? labels[i - 1] : labels[i + 1] >= 0 ? labels[i + 1] : labels[i - N] >= 0 ? labels[i - N] : labels[i + N]; if (a >= 0) labels[i] = a; }
     const R = regions.length, cnt = new Int32Array(R + 1);
     for (let i = 0; i < N * N; i++) if (labels[i] >= 0) cnt[labels[i] + 1]++;
     start = new Int32Array(R + 1); for (let r = 0; r < R; r++) start[r + 1] = start[r] + cnt[r + 1];
     order = new Int32Array(start[R]); const pos = start.slice(0, R);
     for (let i = 0; i < N * N; i++) { const L = labels[i]; if (L >= 0) order[pos[L]++] = i; }
     for (let r = 0; r < R; r++) regions[r] = start[r + 1] - start[r];
-    // background = the biggest shape touching the edge of the page
     bgL = -1; let best = 0;
     for (let i = 0; i < N; i++) for (const p of [i, (N - 1) * N + i, i * N, i * N + N - 1]) { const L = labels[p]; if (L >= 0 && regions[L] > best) { best = regions[L]; bgL = L; } }
     findBlobs(wall);
-    colorOf = new Array(R).fill(null); glitterOf = new Array(R).fill(false); magicOf = new Array(R).fill(false); history = []; adj = null; guideCol = null; guideData = null; celebrated = false; halfSaid = false; fills = 0;
+    // sample points for "how much is coloured" (Mo and the things, not the sky)
+    samplePts = []; for (let L = 0; L < R; L++) { if (L === bgL || regions[L] < 150) continue; const k = Math.max(1, Math.floor(regions[L] / 40)); for (let j = start[L]; j < start[L + 1]; j += k) samplePts.push(order[j]); }
+    adj = null; guideCol = null; targetReady = false; maskCache.clear();
   }
-  /* Solid black areas thicker than a line (Mo's eyes): with the magic crayon they take their real
-     colours from the coloured version (brown iris, black pupil, white shine) once the shape around them is magic-coloured. */
-  let blobs = [], magicOf = [];
-  const bcv = document.createElement('canvas'); bcv.width = bcv.height = N; const bcx = bcv.getContext('2d');
+  /* Mo's eyes are solid black on the page; the magic crayon reveals their real colours (iris, shine) */
   function findBlobs(wall) {
-    blobs = []; bcx.clearRect(0, 0, N, N);
-    const R = 4; let m = wall;
+    blobs = [];
+    let m = wall;
     const erode = a => { const o = new Uint8Array(N * N); for (let y = 1; y < N - 1; y++) for (let x = 1; x < N - 1; x++) { const i = y * N + x; o[i] = a[i] && a[i - 1] && a[i + 1] && a[i - N] && a[i + N] ? 1 : 0; } return o; };
     const dilate = a => { const o = new Uint8Array(N * N); for (let y = 1; y < N - 1; y++) for (let x = 1; x < N - 1; x++) { const i = y * N + x; o[i] = a[i] || a[i - 1] || a[i + 1] || a[i - N] || a[i + N] ? 1 : 0; } return o; };
-    for (let k = 0; k < R; k++) m = erode(m);
+    for (let k = 0; k < 4; k++) m = erode(m);
     let any = false; for (let i = 0; i < N * N; i++) if (m[i]) { any = true; break; } if (!any) return;
-    for (let k = 0; k < R + 1; k++) m = dilate(m);
+    for (let k = 0; k < 5; k++) m = dilate(m);
     const seen = new Uint8Array(N * N), st = new Int32Array(N * N);
     for (let s0 = 0; s0 < N * N; s0++) {
       if (!m[s0] || !wall[s0] || seen[s0]) continue;
-      let sp = 0, px = []; st[sp++] = s0; seen[s0] = 1;
+      let sp = 0; const px = []; st[sp++] = s0; seen[s0] = 1;
       while (sp) { const i = st[--sp]; px.push(i); for (const j of [i - 1, i + 1, i - N, i + N]) if (j >= 0 && j < N * N && m[j] && wall[j] && !seen[j]) { seen[j] = 1; st[sp++] = j; } }
       if (px.length < 40 || px.length > N * N * .02) continue;
-      // eyes are round: skip long thick strokes (a smile, an eyebrow)
       let x0 = N, x1 = 0, y0 = N, y1 = 0; for (const i of px) { const y = (i / N) | 0, x = i - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
       const bw = x1 - x0 + 1, bh = y1 - y0 + 1;
       if (Math.max(bw, bh) > 2.2 * Math.min(bw, bh) || px.length < .45 * bw * bh) continue;
-      // the shape that surrounds it (the face)
       const cnt = new Map();
       for (const i of px) for (const j of [i - 3, i + 3, i - 3 * N, i + 3 * N]) { const L = labels[j]; if (L >= 0) cnt.set(L, (cnt.get(L) || 0) + 1); }
       let L = -1, best = 0; cnt.forEach((v, k) => { if (v > best) { best = v; L = k; } });
       if (L >= 0) blobs.push({ px: Int32Array.from(px), L });
     }
   }
-  function refreshBlobs() {
-    if (!blobs.length) return;
-    const img = bcx.createImageData(N, N), o = img.data, d = guideData;
-    if (d) for (const b of blobs) if (magicOf[b.L]) for (const p of b.px) { const i = p * 4, r = d[i], g = d[i + 1], bl = d[i + 2];
-      if (Math.max(r, g, bl) < 45) continue;
-      const sk = guideCol && guideCol[b.L] && guideCol[b.L][0];          // never paint the face's own skin onto a black area
-      if (sk && (sk[0] - r) ** 2 + (sk[1] - g) ** 2 + (sk[2] - bl) ** 2 < 45 * 45) continue;
-      o[i] = r; o[i + 1] = g; o[i + 2] = bl; o[i + 3] = 255; }
-    bcx.putImageData(img, 0, 0);
-  }
-  function hex(c) { const n = parseInt(c.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
-  let fill;
-  function renderAll() {
-    fill = ctx.createImageData(N, N); const f = fill.data;
-    for (let i = 0; i < N * N * 4; i++) f[i] = 255;
-    for (let L = 0; L < regions.length; L++) if (colorOf[L]) setRegion(L, colorOf[L], glitterOf[L]);
-    paint();
-  }
-  const tmp = document.createElement('canvas'); tmp.width = tmp.height = N; const tctx = tmp.getContext('2d');
-  function paint(clip) {
-    if (clip) { ctx.save(); ctx.beginPath(); ctx.arc(clip.x, clip.y, clip.r, 0, Math.PI * 2); ctx.clip(); }
-    tctx.putImageData(fill, 0, 0); ctx.drawImage(tmp, 0, 0);
-    ctx.globalCompositeOperation = 'multiply'; ctx.drawImage(lineImg, 0, 0); ctx.globalCompositeOperation = 'source-over';
-    if (blobs.length) ctx.drawImage(bcv, 0, 0);
-    if (clip) ctx.restore();
-  }
-  function setRegion(L, color, glitter) {
-    const f = fill.data;
-    if (color && color[0] === 'g' && guideData && guideCol && guideCol[L]) {
-      const cl = guideCol[L], d = guideData;
-      for (let k = start[L]; k < start[L + 1]; k++) { const p = order[k], i = p * 4; let best = cl[0], bd = 1e9;
-        if (Math.min(d[i], d[i + 1], d[i + 2]) > 236) best = WHITE3;   // white in the coloured version (margin, clouds) stays white
-        else if (Math.max(d[i], d[i + 1], d[i + 2]) >= 75) for (const c of cl) { const dd = (c[0] - d[i]) ** 2 + (c[1] - d[i + 1]) ** 2 + (c[2] - d[i + 2]) ** 2; if (dd < bd) { bd = dd; best = c; } }
-        f[i] = best[0]; f[i + 1] = best[1]; f[i + 2] = best[2]; }
-      return;
-    }
-    const c = color ? hex(color) : [255, 255, 255];
-    for (let k = start[L]; k < start[L + 1]; k++) {
-      const i = order[k] * 4;
-      if (glitter) {                                // sparkly texture: light speckles and a soft sheen
-        const p = order[k], y = (p / N) | 0, x = p - y * N, sh = .18 * Math.sin((x + y) * .045), r = Math.random();
-        const m = r < .05 ? .85 : r < .14 ? .45 : Math.max(0, sh);
-        f[i] = c[0] + (255 - c[0]) * m; f[i + 1] = c[1] + (255 - c[1]) * m; f[i + 2] = c[2] + (255 - c[2]) * m;
-      } else { f[i] = c[0]; f[i + 1] = c[1]; f[i + 2] = c[2]; }
-    }
+  const maskCache = new Map();
+  function regionMask(L) {
+    if (maskCache.has(L)) return maskCache.get(L);
+    const c = mk(), x = cx(c), img = x.createImageData(N, N), o = img.data;
+    for (let k = start[L]; k < start[L + 1]; k++) { const i = order[k] * 4; o[i] = o[i + 1] = o[i + 2] = o[i + 3] = 255; }
+    x.putImageData(img, 0, 0); maskCache.set(L, c); if (maskCache.size > 8) maskCache.delete(maskCache.keys().next().value);
+    return c;
   }
 
-  /* ── the magic crayon: Mo's real colours from the guide, or cheerful colours that never touch the same colour ── */
+  /* ── the magic picture: the coloured version, cleaned shape by shape ── */
   function loadGuide(src) {
-    guideImg = null; if (!src) return;
-    const g = new Image(); g.onload = () => { guideImg = g; guideCol = null; }; g.onerror = () => { guideImg = null; }; g.src = src;
+    guideImg = null; guideData = null; if (!src) return;
+    const g = new Image(); g.onload = () => { guideImg = g; guideData = null; guideCol = null; if (labels) targetReady = false; }; g.src = src;
   }
-  /* The coloured version → for each shape, its main colours (up to 4, each at least 10% of it).
-     One colour: a flat fill. Several (a sky and grass that share a shape because of a tiny gap in a line,
-     hair that leaks into the sky…): every pixel takes the nearest of them, so each part gets its real colour. */
-  let guideData = null;
-  function guideColours() {
-    if (guideCol || !guideImg) return guideCol;
-    const c = document.createElement('canvas'); c.width = c.height = N; const x = c.getContext('2d', { willReadFrequently: true }); fitDraw(x, guideImg);
-    const d = guideData = x.getImageData(0, 0, N, N).data; guideCol = [];
+  function clusters() {
+    if (guideCol) return guideCol;
+    const d = guideData; guideCol = [];
     for (let L = 0; L < regions.length; L++) {
       const bins = new Map(), step = Math.max(1, Math.floor(regions[L] / 3000)); let all = 0;
       for (let k = start[L]; k < start[L + 1]; k += step) { const i = order[k] * 4, R = d[i], G = d[i + 1], B = d[i + 2];
         if (Math.max(R, G, B) < 75) continue; all++;
         const key = Math.min(R, G, B) > 232 ? -1 : (R >> 5) << 6 | (G >> 5) << 3 | (B >> 5), e = bins.get(key) || [0, 0, 0, 0];
         e[0]++; e[1] += R; e[2] += G; e[3] += B; bins.set(key, e); }
-      // merge similar shades (light / dark green…) into one colour each, biggest first
       const groups = [];
       [...bins.entries()].sort((a, b) => b[1][0] - a[1][0]).forEach(([key, e]) => {
         const c = [e[1] / e[0], e[2] / e[0], e[3] / e[0]];
@@ -277,72 +242,182 @@
         else groups.push({ n: e[0], s: [e[1], e[2], e[3]], c, white: key === -1 });
       });
       const W = groups.find(g => g.white), wn = W ? W.n : 0;
-      let cl = groups.filter(g => !g.white && g.n >= Math.max(30, (all - wn) * .04)).sort((a, b) => b.n - a.n).slice(0, 6)
-        .map(g => g.s.map(v => Math.round(v / g.n)));
+      let cl = groups.filter(g => !g.white && g.n >= Math.max(30, (all - wn) * .04)).sort((a, b) => b.n - a.n).slice(0, 6).map(g => g.s.map(v => Math.round(v / g.n)));
       if (W && (wn > all * .7 || !cl.length)) cl = [[255, 255, 255]].concat(wn > all * .9 ? [] : cl);
       guideCol[L] = cl.length ? cl : null;
     }
     return guideCol;
   }
-  const WHITE3 = [255, 255, 255];
-  const toHex = c => '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
   function neighbours() {
     if (adj) return adj; adj = regions.map(() => new Set()); const D = 7;
     for (let y = 0; y < N - D; y += 2) for (let x = 0; x < N - D; x += 2) { const i = y * N + x, a = labels[i]; if (a < 0) continue;
       const b = labels[i + D], c = labels[i + D * N]; if (b >= 0 && b !== a) { adj[a].add(b); adj[b].add(a); } if (c >= 0 && c !== a) { adj[a].add(c); adj[c].add(a); } }
     return adj;
   }
-  function magicColour(L) {
-    const gc = guideColours(); if (gc && gc[L]) return gc[L].length > 1 ? 'g' + L : toHex(gc[L][0]);
-    if (L === bgL) return '#D9F1FF';
-    const used = new Set([...neighbours()[L]].map(n => colorOf[n]).filter(Boolean));
-    const opts2 = HAPPY.filter(h => !used.has(h)); const pool = opts2.length ? opts2 : HAPPY;
-    return pool[(L * 7 + regions[L]) % pool.length];
+  function buildTarget() {
+    if (targetReady || !labels) return;
+    const tx = cx(targetC), img = tx.createImageData(N, N), o = img.data;
+    for (let i = 0; i < N * N * 4; i += 4) { o[i] = o[i + 1] = o[i + 2] = 255; o[i + 3] = 255; }
+    if (guideImg) {
+      const g = mk(), gx = cx(g); fitDraw(gx, guideImg); guideData = gx.getImageData(0, 0, N, N).data; guideCol = null;
+      const cl = clusters(), d = guideData;
+      for (let L = 0; L < regions.length; L++) {
+        const C = cl[L] || [[255, 255, 255]];
+        for (let k = start[L]; k < start[L + 1]; k++) {
+          const p = order[k], i = p * 4, r = d[i], gg = d[i + 1], b = d[i + 2];
+          let c;
+          if (Math.min(r, gg, b) > 236) c = [255, 255, 255];                       // white stays white (margin, clouds)
+          else if (Math.max(r, gg, b) < 75) c = C[0];                              // the coloured version's own outline → the shape's colour
+          else { let bd = 1e9, bc = C[0]; for (const q of C) { const dd = (q[0] - r) ** 2 + (q[1] - gg) ** 2 + (q[2] - b) ** 2; if (dd < bd) { bd = dd; bc = q; } }
+            c = bd < 55 * 55 ? [r, gg, b] : bc; }                                  // its real shade, or the shape's colour where the two pictures differ
+          o[i] = c[0]; o[i + 1] = c[1]; o[i + 2] = c[2];
+        }
+      }
+      // eyes
+      const ex = cx(eyeTargetC), ei = ex.createImageData(N, N), eo = ei.data;
+      for (const bl of blobs) { const sk = cl[bl.L] && cl[bl.L][0];
+        for (const p of bl.px) { const i = p * 4, r = d[i], gg = d[i + 1], b = d[i + 2];
+          if (Math.max(r, gg, b) < 45) continue;
+          if (sk && (sk[0] - r) ** 2 + (sk[1] - gg) ** 2 + (sk[2] - b) ** 2 < 45 * 45) continue;
+          eo[i] = r; eo[i + 1] = gg; eo[i + 2] = b; eo[i + 3] = 255; } }
+      ex.putImageData(ei, 0, 0);
+    } else {
+      // no coloured version: cheerful colours that never touch the same colour, light sky behind
+      const used = new Array(regions.length).fill(null), nb = neighbours();
+      for (let L = 0; L < regions.length; L++) {
+        let col = '#D9F1FF';
+        if (L !== bgL) { const near = new Set([...nb[L]].map(n => used[n]).filter(Boolean)); const pool = HAPPY.filter(h => !near.has(h)); col = (pool.length ? pool : HAPPY)[(L * 7 + regions[L]) % (pool.length || HAPPY.length)]; }
+        used[L] = col; const c = hex(col);
+        for (let k = start[L]; k < start[L + 1]; k++) { const i = order[k] * 4; o[i] = c[0]; o[i + 1] = c[1]; o[i + 2] = c[2]; }
+      }
+      cx(eyeTargetC).clearRect(0, 0, N, N);
+    }
+    tx.putImageData(img, 0, 0); targetReady = true;
+  }
+  function hex(c) { const n = parseInt(c.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
+
+  /* ── what each crayon paints ── */
+  function makeSource(c) {
+    const x = cx(srcC); x.globalCompositeOperation = 'source-over';
+    if (c.kind === 'magic') { buildTarget(); x.clearRect(0, 0, N, N); x.drawImage(targetC, 0, 0); return; }
+    if (c.kind === 'rainbow') {
+      const g = x.createLinearGradient(0, 0, N, N), k = (rbShift++ % RAINBOW.length);
+      for (let i = 0; i <= 16; i++) g.addColorStop(i / 16, RAINBOW[(i + k) % RAINBOW.length]);
+      x.fillStyle = g; x.fillRect(0, 0, N, N); return;
+    }
+    x.fillStyle = c.c; x.fillRect(0, 0, N, N);
+    if (c.kind === 'glitter') {                   // sparkly texture: light speckles + soft diagonal sheen
+      const g = x.createLinearGradient(0, 0, N, N); for (let i = 0; i <= 12; i++) g.addColorStop(i / 12, i % 2 ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,.28)');
+      x.fillStyle = g; x.fillRect(0, 0, N, N);
+      for (let i = 0; i < 5000; i++) { x.fillStyle = Math.random() < .35 ? 'rgba(255,255,255,.95)' : 'rgba(255,255,255,.5)'; const s = Math.random() < .2 ? 2.4 : 1.4; x.fillRect(Math.random() * N, Math.random() * N, s, s); }
+    }
   }
 
-  /* ── tapping ── */
+  /* ── drawing ── */
+  function compose() {
+    if (!stroke) return;
+    const t = cx(tmpC); t.globalCompositeOperation = 'source-over'; t.clearRect(0, 0, N, N); t.drawImage(srcC, 0, 0);
+    t.globalCompositeOperation = 'destination-in'; t.drawImage(strokeC, 0, 0);
+    if (stroke.mask) t.drawImage(stroke.mask, 0, 0);
+    t.globalCompositeOperation = 'source-over';
+    if (stroke.magic) { const e = cx(eyeTmpC); e.globalCompositeOperation = 'source-over'; e.clearRect(0, 0, N, N); e.drawImage(eyeTargetC, 0, 0);
+      e.globalCompositeOperation = 'destination-in'; e.drawImage(strokeC, 0, 0); e.globalCompositeOperation = 'source-over'; }
+  }
+  function render() {
+    ctx.globalCompositeOperation = 'source-over'; ctx.drawImage(colorC, 0, 0);
+    if (stroke) ctx.drawImage(tmpC, 0, 0);
+    ctx.globalCompositeOperation = 'multiply'; ctx.drawImage(lineImg, 0, 0); ctx.globalCompositeOperation = 'source-over';
+    ctx.drawImage(eyeC, 0, 0); if (stroke && stroke.magic) ctx.drawImage(eyeTmpC, 0, 0);
+  }
+  let raf = 0; function draw() { if (raf) return; raf = requestAnimationFrame(() => { raf = 0; compose(); render(); }); }
+  function dab(x, y, r) {
+    const s = cx(strokeC), g = s.createRadialGradient(x, y, r * .35, x, y, r);
+    g.addColorStop(0, 'rgba(255,255,255,1)'); g.addColorStop(.75, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+    s.fillStyle = g; s.beginPath(); s.arc(x, y, r, 0, Math.PI * 2); s.fill();
+  }
+  function snapshot() {
+    const a = mk(), b = mk(); cx(a).drawImage(colorC, 0, 0); cx(b).drawImage(eyeC, 0, 0);
+    undoStack.push({ a, b, g: glitPts.length }); if (undoStack.length > 12) undoStack.shift();
+  }
+  function commit() {
+    if (!stroke) return;
+    compose(); cx(colorC).drawImage(tmpC, 0, 0); if (stroke.magic) cx(eyeC).drawImage(eyeTmpC, 0, 0);
+    stroke = null; cx(strokeC).clearRect(0, 0, N, N); render(); checkProgress();
+  }
+  function toCanvas(e) { const r = cvs.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * N, (e.clientY - r.top) / r.height * N]; }
   function regionAt(x, y) {
+    x = Math.max(0, Math.min(N - 1, x | 0)); y = Math.max(0, Math.min(N - 1, y | 0));
     let L = labels[y * N + x];
-    if (L < 0) for (let d = 1; d < 10 && L < 0; d++) for (const [dx, dy] of [[d, 0], [-d, 0], [0, d], [0, -d]]) { const xx = x + dx, yy = y + dy; if (xx >= 0 && yy >= 0 && xx < N && yy < N && labels[yy * N + xx] >= 0) { L = labels[yy * N + xx]; break; } }
+    if (L < 0) for (let d = 1; d < 12 && L < 0; d++) for (const [dx, dy] of [[d, 0], [-d, 0], [0, d], [0, -d]]) { const xx = x + dx, yy = y + dy; if (xx >= 0 && yy >= 0 && xx < N && yy < N && labels[yy * N + xx] >= 0) { L = labels[yy * N + xx]; break; } }
     return L;
   }
-  function onTap(e) {
-    if (busy || !labels) return;
-    const r = cvs.getBoundingClientRect(), x = Math.floor((e.clientX - r.left) / r.width * N), y = Math.floor((e.clientY - r.top) / r.height * N);
-    if (x < 0 || y < 0 || x >= N || y >= N) return;
-    const L = regionAt(x, y); if (L < 0) return;
-    const c = cur, color = c.kind === 'magic' ? magicColour(L) : c.kind === 'rainbow' ? RAINBOW[rbI++ % RAINBOW.length] : c.kind === 'erase' ? null : c.c;
-    const glitter = c.kind === 'glitter';
-    if (colorOf[L] === color && glitterOf[L] === glitter) { twinkleRegion(L, 5); tone(PENTA[fills % PENTA.length], .06, 'sine', .08); return; }
-    fillRegion(L, color, glitter, x, y, c.kind);
+  const BR = N * .05;                              // brush size
+  function onDown(e) {
+    if (!labels || autoRun) return;
+    e.preventDefault(); try { cvs.setPointerCapture(e.pointerId); } catch (er) {}
+    const [x, y] = toCanvas(e), L = regionAt(x, y); if (L < 0) return;
+    const magic = cur.kind === 'magic';
+    snapshot(); makeSource(cur); cx(strokeC).clearRect(0, 0, N, N);
+    stroke = { L, magic, mask: magic ? null : regionMask(L), x, y, x0: x, y0: y, t0: performance.now(), moved: 0, lastNote: 0, lastSwish: 0, glitter: cur.kind === 'glitter' };
+    dab(x, y, BR); swish(.16); draw();
+    if (navigator.vibrate) try { navigator.vibrate(8); } catch (er) {}
   }
-  function fillRegion(L, color, glitter, x, y, kind, quick) {
-    history.push([L, colorOf[L], glitterOf[L], magicOf[L]]); if (history.length > 80) history.shift();
-    colorOf[L] = color; glitterOf[L] = !!glitter && !!color; setRegion(L, color, glitterOf[L]);
-    const wasMagic = magicOf[L]; magicOf[L] = kind === 'magic' && !!guideData;
-    if (wasMagic !== magicOf[L] && blobs.some(b => b.L === L)) refreshBlobs();
-    if (x == null) { const p = order[start[L] + ((regions[L] / 2) | 0)]; y = (p / N) | 0; x = p - y * N; }
-    busy = !quick; const t0 = performance.now(), R = N * 1.1, dur = quick ? 220 : 340;
-    const step = now => { const u = Math.max(0, Math.min(1, (now - t0) / dur)); paint({ x, y, r: R * (1 - Math.pow(1 - u, 3)) }); if (u < 1) requestAnimationFrame(step); else { paint(); busy = false; } };
+  function onMove(e) {
+    if (!stroke || stroke.spreading) return;
+    const [x, y] = toCanvas(e), dx = x - stroke.x, dy = y - stroke.y, dist = Math.hypot(dx, dy);
+    if (dist < 2) return;
+    const n = Math.ceil(dist / (BR * .3));
+    for (let i = 1; i <= n; i++) dab(stroke.x + dx * i / n, stroke.y + dy * i / n, BR * (.92 + Math.random() * .16));
+    stroke.x = x; stroke.y = y; stroke.moved += dist;
+    const now = performance.now();
+    if (stroke.moved - stroke.lastNote > N * .09) { stroke.lastNote = stroke.moved; note(.1); addTwinkle(x, y, stroke.magic || stroke.glitter ? 3 : 2); if (stroke.glitter) glitPts.push([x, y]); }
+    if (now - stroke.lastSwish > 150) { stroke.lastSwish = now; swish(.12); }
+    draw();
+  }
+  function onUp() {
+    if (!stroke || stroke.spreading) return;
+    const tap = stroke.moved < N * .02 && performance.now() - stroke.t0 < 450;
+    if (tap) spread(stroke); else { if (stroke.glitter) glitPts.push([stroke.x, stroke.y]); commit(); }
+  }
+  /* a tap: the colour spreads over the whole shape like wet paint, from the finger outwards */
+  function spread(s, done) {
+    s.spreading = true; if (!s.mask) s.mask = regionMask(s.L);   // a tap only fills the shape it landed on
+    const L = s.L; let maxR = 0;
+    for (let k = start[L]; k < start[L + 1]; k += 37) { const p = order[k], y = (p / N) | 0, x = p - y * N; maxR = Math.max(maxR, Math.hypot(x - s.x0, y - s.y0)); }
+    maxR += BR; const t0 = performance.now(), dur = Math.min(900, 300 + maxR * 1.1);
+    note(.15); swish(.2); setTimeout(() => swish(.15), 160);
+    const step = now => {
+      const u = Math.min(1, (now - t0) / dur), r = maxR * (1 - Math.pow(1 - u, 2.2)), ring = Math.max(10, Math.floor(r / 5));
+      for (let i = 0; i < ring; i++) { const a = Math.random() * Math.PI * 2, rr = r * (.55 + Math.random() * .45); dab(s.x0 + Math.cos(a) * rr, s.y0 + Math.sin(a) * rr, BR * (1 + u * 1.6)); }
+      dab(s.x0, s.y0, Math.max(BR, r * .7));
+      draw();
+      if (u < 1) requestAnimationFrame(step);
+      else {
+        cx(strokeC).fillStyle = '#fff'; cx(strokeC).fillRect(0, 0, N, N);   // finish the whole shape cleanly
+        if (s.magic) revealEyes(L);
+        if (s.glitter) glitPts.push([s.x0, s.y0]);
+        twinkleRegion(L, s.magic || s.glitter ? 12 : 7);
+        if (s.magic) chime([1319, 1568, 2093], 55);
+        commit(); done && done();
+      }
+    };
     requestAnimationFrame(step);
-    if (!color) { tone(260, .1, 'sine', .14); return; }
-    fills++;
-    // sound: a climbing xylophone note + crayon swish (+ magic / glitter extras)
-    tone(PENTA[fills % PENTA.length], .12, 'triangle', .17); if (!quick) swish();
-    if (kind === 'magic') setTimeout(() => chime([1319, 1568, 2093], 55), 90);
-    if (glitter) setTimeout(() => chime([2093, 2637, 3136], 45), 80);
-    twinkleRegion(L, kind === 'magic' || glitter ? 12 : 7);
-    if (!quick && navigator.vibrate) try { navigator.vibrate(12); } catch (er) {}
-    checkProgress();
+  }
+  function revealEyes(L) {               // a magic tap on the face shows the eyes' real colours too
+    const e = cx(eyeC);
+    for (const b of blobs) if (b.L === L) {
+      let x0 = N, x1 = 0, y0 = N, y1 = 0; for (const p of b.px) { const y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      e.drawImage(eyeTargetC, x0, y0, x1 - x0 + 1, y1 - y0 + 1, x0, y0, x1 - x0 + 1, y1 - y0 + 1);
+    }
   }
   function undo() {
-    const h = history.pop(); if (!h) return;
-    colorOf[h[0]] = h[1]; glitterOf[h[0]] = h[2]; if (magicOf[h[0]] !== !!h[3]) { magicOf[h[0]] = !!h[3]; refreshBlobs(); }
-    const f = fill.data; for (let k = start[h[0]]; k < start[h[0] + 1]; k++) { const i = order[k] * 4; f[i] = f[i + 1] = f[i + 2] = 255; }
-    if (h[1]) setRegion(h[0], h[1], h[2]); paint(); tone(330, .08);
+    if (stroke || autoRun) return; const h = undoStack.pop(); if (!h) return;
+    const a = cx(colorC); a.clearRect(0, 0, N, N); a.drawImage(h.a, 0, 0); const b = cx(eyeC); b.clearRect(0, 0, N, N); b.drawImage(h.b, 0, 0);
+    glitPts.length = h.g; render(); tone(330, .08);
   }
 
   /* ── twinkles (and glitter that keeps sparkling) ── */
+  function addTwinkle(x, y, n) { for (let i = 0; i < n; i++) twinkles.push({ x: x + (Math.random() - .5) * BR * 2, y: y + (Math.random() - .5) * BR * 2, t: performance.now() + i * 60, life: 520 + Math.random() * 260, s: 9 + Math.random() * 12 }); runFx(); }
   function twinkleRegion(L, n) {
     for (let i = 0; i < n; i++) { const p = order[start[L] + Math.floor(Math.random() * regions[L])], y = (p / N) | 0, x = p - y * N;
       twinkles.push({ x, y, t: performance.now() + i * 45, life: 520 + Math.random() * 260, s: 10 + Math.random() * 14 }); }
@@ -357,26 +432,40 @@
   function fxLoop(now) {
     if (!root || !root.classList.contains('on')) { fxOn = false; return; }
     fctx.clearRect(0, 0, N, N);
-    if (now - lastGlint > 140) { lastGlint = now;    // glitter shapes keep glinting
-      for (let L = 0; L < regions.length; L++) if (glitterOf[L] && Math.random() < .55) { const p = order[start[L] + Math.floor(Math.random() * regions[L])], y = (p / N) | 0, x = p - y * N; twinkles.push({ x, y, t: now, life: 600, s: 7 + Math.random() * 9 }); } }
+    if (glitPts.length && now - lastGlint > 150) { lastGlint = now;
+      for (let k = 0; k < 3; k++) { const q = glitPts[Math.floor(Math.random() * glitPts.length)]; twinkles.push({ x: q[0] + (Math.random() - .5) * BR * 2.5, y: q[1] + (Math.random() - .5) * BR * 2.5, t: now, life: 600, s: 6 + Math.random() * 8 }); } }
     twinkles = twinkles.filter(w => now < w.t + w.life);
     twinkles.forEach(w => { if (now < w.t) return; const u = (now - w.t) / w.life, a = Math.sin(Math.PI * u); star(w.x, w.y, w.s * (.5 + a * .7), a); });
-    if (twinkles.length || glitterOf.some(Boolean)) requestAnimationFrame(fxLoop); else { fxOn = false; fctx.clearRect(0, 0, N, N); }
+    if (twinkles.length || glitPts.length) requestAnimationFrame(fxLoop); else { fxOn = false; fctx.clearRect(0, 0, N, N); }
   }
 
-  /* ── "✨ Sim salabim": colour everything left, shape by shape ── */
+  /* ── "✨ Sim salabim": a magic brush sweeps over the picture and paints it in Mo's real colours ── */
   function magicAll() {
-    if (!labels || busy) return;
-    const todo = []; for (let L = 0; L < regions.length; L++) if (!colorOf[L] && regions[L] > 120) todo.push(L);
-    todo.sort((a, b) => (a === bgL) - (b === bgL) || regions[b] - regions[a]);   // Mo and the things first, the sky last
-    if (!todo.length) { checkProgress(true); return; }
+    if (!labels || stroke || autoRun) return;
+    autoRun = true; snapshot(); buildTarget(); makeSource(CRAYONS[0]);
+    cx(strokeC).clearRect(0, 0, N, N);
+    stroke = { magic: true, mask: null, x: 0, y: 0 };
     say(LINES.magic[EN ? 1 : 0]); chime([784, 988, 1175, 1568], 60);
-    todo.forEach((L, i) => setTimeout(() => fillRegion(L, magicColour(L), false, null, null, 'magic', true), 280 + i * Math.max(70, Math.min(160, 2600 / todo.length))));
+    const rows = 7, R = N / rows * .95, path = [];
+    for (let r = 0; r < rows; r++) { const y = (r + .5) * N / rows, ltr = r % 2 === 0; for (let i = 0; i <= 24; i++) path.push([ltr ? i / 24 * N : N - i / 24 * N, y + Math.sin(i * .9 + r) * R * .25]); }
+    const t0 = performance.now(), dur = 2600; let done = 0;
+    const step = now => {
+      const u = Math.min(1, (now - t0) / dur), upto = Math.floor(u * (path.length - 1));
+      for (; done <= upto; done++) { const [x, y] = path[done]; dab(x, y, R); if (done % 3 === 0) { addTwinkle(x, y, 2); note(.09); } if (done % 5 === 0) swish(.12); }
+      draw();
+      if (u < 1) requestAnimationFrame(step);
+      else { cx(strokeC).fillStyle = '#fff'; cx(strokeC).fillRect(0, 0, N, N); commit(); autoRun = false; checkProgress(true); }
+    };
+    setTimeout(() => requestAnimationFrame(step), 250);
   }
 
   /* ── progress + celebrations ── */
-  function coloured() { let tot = 0, got = 0; for (let L = 0; L < regions.length; L++) { if (L === bgL || regions[L] < 120) continue; tot += regions[L]; if (colorOf[L]) got += regions[L]; } return tot ? got / tot : 0; }
-  let halfSaid = false;
+  function coloured() {
+    if (!samplePts || !samplePts.length) return 0;
+    const d = cx(colorC).getImageData(0, 0, N, N).data; let got = 0;
+    for (const p of samplePts) { const i = p * 4; if (d[i] < 245 || d[i + 1] < 245 || d[i + 2] < 245) got++; }
+    return got / samplePts.length;
+  }
   function checkProgress(force) {
     if (celebrated && !force) return;
     const done = coloured();
@@ -389,7 +478,7 @@
     const paper = root.querySelector('.mc-paper');
     for (let i = 0; i < 40; i++) { const c = document.createElement('span'); c.className = 'mc-conf'; c.style.left = Math.random() * 100 + '%'; c.style.background = HAPPY[i % HAPPY.length];
       c.style.animationDuration = (1.4 + Math.random() * 1.2) + 's'; c.style.animationDelay = (Math.random() * .5) + 's'; paper.appendChild(c); setTimeout(() => c.remove(), 3200); }
-    for (let L = 0; L < regions.length; L++) if (colorOf[L] && Math.random() < .6) twinkleRegion(L, 3);
+    for (let i = 0; i < 30; i++) addTwinkle(Math.random() * N, Math.random() * N, 1);
     setTimeout(() => { yay.classList.remove('on'); if (closing) { close(); opts.onDone && opts.onDone(); } }, closing ? 2300 : 2000);
   }
   function finish() {
@@ -398,17 +487,18 @@
       const keys = Object.keys(all); if (keys.length > 24) delete all[keys[0]]; localStorage.setItem(STORE, JSON.stringify(all)); } catch (e) {}
     party(T('MasyaAllah, indah! 🌈', 'MashaAllah, beautiful! 🌈'), true);
   }
-  function close() { root.classList.remove('on'); document.documentElement.style.overflow = ''; twinkles = []; }
+  function close() { root.classList.remove('on'); document.documentElement.style.overflow = ''; twinkles = []; glitPts = []; stroke = null; autoRun = false; }
   function open(o) {
     opts = o || {}; if (!root) build();
     root.querySelector('.mc-title').textContent = opts.title || T('Warnai Baby Mo 🖍️', 'Colour Baby Mo 🖍️');
     root.querySelector('.mc-done').textContent = T('Selesai! ⭐', 'Done! ⭐');
     root.querySelector('.mc-auto').textContent = T('✨ Sim salabim', '✨ Magic!');
     root.classList.add('on'); document.documentElement.style.overflow = 'hidden';
-    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, N, N); fctx.clearRect(0, 0, N, N); labels = null;
+    const c = cx(colorC); c.fillStyle = '#fff'; c.fillRect(0, 0, N, N); cx(eyeC).clearRect(0, 0, N, N); cx(eyeTargetC).clearRect(0, 0, N, N);
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, N, N); fctx.clearRect(0, 0, N, N); labels = null; stroke = null; undoStack = []; glitPts = []; celebrated = false; halfSaid = false; autoRun = false;
     cur = CRAYONS[0]; root.querySelectorAll('.mc-c').forEach((x, i) => x.classList.toggle('sel', i === 0));
     loadGuide(opts.guide);
-    const img = new Image(); img.onload = () => { analyse(img); renderAll(); say(LINES.start[EN ? 1 : 0]); }; img.src = opts.src;
+    const img = new Image(); img.onload = () => { analyse(img); render(); say(LINES.start[EN ? 1 : 0]); }; img.src = opts.src;
   }
   window.MoColor = { open, CRAYONS, LINES,
     saved: k => { try { return (JSON.parse(localStorage.getItem(STORE) || '{}'))[k] || null; } catch (e) { return null; } } };
