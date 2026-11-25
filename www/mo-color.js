@@ -41,7 +41,7 @@
   #moColor .mc-top{width:100%;max-width:680px;display:flex;align-items:center;gap:10px;min-height:48px}
   #moColor .mc-x,#moColor .mc-undo{width:48px;height:48px;border-radius:50%;border:0;background:#fff;box-shadow:0 6px 14px -8px rgba(60,40,120,.5);font-size:22px;color:#4A3B8C;cursor:pointer;flex:none;display:grid;place-items:center}
   #moColor .mc-title{flex:1;text-align:center;font-size:clamp(18px,5vw,24px);font-weight:700;color:#4A3B8C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  #moColor .mc-stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:6px 0}
+  #moColor .mc-stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:4px 0 6px}
   #moColor .mc-paper{position:relative;aspect-ratio:1;height:100%;max-width:100%;max-height:100%;background:#fff;border-radius:26px;box-shadow:0 18px 36px -18px rgba(60,40,120,.45),0 0 0 6px #fff;overflow:hidden}
   #moColor canvas{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none}
   #moColor canvas.fx{pointer-events:none}
@@ -66,13 +66,14 @@
   @keyframes mcSpin{to{transform:rotate(360deg)}}
   #moColor .mc-conf{position:absolute;top:-20px;width:12px;height:16px;border-radius:3px;pointer-events:none;animation:mcFall linear forwards}
   @keyframes mcFall{to{transform:translateY(110vh) rotate(720deg)}}
-  #moColor .mc-meter{position:relative;width:100%;max-width:min(560px,70vh);height:20px;margin:6px auto 0;border-radius:999px;background:#fff;box-shadow:inset 0 2px 4px rgba(60,40,120,.15),0 4px 10px -6px rgba(60,40,120,.4)}
-  #moColor .mc-meter i{position:absolute;left:3px;top:3px;bottom:3px;width:0;border-radius:999px;background:linear-gradient(90deg,#FF6B6B,#FFB13B,#FFE066,#5FD068,#3EC1D3,#5B8CFF,#B07CF0);background-size:min(560px,70vh) 100%;transition:width .5s cubic-bezier(.3,1.4,.5,1)}
+  #moColor .mc-meter{display:flex;align-items:center;gap:8px;width:100%;max-width:min(560px,70vh);margin:8px auto 6px;flex:none}
+  #moColor .mc-track{position:relative;flex:1;height:18px;border-radius:999px;background:#fff;box-shadow:inset 0 2px 4px rgba(60,40,120,.15),0 0 0 1.5px rgba(176,124,240,.25)}
+  #moColor .mc-meter i{position:absolute;left:3px;top:3px;bottom:3px;width:0;max-width:calc(100% - 6px);border-radius:999px;background:linear-gradient(90deg,#FF6B6B,#FFB13B,#FFE066,#5FD068,#3EC1D3,#5B8CFF,#B07CF0);background-size:min(560px,70vh) 100%;transition:width .5s cubic-bezier(.3,1.4,.5,1)}
   #moColor .mc-meter i::after{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.55),rgba(255,255,255,0) 60%)}
-  #moColor .mc-meter b{position:absolute;right:-10px;top:50%;width:38px;height:38px;margin-top:-19px;display:grid;place-items:center;font-size:30px;filter:drop-shadow(0 3px 3px rgba(60,40,120,.3)) grayscale(.85);opacity:.7;transition:filter .3s,opacity .3s}
-  #moColor .mc-meter.full b{filter:drop-shadow(0 0 10px #FFD23F);opacity:1}
+  #moColor .mc-meter b{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:20px;line-height:1;background:#fff;box-shadow:0 4px 10px -6px rgba(60,40,120,.5),0 0 0 1.5px rgba(176,124,240,.25);filter:grayscale(.85);opacity:.75;transition:filter .3s,opacity .3s,box-shadow .3s}
+  #moColor .mc-meter.full b{filter:none;opacity:1;box-shadow:0 0 0 3px #FFD23F,0 0 14px 4px rgba(255,210,63,.6)}
   #moColor .mc-meter b.pop{animation:mcStarPop .7s cubic-bezier(.3,1.6,.5,1)}
-  @keyframes mcStarPop{0%{transform:scale(1)}40%{transform:scale(1.7) rotate(25deg)}100%{transform:scale(1)}}
+  @keyframes mcStarPop{0%{transform:scale(1)}40%{transform:scale(1.5) rotate(25deg)}100%{transform:scale(1)}}
   #moColor .mc-cheer{position:absolute;left:50%;top:38%;transform:translate(-50%,-50%) scale(.3);opacity:0;pointer-events:none;font:700 clamp(30px,9vw,52px)/1 'Fredoka','Nunito',sans-serif;color:#fff;
     -webkit-text-stroke:2px rgba(120,40,160,.35);text-shadow:0 4px 0 #B07CF0,0 0 22px rgba(255,210,63,.9);white-space:nowrap;z-index:3}
   #moColor .mc-cheer.on{animation:mcCheer 1.4s cubic-bezier(.2,1.4,.4,1) forwards}
@@ -120,7 +121,7 @@
     const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
     root = el(`<div id="moColor" role="dialog" aria-modal="true">
       <div class="mc-top"><button class="mc-x" type="button" aria-label="${T('Tutup', 'Close')}">✕</button><div class="mc-title"></div><button class="mc-undo" type="button" aria-label="${T('Batal', 'Undo')}">↶</button></div>
-      <div class="mc-meter" aria-hidden="true"><i></i><b>⭐</b></div>
+      <div class="mc-meter" aria-hidden="true"><span class="mc-track"><i></i></span><b>⭐</b></div>
       <div class="mc-stage"><div class="mc-paper"><div class="mc-cheer"></div><canvas class="art" width="${N}" height="${N}"></canvas><canvas class="fx" width="${N}" height="${N}"></canvas><div class="mc-yay"><i>⭐</i><b></b></div></div></div>
       <div class="mc-pal" role="radiogroup" aria-label="${T('Krayon', 'Crayons')}"></div>
       <div class="mc-row"><button class="mc-btn mc-auto" type="button"></button><button class="mc-btn mc-done" type="button"></button></div></div>`);
@@ -477,7 +478,7 @@
   }
   function meter() {
     const f = Math.min(1, doneArea / totArea), bar = root.querySelector('.mc-meter'), st = bar.querySelector('b');
-    bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.classList.toggle('full', f >= .85);
+    bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.querySelector('b').style.filter = f > 0 ? 'grayscale(' + (.85 - .85 * f) + ')' : ''; bar.classList.toggle('full', f >= .85);
     const steps = [[.25, CHEER[0]], [.5, CHEER[1]], [.75, LINES.almost]];
     while (milestone < steps.length && f >= steps[milestone][0]) {
       const line = steps[milestone][1][EN ? 1 : 0]; milestone++;
