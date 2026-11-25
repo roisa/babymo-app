@@ -478,6 +478,12 @@
         let x0 = N, x1 = 0, y0 = N, y1 = 0; for (let k = start[L]; k < start[L + 1]; k++) { const p = order[k], y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
         const e = faceEyes.find(e => x0 >= e.x0 - 3 && x1 <= e.x1 + 3 && y0 >= e.y0 - 3 && y1 <= e.y1 + 3);
         if (e) { const c0 = order[start[L] + ((start[L + 1] - start[L]) >> 1)] * 4; if (Math.min(d[c0], d[c0 + 1], d[c0 + 2]) > 150) { e.hole = true; for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = 0xFFFFFF; } } }
+      // the white of the eye: on the page it lies in the face's skin shape, right beside the black eye;
+      // around each eye the face takes white wherever the coloured version is white there
+      for (const e of faceEyes) { const w = e.x1 - e.x0 + 1, h = e.y1 - e.y0 + 1, mx = Math.round(w * .35), my = Math.round(h * .35);
+        for (let y = Math.max(0, e.y0 - my); y <= Math.min(N - 1, e.y1 + my); y++) for (let x = Math.max(0, e.x0 - mx); x <= Math.min(N - 1, e.x1 + mx); x++) {
+          const p = y * N + x; if (labels[p] !== e.bl.L) continue; const q = p * 4;
+          if (Math.min(d[q], d[q + 1], d[q + 2]) > 215) col[p] = 0xFFFFFF; } }
       for (let i = 0; i < N * N; i++) if (col[i] >= 0) { const o4 = i * 4; o[o4] = col[i] >> 16 & 255; o[o4 + 1] = col[i] >> 8 & 255; o[o4 + 2] = col[i] & 255; }
       // eyes
       const ex = cx(eyeTargetC), ei = ex.createImageData(N, N), eo = ei.data;
@@ -486,7 +492,8 @@
       for (const e of faceEyes) { const { bl } = e, sk = cl[bl.L][0], inB = new Set(bl.px);
         for (const p of bl.px) { const i = p * 4, r = d[i], gg = d[i + 1], b2 = d[i + 2]; let c;
           const deep = inB.has(p - 4) && inB.has(p + 4) && inB.has(p - 4 * N) && inB.has(p + 4 * N);
-          if (Math.min(r, gg, b2) > 200) c = deep ? [255, 255, 255] : [34, 18, 10];   // a shine sits inside the eye, never on its rim
+          const wNext = () => { for (const o of [-3, 3, -3 * N, 3 * N]) { const q = p + o; if (q >= 0 && q < N * N && !inB.has(q) && col[q] === 0xFFFFFF) return true; } return false; };
+          if (Math.min(r, gg, b2) > 200) c = deep || wNext() ? [255, 255, 255] : [34, 18, 10];   // a shine inside the eye, or the white of the eye reaching its rim
           else if ((sk[0] - r) ** 2 + (sk[1] - gg) ** 2 + (sk[2] - b2) ** 2 < 60 * 60 || (r > 170 && gg > 110)) c = [34, 18, 10];
           else c = [r, gg, b2];
           eo[i] = c[0]; eo[i + 1] = c[1]; eo[i + 2] = c[2]; eo[i + 3] = 255; } }
