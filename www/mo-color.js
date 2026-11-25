@@ -109,6 +109,28 @@
   #moColor .mc-auto{background:linear-gradient(180deg,#FFFFFF,#EFE7FF)!important;color:#4A2FA8!important;box-shadow:0 6px 0 #D6C8F5,0 14px 22px -12px rgba(80,50,160,.45)!important}
   #moColor .mc-done{background:linear-gradient(120deg,#3D9BFF,#6F5BF2 60%,#9B5DE5)!important;box-shadow:0 6px 0 #4A3FB8,0 14px 22px -12px rgba(80,60,200,.6)!important;display:flex;align-items:center;justify-content:center;gap:8px}
   #moColor .mc-btn{border-radius:22px!important;min-height:60px!important}
+  /* ── dark mode: a calm night sky with soft stars; the drawing stays on white paper so colours look true ── */
+  html[data-bm-theme="classic"] #moColor{background:radial-gradient(90% 50% at 50% 0%,#3B3586 0%,rgba(59,53,134,0) 70%),linear-gradient(180deg,#232659 0%,#1C1F4A 55%,#191B3E 100%)!important;color-scheme:dark}
+  html[data-bm-theme="classic"] #moColor .mc-deco::before{content:'';position:absolute;inset:0;opacity:.8;animation:mcTw 4s ease-in-out infinite;
+    background:radial-gradient(1.6px 1.6px at 12% 14%,#fff,transparent),radial-gradient(1.3px 1.3px at 82% 9%,#fff,transparent),radial-gradient(2px 2px at 64% 20%,#FFE9A8,transparent),
+      radial-gradient(1.2px 1.2px at 30% 30%,#fff,transparent),radial-gradient(1.6px 1.6px at 92% 46%,#fff,transparent),radial-gradient(1.3px 1.3px at 6% 58%,#FFE9A8,transparent),
+      radial-gradient(1.4px 1.4px at 46% 6%,#fff,transparent),radial-gradient(1.2px 1.2px at 74% 66%,#fff,transparent)}
+  @keyframes mcTw{0%,100%{opacity:.55}50%{opacity:.95}}
+  html[data-bm-theme="classic"] #moColor .mc-deco::after{content:none}
+  @media (min-width:500px){html[data-bm-theme="classic"] #moColor .mc-deco::after{content:'';position:absolute;right:22px;top:15%;width:34px;height:34px;border-radius:50%;box-shadow:-9px 5px 0 0 #FFE3A0;filter:drop-shadow(0 0 8px rgba(255,227,160,.45));transform:rotate(-10deg)}}
+  html[data-bm-theme="classic"] #moColor .d-c1,html[data-bm-theme="classic"] #moColor .d-c2{opacity:.12!important}
+  html[data-bm-theme="classic"] #moColor .d-b1,html[data-bm-theme="classic"] #moColor .d-b2{filter:brightness(.5) saturate(.75)}
+  html[data-bm-theme="classic"] #moColor .mc-title{color:#EDE6FF}
+  html[data-bm-theme="classic"] #moColor .mc-x,html[data-bm-theme="classic"] #moColor .mc-undo{background:rgba(58,62,128,.9);color:#EDE6FF;box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.12)}
+  html[data-bm-theme="classic"] #moColor .mc-track{background:#2C3070!important;box-shadow:inset 0 2px 4px rgba(0,0,0,.35),0 0 0 3px #3A3F86,0 6px 12px -6px rgba(0,0,0,.5)!important}
+  html[data-bm-theme="classic"] #moColor .mc-meter em{background:#4A4F92}
+  html[data-bm-theme="classic"] #moColor .mc-meter b{background:#2C3070;box-shadow:0 4px 10px -6px rgba(0,0,0,.6),0 0 0 1.5px rgba(255,255,255,.12)}
+  html[data-bm-theme="classic"] #moColor .mc-paper{box-shadow:0 18px 34px -18px rgba(0,0,0,.7),0 0 0 8px #E9E4FF!important}
+  html[data-bm-theme="classic"] #moColor .mc-pal{background:rgba(44,48,112,.72);box-shadow:0 12px 24px -16px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.1)}
+  html[data-bm-theme="classic"] #moColor .mc-c.sel{background:#4A3F9E;box-shadow:0 0 0 3px #B79BFF,0 6px 12px -6px rgba(0,0,0,.6)}
+  html[data-bm-theme="classic"] #moColor .mc-auto{background:linear-gradient(180deg,#4A4F9C,#3A3E86)!important;color:#F1EBFF!important;box-shadow:0 6px 0 #262A62,0 14px 22px -12px rgba(0,0,0,.6)!important}
+  html[data-bm-theme="classic"] #moColor .mc-done{box-shadow:0 6px 0 #2E2788,0 14px 22px -12px rgba(0,0,0,.6)!important}
+  @media (prefers-reduced-motion:reduce){html[data-bm-theme="classic"] #moColor .mc-deco::before{animation:none}}
 `;
 
   /* ═══ Painting model (brushing) ═══
