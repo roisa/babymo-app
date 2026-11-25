@@ -2507,7 +2507,7 @@ function showCelebration(){
   // Play voice after short delay (so fanfare doesn't overlap), then this word's little song
   let sang = false; const sing = () => { if (sang) return; sang = true; setTimeout(() => { if (document.getElementById('celebration').classList.contains('show')) kbSong(); }, 350); };
   audio._afterVoice = sing; setTimeout(sing, 12000);
-  setTimeout(() => { try { Promise.resolve(audio.playPhrase(p)).then(() => { if (state.muted) sing(); }); } catch (e) { sing(); } }, 450);
+  setTimeout(() => { try { Promise.resolve(audio.playPhrase(p, { arabicOnly: true })).then(() => { if (state.muted) sing(); }); } catch (e) { sing(); } }, 450);
 }
 
 // Rich share card: the phrase just completed + collection progress
@@ -2739,7 +2739,7 @@ function startNew(){
 document.getElementById('newPuzzleBtn').addEventListener('click', startNew);
 document.getElementById('celebNewBtn').addEventListener('click', startNew);
 document.getElementById('celebCloseBtn').addEventListener('click', hideCelebration);
-document.getElementById('replayBtn').addEventListener('click', () => audio.playPhrase(state.current));
+document.getElementById('replayBtn').addEventListener('click', () => audio.playPhrase(state.current, { arabicOnly: true }));
 document.getElementById('celebCollBtn').addEventListener('click', () => {
   hideCelebration();
   setTimeout(openCollection, 280);
@@ -2808,9 +2808,11 @@ document.addEventListener('click', () => audio.ensureCtx(), { once: true });
     return good[0]||null; }
   function utter(text,lang,rate,pitch){ var u=new SpeechSynthesisUtterance(text); u.lang=lang; u.rate=rate; u.pitch=pitch; var v=voiceFor(lang); if(v) u.voice=v; return u; }
   function clean(t){ return String(t||'').replace(/[^\p{L}\p{N}\s'.,!?\-]/gu,'').trim(); }
-  audio.playPhrase=function(p){
+  audio.playPhrase=function(p,o){
     if(state.muted||!p) return;
     try{ synth.cancel(); }catch(e){}
+    // result page: just the Arabic (the name and meaning are already on the card)
+    if(o&&o.arabicOnly){ var au=utter(p.arabic,'ar-SA',0.82,1.1); au.onend=au.onerror=function(){ try{ audio.spoke(); }catch(e){} }; synth.speak(au); return; }
     var meaning=EN?(window.BM_T?BM_T(p.indo):p.indo):p.indo;
     synth.speak(utter(p.arabic,'ar-SA',0.82,1.1));
     var tu=utter(clean(p.title)+'.', EN?'en-US':'id-ID', 0.95, 1.15); tu.bmRaw=true;   // the Latin name, not the Arabic clip again
