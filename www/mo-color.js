@@ -281,6 +281,10 @@
     const k = Math.min(N / img.naturalWidth, N / img.naturalHeight), w = img.naturalWidth * k, h = img.naturalHeight * k;
     x.drawImage(img, (N - w) / 2, (N - h) / 2, w, h);
   }
+  function cropTo(c) {                    // c = share of the page cut from each side
+    if (!root) return; const k = 1 / (1 - 2 * c);
+    root.querySelectorAll('.mc-paper canvas').forEach(v => { v.style.width = v.style.height = (k * 100) + '%'; v.style.left = v.style.top = (-c * k * 100) + '%'; });
+  }
   function analyse(img) {
     const c = mk(), x = cx(c); fitDraw(x, img); lineImg = c;
     const d = x.getImageData(0, 0, N, N).data, wall = new Uint8Array(N * N);
@@ -309,6 +313,8 @@
     bgL = -1; let best = 0;
     for (let i = 0; i < N; i++) for (const p of [i, (N - 1) * N + i, i * N, i * N + N - 1]) { const L = labels[p]; if (L >= 0 && regions[L] > best) { best = regions[L]; bgL = L; } }
     findBlobs(wall);
+    let mx = N; for (let y = 0; y < N; y += 2) for (let x = 0; x < N; x += 2) if (wall[y * N + x]) { const m = Math.min(x, y, N - 1 - x, N - 1 - y); if (m < mx) mx = m; }
+    cropTo(Math.max(0, Math.min(.12, (mx - N * .012) / N)));
     // sample points for "how much is coloured" (Mo and the things, not the sky)
     samplePts = []; const pl = [];
     for (let L = 0; L < R; L++) { if (L === bgL || regions[L] < 150) continue; const k = Math.max(1, Math.floor(regions[L] / 40)); for (let j = start[L]; j < start[L + 1]; j += k) { samplePts.push(order[j]); pl.push(L); } }
@@ -393,23 +399,42 @@
     if (guideImg) {
       const g = mk(), gx = cx(g); fitDraw(gx, guideImg); guideData = gx.getImageData(0, 0, N, N).data; guideCol = null;
       const cl = clusters(), d = guideData;
+      // where the coloured version's picture really is (inside its own white margin)
+      let gx0 = N, gx1 = 0, gy0 = N, gy1 = 0;
+      for (let y = 0; y < N; y += 2) for (let x = 0; x < N; x += 2) { const i = (y * N + x) * 4; if (Math.min(d[i], d[i + 1], d[i + 2]) < 230) { if (x < gx0) gx0 = x; if (x > gx1) gx1 = x; if (y < gy0) gy0 = y; if (y > gy1) gy1 = y; } }
+      if (gx1 <= gx0) { gx0 = gy0 = 0; gx1 = gy1 = N - 1; }
+      gx0 += 6; gy0 += 6; gx1 -= 6; gy1 -= 6;
+      const isW = q => q[0] > 236 && q[1] > 236 && q[2] > 236;
+      const col = new Int32Array(N * N).fill(-1), multi = new Uint8Array(regions.length), pix = new Int8Array(N * N).fill(-1), pal = [];
       for (let L = 0; L < regions.length; L++) {
-        const C = cl[L] || [[255, 255, 255]];
+        const C = cl[L] || [[255, 255, 255]], hasW = C.some(isW), cnt = new Array(C.length).fill(0);
         for (let k = start[L]; k < start[L + 1]; k++) {
-          const p = order[k], i = p * 4, r = d[i], gg = d[i + 1], b = d[i + 2];
-          let c;
-          if (Math.min(r, gg, b) > 236) {
-            // white stays white (clouds, highlights), except the coloured version's empty margin at the picture's edge:
-            // there a coloured shape (sky, grass) takes its own colour, so magic reaches the edge just like a crayon does
-            const x = p % N, y = (p / N) | 0, band = N * .14, wC = C[0][0] > 236 && C[0][1] > 236 && C[0][2] > 236;
-            c = !wC && (x < band || x >= N - band || y < band || y >= N - band) ? C[0] : [255, 255, 255];
-          }
-          else if (Math.max(r, gg, b) < 75) c = C[0];                              // the coloured version's own outline → the shape's colour
-          else { let bd = 1e9, bc = C[0]; for (const q of C) { const dd = (q[0] - r) ** 2 + (q[1] - gg) ** 2 + (q[2] - b) ** 2; if (dd < bd) { bd = dd; bc = q; } }
-            c = bd < 55 * 55 ? [r, gg, b] : bc; }                                  // its real shade, or the shape's colour where the two pictures differ
-          o[i] = c[0]; o[i + 1] = c[1]; o[i + 2] = c[2];
+          const p = order[k], x = p % N, y = (p / N) | 0;
+          const q = (Math.min(Math.max(y, gy0), gy1) * N + Math.min(Math.max(x, gx0), gx1)) * 4;   // outside the picture: the colour at its edge
+          const r = d[q], gg = d[q + 1], bb = d[q + 2];
+          if (Math.max(r, gg, bb) < 75) continue;                                  // its own outline → decided below
+          if (Math.min(r, gg, bb) > 236 && !hasW) continue;                        // a white gap inside a coloured shape
+          let bd = 1e9, bi = 0; for (let j = 0; j < C.length; j++) { const c = C[j], dd = (c[0] - r) ** 2 + (c[1] - gg) ** 2 + (c[2] - bb) ** 2; if (dd < bd) { bd = dd; bi = j; } }
+          pix[p] = bi; cnt[bi]++;
         }
+        let dom = 0, tot = 0; for (let j = 0; j < C.length; j++) { tot += cnt[j]; if (cnt[j] > cnt[dom]) dom = j; }
+        pal[L] = C.map(c => c[0] << 16 | c[1] << 8 | c[2]);
+        if (!tot || cnt[dom] >= tot * .85 || regions[L] < 4000) { const v = pal[L][dom]; for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = v; }
+        else { multi[L] = 1; pal[L].dom = dom; }
       }
+      // a shape with two real colours (sky above, grass below): every pixel takes the colour most of its
+      // neighbourhood has, so the two drawings' small misfits (thin strips along the lines) disappear
+      const R6 = 7, W1 = N + 1, ii = [];
+      for (let j = 0; j < 6; j++) { const t = new Int32Array(W1 * W1);
+        for (let y = 0; y < N; y++) { let run = 0; for (let x = 0; x < N; x++) { const i = y * N + x; if (pix[i] === j && multi[labels[i]] ) run++; t[(y + 1) * W1 + x + 1] = t[y * W1 + x + 1] + run; } }
+        ii.push(t); }
+      const box = (t, x0, y0, x1, y1) => t[y1 * W1 + x1] - t[y0 * W1 + x1] - t[y1 * W1 + x0] + t[y0 * W1 + x0];
+      for (let L = 0; L < regions.length; L++) { if (!multi[L]) continue; const P = pal[L];
+        for (let k = start[L]; k < start[L + 1]; k++) { const i = order[k], y = (i / N) | 0, x = i - y * N;
+          const x0 = Math.max(0, x - R6), x1 = Math.min(N, x + R6 + 1), y0 = Math.max(0, y - R6), y1 = Math.min(N, y + R6 + 1);
+          let bj = P.dom, bn = -1; for (let j = 0; j < P.length; j++) { const n = box(ii[j], x0, y0, x1, y1); if (n > bn) { bn = n; bj = j; } }
+          col[i] = P[bn > 0 ? bj : P.dom]; } }
+      for (let i = 0; i < N * N; i++) if (col[i] >= 0) { const o4 = i * 4; o[o4] = col[i] >> 16 & 255; o[o4 + 1] = col[i] >> 8 & 255; o[o4 + 2] = col[i] & 255; }
       // eyes
       const ex = cx(eyeTargetC), ei = ex.createImageData(N, N), eo = ei.data;
       for (const bl of blobs) { const sk = cl[bl.L] && cl[bl.L][0];

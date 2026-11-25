@@ -2530,6 +2530,9 @@ function kbUpdateStars(){
 /* === PRAISE TOAST === */
 let praiseLast = -1;
 function showPraise(){
+  // The praise pop-up covered the picture and repeated the progress pill below it, so it no longer shows; the ding stays.
+  audio.playDing();
+  return;
   // Pick a praise that's different from last shown
   let i;
   do { i = Math.floor(Math.random() * PRAISES.length); } while (i === praiseLast && PRAISES.length > 1);
