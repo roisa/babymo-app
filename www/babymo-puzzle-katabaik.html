@@ -1477,6 +1477,28 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #celebPractice{b
 .celebration .celeb-character{height:100%;-webkit-mask-image:none;mask-image:none;filter:drop-shadow(0 12px 14px rgba(40,30,110,.3))}
 .celebration .celeb-stage{height:clamp(180px,27vh,250px)}
 </style>
+<style id="kb-bubble-instr">
+/* smaller question bubble; Mo beside it shows only his upper body (waist down hidden behind the bush line) */
+.kb-q{width:min(54%,250px)!important;padding:10px 12px 10px!important;border-radius:22px!important;top:50%!important}
+.kb-q .title{font-size:clamp(16px,4.7vw,21px)!important;line-height:1.12!important}
+.kb-q .subtitle{margin-top:6px!important;padding:4px 10px!important;font-size:11.5px!important}
+.kb-q::before{left:-13px!important;border-width:9px!important;border-right-width:15px!important;border-left-width:0!important}
+.kb-mo{left:4%!important;width:36%!important;bottom:10px!important;height:calc(100% - 10px)!important;overflow:hidden;
+  -webkit-mask-image:linear-gradient(#000 74%,transparent 98%);mask-image:linear-gradient(#000 74%,transparent 98%)}
+.kb-mo img{top:-6%!important;bottom:auto!important;height:176%!important;width:auto!important;max-width:none!important;left:50%!important;transform:translateX(-50%)!important;object-fit:contain}
+.kb-mo.hop{animation:kbHopUp .5s cubic-bezier(.3,1.6,.5,1)}
+@keyframes kbHopUp{40%{transform:translateY(-8px) rotate(-3deg)}}
+/* this word's instrument, on the puzzle's corner */
+.puzzle-frame{position:relative}
+.kb-instr{position:absolute;z-index:5;left:50%;top:-14px;transform:translateX(-50%);display:none;align-items:center;gap:6px;padding:4px 12px 4px 8px;border-radius:999px;
+  background:#fff;color:#4A2FA8;font:700 13px/1.2 'Fredoka','Nunito',sans-serif;box-shadow:0 6px 14px -8px rgba(60,40,160,.5),inset 0 0 0 1.5px #E6DDFF;white-space:nowrap}
+.kb-instr.on{display:inline-flex}
+.kb-instr i{font-style:normal;font-size:17px;line-height:1}
+.kb-instr.play{animation:kbInstrPlay .45s cubic-bezier(.3,1.6,.5,1)}
+@keyframes kbInstrPlay{40%{transform:translateX(-50%) scale(1.15) rotate(-4deg)}}
+html[data-bm-theme="classic"] .kb-instr{background:#2C3366;color:#EDE6FF;box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.12)}
+@media (prefers-reduced-motion:reduce){.kb-instr.play,.kb-mo.hop{animation:none}}
+</style>
 </head>
 <body>
 <div class="kb-sky" aria-hidden="true">
@@ -1541,7 +1563,7 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #celebPractice{b
     </svg>
     <svg class="kb-bush kb-bush-ml"><use href="#kbBush"/></svg>
     <svg class="kb-bush kb-bush-mr"><use href="#kbBush"/></svg>
-    <div class="kb-mo" id="kbMo" aria-hidden="true"><img src="baby-mo-poses/baby-mo-pose-24.webp" alt="" draggable="false"></div>
+    <div class="kb-mo" id="kbMo" aria-hidden="true"><img src="baby-mo-poses/baby-mo-idea.webp" alt="" draggable="false"></div>
     <div class="kb-q" id="kbQ">
       <h1 class="title" id="promptTitle">Siapa <span class="accent">aku</span>?</h1>
       <p class="subtitle" id="promptSub">Ketuk petak untuk membuka rahasia!</p>
@@ -1551,6 +1573,7 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #celebPractice{b
   <!-- Puzzle -->
   <div class="puzzle-stage">
     <div class="puzzle-frame" id="puzzleFrame">
+      <div class="kb-instr" id="kbInstr" aria-hidden="true"></div>
       <div class="puzzle-grid" id="puzzleGrid"></div>
       <div class="coach-mark" id="coachMark">Ketuk!</div>
       <div class="praise-toast" id="praiseToast"></div>
@@ -1959,6 +1982,78 @@ const audio = {
   },
 };
 
+
+/* === INSTRUMENTS: every good word plays with its own instrument (taps, praise and the win tune) === */
+const KB_INSTR = [
+  ['piano', '🎹', 'Piano', 'Piano'], ['guitar', '🎸', 'Gitar', 'Guitar'], ['drum', '🥁', 'Drum', 'Drum'],
+  ['angklung', '🎋', 'Angklung', 'Angklung'], ['xylo', '🎶', 'Gambang', 'Xylophone'], ['flute', '🪈', 'Seruling', 'Flute'],
+  ['bells', '🔔', 'Lonceng', 'Bells'], ['kalimba', '🎵', 'Kalimba', 'Kalimba'], ['harp', '🎼', 'Harpa', 'Harp'],
+  ['trumpet', '🎺', 'Terompet', 'Trumpet'], ['musicbox', '🎁', 'Kotak musik', 'Music box'], ['rebana', '🪘', 'Rebana', 'Frame drum']
+];
+let kbInstr = KB_INSTR[0];
+function kbSetInstrument(phrase){
+  const n = Math.max(1, phrase && phrase.num || 1);
+  kbInstr = KB_INSTR[(n - 1) % KB_INSTR.length];
+  const el = document.getElementById('kbInstr');
+  if (el){ el.innerHTML = '<i>' + kbInstr[1] + '</i><span></span>'; el.lastChild.textContent = window.BM_LANG === 'en' ? kbInstr[3] : kbInstr[2]; el.classList.add('on'); }
+}
+const kbSynth = {
+  noise(ctx, d){ const b = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * d), ctx.sampleRate), x = b.getChannelData(0); for (let i = 0; i < x.length; i++) x[i] = Math.random() * 2 - 1; return b; },
+  env(ctx, g, t, v, a, d){ g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); },
+  osc(ctx, out, type, f, t, v, a, d, det){ const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (det) o.detune.value = det;
+    this.env(ctx, g, t, v, a, d); o.connect(g); g.connect(out); o.start(t); o.stop(t + a + d + .05); return o; },
+  pluck(ctx, out, f, t, v, decay, bright){            // Karplus-Strong string (guitar / harp)
+    const sr = ctx.sampleRate, len = Math.ceil(sr * decay), buf = ctx.createBuffer(1, len, sr), x = buf.getChannelData(0), P = Math.max(2, Math.round(sr / f)), ring = new Float32Array(P);
+    for (let i = 0; i < P; i++) ring[i] = Math.random() * 2 - 1; let k = 0;
+    for (let i = 0; i < len; i++) { const a = ring[k], b = ring[(k + 1) % P]; x[i] = a; ring[k] = (a * bright + b * (1 - bright)) * .996; k = (k + 1) % P; }
+    const s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = buf; g.gain.value = v; s.connect(g); g.connect(out); s.start(t);
+  },
+  hit(ctx, out, t, v, fLo, fHi, d, type){             // noise burst through a band-pass (drum skin, jingles, breath)
+    const s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain(); s.buffer = this.noise(ctx, d + .05);
+    f.type = type || 'bandpass'; f.frequency.value = Math.sqrt(fLo * fHi); f.Q.value = fHi / Math.max(1, fHi - fLo);
+    this.env(ctx, g, t, v, .002, d); s.connect(f); f.connect(g); g.connect(out); s.start(t); s.stop(t + d + .06);
+  },
+  note(k, f, t, v){
+    const ctx = audio.ensureCtx(); if (!ctx) return; const out = ctx.destination; v = v || .18;
+    switch (k) {
+      case 'piano': this.osc(ctx, out, 'triangle', f, t, v, .005, 1.1, -4); this.osc(ctx, out, 'sine', f * 2, t, v * .35, .005, .7, 3); this.osc(ctx, out, 'sine', f * 3, t, v * .12, .004, .35); break;
+      case 'guitar': this.pluck(ctx, out, f / 2, t, v * 1.6, 1.2, .5); break;
+      case 'harp': this.pluck(ctx, out, f, t, v * 1.3, 1.6, .62); this.pluck(ctx, out, f * 2, t + .05, v * .5, 1.0, .62); break;
+      case 'drum': { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(f * .55, t); o.frequency.exponentialRampToValueAtTime(f * .3, t + .18);
+        this.env(ctx, g, t, v * 1.8, .003, .28); o.connect(g); g.connect(out); o.start(t); o.stop(t + .35); this.hit(ctx, out, t, v * .5, 1500, 5000, .05); } break;
+      case 'rebana': { const o = ctx.createOscillator(), g = ctx.createGain(); o.type = 'sine'; o.frequency.setValueAtTime(f * .4, t); o.frequency.exponentialRampToValueAtTime(f * .28, t + .1);
+        this.env(ctx, g, t, v * 1.4, .002, .16); o.connect(g); g.connect(out); o.start(t); o.stop(t + .22);
+        this.hit(ctx, out, t, v * .9, 500, 1400, .09); this.hit(ctx, out, t + .01, v * .35, 6000, 12000, .16, 'highpass'); } break;
+      case 'angklung':                                   // bamboo tubes shaken: a quick wooden tremolo
+        for (let i = 0; i < 6; i++) { const tt = t + i * .055, vv = v * (i ? .75 : 1) * (1 - i * .1);
+          this.osc(ctx, out, 'sine', f, tt, vv, .004, .09); this.osc(ctx, out, 'sine', f * 2, tt, vv * .45, .003, .06); this.hit(ctx, out, tt, vv * .25, f * 1.5, f * 3, .03); } break;
+      case 'xylo': this.osc(ctx, out, 'sine', f * 2, t, v * 1.1, .002, .35); this.osc(ctx, out, 'sine', f * 8, t, v * .25, .001, .08); this.hit(ctx, out, t, v * .3, 2000, 6000, .015); break;
+      case 'flute': { const o = ctx.createOscillator(), g = ctx.createGain(), l = ctx.createOscillator(), lg = ctx.createGain(); o.type = 'sine'; o.frequency.value = f * 2;
+        l.frequency.value = 5.5; lg.gain.value = 6; l.connect(lg); lg.connect(o.frequency);
+        g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(v * .9, t + .07); g.gain.setValueAtTime(v * .9, t + .25); g.gain.exponentialRampToValueAtTime(.0001, t + .5);
+        o.connect(g); g.connect(out); o.start(t); l.start(t); o.stop(t + .55); l.stop(t + .55); this.hit(ctx, out, t, v * .18, f * 2, f * 5, .3); } break;
+      case 'bells': [[1, 1], [2.76, .4], [5.4, .2], [8.9, .08]].forEach(([m, a]) => this.osc(ctx, out, 'sine', f * 2 * m, t, v * a, .002, 1.6 / Math.sqrt(m))); break;
+      case 'kalimba': this.osc(ctx, out, 'sine', f * 2, t, v * 1.1, .003, .8); this.osc(ctx, out, 'sine', f * 2 * 5.9, t, v * .18, .002, .12); break;
+      case 'trumpet': { const o = ctx.createOscillator(), fl = ctx.createBiquadFilter(), g = ctx.createGain(); o.type = 'sawtooth'; o.frequency.value = f;
+        fl.type = 'lowpass'; fl.frequency.setValueAtTime(400, t); fl.frequency.exponentialRampToValueAtTime(2600, t + .06); fl.frequency.exponentialRampToValueAtTime(1200, t + .3);
+        g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(v * .55, t + .03); g.gain.setValueAtTime(v * .5, t + .2); g.gain.exponentialRampToValueAtTime(.0001, t + .38);
+        o.connect(fl); fl.connect(g); g.connect(out); o.start(t); o.stop(t + .42); } break;
+      case 'musicbox': this.osc(ctx, out, 'sine', f * 4, t, v * .9, .002, .9); this.osc(ctx, out, 'sine', f * 8, t, v * .2, .001, .25); this.hit(ctx, out, t, v * .15, 4000, 9000, .01); break;
+    }
+  },
+  play(seq, gap, v){ if (state.muted) return; const ctx = audio.ensureCtx(); if (!ctx) return; if (ctx.state === 'suspended') ctx.resume();
+    const t0 = ctx.currentTime + .01; seq.forEach((f, i) => { if (f) this.note(kbInstr[0], f, t0 + i * gap, v); });
+    const el = document.getElementById('kbInstr'); if (el) { el.classList.remove('play'); void el.offsetWidth; el.classList.add('play'); } }
+};
+// the game's sounds now go through this word's instrument
+audio.playTwinkle = function (f) { kbSynth.play([f, f * 1.5], .09, .17); };
+audio.playDing = function () { const isDrum = /drum|rebana/.test(kbInstr[0]); kbSynth.play(isDrum ? [392, 392, 523] : [784, 988], isDrum ? .11 : .08, .12); };
+audio.playFanfare = function () {
+  if (/drum|rebana/.test(kbInstr[0])) kbSynth.play([262, 0, 262, 330, 262, 392, 0, 523], .13, .2);       // a little rhythm
+  else if (kbInstr[0] === 'angklung') kbSynth.play([523, 659, 784, 0, 1047], .3, .18);
+  else kbSynth.play([523, 659, 784, 1047, 0, 784, 1047], .13, .19);
+};
+
 // Pre-warm voice list (Chrome/Edge load voices async)
 if (window.speechSynthesis){
   window.speechSynthesis.getVoices();
@@ -1997,7 +2092,8 @@ function buildPuzzle(phrase, isToday){
   if (isToday === undefined) isToday = phrase.id === todayPhrase().id && !kbLoad().learned[kbToday()];
   state.current = phrase;
   state.isToday = !!isToday;
-  { const mi = document.querySelector('#kbMo img'); if (mi && phrase.character) mi.src = phrase.character; }
+  { const mi = document.querySelector('#kbMo img'); if (mi) mi.src = /baby-mo-idea\./.test(phrase.character || '') ? 'baby-mo-poses/baby-mo-ok.webp' : 'baby-mo-poses/baby-mo-idea.webp'; }
+  kbSetInstrument(phrase);
   state.tilesOpened = 0;
   state.done = false;
   // reset progress UI
