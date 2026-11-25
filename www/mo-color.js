@@ -473,17 +473,41 @@
       faceEyes = [];
       for (const bl of blobs) { if (!isSkin(cl[bl.L] && cl[bl.L][0])) continue;
         let x0 = N, x1 = 0, y0 = N, y1 = 0; for (const p of bl.px) { const y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        let dk = 0, nn = 0; for (let k = 0; k < bl.px.length; k += 5) { const q = bl.px[k] * 4; nn++; if (Math.max(d[q], d[q + 1], d[q + 2]) < 110 || Math.min(d[q], d[q + 1], d[q + 2]) > 200) dk++; }
+        if (dk < nn * .6) continue;                                                // dark (or shining) in the coloured version: an eye, not the mouth
         faceEyes.push({ bl, x0, x1, y0, y1, hole: false }); }
       for (let L = 0; L < regions.length; L++) { if (regions[L] > 900 || !faceEyes.length) continue;
         let x0 = N, x1 = 0, y0 = N, y1 = 0; for (let k = start[L]; k < start[L + 1]; k++) { const p = order[k], y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
         const e = faceEyes.find(e => x0 >= e.x0 - 3 && x1 <= e.x1 + 3 && y0 >= e.y0 - 3 && y1 <= e.y1 + 3);
         if (e) { const c0 = order[start[L] + ((start[L + 1] - start[L]) >> 1)] * 4; if (Math.min(d[c0], d[c0 + 1], d[c0 + 2]) > 150) { e.hole = true; for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = 0xFFFFFF; } } }
-      // the white of the eye: on the page it lies in the face's skin shape, right beside the black eye;
-      // around each eye the face takes white wherever the coloured version is white there
-      for (const e of faceEyes) { const w = e.x1 - e.x0 + 1, h = e.y1 - e.y0 + 1, mx = Math.round(w * .35), my = Math.round(h * .35);
-        for (let y = Math.max(0, e.y0 - my); y <= Math.min(N - 1, e.y1 + my); y++) for (let x = Math.max(0, e.x0 - mx); x <= Math.min(N - 1, e.x1 + mx); x++) {
-          const p = y * N + x; if (labels[p] !== e.bl.L) continue; const q = p * 4;
-          if (Math.min(d[q], d[q + 1], d[q + 2]) > 215) col[p] = 0xFFFFFF; } }
+      // the white of the eye: the gap between the black eye and the eyelid line drawn around part of it.
+      // Measured all the way round the eye (every 4°); a real eyelid gap runs on for a while, so only stretches of
+      // at least 24° count — a nose or cheek line that comes close for a moment does not.
+      for (const e of faceEyes) { const inB = new Set(e.bl.px), w = e.x1 - e.x0 + 1, h = e.y1 - e.y0 + 1, sz = Math.max(w, h), T = sz * .28;
+        const ecx = (e.x0 + e.x1) / 2, ecy = (e.y0 + e.y1) / 2, mx = Math.round(w * .4), my = Math.round(h * .4), sk = cl[e.bl.L][0];
+        const B = 90, tb = new Float32Array(B), te = new Float32Array(B), ok = new Uint8Array(B);
+        for (let k = 0; k < B; k++) { const a = k / B * Math.PI * 2, dx = Math.cos(a), dy = Math.sin(a); let st = 0, wl = 0, gl = 0, rs = 0;
+          for (let t = 0; t < sz * 1.2; t += .5) { const xx = Math.round(ecx + dx * t), yy = Math.round(ecy + dy * t); if (xx < 0 || yy < 0 || xx >= N || yy >= N) break; const q = yy * N + xx;
+            if (st === 0) { if (!inB.has(q)) { st = 1; tb[k] = t; } else continue; }
+            if (st === 1) { if (inB.has(q)) continue; if (lineWall[q]) { if ((wl += .5) > 6) break; continue; } st = 2; tb[k] = t; }
+            if (st === 2) { if (labels[q] >= 0 && labels[q] !== e.bl.L && regions[labels[q]] > sz * sz * .8 && !lineWall[q]) break; if (lineWall[q]) { if (gl <= 4.5 && rs < 2) { rs++; st = 1; wl = 0; gl = 0; continue; } if (gl > 1) { te[k] = t; ok[k] = 1; } break; } if ((gl += .5) > T) break; } } }   // a thin light ring at the eye's edge is not the gap yet
+        const ok0 = ok.slice(), te0 = te.slice();
+        for (let k = 0; k < B; k++) { if (!ok[k]) continue; const a = k / B * Math.PI * 2, dx = Math.cos(a), dy = Math.sin(a); let n = 0, wv = 0, lw = tb[k];   // the coloured version agrees: mostly white along the gap
+          for (let t = tb[k]; t <= te[k]; t += 1) { const q = (Math.round(ecy + dy * t) * N + Math.round(ecx + dx * t)) * 4; n++; if (Math.min(d[q], d[q + 1], d[q + 2]) > 195) { wv++; lw = t; } }
+          if (wv < n * .6) ok[k] = 0; else te[k] = Math.min(te[k], lw + 2); }   // the white ends where the coloured version's white ends
+        // a tight, even gap that runs a long way round (>= 40°) is an eyelid even if the coloured version's white sits elsewhere
+        for (let k = 0; k < B; k++) { if (!ok0[k] || ok0[(k + B - 1) % B]) continue; let n = 0; while (n < B && ok0[(k + n) % B]) n++;
+          let tight = true; for (let j = 0; j < n; j++) if (te0[(k + j) % B] - tb[(k + j) % B] > sz * .2) { tight = false; break; }
+          if (n >= 10 && tight) for (let j = 0; j < n; j++) { ok[(k + j) % B] = 1; te[(k + j) % B] = te0[(k + j) % B]; } }
+        const run = new Uint8Array(B);                                               // keep stretches of >= 6 bins (going round)
+        for (let k = 0; k < B; k++) { if (!ok[k] || ok[(k + B - 1) % B]) continue; let n = 0; while (n < B && ok[(k + n) % B]) n++; if (n >= 4) for (let j = 0; j < n; j++) run[(k + j) % B] = 1; }
+        if (ok.every(v => v)) run.fill(1);
+        for (let y = Math.max(1, e.y0 - my); y <= Math.min(N - 2, e.y1 + my); y++) for (let x = Math.max(1, e.x0 - mx); x <= Math.min(N - 2, e.x1 + mx); x++) {
+          const p = y * N + x, Lp = labels[p]; if (inB.has(p) || Lp < 0 || (Lp !== e.bl.L && regions[Lp] > sz * sz * .8)) continue;
+          const a = Math.atan2(y - ecy, x - ecx), k = ((Math.round(a / (Math.PI * 2) * B) % B) + B) % B, r = Math.hypot(x - ecx, y - ecy);
+          const q4 = p * 4, gw = Math.min(d[q4], d[q4 + 1], d[q4 + 2]) > 215;
+          if ((run[k] && r >= tb[k] - 1.5 && r <= te[k] + .5) || (gw && tb[k] && r <= tb[k] + 3)) col[p] = 0xFFFFFF; }   // or white in the coloured version, right beside the eye
+      }
       for (let i = 0; i < N * N; i++) if (col[i] >= 0) { const o4 = i * 4; o[o4] = col[i] >> 16 & 255; o[o4 + 1] = col[i] >> 8 & 255; o[o4 + 2] = col[i] & 255; }
       // eyes
       const ex = cx(eyeTargetC), ei = ex.createImageData(N, N), eo = ei.data;
