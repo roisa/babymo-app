@@ -78,7 +78,38 @@
     -webkit-text-stroke:2px rgba(120,40,160,.35);text-shadow:0 4px 0 #B07CF0,0 0 22px rgba(255,210,63,.9);white-space:nowrap;z-index:3}
   #moColor .mc-cheer.on{animation:mcCheer 1.4s cubic-bezier(.2,1.4,.4,1) forwards}
   @keyframes mcCheer{0%{opacity:0;transform:translate(-50%,-50%) scale(.3) rotate(-8deg)}20%{opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(3deg)}35%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-80%) scale(.9)}}
-  @media (prefers-reduced-motion:reduce){#moColor .mc-conf,#moColor .mc-c.magic.sel svg{animation:none;display:none}}`;
+  @media (prefers-reduced-motion:reduce){#moColor .mc-conf,#moColor .mc-c.magic.sel svg{animation:none;display:none}}
+  /* ── v3 look (owner's reference): lavender sky with clouds and bushes, frosted crayon tray, bar with milestone stars ── */
+  #moColor{background:linear-gradient(180deg,#EEE6FF 0%,#F4EEFF 45%,#FBF1FB 100%)!important}
+  #moColor .mc-deco{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
+  #moColor .mc-deco i{position:absolute;display:block}#moColor .mc-deco svg{display:block;width:100%;height:auto}
+  #moColor .d-c1{left:-24px;top:24%;width:120px;opacity:.9}#moColor .d-c2{right:-20px;top:38%;width:100px;opacity:.85}
+  #moColor .d-b1{left:-30px;bottom:-10px;width:170px}#moColor .d-b2{right:-30px;bottom:-10px;width:170px;transform:scaleX(-1)}
+  #moColor>*:not(.mc-deco){position:relative;z-index:1}
+  #moColor .mc-title{color:#3A2A8C}
+  #moColor .mc-title::before{content:'';display:inline-block;width:20px;height:20px;margin-right:6px;vertical-align:-2px;
+    background:linear-gradient(#FFC93C,#FFC93C) 4px 2px/4px 8px no-repeat,linear-gradient(#FFC93C,#FFC93C) 11px 0/4px 10px no-repeat,linear-gradient(#FFC93C,#FFC93C) 0 12px/9px 4px no-repeat;transform:rotate(-12deg)}
+  #moColor .mc-x,#moColor .mc-undo{background:rgba(255,255,255,.85);color:#4A2FA8;box-shadow:0 6px 14px -8px rgba(80,50,160,.5),inset 0 0 0 1.5px rgba(255,255,255,.9)}
+  #moColor .mc-meter{max-width:min(520px,66vh)!important}
+  #moColor .mc-track{height:22px!important;box-shadow:inset 0 2px 4px rgba(80,50,160,.15),0 0 0 3px #fff,0 6px 12px -6px rgba(80,50,160,.35)!important}
+  #moColor .mc-meter i{background:linear-gradient(90deg,#FF6F9E,#FF9D5C,#FFC93C,#FFE070)!important}
+  #moColor .mc-meter em{position:absolute;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;z-index:2;background:#E1D8F5;
+    clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .3s}
+  #moColor .mc-meter em.on{background:#FFC93C;transform:scale(1.25);filter:drop-shadow(0 0 4px #FFE070)}
+  #moColor .mc-meter b{width:38px!important;height:38px!important}
+  #moColor .mc-paper{border-radius:30px!important;box-shadow:0 18px 34px -18px rgba(80,50,160,.5),0 0 0 8px #fff!important}
+  #moColor .mc-pal{position:relative;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:26px;
+    padding:12px 12px 8px!important;margin-top:12px;box-shadow:0 12px 24px -16px rgba(80,50,160,.5),inset 0 0 0 1.5px rgba(255,255,255,.9);max-width:min(560px,66vh)!important;box-sizing:border-box}
+  #moColor .mc-c{border-radius:16px}
+  #moColor .mc-c.sel{transform:none!important;background:#EADFFF;box-shadow:0 0 0 3px #9B72EE,0 6px 12px -6px rgba(80,50,160,.5)}
+  #moColor .mc-c.sel::after{content:''!important;left:-4px!important;top:-8px!important;bottom:auto!important;margin:0!important;width:16px!important;height:16px!important;border-radius:0!important;
+    background:linear-gradient(#FFC93C,#FFC93C) 3px 1px/3px 7px no-repeat,linear-gradient(#FFC93C,#FFC93C) 9px 0/3px 8px no-repeat,linear-gradient(#FFC93C,#FFC93C) 0 10px/7px 3px no-repeat!important;transform:rotate(-20deg)}
+  #moColor .mc-c.sel svg{transform:translateY(-3px)}
+  #moColor .mc-row{max-width:min(560px,66vh)!important;gap:14px!important;margin-top:14px!important}
+  #moColor .mc-auto{background:linear-gradient(180deg,#FFFFFF,#EFE7FF)!important;color:#4A2FA8!important;box-shadow:0 6px 0 #D6C8F5,0 14px 22px -12px rgba(80,50,160,.45)!important}
+  #moColor .mc-done{background:linear-gradient(120deg,#3D9BFF,#6F5BF2 60%,#9B5DE5)!important;box-shadow:0 6px 0 #4A3FB8,0 14px 22px -12px rgba(80,60,200,.6)!important;display:flex;align-items:center;justify-content:center;gap:8px}
+  #moColor .mc-btn{border-radius:22px!important;min-height:60px!important}
+`;
 
   /* ═══ Painting model (brushing) ═══
      colorC  : the child's colours (white to start)          eyeC : real eye colours revealed by the magic crayon
@@ -124,9 +155,9 @@
   }
   function build() {
     const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
-    root = el(`<div id="moColor" role="dialog" aria-modal="true">
-      <div class="mc-top"><button class="mc-x" type="button" aria-label="${T('Tutup', 'Close')}">✕</button><div class="mc-title"></div><button class="mc-undo" type="button" aria-label="${T('Batal', 'Undo')}">↶</button></div>
-      <div class="mc-meter" aria-hidden="true"><span class="mc-track"><i></i></span><b>⭐</b></div>
+    root = el(`<div id="moColor" role="dialog" aria-modal="true"><div class="mc-deco" aria-hidden="true"><i class="d-c1"><svg viewBox="0 0 120 60" aria-hidden="true"><g fill="#fff"><circle cx="34" cy="36" r="18"/><circle cx="56" cy="26" r="24"/><circle cx="82" cy="32" r="19"/><circle cx="20" cy="44" r="12"/><rect x="18" y="36" width="84" height="18" rx="9"/></g></svg></i><i class="d-c2"><svg viewBox="0 0 120 60" aria-hidden="true"><g fill="#fff"><circle cx="34" cy="36" r="18"/><circle cx="56" cy="26" r="24"/><circle cx="82" cy="32" r="19"/><circle cx="20" cy="44" r="12"/><rect x="18" y="36" width="84" height="18" rx="9"/></g></svg></i><i class="d-b1"><svg viewBox="0 0 140 80" aria-hidden="true"><g fill="#7ACB55"><circle cx="30" cy="60" r="28"/><circle cx="70" cy="50" r="34"/><circle cx="112" cy="62" r="26"/></g><g fill="#A2E07A"><circle cx="60" cy="34" r="10"/><circle cx="100" cy="50" r="7"/></g><g><circle cx="44" cy="44" r="7" fill="#fff"/><circle cx="44" cy="44" r="3" fill="#FFC93C"/><circle cx="96" cy="36" r="6" fill="#fff"/><circle cx="96" cy="36" r="2.6" fill="#FFC93C"/></g></svg></i><i class="d-b2"><svg viewBox="0 0 140 80" aria-hidden="true"><g fill="#7ACB55"><circle cx="30" cy="60" r="28"/><circle cx="70" cy="50" r="34"/><circle cx="112" cy="62" r="26"/></g><g fill="#A2E07A"><circle cx="60" cy="34" r="10"/><circle cx="100" cy="50" r="7"/></g><g><circle cx="44" cy="44" r="7" fill="#fff"/><circle cx="44" cy="44" r="3" fill="#FFC93C"/><circle cx="96" cy="36" r="6" fill="#fff"/><circle cx="96" cy="36" r="2.6" fill="#FFC93C"/></g></svg></i></div>
+      <div class="mc-top"><button class="mc-x" type="button" aria-label="${T('Tutup', 'Close')}">✕</button><div class="mc-title"></div><button class="mc-undo" type="button" aria-label="${T('Batal', 'Undo')}"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v5h5"/><path d="M5.5 14.5A7.5 7.5 0 1 0 7 6.6L4 10"/></svg></button></div>
+      <div class="mc-meter" aria-hidden="true"><span class="mc-track"><i></i><em style="left:25%"></em><em style="left:50%"></em><em style="left:75%"></em></span><b>⭐</b></div>
       <div class="mc-stage"><div class="mc-paper"><div class="mc-cheer"></div><canvas class="art" width="${N}" height="${N}"></canvas><canvas class="fx" width="${N}" height="${N}"></canvas><div class="mc-yay"><i>⭐</i><b></b></div></div></div>
       <div class="mc-pal" role="radiogroup" aria-label="${T('Krayon', 'Crayons')}"></div>
       <div class="mc-row"><button class="mc-btn mc-auto" type="button"></button><button class="mc-btn mc-done" type="button"></button></div></div>`);
@@ -493,7 +524,7 @@
     bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.querySelector('b').style.filter = f > 0 ? 'grayscale(' + (.85 - .85 * f) + ')' : ''; bar.classList.toggle('full', f >= .85);
     const steps = [[.25, CHEER[0]], [.5, CHEER[1]], [.75, LINES.almost]];
     while (milestone < steps.length && f >= steps[milestone][0]) {
-      const line = steps[milestone][1][EN ? 1 : 0]; milestone++;
+      const line = steps[milestone][1][EN ? 1 : 0]; { const ms = bar.querySelectorAll('em')[milestone]; if (ms) ms.classList.add('on'); } milestone++;
       if (autoRun) continue;
       st.classList.remove('pop'); void st.offsetWidth; st.classList.add('pop');
       const ch = root.querySelector('.mc-cheer'); ch.textContent = line; ch.classList.remove('on'); void ch.offsetWidth; ch.classList.add('on');
@@ -608,14 +639,14 @@
   function open(o) {
     opts = o || {}; if (!root) build();
     root.querySelector('.mc-title').textContent = opts.title || T('Warnai Baby Mo 🖍️', 'Colour Baby Mo 🖍️');
-    root.querySelector('.mc-done').textContent = T('Selesai! ⭐', 'Done! ⭐');
+    root.querySelector('.mc-done').innerHTML = '<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg> ' + T('Selesai!', 'Done!') + ' <span aria-hidden="true">⭐</span>';
     root.querySelector('.mc-auto').textContent = T('✨ Sim salabim', '✨ Magic!');
     root.classList.add('on'); document.documentElement.style.overflow = 'hidden';
     const c = cx(colorC); c.fillStyle = '#fff'; c.fillRect(0, 0, N, N); cx(eyeC).clearRect(0, 0, N, N); cx(eyeTargetC).clearRect(0, 0, N, N);
     ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, N, N); fctx.clearRect(0, 0, N, N); labels = null; stroke = null; undoStack = []; glitPts = []; celebrated = false; halfSaid = false; autoRun = false;
     cur = CRAYONS[0]; root.querySelectorAll('.mc-c').forEach((x, i) => x.classList.toggle('sel', i === 0));
     loadGuide(opts.guide); parts = []; flashes = []; wand = null; tgtData = null;
-    { const bar = root.querySelector('.mc-meter'); bar.classList.remove('full'); bar.querySelector('i').style.width = '0'; }
+    { const bar = root.querySelector('.mc-meter'); bar.classList.remove('full'); bar.querySelector('i').style.width = '0'; bar.querySelectorAll('em').forEach(x => x.classList.remove('on')); }
     const img = new Image(); img.onload = () => { analyse(img); render(); say(LINES.start[EN ? 1 : 0]); }; img.src = opts.src;
   }
   window.MoColor = { open, CRAYONS, LINES,
