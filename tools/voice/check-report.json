@@ -12788,5 +12788,1441 @@
   ],
   "ok": true,
   "file": "www/voice/cari-11b2dbad.mp3"
+ },
+ {
+  "text": "Bismillah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Bismillah",
+   "Bismilah",
+   "bismillaah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5f9b00a5.mp3"
+ },
+ {
+  "text": "Dengan nama Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b7801a7a.mp3"
+ },
+ {
+  "text": "Allahu Akbar.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a9bafbe6.mp3"
+ },
+ {
+  "text": "Allah Maha Besar",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9788f9ef.mp3"
+ },
+ {
+  "text": "Wa'alaikumussalam.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-dddcb39b.mp3"
+ },
+ {
+  "text": "Dan semoga keselamatan juga untukmu",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d92c1e50.mp3"
+ },
+ {
+  "text": "Yarhamukallah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-71f0e110.mp3"
+ },
+ {
+  "text": "Semoga Allah merahmatimu",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c02ce77a.mp3"
+ },
+ {
+  "text": "La Haula wala Quwwata.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-00727416.mp3"
+ },
+ {
+  "text": "Tiada daya dan kekuatan kecuali dengan pertolongan Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f86d9eba.mp3"
+ },
+ {
+  "text": "Tawakkaltu 'alallah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-8e1ee76a.mp3"
+ },
+ {
+  "text": "Aku berserah diri kepada Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "aku",
+   "aku berserah",
+   "aku bertemu"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-97172507.mp3"
+ },
+ {
+  "text": "Fii Amanillah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-886d3f1c.mp3"
+ },
+ {
+  "text": "Semoga dalam lindungan Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "semoga dalam",
+   "semoga dalam lindungan",
+   "semoga"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f3f1cbb7.mp3"
+ },
+ {
+  "text": "Aamiin.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c1d2dbbd.mp3"
+ },
+ {
+  "text": "Kabulkanlah, ya Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-17a41fda.mp3"
+ },
+ {
+  "text": "Na'udzubillah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-6b781f2b.mp3"
+ },
+ {
+  "text": "Kami berlindung kepada Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ec16e650.mp3"
+ },
+ {
+  "text": "Ahlan wa Sahlan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-10b9bb2b.mp3"
+ },
+ {
+  "text": "Selamat datang",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "selamat datang"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-88b54efd.mp3"
+ },
+ {
+  "text": "Bismillahirrahmanirrahim.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-74fa7dff.mp3"
+ },
+ {
+  "text": "Dengan nama Allah Yang Maha Pengasih, Maha Penyayang",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2d6e160c.mp3"
+ },
+ {
+  "text": "SubhanAllahi wa Bihamdihi.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-17791f57.mp3"
+ },
+ {
+  "text": "Maha Suci Allah dan segala puji bagi-Nya",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "bahasa",
+   "bahas"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a4d7347b.mp3"
+ },
+ {
+  "text": "Alhamdulillahi Rabbil 'Alamin.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-13ed1f84.mp3"
+ },
+ {
+  "text": "Segala puji bagi Allah, Tuhan semesta alam",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "segala puji bagi Allah Tuhan",
+   "segala puji bagi Allah Tuhan semesta",
+   "segala puji bagi Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-057d8e20.mp3"
+ },
+ {
+  "text": "Hasbunallah wa Ni'mal Wakil.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-74ac2f4d.mp3"
+ },
+ {
+  "text": "Cukuplah Allah bagi kami, Dialah sebaik-baik pelindung",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a68c9a62.mp3"
+ },
+ {
+  "text": "Allahumma Barik.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-6f04f4f6.mp3"
+ },
+ {
+  "text": "Ya Allah, berkahilah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9182bc4f.mp3"
+ },
+ {
+  "text": "Taqabbalallahu Minna wa Minkum.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-6bb59b29.mp3"
+ },
+ {
+  "text": "Semoga Allah menerima amal kami dan amalmu",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-08f49d03.mp3"
+ },
+ {
+  "text": "Yahdikumullah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "yahdikumullah",
+   "yah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0917312a.mp3"
+ },
+ {
+  "text": "Semoga Allah memberimu petunjuk",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-c00a5ddf.mp3"
+ },
+ {
+  "text": "La Ba'sa Thahurun.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "gurun",
+   "turun",
+   "hurun"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a5265012.mp3"
+ },
+ {
+  "text": "Tidak apa-apa, semoga sakitmu menjadi pembersih dosa, insya Allah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "tidak jadi",
+   "jadi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-65da02c6.mp3"
+ },
+ {
+  "text": "Rabbi Zidni 'Ilma.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a7bae91f.mp3"
+ },
+ {
+  "text": "Ya Tuhanku, tambahkanlah ilmuku",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "tambahkanlah ilmuku",
+   "tambahkanlah ilmu"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fc4b596f.mp3"
+ },
+ {
+  "text": "Shalawat.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5a4a14cd.mp3"
+ },
+ {
+  "text": "Ya Allah, limpahkanlah shalawat kepada Nabi Muhammad",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2939daf9.mp3"
+ },
+ {
+  "text": "Wa Iyyakum.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-6cc92b04.mp3"
+ },
+ {
+  "text": "Dan untukmu juga",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d525bded.mp3"
+ },
+ {
+  "text": "Allahu A'lam.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cc42db5d.mp3"
+ },
+ {
+  "text": "Allah yang lebih mengetahui",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-5167af50.mp3"
+ },
+ {
+  "text": "Ma'as Salamah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-323498c5.mp3"
+ },
+ {
+  "text": "Selamat jalan, semoga selamat",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-25f799c1.mp3"
+ },
+ {
+  "text": "Shabahul Khair.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-e8661218.mp3"
+ },
+ {
+  "text": "Selamat pagi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-82b558f8.mp3"
+ },
+ {
+  "text": "Masa'ul Khair.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-29f63800.mp3"
+ },
+ {
+  "text": "Selamat sore",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-89a1128b.mp3"
+ },
+ {
+  "text": "Syukran.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Syukron",
+   "cukuran"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-e38c31ad.mp3"
+ },
+ {
+  "text": "Terima kasih",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "terima kasih",
+   "Terima kasih ini",
+   "terimakasih"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-24a4e961.mp3"
+ },
+ {
+  "text": "'Afwan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f663162e.mp3"
+ },
+ {
+  "text": "Sama-sama",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "sama-sama",
+   "Thomas"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fc385dcc.mp3"
+ },
+ {
+  "text": "La Tahzan.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-40026895.mp3"
+ },
+ {
+  "text": "Jangan bersedih, sesungguhnya Allah bersama kita",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "jangan bersedih Sesungguhnya Allah bersama kita"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-17d1aacd.mp3"
+ },
+ {
+  "text": "Hayya 'alash Shalah.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-7e5356f2.mp3"
+ },
+ {
+  "text": "Mari kita sholat",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b251f287.mp3"
+ },
+ {
+  "text": "Tafaddhal.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-1b0d3158.mp3"
+ },
+ {
+  "text": "Silakan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cb868dc8.mp3"
+ },
+ {
+  "text": "Bismillah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Bismillah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f50c20bd.mp3"
+ },
+ {
+  "text": "In the name of Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "in the name of Allah",
+   "in the named of Allah",
+   "in the Naim of Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-899a644c.mp3"
+ },
+ {
+  "text": "Allahu Akbar.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Allahu Akbar",
+   "Allahu akhbar",
+   "Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-55f4981e.mp3"
+ },
+ {
+  "text": "Allah is the Greatest",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Allah is the greatest",
+   "Allah is the greatist"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5debe357.mp3"
+ },
+ {
+  "text": "Wa'alaikumussalam.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "am",
+   "mm",
+   "mmm"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-de7e7fde.mp3"
+ },
+ {
+  "text": "And peace be upon you too",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "and peace be upon you too",
+   "annd peace be upon you too",
+   "andd peace be upon you too"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fd6cc684.mp3"
+ },
+ {
+  "text": "Yarhamukallah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "your",
+   "Eur",
+   "yor"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-39b7a1a3.mp3"
+ },
+ {
+  "text": "May Allah have mercy on you",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "may Allah have mercy on you",
+   "met Allah have mercy on you",
+   "Mets Allah have mercy on you"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-89ce2ce1.mp3"
+ },
+ {
+  "text": "La Haula wala Quwwata.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "hello"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-bcc3458b.mp3"
+ },
+ {
+  "text": "There is no power and no strength except with Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "there is no power and no strength except with Allah",
+   "there is no power and no strengths except with Allah",
+   "their is no power and no strength except with Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2a6740da.mp3"
+ },
+ {
+  "text": "Tawakkaltu 'alallah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Allah",
+   "all",
+   "to Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-35e214cd.mp3"
+ },
+ {
+  "text": "I put my trust in Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "I put my trust in Allah",
+   "igh put my trust in Allah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a1e3a718.mp3"
+ },
+ {
+  "text": "Fii Amanillah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "fii amanillah",
+   "fii am Manilla",
+   "fyeye amanillah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bd172ab0.mp3"
+ },
+ {
+  "text": "May you be in Allah's protection",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "may you be in Allah's protection",
+   "met you be in Allah's protection",
+   "Mets you be in Allah's protection"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-00393036.mp3"
+ },
+ {
+  "text": "Aamiin.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "amen",
+   "I mean",
+   "aimen"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-c5b0bb07.mp3"
+ },
+ {
+  "text": "O Allah, please accept",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "I would love please accept",
+   "oh Allah please accept",
+   "I would love please except"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-49b0a273.mp3"
+ },
+ {
+  "text": "Na'udzubillah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "now"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-501c9a57.mp3"
+ },
+ {
+  "text": "We seek refuge in Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "we seek refuge in a law",
+   "we seek refuge in a long",
+   "we seek refuge in a"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-58cfeb6b.mp3"
+ },
+ {
+  "text": "Ahlan wa Sahlan.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Allyn wa salon",
+   "Allyn wa Solon",
+   "Alan W A Salon"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-d76e0297.mp3"
+ },
+ {
+  "text": "Welcome",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "welcome",
+   "wellcome"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-32ed4253.mp3"
+ },
+ {
+  "text": "Bismillahirrahmanirrahim.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Bismillah Rahman Rahim",
+   "man",
+   "Mann"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f6cb2769.mp3"
+ },
+ {
+  "text": "In the name of Allah, the Most Gracious, the Most Merciful",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "in the name of Allah the most gracious the most merciful",
+   "Inn the name of Allah the most gracious the most merciful",
+   "een the name of Allah the most gracious the most merciful"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d1a86224.mp3"
+ },
+ {
+  "text": "SubhanAllahi wa Bihamdihi.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Subhan Allah",
+   "Subhan Allah he"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3bfad90d.mp3"
+ },
+ {
+  "text": "Glory be to Allah and all praise is His",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "glory be to Allah and all Praises his",
+   "glory be to Allah and awl Praises his",
+   "glory be to Allah and all praise is his"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8969b93c.mp3"
+ },
+ {
+  "text": "Alhamdulillahi Rabbil 'Alamin.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "alhamdulillah"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c1bb71cc.mp3"
+ },
+ {
+  "text": "All praise is for Allah, Lord of all the worlds",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "all Praises for Allah Lord of all the worlds",
+   "awl Praises for Allah Lord of all the worlds",
+   "all Praises for Allah Lourdes of all the worlds"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-f46372bb.mp3"
+ },
+ {
+  "text": "Hasbunallah wa Ni'mal Wakil.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "wa wa",
+   "wah wah",
+   "wha wa"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-bb680de5.mp3"
+ },
+ {
+  "text": "Allah is enough for us, and He is the best Protector",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Allah is enough for us and he is the best protector",
+   "Allah is enough for us and he is the best protecter",
+   "Allah is enough for us and he is the best protektor"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5b6ada65.mp3"
+ },
+ {
+  "text": "Allahumma Barik.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "all about it",
+   "about it",
+   "all about"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-724662e8.mp3"
+ },
+ {
+  "text": "O Allah, bless it",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "oh Allah blessed",
+   "oh Allah bless it",
+   "oh Allah blest"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-87d1dd99.mp3"
+ },
+ {
+  "text": "Taqabbalallahu Minna wa Minkum.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "w a m",
+   "w a",
+   "wa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6bbdb1aa.mp3"
+ },
+ {
+  "text": "May Allah accept from us and from you",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Mela except from us and from you",
+   "Mella except from us and from you",
+   "melih except from us and from you"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a2a4c777.mp3"
+ },
+ {
+  "text": "Yahdikumullah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/lines-28557fa4.mp3"
+ },
+ {
+  "text": "May Allah guide you",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "may Allah guide you",
+   "met Allah guide you",
+   "Mets Allah guide you"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-52b05209.mp3"
+ },
+ {
+  "text": "La Ba'sa Thahurun.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "labasa sahu",
+   "labasa sahoo",
+   "libassa sahu"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-e9c71479.mp3"
+ },
+ {
+  "text": "No worries, may it be a cleansing for you, insha Allah",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "no worries may it be a cleansing for you inshallah",
+   "no worries may it be ah cleansing for you inshallah",
+   "no worries may it be a klenzing for you inshallah"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-ac5a637e.mp3"
+ },
+ {
+  "text": "Rabbi Zidni 'Ilma.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Rabbi zidni Elma",
+   "rabbi zidni elmah",
+   "rabbi zidni ilma"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-86a5d10a.mp3"
+ },
+ {
+  "text": "My Lord, increase me in knowledge",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "my Lord increase me in knowledge",
+   "my Lord increased me in knowledge",
+   "my Lord increase me in knowlege"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b64006dc.mp3"
+ },
+ {
+  "text": "Shalawat.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "shalawat",
+   "shallow what",
+   "shallow at"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1680a5b8.mp3"
+ },
+ {
+  "text": "O Allah, send blessings upon Prophet Muhammad",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "oh Allah send blessings upon Prophet Muhammad",
+   "oh all-at send blessings upon Prophet Muhammad",
+   "oh Allah send blessings upin Prophet Muhammad"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-282f68ec.mp3"
+ },
+ {
+  "text": "Wa Iyyakum.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "wae",
+   "wa eakam",
+   "wha eakam"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-8fcb7f49.mp3"
+ },
+ {
+  "text": "And to you too",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "and to you too",
+   "and to you",
+   "and Teo you too"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7795fb8e.mp3"
+ },
+ {
+  "text": "Allahu A'lam.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/lines-415f6d7f.mp3"
+ },
+ {
+  "text": "Allah knows best",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "Allah Knows Best",
+   "Allah knows bests",
+   "Allah knows beste"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-a2b3ffcd.mp3"
+ },
+ {
+  "text": "Ma'as Salamah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "MAA",
+   "Ma",
+   "ma Salama"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9103afb3.mp3"
+ },
+ {
+  "text": "Goodbye, go safely",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "goodbye go safely",
+   "goodbuy go safely",
+   "goodbyes go safely"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-11b69b3e.mp3"
+ },
+ {
+  "text": "Shabahul Khair.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   ""
+  ],
+  "ok": false,
+  "file": "www/voice/lines-89ac6944.mp3"
+ },
+ {
+  "text": "Good morning",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "good morning",
+   "good Mourning",
+   "gooood morning"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-04891ddb.mp3"
+ },
+ {
+  "text": "Masa'ul Khair.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "Masa",
+   "Massa",
+   "Mossa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b8dca257.mp3"
+ },
+ {
+  "text": "Good evening",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "good evening",
+   "Goode evening",
+   "gud evening"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e4c504d9.mp3"
+ },
+ {
+  "text": "Syukran.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "shukran",
+   "shikran"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-5b5606b7.mp3"
+ },
+ {
+  "text": "Thank you",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "thank you",
+   "thanked you",
+   "thankk you"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-59859888.mp3"
+ },
+ {
+  "text": "'Afwan.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "F1"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-f3b8b92a.mp3"
+ },
+ {
+  "text": "You're Welcome",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "you're welcome",
+   "you're wellcome"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5540c75e.mp3"
+ },
+ {
+  "text": "La Tahzan.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "lausanne",
+   "let hazan",
+   "Lauzon"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-e7e5df31.mp3"
+ },
+ {
+  "text": "Don't be sad, Allah is with us",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "don't be sad Allah is with us",
+   "don't be sadd Allah is with us",
+   "don't be sad all-at is with us"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4983dfaf.mp3"
+ },
+ {
+  "text": "Hayya 'alash Shalah.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "heya alasha",
+   "heya elasha",
+   "ha alash Shala"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-169fb614.mp3"
+ },
+ {
+  "text": "Come to prayer",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "come to prayer",
+   "kome to prayer",
+   "come to preyer"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9908b43d.mp3"
+ },
+ {
+  "text": "Tafaddhal.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama kata / phrase name",
+  "heard": [
+   "taal",
+   "tapa Dal",
+   "tafa Dal"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-ef7c71cb.mp3"
+ },
+ {
+  "text": "Please, go ahead",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "arti / meaning",
+  "heard": [
+   "please go ahead",
+   "PLS go ahead",
+   "pleased go ahead"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-447005cd.mp3"
+ },
+ {
+  "text": "Yeay!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-3538a21e.mp3"
+ },
+ {
+  "text": "Ketemu!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-bda524e8.mp3"
+ },
+ {
+  "text": "Horee!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-91c11972.mp3"
+ },
+ {
+  "text": "Yay!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [
+   "yay",
+   "why",
+   "y"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fbfb1ebd.mp3"
+ },
+ {
+  "text": "Great job!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [
+   "great job",
+   "great Jobe",
+   "great jobb"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0aa9a1c9.mp3"
+ },
+ {
+  "text": "You found it!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [
+   "you found it",
+   "yowu found it",
+   "you found aiti"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-19df7e96.mp3"
+ },
+ {
+  "text": "Well done!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [
+   "well done",
+   "well Doan",
+   "well Doane"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-32699f5c.mp3"
+ },
+ {
+  "text": "Hooray!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "pujian setelah cocok / praise after a match",
+  "heard": [
+   "hooray",
+   "hurray",
+   "hoorae"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0f07381e.mp3"
  }
 ]
