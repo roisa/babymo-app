@@ -251,6 +251,13 @@
 
   /* ── sound ── */
   function ac() { try { audio = audio || new (window.AudioContext || window.webkitAudioContext)(); if (audio.state === 'suspended') audio.resume(); return audio; } catch (e) { return null; } }
+  // iPhone/iPad only start sound on a finished tap; brush strokes begin on pointerdown, so wake the engine on
+  // every touchend/click while the colouring page is open (iOS 17+: play like a media app, past the silent switch)
+  ['touchend', 'click'].forEach(ev => document.addEventListener(ev, () => {
+    if (!root || !root.classList.contains('on')) return;
+    try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
+    ac();
+  }, { capture: true, passive: true }));
   function tone(f, d, type, vol) {
     const A = ac(); if (!A) return;
     const t = A.currentTime, o = A.createOscillator(), g = A.createGain(); o.type = type || 'sine'; o.frequency.setValueAtTime(f, t);
