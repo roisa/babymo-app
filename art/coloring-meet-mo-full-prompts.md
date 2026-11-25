@@ -8,7 +8,53 @@ One prompt per pose, ready to paste. For each one:
 4. If the result has grey shading, thin lines or too many tiny parts, reply with the **fix-up prompt** at the bottom.
 5. Send the image to Claude with its pose name (or run `python3 tools/clean-coloring.py <file> <pose>`). The "Warnai Mo" button then appears for that pose.
 
+## All 40 pose pictures (open → save → attach in ChatGPT)
+
+| # | Pose | Picture |
+|---|---|---|
+| 1 | Winks, both hands pointing forward — "all set!" | [baby-mo-alright.png](https://play.babymo.id/baby-mo-poses/baby-mo-alright.png) |
+| 2 | One finger up — "I have an idea!" | [baby-mo-idea.png](https://play.babymo.id/baby-mo-poses/baby-mo-idea.png) |
+| 3 | OK sign with one hand, winking | [baby-mo-ok.png](https://play.babymo.id/baby-mo-poses/baby-mo-ok.png) |
+| 4 | Waves hello, winking | [baby-mo-pose-01.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-01.png) |
+| 5 | Jumps for joy in the air | [baby-mo-pose-02.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-02.png) |
+| 6 | Hands on hips, ready to play | [baby-mo-pose-04.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-04.png) |
+| 7 | Hands together, making du'a | [baby-mo-pose-05.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-05.png) |
+| 8 | Sits and relaxes on the ground | [baby-mo-pose-06.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-06.png) |
+| 9 | Laughs happily, hands on cheeks | [baby-mo-pose-07.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-07.png) |
+| 10 | Points over there with a big step | [baby-mo-pose-08.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-08.png) |
+| 11 | Jumps up high, knees tucked | [baby-mo-pose-11.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-11.png) |
+| 12 | Sits nicely, hands together | [baby-mo-pose-12.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-12.png) |
+| 13 | Sits and waves | [baby-mo-pose-13.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-13.png) |
+| 14 | Stands up tall | [baby-mo-pose-14.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-14.png) |
+| 15 | Shows the way with one arm | [baby-mo-pose-15.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-15.png) |
+| 16 | Cheeky wink, hand by his cheek | [baby-mo-pose-16.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-16.png) |
+| 17 | Sits and thinks | [baby-mo-pose-18.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-18.png) |
+| 18 | Flies like a plane, arms out | [baby-mo-pose-20.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-20.png) |
+| 19 | Says "cool!" | [baby-mo-pose-21.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-21.png) |
+| 20 | Waits for his turn | [baby-mo-pose-22.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-22.png) |
+| 21 | Kneels nicely | [baby-mo-pose-23.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-23.png) |
+| 22 | Gives a little wave | [baby-mo-pose-24.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-24.png) |
+| 23 | Winks and says OK | [baby-mo-pose-25.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-25.png) |
+| 24 | Claps his hands | [baby-mo-pose-26.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-26.png) |
+| 25 | All fired up, fists ready | [baby-mo-pose-27.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-27.png) |
+| 26 | Listens carefully | [baby-mo-pose-28.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-28.png) |
+| 27 | Big smile, winking | [baby-mo-pose-29.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-29.png) |
+| 28 | Dances happily | [baby-mo-pose-30.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-30.png) |
+| 29 | Surprised: "wow!" | [baby-mo-pose-31.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-31.png) |
+| 30 | Steps out happily | [baby-mo-pose-32.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-32.png) |
+| 31 | Bows to say hello | [baby-mo-pose-34.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-34.png) |
+| 32 | Smiles sweetly | [baby-mo-pose-35.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-35.png) |
+| 33 | Feels a little shy | [baby-mo-pose-37.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-37.png) |
+| 34 | Opens his arms wide | [baby-mo-pose-41.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-41.png) |
+| 35 | Goes for a walk | [baby-mo-pose-42.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-42.png) |
+| 36 | Runs fast | [baby-mo-run.png](https://play.babymo.id/baby-mo-poses/baby-mo-run.png) |
+| 37 | Hands together, says thank you | [baby-mo-thank-you.png](https://play.babymo.id/baby-mo-poses/baby-mo-thank-you.png) |
+| 38 | Amazed: "wow!" | [baby-mo-wow.png](https://play.babymo.id/baby-mo-poses/baby-mo-wow.png) |
+| 39 | Says "yes!", one arm up | [baby-mo-yes.png](https://play.babymo.id/baby-mo-poses/baby-mo-yes.png) |
+| 40 | Cheers "yay!", one arm up | [baby-mo-yeyy.png](https://play.babymo.id/baby-mo-poses/baby-mo-yeyy.png) |
+
 ---
+
 
 ## 1. Winks, both hands pointing forward — "all set!"
 Attach (open, save, then attach in ChatGPT): [baby-mo-alright.png](https://play.babymo.id/baby-mo-poses/baby-mo-alright.png)
