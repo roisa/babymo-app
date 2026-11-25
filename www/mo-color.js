@@ -474,6 +474,15 @@
           if (Math.max(r, gg, b) < 45) continue;
           if (sk && (sk[0] - r) ** 2 + (sk[1] - gg) ** 2 + (sk[2] - b) ** 2 < 45 * 45) continue;
           eo[i] = r; eo[i + 1] = gg; eo[i + 2] = b; eo[i + 3] = 255; } }
+      // a clear white shine in each eye (a big one up top, a small one below), so the eyes always sparkle
+      for (const bl of blobs) { const sk = cl[bl.L] && cl[bl.L][0]; if (!sk || !(sk[0] > 190 && sk[1] > 140 && sk[1] < 225 && sk[2] > 100 && sk[2] < 205)) continue;   // eyes sit in the face
+        let x0 = N, x1 = 0, y0 = N, y1 = 0; const inB = new Set(bl.px);
+        for (const p of bl.px) { const y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        const w = x1 - x0 + 1, h = y1 - y0 + 1, m = Math.min(w, h);
+        const dots = [[x0 + w * .36, y0 + h * .3, m * .2], [x0 + w * .64, y0 + h * .66, m * .1]];
+        for (const p of bl.px) { const y = (p / N) | 0, x = p - y * N;
+          if (!inB.has(p - 2) || !inB.has(p + 2) || !inB.has(p - 2 * N) || !inB.has(p + 2 * N)) continue;   // keep the dark rim
+          for (const [cx_, cy_, r] of dots) if ((x - cx_) ** 2 + (y - cy_) ** 2 <= r * r) { const i = p * 4; eo[i] = eo[i + 1] = eo[i + 2] = 255; eo[i + 3] = 255; } } }
       ex.putImageData(ei, 0, 0);
     } else {
       // no coloured version: cheerful colours that never touch the same colour, light sky behind
