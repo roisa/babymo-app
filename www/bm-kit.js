@@ -1105,11 +1105,19 @@
     _placeRaf = (window.requestAnimationFrame || setTimeout)(function () { _placeRaf = 0; keepToastsOffCard(); placeMo(); });
   }
 
-  var moTimer = null;
+  var moTimer = null, MO_POPUP = false;
   function react(type, opts) {
     try {
       opts = opts || {};
       var cfg = PHRASES[type] || PHRASES.greet;
+      // 26 Nov 2026: the little Mo + speech bubble pop-up is switched off. Every game screen already shows a big Mo,
+      // and toddlers can't read the bubble; the reaction keeps its sound, star and buzz.
+      if (!MO_POPUP) {
+        if (opts.sound !== false) playSfx(type === "greet" ? null : type);
+        if (type === "win" && opts.star !== false) addStars(1);
+        try { if (navigator.vibrate) navigator.vibrate(type === "win" ? [18, 40, 18] : 10); } catch (e) {}
+        return;
+      }
       ensureMoStyle();
       var box = document.getElementById("bm-mo");
       if (!box) {
