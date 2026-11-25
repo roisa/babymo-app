@@ -163,6 +163,7 @@ const PAGES = {
       Object.keys(PZ_CHEERS).forEach(k => PZ_CHEERS[k].forEach(c => a.push([c[i], M, 'semangat saat membuka / cheer while uncovering'])));
       a.push([M === 'en' ? 'Yay!' : 'Yeay!', M, 'Mo ketemu / Mo found']);
       Object.keys(POSE_NAMES).forEach(k => a.push([POSE_NAMES[k][i], M, 'nama gaya Mo / Mo\'s pose: ' + k]));
+      if (window.MoColor) { MoColor.CRAYONS.forEach(c => a.push([c.name[i], M, 'nama krayon / crayon name'])); Object.keys(MoColor.LINES).forEach(k => a.push([MoColor.LINES[k][i], M, 'mewarnai / colouring'])); a.push([i ? 'MashaAllah, beautiful!' : 'MasyaAllah, indah!', M, 'mewarnai selesai / colouring done']); }
       return a;
     }
   },
