@@ -883,19 +883,19 @@ html[data-bm-theme="classic"] #celebOverlay .bm-wa-s .wi{stroke:#EDE6FF}
 @media (max-width:440px){#celebOverlay .bm-wa-two .bm-wa-pri{gap:7px!important;padding:0 8px!important}.bm-wa-pri .pz-ic{width:38px;height:38px;border-radius:12px}.bm-wa-pri .pz-ic svg{width:30px;height:30px}}
 @media (max-width:360px){.bm-wa-pri .pz-ic{width:32px;height:32px;border-radius:10px}.bm-wa-pri .pz-ic svg{width:26px;height:26px}}
 </style>
-<style id="pz-seamless">
-/* opened tiles join up (no gaps, no white frames) so Mo looks like one picture; the gold "just opened" glow sits
-   inside the tile so the board's rounded corner can't cut it off */
-.tile.flipped{z-index:1}
-.tile.flipped .tile-front{inset:var(--seam,0)!important;border-radius:var(--seamR,18px)!important;box-shadow:none!important}
-.tile:not(.flipped) .tile-front{--sx:0px!important;--sy:0px!important}
-.tile.flipped .tile-front::after{display:none!important}
-.tile.just-revealed .tile-front{box-shadow:none!important}
-.tile.just-revealed .tile-front::before{content:''!important;position:absolute;inset:0;z-index:2;border-radius:inherit;pointer-events:none;
-  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.55),rgba(255,255,255,0) 62%)!important;
-  box-shadow:inset 0 0 0 4px #FFD54A,inset 0 0 24px 6px rgba(255,213,74,.75);animation:pzInGlow .9s ease-out forwards!important}
-@keyframes pzInGlow{0%{opacity:0}18%{opacity:1}100%{opacity:0}}
-@media (prefers-reduced-motion:reduce){.tile.just-revealed .tile-front::before{animation:none!important;opacity:0}}
+<style id="pz-seamless2">
+/* opened tiles join into one picture: flat pieces above the turned tiles (no 3D, same on Safari and Chrome) */
+#grid{position:relative}
+#grid .pz-piece{position:absolute;z-index:3;pointer-events:none;background-repeat:no-repeat;background-color:#F2EEE5;animation:pzPieceIn .25s ease-out both}
+#grid .pz-piece.new::after{content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.5),rgba(255,255,255,0) 62%);
+  box-shadow:inset 0 0 0 4px #FFD54A,inset 0 0 24px 6px rgba(255,213,74,.75);animation:pzInGlow 1s ease-out forwards}
+@keyframes pzPieceIn{from{opacity:0}to{opacity:1}}
+@keyframes pzInGlow{0%{opacity:1}100%{opacity:0}}
+/* the glow while the tile is turning sits inside the tile, so the board's rounded corner can't crop it */
+.tile.just-revealed .tile-front{box-shadow:inset 0 0 0 3px #fff!important}
+.tile.just-revealed .tile-front::before{box-shadow:inset 0 0 0 4px #FFD54A,inset 0 0 24px 6px rgba(255,213,74,.75)}
+@media (prefers-reduced-motion:reduce){#grid .pz-piece,#grid .pz-piece.new::after{animation:none}}
 </style>
 </head>
 <body>
@@ -1141,12 +1141,7 @@ function buildGrid(){
       const by = fit.y - (r * (TILE_SIZE + GAP));
       front.style.backgroundImage  = `url('${poseSrc(CUR_POSE)}'), url('${poseSrc(CUR_POSE, true)}')`;
       front.style.backgroundSize   = `${fit.size}px ${fit.size}px`;
-      front.style.backgroundPosition = `calc(${bx}px + var(--sx,0px)) calc(${by}px + var(--sy,0px))`;
-      { const h = GAP / 2, eL = c > 0 ? h : 0, eR = c < COLS - 1 ? h : 0, eT = r > 0 ? h : 0, eB = r < ROWS - 1 ? h : 0, R = '18px';
-        const tl = r === 0 && c === 0 ? R : 0, tr = r === 0 && c === COLS - 1 ? R : 0, bl = r === ROWS - 1 && c === 0 ? R : 0, br = r === ROWS - 1 && c === COLS - 1 ? R : 0;
-        front.style.setProperty('--seam', `${-eT}px ${-eL}px ${-eB}px ${-eR}px`);
-        front.style.setProperty('--sx', eL + 'px'); front.style.setProperty('--sy', eT + 'px');
-        front.style.setProperty('--seamR', `${tr} ${tl} ${bl} ${br}`); }
+      front.style.backgroundPosition = `${bx}px ${by}px`;
 
       inner.appendChild(back);
       inner.appendChild(front);
@@ -1177,6 +1172,7 @@ window.addEventListener('resize', () => { clearTimeout(_pzRT); _pzRT = setTimeou
     t.style.width = t.style.height = TILE_SIZE + 'px';
     if (f){ f.style.backgroundSize = fit.size + 'px ' + fit.size + 'px';
       f.style.backgroundPosition = (fit.x - c * (TILE_SIZE + GAP)) + 'px ' + (fit.y - r * (TILE_SIZE + GAP)) + 'px'; }
+    if (t.classList.contains('flipped')) pzPiece(r, c, false);
   });
 }, 120); });
 
@@ -1199,11 +1195,28 @@ function pzCheer(when, emoji){
   if (when !== 'oneLeft') showToast(emoji, t);
   pzSpeak(t);
 }
+/* a flat piece of today's picture over an opened tile, reaching halfway into the gaps around it */
+function pzPiece(r, c, fresh){
+  const grid = document.getElementById('grid'); if (!grid || !CUR_POSE) return;
+  let el = grid.querySelector(`.pz-piece[data-rc="${r}-${c}"]`);
+  if (!el) { el = document.createElement('i'); el.className = 'pz-piece'; el.dataset.rc = r + '-' + c; grid.appendChild(el); }
+  if (fresh) { el.classList.add('new'); setTimeout(() => el.classList.remove('new'), 1100); }
+  const fit = poseFit(CUR_POSE), h = GAP / 2 + .75, R = 18, step = TILE_SIZE + GAP;
+  const eL = c > 0 ? h : 0, eR = c < COLS - 1 ? h : 0, eT = r > 0 ? h : 0, eB = r < ROWS - 1 ? h : 0;
+  const x = c * step - eL, y = r * step - eT;
+  el.style.left = x + 'px'; el.style.top = y + 'px';
+  el.style.width = (TILE_SIZE + eL + eR) + 'px'; el.style.height = (TILE_SIZE + eT + eB) + 'px';
+  el.style.borderRadius = `${r === 0 && c === 0 ? R : 0}px ${r === 0 && c === COLS - 1 ? R : 0}px ${r === ROWS - 1 && c === COLS - 1 ? R : 0}px ${r === ROWS - 1 && c === 0 ? R : 0}px`;
+  el.style.backgroundImage = `url('${poseSrc(CUR_POSE)}'), url('${poseSrc(CUR_POSE, true)}')`;
+  el.style.backgroundSize = `${fit.size}px ${fit.size}px`;
+  el.style.backgroundPosition = `${fit.x - x}px ${fit.y - y}px`;
+}
 function onTileTap(tile, idx, r, c){
   if(tile.classList.contains('flipped')) return;
 
   // Flip
   tile.classList.add('flipped', 'just-revealed');
+  setTimeout(() => { if (tile.isConnected && tile.classList.contains('flipped')) pzPiece(r, c, true); }, 330);
   setTimeout(() => tile.classList.remove('just-revealed'), 900);
   revealed++;
 

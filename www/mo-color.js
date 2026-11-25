@@ -550,6 +550,7 @@
     const f = Math.min(1, doneArea / totArea), bar = root.querySelector('.mc-meter'), st = bar.querySelector('b');
     bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.querySelector('b').style.filter = f > 0 ? 'grayscale(' + (.85 - .85 * f) + ')' : ''; bar.classList.toggle('full', f >= .85);
     const steps = [[.25, CHEER[0]], [.5, CHEER[1]], [.75, LINES.almost]];
+    bar.querySelectorAll('em').forEach((m, k) => m.classList.toggle('on', f >= steps[k][0])); // stars light up as soon as the bar passes them
     while (milestone < steps.length && f >= steps[milestone][0]) {
       const line = steps[milestone][1][EN ? 1 : 0]; { const ms = bar.querySelectorAll('em')[milestone]; if (ms) ms.classList.add('on'); } milestone++;
       if (autoRun) continue;
