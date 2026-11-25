@@ -170,7 +170,7 @@
     // background = the biggest shape touching the edge of the page
     bgL = -1; let best = 0;
     for (let i = 0; i < N; i++) for (const p of [i, (N - 1) * N + i, i * N, i * N + N - 1]) { const L = labels[p]; if (L >= 0 && regions[L] > best) { best = regions[L]; bgL = L; } }
-    colorOf = new Array(R).fill(null); glitterOf = new Array(R).fill(false); history = []; adj = null; guideCol = null; celebrated = false; halfSaid = false; fills = 0;
+    colorOf = new Array(R).fill(null); glitterOf = new Array(R).fill(false); history = []; adj = null; guideCol = null; guideData = null; celebrated = false; halfSaid = false; fills = 0;
   }
   function hex(c) { const n = parseInt(c.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
   let fill;
@@ -188,7 +188,16 @@
     if (clip) ctx.restore();
   }
   function setRegion(L, color, glitter) {
-    const c = color ? hex(color) : [255, 255, 255], f = fill.data;
+    const f = fill.data;
+    if (color && color[0] === 'g' && guideData && guideCol && guideCol[L]) {
+      const cl = guideCol[L], d = guideData;
+      for (let k = start[L]; k < start[L + 1]; k++) { const p = order[k], i = p * 4; let best = cl[0], bd = 1e9;
+        if (Math.min(d[i], d[i + 1], d[i + 2]) > 236) best = WHITE3;   // white in the coloured version (margin, clouds) stays white
+        else if (Math.max(d[i], d[i + 1], d[i + 2]) >= 75) for (const c of cl) { const dd = (c[0] - d[i]) ** 2 + (c[1] - d[i + 1]) ** 2 + (c[2] - d[i + 2]) ** 2; if (dd < bd) { bd = dd; best = c; } }
+        f[i] = best[0]; f[i + 1] = best[1]; f[i + 2] = best[2]; }
+      return;
+    }
+    const c = color ? hex(color) : [255, 255, 255];
     for (let k = start[L]; k < start[L + 1]; k++) {
       const i = order[k] * 4;
       if (glitter) {                                // sparkly texture: light speckles and a soft sheen
@@ -204,17 +213,38 @@
     guideImg = null; if (!src) return;
     const g = new Image(); g.onload = () => { guideImg = g; guideCol = null; }; g.onerror = () => { guideImg = null; }; g.src = src;
   }
+  /* The coloured version → for each shape, its main colours (up to 4, each at least 10% of it).
+     One colour: a flat fill. Several (a sky and grass that share a shape because of a tiny gap in a line,
+     hair that leaks into the sky…): every pixel takes the nearest of them, so each part gets its real colour. */
+  let guideData = null;
   function guideColours() {
     if (guideCol || !guideImg) return guideCol;
     const c = document.createElement('canvas'); c.width = c.height = N; const x = c.getContext('2d', { willReadFrequently: true }); fitDraw(x, guideImg);
-    const d = x.getImageData(0, 0, N, N).data; guideCol = [];
+    const d = guideData = x.getImageData(0, 0, N, N).data; guideCol = [];
     for (let L = 0; L < regions.length; L++) {
-      let r = 0, g = 0, b = 0, n = 0; const step = Math.max(1, Math.floor(regions[L] / 1500));
-      for (let k = start[L]; k < start[L + 1]; k += step) { const i = order[k] * 4; r += d[i]; g += d[i + 1]; b += d[i + 2]; n++; }
-      guideCol[L] = n ? '#' + [r, g, b].map(v => Math.round(v / n).toString(16).padStart(2, '0')).join('') : null;
+      const bins = new Map(), step = Math.max(1, Math.floor(regions[L] / 3000)); let all = 0;
+      for (let k = start[L]; k < start[L + 1]; k += step) { const i = order[k] * 4, R = d[i], G = d[i + 1], B = d[i + 2];
+        if (Math.max(R, G, B) < 75) continue; all++;
+        const key = Math.min(R, G, B) > 232 ? -1 : (R >> 5) << 6 | (G >> 5) << 3 | (B >> 5), e = bins.get(key) || [0, 0, 0, 0];
+        e[0]++; e[1] += R; e[2] += G; e[3] += B; bins.set(key, e); }
+      // merge similar shades (light / dark green…) into one colour each, biggest first
+      const groups = [];
+      [...bins.entries()].sort((a, b) => b[1][0] - a[1][0]).forEach(([key, e]) => {
+        const c = [e[1] / e[0], e[2] / e[0], e[3] / e[0]];
+        const g = groups.find(g => key !== -1 && !g.white && (g.c[0] - c[0]) ** 2 + (g.c[1] - c[1]) ** 2 + (g.c[2] - c[2]) ** 2 < 70 * 70);
+        if (g) { g.n += e[0]; g.s[0] += e[1]; g.s[1] += e[2]; g.s[2] += e[3]; }
+        else groups.push({ n: e[0], s: [e[1], e[2], e[3]], c, white: key === -1 });
+      });
+      const W = groups.find(g => g.white), wn = W ? W.n : 0;
+      let cl = groups.filter(g => !g.white && g.n >= Math.max(30, (all - wn) * .04)).sort((a, b) => b.n - a.n).slice(0, 6)
+        .map(g => g.s.map(v => Math.round(v / g.n)));
+      if (W && (wn > all * .7 || !cl.length)) cl = [[255, 255, 255]].concat(wn > all * .9 ? [] : cl);
+      guideCol[L] = cl.length ? cl : null;
     }
     return guideCol;
   }
+  const WHITE3 = [255, 255, 255];
+  const toHex = c => '#' + c.map(v => v.toString(16).padStart(2, '0')).join('');
   function neighbours() {
     if (adj) return adj; adj = regions.map(() => new Set()); const D = 7;
     for (let y = 0; y < N - D; y += 2) for (let x = 0; x < N - D; x += 2) { const i = y * N + x, a = labels[i]; if (a < 0) continue;
@@ -222,7 +252,7 @@
     return adj;
   }
   function magicColour(L) {
-    const gc = guideColours(); if (gc && gc[L]) return gc[L];
+    const gc = guideColours(); if (gc && gc[L]) return gc[L].length > 1 ? 'g' + L : toHex(gc[L][0]);
     if (L === bgL) return '#D9F1FF';
     const used = new Set([...neighbours()[L]].map(n => colorOf[n]).filter(Boolean));
     const opts2 = HAPPY.filter(h => !used.has(h)); const pool = opts2.length ? opts2 : HAPPY;

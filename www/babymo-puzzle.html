@@ -1014,7 +1014,7 @@ function onComplete(){
     cb.hidden = !has; cb.closest('.bm-wa').classList.toggle('has-color', has);
     cb.textContent = PL('🖍️ Warnai Mo', '🖍️ Colour Mo');
     cb.onclick = () => { try { playSparkle(); } catch (e) {} window.MoColor && MoColor.open({ src: 'coloring/meet/' + CUR_POSE[0] + '.png', key: 'meet-' + CUR_POSE[0],
-      guide: (window.MO_COLOR_GUIDES || []).indexOf(CUR_POSE[0]) >= 0 ? 'coloring/meet/' + CUR_POSE[0] + '-color.png' : null,
+      guide: (window.MO_COLOR_GUIDES || []).indexOf(CUR_POSE[0]) >= 0 ? 'coloring/meet/' + CUR_POSE[0] + '-color.webp' : null,
       title: (POSE_NAMES[CUR_POSE[0]] || ['Baby Mo', 'Baby Mo'])[PZ_EN ? 1 : 0] + ' 🖍️' }); }; }
   // Grid gets gold border
   document.getElementById('grid').classList.add('complete');
