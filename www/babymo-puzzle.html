@@ -731,6 +731,47 @@ html[data-bm-theme="classic"] .tile-back{filter:saturate(.85) brightness(.88)}
 @media (orientation:landscape) and (max-height:500px){.title-area::before{display:none}.pz2-tree,.pz2-fence{display:none}.main-title{font-size:26px!important}}
 @media (prefers-reduced-motion:reduce){.tile-back-icon{animation:none!important}}
 </style>
+<style id="pz-candy-card">
+/* reward card in the storybook look: the garden stays visible behind, a cream card with a cloud top,
+   Mo on a little grass hill, the name in purple/orange, a yellow ribbon for the pose, candy buttons */
+#celebOverlay .celeb-bg{background:linear-gradient(180deg,rgba(93,185,247,.25) 0%,rgba(93,185,247,.12) 40%,rgba(255,255,255,0) 70%)!important;-webkit-backdrop-filter:blur(2px)!important;backdrop-filter:blur(2px)!important}
+#celebOverlay #introCard{background:linear-gradient(180deg,#FFFFFF 0%,#FFFBEE 55%,#FFF3D2 100%)!important;border:0!important;border-radius:30px 30px 0 0!important;
+  box-shadow:0 -14px 30px -14px rgba(30,70,140,.4)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;overflow:visible!important;padding-top:6px!important}
+#celebOverlay #introCard::before{content:''!important;position:absolute;left:0;right:0;top:-34px;height:36px;border-radius:0;background:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60' preserveAspectRatio='none'><path d='M0 60 V34 C20 34 26 14 52 16 C66 0 98 2 110 18 C128 4 164 6 172 24 C190 8 226 8 236 26 C252 10 290 12 296 28 C314 14 350 16 356 32 C372 22 396 28 400 34 V60 Z' fill='%23ffffff'/></svg>") center bottom/100% 100% no-repeat!important;pointer-events:none;
+  filter:drop-shadow(0 -6px 8px rgba(30,70,140,.12))}
+#celebOverlay #introCard::after{display:none!important}
+.intro-card .mo-stage{position:relative}
+.intro-card .mo-stage::after{bottom:-4px!important;width:210px!important;height:34px!important;border-radius:50% 50% 40% 40%/100% 100% 0 0!important;
+  background:linear-gradient(180deg,#A8E27C,#7CCF55)!important;z-index:0}
+.intro-card .mo-reveal-img{z-index:1;filter:drop-shadow(0 8px 8px rgba(40,90,30,.25))}
+.intro-card .intro-name{color:#6B3FD8!important;-webkit-text-fill-color:#6B3FD8!important;background:none!important;font:700 clamp(36px,10vw,46px)/1.05 'Fredoka','Nunito',sans-serif!important;
+  text-shadow:0 3px 0 #fff,3px 0 0 #fff,-3px 0 0 #fff,0 -3px 0 #fff,0 7px 0 rgba(107,63,216,.22)!important;margin-top:10px!important}
+#celebOverlay #poseChip:not([hidden]){position:relative;display:inline-block!important;padding:7px 22px!important;border-radius:8px!important;transform:rotate(-1.5deg);
+  background:linear-gradient(180deg,#FFE98A,#FFD54A)!important;color:#5A3A00!important;font:600 clamp(15px,4.2vw,18px)/1.15 'Fredoka','Nunito',sans-serif!important;
+  box-shadow:0 4px 0 #E8A920,0 10px 14px -8px rgba(160,100,0,.5)!important;border:0!important;margin:10px auto 14px!important}
+#celebOverlay #poseChip::before,#celebOverlay #poseChip::after{content:'';position:absolute;bottom:-8px;width:18px;height:22px;background:#F2B830;z-index:-1}
+#celebOverlay #poseChip::before{left:-12px;clip-path:polygon(0 0,100% 0,100% 100%,0 100%,40% 50%)}
+#celebOverlay #poseChip::after{right:-12px;clip-path:polygon(0 0,100% 0,60% 50%,100% 100%,0 100%)}
+.intro-content{display:flex;flex-direction:column;align-items:center}
+.intro-content>*{width:100%}
+#celebOverlay #poseChip,.intro-card .intro-name{width:auto!important}
+.intro-card .stk-new{background:#fff!important;border:2.5px solid #FFD54A!important;box-shadow:0 6px 12px -8px rgba(160,100,0,.5)!important}
+.intro-card .stk-new div b{color:#FF7A1A!important}
+#celebOverlay .bm-wa-pri{border-radius:999px!important;border:0!important;font:700 clamp(18px,5vw,21px)/1 'Fredoka','Nunito',sans-serif!important;text-shadow:0 2px 0 rgba(0,0,0,.15)!important}
+#celebOverlay .bm-wa-pri::before{left:6%!important;right:auto!important;width:22%!important;top:7px!important;height:9px!important;border-radius:999px!important;background:rgba(255,255,255,.5)!important}
+#celebOverlay .bm-wa-pri.pz-color{background:linear-gradient(180deg,#FF9FC4,#FF5FA0)!important;box-shadow:0 6px 0 #D63F82,0 14px 22px -12px rgba(214,63,130,.6)!important}
+#celebOverlay #pzAgain{background:linear-gradient(180deg,#9EE87A,#4DBE3E)!important;box-shadow:0 6px 0 #2F9A2A,0 14px 22px -12px rgba(47,154,42,.6)!important}
+#celebOverlay .bm-wa-pri:active{transform:translateY(4px)!important}
+#celebOverlay .bm-wa-s{background:#fff!important;border:2px solid #E6DEFA!important;color:#3A2D7A!important;font-family:'Fredoka','Nunito',sans-serif!important;font-weight:600!important;box-shadow:0 5px 10px -7px rgba(60,40,120,.45)!important}
+/* night */
+html[data-bm-theme="classic"] #celebOverlay .celeb-bg{background:linear-gradient(180deg,rgba(20,27,69,.45),rgba(20,27,69,.15) 60%,rgba(20,27,69,0))!important}
+html[data-bm-theme="classic"] #celebOverlay #introCard{background:linear-gradient(180deg,#2B3470,#232B5E)!important}
+html[data-bm-theme="classic"] #celebOverlay #introCard::before{background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 60' preserveAspectRatio='none'><path d='M0 60 V34 C20 34 26 14 52 16 C66 0 98 2 110 18 C128 4 164 6 172 24 C190 8 226 8 236 26 C252 10 290 12 296 28 C314 14 350 16 356 32 C372 22 396 28 400 34 V60 Z' fill='%232B3470'/></svg>")!important}
+html[data-bm-theme="classic"] .intro-card .intro-name{color:#CDB8FF!important;-webkit-text-fill-color:#CDB8FF!important;text-shadow:0 3px 0 #1B2250,0 7px 0 rgba(0,0,0,.25)!important}
+html[data-bm-theme="classic"] .intro-card .mo-stage::after{background:linear-gradient(180deg,#2B5A3B,#22492F)!important}
+html[data-bm-theme="classic"] .intro-card .stk-new,html[data-bm-theme="classic"] #celebOverlay .bm-wa-s{background:#353F80!important;border-color:#4A548F!important;color:#EDE6FF!important}
+html[data-bm-theme="classic"] .intro-card .stk-new div{color:#C9C3E6!important}
+</style>
 </head>
 <body>
 
