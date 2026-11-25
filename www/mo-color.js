@@ -107,15 +107,20 @@
     if (c.kind === 'magic') defs = '<linearGradient id="mcMagic" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#B07CF0"/><stop offset=".5" stop-color="#FF7EB6"/><stop offset="1" stop-color="#FFB13B"/></linearGradient>';
     if (c.kind === 'rainbow') defs = '<linearGradient id="mcRain" x1="0" y1="0" x2="0" y2="1">' + RAINBOW.map((r, i) => `<stop offset="${i / 7}" stop-color="${r}"/>`).join('') + '</linearGradient>';
     if (c.kind === 'glitter') defs = `<linearGradient id="mcG-${c.id}" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff"/><stop offset=".35" stop-color="${c.c}"/><stop offset=".7" stop-color="#fff" stop-opacity=".8"/><stop offset="1" stop-color="${c.c}"/></linearGradient>`;
-    const extra = c.kind === 'magic' ? '<path d="M22 31l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#FFE27A" stroke="#fff" stroke-width="1.2"/>'
+    const extra = c.kind === 'magic' ? '<path d="M22 36.5l2.2 4.6 5 .7-3.6 3.5.9 5-4.5-2.4-4.5 2.4.9-5-3.6-3.5 5-.7z" fill="#FFE27A" stroke="#fff" stroke-width="1.2"/>'
       : c.kind === 'glitter' ? '<circle cx="17" cy="34" r="1.6" fill="#fff"/><circle cx="26" cy="44" r="1.3" fill="#fff"/><circle cx="21" cy="52" r="1.1" fill="#fff"/><path d="M27 28l1 2.4 2.4 1-2.4 1-1 2.4-1-2.4-2.4-1 2.4-1z" fill="#fff"/>'
-      : c.kind === 'erase' ? '<rect x="13" y="38" width="18" height="10" rx="2" fill="#FF9FC4"/>' : '';
-    return `<svg viewBox="0 0 44 64" aria-hidden="true"><defs>${defs}</defs>
-      <path d="M12.5 23 C12.5 15 16 8.5 22 7.5 C28 8.5 31.5 15 31.5 23 Z" fill="${c.kind === 'erase' ? '#FFFFFF' : tip}" stroke="${edge}" stroke-width="1.5" stroke-linejoin="round"/>
-      <ellipse cx="18.6" cy="14.5" rx="2" ry="3.4" transform="rotate(20 18.6 14.5)" fill="#fff" opacity=".55"/>
-      <rect x="12" y="20" width="20" height="42" rx="7" fill="${body}" stroke="${edge}" stroke-width="1.5"/>
-      <rect x="12" y="27" width="20" height="4" fill="#fff" opacity=".45"/><rect x="12" y="54" width="20" height="4" fill="#fff" opacity=".45"/>
-      <rect x="15" y="22" width="3.5" height="38" rx="1.7" fill="#fff" opacity=".35"/>${extra}</svg>`;
+      : c.kind === 'erase' ? '<rect x="14" y="38" width="16" height="10" rx="2" fill="#FF9FC4"/>' : '';
+    const fill = c.kind === 'erase' ? '#FFFFFF' : body, wax = c.kind === 'erase' ? '#FFFFFF' : tip, sid = 'mcSh-' + c.id;
+    const band = c.kind === 'erase' ? '#E3DDF2' : 'rgba(0,0,0,.22)';
+    return `<svg viewBox="0 0 44 64" aria-hidden="true"><defs>${defs}
+        <linearGradient id="${sid}" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#fff" stop-opacity=".45"/><stop offset=".35" stop-color="#fff" stop-opacity=".08"/><stop offset=".7" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000" stop-opacity=".22"/></linearGradient></defs>
+      <path d="M15.5 21 L19.2 9.6 Q22 6.2 24.8 9.6 L28.5 21 Z" fill="${wax}" stroke="${edge}" stroke-width="1.2" stroke-linejoin="round"/>
+      <path d="M15.5 21 L19.2 9.6 Q22 6.2 24.8 9.6 L28.5 21 Z" fill="url(#${sid})"/>
+      <rect x="14" y="20" width="16" height="5" rx="1" fill="${wax}" stroke="${edge}" stroke-width="1"/>
+      <rect x="14" y="20" width="16" height="5" rx="1" fill="url(#${sid})"/>
+      <rect x="12.5" y="24" width="19" height="38" rx="3" fill="${fill}" stroke="${edge}" stroke-width="1.2"/>
+      <path d="M12.5 29 h19 M12.5 31.5 h19 M12.5 54.5 h19 M12.5 57 h19" stroke="${band}" stroke-width="1.4"/>
+      <rect x="12.5" y="24" width="19" height="38" rx="3" fill="url(#${sid})"/>${extra}</svg>`;
   }
   function build() {
     const st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
