@@ -2080,37 +2080,53 @@ audio.playFanfare = function () {
 };
 
 
-/* === a short, catchy song on the result card, played on this word's instrument, so the word and its
-   instrument stick together. One cheerful original tune; drums and rebana play it as a rhythm. === */
-const KB_SONG = [            // [note (0 = rest), beats]
-  [523, 1], [659, 1], [784, 1], [659, 1], [880, 2], [784, 2],
-  [698, 1], [880, 1], [784, 1], [659, 1], [587, 2], [0, 1], [784, 1],
-  [659, 1], [784, 1], [880, 1], [1047, 1], [988, 1], [880, 1], [784, 2], [1047, 3]
+/* === the Baby Mo jingle on the result card, played on this word's instrument ===
+   Same shape as the real jingle (Intro_Baby_Mo): a bell phrase E–D–G, Mo's own voice "Baby Mo",
+   the answer E–D–C, then Mo's voice "Bismillah". The two voice clips are cut from that recording. */
+const KB_JINGLE_VOICE = { babymo: 'mo-jingle/babymo-v1.mp3', bismillah: 'mo-jingle/bismillah-v1.mp3' };
+const KB_JINGLE = [                // [time s, note Hz | voice key, hold]
+  [0, 659.25], [.35, 587.33], [.7, 783.99, 1],
+  [1.7, 'babymo'],
+  [3.0, 659.25], [3.35, 587.33], [3.7, 523.25, 1],
+  [4.7, 'bismillah'],
+  [5.75, 523.25], [5.75, 659.25], [5.75, 783.99]          // a happy little chord at the end
 ];
-const KB_BEAT = [[1, 1], [0, 1], [1, .5], [1, .5], [0, 1], [1, 1], [0, .5], [1, .5], [1, 1], [0, 1], [1, .5], [1, .5], [1, .5], [1, .5], [1, 2]];
+const kbVoiceBuf = {};
+function kbLoadVoices(){
+  const ctx = audio.ensureCtx(); if (!ctx) return;
+  for (const k in KB_JINGLE_VOICE) if (!kbVoiceBuf[k]) {
+    kbVoiceBuf[k] = 'loading';
+    fetch(KB_JINGLE_VOICE[k]).then(r => r.arrayBuffer()).then(a => new Promise((ok, no) => ctx.decodeAudioData(a, ok, no)))
+      .then(b => { kbVoiceBuf[k] = b; }).catch(() => { kbVoiceBuf[k] = null; });
+  }
+}
 let kbSongT = [];
 function kbTuneReady(){
+  kbLoadVoices();
   const b = document.getElementById('kbTune'); if (!b) return;
   b.querySelector('i').textContent = kbInstr[1];
-  b.querySelector('span').textContent = window.BM_LANG === 'en' ? 'Play the ' + kbInstr[3].toLowerCase() + ' song' : 'Lagu ' + kbInstr[2].toLowerCase();
+  b.querySelector('span').textContent = window.BM_LANG === 'en' ? 'Baby Mo song · ' + kbInstr[3].toLowerCase() : 'Lagu Baby Mo · ' + kbInstr[2].toLowerCase();
   b.classList.remove('playing');
 }
 function kbSong(){
   if (state.muted) return; const ctx = audio.ensureCtx(); if (!ctx) return; if (ctx.state === 'suspended') ctx.resume();
-  kbSongT.forEach(clearTimeout); kbSongT = [];
-  const b = document.getElementById('kbTune'), k = kbInstr[0], drum = /drum|rebana/.test(k);
-  const beat = k === 'angklung' || k === 'flute' || k === 'trumpet' ? .3 : .24, t0 = ctx.currentTime + .05;
-  let t = 0, i = 0;
+  kbLoadVoices(); kbSongT.forEach(clearTimeout); kbSongT = [];
+  try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
+  const b = document.getElementById('kbTune'), k = kbInstr[0], t0 = ctx.currentTime + .06;
   const bump = d => kbSongT.push(setTimeout(() => { if (!b) return; b.classList.remove('hit'); void b.offsetWidth; b.classList.add('hit'); kbNoteFloat(b); }, d * 1000));
-  if (drum) {
-    for (let r = 0; r < 2; r++) KB_BEAT.forEach(([on, len]) => { if (on) { kbSynth.note(k, (i++ % 3 === 2) ? 392 : 262, t0 + t, .2); bump(t); } t += len * beat; });
-    kbSynth.note(k, 523, t0 + t, .22); bump(t);
-  } else {
-    KB_SONG.forEach(([f, len]) => { if (f) { kbSynth.note(k, f, t0 + t, .18); bump(t);
-        if (!/angklung|flute|trumpet/.test(k) && (i++ % 2 === 0)) kbSynth.note(k, f / 2, t0 + t, .07); }   // a soft lower note underneath
-      t += len * beat; });
-  }
-  if (b) { b.classList.add('playing'); kbSongT.push(setTimeout(() => b.classList.remove('playing'), (t + .6) * 1000)); }
+  let end = 0;
+  KB_JINGLE.forEach(([t, n, hold]) => {
+    if (typeof n === 'string') {
+      const buf = kbVoiceBuf[n];
+      if (buf && buf !== 'loading') { const src = ctx.createBufferSource(), g = ctx.createGain(); g.gain.value = 1.1; src.buffer = buf; src.connect(g); g.connect(ctx.destination); src.start(t0 + t); end = Math.max(end, t + buf.duration); }
+      else { kbSynth.note(k, 392, t0 + t, .12); kbSynth.note(k, 330, t0 + t + .2, .12); kbSynth.note(k, 440, t0 + t + .4, .14); }   // no clip yet: hum it
+      return;
+    }
+    kbSynth.note(k, n, t0 + t, hold ? .2 : .17); bump(t);
+    if (hold && !/drum|rebana|angklung/.test(k)) kbSynth.note(k, n, t0 + t + .5, .08);     // let the long note ring on
+    end = Math.max(end, t + .6);
+  });
+  if (b) { b.classList.add('playing'); kbSongT.push(setTimeout(() => b.classList.remove('playing'), (end + .4) * 1000)); }
 }
 function kbNoteFloat(b){
   const n = document.createElement('em'); n.className = 'kb-fnote'; n.textContent = Math.random() < .5 ? '♪' : '♫';

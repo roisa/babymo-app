@@ -13,6 +13,7 @@
 const CACHE = "babymo-games-v377";
 
 const SHELL = [
+  "/mo-jingle/babymo-v1.mp3", "/mo-jingle/bismillah-v1.mp3",
   "/",
   "/index.html",
   "/manifest.webmanifest",
