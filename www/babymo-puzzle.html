@@ -870,6 +870,19 @@ html[data-bm-theme="classic"] .intro-card .stk-go{color:#CDB8FF}
 html[data-bm-theme="classic"] #celebOverlay .bm-wa-s{background:#353F80!important}
 html[data-bm-theme="classic"] #celebOverlay .bm-wa-s .wi{stroke:#EDE6FF}
 </style>
+<style id="pz-btn-icons">
+/* Warnai Mo / Gambar Baru: drawn icons on a white tile instead of emoji */
+#celebOverlay .bm-wa-two .bm-wa-pri{display:flex!important;align-items:center!important;gap:10px}
+.bm-wa-pri .pz-ic{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:15px;background:#fff;
+  box-shadow:0 3px 0 rgba(0,0,0,.10),0 8px 12px -8px rgba(0,0,0,.45);transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+.bm-wa-pri .pz-ic svg{width:36px;height:36px;display:block}
+.bm-wa-pri .pz-ic-c{transform:rotate(-6deg)}.bm-wa-pri .pz-ic-n{transform:rotate(5deg)}
+.bm-wa-pri:active .pz-ic,.bm-wa-pri:hover .pz-ic{transform:rotate(0) scale(1.08)}
+.bm-wa-pri .pz-lb{min-width:0}
+#celebOverlay .bm-wa-two .bm-wa-pri::before{left:34%!important;width:26%!important}
+@media (max-width:440px){#celebOverlay .bm-wa-two .bm-wa-pri{gap:7px!important;padding:0 8px!important}.bm-wa-pri .pz-ic{width:38px;height:38px;border-radius:12px}.bm-wa-pri .pz-ic svg{width:30px;height:30px}}
+@media (max-width:360px){.bm-wa-pri .pz-ic{width:32px;height:32px;border-radius:10px}.bm-wa-pri .pz-ic svg{width:26px;height:26px}}
+</style>
 </head>
 <body>
 
@@ -974,8 +987,8 @@ html[data-bm-theme="classic"] #celebOverlay .bm-wa-s .wi{stroke:#EDE6FF}
       <div class="mo-who" id="moWho"></div>
       <div class="stk-new" id="stkNew"></div>
       <div class="bm-wa">
-        <div class="bm-wa-two"><button class="bm-wa-pri pz-color" id="pzColor" type="button" hidden>🖍️ Warnai Mo</button>
-        <button class="bm-wa-pri" id="pzAgain" type="button">🧩 Gambar Baru</button></div>
+        <div class="bm-wa-two"><button class="bm-wa-pri pz-color" id="pzColor" type="button" hidden><i class="pz-ic pz-ic-c"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M8 34q3.5-4 7 0t7 0t7 0" fill="none" stroke="#FF5FA2" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/><g transform="rotate(140 21 17)"><rect x="5" y="13" width="5" height="10" rx="2.4" fill="#C92F75"/><rect x="8" y="13" width="19" height="10" rx="2.2" fill="#FF5FA2"/><rect x="12" y="13" width="3.2" height="10" fill="#fff" opacity=".9"/><rect x="20" y="13" width="3.2" height="10" fill="#fff" opacity=".9"/><path d="M26.5 13.6Q28.5 13.6 33.4 17.2Q35 18 33.4 18.8Q28.5 22.4 26.5 22.4Z" fill="#E23C86"/><rect x="9" y="14.6" width="16" height="2.2" rx="1.1" fill="#fff" opacity=".45"/></g><path d="M7 4.5l1.2 3 3 1.2-3 1.2-1.2 3-1.2-3-3-1.2 3-1.2z" fill="#FFC93C"/></svg></i><span class="pz-lb">Warnai Mo</span></button>
+        <button class="bm-wa-pri" id="pzAgain" type="button"><i class="pz-ic pz-ic-n"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><clipPath id="pzIcCard"><rect x="4" y="6" width="27" height="25" rx="6"/></clipPath></defs><g clip-path="url(#pzIcCard)"><rect x="4" y="6" width="27" height="25" fill="#8FD3FF"/><circle cx="12" cy="13.5" r="3.6" fill="#FFC93C"/><path d="M4 31V24q7-7 14-2t13-3v12z" fill="#5DC046"/><path d="M4 31v-3q9-5 16 0t11-1v4z" fill="#3FA736"/><path d="M19 12.5a3 3 0 0 1 5.6-1.2 2.4 2.4 0 1 1 .4 4.7H19.6a1.8 1.8 0 0 1-.6-3.5z" fill="#fff"/></g><rect x="4" y="6" width="27" height="25" rx="6" fill="none" stroke="#2F9A2A" stroke-width="2"/><circle cx="30.5" cy="29.5" r="7.2" fill="#FF9D2E" stroke="#fff" stroke-width="2.4"/><path d="M30.5 25.8v7.4M26.8 29.5h7.4" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></i><span class="pz-lb">Gambar Baru</span></button></div>
         <div class="bm-wa-row">
           <a href="./index.html" class="bm-wa-s"><svg class="wi" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M10 19v-5h4v5"/></svg><span>Hub</span></a>
           <button class="bm-wa-s" id="pzAlbum" type="button">📒 Album</button>
@@ -1250,7 +1263,8 @@ function onComplete(){
   // colouring page of this exact pose, when it exists
   { const cb = document.getElementById('pzColor'), has = (window.MO_COLOR_PAGES || []).indexOf(CUR_POSE[0]) >= 0;
     cb.hidden = !has; cb.closest('.bm-wa').classList.toggle('has-color', has);
-    cb.textContent = PL('🖍️ Warnai Mo', '🖍️ Colour Mo');
+    cb.querySelector('.pz-lb').textContent = PL('Warnai Mo', 'Colour Mo');
+    { const nb = document.querySelector('#pzAgain .pz-lb'); if (nb) nb.textContent = PL('Gambar Baru', 'New Picture'); }
     cb.onclick = () => { try { playSparkle(); } catch (e) {} window.MoColor && MoColor.open({ src: 'coloring/meet/' + CUR_POSE[0] + '.png', key: 'meet-' + CUR_POSE[0],
       guide: (window.MO_COLOR_GUIDES || []).indexOf(CUR_POSE[0]) >= 0 ? 'coloring/meet/' + CUR_POSE[0] + '-color.webp' : null,
       title: (POSE_NAMES[CUR_POSE[0]] || ['Baby Mo', 'Baby Mo'])[PZ_EN ? 1 : 0] + ' 🖍️' }); }; }
