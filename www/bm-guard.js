@@ -53,6 +53,13 @@
       ".bmg-text{margin:0 auto 14px;max-width:320px;font-weight:500;font-size:16px;line-height:1.4;color:#5A4E7A}" +
       ".bmg-wait{display:inline-flex;align-items:center;gap:8px;margin-bottom:14px;padding:7px 14px;border-radius:999px;background:#EEF8F1;color:#1E8A52;font-weight:700;font-size:15px}" +
       ".bmg-ring{width:22px;height:22px}" +
+      /* break countdown: a big amber ring with the time left inside */
+      ".bmg-cd{position:relative;width:132px;height:132px;margin:2px auto 8px;color:#F08A1C}.bmg-cd svg{width:100%;height:100%;display:block}" +
+      ".bmg-cd-in{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px}" +
+      ".bmg-cd-t{font:800 34px/1 'Nunito','Fredoka',sans-serif;color:#3A2A8C;font-variant-numeric:tabular-nums}" +
+      ".bmg-cd-l{font:700 12.5px/1.15 'Fredoka','Nunito',sans-serif;color:#8A80A8;max-width:84px}" +
+      ".bmg-cd .bmg-arc{transition:stroke-dashoffset .5s linear}" +
+      "html[data-bm-theme=classic] .bmg-cd{color:#FFB547}html[data-bm-theme=classic] .bmg-cd-t{color:#F1EBFF}html[data-bm-theme=classic] .bmg-cd-l{color:#A9A2CC}html[data-bm-theme=classic] .bmg-btn.soft{color:#F1EBFF;background:linear-gradient(180deg,#4A5290,#3C437A);box-shadow:0 6px 0 #2C3264}" +
       ".bmg-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:60px;border:0;border-radius:22px;cursor:pointer;font:700 19px/1 'Fredoka','Nunito',sans-serif;color:#fff;" +
       "background:linear-gradient(180deg,#3FCF85,#1E9E5E);box-shadow:0 6px 0 #17804B,0 14px 22px -12px rgba(20,120,70,.6);-webkit-tap-highlight-color:transparent}" +
       ".bmg-btn:active{transform:translateY(3px);box-shadow:0 3px 0 #17804B}" +
@@ -131,10 +138,21 @@
       '<h2 class="bmg-title">' + T("Hore, mainnya <b>seru!</b>", "What a <b>fun</b> play!") + "</h2>" +
       '<p class="bmg-text">' + T("Sekarang istirahat dulu ya. Istirahatkan mata, minum air, dan main di luar sebentar. Mo tunggu nanti!",
                                  "Now let's take a break. Rest your eyes, drink some water and play outside for a bit. Mo will see you later!") + "</p>" +
+      '<div class="bmg-cd"><svg viewBox="0 0 120 120"><circle cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-opacity=".16" stroke-width="11"/>' +
+      '<circle class="bmg-arc" cx="60" cy="60" r="52" fill="none" stroke="currentColor" stroke-width="11" stroke-linecap="round" stroke-dasharray="326.7" transform="rotate(-90 60 60)"/></svg>' +
+      '<div class="bmg-cd-in"><span class="bmg-cd-t"></span><span class="bmg-cd-l">' + T("sampai main lagi", "until play time") + "</span></div></div>" +
       '<button class="bmg-grown" type="button">' + T("Untuk orang tua", "For grown-ups") + "</button>", POSE_BYE);
+    var upd = function () {
+      if (!card || card !== c || !play.lockAt) return;
+      var left = Math.max(0, BREAK - (Date.now() - play.lockAt)), sec = Math.ceil(left / 1000);
+      c.querySelector(".bmg-cd-t").textContent = Math.floor(sec / 60) + ":" + String(sec % 60).padStart(2, "0");
+      c.querySelector(".bmg-cd .bmg-arc").setAttribute("stroke-dashoffset", String(326.7 * (1 - left / BREAK)));
+      if (left > 0) setTimeout(upd, 500);
+    };
+    upd();
     c.querySelector(".bmg-grown").onclick = function () {
       grownUp("time", T("Tambah waktu main?", "More play time?"),
-        '<button class="bmg-btn soft" data-a="s10" type="button">+10 ' + T("menit", "min") + '</button><button class="bmg-btn" data-a="reset" type="button">' + T("Mulai lagi", "Start over") + "</button>");
+        '<button class="bmg-btn main" data-a="s10" type="button">+10 ' + T("menit", "min") + '</button><button class="bmg-btn soft" data-a="reset" type="button">' + T("Mulai lagi", "Start over") + "</button>");
     };
   }
   function dayDone() {
@@ -146,7 +164,7 @@
       '<button class="bmg-grown" type="button">' + T("Untuk orang tua", "For grown-ups") + "</button>", POSE_BYE);
     c.querySelector(".bmg-grown").onclick = function () {
       grownUp("time-day", T("Tambah waktu hari ini?", "More time today?"),
-        '<button class="bmg-btn" data-a="d15" type="button">+15 ' + T("menit", "min") + "</button>");
+        '<button class="bmg-btn main" data-a="d15" type="button">+15 ' + T("menit", "min") + "</button>");
     };
   }
   function toast(text) {
