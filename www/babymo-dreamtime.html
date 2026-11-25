@@ -2030,8 +2030,16 @@ function buildDoa(wrap,done){
       lat.innerHTML=s.lat.split(' ').map(function(w,i){ return '<span class="lw" data-w="'+((s.lw||[])[i]!=null?s.lw[i]:-1)+'">'+w+'</span>'; }).join(' ');
       mn.textContent=s.mean;
       ar.style.opacity='1';lat.style.opacity='1';mn.style.opacity='1';
+      fitDua();
     },170);
   }
+  function fitDua(){
+    var st=document.getElementById('doaStage'),ar=document.getElementById('stageAr'); if(!st||!ar) return;
+    if(ar.dataset.fs0==null) ar.dataset.fs0=ar.style.fontSize||'';
+    ar.style.removeProperty('font-size'); ar.style.fontSize=ar.dataset.fs0; var fs=parseFloat(getComputedStyle(ar).fontSize), n=0;
+    while(st.scrollHeight>st.clientHeight+1 && fs>18 && n++<16){ fs-=1.5; ar.style.setProperty('font-size',fs+'px','important'); }
+  }
+  window.addEventListener('resize',function(){ if(document.getElementById('doaStage')) fitDua(); });
   function dot(i,cls){var d=document.querySelector('.ddot[data-d="'+i+'"]');if(d){d.classList.remove('active','done');if(cls)d.classList.add(cls);}}
   function wave(on){var w=document.getElementById('doaWave');if(w)w.style.display=on?'flex':'none';}
   function arHL(on){var ar=document.getElementById('stageAr');if(ar)ar.classList.toggle('active',on);}
@@ -2157,7 +2165,7 @@ function buildBlanket(wrap,done){
     +'<path d="M36 2v66M2 35h68" stroke="url(#bgHead)" stroke-width="4"/><rect x="6" y="5" width="10" height="26" rx="5" fill="#fff" opacity=".08"/></g>'
     /* little lamp on the wall + its warm glow */
     +'<circle id="bedLamp" cx="40" cy="64" r="78" fill="url(#bgLamp)"/>'
-    +'<g transform="translate(40 34)"><path d="M-3 22h6v14h-6z" fill="#E7D9C4"/><path d="M-15 22Q-14 4 0 3 14 4 15 22Z" fill="url(#dgPink)"/><path d="M-9 17Q-8 9 -2 7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".6"/><rect x="-11" y="35" width="22" height="5" rx="2.5" fill="url(#bgHead)"/></g>'
+    +'<g transform="translate(40 34)"><path d="M-3 22h6v14h-6z" fill="#E7D9C4"/><path d="M-15 22Q-14 4 0 3 14 4 15 22Z" fill="url(#dgPink)"/><path d="M-9 17Q-8 9 -2 7" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round" opacity=".6"/><rect x="-11" y="35" width="22" height="5" rx="2.5" fill="url(#bgHead)"/><rect x="-22" y="40" width="44" height="6" rx="3" fill="url(#bgHead)"/><rect x="-20" y="40" width="40" height="2" rx="1" fill="#fff" opacity=".35"/><path d="M-15 46v10l9-10z M15 46v10l-9-10z" fill="#A86E3E"/></g>'
     +twinkle(110,26,4,.3)+twinkle(176,54,3.4,.9)+twinkle(84,72,3,1.4)
     /* floor + rug */
     +'<rect y="318" width="300" height="72" fill="#1A1550"/><ellipse cx="150" cy="384" rx="150" ry="22" fill="url(#bgRug)"/>'
@@ -2524,5 +2532,34 @@ function startSleep(){
 })();
 </script>
 <script src="/bm-kit.js" defer></script>
+
+<style id="dt-fix-1126">
+/* Mo sits a little higher in bed */
+.bedmo img{top:10%!important}
+/* du'a words: the highlight box adds no width, so the lines never re-wrap while Mo reads */
+#stageAr .aw{padding:0 5px!important;margin:0 -5px!important}
+#stageAr .aw.on{transform:none!important}
+#doaStage{justify-content:safe center!important}
+/* Listen & Repeat: the games' "Again!" button look — green → teal → blue pill, soft top gloss, a passing shine */
+#playAll.pa{background:linear-gradient(120deg,#16B46A 0%,#0A9C8C 52%,#0A84B8 100%)!important;background-size:100% 100%!important;border:1px solid rgba(255,255,255,.25)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(0,60,70,.18),0 10px 22px -12px rgba(10,143,160,.6)!important;animation:none!important;isolation:isolate}
+#playAll.pa::before{content:"";position:absolute;left:3%;right:3%;top:1px;height:50%;border-radius:999px 999px 40% 40%;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.24),rgba(255,255,255,0))}
+#playAll.pa::after{top:-20%!important;bottom:-20%!important;width:28%!important;z-index:-1;background:linear-gradient(90deg,transparent,rgba(255,255,255,.26),transparent)!important;animation:dtShine 7s ease-in-out 1.5s infinite!important}
+@keyframes dtShine{0%,62%{left:-40%}82%,100%{left:125%}}
+#playAll.pa .pa-ic{color:#0A9C8C}#playAll.pa .pa-eq i{background:#0A9C8C}
+#playAll.pa .pa-t{font:800 18px 'Nunito',sans-serif;text-shadow:0 1px 1px rgba(0,70,45,.25)}
+#playAll.pa:active{transform:scale(.97)}
+/* Aamiin: clearly "not yet" (grey with a lock) until the du'a is heard, then a bright gold pill in the same glossy style */
+#doaLanjut.aam{isolation:isolate;overflow:hidden!important;font:800 17px 'Nunito',sans-serif!important}
+#doaLanjut.aam:disabled,#s-steps.duaroom #doaLanjut.aam:disabled{background:linear-gradient(180deg,#E4E1F2,#CFCBE3)!important;border:0!important;color:#6E6A8E!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.7),inset 0 -2px 0 rgba(60,50,120,.12)!important}
+#doaLanjut.aam:disabled .aam-lock,#s-steps.duaroom #doaLanjut.aam:disabled .aam-lock{background:#fff!important;color:#8A84B0!important;box-shadow:0 2px 4px rgba(60,50,120,.18)}
+#doaLanjut.aam.unlocked,#s-steps.duaroom #doaLanjut.aam.unlocked{background:linear-gradient(120deg,#FFD24A 0%,#FFAE2B 50%,#FF8A1F 100%)!important;color:#fff!important;text-shadow:0 1px 1px rgba(150,70,0,.35);border:1px solid rgba(255,255,255,.3)!important;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(150,70,0,.2),0 10px 22px -12px rgba(255,138,31,.7)!important}
+#doaLanjut.aam.unlocked::before{content:"";position:absolute;left:3%;right:3%;top:1px;height:50%;border-radius:999px 999px 40% 40%;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.3),rgba(255,255,255,0))}
+#doaLanjut.aam.unlocked::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-40%;width:28%;z-index:-1;pointer-events:none;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.35),transparent);animation:dtShine 5s ease-in-out .8s infinite}
+html[data-bm-theme="classic"] #doaLanjut.aam:disabled{background:linear-gradient(180deg,#4A4F86,#3B4074)!important;color:#B9B5E0!important}
+html[data-bm-theme="classic"] #doaLanjut.aam:disabled .aam-lock{background:#2E3262!important;color:#B9B5E0!important}
+@media (prefers-reduced-motion:reduce){#playAll.pa::after,#doaLanjut.aam.unlocked::after{animation:none!important;display:none}}
+</style>
 </body>
 </html>
