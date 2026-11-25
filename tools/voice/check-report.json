@@ -14224,5 +14224,71 @@
   ],
   "ok": true,
   "file": "www/voice/lines-0f07381e.mp3"
+ },
+ {
+  "text": "Sempurna!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nilai pukulan forehand / forehand grade",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-79379316.mp3"
+ },
+ {
+  "text": "Bagus!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nilai pukulan forehand / forehand grade",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-76dc307e.mp3"
+ },
+ {
+  "text": "Oke!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nilai pukulan forehand / forehand grade",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-54978382.mp3"
+ },
+ {
+  "text": "Perfect!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nilai pukulan forehand / forehand grade",
+  "heard": [
+   "perfect",
+   "Purrfect",
+   "perfekt"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cbf4dda2.mp3"
+ },
+ {
+  "text": "Nice!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nilai pukulan forehand / forehand grade",
+  "heard": [
+   "nice",
+   "niece",
+   "NYSE"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-aa56079f.mp3"
+ },
+ {
+  "text": "Good!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nilai pukulan forehand / forehand grade",
+  "heard": [
+   "good",
+   "Goode",
+   "gud"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-98bb4945.mp3"
  }
 ]
