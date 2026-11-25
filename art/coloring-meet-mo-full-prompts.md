@@ -6,7 +6,8 @@ One prompt per pose, ready to paste. For each one:
 2. **Attach the pose picture**: `www/baby-mo-poses/baby-mo-<pose>.png` (the file name is under each title).
 3. Paste the prompt and generate.
 4. If the result has grey shading, thin lines or too many tiny parts, reply with the **fix-up prompt** at the bottom.
-5. Send the image to Claude with its pose name (or run `python3 tools/clean-coloring.py <file> <pose>`). The "Warnai Mo" button then appears for that pose.
+5. Then ask for the **coloured version** in the same chat (Step 2 prompt below), for the 🪄 magic crayon.
+6. Send both images to Claude with the pose name (or run `python3 tools/clean-coloring.py <page> <pose> <coloured>`). The "Warnai Mo" button then appears for that pose.
 
 ## All 40 pose pictures (open → save → attach in ChatGPT)
 
@@ -615,6 +616,23 @@ Scene around him: A finish-line flag, a big medal with a star, confetti shapes.
 
 Place the extra items around him so nothing covers his face or hands. Keep the scene simple and uncluttered with lots of white space. No text, no letters, no numbers, no Arabic writing, no logos, no other people.
 ```
+
+---
+
+## ⭐ Step 2: the coloured version (for the 🪄 magic crayon)
+
+When the colouring page looks good, reply **in the same chat** with this. The magic crayon uses the
+coloured version so a toddler can colour Mo in his real colours with one tap per shape:
+
+```
+Now colour this exact colouring page. Keep every black line and every shape EXACTLY where it is: do not move, add or remove anything, same framing and size.
+Fill each shape with ONE flat, bright colour (no shading, no gradients, no texture), like a finished colouring book page.
+Baby Mo's real colours: bright green one-piece outfit and green shoes, orange sleeves, yellow cuffs, a white star on the chest, an orange stripe at the waist, black hair, warm peach skin, rosy cheeks.
+Colour the other things in natural, cheerful colours (sky light blue, grass green, sun yellow…). Keep the white background white unless it is clearly sky or grass.
+Square 1024×1024 PNG.
+```
+
+Send Claude both pictures (the black-and-white page and the coloured one) with the pose name.
 
 ---
 
