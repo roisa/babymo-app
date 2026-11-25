@@ -14290,5 +14290,1085 @@
   ],
   "ok": true,
   "file": "www/voice/lines-98bb4945.mp3"
+ },
+ {
+  "text": "Hampir ketemu!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cc81fd78.mp3"
+ },
+ {
+  "text": "Sedikit lagi!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "sedikit lagi",
+   "dikit lagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4b6962f4.mp3"
+ },
+ {
+  "text": "Wah, siapa ya?",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-f90ea53c.mp3"
+ },
+ {
+  "text": "Satu lagi!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "satu lagi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-3cc286fd.mp3"
+ },
+ {
+  "text": "Tinggal satu!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d8b19672.mp3"
+ },
+ {
+  "text": "Mo mengedip: siap!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: alright",
+  "heard": [
+   "mau ngedit",
+   "mau ngedip",
+   "mengedip"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d1fb72d3.mp3"
+ },
+ {
+  "text": "Mo punya ide!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: idea",
+  "heard": [
+   "aku punya ide",
+   "gue punya ide",
+   "punya ide"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c5922b7d.mp3"
+ },
+ {
+  "text": "Mo bilang oke",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: ok",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ed5ebbe8.mp3"
+ },
+ {
+  "text": "Mo melambai: halo!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-01",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-434d1264.mp3"
+ },
+ {
+  "text": "Mo melompat gembira",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-02",
+  "heard": [
+   "melompat gembira",
+   "lompat gembira",
+   "4 gembira"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-8349b6b9.mp3"
+ },
+ {
+  "text": "Mo siap bermain",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-04",
+  "heard": [
+   "Mutia bermain",
+   "mau siap bermain",
+   "Muthia bermain"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-619bfbda.mp3"
+ },
+ {
+  "text": "Mo sedang berdoa",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-05",
+  "heard": [
+   "sedang berdoa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-724c8a8a.mp3"
+ },
+ {
+  "text": "Mo duduk santai",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-06",
+  "heard": [
+   "mau duduk santai",
+   "mod duduk santai",
+   "duduk santai"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-5bd276b0.mp3"
+ },
+ {
+  "text": "Mo tertawa senang",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-07",
+  "heard": [
+   "mau tertawa",
+   "motor Kawasaki",
+   "tertawa"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-433802bf.mp3"
+ },
+ {
+  "text": "Mo menunjuk ke sana!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-08",
+  "heard": [
+   "menunjukkan",
+   "menunjuk"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f2d8a635.mp3"
+ },
+ {
+  "text": "Mo melompat tinggi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-11",
+  "heard": [
+   "lompat tinggi",
+   "melompat tinggi"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e1c54b7f.mp3"
+ },
+ {
+  "text": "Mo duduk manis",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-12",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a8253522.mp3"
+ },
+ {
+  "text": "Mo duduk sambil melambai",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-13",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d1807b78.mp3"
+ },
+ {
+  "text": "Mo berdiri tegap",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-14",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0e921253.mp3"
+ },
+ {
+  "text": "Mo menunjukkan jalan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-15",
+  "heard": [
+   "mau menunjukkan jalan",
+   "kamu menunjukkan jalan",
+   "mu menunjukkan jalan"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-5e4c81dc.mp3"
+ },
+ {
+  "text": "Mo mengedip ceria",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-16",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-96da5d09.mp3"
+ },
+ {
+  "text": "Mo duduk sambil berpikir",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-18",
+  "heard": [
+   "mau duduk sambil berpikir",
+   "duduk sambil berpikir",
+   "mau duduk sambil berdzikir"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-420ba5ad.mp3"
+ },
+ {
+  "text": "Mo terbang seperti pesawat",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-20",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-12614806.mp3"
+ },
+ {
+  "text": "Mo bilang: keren!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-21",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-668af998.mp3"
+ },
+ {
+  "text": "Mo menunggu giliran",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-22",
+  "heard": [
+   "mau menunggu giliran",
+   "menunggu giliran",
+   "kamu menunggu giliran"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ac081f07.mp3"
+ },
+ {
+  "text": "Mo berlutut manis",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-23",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-256eef25.mp3"
+ },
+ {
+  "text": "Mo melambai pelan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-24",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ad890dca.mp3"
+ },
+ {
+  "text": "Mo mengedip: oke!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-25",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-368053d9.mp3"
+ },
+ {
+  "text": "Mo bertepuk tangan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-26",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-017d1710.mp3"
+ },
+ {
+  "text": "Mo bersemangat!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-27",
+  "heard": [
+   "mau berteman nggak",
+   "mau berteman enggak",
+   "mau berteman"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-7682874d.mp3"
+ },
+ {
+  "text": "Mo mendengarkan baik-baik",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-28",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-6e207db8.mp3"
+ },
+ {
+  "text": "Mo tersenyum lebar",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-29",
+  "heard": [
+   "mau tersenyum lebar",
+   "kamu tersenyum lebar",
+   "motor senyum lebar"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-2833b134.mp3"
+ },
+ {
+  "text": "Mo menari riang",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-30",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-bb94a5d4.mp3"
+ },
+ {
+  "text": "Mo terkejut: wah!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-31",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0ebb3779.mp3"
+ },
+ {
+  "text": "Mo melangkah ceria",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-32",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-11a1b9de.mp3"
+ },
+ {
+  "text": "Mo membungkuk menyapa",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-34",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-d9ca6612.mp3"
+ },
+ {
+  "text": "Mo tersenyum manis",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-35",
+  "heard": [
+   "tersenyum",
+   "tersenyum manis"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cb501be8.mp3"
+ },
+ {
+  "text": "Mo tersipu malu",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-37",
+  "heard": [
+   "motor DP Mall",
+   "mau tertipu malu",
+   "MotoGP"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-39bf8821.mp3"
+ },
+ {
+  "text": "Mo membuka tangan lebar",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-41",
+  "heard": [
+   "mau membuka",
+   "mau membuka tangan",
+   "membuka tangan"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4e6c6160.mp3"
+ },
+ {
+  "text": "Mo berjalan-jalan",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-42",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-2aabfbc6.mp3"
+ },
+ {
+  "text": "Mo berlari kencang",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: run",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-9a7f9dec.mp3"
+ },
+ {
+  "text": "Mo berterima kasih",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: thank-you",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-fb430898.mp3"
+ },
+ {
+  "text": "Mo kagum: wow!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: wow",
+  "heard": [
+   "kagum",
+   "buka gom",
+   "muka Gum"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-814b2cbb.mp3"
+ },
+ {
+  "text": "Mo bilang: ya!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: yes",
+  "heard": [
+   "mobilan",
+   "mau bilang",
+   "mobil ang"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-021a359c.mp3"
+ },
+ {
+  "text": "Mo bersorak: yeay!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: yeyy",
+  "heard": [
+   "mau bersorak",
+   "mau bercorak",
+   "mau bersuara"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-c16d7817.mp3"
+ },
+ {
+  "text": "Wonderful!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "wonderful",
+   "onederful",
+   "wonderffle"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-e6219249.mp3"
+ },
+ {
+  "text": "Almost there!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "almost there",
+   "almost their",
+   "aalmost there"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6ba13fee.mp3"
+ },
+ {
+  "text": "Nearly there!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "nearly there",
+   "nearly their",
+   "nearly ther"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-85a5faec.mp3"
+ },
+ {
+  "text": "Who could it be?",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "who could it be",
+   "who could it B",
+   "who could it bee"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-810a757f.mp3"
+ },
+ {
+  "text": "One more!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "1 more",
+   "1 moere",
+   "1 moerae"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-e121411d.mp3"
+ },
+ {
+  "text": "Just one more!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "semangat saat membuka / cheer while uncovering",
+  "heard": [
+   "just 1 more"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-ecc22913.mp3"
+ },
+ {
+  "text": "Mo winks: all set!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: alright",
+  "heard": [
+   "Mo Wings all set",
+   "moinks all set",
+   "Mo Winx all set"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-289f992e.mp3"
+ },
+ {
+  "text": "Mo has an idea!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: idea",
+  "heard": [
+   "Mo has an idea",
+   "Moe has an idea",
+   "mou has an idea"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bf2329c9.mp3"
+ },
+ {
+  "text": "Mo says OK",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: ok",
+  "heard": [
+   "Moses okay",
+   "Moss says okay",
+   "Moises okay"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-7a4b847a.mp3"
+ },
+ {
+  "text": "Mo waves hello!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-01",
+  "heard": [
+   "moav hello",
+   "moow"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a5d00493.mp3"
+ },
+ {
+  "text": "Mo jumps for joy",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-02",
+  "heard": [
+   "mode jumps for joy",
+   "mowed jumps for joy",
+   "Mohd jumps for joy"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-8df8bf42.mp3"
+ },
+ {
+  "text": "Mo is ready to play",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-04",
+  "heard": [
+   "MO is ready to play",
+   "Moe is ready to play",
+   "mou is ready to play"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-9d5b2726.mp3"
+ },
+ {
+  "text": "Mo is making du'a",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-05",
+  "heard": [
+   "MO is making duaa",
+   "Moe is making duaa",
+   "MO is making Dua"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-42ae2dd1.mp3"
+ },
+ {
+  "text": "Mo sits and relaxes",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-06",
+  "heard": [
+   "most sits and relaxes",
+   "Mo sits and relaxes",
+   "Moe sits and relaxes"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-21ba0217.mp3"
+ },
+ {
+  "text": "Mo laughs happily",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-07",
+  "heard": [
+   "mole laughs happily",
+   "mol laughs happily",
+   "mul laughs happily"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-8908d39b.mp3"
+ },
+ {
+  "text": "Mo points over there!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-08",
+  "heard": [
+   "more points over there",
+   "Mo points over there",
+   "Moe points over there"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-beb0f99d.mp3"
+ },
+ {
+  "text": "Mo jumps up high",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-11",
+  "heard": [
+   "Mo jumps up high",
+   "Moe jumps up high",
+   "mow jumps up high"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bf33ceea.mp3"
+ },
+ {
+  "text": "Mo sits nicely",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-12",
+  "heard": [
+   "most sits nicely",
+   "most it's nicely",
+   "maast sits nicely"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-a886fc85.mp3"
+ },
+ {
+  "text": "Mo sits and waves",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-13",
+  "heard": [
+   "most sits and waves",
+   "most sits in waves",
+   "most sitz and waves"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-0be1556a.mp3"
+ },
+ {
+  "text": "Mo stands up tall",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-14",
+  "heard": [
+   "most stands up tall",
+   "most ends up tall",
+   "most stands up Tal"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-80d170b1.mp3"
+ },
+ {
+  "text": "Mo shows the way",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-15",
+  "heard": [
+   "most shows the way",
+   "most shows the weigh",
+   "most shows the whey"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-6e3e129f.mp3"
+ },
+ {
+  "text": "Mo gives a cheeky wink",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-16",
+  "heard": [
+   "Mo gives a cheeky wink",
+   "Moe gives a cheeky wink",
+   "mow gives a cheeky wink"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-85f9b3ae.mp3"
+ },
+ {
+  "text": "Mo sits and thinks",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-18",
+  "heard": [
+   "most sits and thinks",
+   "maast sits and thinks",
+   "moste sits and thinks"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-7fe9bcd4.mp3"
+ },
+ {
+  "text": "Mo flies like a plane",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-20",
+  "heard": [
+   "Mo flies like a plane",
+   "Moe flies like a plane",
+   "Mo flies like a plain"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-18b621da.mp3"
+ },
+ {
+  "text": "Mo says: cool!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-21",
+  "heard": [
+   "Moses cool",
+   "Moses Kool",
+   "Moses Kuhl"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-63946e00.mp3"
+ },
+ {
+  "text": "Mo waits for his turn",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-22",
+  "heard": [
+   "Mo waits for his turn",
+   "Moe waits for his turn",
+   "mow waits for his turn"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b31d891f.mp3"
+ },
+ {
+  "text": "Mo kneels nicely",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-23",
+  "heard": [
+   "Mo Neil's nicely",
+   "Moe Neil's nicely",
+   "mow Neil's nicely"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-42b0a57a.mp3"
+ },
+ {
+  "text": "Mo gives a little wave",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-24",
+  "heard": [
+   "Mo gives a little wave",
+   "Moe gives a little wave",
+   "mow gives a little wave"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7b3c99d7.mp3"
+ },
+ {
+  "text": "Mo winks: OK!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-25",
+  "heard": [
+   "Mo wings okay",
+   "moinks okay",
+   "Moe wings okay"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-474091a6.mp3"
+ },
+ {
+  "text": "Mo claps his hands",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-26",
+  "heard": [
+   "mole claps his hands",
+   "Mo claps his hands",
+   "Moe claps his hands"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ff760ca0.mp3"
+ },
+ {
+  "text": "Mo is all fired up!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-27",
+  "heard": [
+   "MO is All Fired Up",
+   "Moe is All Fired Up",
+   "mow is All Fired Up"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d30dcee3.mp3"
+ },
+ {
+  "text": "Mo listens carefully",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-28",
+  "heard": [
+   "mole listens carefully",
+   "mol listens carefully",
+   "mul listens carefully"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-d043e0a2.mp3"
+ },
+ {
+  "text": "Mo gives a big smile",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-29",
+  "heard": [
+   "Mo gives a big smile",
+   "Moe gives a big smile",
+   "mow gives a big smile"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-92269167.mp3"
+ },
+ {
+  "text": "Mo dances happily",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-30",
+  "heard": [
+   "Mo dances happily",
+   "Moe dances happily",
+   "mow dances happily"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-ebf6fbd9.mp3"
+ },
+ {
+  "text": "Mo is surprised: wow!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-31",
+  "heard": [
+   "MO is surprised wow",
+   "Moe is surprised wow",
+   "mou is surprised wow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-cdfea463.mp3"
+ },
+ {
+  "text": "Mo steps out happily",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-32",
+  "heard": [
+   "Mo steps are happily",
+   "Moe steps are happily",
+   "mole steps are happily"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-b36953a2.mp3"
+ },
+ {
+  "text": "Mo bows to say hello",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-34",
+  "heard": [
+   "mobiles to say hello",
+   "mobles to say hello",
+   "Mobile's to say hello"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-28a70929.mp3"
+ },
+ {
+  "text": "Mo smiles sweetly",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-35",
+  "heard": [
+   "most Smiles sweetly",
+   "maast Smiles sweetly",
+   "moste Smiles sweetly"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-22a8ddf7.mp3"
+ },
+ {
+  "text": "Mo feels a little shy",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-37",
+  "heard": [
+   "Mo feels a little shy",
+   "Moe feels a little shy",
+   "mow feels a little shy"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1e833925.mp3"
+ },
+ {
+  "text": "Mo opens his arms wide",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-41",
+  "heard": [
+   "Mo opens his arms wide",
+   "Moe opens his arms wide",
+   "mow opens his arms wide"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-d6a547ed.mp3"
+ },
+ {
+  "text": "Mo goes for a walk",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: pose-42",
+  "heard": [
+   "Mo goes for a walk",
+   "Moe goes for a walk",
+   "mow goes for a walk"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-bcafa16f.mp3"
+ },
+ {
+  "text": "Mo runs fast",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: run",
+  "heard": [
+   "Mo runs fast",
+   "Moe runs fast",
+   "mow runs fast"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-4c86562e.mp3"
+ },
+ {
+  "text": "Mo says thank you",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: thank-you",
+  "heard": [
+   "Moses thank you",
+   "Moises thank you",
+   "mozus thank you"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-4dbbf898.mp3"
+ },
+ {
+  "text": "Mo is amazed: wow!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: wow",
+  "heard": [
+   "MO is amazed wow",
+   "Moe is amazed wow",
+   "mou is amazed wow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-84222fb2.mp3"
+ },
+ {
+  "text": "Mo says: yes!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: yes",
+  "heard": [
+   "Moe says yes",
+   "Mo says yes",
+   "mow says yes"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-1349a787.mp3"
+ },
+ {
+  "text": "Mo cheers: yay!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama gaya Mo / Mo's pose: yeyy",
+  "heard": [
+   "Mo cheers yay",
+   "Moe cheers yay",
+   "mow cheers yay"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-79039c9b.mp3"
  }
 ]
