@@ -924,6 +924,17 @@ html[data-bm-theme="classic"] #celebOverlay #introCard{background:linear-gradien
 #pzAlbum .wi{width:22px;height:22px;stroke:#4A2FA8;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 html[data-bm-theme="classic"] #pzAlbum .wi{stroke:#EDE6FF}
 </style>
+<style id="pz-card-bigmo">
+/* a bigger Mo who stands on the hill and pops out over the top of the card */
+#celebOverlay #introCard{overflow:visible!important;max-height:none!important}
+.intro-card .mo-stage{overflow:visible!important;min-height:0!important;padding-top:18px!important}
+.intro-card .mo-fit{position:relative;display:block;z-index:2;margin-bottom:8px;flex:none}
+.intro-card .mo-fit .mo-reveal-img{position:absolute!important;max-width:none!important;margin:0!important;object-fit:fill!important}
+.intro-card .mo-hill{z-index:1}
+.intro-card .mo-stage{margin-top:-52px!important;padding-top:0!important}
+@media (max-height:700px){.intro-card .mo-stage{margin-top:-34px!important}}
+@media (max-height:600px){#celebOverlay #introCard{overflow:hidden auto!important;max-height:calc(100% - clamp(84px,12vh,104px) - 14px)!important}.intro-card .mo-stage{margin-top:0!important;padding-top:10px!important}}
+</style>
 </head>
 <body>
 
@@ -1698,12 +1709,16 @@ const POSE_NAMES = {
    (The old upper-body crop set inline size/offsets that overrode the podium
    CSS and pushed an enlarged Mo off the top of the screen.) */
 function fitFullBody(img, p){
-  img.style.width = img.style.height = img.style.top = img.style.left = '';
-  const pad = 6, t = Math.max(0, p[2] - pad), r = Math.max(0, 480 - p[3] - pad),
-        b = Math.max(0, 480 - p[4] - 2), l = Math.max(0, p[1] - pad);
-  img.style.objectViewBox = 'inset(' + t + 'px ' + r + 'px ' + b + 'px ' + l + 'px)';
-  img.style.objectPosition = '50% 100%';
+  img.style.objectViewBox = ''; img.style.objectPosition = '';
+  const bw = Math.max(40, p[3] - p[1]), bh = Math.max(40, p[4] - p[2]), vh = innerHeight;
+  const H = vh < 700 ? 165 : vh < 800 ? 220 : vh > 950 ? 280 : 250;          // Mo's height on the card
+  const k = Math.min(H / Math.max(bh, 340), (Math.min(innerWidth, 520) - 80) / bw);
+  let box = img.parentElement;
+  if (!box || !box.classList.contains('mo-fit')) { box = document.createElement('span'); box.className = 'mo-fit'; img.parentNode.insertBefore(box, img); box.appendChild(img); }
+  box.style.width = Math.round(bw * k) + 'px'; box.style.height = Math.round(bh * k) + 'px';
+  for (const [n, v] of [['width', 480 * k], ['height', 480 * k], ['left', -p[1] * k], ['top', -p[2] * k]]) img.style.setProperty(n, Math.round(v) + 'px', 'important');
 }
+
 /* First time: Mo introduces himself. After that: say hello again and tell what pose this is. */
 function fillMoIntro(){
   const L = (id, en) => PZ_EN ? en : id;
