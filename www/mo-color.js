@@ -24,7 +24,7 @@
   #moColor .mc-stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:8px 0}
   #moColor .mc-paper{position:relative;aspect-ratio:1;height:100%;max-width:100%;max-height:100%;background:#fff;border-radius:26px;box-shadow:0 18px 36px -18px rgba(60,40,120,.45),0 0 0 6px #fff;overflow:hidden}
   #moColor canvas{width:100%;height:100%;display:block;touch-action:none}
-  #moColor .mc-pal{width:100%;max-width:640px;display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:10px 4px 4px}
+  #moColor .mc-pal{width:100%;max-width:min(640px, 62vh);display:grid;grid-template-columns:repeat(6,1fr);gap:10px;padding:10px 4px 4px}
   #moColor .mc-c{aspect-ratio:1;border-radius:50%;border:0;cursor:pointer;box-shadow:inset 0 -5px 0 rgba(0,0,0,.14),0 5px 10px -6px rgba(0,0,0,.4);transition:transform .18s cubic-bezier(.3,1.6,.5,1);min-height:44px}
   #moColor .mc-c.white{box-shadow:inset 0 0 0 2px #E3DDF2,inset 0 -5px 0 rgba(0,0,0,.08),0 5px 10px -6px rgba(0,0,0,.3)}
   #moColor .mc-c.rainbow{background:conic-gradient(#FF4D4D,#FF9F1C,#FFD93D,#4CC94C,#2EC4B6,#3D8BFF,#9B5DE5,#FF7EB6,#FF4D4D)}
