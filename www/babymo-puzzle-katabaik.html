@@ -1504,6 +1504,23 @@ html[data-bm-theme="classic"] .kb-instr{background:#2C3366;color:#EDE6FF;box-sha
 @keyframes kbInstrPlay2{40%{transform:scale(1.15) rotate(-4deg)}}
 @media (prefers-reduced-motion:reduce){.kb-instr.play,.kb-mo.hop{animation:none!important}}
 </style>
+<style id="kb-tune">
+.kb-tune{position:relative;display:inline-flex;align-items:center;gap:8px;margin:12px auto 0;padding:8px 16px 8px 10px;border-radius:999px;border:0;cursor:pointer;
+  background:linear-gradient(180deg,#fff,#F1EBFF);color:#4A2FA8;font:700 15px/1.2 'Fredoka','Nunito',sans-serif;box-shadow:0 8px 16px -10px rgba(60,40,160,.55),inset 0 0 0 1.5px #E3D8FF;
+  -webkit-tap-highlight-color:transparent;overflow:visible}
+.kb-tune i{font-style:normal;font-size:22px;line-height:1}
+.kb-tune b{font-size:18px;color:#B07CF0}
+.kb-tune:active{transform:scale(.96)}
+.kb-tune.playing{box-shadow:0 0 0 3px #FFD54A,0 0 18px 4px rgba(255,210,63,.5),inset 0 0 0 1.5px #fff}
+.kb-tune.hit i{animation:kbTuneHit .3s cubic-bezier(.3,1.6,.5,1)}
+@keyframes kbTuneHit{50%{transform:scale(1.35) rotate(-10deg)}}
+.kb-fnote{position:absolute;bottom:70%;font-style:normal;font-size:18px;color:#9B6CF0;pointer-events:none;animation:kbFNote 1.2s ease-out forwards}
+@keyframes kbFNote{0%{opacity:0;transform:translate(0,6px) scale(.6)}20%{opacity:1}100%{opacity:0;transform:translate(var(--dx),-46px) scale(1.15) rotate(12deg)}}
+.celeb-text{text-align:center}
+html[data-bm-theme="classic"] .kb-tune{background:linear-gradient(180deg,#3A4285,#2C3366);color:#EDE6FF;box-shadow:0 8px 16px -10px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.12)}
+html[data-bm-theme="classic"] .kb-fnote{color:#CDB8FF}
+@media (prefers-reduced-motion:reduce){.kb-tune.hit i,.kb-fnote{animation:none}.kb-fnote{display:none}}
+</style>
 </head>
 <body>
 <div class="kb-sky" aria-hidden="true">
@@ -1659,6 +1676,7 @@ html[data-bm-theme="classic"] .kb-instr{background:#2C3366;color:#EDE6FF;box-sha
       <div class="celeb-meaning-label">Artinya</div>
       <p class="celeb-indo" id="celebIndo">—</p>
     </div>
+    <button class="kb-tune" id="kbTune" type="button"><i></i><span></span><b aria-hidden="true">♪</b></button>
   </div>
 
   <div class="practice" id="celebPractice" hidden></div>
@@ -1963,7 +1981,7 @@ const audio = {
           setTimeout(() => resolve(false), 800);
           a.load();
         });
-        if (ok){ this.el = a; await a.play(); return; }
+        if (ok){ this.el = a; a.addEventListener('ended', () => this.spoke(), { once: true }); await a.play(); return; }
       } catch(e) { /* fall through */ }
     }
     // 2) Fallback: browser TTS using Arabic SCRIPT (correct pronunciation)
@@ -1976,9 +1994,11 @@ const audio = {
       u.volume = 1;
       const v = this.pickArabicVoice();
       if (v) u.voice = v;
-      this.synth.speak(u);
+      u.onend = () => this.spoke(); u.onerror = () => this.spoke();
+      this.synth.speak(u); return;
     }
   },
+  spoke(){ const f = this._afterVoice; this._afterVoice = null; if (f) f(); },
   /** Celebration "ta-da" using tones. */
   playFanfare(){
     if (state.muted) return;
@@ -2058,6 +2078,45 @@ audio.playFanfare = function () {
   else if (kbInstr[0] === 'angklung') kbSynth.play([523, 659, 784, 0, 1047], .3, .18);
   else kbSynth.play([523, 659, 784, 1047, 0, 784, 1047], .13, .19);
 };
+
+
+/* === a short, catchy song on the result card, played on this word's instrument, so the word and its
+   instrument stick together. One cheerful original tune; drums and rebana play it as a rhythm. === */
+const KB_SONG = [            // [note (0 = rest), beats]
+  [523, 1], [659, 1], [784, 1], [659, 1], [880, 2], [784, 2],
+  [698, 1], [880, 1], [784, 1], [659, 1], [587, 2], [0, 1], [784, 1],
+  [659, 1], [784, 1], [880, 1], [1047, 1], [988, 1], [880, 1], [784, 2], [1047, 3]
+];
+const KB_BEAT = [[1, 1], [0, 1], [1, .5], [1, .5], [0, 1], [1, 1], [0, .5], [1, .5], [1, 1], [0, 1], [1, .5], [1, .5], [1, .5], [1, .5], [1, 2]];
+let kbSongT = [];
+function kbTuneReady(){
+  const b = document.getElementById('kbTune'); if (!b) return;
+  b.querySelector('i').textContent = kbInstr[1];
+  b.querySelector('span').textContent = window.BM_LANG === 'en' ? 'Play the ' + kbInstr[3].toLowerCase() + ' song' : 'Lagu ' + kbInstr[2].toLowerCase();
+  b.classList.remove('playing');
+}
+function kbSong(){
+  if (state.muted) return; const ctx = audio.ensureCtx(); if (!ctx) return; if (ctx.state === 'suspended') ctx.resume();
+  kbSongT.forEach(clearTimeout); kbSongT = [];
+  const b = document.getElementById('kbTune'), k = kbInstr[0], drum = /drum|rebana/.test(k);
+  const beat = k === 'angklung' || k === 'flute' || k === 'trumpet' ? .3 : .24, t0 = ctx.currentTime + .05;
+  let t = 0, i = 0;
+  const bump = d => kbSongT.push(setTimeout(() => { if (!b) return; b.classList.remove('hit'); void b.offsetWidth; b.classList.add('hit'); kbNoteFloat(b); }, d * 1000));
+  if (drum) {
+    for (let r = 0; r < 2; r++) KB_BEAT.forEach(([on, len]) => { if (on) { kbSynth.note(k, (i++ % 3 === 2) ? 392 : 262, t0 + t, .2); bump(t); } t += len * beat; });
+    kbSynth.note(k, 523, t0 + t, .22); bump(t);
+  } else {
+    KB_SONG.forEach(([f, len]) => { if (f) { kbSynth.note(k, f, t0 + t, .18); bump(t);
+        if (!/angklung|flute|trumpet/.test(k) && (i++ % 2 === 0)) kbSynth.note(k, f / 2, t0 + t, .07); }   // a soft lower note underneath
+      t += len * beat; });
+  }
+  if (b) { b.classList.add('playing'); kbSongT.push(setTimeout(() => b.classList.remove('playing'), (t + .6) * 1000)); }
+}
+function kbNoteFloat(b){
+  const n = document.createElement('em'); n.className = 'kb-fnote'; n.textContent = Math.random() < .5 ? '♪' : '♫';
+  n.style.left = (20 + Math.random() * 60) + '%'; n.style.setProperty('--dx', (Math.random() * 40 - 20) + 'px'); b.appendChild(n); setTimeout(() => n.remove(), 1200);
+}
+document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#kbTune')) kbSong(); });
 
 // Pre-warm voice list (Chrome/Edge load voices async)
 if (window.speechSynthesis){
@@ -2374,8 +2433,11 @@ function showCelebration(){
   document.getElementById('celebration').classList.add('show');
   audio.playFanfare();
   spawnConfetti(40);
-  // Play voice after short delay (so fanfare doesn't overlap)
-  setTimeout(() => audio.playPhrase(p), 450);
+  kbTuneReady();
+  // Play voice after short delay (so fanfare doesn't overlap), then this word's little song
+  let sang = false; const sing = () => { if (sang) return; sang = true; setTimeout(() => { if (document.getElementById('celebration').classList.contains('show')) kbSong(); }, 350); };
+  audio._afterVoice = sing; setTimeout(sing, 12000);
+  setTimeout(() => { try { Promise.resolve(audio.playPhrase(p)).then(() => { if (state.muted) sing(); }); } catch (e) { sing(); } }, 450);
 }
 
 // Rich share card: the phrase just completed + collection progress
@@ -2394,7 +2456,7 @@ function shareKata(){
 }
 
 function hideCelebration(){
-  document.getElementById('celebration').classList.remove('show');
+  document.getElementById('celebration').classList.remove('show'); kbSongT.forEach(clearTimeout); kbSongT = []; audio._afterVoice = null;
   audio.stopAll();
 }
 
@@ -2683,7 +2745,8 @@ document.addEventListener('click', () => audio.ensureCtx(), { once: true });
     synth.speak(utter(p.arabic,'ar-SA',0.82,1.1));
     var tu=utter(clean(p.title)+'.', EN?'en-US':'id-ID', 0.95, 1.15); tu.bmRaw=true;   // the Latin name, not the Arabic clip again
     synth.speak(tu);
-    synth.speak(utter(clean(meaning), EN?'en-US':'id-ID', 0.95, 1.15));
+    var mu=utter(clean(meaning), EN?'en-US':'id-ID', 0.95, 1.15); mu.onend=mu.onerror=function(){ try{ audio.spoke(); }catch(e){} };
+    synth.speak(mu);
   };
   // a short spoken cheer now and then while opening tiles
   var _praise=showPraise;
