@@ -1549,9 +1549,9 @@ html[data-bm-theme="classic"] .kb-fnote{color:#CDB8FF}
   background:linear-gradient(180deg,#FFE680,#FFC22E);box-shadow:0 8px 16px -8px rgba(180,110,0,.6),inset 0 0 0 3px #fff}
 #celebration .kb-tune span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
 #celebration .kb-tune i{font-size:26px}
-#celebration .kb-tune b{position:absolute;right:-4px;top:-6px;width:22px;height:22px;border-radius:50%;background:#7B4BE0;color:#fff;font-size:12px;line-height:22px;text-align:center;
+#celebration .kb-tune b{position:absolute;right:-6px;top:-6px;width:26px;height:26px;border-radius:50%;background:linear-gradient(160deg,#9B6CF5,#6A3FD8);color:#fff;font-size:12px;line-height:22px;text-align:center;
   box-shadow:0 0 0 2px #fff}
-#celebration .kb-tune b::before{content:'▶';font-size:9px}
+#celebration .kb-tune b svg{display:block;width:16px;height:16px;margin:5px 5px 5px 6px}
 #celebration .kb-tune b{font-size:0}
 #celebration .kb-tune.playing{box-shadow:0 0 0 4px rgba(255,213,74,.6),0 0 20px 6px rgba(255,210,63,.55),inset 0 0 0 3px #fff}
 #celebration .bm-wa{margin-top:40px!important}
@@ -2145,6 +2145,7 @@ function kbTuneReady(){
   kbLoadVoices();
   const b = document.getElementById('kbTune'); if (!b) return;
   b.querySelector('i').textContent = kbInstr[1];
+  b.querySelector('b').innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6.8v10.4a1 1 0 0 0 1.5.86l8.4-5.2a1 1 0 0 0 0-1.72l-8.4-5.2A1 1 0 0 0 9 6.8z" fill="#fff"/></svg>';
   b.querySelector('span').textContent = window.BM_LANG === 'en' ? 'Baby Mo song · ' + kbInstr[3].toLowerCase() : 'Lagu Baby Mo · ' + kbInstr[2].toLowerCase();
   b.setAttribute('aria-label', b.querySelector('span').textContent);
   b.classList.remove('playing');
@@ -2169,6 +2170,15 @@ function kbSong(){
   });
   if (b) { b.classList.add('playing'); kbSongT.push(setTimeout(() => b.classList.remove('playing'), (end + .4) * 1000)); }
 }
+/* long phrases: shrink the Arabic until it fits on one line (never below 24px; very long ones may use two lines) */
+function kbFitArabic(){
+  const el = document.getElementById('celebArabic'); if (!el || !el.offsetWidth) return;
+  el.style.fontSize = ''; el.style.whiteSpace = 'nowrap';
+  let size = parseFloat(getComputedStyle(el).fontSize) || 40; const box = el.parentElement.clientWidth - 24;
+  while (el.scrollWidth > box && size > 24) { size -= 2; el.style.setProperty('font-size', size + 'px', 'important'); }
+  el.style.whiteSpace = el.scrollWidth > box ? 'normal' : 'nowrap';
+}
+addEventListener('resize', () => { if (document.getElementById('celebration').classList.contains('show')) kbFitArabic(); });
 function kbNoteFloat(b){
   const n = document.createElement('em'); n.className = 'kb-fnote'; n.textContent = Math.random() < .5 ? '♪' : '♫';
   n.style.left = (20 + Math.random() * 60) + '%'; n.style.setProperty('--dx', (Math.random() * 40 - 20) + 'px'); b.appendChild(n); setTimeout(() => n.remove(), 1200);
@@ -2488,6 +2498,7 @@ function showCelebration(){
   renderCelebPractice(p); updateTodayBtn();
 
   document.getElementById('celebration').classList.add('show');
+  kbFitArabic(); requestAnimationFrame(kbFitArabic); setTimeout(kbFitArabic, 400);
   audio.playFanfare();
   spawnConfetti(40);
   kbTuneReady();
