@@ -15370,5 +15370,395 @@
   ],
   "ok": true,
   "file": "www/voice/lines-79039c9b.mp3"
+ },
+ {
+  "text": "Krayon ajaib",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-445117cc.mp3"
+ },
+ {
+  "text": "Pelangi",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0cca0669.mp3"
+ },
+ {
+  "text": "Emas berkilau",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-0668cc33.mp3"
+ },
+ {
+  "text": "Perak berkilau",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-df133519.mp3"
+ },
+ {
+  "text": "Merah",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-320f3294.mp3"
+ },
+ {
+  "text": "Oranye",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-4e3d4441.mp3"
+ },
+ {
+  "text": "Kuning",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-422e49a5.mp3"
+ },
+ {
+  "text": "Hijau",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-39f26599.mp3"
+ },
+ {
+  "text": "Biru",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "biru",
+   "birru"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-97e3c532.mp3"
+ },
+ {
+  "text": "Ungu",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-6832c7c0.mp3"
+ },
+ {
+  "text": "Merah muda",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-b964a6bf.mp3"
+ },
+ {
+  "text": "Cokelat",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-cc8226f0.mp3"
+ },
+ {
+  "text": "Krem",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-45ee0f51.mp3"
+ },
+ {
+  "text": "Penghapus",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-19ee3a91.mp3"
+ },
+ {
+  "text": "Ayo warnai! Ketuk gambarnya.",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-de90e9ad.mp3"
+ },
+ {
+  "text": "Wah, hampir selesai!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-46fe4098.mp3"
+ },
+ {
+  "text": "MasyaAllah, cantik sekali!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-ceeee734.mp3"
+ },
+ {
+  "text": "Sim salabim!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-50a42c56.mp3"
+ },
+ {
+  "text": "MasyaAllah, indah!",
+  "lang": "id",
+  "sec": "lines",
+  "hint": "mewarnai selesai / colouring done",
+  "heard": [],
+  "ok": false,
+  "file": "www/voice/lines-a13d43ba.mp3"
+ },
+ {
+  "text": "Magic crayon",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "magic crayon",
+   "Magic craion",
+   "Majic crayon"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-f3219dff.mp3"
+ },
+ {
+  "text": "Rainbow",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "rainbow",
+   "Rainbo",
+   "Rainbeau"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c2994faf.mp3"
+ },
+ {
+  "text": "Sparkly gold",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "sparkly gold",
+   "sparkly Gould",
+   "sparkly gauld"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-222b31c2.mp3"
+ },
+ {
+  "text": "Sparkly silver",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "sparkly silver",
+   "sparkly sylver",
+   "sparkly silverr"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-fe847d1b.mp3"
+ },
+ {
+  "text": "Red",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "red",
+   "read",
+   "Redd"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-abec0bd8.mp3"
+ },
+ {
+  "text": "Yellow",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "yellow"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-26705445.mp3"
+ },
+ {
+  "text": "Green",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "green",
+   "Greene",
+   "Gruene"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c5bc9798.mp3"
+ },
+ {
+  "text": "Blue",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "blue",
+   "Bleu",
+   "Blu"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-0544f340.mp3"
+ },
+ {
+  "text": "Purple",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "purple",
+   "purplle",
+   "purpl"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-b9b93cac.mp3"
+ },
+ {
+  "text": "Pink",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "pink",
+   "pynk",
+   "pinc"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2f88f040.mp3"
+ },
+ {
+  "text": "Brown",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "Brown",
+   "Braun",
+   "Browne"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-c900340e.mp3"
+ },
+ {
+  "text": "Eraser",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "nama krayon / crayon name",
+  "heard": [
+   "eraser"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6d483a73.mp3"
+ },
+ {
+  "text": "Let's colour! Tap the picture.",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [
+   "let's color tap the picture",
+   "let's Colour tap the picture",
+   "let's color Tapp the picture"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-6fc88e48.mp3"
+ },
+ {
+  "text": "Wow, almost done!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [
+   "wow almost done",
+   "wooow almost done",
+   "woow almost done"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-342ebcc4.mp3"
+ },
+ {
+  "text": "MashaAllah, so beautiful!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [
+   "mashallah so beautiful",
+   "Masha Allah so beautiful",
+   "mashallah so beautifull"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-2d0d242a.mp3"
+ },
+ {
+  "text": "Abracadabra!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "mewarnai / colouring",
+  "heard": [
+   "abracadabra",
+   "abrakadabra"
+  ],
+  "ok": true,
+  "file": "www/voice/lines-7dc913fa.mp3"
+ },
+ {
+  "text": "MashaAllah, beautiful!",
+  "lang": "en",
+  "sec": "lines",
+  "hint": "mewarnai selesai / colouring done",
+  "heard": [
+   "mashallah beautiful",
+   "mashallah beautifull",
+   "mashallah biutyful"
+  ],
+  "ok": false,
+  "file": "www/voice/lines-69aef6ac.mp3"
  }
 ]
