@@ -96,6 +96,14 @@
   #moColor .mc-meter em{position:absolute;top:50%;width:26px;height:26px;margin:-13px 0 0 -13px;z-index:2;background:#E1D8F5;
     clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%);transition:transform .35s cubic-bezier(.3,1.6,.5,1),background .3s}
   #moColor .mc-meter em.on{background:#FFC93C;transform:scale(1.25);filter:drop-shadow(0 0 4px #FFE070)}
+  #moColor .mc-meter em{width:30px!important;height:30px!important;margin:-15px 0 0 -15px!important;clip-path:none!important;border-radius:50%;background:#fff!important;
+    box-shadow:0 3px 6px -2px rgba(80,50,160,.35),inset 0 0 0 2px #EDE6FB;filter:none!important;transform:none;transition:box-shadow .3s,background .3s}
+  #moColor .mc-meter em::before{content:'';position:absolute;inset:4px;background:#D8CCF3;transition:background .3s;
+    clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+  #moColor .mc-meter em.on{background:#fff!important;box-shadow:0 0 0 2.5px #FFC93C,0 0 12px 3px rgba(255,201,60,.55)!important;animation:mcMsPop .6s cubic-bezier(.3,1.6,.5,1)}
+  #moColor .mc-meter em.on::before{background:linear-gradient(160deg,#FFE680,#FFB21E)}
+  @keyframes mcMsPop{0%{transform:scale(1)}40%{transform:scale(1.4) rotate(-12deg)}100%{transform:scale(1.1)}}
+  #moColor .mc-meter em.on{transform:scale(1.1)}
   #moColor .mc-meter b{width:38px!important;height:38px!important}
   #moColor .mc-paper{border-radius:30px!important;box-shadow:0 18px 34px -18px rgba(80,50,160,.5),0 0 0 8px #fff!important}
   #moColor .mc-pal{position:relative;background:rgba(255,255,255,.72);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border-radius:26px;
@@ -123,7 +131,10 @@
   html[data-bm-theme="classic"] #moColor .mc-title{color:#EDE6FF}
   html[data-bm-theme="classic"] #moColor .mc-x,html[data-bm-theme="classic"] #moColor .mc-undo{background:rgba(58,62,128,.9);color:#EDE6FF;box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.12)}
   html[data-bm-theme="classic"] #moColor .mc-track{background:#2C3070!important;box-shadow:inset 0 2px 4px rgba(0,0,0,.35),0 0 0 3px #3A3F86,0 6px 12px -6px rgba(0,0,0,.5)!important}
-  html[data-bm-theme="classic"] #moColor .mc-meter em{background:#4A4F92}
+  html[data-bm-theme="classic"] #moColor .mc-meter em{background:#2C3070!important;box-shadow:0 3px 6px -2px rgba(0,0,0,.5),inset 0 0 0 2px #444A94}
+  html[data-bm-theme="classic"] #moColor .mc-meter em::before{background:#5A60A8}
+  html[data-bm-theme="classic"] #moColor .mc-meter em.on{background:#3B3470!important}
+  html[data-bm-theme="classic"] #moColor .mc-meter em.on::before{background:linear-gradient(160deg,#FFE680,#FFB21E)}
   html[data-bm-theme="classic"] #moColor .mc-meter b{background:#2C3070;box-shadow:0 4px 10px -6px rgba(0,0,0,.6),0 0 0 1.5px rgba(255,255,255,.12)}
   html[data-bm-theme="classic"] #moColor .mc-paper{box-shadow:0 18px 34px -18px rgba(0,0,0,.7),0 0 0 8px #E9E4FF!important}
   html[data-bm-theme="classic"] #moColor .mc-pal{background:rgba(44,48,112,.72);box-shadow:0 12px 24px -16px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.1)}
@@ -522,6 +533,7 @@
       for (const m of cell) { if (covered[m]) continue; const L = ptL[m]; if (onlyL != null && (onlyL instanceof Set ? !onlyL.has(L) : L !== onlyL)) continue;
         const dx = ptX[m] - x, dy = ptY[m] - y; if (dx * dx + dy * dy < r2) { covered[m] = 1; regCov[L]++; touched.add(L); } } }
     touched.forEach(L => { if (!doneR[L] && regCov[L] >= regTot[L] * .85) finishRegion(L, false); });
+    if (touched.size) meterSoon();
   }
   function coverRegion(L, quiet) {
     if (!grid || L < 0 || !regTot[L]) return;
@@ -534,6 +546,7 @@
     for (let m = 0; m < ptL.length; m++) { if (covered[m]) continue; const i = samplePts[m] * 4;
       if (d[i] < 245 || d[i + 1] < 245 || d[i + 2] < 245) { covered[m] = 1; regCov[ptL[m]]++; touched.add(ptL[m]); } }
     touched.forEach(L => { if (!doneR[L] && regCov[L] >= regTot[L] * .85) finishRegion(L, autoRun); });
+    if (touched.size) meterSoon();
   }
   function centroid(L) { let sx = 0, sy = 0, n = 0; for (let k = start[L]; k < start[L + 1]; k += 23) { const p = order[k], y = (p / N) | 0; sx += p - y * N; sy += y; n++; } return [sx / n, sy / n]; }
   function finishRegion(L, quiet) {
@@ -555,8 +568,9 @@
       parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1.2, g: .12, life: 700 + Math.random() * 400, t: performance.now(), s: 7 + Math.random() * 9, c: HAPPY[i % HAPPY.length], star: i % 3 !== 2 }); }
   }
   function meter() {
-    const f = Math.min(1, doneArea / totArea), bar = root.querySelector('.mc-meter'), st = bar.querySelector('b');
-    bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.querySelector('b').style.filter = f > 0 ? 'grayscale(' + (.85 - .85 * f) + ')' : ''; bar.classList.toggle('full', f >= .85);
+    let a = 0; for (let L = 0; L < regTot.length; L++) if (regTot[L]) a += regions[L] * (doneR[L] ? 1 : Math.min(1, regCov[L] / (regTot[L] * .7)));
+    const f = Math.min(1, a / totArea / .85), bar = root.querySelector('.mc-meter'), st = bar.querySelector('b');
+    bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.querySelector('b').style.filter = f > 0 ? 'grayscale(' + (.85 - .85 * f) + ')' : ''; bar.classList.toggle('full', f >= .97);
     const steps = [[.25, CHEER[0]], [.5, CHEER[1]], [.75, LINES.almost]];
     bar.querySelectorAll('em').forEach((m, k) => m.classList.toggle('on', f >= steps[k][0])); // stars light up as soon as the bar passes them
     while (milestone < steps.length && f >= steps[milestone][0]) {
@@ -567,8 +581,9 @@
       setTimeout(() => { say(line); fanfare(); }, 120);
       for (let i = 0; i < 3; i++) setTimeout(() => burst(N * (.2 + Math.random() * .6), N * (.2 + Math.random() * .5), 14, 1.2), i * 160);
     }
-    if (f >= .85 && !celebrated) { celebrated = true; setTimeout(() => party(LINES.done[EN ? 1 : 0], false), 700); }
+    if (f >= .97 && !celebrated) { celebrated = true; setTimeout(() => party(LINES.done[EN ? 1 : 0], false), 700); }
   }
+  let meterT = 0; function meterSoon() { if (meterT) return; meterT = setTimeout(() => { meterT = 0; if (root && regTot) meter(); }, 90); }
   function fanfare() { [[523, 0], [659, 90], [784, 180], [1047, 300], [784, 420], [1047, 520]].forEach(([f, t]) => setTimeout(() => tone(f, .14, 'triangle', .15), t)); }
   /* a soft magical shimmer that plays while the magic crayon is moving */
   function shimmerOn() {
