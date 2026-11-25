@@ -58,10 +58,10 @@
   #moColor .mc-auto{background:linear-gradient(120deg,#B07CF0,#FF7EB6);box-shadow:0 6px 0 #8A3F9E,0 14px 24px -12px rgba(176,124,240,.6)}
   #moColor .mc-done{background:linear-gradient(120deg,#16C47F,#0A8FA0);box-shadow:0 6px 0 #0A6B60,0 14px 24px -12px rgba(10,143,160,.6)}
   #moColor .mc-btn:active{transform:translateY(4px)}
-  #moColor .mc-yay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;gap:6px;background:rgba(255,255,255,.4);pointer-events:none}
+  #moColor .mc-yay{position:absolute;inset:0;display:none;align-items:center;justify-content:flex-end;flex-direction:column;gap:6px;padding-bottom:5%;background:none;pointer-events:none}
   #moColor .mc-yay.on{display:flex}
-  #moColor .mc-yay i{font-style:normal;font-size:clamp(54px,16vw,90px);animation:mcPop .6s cubic-bezier(.3,1.6,.5,1),mcSpin 2.2s linear .6s infinite}
-  #moColor .mc-yay b{font-size:clamp(26px,8vw,44px);color:#E2489A;text-shadow:0 3px 0 #fff,0 0 18px #fff;animation:mcPop .6s cubic-bezier(.3,1.6,.5,1);text-align:center;padding:0 12px}
+  #moColor .mc-yay i{display:none;font-style:normal;font-size:clamp(54px,16vw,90px);animation:mcPop .6s cubic-bezier(.3,1.6,.5,1),mcSpin 2.2s linear .6s infinite}
+  #moColor .mc-yay b{align-self:center;background:#fff;border:3px solid #FFD54A;border-radius:999px;padding:10px 22px!important;box-shadow:0 10px 20px -10px rgba(120,60,0,.5);font-size:clamp(20px,6vw,32px);color:#E2489A;text-shadow:none;animation:mcPop .6s cubic-bezier(.3,1.6,.5,1);text-align:center;padding:0 12px}
   @keyframes mcPop{from{transform:scale(.3)}to{transform:scale(1)}}
   @keyframes mcSpin{to{transform:rotate(360deg)}}
   #moColor .mc-conf{position:absolute;top:-20px;width:12px;height:16px;border-radius:3px;pointer-events:none;animation:mcFall linear forwards}
@@ -582,6 +582,7 @@
   }
   function checkProgress(force) { if (force) setTimeout(() => party(LINES.done[EN ? 1 : 0], false), 450); }
   function party(text, closing) {
+    wand = null; shimmerOff();
     const yay = root.querySelector('.mc-yay'); yay.querySelector('b').textContent = text; yay.classList.add('on');
     say(text); chime([523, 659, 784, 1047, 1319], 110);
     const paper = root.querySelector('.mc-paper');

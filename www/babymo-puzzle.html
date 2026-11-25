@@ -802,6 +802,18 @@ html[data-bm-theme="classic"] .pz2 .fg{stroke:#6A6F98}html[data-bm-theme="classi
 html[data-bm-theme="classic"] .pz2 .fc2{fill:#C9BE7A}
 @media (prefers-reduced-motion:reduce){.pz2 .sw,.pz2-tree svg g{animation:none!important}}
 </style>
+<style id="pz-polish2">
+/* 1) revealed tiles must never show the cover's icon or shine (iOS Safari draws animated children through backface-visibility) */
+.tile-back-icon,.tile-back::before{-webkit-backface-visibility:hidden;backface-visibility:hidden}
+.tile.flipped .tile-back-icon,.tile.flipped .tile-back::before{opacity:0!important;visibility:hidden;transition:opacity .15s,visibility 0s .15s}
+.tile-back-icon{z-index:1!important}
+/* 2) reward card: Mo stands IN the grass (feet a little into the hill, soft shadow), ribbon clear of the sticker row */
+.intro-card .mo-stage::after{height:30px!important;bottom:-2px!important}
+.intro-card .mo-stage::before{display:block!important;content:''!important;position:absolute;left:50%;bottom:12px;width:96px!important;height:14px;border-radius:50%;transform:translateX(-50%);
+  background:radial-gradient(closest-side,rgba(40,90,30,.35),rgba(40,90,30,0))!important;z-index:1}
+.intro-card .mo-reveal-img{margin-bottom:-2px!important;z-index:2!important}
+#celebOverlay #poseChip:not([hidden]){margin:12px auto 24px!important}
+</style>
 </head>
 <body>
 
