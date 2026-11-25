@@ -348,7 +348,12 @@
         for (let k = start[L]; k < start[L + 1]; k++) {
           const p = order[k], i = p * 4, r = d[i], gg = d[i + 1], b = d[i + 2];
           let c;
-          if (Math.min(r, gg, b) > 236) c = [255, 255, 255];                       // white stays white (margin, clouds)
+          if (Math.min(r, gg, b) > 236) {
+            // white stays white (clouds, highlights), except the coloured version's empty margin at the picture's edge:
+            // there a coloured shape (sky, grass) takes its own colour, so magic reaches the edge just like a crayon does
+            const x = p % N, y = (p / N) | 0, band = N * .14, wC = C[0][0] > 236 && C[0][1] > 236 && C[0][2] > 236;
+            c = !wC && (x < band || x >= N - band || y < band || y >= N - band) ? C[0] : [255, 255, 255];
+          }
           else if (Math.max(r, gg, b) < 75) c = C[0];                              // the coloured version's own outline → the shape's colour
           else { let bd = 1e9, bc = C[0]; for (const q of C) { const dd = (q[0] - r) ** 2 + (q[1] - gg) ** 2 + (q[2] - b) ** 2; if (dd < bd) { bd = dd; bc = q; } }
             c = bd < 55 * 55 ? [r, gg, b] : bc; }                                  // its real shade, or the shape's colour where the two pictures differ
