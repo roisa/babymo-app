@@ -1565,6 +1565,9 @@ html[data-bm-theme="classic"] #celebration .kb-tune{background:linear-gradient(1
 /* result: number badge on the right (away from the lantern) */
 #celebration .celeb-num{left:auto!important;right:14px!important}
 /* the word's picture floats in the open sky above the lantern, not over the mosque */
+/* Arabic marks below the letters (kasra, etc.) reach past the line box: give them room so they never touch the meaning */
+#celebration .celeb-arabic{line-height:1.75!important;padding:.05em 0 .3em!important}
+#celebration .celeb-meaning{margin-top:10px!important;position:relative;z-index:1}
 #celebration .theme-emoji.pos-tr{top:9%!important;right:auto!important;left:7%!important;font-size:40px!important}
 </style>
 </head>
