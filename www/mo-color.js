@@ -439,14 +439,22 @@
     return L;
   }
   const BR = N * .05;                              // brush size
+  /* a crayon colours every shape the finger actually goes through (like a real crayon), but never spills into a
+     shape the brush only grazes, so the lines stay tidy */
+  function ownMask(L) { const m = mk(); cx(m).drawImage(regionMask(L), 0, 0); return m; }
+  function reach(x, y) {
+    const L = labels[(Math.max(0, Math.min(N - 1, y | 0))) * N + Math.max(0, Math.min(N - 1, x | 0))];
+    if (L < 0 || stroke.regs.has(L)) return;
+    stroke.regs.add(L); cx(stroke.mask).drawImage(regionMask(L), 0, 0);
+  }
   function onDown(e) {
     if (!labels || autoRun || (stroke && stroke.spreading)) return;
     e.preventDefault(); try { cvs.setPointerCapture(e.pointerId); } catch (er) {}
     const magic = cur.kind === 'magic', [x, y] = toCanvas(e), L = regionAt(x, y); if (L < 0 && !magic) return;   // the magic brush can start anywhere
     snapshot(); makeSource(cur); cx(strokeC).clearRect(0, 0, N, N);
-    stroke = { L, magic, mask: magic ? null : regionMask(L), x, y, x0: x, y0: y, t0: performance.now(), moved: 0, lastNote: 0, lastSwish: 0, glitter: cur.kind === 'glitter' };
+    stroke = { L, magic, mask: magic ? null : ownMask(L), regs: new Set([L]), x, y, x0: x, y0: y, t0: performance.now(), moved: 0, lastNote: 0, lastSwish: 0, glitter: cur.kind === 'glitter' };
     dab(x, y, BR); swish(.16); draw();
-    if (cur.kind !== 'erase') cover(x, y, BR, magic ? null : L);
+    if (cur.kind !== 'erase') cover(x, y, BR, magic ? null : stroke.regs);
     if (magic) { shimmerOn(); wand = { x, y }; chime([1568, 2093], 50); runFx(); }
     if (navigator.vibrate) try { navigator.vibrate(8); } catch (er) {}
   }
@@ -455,7 +463,7 @@
     const [x, y] = toCanvas(e), dx = x - stroke.x, dy = y - stroke.y, dist = Math.hypot(dx, dy);
     if (dist < 2) return;
     const n = Math.ceil(dist / (BR * .3));
-    for (let i = 1; i <= n; i++) { const px = stroke.x + dx * i / n, py = stroke.y + dy * i / n; dab(px, py, BR * (.92 + Math.random() * .16)); if (cur.kind !== 'erase') cover(px, py, BR, stroke.magic ? null : stroke.L); }
+    for (let i = 1; i <= n; i++) { const px = stroke.x + dx * i / n, py = stroke.y + dy * i / n; if (stroke.mask) reach(px, py); dab(px, py, BR * (.92 + Math.random() * .16)); if (cur.kind !== 'erase') cover(px, py, BR, stroke.magic ? null : stroke.regs); }
     if (stroke.magic) { wand = { x, y }; trail(x, y); }
     stroke.x = x; stroke.y = y; stroke.moved += dist;
     const now = performance.now();
@@ -511,7 +519,7 @@
     if (!grid) return; const touched = new Set(), rr = r * .85, r2 = rr * rr;
     for (let gx = (x - rr) >> 5; gx <= (x + rr) >> 5; gx++) for (let gy = (y - rr) >> 5; gy <= (y + rr) >> 5; gy++) {
       const cell = grid.get(gx + ',' + gy); if (!cell) continue;
-      for (const m of cell) { if (covered[m]) continue; const L = ptL[m]; if (onlyL != null && L !== onlyL) continue;
+      for (const m of cell) { if (covered[m]) continue; const L = ptL[m]; if (onlyL != null && (onlyL instanceof Set ? !onlyL.has(L) : L !== onlyL)) continue;
         const dx = ptX[m] - x, dy = ptY[m] - y; if (dx * dx + dy * dy < r2) { covered[m] = 1; regCov[L]++; touched.add(L); } } }
     touched.forEach(L => { if (!doneR[L] && regCov[L] >= regTot[L] * .85) finishRegion(L, false); });
   }
