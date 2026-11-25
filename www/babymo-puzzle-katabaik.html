@@ -1497,7 +1497,12 @@ html:not([data-bm-theme="dark"]):not([data-bm-theme="classic"]) #celebPractice{b
 .kb-instr.play{animation:kbInstrPlay .45s cubic-bezier(.3,1.6,.5,1)}
 @keyframes kbInstrPlay{40%{transform:translateX(-50%) scale(1.15) rotate(-4deg)}}
 html[data-bm-theme="classic"] .kb-instr{background:#2C3366;color:#EDE6FF;box-shadow:0 6px 14px -8px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.12)}
-@media (prefers-reduced-motion:reduce){.kb-instr.play,.kb-mo.hop{animation:none}}
+/* the instrument chip now sits just under the word's name */
+.title-wrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.kb-instr{position:relative!important;left:auto!important;top:auto!important;transform:none!important;padding:3px 11px 3px 8px!important;font-size:12.5px!important}
+.kb-instr.play{animation:kbInstrPlay2 .45s cubic-bezier(.3,1.6,.5,1)!important}
+@keyframes kbInstrPlay2{40%{transform:scale(1.15) rotate(-4deg)}}
+@media (prefers-reduced-motion:reduce){.kb-instr.play,.kb-mo.hop{animation:none!important}}
 </style>
 </head>
 <body>
@@ -1547,6 +1552,7 @@ html[data-bm-theme="classic"] .kb-instr{background:#2C3366;color:#EDE6FF;box-sha
   <!-- Title (per-phrase contextual prompt) -->
   <div class="title-wrap">
     <span class="eyebrow" id="promptEyebrow">Kalimat Thayyibah</span>
+    <div class="kb-instr" id="kbInstr" aria-hidden="true"></div>
   </div>
 
   <!-- Baby Mo making du'a + a hint bubble (the phrase's theme picture) -->
@@ -1573,7 +1579,6 @@ html[data-bm-theme="classic"] .kb-instr{background:#2C3366;color:#EDE6FF;box-sha
   <!-- Puzzle -->
   <div class="puzzle-stage">
     <div class="puzzle-frame" id="puzzleFrame">
-      <div class="kb-instr" id="kbInstr" aria-hidden="true"></div>
       <div class="puzzle-grid" id="puzzleGrid"></div>
       <div class="coach-mark" id="coachMark">Ketuk!</div>
       <div class="praise-toast" id="praiseToast"></div>
