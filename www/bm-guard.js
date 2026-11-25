@@ -22,12 +22,12 @@
   function en() { try { return (window.BM_LANG || LS.getItem("bm_lang")) === "en"; } catch (e) { return false; } }
   function T(id, e) { return en() ? e : id; }
   function today() { var d = new Date(); return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
-  function settings() { var s = get("bm_guard", {}); return { timer: [0, 10, 20, 30].indexOf(+s.timer) >= 0 ? +s.timer : 0, pray: s.pray !== false }; }
+  function settings() { var s = get("bm_guard", {}); return { timer: [0, 10, 20, 30].indexOf(+s.timer) >= 0 ? +s.timer : 0, daily: [0, 60, 120].indexOf(+s.daily) >= 0 ? +s.daily : 0, pray: s.pray !== false }; }
   function saveSettings(s) { put("bm_guard", s); }
 
   var PR = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
   var PNAME = { Fajr: ["Subuh", "Fajr"], Dhuhr: ["Dzuhur", "Dhuhr"], Asr: ["Ashar", "Asr"], Maghrib: ["Maghrib", "Maghrib"], Isha: ["Isya", "Isha"] };
-  var WAIT = 5 * 60 * 1000, WINDOW = 40, BREAK = 60 * 60 * 1000;
+  var WAIT = 5 * 60 * 1000, WINDOW = 40, BREAK = 30 * 60 * 1000;
   var POSE_PRAY = "/mo-pray-assets/mo-takbir-mat.webp", POSE_BYE = "/baby-mo-poses/baby-mo-ok.webp";
 
   /* ── look ── */
@@ -56,6 +56,17 @@
       ".bmg-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:60px;border:0;border-radius:22px;cursor:pointer;font:700 19px/1 'Fredoka','Nunito',sans-serif;color:#fff;" +
       "background:linear-gradient(180deg,#3FCF85,#1E9E5E);box-shadow:0 6px 0 #17804B,0 14px 22px -12px rgba(20,120,70,.6);-webkit-tap-highlight-color:transparent}" +
       ".bmg-btn:active{transform:translateY(3px);box-shadow:0 3px 0 #17804B}" +
+      /* the main button matches the games' "Again!" button: green→teal→blue pill with a soft top gloss and a passing shine */
+      ".bmg-btn.main{position:relative;overflow:hidden;isolation:isolate;border-radius:999px;min-height:58px;border:1px solid rgba(255,255,255,.22);font:800 18px/1.15 'Nunito','Fredoka',sans-serif;" +
+      "background:linear-gradient(120deg,#16B46A 0%,#0A9C8C 52%,#0A84B8 100%);text-shadow:0 1px 1px rgba(0,70,45,.22);" +
+      "box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(0,60,70,.18),0 10px 22px -12px rgba(10,143,160,.55)}" +
+      ".bmg-btn.main::before{content:'';position:absolute;left:3%;right:3%;top:1px;height:50%;border-radius:999px 999px 40% 40%;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.2),rgba(255,255,255,0))}" +
+      ".bmg-btn.main::after{content:'';position:absolute;top:-20%;bottom:-20%;left:-40%;width:28%;z-index:-1;pointer-events:none;transform:skewX(-20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.22),transparent);animation:bmgShine 7s ease-in-out 1.5s infinite}" +
+      "@keyframes bmgShine{0%,62%{left:-40%}82%,100%{left:125%}}" +
+      ".bmg-btn.main:active{transform:scale(.97);box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 14px -10px rgba(10,143,160,.5)}" +
+      ".bmg-btn.main[disabled]{background:linear-gradient(120deg,#CFE3D8 0%,#C6DEDA 52%,#C3D8E2 100%);color:#F4FAF8;text-shadow:none;box-shadow:inset 0 1px 0 rgba(255,255,255,.5)}" +
+      ".bmg-btn.main[disabled]::after{display:none}" +
+      "html[data-bm-theme=classic] .bmg-btn.main[disabled]{background:linear-gradient(120deg,#46507F,#404A7A 52%,#3C4776);color:#8F96C6}" +
       ".bmg-btn[disabled]{background:linear-gradient(180deg,#D8E6DD,#C3D6CA);box-shadow:0 6px 0 #AFC4B7;color:#F4FAF6;cursor:default}" +
       ".bmg-grown{margin-top:14px;border:0;background:none;color:#8A80A8;font:600 14px 'Fredoka','Nunito',sans-serif;text-decoration:underline;cursor:pointer;padding:6px 10px}" +
       ".bmg-row{display:flex;gap:10px;margin-top:4px}.bmg-row .bmg-btn{flex:1;font-size:17px;min-height:54px}" +
@@ -67,7 +78,7 @@
       "html[data-bm-theme=classic] .bmg-title{color:#F1EBFF}html[data-bm-theme=classic] .bmg-text{color:#CFC7EE}html[data-bm-theme=classic] .bmg-ar{color:#6FE89B}" +
       "html[data-bm-theme=classic] .bmg-wait{background:rgba(111,232,155,.12);color:#8EF0B2}html[data-bm-theme=classic] .bmg-grown{color:#A9A2CC}" +
       "html[data-bm-theme=classic] .bmg-btn[disabled]{background:linear-gradient(180deg,#4A5288,#3E4578);box-shadow:0 6px 0 #2C3264;color:#8F96C6}" +
-      "@media (prefers-reduced-motion:reduce){.bmg,.bmg-card,.bmg-mo,.bmg-toast{animation:none}}";
+      "@media (prefers-reduced-motion:reduce){.bmg,.bmg-card,.bmg-mo,.bmg-toast,.bmg-btn.main::after{animation:none}}";
     document.head.appendChild(st);
   }
 
@@ -90,34 +101,52 @@
     if (B && B.parentGate) B.parentGate(fn, null, true, ["Jawab dulu untuk melanjutkan.", "Answer to continue."]); else if (confirm(T("Untuk orang tua: lanjutkan?", "For grown-ups: continue?"))) fn();
   }
 
-  /* ── play time ── */
-  var play = get("bm_play", { used: 0, day: today(), lockAt: 0 }), last = Date.now(), warned = false;
+  /* ── play time: a session timer (break after 10/20/30 min) and a daily total (60/120 min) ── */
+  function fresh0() { return { used: 0, dayUsed: 0, day: today(), lockAt: 0 }; }
+  var play = get("bm_play", fresh0()), last = Date.now(), warned = "";
+  if (play.dayUsed == null) play.dayUsed = play.used || 0;
   function savePlay() { put("bm_play", play); }
   function limitMs() { return settings().timer * 60000; }
+  function dailyMs() { return settings().daily * 60000; }
+  function grownUp(kind, title, buttons) {
+    gate(function () {
+      var g = show(kind + "-parent",
+        '<span class="bmg-pill amber">' + T("Untuk orang tua", "For grown-ups") + "</span>" +
+        '<h2 class="bmg-title">' + title + "</h2>" + '<div class="bmg-row">' + buttons + "</div>" +
+        '<button class="bmg-grown" data-a="keep" type="button">' + T("Tetap istirahat", "Keep the break") + "</button>", POSE_BYE);
+      g.querySelectorAll("[data-a]").forEach(function (b) {
+        b.onclick = function () {
+          var a = b.getAttribute("data-a"), d = dailyMs();
+          if (a === "s10") { play.used = Math.max(0, limitMs() - 10 * 60000); play.lockAt = 0; }
+          else if (a === "reset") { play.used = 0; play.lockAt = 0; }
+          else if (a === "d15") { play.dayUsed = Math.max(0, d - 15 * 60000); play.used = 0; play.lockAt = 0; }
+          savePlay(); close(); warned = ""; tick();
+        };
+      });
+    });
+  }
   function timeUp() {
     var c = show("time",
-      '<span class="bmg-pill amber">' + T("Waktu main habis", "Play time is over") + "</span>" +
-      '<h2 class="bmg-title">' + T("Hore, main hari ini <b>seru!</b>", "What a <b>fun</b> play today!") + "</h2>" +
-      '<p class="bmg-text">' + T("Sekarang waktunya istirahat. Yuk istirahatkan mata, minum air, dan main di luar sebentar. Sampai jumpa lagi!",
-                                 "Now it's time for a break. Let's rest our eyes, drink some water and play outside for a bit. See you again!") + "</p>" +
+      '<span class="bmg-pill amber">' + T("Waktunya istirahat", "Break time") + "</span>" +
+      '<h2 class="bmg-title">' + T("Hore, mainnya <b>seru!</b>", "What a <b>fun</b> play!") + "</h2>" +
+      '<p class="bmg-text">' + T("Sekarang istirahat dulu ya. Istirahatkan mata, minum air, dan main di luar sebentar. Mo tunggu nanti!",
+                                 "Now let's take a break. Rest your eyes, drink some water and play outside for a bit. Mo will see you later!") + "</p>" +
       '<button class="bmg-grown" type="button">' + T("Untuk orang tua", "For grown-ups") + "</button>", POSE_BYE);
     c.querySelector(".bmg-grown").onclick = function () {
-      gate(function () {
-        var g = show("time-parent",
-          '<span class="bmg-pill amber">' + T("Untuk orang tua", "For grown-ups") + "</span>" +
-          '<h2 class="bmg-title">' + T("Tambah waktu main?", "More play time?") + "</h2>" +
-          '<div class="bmg-row"><button class="bmg-btn soft" data-a="10" type="button">+10 ' + T("menit", "min") + '</button>' +
-          '<button class="bmg-btn" data-a="reset" type="button">' + T("Mulai lagi", "Start over") + "</button></div>" +
-          '<button class="bmg-grown" data-a="keep" type="button">' + T("Tetap istirahat", "Keep the break") + "</button>", POSE_BYE);
-        g.querySelectorAll("[data-a]").forEach(function (b) {
-          b.onclick = function () {
-            var a = b.getAttribute("data-a");
-            if (a === "10") { play.used = Math.max(0, limitMs() - 10 * 60000); play.lockAt = 0; }
-            else if (a === "reset") { play.used = 0; play.lockAt = 0; }
-            savePlay(); close(); warned = false; if (a === "keep") tick();
-          };
-        });
-      });
+      grownUp("time", T("Tambah waktu main?", "More play time?"),
+        '<button class="bmg-btn soft" data-a="s10" type="button">+10 ' + T("menit", "min") + '</button><button class="bmg-btn" data-a="reset" type="button">' + T("Mulai lagi", "Start over") + "</button>");
+    };
+  }
+  function dayDone() {
+    var c = show("time-day",
+      '<span class="bmg-pill amber">' + T("Waktu main hari ini selesai", "That's all for today") + "</span>" +
+      '<h2 class="bmg-title">' + T("Sampai jumpa <b>besok!</b>", "See you <b>tomorrow!</b>") + "</h2>" +
+      '<p class="bmg-text">' + T("Hari ini kamu sudah banyak main dan belajar bareng Mo. Sekarang waktunya main dengan Ayah, Bunda dan teman-teman. Besok kita main lagi ya!",
+                                 "You played and learned a lot with Mo today. Now it's time to play with Mum, Dad and friends. Let's play again tomorrow!") + "</p>" +
+      '<button class="bmg-grown" type="button">' + T("Untuk orang tua", "For grown-ups") + "</button>", POSE_BYE);
+    c.querySelector(".bmg-grown").onclick = function () {
+      grownUp("time-day", T("Tambah waktu hari ini?", "More time today?"),
+        '<button class="bmg-btn" data-a="d15" type="button">+15 ' + T("menit", "min") + "</button>");
     };
   }
   function toast(text) {
@@ -126,18 +155,23 @@
     document.body.appendChild(t); setTimeout(function () { t.remove(); }, 5000);
   }
   function tickPlay(now) {
-    var lim = limitMs();
-    if (play.day !== today()) { play = { used: 0, day: today(), lockAt: 0 }; savePlay(); }
-    var fresh = get("bm_play", play); if (fresh && fresh.day === play.day) play = fresh;   // other tabs / pages
-    if (!lim) { if (cardKind.indexOf("time") === 0) close(); return; }
-    if (play.lockAt) {
+    var lim = limitMs(), dl = dailyMs();
+    if (play.day !== today()) { play = fresh0(); savePlay(); if (cardKind.indexOf("time") === 0) close(); }
+    var f = get("bm_play", play); if (f && f.day === play.day) { play = f; if (play.dayUsed == null) play.dayUsed = play.used || 0; }   // other pages
+    if (!lim && !dl) { if (cardKind.indexOf("time") === 0) close(); return; }
+    if (dl && play.dayUsed >= dl) { if (cardKind.indexOf("time-day") !== 0) dayDone(); return; }       // the day is done
+    if (cardKind.indexOf("time-day") === 0) close();
+    if (lim && play.lockAt) {
       if (now - play.lockAt >= BREAK) { play.used = 0; play.lockAt = 0; savePlay(); if (cardKind.indexOf("time") === 0) close(); }
       else if (!card) timeUp();
       return;
     }
-    if (!document.hidden) { play.used += Math.min(2000, Math.max(0, now - last)); savePlay(); }
-    if (!warned && lim - play.used <= 60000 && lim - play.used > 0) { warned = true; toast(T("1 menit lagi, ya!", "1 more minute!")); }
-    if (play.used >= lim) { play.lockAt = now; savePlay(); if (!card) timeUp(); }
+    if (!lim && play.lockAt) { play.lockAt = 0; savePlay(); if (cardKind.indexOf("time") === 0) close(); }
+    if (!document.hidden) { var dt = Math.min(2000, Math.max(0, now - last)); play.used += dt; play.dayUsed += dt; savePlay(); }
+    var left = Math.min(lim ? lim - play.used : Infinity, dl ? dl - play.dayUsed : Infinity);
+    if (left <= 60000 && left > 0 && warned !== play.day + (play.lockAt || "") + Math.round((lim ? play.used : play.dayUsed) / 120000)) { warned = play.day + (play.lockAt || "") + Math.round((lim ? play.used : play.dayUsed) / 120000); toast(T("1 menit lagi, ya!", "1 more minute!")); }
+    if (dl && play.dayUsed >= dl) { savePlay(); dayDone(); return; }
+    if (lim && play.used >= lim) { play.lockAt = now; savePlay(); if (!card) timeUp(); }
   }
 
   /* ── prayer ── */
@@ -174,7 +208,7 @@
                                  "Let's stop for a moment and pray " + nm + " first, at the masjid or at home. Mo will wait for you here!") + "</p>" +
       '<div class="bmg-wait"><svg class="bmg-ring" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-opacity=".2" stroke-width="3"/>' +
       '<circle class="bmg-arc" cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-dasharray="56.5" transform="rotate(-90 12 12)"/></svg><span class="bmg-left"></span></div>' +
-      '<button class="bmg-btn" type="button" disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span></span></button>' +
+      '<button class="bmg-btn main" type="button" disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span></span></button>' +
       '<button class="bmg-grown" type="button">' + T("Untuk orang tua", "For grown-ups") + "</button>", POSE_PRAY);
     c.querySelector(".bmg-btn span").textContent = T("Aku sudah sholat " + nm, "I have prayed " + nm);
     c.querySelector(".bmg-btn").onclick = function () { markDone(k); close(); };
@@ -206,8 +240,9 @@
 
   window.BMGuard = {
     settings: settings,
-    set: function (patch) { var s = settings(); for (var k in patch) s[k] = patch[k]; saveSettings(s); if ("timer" in patch) { play = { used: 0, day: today(), lockAt: 0 }; savePlay(); warned = false; close(); } tick(); },
+    set: function (patch) { var s = settings(); for (var k in patch) s[k] = patch[k]; saveSettings(s); if ("timer" in patch) { play.used = 0; play.lockAt = 0; savePlay(); } warned = ""; if ("timer" in patch || "daily" in patch) close(); tick(); },
     playLeft: function () { var lim = limitMs(); return lim ? Math.max(0, lim - play.used) : null; },
+    dayLeft: function () { var d = dailyMs(); return d ? Math.max(0, d - (play.dayUsed || 0)) : null; },
     hasPlace: function () { var l = get("mo_cached_loc", null); return !!(l && l.lat != null); },
     place: function () { var c = get("mo_manual_city", null), l = get("mo_cached_loc", null); return (c && c.n) || (l && l.near) || ""; },
     _due: dueNow, _gate: gate
