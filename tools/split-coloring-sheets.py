@@ -25,6 +25,10 @@ def gutter(dark, axis, lo, hi):
 
 def strip_frame(a):
     """crop just inside a rounded-rectangle frame, if the panel has one"""
+    y0, y1, x0, x1 = frame_box(a); return a[y0:y1, x0:x1]
+
+def frame_box(a):
+    """(y0, y1, x0, x1) just inside the panel's frame (the whole panel when it has none)"""
     d = a < 128; h, w = d.shape
     def inner(prof, n, rev):
         idx = range(n - 1, -1, -1) if rev else range(n)
@@ -36,9 +40,9 @@ def strip_frame(a):
         return None
     cols, rows = d.mean(0), d.mean(1)
     l, r, t, b = inner(cols, w, False), inner(cols, w, True), inner(rows, h, False), inner(rows, h, True)
-    if None in (l, r, t, b): return a
+    if None in (l, r, t, b): return 0, h, 0, w
     m = max(8, int(min(h, w) * .02))         # step past the frame's rounded corners
-    return a[t + m:b - m + 1, l + m:r - m + 1]
+    return t + m, b - m + 1, l + m, r - m + 1
 
 out = sys.argv[1]; os.makedirs(out, exist_ok=True)
 args = sys.argv[2:]
