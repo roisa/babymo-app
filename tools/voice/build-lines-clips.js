@@ -150,6 +150,11 @@ const PAGES = {
     g: 'Memory Match', lits: [],
     fn: (M) => JOY_WORDS.map(w => [w, M, 'pujian setelah cocok / praise after a match'])
   },
+  // Forehand Beat: the grade word Mo says after a forehand (fhSay → id-ID / en-US by the game's language)
+  'baby-mo-forehand-beat': {
+    g: 'Forehand Beat', lits: [],
+    fn: (M) => (M === 'en' ? ['Perfect!', 'Great!', 'Nice!', 'Good!'] : FH_TIERS.map(t => t.say)).map(w => [w, M, 'nilai pukulan forehand / forehand grade'])
+  },
   'index': {
     g: 'Beranda', lits: ['GREETINGS'],
     fn: (M, X) => {
