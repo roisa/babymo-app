@@ -2185,6 +2185,31 @@ html[data-theme="dark"] #prayerHub .ph-cell.current,html[data-theme="dark"] #pra
         </div>
       </div>
 
+
+      <!-- Play time & prayer (parents only: every change goes through the parental gate) -->
+      <div class="list-group-title" data-i18n="guard_group">Waktu Main &amp; Sholat</div>
+      <style>#guardGroup .lrow-sub{white-space:normal;overflow:visible;text-overflow:clip}#guardGroup .lrow-body{min-width:150px}</style>
+      <div class="list-group" id="guardGroup">
+        <div class="lrow" style="flex-wrap:wrap;gap:10px">
+          <div class="lrow-icon has-art"><svg class="lrow-art" viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="22" r="13" fill="#FFF3D6" stroke="#F08A1C" stroke-width="3"/><path d="M20 14v8l5 3" fill="none" stroke="#3A2A8C" stroke-width="3" stroke-linecap="round"/><path d="M15 5h10M20 5v4" stroke="#F08A1C" stroke-width="3" stroke-linecap="round"/></svg></div>
+          <div class="lrow-body"><div class="lrow-title" data-i18n="guard_timer">Batas waktu main</div><div class="lrow-sub" id="guardTimerSub">—</div></div>
+          <div class="lang-toggle" id="guardTimer">
+            <button class="lang-opt" data-t="0" type="button" data-i18n="guard_off">Mati</button>
+            <button class="lang-opt" data-t="10" type="button">10</button>
+            <button class="lang-opt" data-t="20" type="button">20</button>
+            <button class="lang-opt" data-t="30" type="button">30</button>
+          </div>
+        </div>
+        <div class="lrow" style="flex-wrap:wrap;gap:10px">
+          <div class="lrow-icon has-art"><img class="lrow-art" src="./mo-pray-assets/mo-takbir.webp" alt="" draggable="false" style="object-fit:contain"></div>
+          <div class="lrow-body"><div class="lrow-title" data-i18n="guard_pray">Pengingat waktu sholat</div><div class="lrow-sub" id="guardPraySub">—</div></div>
+          <div class="lang-toggle" id="guardPray">
+            <button class="lang-opt" data-p="on" type="button" data-i18n="sound_on">Nyala</button>
+            <button class="lang-opt" data-p="off" type="button" data-i18n="sound_off">Mati</button>
+          </div>
+        </div>
+      </div>
+
       <div class="list-group-title" data-i18n="name_group">Si Kecil</div>
       <div class="list-group">
         <a class="lrow" href="#" onclick="event.preventDefault();openNameSheet()">
@@ -2332,7 +2357,7 @@ const I18N={
   doa_dua_s:{id:'Cocokkan doa dengan artinya',en:'Match duas with their meanings'},
   doa_dream_s:{id:'Doa & rutinitas tidur',en:'Dua & bedtime routine'},
   foot_doa:{id:'Ya Tuhanku, tambahkanlah ilmuku',en:'O my Lord, increase me in knowledge'},
-  about_title:{id:'Orang Tua',en:'Parents'},disp_group:{id:'Tampilan & Suara',en:'Display & Sound'},theme_row:{id:'Tema',en:'Theme'},theme_auto:{id:'Otomatis',en:'Auto'},theme_light:{id:'☀️ Terang',en:'☀️ Light'},theme_dark:{id:'🌙 Gelap',en:'🌙 Dark'},sound_row:{id:'Suara & musik',en:'Sound & music'},sound_sub:{id:'Efek suara dan bacaan',en:'Sound effects and read-aloud'},sound_on:{id:'Nyala',en:'On'},sound_off:{id:'Mati',en:'Off'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
+  about_title:{id:'Orang Tua',en:'Parents'},guard_group:{id:'Waktu Main & Sholat',en:'Play Time & Prayer'},guard_timer:{id:'Batas waktu main',en:'Play time limit'},guard_pray:{id:'Pengingat waktu sholat',en:'Prayer time reminder'},guard_off:{id:'Mati',en:'Off'},disp_group:{id:'Tampilan & Suara',en:'Display & Sound'},theme_row:{id:'Tema',en:'Theme'},theme_auto:{id:'Otomatis',en:'Auto'},theme_light:{id:'☀️ Terang',en:'☀️ Light'},theme_dark:{id:'🌙 Gelap',en:'🌙 Dark'},sound_row:{id:'Suara & musik',en:'Sound & music'},sound_sub:{id:'Efek suara dan bacaan',en:'Sound effects and read-aloud'},sound_on:{id:'Nyala',en:'On'},sound_off:{id:'Mati',en:'Off'},lang_group:{id:'Bahasa / Language',en:'Language / Bahasa'},
   about_app:{id:'Aplikasi',en:'App'},about_ver:{id:'Versi',en:'Version'},about_ver_web:{id:'Versi web · play.babymo.id',en:'Web version · play.babymo.id'},
   about_total:{id:'Total Game',en:'Total Games'},about_total_s:{id:'19 game siap dimainkan',en:'19 games ready to play'},
   cat_tenis_t:{id:'Akademi Tenis Kak Adam',en:"Kak Adam's Tennis Academy"},cat_tenis_s:{id:'Belajar tenis dari bola merah sampai bertanding',en:'Learn tennis from the red ball to your first match'},
@@ -2428,6 +2453,7 @@ function applyLang(lang){
   try{renderName()}catch(e){}
   try{window.bmPrayerRender&&bmPrayerRender()}catch(e){}
   try{window.pdRender&&pdRender()}catch(e){}
+  try{guardRender()}catch(e){}
   const lb=document.getElementById('langBtn'); if(lb){ lb.textContent=lang==='en'?'EN':'ID'; }
   document.querySelectorAll('#langToggle .lang-opt').forEach(b=>{
     b.classList.toggle('active',b.dataset.lang===lang);
@@ -2458,6 +2484,26 @@ function toggleLang(){
   showToast(next==='en'?'🇬🇧 English — games too':'🇮🇩 Bahasa Indonesia — game juga');
 }
 window.pickLang=pickLang;window.setLang=setLang;window.toggleLang=toggleLang;
+/* Play time & prayer settings (bm-guard.js); a grown-up answers the parental gate before any change */
+function guardRender(){
+  const G=window.BMGuard; if(!G) return; const s=G.settings(), en=curLang==='en';
+  document.querySelectorAll('#guardTimer .lang-opt').forEach(b=>b.classList.toggle('active',+b.dataset.t===s.timer));
+  document.querySelectorAll('#guardPray .lang-opt').forEach(b=>b.classList.toggle('active',(b.dataset.p==='on')===s.pray));
+  const ts=document.getElementById('guardTimerSub');
+  if(ts){ if(!s.timer) ts.textContent=en?'Off · play as long as you like':'Mati · main tanpa batas';
+    else { const left=Math.ceil((G.playLeft()||0)/60000); ts.textContent=en?(s.timer+' min a day · '+left+' min left today'):(s.timer+' menit sehari · sisa '+left+' menit hari ini'); } }
+  const ps=document.getElementById('guardPraySub');
+  if(ps){ if(!s.pray) ps.textContent=en?'Off':'Mati';
+    else if(!G.hasPlace()) ps.textContent=en?'Set your city in the Prayer tab first':'Atur kota dulu di tab Sholat';
+    else { const pl=G.place(); ps.textContent=(en?'Pops up at each prayer time':'Muncul di setiap waktu sholat')+(pl?' · '+pl:''); } }
+}
+function guardAsk(fn){ const B=window.BabyMo; if(B&&B.parentGate) B.parentGate(()=>{fn();guardRender();},null,true,['Jawab dulu untuk mengubah pengaturan.','Answer to change the settings.']); else {fn();guardRender();} }
+document.addEventListener('click',e=>{
+  const t=e.target.closest('#guardTimer .lang-opt'); if(t&&window.BMGuard){ const v=+t.dataset.t; if(v!==BMGuard.settings().timer) guardAsk(()=>BMGuard.set({timer:v})); return; }
+  const q=e.target.closest('#guardPray .lang-opt'); if(q&&window.BMGuard){ const v=q.dataset.p==='on'; if(v!==BMGuard.settings().pray) guardAsk(()=>BMGuard.set({pray:v})); }
+});
+setInterval(()=>{ const pane=document.getElementById('pane-about'); if(pane&&pane.offsetParent) guardRender(); },1000);
+
 if(curLang){document.getElementById('langPick').classList.add('hide');applyLang(curLang);}
 
 (function(){

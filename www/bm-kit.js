@@ -1839,7 +1839,7 @@
     setTimeout(function () { g.bg.remove(); g.sheet.remove(); }, 380);
     if (cb) cb();
   }
-  function parentGate(onPass, onCancel, always) {
+  function parentGate(onPass, onCancel, always, sub) {
     if (typeof onPass !== "function") onPass = function () {};
     if ((!isApp() && !always) || gateOpen) { onPass(); return; }
     try {
@@ -1852,7 +1852,7 @@
       sh.innerHTML = '<div class="bm-gate-grab"></div><div class="bm-gate-ic" aria-hidden="true">🔒</div>' +
         '<div class="bm-gate-k">' + (en ? "For grown-ups" : "Khusus orang tua") + "</div>" +
         '<h2 id="bmGateQ">' + (en ? "Ask a grown-up: what is " : "Tanya Ayah/Bunda: berapa ") + Q.q + "?</h2>" +
-        '<p class="bm-gate-sub">' + (en ? "Answer to open the link or share." : "Jawab dulu untuk membuka tautan atau berbagi.") + "</p>" +
+        '<p class="bm-gate-sub">' + (sub ? (en ? sub[1] : sub[0]) : (en ? "Answer to open the link or share." : "Jawab dulu untuk membuka tautan atau berbagi.")) + "</p>" +
         '<div class="bm-gate-opts">' + Q.opts.map(function (o) { return '<button type="button" data-v="' + o + '">' + o + "</button>"; }).join("") + "</div>" +
         '<p class="bm-gate-err" aria-live="polite"></p>' +
         '<button type="button" class="bm-gate-x">' + (en ? "Cancel" : "Batal") + "</button>";
@@ -2023,4 +2023,11 @@
     document.body.appendChild(d);
   }
   if (document.body) add(); else document.addEventListener("DOMContentLoaded", add);
+})();
+
+/* Play-time limit + "time to pray" pop-up on every page (settings in the hub's Parents tab) */
+(function () {
+  if (window.BMGuard || document.getElementById("bm-guard-js")) return;
+  var s = document.createElement("script"); s.id = "bm-guard-js"; s.src = "/bm-guard.js"; s.defer = true;
+  (document.head || document.documentElement).appendChild(s);
 })();
