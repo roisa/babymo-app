@@ -599,16 +599,30 @@
     const f = Math.min(1, a / totArea / .85), bar = root.querySelector('.mc-meter'), st = bar.querySelector('b');
     bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.querySelector('b').style.filter = f > 0 ? 'grayscale(' + (.85 - .85 * f) + ')' : ''; bar.classList.toggle('full', f >= .97);
     const steps = [[.25, CHEER[0]], [.5, CHEER[1]], [.75, LINES.almost]];
-    bar.querySelectorAll('em').forEach((m, k) => m.classList.toggle('on', f >= steps[k][0])); // stars light up as soon as the bar passes them
+    { let n = 0; bar.querySelectorAll('em').forEach((m, k) => { const on = f >= steps[k][0];   // stars wake up as soon as the bar passes them
+        if (on && !m.classList.contains('on')) { const d = n++ * 380; setTimeout(() => wakeSfx(k), d); }
+        m.classList.toggle('on', on); });
+      if (f >= .97 && !wakeFull) { wakeFull = true; setTimeout(() => wakeSfx(3), n * 380); } else if (f < .97) wakeFull = false; }
     while (milestone < steps.length && f >= steps[milestone][0]) {
       const line = steps[milestone][1][EN ? 1 : 0]; { const ms = bar.querySelectorAll('em')[milestone]; if (ms) ms.classList.add('on'); } milestone++;
       if (autoRun) continue;
       st.classList.remove('pop'); void st.offsetWidth; st.classList.add('pop');
       const ch = root.querySelector('.mc-cheer'); ch.textContent = line; ch.classList.remove('on'); void ch.offsetWidth; ch.classList.add('on');
-      setTimeout(() => { say(line); fanfare(); }, 120);
+      setTimeout(() => { say(line); fanfare(); }, 520);
       for (let i = 0; i < 3; i++) setTimeout(() => burst(N * (.2 + Math.random() * .6), N * (.2 + Math.random() * .5), 14, 1.2), i * 160);
     }
     if (f >= .97 && !celebrated) { celebrated = true; setTimeout(() => party(LINES.done[EN ? 1 : 0], false), 700); }
+  }
+  /* a star waking up: a soft rising "boing" and a sparkly twinkle, a little higher for each star */
+  let wakeFull = false;
+  function wakeSfx(k) {
+    const A = ac(); if (!A) return; const b = [523, 659, 784, 1047][k] || 659;
+    try { const t = A.currentTime, o = A.createOscillator(), g = A.createGain(); o.type = 'sine';
+      o.frequency.setValueAtTime(b * .5, t); o.frequency.exponentialRampToValueAtTime(b * 1.25, t + .14); o.frequency.exponentialRampToValueAtTime(b, t + .22);
+      g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.2, t + .02); g.gain.exponentialRampToValueAtTime(.0001, t + .3);
+      o.connect(g); g.connect(A.destination); o.start(t); o.stop(t + .32); } catch (e) {}
+    setTimeout(() => { tone(b * 2, .05, 'triangle', .1); setTimeout(() => tone(b * 3, .06, 'triangle', .09), 70); setTimeout(() => tone(b * 4, .08, 'sine', .07), 140); }, 150);
+    if (navigator.vibrate) try { navigator.vibrate(12); } catch (e) {}
   }
   let meterT = 0; function meterSoon() { if (meterT) return; meterT = setTimeout(() => { meterT = 0; if (root && regTot) meter(); }, 90); }
   function fanfare() { [[523, 0], [659, 90], [784, 180], [1047, 300], [784, 420], [1047, 520]].forEach(([f, t]) => setTimeout(() => tone(f, .14, 'triangle', .15), t)); }
