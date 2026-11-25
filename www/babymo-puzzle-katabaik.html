@@ -1521,6 +1521,40 @@ html[data-bm-theme="classic"] .kb-tune{background:linear-gradient(180deg,#3A4285
 html[data-bm-theme="classic"] .kb-fnote{color:#CDB8FF}
 @media (prefers-reduced-motion:reduce){.kb-tune.hit i,.kb-fnote{animation:none}.kb-fnote{display:none}}
 </style>
+<style id="kb-one-card">
+/* result: one card instead of five boxes — name heading, big Arabic, meaning line; number as a corner badge;
+   the song is a round play button on the card's edge */
+#celebration .celeb-text{position:relative;z-index:1;width:calc(100% - 32px);max-width:440px!important;box-sizing:border-box;margin:-30px auto 0!important;
+  padding:22px 18px 26px;border-radius:30px;background:var(--kb-plate,#fff);text-align:center;
+  box-shadow:0 22px 40px -24px rgba(60,40,160,.55),0 1px 0 rgba(255,255,255,.9) inset}
+#celebration .celeb-num{position:absolute!important;left:14px;top:-18px;width:42px!important;height:42px!important;margin:0!important;font-size:17px!important;z-index:3}
+#celebration .celeb-title{display:block;width:auto;max-width:none;margin:0 auto!important;padding:0 34px!important;background:none!important;box-shadow:none!important;border:0!important;
+  font-size:clamp(24px,7vw,32px)!important;line-height:1.1}
+#celebration .celeb-title::before,#celebration .celeb-title::after,#celebration .celeb-meaning::after{display:none!important}
+#celebration .celeb-arabic{display:block;width:auto;max-width:none;margin:10px auto 0!important;padding:0!important;background:none!important;box-shadow:none!important;border:0!important;
+  font-size:clamp(34px,10vw,46px)!important;line-height:1.5}
+#celebration .celeb-meaning{display:block;width:auto;min-width:0;max-width:none;margin:6px auto 0!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;
+  -webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#celebration .celeb-meaning::before{display:none!important}
+#celebration .celeb-meaning-label{display:none!important}
+#celebration .celeb-indo{margin:0;font:600 17px/1.35 'Fredoka','Nunito',sans-serif!important;color:var(--kb-ink,#2B2560);opacity:.85}
+/* the song: a round button sitting on the card's bottom-right edge */
+#celebration .kb-tune{position:absolute;left:50%;right:auto;bottom:-28px;transform:translateX(-50%);margin:0;width:56px;height:56px;padding:0;border-radius:50%;justify-content:center;gap:0;
+  background:linear-gradient(180deg,#FFE680,#FFC22E);box-shadow:0 8px 16px -8px rgba(180,110,0,.6),inset 0 0 0 3px #fff}
+#celebration .kb-tune span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+#celebration .kb-tune i{font-size:26px}
+#celebration .kb-tune b{position:absolute;right:-4px;top:-6px;width:22px;height:22px;border-radius:50%;background:#7B4BE0;color:#fff;font-size:12px;line-height:22px;text-align:center;
+  box-shadow:0 0 0 2px #fff}
+#celebration .kb-tune b::before{content:'▶';font-size:9px}
+#celebration .kb-tune b{font-size:0}
+#celebration .kb-tune.playing{box-shadow:0 0 0 4px rgba(255,213,74,.6),0 0 20px 6px rgba(255,210,63,.55),inset 0 0 0 3px #fff}
+#celebration .bm-wa{margin-top:40px!important}
+#celebration .kb-tune:active{transform:translateX(-50%) scale(.94)}
+#celebration .celeb-text{padding-bottom:34px}
+html[data-bm-theme="classic"] #celebration .celeb-text{background:#2C3366;box-shadow:0 22px 40px -20px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.1) inset}
+html[data-bm-theme="classic"] #celebration .celeb-indo{color:#EDE6FF}
+html[data-bm-theme="classic"] #celebration .kb-tune{background:linear-gradient(180deg,#FFE680,#FFC22E);box-shadow:0 8px 16px -8px rgba(0,0,0,.6),inset 0 0 0 3px #2C3366}
+</style>
 </head>
 <body>
 <div class="kb-sky" aria-hidden="true">
@@ -2106,6 +2140,7 @@ function kbTuneReady(){
   const b = document.getElementById('kbTune'); if (!b) return;
   b.querySelector('i').textContent = kbInstr[1];
   b.querySelector('span').textContent = window.BM_LANG === 'en' ? 'Baby Mo song · ' + kbInstr[3].toLowerCase() : 'Lagu Baby Mo · ' + kbInstr[2].toLowerCase();
+  b.setAttribute('aria-label', b.querySelector('span').textContent);
   b.classList.remove('playing');
 }
 function kbSong(){
