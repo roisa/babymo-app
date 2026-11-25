@@ -170,7 +170,47 @@
     // background = the biggest shape touching the edge of the page
     bgL = -1; let best = 0;
     for (let i = 0; i < N; i++) for (const p of [i, (N - 1) * N + i, i * N, i * N + N - 1]) { const L = labels[p]; if (L >= 0 && regions[L] > best) { best = regions[L]; bgL = L; } }
-    colorOf = new Array(R).fill(null); glitterOf = new Array(R).fill(false); history = []; adj = null; guideCol = null; guideData = null; celebrated = false; halfSaid = false; fills = 0;
+    findBlobs(wall);
+    colorOf = new Array(R).fill(null); glitterOf = new Array(R).fill(false); magicOf = new Array(R).fill(false); history = []; adj = null; guideCol = null; guideData = null; celebrated = false; halfSaid = false; fills = 0;
+  }
+  /* Solid black areas thicker than a line (Mo's eyes): with the magic crayon they take their real
+     colours from the coloured version (brown iris, black pupil, white shine) once the shape around them is magic-coloured. */
+  let blobs = [], magicOf = [];
+  const bcv = document.createElement('canvas'); bcv.width = bcv.height = N; const bcx = bcv.getContext('2d');
+  function findBlobs(wall) {
+    blobs = []; bcx.clearRect(0, 0, N, N);
+    const R = 4; let m = wall;
+    const erode = a => { const o = new Uint8Array(N * N); for (let y = 1; y < N - 1; y++) for (let x = 1; x < N - 1; x++) { const i = y * N + x; o[i] = a[i] && a[i - 1] && a[i + 1] && a[i - N] && a[i + N] ? 1 : 0; } return o; };
+    const dilate = a => { const o = new Uint8Array(N * N); for (let y = 1; y < N - 1; y++) for (let x = 1; x < N - 1; x++) { const i = y * N + x; o[i] = a[i] || a[i - 1] || a[i + 1] || a[i - N] || a[i + N] ? 1 : 0; } return o; };
+    for (let k = 0; k < R; k++) m = erode(m);
+    let any = false; for (let i = 0; i < N * N; i++) if (m[i]) { any = true; break; } if (!any) return;
+    for (let k = 0; k < R + 1; k++) m = dilate(m);
+    const seen = new Uint8Array(N * N), st = new Int32Array(N * N);
+    for (let s0 = 0; s0 < N * N; s0++) {
+      if (!m[s0] || !wall[s0] || seen[s0]) continue;
+      let sp = 0, px = []; st[sp++] = s0; seen[s0] = 1;
+      while (sp) { const i = st[--sp]; px.push(i); for (const j of [i - 1, i + 1, i - N, i + N]) if (j >= 0 && j < N * N && m[j] && wall[j] && !seen[j]) { seen[j] = 1; st[sp++] = j; } }
+      if (px.length < 40 || px.length > N * N * .02) continue;
+      // eyes are round: skip long thick strokes (a smile, an eyebrow)
+      let x0 = N, x1 = 0, y0 = N, y1 = 0; for (const i of px) { const y = (i / N) | 0, x = i - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+      const bw = x1 - x0 + 1, bh = y1 - y0 + 1;
+      if (Math.max(bw, bh) > 2.2 * Math.min(bw, bh) || px.length < .45 * bw * bh) continue;
+      // the shape that surrounds it (the face)
+      const cnt = new Map();
+      for (const i of px) for (const j of [i - 3, i + 3, i - 3 * N, i + 3 * N]) { const L = labels[j]; if (L >= 0) cnt.set(L, (cnt.get(L) || 0) + 1); }
+      let L = -1, best = 0; cnt.forEach((v, k) => { if (v > best) { best = v; L = k; } });
+      if (L >= 0) blobs.push({ px: Int32Array.from(px), L });
+    }
+  }
+  function refreshBlobs() {
+    if (!blobs.length) return;
+    const img = bcx.createImageData(N, N), o = img.data, d = guideData;
+    if (d) for (const b of blobs) if (magicOf[b.L]) for (const p of b.px) { const i = p * 4, r = d[i], g = d[i + 1], bl = d[i + 2];
+      if (Math.max(r, g, bl) < 45) continue;
+      const sk = guideCol && guideCol[b.L] && guideCol[b.L][0];          // never paint the face's own skin onto a black area
+      if (sk && (sk[0] - r) ** 2 + (sk[1] - g) ** 2 + (sk[2] - bl) ** 2 < 45 * 45) continue;
+      o[i] = r; o[i + 1] = g; o[i + 2] = bl; o[i + 3] = 255; }
+    bcx.putImageData(img, 0, 0);
   }
   function hex(c) { const n = parseInt(c.slice(1), 16); return [n >> 16 & 255, n >> 8 & 255, n & 255]; }
   let fill;
@@ -185,6 +225,7 @@
     if (clip) { ctx.save(); ctx.beginPath(); ctx.arc(clip.x, clip.y, clip.r, 0, Math.PI * 2); ctx.clip(); }
     tctx.putImageData(fill, 0, 0); ctx.drawImage(tmp, 0, 0);
     ctx.globalCompositeOperation = 'multiply'; ctx.drawImage(lineImg, 0, 0); ctx.globalCompositeOperation = 'source-over';
+    if (blobs.length) ctx.drawImage(bcv, 0, 0);
     if (clip) ctx.restore();
   }
   function setRegion(L, color, glitter) {
@@ -276,8 +317,10 @@
     fillRegion(L, color, glitter, x, y, c.kind);
   }
   function fillRegion(L, color, glitter, x, y, kind, quick) {
-    history.push([L, colorOf[L], glitterOf[L]]); if (history.length > 80) history.shift();
+    history.push([L, colorOf[L], glitterOf[L], magicOf[L]]); if (history.length > 80) history.shift();
     colorOf[L] = color; glitterOf[L] = !!glitter && !!color; setRegion(L, color, glitterOf[L]);
+    const wasMagic = magicOf[L]; magicOf[L] = kind === 'magic' && !!guideData;
+    if (wasMagic !== magicOf[L] && blobs.some(b => b.L === L)) refreshBlobs();
     if (x == null) { const p = order[start[L] + ((regions[L] / 2) | 0)]; y = (p / N) | 0; x = p - y * N; }
     busy = !quick; const t0 = performance.now(), R = N * 1.1, dur = quick ? 220 : 340;
     const step = now => { const u = Math.max(0, Math.min(1, (now - t0) / dur)); paint({ x, y, r: R * (1 - Math.pow(1 - u, 3)) }); if (u < 1) requestAnimationFrame(step); else { paint(); busy = false; } };
@@ -294,7 +337,7 @@
   }
   function undo() {
     const h = history.pop(); if (!h) return;
-    colorOf[h[0]] = h[1]; glitterOf[h[0]] = h[2];
+    colorOf[h[0]] = h[1]; glitterOf[h[0]] = h[2]; if (magicOf[h[0]] !== !!h[3]) { magicOf[h[0]] = !!h[3]; refreshBlobs(); }
     const f = fill.data; for (let k = start[h[0]]; k < start[h[0] + 1]; k++) { const i = order[k] * 4; f[i] = f[i + 1] = f[i + 2] = 255; }
     if (h[1]) setRegion(h[0], h[1], h[2]); paint(); tone(330, .08);
   }
