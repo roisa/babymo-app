@@ -11,7 +11,7 @@ One prompt per pose, ready to paste. For each one:
 ---
 
 ## 1. Winks, both hands pointing forward — "all set!"
-Attach: `baby-mo-alright.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-alright.png](https://play.babymo.id/baby-mo-poses/baby-mo-alright.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -25,7 +25,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 2. One finger up — "I have an idea!"
-Attach: `baby-mo-idea.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-idea.png](https://play.babymo.id/baby-mo-poses/baby-mo-idea.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -39,7 +39,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 3. OK sign with one hand, winking
-Attach: `baby-mo-ok.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-ok.png](https://play.babymo.id/baby-mo-poses/baby-mo-ok.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -53,7 +53,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 4. Waves hello, winking
-Attach: `baby-mo-pose-01.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-01.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-01.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -67,7 +67,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 5. Jumps for joy in the air
-Attach: `baby-mo-pose-02.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-02.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-02.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -81,7 +81,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 6. Hands on hips, ready to play
-Attach: `baby-mo-pose-04.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-04.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-04.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -95,7 +95,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 7. Hands together, making du'a
-Attach: `baby-mo-pose-05.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-05.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-05.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -109,7 +109,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 8. Sits and relaxes on the ground
-Attach: `baby-mo-pose-06.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-06.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-06.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -123,7 +123,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 9. Laughs happily, hands on cheeks
-Attach: `baby-mo-pose-07.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-07.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-07.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -137,7 +137,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 10. Points over there with a big step
-Attach: `baby-mo-pose-08.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-08.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-08.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -151,7 +151,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 11. Jumps up high, knees tucked
-Attach: `baby-mo-pose-11.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-11.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-11.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -165,7 +165,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 12. Sits nicely, hands together
-Attach: `baby-mo-pose-12.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-12.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-12.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -179,7 +179,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 13. Sits and waves
-Attach: `baby-mo-pose-13.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-13.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-13.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -193,7 +193,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 14. Stands up tall
-Attach: `baby-mo-pose-14.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-14.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-14.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -207,7 +207,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 15. Shows the way with one arm
-Attach: `baby-mo-pose-15.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-15.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-15.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -221,7 +221,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 16. Cheeky wink, hand by his cheek
-Attach: `baby-mo-pose-16.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-16.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-16.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -235,7 +235,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 17. Sits and thinks
-Attach: `baby-mo-pose-18.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-18.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-18.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -249,7 +249,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 18. Flies like a plane, arms out
-Attach: `baby-mo-pose-20.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-20.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-20.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -263,7 +263,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 19. Says "cool!"
-Attach: `baby-mo-pose-21.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-21.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-21.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -277,7 +277,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 20. Waits for his turn
-Attach: `baby-mo-pose-22.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-22.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-22.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -291,7 +291,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 21. Kneels nicely
-Attach: `baby-mo-pose-23.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-23.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-23.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -305,7 +305,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 22. Gives a little wave
-Attach: `baby-mo-pose-24.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-24.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-24.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -319,7 +319,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 23. Winks and says OK
-Attach: `baby-mo-pose-25.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-25.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-25.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -333,7 +333,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 24. Claps his hands
-Attach: `baby-mo-pose-26.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-26.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-26.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -347,7 +347,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 25. All fired up, fists ready
-Attach: `baby-mo-pose-27.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-27.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-27.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -361,7 +361,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 26. Listens carefully
-Attach: `baby-mo-pose-28.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-28.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-28.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -375,7 +375,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 27. Big smile, winking
-Attach: `baby-mo-pose-29.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-29.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-29.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -389,7 +389,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 28. Dances happily
-Attach: `baby-mo-pose-30.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-30.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-30.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -403,7 +403,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 29. Surprised: "wow!"
-Attach: `baby-mo-pose-31.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-31.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-31.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -417,7 +417,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 30. Steps out happily
-Attach: `baby-mo-pose-32.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-32.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-32.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -431,7 +431,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 31. Bows to say hello
-Attach: `baby-mo-pose-34.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-34.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-34.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -445,7 +445,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 32. Smiles sweetly
-Attach: `baby-mo-pose-35.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-35.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-35.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -459,7 +459,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 33. Feels a little shy
-Attach: `baby-mo-pose-37.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-37.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-37.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -473,7 +473,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 34. Opens his arms wide
-Attach: `baby-mo-pose-41.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-41.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-41.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -487,7 +487,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 35. Goes for a walk
-Attach: `baby-mo-pose-42.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-pose-42.png](https://play.babymo.id/baby-mo-poses/baby-mo-pose-42.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -501,7 +501,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 36. Runs fast
-Attach: `baby-mo-run.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-run.png](https://play.babymo.id/baby-mo-poses/baby-mo-run.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -515,7 +515,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 37. Hands together, says thank you
-Attach: `baby-mo-thank-you.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-thank-you.png](https://play.babymo.id/baby-mo-poses/baby-mo-thank-you.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -529,7 +529,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 38. Amazed: "wow!"
-Attach: `baby-mo-wow.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-wow.png](https://play.babymo.id/baby-mo-poses/baby-mo-wow.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -543,7 +543,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 39. Says "yes!", one arm up
-Attach: `baby-mo-yes.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-yes.png](https://play.babymo.id/baby-mo-poses/baby-mo-yes.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
@@ -557,7 +557,7 @@ Place the extra items around him so nothing covers his face or hands. Keep the s
 ```
 
 ## 40. Cheers "yay!", one arm up
-Attach: `baby-mo-yeyy.png`
+Attach (open, save, then attach in ChatGPT): [baby-mo-yeyy.png](https://play.babymo.id/baby-mo-poses/baby-mo-yeyy.png)
 
 ```
 Black-and-white colouring book page for toddlers (2–4 years old). Line art only: clean, smooth, uniform THICK black outlines (like a bold marker), every shape fully closed, pure white inside every shape. Absolutely NO grey, NO shading, NO gradients, NO hatching, NO texture, NO filled black areas (hair, eyes and shoes are outlines only; pupils may be small solid dots). Big simple rounded shapes, about 15–35 shapes in total, no tiny details. Pure white background (not transparent), square 1:1, 1024×1024.
