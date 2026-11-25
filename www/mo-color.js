@@ -61,7 +61,7 @@
   #moColor .mc-yay{position:absolute;inset:0;display:none;align-items:center;justify-content:flex-end;flex-direction:column;gap:6px;padding-bottom:5%;background:none;pointer-events:none}
   #moColor .mc-yay.on{display:flex}
   #moColor .mc-yay i{display:none;font-style:normal;font-size:clamp(54px,16vw,90px);animation:mcPop .6s cubic-bezier(.3,1.6,.5,1),mcSpin 2.2s linear .6s infinite}
-  #moColor .mc-yay b{align-self:center;background:#fff;border:3px solid #FFD54A;border-radius:999px;padding:10px 22px!important;box-shadow:0 10px 20px -10px rgba(120,60,0,.5);font-size:clamp(20px,6vw,32px);color:#E2489A;text-shadow:none;animation:mcPop .6s cubic-bezier(.3,1.6,.5,1);text-align:center;padding:0 12px}
+  #moColor .mc-yay b{align-self:center;max-width:86%;background:rgba(255,255,255,.5);-webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);border:1px solid rgba(255,255,255,.75);border-radius:999px;padding:8px 18px!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 10px 24px -12px rgba(80,40,120,.45);font-size:clamp(15px,4.2vw,20px);line-height:1.2;color:#B02E78;text-shadow:0 1px 0 rgba(255,255,255,.6);animation:mcPop .6s cubic-bezier(.3,1.6,.5,1);text-align:center}
   @keyframes mcPop{from{transform:scale(.3)}to{transform:scale(1)}}
   @keyframes mcSpin{to{transform:rotate(360deg)}}
   #moColor .mc-conf{position:absolute;top:-20px;width:12px;height:16px;border-radius:3px;pointer-events:none;animation:mcFall linear forwards}
@@ -186,6 +186,7 @@
   const mk = () => { const c = document.createElement('canvas'); c.width = c.height = N; return c; };
   const colorC = mk(), eyeC = mk(), strokeC = mk(), maskC = mk(), srcC = mk(), tmpC = mk(), eyeTmpC = mk(), targetC = mk(), eyeTargetC = mk();
   const cx = c => c.getContext('2d', { willReadFrequently: true });
+  let lineWall = null, openTok = 0, guideWait = null, magicQueued = false;
   let root, cvs, ctx, fx, fctx, lineImg, labels, regions, order, start, bgL = -1, opts = {}, audio, cur = CRAYONS[0],
       guideImg = null, guideData = null, guideCol = null, targetReady = false, blobs = [], adj = null,
       stroke = null, undoStack = [], glitPts = [], twinkles = [], fxOn = false, celebrated = false, halfSaid = false,
@@ -289,6 +290,7 @@
     const c = mk(), x = cx(c); fitDraw(x, img); lineImg = c;
     const d = x.getImageData(0, 0, N, N).data, wall = new Uint8Array(N * N);
     for (let i = 0; i < N * N; i++) { if (d[i * 4] * .3 + d[i * 4 + 1] * .59 + d[i * 4 + 2] * .11 < 160) wall[i] = 1; }
+    lineWall = wall;
     const w2 = wall.slice();
     for (let y = 1; y < N - 1; y++) for (let xx = 1; xx < N - 1; xx++) { const i = y * N + xx; if (!wall[i] && (wall[i - 1] || wall[i + 1] || wall[i - N] || wall[i + N])) w2[i] = 1; }
     labels = new Int32Array(N * N).fill(-1); const st = new Int32Array(N * N); regions = [];
@@ -361,7 +363,7 @@
   /* ── the magic picture: the coloured version, cleaned shape by shape ── */
   function loadGuide(src) {
     guideImg = null; guideData = null; if (!src) return;
-    const g = new Image(); g.onload = () => { guideImg = g; guideData = null; guideCol = null; if (labels) targetReady = false; }; g.src = src;
+    const g = new Image(); g.onload = () => { if (opts.guide !== src) return; guideImg = g; guideData = null; guideCol = null; if (labels) targetReady = false; guideWait && guideWait(); }; g.onerror = () => { guideWait && guideWait(); }; g.src = src;
   }
   function clusters() {
     if (guideCol) return guideCol;
@@ -392,39 +394,67 @@
       const b = labels[i + D], c = labels[i + D * N]; if (b >= 0 && b !== a) { adj[a].add(b); adj[b].add(a); } if (c >= 0 && c !== a) { adj[a].add(c); adj[c].add(a); } }
     return adj;
   }
+  function alignGuide() {
+    const f = mk(), fx_ = cx(f); fitDraw(fx_, guideImg); if (!lineWall) return f;
+    const gd = fx_.getImageData(0, 0, N, N).data, dark = new Uint8Array(N * N);
+    for (let i = 0; i < N * N; i++) dark[i] = Math.max(gd[i * 4], gd[i * 4 + 1], gd[i * 4 + 2]) < 95 ? 1 : 0;
+    const grow = (m, r) => { let a = m; for (let k = 0; k < r; k++) { const o = a.slice(); for (let y = 1; y < N - 1; y++) for (let x = 1; x < N - 1; x++) { const i = y * N + x; if (!a[i] && (a[i - 1] || a[i + 1] || a[i - N] || a[i + N])) o[i] = 1; } a = o; } return a; };
+    const near = grow(dark, 1), wide = grow(near, 3);
+    const pts = []; for (let i = 0; i < N * N; i += 7) if (lineWall[i]) pts.push(i % N, (i / N) | 0);
+    if (pts.length < 400) return f;
+    const c = N / 2;
+    const score = (m, sc, dx, dy) => { let n = 0; for (let k = 0; k < pts.length; k += 2) { const x = Math.round(c + (pts[k] - c) * sc + dx), y = Math.round(c + (pts[k + 1] - c) * sc + dy); if (x >= 0 && y >= 0 && x < N && y < N && m[y * N + x]) n++; } return n; };
+    let best = [1, 0, 0], bs = score(wide, 1, 0, 0); const s0 = score(near, 1, 0, 0);
+    for (let sc = .86; sc <= 1.141; sc += .02) for (let dx = -72; dx <= 72; dx += 4) for (let dy = -72; dy <= 72; dy += 4) { const v = score(wide, sc, dx, dy); if (v > bs) { bs = v; best = [sc, dx, dy]; } }
+    let fb = best, fs = score(near, best[0], best[1], best[2]);
+    for (let sc = best[0] - .02; sc <= best[0] + .021; sc += .005) for (let dx = best[1] - 4; dx <= best[1] + 4; dx++) for (let dy = best[2] - 4; dy <= best[2] + 4; dy++) { const v = score(near, sc, dx, dy); if (v > fs) { fs = v; fb = [sc, dx, dy]; } }
+    if (fs < s0 * 1.04 || (fb[0] === 1 && !fb[1] && !fb[2])) return f;
+    // draw it so the guide's point c + s(p - c) + d lands on the page's point p
+    const o = mk(), ox = cx(o); ox.fillStyle = '#fff'; ox.fillRect(0, 0, N, N);
+    ox.setTransform(1 / fb[0], 0, 0, 1 / fb[0], c - (c + fb[1]) / fb[0], c - (c + fb[2]) / fb[0]); ox.drawImage(f, 0, 0); ox.setTransform(1, 0, 0, 1, 0, 0);
+    return o;
+  }
   function buildTarget() {
     if (targetReady || !labels) return;
     const tx = cx(targetC), img = tx.createImageData(N, N), o = img.data;
     for (let i = 0; i < N * N * 4; i += 4) { o[i] = o[i + 1] = o[i + 2] = 255; o[i + 3] = 255; }
     if (guideImg) {
-      const g = mk(), gx = cx(g); fitDraw(gx, guideImg); guideData = gx.getImageData(0, 0, N, N).data; guideCol = null;
+      const g = alignGuide(); guideData = cx(g).getImageData(0, 0, N, N).data; guideCol = null;
       const cl = clusters(), d = guideData;
       // where the coloured version's picture really is (inside its own white margin)
       let gx0 = N, gx1 = 0, gy0 = N, gy1 = 0;
       for (let y = 0; y < N; y += 2) for (let x = 0; x < N; x += 2) { const i = (y * N + x) * 4; if (Math.min(d[i], d[i + 1], d[i + 2]) < 230) { if (x < gx0) gx0 = x; if (x > gx1) gx1 = x; if (y < gy0) gy0 = y; if (y > gy1) gy1 = y; } }
       if (gx1 <= gx0) { gx0 = gy0 = 0; gx1 = gy1 = N - 1; }
-      gx0 += 6; gy0 += 6; gx1 -= 6; gy1 -= 6;
+      gx0 += 14; gy0 += 14; gx1 -= 14; gy1 -= 14;
       const isW = q => q[0] > 236 && q[1] > 236 && q[2] > 236;
       const col = new Int32Array(N * N).fill(-1), multi = new Uint8Array(regions.length), pix = new Int8Array(N * N).fill(-1), pal = [];
       for (let L = 0; L < regions.length; L++) {
-        const C = cl[L] || [[255, 255, 255]], hasW = C.some(isW), cnt = new Array(C.length).fill(0);
+        const C = [], d2 = (a, b) => (a[0] - b[0]) ** 2 + (a[1] - b[1]) ** 2 + (a[2] - b[2]) ** 2;
+        for (const q of (cl[L] || [[255, 255, 255]])) if (!C.some(k => d2(k, q) < 100 * 100)) C.push(q);
+        if (!C.some(isW)) { let w = 0; for (let k = start[L]; k < start[L + 1]; k += 3) { const p = order[k], q = p * 4, x = p % N, y = (p / N) | 0; if (x > gx0 + 34 && x < gx1 - 34 && y > gy0 + 34 && y < gy1 - 34 && Math.min(d[q], d[q + 1], d[q + 2]) > 236) w++; } if (w * 3 >= 1500 && w * 3 < regions[L] * .5) C.push([255, 255, 255]); }   // a cloud inside the sky's shape stays white
+        const hasW = C.some(isW), cnt = new Array(C.length).fill(0); let wGap = 0;
         for (let k = start[L]; k < start[L + 1]; k++) {
           const p = order[k], x = p % N, y = (p / N) | 0;
           const q = (Math.min(Math.max(y, gy0), gy1) * N + Math.min(Math.max(x, gx0), gx1)) * 4;   // outside the picture: the colour at its edge
           const r = d[q], gg = d[q + 1], bb = d[q + 2];
           if (Math.max(r, gg, bb) < 75) continue;                                  // its own outline → decided below
-          if (Math.min(r, gg, bb) > 236 && !hasW) continue;                        // a white gap inside a coloured shape
+          if (Math.min(r, gg, bb) > 236 && (!hasW || x < gx0 + 34 || x > gx1 - 34 || y < gy0 + 34 || y > gy1 - 34)) { wGap++; continue; }   // a white gap, or the coloured version's own white margin
           let bd = 1e9, bi = 0; for (let j = 0; j < C.length; j++) { const c = C[j], dd = (c[0] - r) ** 2 + (c[1] - gg) ** 2 + (c[2] - bb) ** 2; if (dd < bd) { bd = dd; bi = j; } }
+          if (bd > 125 * 125) continue;                                             // matches none of the shape's colours: decided by its neighbours
           pix[p] = bi; cnt[bi]++;
         }
         let dom = 0, tot = 0; for (let j = 0; j < C.length; j++) { tot += cnt[j]; if (cnt[j] > cnt[dom]) dom = j; }
         pal[L] = C.map(c => c[0] << 16 | c[1] << 8 | c[2]);
+        if (regions[L] < 20000 && wGap > (tot + wGap) * .55) { for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = 0xFFFFFF; continue; }   // a thin gap in a cloud's outline: white
         if (!tot || cnt[dom] >= tot * .85 || regions[L] < 4000) { const v = pal[L][dom]; for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = v; }
-        else { multi[L] = 1; pal[L].dom = dom; }
+        else { multi[L] = 1; pal[L].dom = dom;
+          const keep = C.map((q, j) => j === dom || cnt[j] >= Math.min(tot * .12, 1500));   // a real area (hair that shares the sky's shape) stays
+          const to = C.map((q, j) => { if (keep[j]) return j; let bj = dom, bd = 1e12; C.forEach((r, i) => { if (keep[i] && d2(q, r) < bd) { bd = d2(q, r); bj = i; } }); return bj; });
+          for (let k = start[L]; k < start[L + 1]; k++) { const p = order[k]; if (pix[p] >= 0) pix[p] = to[pix[p]]; } }
       }
       // a shape with two real colours (sky above, grass below): every pixel takes the colour most of its
       // neighbourhood has, so the two drawings' small misfits (thin strips along the lines) disappear
-      const R6 = 7, W1 = N + 1, ii = [];
+      const R6 = 11, W1 = N + 1, ii = [];
       for (let j = 0; j < 6; j++) { const t = new Int32Array(W1 * W1);
         for (let y = 0; y < N; y++) { let run = 0; for (let x = 0; x < N; x++) { const i = y * N + x; if (pix[i] === j && multi[labels[i]] ) run++; t[(y + 1) * W1 + x + 1] = t[y * W1 + x + 1] + run; } }
         ii.push(t); }
@@ -433,6 +463,8 @@
         for (let k = start[L]; k < start[L + 1]; k++) { const i = order[k], y = (i / N) | 0, x = i - y * N;
           const x0 = Math.max(0, x - R6), x1 = Math.min(N, x + R6 + 1), y0 = Math.max(0, y - R6), y1 = Math.min(N, y + R6 + 1);
           let bj = P.dom, bn = -1; for (let j = 0; j < P.length; j++) { const n = box(ii[j], x0, y0, x1, y1); if (n > bn) { bn = n; bj = j; } }
+          if (bn <= 0) { const x2 = Math.max(0, x - 48), x3 = Math.min(N, x + 49), y2 = Math.max(0, y - 48), y3 = Math.min(N, y + 49);   // nothing near: look further
+            for (let j = 0; j < P.length; j++) { const n = box(ii[j], x2, y2, x3, y3); if (n > bn) { bn = n; bj = j; } } }
           col[i] = P[bn > 0 ? bj : P.dom]; } }
       for (let i = 0; i < N * N; i++) if (col[i] >= 0) { const o4 = i * 4; o[o4] = col[i] >> 16 & 255; o[o4 + 1] = col[i] >> 8 & 255; o[o4 + 2] = col[i] & 255; }
       // eyes
@@ -733,7 +765,8 @@
 
   /* ── "✨ Sim salabim": a magic brush sweeps over the picture and paints it in Mo's real colours ── */
   function magicAll() {
-    if (!labels || stroke || autoRun) return;
+    if (!labels) { magicQueued = true; return; }      // tapped while the page is still loading: run it when ready
+    if (stroke || autoRun) return;
     autoRun = true; snapshot(); buildTarget(); makeSource(CRAYONS[0]);
     cx(strokeC).clearRect(0, 0, N, N);
     stroke = { magic: true, mask: null, x: 0, y: 0 };
@@ -795,7 +828,12 @@
     cur = CRAYONS[0]; root.querySelectorAll('.mc-c').forEach((x, i) => x.classList.toggle('sel', i === 0));
     loadGuide(opts.guide); parts = []; flashes = []; wand = null; tgtData = null;
     { const bar = root.querySelector('.mc-meter'); bar.classList.remove('full'); bar.querySelector('i').style.width = '0'; bar.querySelectorAll('em').forEach(x => x.classList.remove('on')); }
-    const img = new Image(); img.onload = () => { analyse(img); render(); say(LINES.start[EN ? 1 : 0]); }; img.src = opts.src;
+    // the page becomes colourable once its coloured version is here too, so the magic crayon never starts
+    // with stand-in colours on a slow connection (the coloured version is waited for at most 6 s)
+    magicQueued = false; const tok = ++openTok, img = new Image(); let lineOk = false, guideOk = !opts.guide;
+    const go = () => { if (tok !== openTok || !lineOk || !guideOk) return; guideOk = false; analyse(img); render(); say(LINES.start[EN ? 1 : 0]); if (magicQueued) { magicQueued = false; setTimeout(magicAll, 250); } };
+    guideWait = () => { guideOk = true; go(); }; setTimeout(() => { guideOk = true; go(); }, 6000);
+    img.onload = () => { lineOk = true; go(); }; img.src = opts.src;
   }
   window.MoColor = { open, CRAYONS, LINES,
     saved: k => { try { return (JSON.parse(localStorage.getItem(STORE) || '{}'))[k] || null; } catch (e) { return null; } } };
