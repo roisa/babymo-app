@@ -2012,7 +2012,7 @@ const audio = {
   playTone(freq=440, dur=0.22, type='sine', vol=0.16){
     if (state.muted) return;
     const ctx = this.ensureCtx(); if (!ctx) return;
-    if (ctx.state === 'suspended') ctx.resume();
+    if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
     const t0 = ctx.currentTime;
     const make = (f, v, d, ty='sine') => {
       const o = ctx.createOscillator(), g = ctx.createGain();
@@ -2031,7 +2031,7 @@ const audio = {
   playTwinkle(baseFreq=523.25){
     if (state.muted) return;
     const ctx = this.ensureCtx(); if (!ctx) return;
-    if (ctx.state === 'suspended') ctx.resume();
+    if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
     const intervals = [1, 1.5, 2]; // octave + fifth
     intervals.forEach((m, i) => {
       setTimeout(() => this.playTone(baseFreq*m, 0.18, 'sine', 0.13 - i*0.02), i*55);
@@ -2041,7 +2041,7 @@ const audio = {
   playDing(){
     if (state.muted) return;
     const ctx = this.ensureCtx(); if (!ctx) return;
-    if (ctx.state === 'suspended') ctx.resume();
+    if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
     // Cheerful major triad cluster with quick decay
     this.playTone(1318.51, 0.32, 'sine', 0.12);  // E6
     setTimeout(() => this.playTone(1567.98, 0.28, 'sine', 0.10), 30); // G6
@@ -2113,11 +2113,17 @@ const kbSynth = {
   env(ctx, g, t, v, a, d){ g.gain.setValueAtTime(0.0001, t); g.gain.exponentialRampToValueAtTime(v, t + a); g.gain.exponentialRampToValueAtTime(0.0001, t + a + d); },
   osc(ctx, out, type, f, t, v, a, d, det){ const o = ctx.createOscillator(), g = ctx.createGain(); o.type = type; o.frequency.setValueAtTime(f, t); if (det) o.detune.value = det;
     this.env(ctx, g, t, v, a, d); o.connect(g); g.connect(out); o.start(t); o.stop(t + a + d + .05); return o; },
-  pluck(ctx, out, f, t, v, decay, bright){            // Karplus-Strong string (guitar / harp)
-    const sr = ctx.sampleRate, len = Math.ceil(sr * decay), buf = ctx.createBuffer(1, len, sr), x = buf.getChannelData(0), P = Math.max(2, Math.round(sr / f)), ring = new Float32Array(P);
-    for (let i = 0; i < P; i++) ring[i] = Math.random() * 2 - 1; let k = 0;
-    for (let i = 0; i < len; i++) { const a = ring[k], b = ring[(k + 1) % P]; x[i] = a; ring[k] = (a * bright + b * (1 - bright)) * .996; k = (k + 1) % P; }
-    const s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = buf; g.gain.value = v; s.connect(g); g.connect(out); s.start(t);
+  _pl: new Map(),
+  pluck(ctx, out, f, t, v, decay, bright){            // Karplus-Strong string (guitar / harp / sasando …), cached per pitch
+    const sr = ctx.sampleRate, key = sr + '|' + Math.round(f * 10) + '|' + decay + '|' + bright; let buf = this._pl.get(key);
+    if (!buf || buf.ctx !== ctx) {
+      const len = Math.ceil(sr * decay), P = Math.max(2, Math.round(sr / f)), ring = new Float32Array(P), fb = Math.pow(0.002, 1 / (sr * decay));
+      buf = ctx.createBuffer(1, len, sr); const x = buf.getChannelData(0);
+      for (let i = 0; i < P; i++) ring[i] = Math.random() * 2 - 1; let k = 0;
+      for (let i = 0; i < len; i++) { const a = ring[k], b = ring[(k + 1) % P]; x[i] = a; ring[k] = (a * bright + b * (1 - bright)) * fb; k = (k + 1) % P; }
+      buf.ctx = ctx; this._pl.set(key, buf); if (this._pl.size > 120) this._pl.delete(this._pl.keys().next().value);
+    }
+    const s = ctx.createBufferSource(), g = ctx.createGain(); s.buffer = buf; g.gain.value = v * .8; s.connect(g); g.connect(out); s.start(Math.max(t, ctx.currentTime));
   },
   hit(ctx, out, t, v, fLo, fHi, d, type){             // noise burst through a band-pass (drum skin, jingles, breath)
     const s = ctx.createBufferSource(), f = ctx.createBiquadFilter(), g = ctx.createGain(); s.buffer = this.noise(ctx, d + .05);
@@ -2169,7 +2175,8 @@ const kbSynth = {
       case 'gong': [[1, 1], [1.012, .8], [1.5, .3], [2.3, .2]].forEach(([m, a]) => this.osc(ctx, out, 'sine', f / 4 * m, t, v * a * 1.3, .02, 2.2));
         this.hit(ctx, out, t, v * .3, 200, 900, .2); break;
       case 'kolintang': this.osc(ctx, out, 'sine', f, t, v * 1.2, .002, .45); this.osc(ctx, out, 'sine', f * 3.9, t, v * .3, .001, .1); this.hit(ctx, out, t, v * .35, 800, 2500, .02); break;
-      case 'sasando': this.pluck(ctx, out, f, t, v * 1.1, 1.8, .7); this.pluck(ctx, out, f * 1.003, t + .015, v * .7, 1.8, .7); this.pluck(ctx, out, f * 2, t + .03, v * .4, 1.2, .7); break;
+      case 'sasando': this.pluck(ctx, out, f, t, v * 1.2, 1.4, .6); this.pluck(ctx, out, f * 1.004, t + .018, v * .7, 1.4, .6);
+        this.osc(ctx, out, 'sine', f, t, v * .55, .004, .9); this.osc(ctx, out, 'sine', f * 2.003, t + .01, v * .25, .003, .6); this.osc(ctx, out, 'triangle', f * 3, t, v * .08, .002, .25); break;
       case 'kecapi': this.pluck(ctx, out, f, t, v * 1.4, .9, .8); this.pluck(ctx, out, f * 1.5, t + .02, v * .35, .6, .8); break;
       case 'steelpan': [[1, 1], [2, .55], [3, .3], [4.2, .12]].forEach(([m, a]) => this.osc(ctx, out, 'sine', f * m, t, v * a, .002, .7 / Math.sqrt(m))); break;
       case 'triangle': [[1, .8], [2.76, .4], [5.4, .25]].forEach(([m, a]) => this.osc(ctx, out, 'sine', f * 4 * m / 2.76 * 1.5, t, v * a * .7, .001, 1.6)); break;
@@ -2177,7 +2184,7 @@ const kbSynth = {
       case 'musicbox': this.osc(ctx, out, 'sine', f * 4, t, v * .9, .002, .9); this.osc(ctx, out, 'sine', f * 8, t, v * .2, .001, .25); this.hit(ctx, out, t, v * .15, 4000, 9000, .01); break;
     }
   },
-  play(seq, gap, v){ if (state.muted) return; const ctx = audio.ensureCtx(); if (!ctx) return; if (ctx.state === 'suspended') ctx.resume();
+  play(seq, gap, v){ if (state.muted) return; const ctx = audio.ensureCtx(); if (!ctx) return; if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
     const t0 = ctx.currentTime + .01; seq.forEach((f, i) => { if (f) this.note(kbInstr[0], f, t0 + i * gap, v); });
     const el = document.getElementById('kbInstr'); if (el) { el.classList.remove('play'); void el.offsetWidth; el.classList.add('play'); } }
 };
@@ -2222,10 +2229,10 @@ function kbTuneReady(){
   b.classList.remove('playing');
 }
 function kbSong(){
-  if (state.muted) return; const ctx = audio.ensureCtx(); if (!ctx) return; if (ctx.state === 'suspended') ctx.resume();
+  if (state.muted) return; const ctx = audio.ensureCtx(); if (!ctx) return; if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
   kbLoadVoices(); kbSongT.forEach(clearTimeout); kbSongT = [];
   try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
-  const b = document.getElementById('kbTune'), k = kbInstr[0], t0 = ctx.currentTime + .06;
+  const b = document.getElementById('kbTune'), k = kbInstr[0], t0 = ctx.currentTime + .15;
   const bump = d => kbSongT.push(setTimeout(() => { if (!b) return; b.classList.remove('hit'); void b.offsetWidth; b.classList.add('hit'); kbNoteFloat(b); }, d * 1000));
   let end = 0;
   KB_JINGLE.forEach(([t, n, hold]) => {
