@@ -117,6 +117,9 @@
   #moColor .mc-auto{background:linear-gradient(180deg,#FFFFFF,#EFE7FF)!important;color:#4A2FA8!important;box-shadow:0 6px 0 #D6C8F5,0 14px 22px -12px rgba(80,50,160,.45)!important}
   #moColor .mc-done{background:linear-gradient(120deg,#3D9BFF,#6F5BF2 60%,#9B5DE5)!important;box-shadow:0 6px 0 #4A3FB8,0 14px 22px -12px rgba(80,60,200,.6)!important;display:flex;align-items:center;justify-content:center;gap:8px}
   #moColor .mc-btn{border-radius:22px!important;min-height:60px!important}
+  #moColor .mc-meter>b{display:none!important}
+  #moColor .mc-meter.full .mc-track{box-shadow:inset 0 2px 4px rgba(80,50,160,.15),0 0 0 3px #FFD54A,0 0 16px 4px rgba(255,210,63,.55)!important}
+  html[data-bm-theme="classic"] #moColor .mc-meter.full .mc-track{box-shadow:inset 0 2px 4px rgba(0,0,0,.35),0 0 0 3px #FFD54A,0 0 16px 4px rgba(255,210,63,.45)!important}
   #moColor .mc-done .kstar{flex:none;filter:drop-shadow(0 2px 2px rgba(40,20,120,.35))}
   /* ── dark mode: a calm night sky with soft stars; the drawing stays on white paper so colours look true ── */
   html[data-bm-theme="classic"] #moColor{background:radial-gradient(90% 50% at 50% 0%,#3B3586 0%,rgba(59,53,134,0) 70%),linear-gradient(180deg,#232659 0%,#1C1F4A 55%,#191B3E 100%)!important;color-scheme:dark}
@@ -551,6 +554,16 @@
     if (stroke || autoRun) return; const h = undoStack.pop(); if (!h) return;
     const a = cx(colorC); a.clearRect(0, 0, N, N); a.drawImage(h.a, 0, 0); const b = cx(eyeC); b.clearRect(0, 0, N, N); b.drawImage(h.b, 0, 0);
     glitPts.length = h.g; render(); tone(330, .08);
+    recount();
+  }
+  function recount() {
+    if (!grid || !ptL) return;
+    covered.fill(0); regCov.fill(0); doneR.fill(0); doneArea = 0;
+    const d = cx(colorC).getImageData(0, 0, N, N).data;
+    for (let m = 0; m < ptL.length; m++) { const i = samplePts[m] * 4;
+      if (d[i] < 245 || d[i + 1] < 245 || d[i + 2] < 245) { covered[m] = 1; regCov[ptL[m]]++; } }
+    for (let L = 0; L < regTot.length; L++) if (regTot[L] && regCov[L] >= regTot[L] * .85) { doneR[L] = 1; doneArea += regions[L]; }
+    meter(true);
   }
 
   /* ── rewards: painted shapes "ding" + shine + star burst; a rainbow bar fills; Mo cheers at ¼ ½ ¾ ── */
@@ -595,9 +608,10 @@
     for (let i = 0; i < n; i++) { const a = Math.PI * 2 * i / n + Math.random() * .4, v = (2.2 + Math.random() * 3.2) * (k || 1);
       parts.push({ x, y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1.2, g: .12, life: 700 + Math.random() * 400, t: performance.now(), s: 7 + Math.random() * 9, c: HAPPY[i % HAPPY.length], star: i % 3 !== 2 }); }
   }
-  function meter() {
+  function meter(back) {
     let a = 0; for (let L = 0; L < regTot.length; L++) if (regTot[L]) a += regions[L] * (doneR[L] ? 1 : Math.min(1, regCov[L] / (regTot[L] * .7)));
     const f = Math.min(1, a / totArea / .85), bar = root.querySelector('.mc-meter'), st = bar.querySelector('b');
+    if (back) { const st0 = [.25, .5, .75]; let n = 0; while (n < 3 && f >= st0[n]) n++; milestone = Math.min(milestone, n); if (f < .97) celebrated = false; }
     bar.querySelector('i').style.width = 'calc(' + (f * 100) + '% - ' + (6 * f) + 'px)'; bar.querySelector('b').style.filter = f > 0 ? 'grayscale(' + (.85 - .85 * f) + ')' : ''; bar.classList.toggle('full', f >= .97);
     const steps = [[.25, CHEER[0]], [.5, CHEER[1]], [.75, LINES.almost]];
     { let n = 0; bar.querySelectorAll('em').forEach((m, k) => { const on = f >= steps[k][0];   // stars wake up as soon as the bar passes them
