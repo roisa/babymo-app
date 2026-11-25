@@ -897,6 +897,33 @@ html[data-bm-theme="classic"] #celebOverlay .bm-wa-s .wi{stroke:#EDE6FF}
 .tile.just-revealed .tile-front::before{box-shadow:inset 0 0 0 4px #FFD54A,inset 0 0 24px 6px rgba(255,213,74,.75)}
 @media (prefers-reduced-motion:reduce){#grid .pz-piece,#grid .pz-piece.new::after{animation:none}}
 </style>
+<style id="pz-card-sheet">
+/* reward card as a floating iOS-style sheet (like the other games): rounded frosted card with a soft shadow,
+   the scene stays softly visible behind */
+#celebOverlay .celeb-bg{background:rgba(40,30,90,.28)!important;-webkit-backdrop-filter:blur(6px) saturate(1.1)!important;backdrop-filter:blur(6px) saturate(1.1)!important}
+#celebOverlay #introCard{left:14px!important;right:14px!important;top:auto!important;bottom:max(14px,env(safe-area-inset-bottom))!important;
+  max-height:calc(100% - clamp(84px,12vh,104px) - 14px)!important;width:auto!important;max-width:520px!important;margin:0 auto!important;
+  border-radius:32px!important;padding:0 18px 20px!important;overflow:hidden auto!important;
+  background:linear-gradient(180deg,rgba(236,246,255,.97) 0%,rgba(255,255,255,.97) 34%,rgba(255,248,252,.97) 100%)!important;
+  -webkit-backdrop-filter:blur(18px) saturate(1.2);backdrop-filter:blur(18px) saturate(1.2);
+  border:1px solid rgba(255,255,255,.9)!important;box-shadow:0 30px 60px -24px rgba(40,30,110,.55),0 2px 0 rgba(255,255,255,.8) inset!important}
+#celebOverlay #introCard::before{display:none!important}
+.intro-card .mo-stage{border-radius:30px 30px 0 0;margin:0 -18px!important;padding:0 18px}
+@media (min-width:560px){#celebOverlay #introCard{bottom:auto!important;top:50%!important;transform:translateY(-44%)!important}}
+html[data-bm-theme="classic"] #celebOverlay .celeb-bg{background:rgba(6,8,30,.5)!important}
+html[data-bm-theme="classic"] #celebOverlay #introCard{background:linear-gradient(180deg,rgba(52,62,130,.96) 0%,rgba(38,46,104,.97) 40%,rgba(32,38,90,.97) 100%)!important;
+  border-color:rgba(255,255,255,.12)!important;box-shadow:0 30px 60px -20px rgba(0,0,0,.7),0 1px 0 rgba(255,255,255,.12) inset!important}
+/* new icons: smiling star on the counter, sticker book, little tag icons, line book on the Album pill */
+.counter-badge .kstar{width:22px;height:22px;vertical-align:-5px;margin-left:2px;filter:drop-shadow(0 1px 2px rgba(160,100,0,.3))}
+.album-btn .kbook{width:30px;height:30px;display:block;filter:drop-shadow(0 2px 2px rgba(60,30,140,.25))}
+.main-title .kstar-t{width:1.05em;height:1.05em;vertical-align:-.14em;margin-left:.08em;filter:drop-shadow(0 3px 3px rgba(160,100,0,.3));animation:pzStarT 2.6s ease-in-out infinite}
+@keyframes pzStarT{0%,100%{transform:rotate(-8deg) scale(1)}50%{transform:rotate(8deg) scale(1.08)}}
+@media (prefers-reduced-motion:reduce){.main-title .kstar-t{animation:none}}
+@media (max-width:390px){#celebOverlay #introCard{left:10px!important;right:10px!important;padding:0 12px 16px!important}.intro-card .mo-stage{margin:0 -12px!important}#celebOverlay .bm-wa-two{gap:10px!important}#celebOverlay .bm-wa-two .bm-wa-pri{font-size:14.5px!important;gap:6px!important;padding:0 6px!important}#celebOverlay .bm-wa-two .pz-ic{width:34px!important;height:34px!important;border-radius:11px!important}#celebOverlay .bm-wa-two .pz-ic svg{width:27px!important;height:27px!important}}
+.today-tag .ktag{width:18px;height:18px;flex:none}
+#pzAlbum .wi{width:22px;height:22px;stroke:#4A2FA8;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+html[data-bm-theme="classic"] #pzAlbum .wi{stroke:#EDE6FF}
+</style>
 </head>
 <body>
 
@@ -937,18 +964,18 @@ html[data-bm-theme="classic"] #celebOverlay .bm-wa-s .wi{stroke:#EDE6FF}
     <div class="hdr-right">
       <!-- Counter -->
       <div class="counter-badge" id="counter">
-        <span id="countNum">0</span> / <span id="countTot">9</span> 🌟
+        <span id="countNum">0</span> / <span id="countTot">9</span> <svg class="kstar" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="pzStarG1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE878"/><stop offset="1" stop-color="#FFB41F"/></linearGradient></defs><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="url(#pzStarG1)" stroke="#FFC22E" stroke-width="4" stroke-linejoin="round"/><ellipse cx="15" cy="15.5" rx="3.6" ry="2.2" transform="rotate(-30 15 15.5)" fill="#fff" opacity=".6"/><ellipse cx="16.2" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><ellipse cx="23.8" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><circle cx="13.6" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><circle cx="26.4" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><path d="M17.6 25.2q2.4 2.6 4.8 0" fill="none" stroke="#4A2A12" stroke-width="1.6" stroke-linecap="round"/></svg>
       </div>
-      <button class="album-btn" id="albumBtn" type="button" aria-label="Album Stiker">📒<b id="albumNum">0</b></button>
+      <button class="album-btn" id="albumBtn" type="button" aria-label="Album Stiker"><svg class="kbook" viewBox="0 0 32 32" aria-hidden="true"><rect x="6" y="4" width="21" height="25" rx="4" fill="#7B5BE6"/><rect x="6" y="4" width="6" height="25" rx="3" fill="#5E40C8"/><rect x="9" y="4" width="18" height="25" rx="4" fill="#9B7DF5"/><rect x="11" y="7" width="13" height="2.4" rx="1.2" fill="#fff" opacity=".35"/><path d="M18 11.5l1.6 3.3 3.6.5-2.6 2.5.6 3.6-3.2-1.7-3.2 1.7.6-3.6-2.6-2.5 3.6-.5z" fill="#FFD23F" stroke="#fff" stroke-width="1.2" stroke-linejoin="round"/></svg><b id="albumNum">0</b></button>
     </div>
   </div>
 
   <!-- Title -->
   <div class="title-area">
 
-    <div class="main-title" id="mainTitle">Siapa <span>aku</span>? 🌟</div>
+    <div class="main-title" id="mainTitle">Siapa <span>aku</span>? <svg class="kstar kstar-t" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="pzStarG2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE878"/><stop offset="1" stop-color="#FFB41F"/></linearGradient></defs><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="url(#pzStarG2)" stroke="#FFC22E" stroke-width="4" stroke-linejoin="round"/><ellipse cx="15" cy="15.5" rx="3.6" ry="2.2" transform="rotate(-30 15 15.5)" fill="#fff" opacity=".6"/><ellipse cx="16.2" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><ellipse cx="23.8" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><circle cx="13.6" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><circle cx="26.4" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><path d="M17.6 25.2q2.4 2.6 4.8 0" fill="none" stroke="#4A2A12" stroke-width="1.6" stroke-linecap="round"/></svg></div>
     <div class="sub-hint" id="subHint">Kenalan dulu yuk!</div>
-    <div class="today-tag" id="todayTag">🌞 Gambar hari ini</div>
+    <div class="today-tag" id="todayTag"><svg class="ktag" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#FFB21E" stroke-width="2.4" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g><circle cx="12" cy="12" r="5" fill="#FFC93C"/></svg><span>Gambar hari ini</span></div>
   </div>
 
   <!-- Puzzle -->
@@ -1005,7 +1032,7 @@ html[data-bm-theme="classic"] #celebOverlay .bm-wa-s .wi{stroke:#EDE6FF}
         <button class="bm-wa-pri" id="pzAgain" type="button"><i class="pz-ic pz-ic-n"><svg viewBox="0 0 40 40" aria-hidden="true"><defs><clipPath id="pzIcCard"><rect x="4" y="6" width="27" height="25" rx="6"/></clipPath></defs><g clip-path="url(#pzIcCard)"><rect x="4" y="6" width="27" height="25" fill="#8FD3FF"/><circle cx="12" cy="13.5" r="3.6" fill="#FFC93C"/><path d="M4 31V24q7-7 14-2t13-3v12z" fill="#5DC046"/><path d="M4 31v-3q9-5 16 0t11-1v4z" fill="#3FA736"/><path d="M19 12.5a3 3 0 0 1 5.6-1.2 2.4 2.4 0 1 1 .4 4.7H19.6a1.8 1.8 0 0 1-.6-3.5z" fill="#fff"/></g><rect x="4" y="6" width="27" height="25" rx="6" fill="none" stroke="#2F9A2A" stroke-width="2"/><circle cx="30.5" cy="29.5" r="7.2" fill="#FF9D2E" stroke="#fff" stroke-width="2.4"/><path d="M30.5 25.8v7.4M26.8 29.5h7.4" stroke="#fff" stroke-width="2.6" stroke-linecap="round"/></svg></i><span class="pz-lb">Gambar Baru</span></button></div>
         <div class="bm-wa-row">
           <a href="./index.html" class="bm-wa-s"><svg class="wi" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 11.5 12 5l8 6.5"/><path d="M6.5 10v9h11v-9"/><path d="M10 19v-5h4v5"/></svg><span>Hub</span></a>
-          <button class="bm-wa-s" id="pzAlbum" type="button">📒 Album</button>
+          <button class="bm-wa-s" id="pzAlbum" type="button"><svg class="wi" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 4.5h10.5a2 2 0 0 1 2 2v13H8a2 2 0 0 1-2-2z"/><path d="M6 17.5a2 2 0 0 1 2-2h10.5"/><path d="M12.3 8l.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2L9.4 10.1l2-.3z"/></svg><span>Album</span></button>
           <a href="#" class="bm-wa-s" onclick="event.preventDefault();window.BabyMo&&BabyMo.share({title:'Kenalan dengan Baby Mo',message:'Kenalan yuk sama Baby Mo — sahabat kecil islami! 🐻'})"><svg class="wi" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14.5V3.5M7.5 8 12 3.5 16.5 8"/><path d="M5 12.5V19a1.5 1.5 0 0 0 1.5 1.5h11A1.5 1.5 0 0 0 19 19v-6.5"/></svg><span>Bagikan</span></a>
         </div>
       </div>
@@ -1048,7 +1075,9 @@ function sizePuzzle(){
 }
 
 // Tile back icons — cycling
-const BACK_ICONS = ['🌙','⭐','✨','🌿','💚','🌟','✦','🌸','☀️'];
+const BACK_ICONS = ['🌙','⭐','✨','🌿','💚','🌟','🌈','🌸','☀️'];
+const KSTAR_T = '<svg class="kstar kstar-t" viewBox="0 0 40 40" aria-hidden="true"><defs><linearGradient id="pzStarG3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFE878"/><stop offset="1" stop-color="#FFB41F"/></linearGradient></defs><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="#fff" stroke="#fff" stroke-width="7" stroke-linejoin="round"/><path d="M20.0 7.0 L24.5 15.4 L33.8 17.0 L27.2 23.8 L28.5 33.2 L20.0 29.1 L11.5 33.2 L12.8 23.8 L6.2 17.0 L15.5 15.4Z" fill="url(#pzStarG3)" stroke="#FFC22E" stroke-width="4" stroke-linejoin="round"/><ellipse cx="15" cy="15.5" rx="3.6" ry="2.2" transform="rotate(-30 15 15.5)" fill="#fff" opacity=".6"/><ellipse cx="16.2" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><ellipse cx="23.8" cy="21.8" rx="1.5" ry="1.9" fill="#4A2A12"/><circle cx="13.6" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><circle cx="26.4" cy="25" r="1.6" fill="#FF8FA3" opacity=".75"/><path d="M17.6 25.2q2.4 2.6 4.8 0" fill="none" stroke="#4A2A12" stroke-width="1.6" stroke-linecap="round"/></svg>';
+const TAG_SUN = '<svg class="ktag" viewBox="0 0 24 24" aria-hidden="true"><g stroke="#FFB21E" stroke-width="2.4" stroke-linecap="round"><path d="M12 2.5v2.6M12 18.9v2.6M2.5 12h2.6M18.9 12h2.6M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g><circle cx="12" cy="12" r="5" fill="#FFC93C"/></svg>', TAG_BOOK = '<svg class="ktag" viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="3" width="15" height="18" rx="3" fill="#9B7DF5"/><rect x="5" y="3" width="4" height="18" rx="2" fill="#6E4FD8"/><path d="M14.5 8.2l1.1 2.2 2.4.4-1.7 1.7.4 2.4-2.2-1.1-2.2 1.1.4-2.4-1.7-1.7 2.4-.4z" fill="#FFD23F"/></svg>';
 
 // Musical notes — C major scale + two extra
 const NOTES = [261, 294, 330, 349, 392, 440, 494, 523, 587];
@@ -1299,13 +1328,13 @@ function onComplete(){
     { const nb = document.querySelector('#pzAgain .pz-lb'); if (nb) nb.textContent = PL('Gambar Baru', 'New Picture'); }
     cb.onclick = () => { try { playSparkle(); } catch (e) {} window.MoColor && MoColor.open({ src: 'coloring/meet/' + CUR_POSE[0] + '.png', key: 'meet-' + CUR_POSE[0],
       guide: (window.MO_COLOR_GUIDES || []).indexOf(CUR_POSE[0]) >= 0 ? 'coloring/meet/' + CUR_POSE[0] + '-color.webp' : null,
-      title: (POSE_NAMES[CUR_POSE[0]] || ['Baby Mo', 'Baby Mo'])[PZ_EN ? 1 : 0] + ' 🖍️' }); }; }
+      title: (POSE_NAMES[CUR_POSE[0]] || ['Baby Mo', 'Baby Mo'])[PZ_EN ? 1 : 0] }); }; }
   // Grid gets gold border
   document.getElementById('grid').classList.add('complete');
   document.getElementById('puzzleGlow').style.opacity = '1';
 
   // Title changes
-  document.getElementById('mainTitle').innerHTML = 'Ketemu! <span>Baby Mo!</span> 🎉';
+  document.getElementById('mainTitle').innerHTML = PL('Ketemu! <span>Baby Mo!</span> ', 'Found it! <span>Baby Mo!</span> ') + KSTAR_T;
   document.getElementById('subHint').style.opacity = '0';
   showBottomHint('');
 
@@ -1620,7 +1649,8 @@ function renderChrome(){
   document.getElementById('albumNum').textContent = n;
   document.getElementById('countTot').textContent = TOTAL;
   const tag = document.getElementById('todayTag');
-  tag.textContent = IS_TODAY ? PL('🌞 Gambar hari ini', "🌞 Today's picture") : PL('📒 Dari album', '📒 From the album');
+  tag.innerHTML = (IS_TODAY ? TAG_SUN : TAG_BOOK) + '<span></span>';
+  tag.lastChild.textContent = IS_TODAY ? PL('Gambar hari ini', "Today's picture") : PL('Dari album', 'From the album');
   const row = document.getElementById('sizeRow');
   row.hidden = !bigOpen();
   row.querySelectorAll('.size-chip').forEach(b => b.classList.toggle('on', +b.dataset.size === COLS));
@@ -1631,7 +1661,7 @@ function startPuzzle(pose, today){
   revealed = 0;
   const g = document.getElementById('grid'); g.classList.remove('complete'); g.style.transform = ''; moAliveReset();
   document.getElementById('puzzleGlow').style.opacity = '0';
-  document.getElementById('mainTitle').innerHTML = PL('Siapa <span>aku</span>? 🌟', 'Who <span>am I</span>? 🌟');
+  document.getElementById('mainTitle').innerHTML = PL('Siapa <span>aku</span>? ', 'Who <span>am I</span>? ') + KSTAR_T;
   document.getElementById('subHint').style.opacity = '1';
   document.getElementById('ringFill').style.stroke = '';
   document.getElementById('countNum').textContent = '0';
@@ -1680,7 +1710,7 @@ function fillMoIntro(){
   let met = false; try{ met = localStorage.getItem('bm_puzzle_met') === '1'; localStorage.setItem('bm_puzzle_met', '1'); }catch(e){}
   const name = (POSE_NAMES[CUR_POSE[0]] || [])[PZ_EN ? 1 : 0];
   const chip = document.getElementById('poseChip');
-  if (chip){ chip.hidden = !name; chip.textContent = name ? '📸 ' + name : ''; }
+  if (chip){ chip.hidden = !name; chip.textContent = name || ''; }
   let child = ''; try{ child = (localStorage.getItem('mo_child_name') || '').trim(); }catch(e){}
   const t = document.getElementById('bubbleText'), s = document.getElementById('bubbleSub');
   if (!met){
@@ -1721,7 +1751,7 @@ function renderStickerNote(isNew){
   const n = stickerCount(), box = document.getElementById('stkNew');
   const unlockBig = isNew && n === BIG_AT;
   box.innerHTML = `<img src="${poseSrc(CUR_POSE, true)}" alt="">` + (isNew
-    ? `<div><b>🎉 ${PL('Stiker baru!', 'New sticker!')} (${n}/${POSES.length})</b>${unlockBig ? PL('Puzzle 4×4 terbuka! Coba yang lebih menantang 💪', '4×4 puzzle unlocked! Try the bigger one 💪') : PL('Tekan Gambar Baru untuk pose Mo yang lain!', 'Tap New Picture for another Mo pose!')}</div>`
+    ? `<div><b>${PL('Stiker baru!', 'New sticker!')} (${n}/${POSES.length})</b>${unlockBig ? PL('Puzzle 4×4 terbuka! Coba yang lebih menantang 💪', '4×4 puzzle unlocked! Try the bigger one 💪') : PL('Tekan Gambar Baru untuk pose Mo yang lain!', 'Tap New Picture for another Mo pose!')}</div>`
     : `<div><b>${PL('Album', 'Album')}: ${n}/${POSES.length} ${PL('stiker', 'stickers')}</b>${PL('Stiker ini sudah ada di albummu. Tekan Gambar Baru!', 'This sticker is already in your album. Tap New Picture!')}</div>`);
   box.insertAdjacentHTML('beforeend', `<i class="stk-bar" aria-hidden="true"><u style="width:${Math.round(n / POSES.length * 100)}%"></u></i><span class="stk-go" aria-hidden="true">›</span>`);
   box.setAttribute('role', 'button'); box.tabIndex = 0;
