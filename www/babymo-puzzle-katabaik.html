@@ -1503,6 +1503,12 @@ html[data-bm-theme="classic"] .kb-instr{background:#2C3366;color:#EDE6FF;box-sha
 .kb-instr.play{animation:kbInstrPlay2 .45s cubic-bezier(.3,1.6,.5,1)!important}
 @keyframes kbInstrPlay2{40%{transform:scale(1.15) rotate(-4deg)}}
 @media (prefers-reduced-motion:reduce){.kb-instr.play,.kb-mo.hop{animation:none!important}}
+/* the bubble sits on the row's bottom edge, clear of the puzzle card (which overlaps the row by ~28px) and grows upward */
+.kb-mo-row{min-height:146px!important}
+.kb-q{top:auto!important;bottom:34px!important;transform:none!important}
+.kb-q.pop{animation:kbQPop2 .55s cubic-bezier(.3,1.5,.5,1)!important}
+@keyframes kbQPop2{from{transform:scale(.6);opacity:0}}
+@media (max-height:640px){.kb-mo-row{min-height:120px!important}.kb-q .subtitle{display:none!important}}
 </style>
 <style id="kb-tune">
 .kb-tune{position:relative;display:inline-flex;align-items:center;gap:8px;margin:12px auto 0;padding:8px 16px 8px 10px;border-radius:999px;border:0;cursor:pointer;
