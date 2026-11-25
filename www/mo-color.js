@@ -186,6 +186,7 @@
   const mk = () => { const c = document.createElement('canvas'); c.width = c.height = N; return c; };
   const colorC = mk(), eyeC = mk(), strokeC = mk(), maskC = mk(), srcC = mk(), tmpC = mk(), eyeTmpC = mk(), targetC = mk(), eyeTargetC = mk();
   const cx = c => c.getContext('2d', { willReadFrequently: true });
+  let faceEyes = [];
   let lineWall = null, openTok = 0, guideWait = null, magicQueued = false;
   let root, cvs, ctx, fx, fctx, lineImg, labels, regions, order, start, bgL = -1, opts = {}, audio, cur = CRAYONS[0],
       guideImg = null, guideData = null, guideCol = null, targetReady = false, blobs = [], adj = null,
@@ -466,23 +467,34 @@
           if (bn <= 0) { const x2 = Math.max(0, x - 48), x3 = Math.min(N, x + 49), y2 = Math.max(0, y - 48), y3 = Math.min(N, y + 49);   // nothing near: look further
             for (let j = 0; j < P.length; j++) { const n = box(ii[j], x2, y2, x3, y3); if (n > bn) { bn = n; bj = j; } } }
           col[i] = P[bn > 0 ? bj : P.dom]; } }
+      // Mo's eyes: on the page they are black with little white shine holes. The holes stay white (they are the
+      // shine), and the eye gets a warm brown iris around a dark pupil, like the coloured pictures.
+      const isSkin = c => c && c[0] > 190 && c[1] > 140 && c[1] < 225 && c[2] > 100 && c[2] < 205;
+      faceEyes = [];
+      for (const bl of blobs) { if (!isSkin(cl[bl.L] && cl[bl.L][0])) continue;
+        let x0 = N, x1 = 0, y0 = N, y1 = 0; for (const p of bl.px) { const y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        faceEyes.push({ bl, x0, x1, y0, y1, hole: false }); }
+      for (let L = 0; L < regions.length; L++) { if (regions[L] > 900 || !faceEyes.length) continue;
+        let x0 = N, x1 = 0, y0 = N, y1 = 0; for (let k = start[L]; k < start[L + 1]; k++) { const p = order[k], y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+        const e = faceEyes.find(e => x0 >= e.x0 - 3 && x1 <= e.x1 + 3 && y0 >= e.y0 - 3 && y1 <= e.y1 + 3);
+        if (e) { const c0 = order[start[L] + ((start[L + 1] - start[L]) >> 1)] * 4; if (Math.min(d[c0], d[c0 + 1], d[c0 + 2]) > 150) { e.hole = true; for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = 0xFFFFFF; } } }
       for (let i = 0; i < N * N; i++) if (col[i] >= 0) { const o4 = i * 4; o[o4] = col[i] >> 16 & 255; o[o4 + 1] = col[i] >> 8 & 255; o[o4 + 2] = col[i] & 255; }
       // eyes
       const ex = cx(eyeTargetC), ei = ex.createImageData(N, N), eo = ei.data;
-      for (const bl of blobs) { const sk = cl[bl.L] && cl[bl.L][0];
+      // face eyes: the lined-up coloured version's own eye (dark pupil, white shines); where it shows skin
+      // (the two drawings differ a little) the eye stays dark, never skin-coloured
+      for (const e of faceEyes) { const { bl } = e, sk = cl[bl.L][0], inB = new Set(bl.px);
+        for (const p of bl.px) { const i = p * 4, r = d[i], gg = d[i + 1], b2 = d[i + 2]; let c;
+          const deep = inB.has(p - 4) && inB.has(p + 4) && inB.has(p - 4 * N) && inB.has(p + 4 * N);
+          if (Math.min(r, gg, b2) > 200) c = deep ? [255, 255, 255] : [34, 18, 10];   // a shine sits inside the eye, never on its rim
+          else if ((sk[0] - r) ** 2 + (sk[1] - gg) ** 2 + (sk[2] - b2) ** 2 < 60 * 60 || (r > 170 && gg > 110)) c = [34, 18, 10];
+          else c = [r, gg, b2];
+          eo[i] = c[0]; eo[i + 1] = c[1]; eo[i + 2] = c[2]; eo[i + 3] = 255; } }
+      for (const bl of blobs) { if (faceEyes.some(e => e.bl === bl)) continue; const sk = cl[bl.L] && cl[bl.L][0];
         for (const p of bl.px) { const i = p * 4, r = d[i], gg = d[i + 1], b = d[i + 2];
           if (Math.max(r, gg, b) < 45) continue;
           if (sk && (sk[0] - r) ** 2 + (sk[1] - gg) ** 2 + (sk[2] - b) ** 2 < 45 * 45) continue;
           eo[i] = r; eo[i + 1] = gg; eo[i + 2] = b; eo[i + 3] = 255; } }
-      // a clear white shine in each eye (a big one up top, a small one below), so the eyes always sparkle
-      for (const bl of blobs) { const sk = cl[bl.L] && cl[bl.L][0]; if (!sk || !(sk[0] > 190 && sk[1] > 140 && sk[1] < 225 && sk[2] > 100 && sk[2] < 205)) continue;   // eyes sit in the face
-        let x0 = N, x1 = 0, y0 = N, y1 = 0; const inB = new Set(bl.px);
-        for (const p of bl.px) { const y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
-        const w = x1 - x0 + 1, h = y1 - y0 + 1, m = Math.min(w, h);
-        const dots = [[x0 + w * .36, y0 + h * .3, m * .2], [x0 + w * .64, y0 + h * .66, m * .1]];
-        for (const p of bl.px) { const y = (p / N) | 0, x = p - y * N;
-          if (!inB.has(p - 2) || !inB.has(p + 2) || !inB.has(p - 2 * N) || !inB.has(p + 2 * N)) continue;   // keep the dark rim
-          for (const [cx_, cy_, r] of dots) if ((x - cx_) ** 2 + (y - cy_) ** 2 <= r * r) { const i = p * 4; eo[i] = eo[i + 1] = eo[i + 2] = 255; eo[i + 3] = 255; } } }
       ex.putImageData(ei, 0, 0);
     } else {
       // no coloured version: cheerful colours that never touch the same colour, light sky behind
