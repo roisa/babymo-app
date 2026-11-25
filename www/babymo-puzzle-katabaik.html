@@ -2257,6 +2257,20 @@ function kbNoteFloat(b){ return;   // replaced by a gold ring pulse on the butto
 }
 document.addEventListener('click', e => { if (e.target.closest && e.target.closest('#kbTune')) kbSong(); });
 
+/* iPhone/iPad: Safari only lets a page start sound on a finished tap (touchend/click), not on the pointerdown the
+   tiles react to, so the sound engine stayed asleep and every chime was silent. Wake it on every finished tap,
+   prime it with a silent sound, and (iOS 17+) ask to play like a media app so the silent switch doesn't mute it. */
+(function () {
+  function wake() {
+    try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
+    const ctx = audio.ensureCtx(); if (!ctx) return;
+    if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
+    if (!wake.primed) { try { const b = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource(); src.buffer = b; src.connect(ctx.destination); src.start(0); wake.primed = true; } catch (e) {} }
+  }
+  ['touchend', 'click', 'keydown'].forEach(ev => document.addEventListener(ev, wake, { capture: true, passive: true }));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && state.audioCtx && state.audioCtx.state !== 'running') { try { state.audioCtx.resume(); } catch (e) {} } });
+})();
+
 // Pre-warm voice list (Chrome/Edge load voices async)
 if (window.speechSynthesis){
   window.speechSynthesis.getVoices();
