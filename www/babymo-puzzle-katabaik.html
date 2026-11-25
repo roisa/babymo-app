@@ -2004,6 +2004,18 @@ const audio = {
     const female = arabic.find(v => /female|woman|laila|hoda|amira|salma/i.test(v.name));
     return female || arabic[0];
   },
+  /* iPhone/iPad: after Mo's voice and the song's voice clips play, Safari can leave the old sound engine silent
+     (sometimes still claiming "running"), which is why a page refresh brought the instruments back. Swap in a fresh
+     engine inside a tap: on "Again!", closing the result card, and whenever Safari reports it interrupted/closed. */
+  freshCtx(){
+    const old = state.audioCtx; state.audioCtx = null;
+    if (old) { try { old.close(); } catch (e) {} }
+    const ctx = this.ensureCtx(); if (!ctx) return null;
+    try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
+    try { ctx.resume(); } catch (e) {}
+    try { const b = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource(); src.buffer = b; src.connect(ctx.destination); src.start(0); } catch (e) {}
+    return ctx;
+  },
   stopAll(){
     if (this.synth) this.synth.cancel();
     if (this.el){ try{ this.el.pause(); this.el.currentTime=0; }catch(e){} }
@@ -2270,7 +2282,8 @@ document.addEventListener('click', e => { if (e.target.closest && e.target.close
 (function () {
   function wake() {
     try { if (navigator.audioSession && navigator.audioSession.type !== 'playback') navigator.audioSession.type = 'playback'; } catch (e) {}
-    const ctx = audio.ensureCtx(); if (!ctx) return;
+    let ctx = audio.ensureCtx(); if (!ctx) return;
+    if (ctx.state === 'interrupted' || ctx.state === 'closed') { ctx = audio.freshCtx(); if (!ctx) return; }
     if (ctx.state !== 'running') { try { ctx.resume(); } catch (e) {} }
     if (!wake.primed) { try { const b = ctx.createBuffer(1, 1, 22050), src = ctx.createBufferSource(); src.buffer = b; src.connect(ctx.destination); src.start(0); wake.primed = true; } catch (e) {} }
   }
@@ -2619,6 +2632,7 @@ function shareKata(){
 function hideCelebration(){
   document.getElementById('celebration').classList.remove('show'); kbSongT.forEach(clearTimeout); kbSongT = []; audio._afterVoice = null;
   audio.stopAll();
+  audio.freshCtx();   // the result card's voice + song can leave Safari's sound engine silent: start the next word on a fresh one
 }
 
 function spawnConfetti(n){
