@@ -371,7 +371,7 @@
   function commit() {
     if (!stroke) return;
     compose(); cx(colorC).drawImage(tmpC, 0, 0); if (stroke.magic) cx(eyeC).drawImage(eyeTmpC, 0, 0);
-    stroke = null; cx(strokeC).clearRect(0, 0, N, N); render(); checkProgress();
+    stroke = null; cx(strokeC).clearRect(0, 0, N, N); render(); syncCover(); checkProgress();
   }
   function toCanvas(e) { const r = cvs.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * N, (e.clientY - r.top) / r.height * N]; }
   function regionAt(x, y) {
@@ -382,7 +382,7 @@
   }
   const BR = N * .05;                              // brush size
   function onDown(e) {
-    if (!labels || autoRun) return;
+    if (!labels || autoRun || (stroke && stroke.spreading)) return;
     e.preventDefault(); try { cvs.setPointerCapture(e.pointerId); } catch (er) {}
     const magic = cur.kind === 'magic', [x, y] = toCanvas(e), L = regionAt(x, y); if (L < 0 && !magic) return;   // the magic brush can start anywhere
     snapshot(); makeSource(cur); cx(strokeC).clearRect(0, 0, N, N);
@@ -461,6 +461,13 @@
     if (!grid || L < 0 || !regTot[L]) return;
     for (let m = 0; m < ptL.length; m++) if (ptL[m] === L && !covered[m]) { covered[m] = 1; regCov[L]++; }
     if (!doneR[L]) finishRegion(L, quiet);
+  }
+  function syncCover() {
+    if (!grid || !ptL) return;
+    const d = cx(colorC).getImageData(0, 0, N, N).data, touched = new Set();
+    for (let m = 0; m < ptL.length; m++) { if (covered[m]) continue; const i = samplePts[m] * 4;
+      if (d[i] < 245 || d[i + 1] < 245 || d[i + 2] < 245) { covered[m] = 1; regCov[ptL[m]]++; touched.add(ptL[m]); } }
+    touched.forEach(L => { if (!doneR[L] && regCov[L] >= regTot[L] * .85) finishRegion(L, autoRun); });
   }
   function centroid(L) { let sx = 0, sy = 0, n = 0; for (let k = start[L]; k < start[L + 1]; k += 23) { const p = order[k], y = (p / N) | 0; sx += p - y * N; sy += y; n++; } return [sx / n, sy / n]; }
   function finishRegion(L, quiet) {
