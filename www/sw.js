@@ -10,7 +10,7 @@
      - same-origin static → cache-first (fast), refreshed in background.
      - cross-origin (fonts) → opportunistic cache.
    ============================================================ */
-const CACHE = "babymo-games-v337";
+const CACHE = "babymo-games-v338";
 
 const SHELL = [
   "/",
@@ -118,6 +118,24 @@ const SHELL = [
   "/baby-mo-poses/baby-mo-gw-welcome.webp",
   "/baby-mo-poses/baby-mo-gw-proud.webp",
   "/baby-mo-poses/baby-mo-gw-calm.webp",
+  "/baby-mo-poses/baby-mo-fh-run1.webp",
+  "/baby-mo-poses/baby-mo-fh-run2.webp",
+  "/baby-mo-poses/baby-mo-fh-run3.webp",
+  "/baby-mo-poses/baby-mo-fh-run4.webp",
+  "/baby-mo-poses/baby-mo-fh-run5.webp",
+  "/baby-mo-poses/baby-mo-fh-run6.webp",
+  "/baby-mo-poses/baby-mo-fh-crouch.webp",
+  "/baby-mo-poses/baby-mo-fh-leap.webp",
+  "/baby-mo-poses/baby-mo-fh-tuck.webp",
+  "/baby-mo-poses/baby-mo-fh-hooray.webp",
+  "/baby-mo-poses/baby-mo-fh-air.webp",
+  "/baby-mo-poses/baby-mo-fh-land.webp",
+  "/baby-mo-poses/baby-mo-fh-ready.webp",
+  "/baby-mo-poses/baby-mo-fh-back.webp",
+  "/baby-mo-poses/baby-mo-fh-hit.webp",
+  "/baby-mo-poses/baby-mo-fh-follow.webp",
+  "/baby-mo-poses/baby-mo-fh-oops.webp",
+  "/baby-mo-poses/baby-mo-fh-win.webp",
   "/baby-mo-poses/baby-mo-pj-top.webp",
   "/baby-mo-poses/baby-mo-pj-pants.webp",
   "/baby-mo-poses/baby-mo-pj-both.webp",
