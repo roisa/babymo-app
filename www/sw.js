@@ -18,6 +18,7 @@ const SHELL = [
   "/index.html",
   "/manifest.webmanifest",
   "/bm-kit.js",
+  "/bm-guard.js",
   "/bm-season.js",
   "/bm-voice.js",
   "/bm-prayertimes.js",
