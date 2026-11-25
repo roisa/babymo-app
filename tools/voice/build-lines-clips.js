@@ -155,6 +155,17 @@ const PAGES = {
     g: 'Forehand Beat', lits: [],
     fn: (M) => (M === 'en' ? ['Perfect!', 'Great!', 'Nice!', 'Good!'] : FH_TIERS.map(t => t.say)).map(w => [w, M, 'nilai pukulan forehand / forehand grade'])
   },
+  // Meet Baby Mo: the cheers while uncovering the picture (pzCheer), "Yeay!" and Mo's pose name at the reveal (moAlive)
+  'babymo-puzzle': {
+    g: 'Meet Baby Mo', lits: [],
+    fn: (M) => {
+      const i = M === 'en' ? 1 : 0, a = [];
+      Object.keys(PZ_CHEERS).forEach(k => PZ_CHEERS[k].forEach(c => a.push([c[i], M, 'semangat saat membuka / cheer while uncovering'])));
+      a.push([M === 'en' ? 'Yay!' : 'Yeay!', M, 'Mo ketemu / Mo found']);
+      Object.keys(POSE_NAMES).forEach(k => a.push([POSE_NAMES[k][i], M, 'nama gaya Mo / Mo\'s pose: ' + k]));
+      return a;
+    }
+  },
   'index': {
     g: 'Beranda', lits: ['GREETINGS'],
     fn: (M, X) => {

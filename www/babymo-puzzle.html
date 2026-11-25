@@ -7,6 +7,8 @@
 <script src="bm-fit.js"></script>
 <script src="i18n/puzzle.js"></script>
 <script src="bm-i18n.js"></script>
+<script src="voice/manifest.js"></script>
+<script src="bm-voice.js"></script>
 <meta name="description" content="Puzzle interaktif untuk mengenal maskot Baby Mo — seru, ramah anak, dan edukatif.">
 <title>Kenalan dengan Baby Mo — Puzzle Interaktif Anak | Baby Mo</title>
 <link rel="stylesheet" href="fonts/fonts.css">
@@ -289,7 +291,7 @@ body::before{
   font-size:12px;font-weight:900;color:var(--gold-lt);}
 
 /* ── TOAST ── */
-.toast{position:fixed;top:50%;left:50%;
+.toast{position:fixed;top:clamp(70px,15%,140px);left:50%;
   transform:translate(-50%,-50%) scale(0);
   background:linear-gradient(135deg,#18A84E,#0E7C38);
   border-radius:20px;padding:14px 24px;
@@ -625,6 +627,11 @@ html[data-bm-theme="dark"] .pz-scene .st,html[data-bm-theme="classic"] .pz-scene
 <script src="mo-color.js" defer></script>
 <style>.bm-wa-pri.pz-color{background:linear-gradient(120deg,#FF8A3D,#E2489A)!important;box-shadow:0 6px 0 #A8306E,0 14px 24px -12px rgba(226,72,154,.6)!important}
 .bm-wa.has-color #pzAgain{min-height:50px!important;font-size:16px!important}</style>
+<style>/* simpler reward card (Nov 2026) */
+.intro-card #poseChip:not([hidden]){display:block!important;font-size:clamp(17px,4.6vw,21px)!important;padding:8px 16px!important;margin:4px auto 12px!important}
+#pzColor[hidden]{display:none!important}
+#celebOverlay #introCard{position:absolute;left:0;right:0;bottom:0;top:auto;max-height:100%;overflow-y:auto}
+#moWho[hidden],#moTag[hidden],#bubbleSub[hidden]{display:none!important}</style>
 </head>
 <body>
 
@@ -906,6 +913,22 @@ window.addEventListener('resize', () => { clearTimeout(_pzRT); _pzRT = setTimeou
 // ═══════════════════════════════════════════
 // TAP HANDLER
 // ═══════════════════════════════════════════
+/* Spoken cheers while the picture is being uncovered (recorded clips via bm-voice when they exist) */
+const PZ_CHEERS = {
+  third:     [['Bagus sekali!', 'Wonderful!'], ['Keren!', 'Great job!'], ['Hebat!', 'Awesome!']],
+  twoThirds: [['Hampir ketemu!', 'Almost there!'], ['Sedikit lagi!', 'Nearly there!'], ['Wah, siapa ya?', 'Who could it be?']],
+  oneLeft:   [['Satu lagi!', 'One more!'], ['Tinggal satu!', 'Just one more!']]
+};
+function pzSpeak(text, then){
+  try { const u = new SpeechSynthesisUtterance(text); u.lang = PZ_EN ? 'en-US' : 'id-ID'; u.rate = .95; u.pitch = 1.25;
+    if (then) { let done = false; const go = () => { if (!done) { done = true; then(); } }; u.onend = go; u.onerror = go; setTimeout(go, 2200); }
+    speechSynthesis.cancel(); speechSynthesis.speak(u); } catch (e) { then && then(); }
+}
+function pzCheer(when, emoji){
+  const pool = PZ_CHEERS[when], c = pool[Math.floor(Math.random() * pool.length)], t = c[PZ_EN ? 1 : 0];
+  if (when !== 'oneLeft') showToast(emoji, t);
+  pzSpeak(t);
+}
 function onTileTap(tile, idx, r, c){
   if(tile.classList.contains('flipped')) return;
 
@@ -935,15 +958,17 @@ function onTileTap(tile, idx, r, c){
     showBottomHint(HINTS[8]);
   }
 
-  // Milestones
+  // Milestones — shown and spoken
   if(revealed === Math.round(TOTAL / 3)){
-    showToast('🌟', 'Bagus sekali!');
+    pzCheer('third', '🌟');
   } else if(revealed === Math.round(TOTAL * 2 / 3)){
-    showToast('🔥', 'Hampir ketemu!');
+    pzCheer('twoThirds', '🔥');
     // Pulse the grid
     document.getElementById('grid').style.transform = 'scale(1.02)';
     setTimeout(() => document.getElementById('grid').style.transform = '', 300);
   }
+
+  if(revealed === TOTAL - 1 && TOTAL > 4) setTimeout(() => pzCheer('oneLeft', '💚'), 150);
 
   // Complete
   if(revealed === TOTAL){
@@ -1066,7 +1091,7 @@ function moAlive(done){
     [120, 560, 1000].forEach(t => setTimeout(ding, t));
     for (let i = 0; i < 3; i++) setTimeout(() => { const rr = mo.getBoundingClientRect(); try { spawnSparkles(rr.left + rr.width / 2, rr.top + rr.height * .55, 10); } catch (e) {} }, 300 + i * 480);
     const nm = (POSE_NAMES[p[0]] || ['Baby Mo!', 'Baby Mo!'])[PZ_EN ? 1 : 0];
-    setTimeout(() => { bub.textContent = nm + '!'; bub.classList.add('show'); moAliveSay((PZ_EN ? 'Yay! ' : 'Yeay! ') + nm); }, 350);
+    setTimeout(() => { bub.textContent = nm + '!'; bub.classList.add('show'); pzSpeak(PZ_EN ? 'Yay!' : 'Yeay!', () => pzSpeak(nm)); }, 350);
     a.onfinish = () => setTimeout(() => {
       mo.animate([{ opacity:1 }, { opacity:0 }], { duration:350, fill:'forwards' }).onfinish = () => { lay.classList.remove('on'); mo.getAnimations().forEach(x => x.cancel()); done && done(); };
     }, 450);
@@ -1389,7 +1414,10 @@ function fillMoIntro(){
   const likes = [['mo-salam', L('Salam', 'Salam')], ['mo-dua', L('Berdoa', 'Praying')], ['mo-read', L('Membaca', 'Reading')]];
   const fam = [['abi', 'Abi'], ['umi', 'Umi'], ['ais', 'Ais'], ['adam', 'Kak Adam']];
   const who = document.getElementById('moWho');
-  if (who) who.innerHTML =
+  if (who) who.hidden = true;
+  document.getElementById('moTag').hidden = true;
+  if (s) s.hidden = met;
+  if (false) who.innerHTML =
     '<div><h4>' + L('Mo suka…', 'Mo loves…') + '</h4><div class="mo-likes">' +
       likes.map(x => '<div class="mo-like"><img src="word-art/' + x[0] + '.webp" alt="" loading="lazy"><span>' + x[1] + '</span></div>').join('') +
     '</div></div>' +
