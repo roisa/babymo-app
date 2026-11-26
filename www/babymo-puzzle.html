@@ -1059,6 +1059,7 @@ html[data-bm-theme="classic"] #pzAlbum .wi{stroke:#EDE6FF}
       <h2><small id="alCount">0 / 40</small><span id="alTitle">Album Stiker Baby Mo</span></h2>
       <button class="al-close" id="alClose" type="button" aria-label="Tutup">✕</button>
     </div>
+    <div class="al-tabs" role="tablist"><button type="button" class="al-tab on" id="alTabS" role="tab"></button><button type="button" class="al-tab" id="alTabC" role="tab"></button></div>
     <div class="al-bar"><i id="alBar" style="width:0%"></i></div>
     <div class="al-note" id="alNote"></div>
     <div class="al-grid" id="alGrid"></div>
@@ -1337,7 +1338,7 @@ function onComplete(){
     cb.hidden = !has; cb.closest('.bm-wa').classList.toggle('has-color', has);
     cb.querySelector('.pz-lb').textContent = PL('Warnai Mo', 'Colour Mo');
     { const nb = document.querySelector('#pzAgain .pz-lb'); if (nb) nb.textContent = PL('Gambar Baru', 'New Picture'); }
-    cb.onclick = () => { try { playSparkle(); } catch (e) {} window.MoColor && MoColor.open({ src: 'coloring/meet/' + CUR_POSE[0] + '.png', key: 'meet-' + CUR_POSE[0],
+    cb.onclick = () => { try { playSparkle(); } catch (e) {} window.MoColor && openColour({ src: 'coloring/meet/' + CUR_POSE[0] + '.png', key: 'meet-' + CUR_POSE[0],
       guide: (window.MO_COLOR_GUIDES || []).indexOf(CUR_POSE[0]) >= 0 ? 'coloring/meet/' + CUR_POSE[0] + '-color.webp' : null,
       title: (POSE_NAMES[CUR_POSE[0]] || ['Baby Mo', 'Baby Mo'])[PZ_EN ? 1 : 0] }); }; }
   // Grid gets gold border
@@ -1772,7 +1773,38 @@ function renderStickerNote(isNew){
   box.setAttribute('role', 'button'); box.tabIndex = 0;
   if (!box.dataset.go) { box.dataset.go = '1'; box.addEventListener('click', () => { try { document.getElementById('pzAlbum').click(); } catch (e) {} }); }
 }
+/* colouring page in this game's own look: the same sky, clouds, hills, trees, fence and flowers behind it */
+function openColour(o){
+  MoColor.open(o);
+  const mc = document.getElementById('moColor'), sc = document.querySelector('.pz2');
+  if (mc && sc && !mc.querySelector('.pz2')) { const c = sc.cloneNode(true); c.classList.add('mc-pz2'); mc.insertBefore(c, mc.firstChild); }
+  mc && mc.classList.add('pz-look');
+}
+let alMode = 'st';
+function albumTabs(){
+  const works = (window.MoColor && MoColor.works) ? MoColor.works() : [];
+  const ts = document.getElementById('alTabS'), tc = document.getElementById('alTabC');
+  ts.textContent = PL('Stiker', 'Stickers'); tc.textContent = PL('Warnaanku', 'My colouring') + (works.length ? ' (' + works.length + ')' : '');
+  ts.classList.toggle('on', alMode === 'st'); tc.classList.toggle('on', alMode === 'col');
+  return works;
+}
+function openColourAlbum(){
+  const works = albumTabs(), grid = document.getElementById('alGrid'); grid.innerHTML = '';
+  document.getElementById('alCount').textContent = works.length + ' ' + PL('gambar', works.length === 1 ? 'picture' : 'pictures');
+  document.getElementById('alTitle').textContent = PL('Gambar Warnaanku', 'My Coloured Mo');
+  document.getElementById('alBar').parentNode.style.display = 'none';
+  document.getElementById('alNote').textContent = works.length
+    ? PL('Ketuk gambar untuk lanjut mewarnai.', 'Tap a picture to keep colouring it.')
+    : PL('Belum ada gambar. Selesaikan puzzle, lalu tekan Warnai Mo!', 'No pictures yet. Finish a puzzle, then tap Colour Mo!');
+  works.forEach(w => { const b = document.createElement('button'); b.type = 'button'; b.className = 'al-st got al-col';
+    b.innerHTML = `<img src="${w.thumb}" alt="">`;
+    b.addEventListener('click', () => { closeAlbum(); openColour({ src: w.src, guide: w.guide, key: w.key, title: w.title, resume: true }); });
+    grid.appendChild(b); });
+  document.getElementById('album').classList.add('on');
+}
 function openAlbum(){
+  if (alMode === 'col') return openColourAlbum();
+  albumTabs(); document.getElementById('alBar').parentNode.style.display = '';
   const d = pzLoad(), n = stickerCount(), tp = todayPose();
   document.getElementById('alCount').textContent = `${n} / ${POSES.length}`;
   document.getElementById('alTitle').textContent = PL('Album Stiker Baby Mo', 'Baby Mo Sticker Album');
@@ -1795,6 +1827,10 @@ function closeAlbum(){ document.getElementById('album').classList.remove('on'); 
 document.getElementById('albumBtn').addEventListener('click', openAlbum);
 document.getElementById('pzAlbum').addEventListener('click', openAlbum);
 document.getElementById('alClose').addEventListener('click', closeAlbum);
+document.getElementById('alTabS').addEventListener('click', () => { alMode = 'st'; openAlbum(); });
+document.getElementById('alTabC').addEventListener('click', () => { alMode = 'col'; openColourAlbum(); });
+/* a tap on the empty space around the result card closes it */
+document.getElementById('celebOverlay').addEventListener('click', e => { if (!e.target.closest('#introCard') && document.getElementById('celebOverlay').classList.contains('show')) closeCeleb(); });
 document.getElementById('pzAgain').addEventListener('click', () => { closeCeleb(); setTimeout(() => startPuzzle(nextPose(), false), 250); });
 document.getElementById('sizeRow').querySelectorAll('.size-chip').forEach(b => b.addEventListener('click', () => {
   if (revealed > 0 && revealed < TOTAL) return;           // finish this one first
@@ -1840,6 +1876,38 @@ document.addEventListener('visibilitychange', () => { if(document.hidden && moIn
 @media (max-width:400px){.bm-wa-pri .pz-ic,.bm-wa-pri .pz-ic svg{width:32px!important;height:32px!important}#celebOverlay .bm-wa-two .bm-wa-pri{font-size:15px!important;padding:0 8px 0 2px!important;gap:3px!important;min-height:58px!important}}
 @media (max-width:340px){.bm-wa-pri .pz-ic{display:none!important}}
 @media (prefers-reduced-motion:reduce){#celebOverlay .bm-wa-two .bm-wa-pri::after{animation:none!important;display:none!important}}
+</style>
+
+<style>
+/* colouring page = the same storybook world as the game */
+#moColor.pz-look{background:#7FCBFF!important}
+html[data-bm-theme="classic"] #moColor.pz-look{background:#1B2452!important}
+#moColor.pz-look .mc-deco{display:none!important}
+#moColor .mc-pz2{position:absolute!important;inset:0;z-index:0!important}
+#moColor.pz-look .mc-title{font:800 clamp(18px,5vw,23px)/1.1 'Fredoka','Nunito',sans-serif!important;color:#4A2FA8!important;background:rgba(255,255,255,.88);border-radius:999px;padding:8px 14px;
+  box-shadow:0 6px 14px -8px rgba(40,70,140,.55),0 0 0 1.5px rgba(255,255,255,.9);flex:0 1 auto!important;margin:0 auto}
+html[data-bm-theme="classic"] #moColor.pz-look .mc-title{background:rgba(43,52,112,.92);color:#EDE6FF!important}
+#moColor.pz-look .mc-x,#moColor.pz-look .mc-undo{background:#fff!important;box-shadow:0 6px 14px -8px rgba(40,70,140,.55),0 0 0 1.5px rgba(255,255,255,.9)!important}
+#moColor.pz-look .mc-pal{background:rgba(255,255,255,.92);border-radius:26px;box-shadow:0 14px 30px -18px rgba(40,70,140,.55)}
+/* Magic = the pink "Colour Mo" pill, Done = the green "New Picture" pill */
+#moColor.pz-look .mc-btn{position:relative;overflow:hidden;isolation:isolate;border-radius:999px!important;border:1px solid rgba(255,255,255,.25)!important;color:#fff!important;
+  font:800 clamp(17px,4.8vw,20px)/1 'Nunito','Fredoka',sans-serif!important;text-shadow:0 1px 1px rgba(0,0,0,.22)}
+#moColor.pz-look .mc-auto{background:linear-gradient(120deg,#FF86B8 0%,#F2509A 50%,#D23C9E 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 22px -12px rgba(210,60,158,.6)!important}
+#moColor.pz-look .mc-done{background:linear-gradient(120deg,#5FD65A 0%,#26B24E 50%,#0E9A6C 100%)!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 10px 22px -12px rgba(14,154,108,.6)!important}
+#moColor.pz-look .mc-btn::before{content:'';position:absolute;left:4%;right:4%;top:1px;height:50%;border-radius:999px 999px 40% 40%;z-index:-1;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,0))}
+#moColor.pz-look .mc-btn:active{transform:scale(.97)}
+</style>
+
+<style>
+.al-tabs{display:flex;gap:8px;margin:0 0 10px}
+.al-tab{flex:1;min-height:44px;border-radius:999px;border:0;background:rgba(255,255,255,.7);color:#4A2FA8;font:800 15px/1 'Nunito','Fredoka',sans-serif;cursor:pointer;box-shadow:inset 0 0 0 1.5px rgba(74,47,168,.15)}
+.al-tab.on{background:linear-gradient(120deg,#16B46A,#0A9C8C 52%,#0A84B8);color:#fff;box-shadow:0 8px 16px -10px rgba(10,143,160,.6)}
+html[data-bm-theme="classic"] .al-tab{background:rgba(255,255,255,.08);color:#EDE6FF}
+html[data-bm-theme="classic"] .al-tab.on{background:linear-gradient(120deg,#16B46A,#0A9C8C 52%,#0A84B8);color:#fff}
+html[data-bm-theme="classic"] #moColor.pz-look .mc-x,html[data-bm-theme="classic"] #moColor.pz-look .mc-undo{background:rgba(43,52,112,.95)!important;color:#EDE6FF!important;opacity:1!important}
+html[data-bm-theme="classic"] #moColor.pz-look .mc-auto{background:linear-gradient(120deg,#FF86B8 0%,#F2509A 50%,#D23C9E 100%)!important}
+html[data-bm-theme="classic"] #moColor.pz-look .mc-done{background:linear-gradient(120deg,#5FD65A 0%,#26B24E 50%,#0E9A6C 100%)!important}
+.al-st.al-col{border-style:solid;cursor:pointer;overflow:hidden;padding:0}.al-st.al-col img{width:100%;height:100%;object-fit:cover;border-radius:14px}
 </style>
 </body>
 </html>
