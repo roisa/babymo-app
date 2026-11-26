@@ -395,6 +395,7 @@
       const b = labels[i + D], c = labels[i + D * N]; if (b >= 0 && b !== a) { adj[a].add(b); adj[b].add(a); } if (c >= 0 && c !== a) { adj[a].add(c); adj[c].add(a); } }
     return adj;
   }
+  function mx2Ok(r, g, b) { return true; }
   function alignGuide() {
     const f = mk(), fx_ = cx(f); fitDraw(fx_, guideImg); if (!lineWall) return f;
     const gd = fx_.getImageData(0, 0, N, N).data, dark = new Uint8Array(N * N);
@@ -479,7 +480,7 @@
       for (let L = 0; L < regions.length; L++) { if (regions[L] > 900 || !faceEyes.length) continue;
         let x0 = N, x1 = 0, y0 = N, y1 = 0; for (let k = start[L]; k < start[L + 1]; k++) { const p = order[k], y = (p / N) | 0, x = p - y * N; if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
         const e = faceEyes.find(e => x0 >= e.x0 - 3 && x1 <= e.x1 + 3 && y0 >= e.y0 - 3 && y1 <= e.y1 + 3);
-        if (e) { const c0 = order[start[L] + ((start[L + 1] - start[L]) >> 1)] * 4; if (Math.min(d[c0], d[c0 + 1], d[c0 + 2]) > 150) { e.hole = true; for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = 0xFFFFFF; } } }
+        if (e) { if (regions[L] < (e.x1 - e.x0 + 1) * (e.y1 - e.y0 + 1) * .2) { e.hole = true; for (let k = start[L]; k < start[L + 1]; k++) col[order[k]] = 0xFFFFFF; } } }
       // the white of the eye: the gap between the black eye and the eyelid line drawn around part of it.
       // Measured all the way round the eye (every 4°); a real eyelid gap runs on for a while, so only stretches of
       // at least 24° count — a nose or cheek line that comes close for a moment does not.
@@ -528,7 +529,8 @@
         const ring = []; for (const p of e.bl.px) for (const o of [-4, 4, -4 * N, 4 * N]) { const q = p + o; if (q >= 0 && q < N * N && !inB.has(q) && labels[q] === e.bl.L) ring.push(q); }
         const dkAt = (q, ox, oy) => { const y = ((q / N) | 0) + oy, x = q % N + ox; if (x < 0 || y < 0 || x >= N || y >= N) return 0; const i = (y * N + x) * 4; return Math.max(d[i], d[i + 1], d[i + 2]) < 110 ? 1 : 0; };
         let bo = [0, 0], bsc = -1e9;
-        for (let oy = -10; oy <= 10; oy += 2) for (let ox = -10; ox <= 10; ox += 2) { let sc = 0; for (let j = 0; j < e.bl.px.length; j += 3) sc += dkAt(e.bl.px[j], ox, oy); for (let j = 0; j < ring.length; j += 3) sc -= dkAt(ring[j], ox, oy); if (sc > bsc) { bsc = sc; bo = [ox, oy]; } }
+        for (let oy = -10; oy <= 10; oy += 1) for (let ox = -10; ox <= 10; ox += 1) { let sc = 0; for (let j = 0; j < e.bl.px.length; j += 3) sc += dkAt(e.bl.px[j], ox, oy); for (let j = 0; j < ring.length; j += 3) sc -= dkAt(ring[j], ox, oy); if (sc > bsc) { bsc = sc; bo = [ox, oy]; } }
+        e.bo = bo;
         for (let y = Math.max(1, e.y0 - my); y <= Math.min(N - 2, e.y1 + my); y++) for (let x = Math.max(1, e.x0 - mx); x <= Math.min(N - 2, e.x1 + mx); x++) {
           const p = y * N + x; if (inB.has(p) || labels[p] < 0 || col[p] === 0xFFFFFF) continue; const Lp = labels[p]; if (Lp !== e.bl.L && regions[Lp] > sz * sz * .8) continue;
           const gx = x + bo[0], gy = y + bo[1]; if (gx < 0 || gy < 0 || gx >= N || gy >= N) continue; const i = (gy * N + gx) * 4; if (Math.min(d[i], d[i + 1], d[i + 2]) <= 195) continue;
@@ -539,16 +541,34 @@
       for (let i = 0; i < N * N; i++) if (col[i] >= 0) { const o4 = i * 4; o[o4] = col[i] >> 16 & 255; o[o4 + 1] = col[i] >> 8 & 255; o[o4 + 2] = col[i] & 255; }
       // eyes
       const ex = cx(eyeTargetC), ei = ex.createImageData(N, N), eo = ei.data;
-      // face eyes: the lined-up coloured version's own eye (dark pupil, white shines); where it shows skin
-      // (the two drawings differ a little) the eye stays dark, never skin-coloured
-      for (const e of faceEyes) { const { bl } = e, sk = cl[bl.L][0], inB = new Set(bl.px);
-        for (const p of bl.px) { const i = p * 4, r = d[i], gg = d[i + 1], b2 = d[i + 2]; let c;
-          const deep = inB.has(p - 4) && inB.has(p + 4) && inB.has(p - 4 * N) && inB.has(p + 4 * N);
-          const wNext = () => { for (const o of [-3, 3, -3 * N, 3 * N]) { const q = p + o; if (q >= 0 && q < N * N && !inB.has(q) && col[q] === 0xFFFFFF) return true; } return false; };
-          if (Math.min(r, gg, b2) > 200) c = deep || wNext() ? [255, 255, 255] : [34, 18, 10];   // a shine inside the eye, or the white of the eye reaching its rim
-          else if ((sk[0] - r) ** 2 + (sk[1] - gg) ** 2 + (sk[2] - b2) ** 2 < 60 * 60 || (r > 170 && gg > 110)) c = [34, 18, 10];
-          else c = [r, gg, b2];
-          eo[i] = c[0]; eo[i + 1] = c[1]; eo[i + 2] = c[2]; eo[i + 3] = 255; } }
+      // face eyes: the coloured version's own eye, lined up on this eye. Each pixel is sorted into pupil / iris /
+      // shine, the sorting is smoothed (no specks or ragged rims), and each class gets one clean colour.
+      for (const e of faceEyes) { const { bl } = e, inB = new Set(bl.px), bo = e.bo || [0, 0];
+        const cls = new Map(), gcol = new Map(), sum = [[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]];
+        for (const p of bl.px) { const y = ((p / N) | 0) + bo[1], x = p % N + bo[0]; let c = 0, r = 0, gg = 0, b2 = 0;
+          if (x >= 0 && y >= 0 && x < N && y < N) { const i = (y * N + x) * 4; r = d[i]; gg = d[i + 1]; b2 = d[i + 2]; const mn = Math.min(r, gg, b2), mx2 = Math.max(r, gg, b2);
+            c = mn > 195 ? 2 : (mx2 > 70 && r > gg && gg >= b2 && mx2 < 200 ? 1 : 0); }          // 2 shine, 1 brown iris, 0 pupil / rim
+          cls.set(p, c); gcol.set(p, [r, gg, b2]); if (c < 2 && mx2Ok(r, gg, b2)) { const S = sum[c]; S[0] += r; S[1] += gg; S[2] += b2; S[3]++; } }
+        for (let pass = 0; pass < 1; pass++) { const nx = new Map();
+          for (const p of bl.px) { const n = [0, 0, 0]; for (let oy = -1; oy <= 1; oy++) for (let ox = -1; ox <= 1; ox++) { const v = cls.get(p + oy * N + ox); if (v !== undefined) n[v]++; }
+            nx.set(p, n[2] > n[1] && n[2] > n[0] ? 2 : n[1] > n[0] ? 1 : 0); }
+          nx.forEach((v, k) => cls.set(k, v)); }
+        const pupil = sum[0][3] ? sum[0].slice(0, 3).map(v => Math.round(v / sum[0][3])) : [30, 16, 8];
+        const iris = sum[1][3] > 20 ? sum[1].slice(0, 3).map(v => Math.round(v / sum[1][3])) : [92, 50, 24];
+        const pd = pupil.map(v => Math.min(v, 45));
+        for (const p of bl.px) { const i = p * 4; let v = cls.get(p), c;
+          const rim = !inB.has(p - 2) || !inB.has(p + 2) || !inB.has(p - 2 * N) || !inB.has(p + 2 * N);
+          if (v === 2) { let edgeWhite = false; for (const o of [-3, 3, -3 * N, 3 * N]) { const q = p + o; if (!inB.has(q) && col[q] === 0xFFFFFF) edgeWhite = true; }
+            if (rim && !edgeWhite) v = 0; }                                                  // a shine never sits on the rim, unless the eye white meets it there
+          if (v === 2) c = [255, 255, 255]; else if (rim) c = pd;
+          else { let n = 0, a0 = 0, a1 = 0, a2 = 0; for (let oy = -2; oy <= 2; oy++) for (let ox = -2; ox <= 2; ox++) { const q = p + oy * N + ox; if (cls.get(q) === v && !(oy === 0 && ox === 0 && false)) { const g = gcol.get(q); if (Math.max(g[0], g[1], g[2]) < 200) { a0 += g[0]; a1 += g[1]; a2 += g[2]; n++; } } }
+            c = n ? [Math.round(a0 / n), Math.round(a1 / n), Math.round(a2 / n)] : (v === 1 ? iris : pd);
+            if (Math.max(c[0], c[1], c[2]) > 170) c = v === 1 ? iris : pd; }                   // soft shading from the coloured version, never skin
+          eo[i] = c[0]; eo[i + 1] = c[1]; eo[i + 2] = c[2]; eo[i + 3] = 255; }
+        // the page's own shine dots (little white holes in the black eye) always stay white
+        for (let y = e.y0; y <= e.y1; y++) for (let x = e.x0; x <= e.x1; x++) { const p = y * N + x; if (inB.has(p) || lineWall[p]) continue;
+          let enc = 0; for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) for (let t = 1; t <= 12; t++) { const q = (y + dy * t) * N + x + dx * t; if (inB.has(q)) { enc++; break; } if (!lineWall[q] && t > 10) break; }
+          if (enc === 4) { const i = p * 4; eo[i] = eo[i + 1] = eo[i + 2] = 255; eo[i + 3] = 255; } } }
       for (const bl of blobs) { if (faceEyes.some(e => e.bl === bl)) continue; const sk = cl[bl.L] && cl[bl.L][0];
         for (const p of bl.px) { const i = p * 4, r = d[i], gg = d[i + 1], b = d[i + 2];
           if (Math.max(r, gg, b) < 45) continue;
