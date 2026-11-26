@@ -2561,5 +2561,16 @@ html[data-bm-theme="classic"] #doaLanjut.aam:disabled{background:linear-gradient
 html[data-bm-theme="classic"] #doaLanjut.aam:disabled .aam-lock{background:#2E3262!important;color:#B9B5E0!important}
 @media (prefers-reduced-motion:reduce){#playAll.pa::after,#doaLanjut.aam.unlocked::after{animation:none!important;display:none}}
 </style>
+
+<style id="dt-tall-1126">
+/* tall phones (iPhone Pro Max and the like): the front page uses the whole height instead of leaving the bottom empty,
+   and the bed with Mo sits higher, nearer the title */
+@media (min-aspect-ratio:1/3) and (max-aspect-ratio:10/19) and (min-height:760px){
+  .dh-wrap{--sh:min(92vw,46vh,46svh,520px)}
+  #s-home .dh-body{justify-content:space-evenly;padding-bottom:max(34px,4vh)}
+  #s-home .dh-go .gbtn{min-height:68px}
+  #s-steps.bedstep .bedwrap{align-items:flex-end!important;padding-bottom:8vh!important;background:linear-gradient(180deg,transparent calc(100% - 8vh - 40px),#1A1550 calc(100% - 8vh - 2px))}
+}
+</style>
 </body>
 </html>

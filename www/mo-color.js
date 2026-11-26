@@ -649,7 +649,8 @@
     ctx.globalCompositeOperation = 'source-over'; ctx.drawImage(colorC, 0, 0);
     if (stroke) ctx.drawImage(tmpC, 0, 0);
     ctx.globalCompositeOperation = 'multiply'; ctx.drawImage(lineImg, 0, 0); ctx.globalCompositeOperation = 'source-over';
-    ctx.drawImage(eyeC, 0, 0); if (stroke && stroke.magic) ctx.drawImage(eyeTmpC, 0, 0);
+    if (stroke && !stroke.magic) { const t = cx(eyeTmpC); t.clearRect(0, 0, N, N); t.drawImage(eyeC, 0, 0); t.globalCompositeOperation = 'destination-out'; t.drawImage(tmpC, 0, 0); t.globalCompositeOperation = 'source-over'; ctx.drawImage(eyeTmpC, 0, 0); }
+    else { ctx.drawImage(eyeC, 0, 0); if (stroke && stroke.magic) ctx.drawImage(eyeTmpC, 0, 0); }
   }
   let raf = 0; function draw() { if (raf) return; raf = requestAnimationFrame(() => { raf = 0; compose(); render(); }); }
   function dab(x, y, r) {
@@ -663,7 +664,9 @@
   }
   function commit() {
     if (!stroke) return;
-    compose(); cx(colorC).drawImage(tmpC, 0, 0); if (stroke.magic) cx(eyeC).drawImage(eyeTmpC, 0, 0);
+    compose(); cx(colorC).drawImage(tmpC, 0, 0);
+    if (stroke.magic) cx(eyeC).drawImage(eyeTmpC, 0, 0);
+    else { const e = cx(eyeC); e.globalCompositeOperation = 'destination-out'; e.drawImage(tmpC, 0, 0); e.globalCompositeOperation = 'source-over'; }   // a crayon covers the magic eye
     stroke = null; cx(strokeC).clearRect(0, 0, N, N); render(); syncCover(); checkProgress();
   }
   function toCanvas(e) { const r = cvs.getBoundingClientRect(); return [(e.clientX - r.left) / r.width * N, (e.clientY - r.top) / r.height * N]; }
@@ -930,13 +933,26 @@
     for (let i = 0; i < 30; i++) addTwinkle(Math.random() * N, Math.random() * N, 1);
     setTimeout(() => { yay.classList.remove('on'); if (closing) { close(); opts.onDone && opts.onDone(); } }, closing ? 2300 : 2000);
   }
-  function finish() {
+  const WORK = 'bm_mo_color_work';                 // full colour layers, to carry on colouring later
+  function hasWork() { try { const d = cx(colorC).getImageData(0, 0, N, N).data; for (let i = 0; i < d.length; i += 4 * 97) if (d[i] < 245 || d[i + 1] < 245 || d[i + 2] < 245) return true; } catch (e) {} return false; }
+  function save() {
+    if (!labels || !hasWork()) return;
+    const key = opts.key || 'mo';
     try { const s = document.createElement('canvas'); s.width = s.height = 320; s.getContext('2d').drawImage(cvs, 0, 0, 320, 320);
-      const all = JSON.parse(localStorage.getItem(STORE) || '{}'); all[opts.key || 'mo'] = s.toDataURL('image/jpeg', .8);
+      const all = JSON.parse(localStorage.getItem(STORE) || '{}'); delete all[key]; all[key] = s.toDataURL('image/jpeg', .8);
       const keys = Object.keys(all); if (keys.length > 24) delete all[keys[0]]; localStorage.setItem(STORE, JSON.stringify(all)); } catch (e) {}
+    try { const a = document.createElement('canvas'); a.width = a.height = 512; a.getContext('2d').drawImage(colorC, 0, 0, 512, 512);
+      const b = document.createElement('canvas'); b.width = b.height = 512; b.getContext('2d').drawImage(eyeC, 0, 0, 512, 512);
+      const w = JSON.parse(localStorage.getItem(WORK) || '{}'); delete w[key];
+      w[key] = { c: a.toDataURL('image/jpeg', .85), e: b.toDataURL('image/png'), src: opts.src, guide: opts.guide || null, title: opts.title || '', t: Date.now() };
+      let ks = Object.keys(w); while (ks.length > 12) { delete w[ks[0]]; ks = Object.keys(w); }
+      for (let n = 0; n < 6; n++) { try { localStorage.setItem(WORK, JSON.stringify(w)); break; } catch (e) { ks = Object.keys(w); if (ks.length < 2) break; delete w[ks[0]]; } } } catch (e) {}
+  }
+  function finish() {
+    save();
     party(T('MasyaAllah, indah! 🌈', 'MashaAllah, beautiful! 🌈'), true);
   }
-  function close() { shimmerOff(); wand = null; root.classList.remove('on'); document.documentElement.style.overflow = ''; twinkles = []; glitPts = []; stroke = null; autoRun = false; }
+  function close() { if (root && root.classList.contains('on') && !root.querySelector('.mc-yay.on')) save(); shimmerOff(); wand = null; root.classList.remove('on'); document.documentElement.style.overflow = ''; twinkles = []; glitPts = []; stroke = null; autoRun = false; }
   /* size the square picture in pixels so it always fits its space (Safari can let an aspect-ratio box grow past it),
      leaving room for its white frame so it never slides under the stars */
   function fitPaper() {
@@ -959,10 +975,18 @@
     // the page becomes colourable once its coloured version is here too, so the magic crayon never starts
     // with stand-in colours on a slow connection (the coloured version is waited for at most 6 s)
     magicQueued = false; const tok = ++openTok, img = new Image(); let lineOk = false, guideOk = !opts.guide;
-    const go = () => { if (tok !== openTok || !lineOk || !guideOk) return; guideOk = false; analyse(img); render(); say(LINES.start[EN ? 1 : 0]); if (magicQueued) { magicQueued = false; setTimeout(magicAll, 250); } };
+    const go = () => { if (tok !== openTok || !lineOk || !guideOk) return; guideOk = false; analyse(img); restoreWork(); render(); say(LINES.start[EN ? 1 : 0]); if (magicQueued) { magicQueued = false; setTimeout(magicAll, 250); } };
     guideWait = () => { guideOk = true; go(); }; setTimeout(() => { guideOk = true; go(); }, 6000);
     img.onload = () => { lineOk = true; go(); }; img.src = opts.src;
   }
+  function restoreWork() {
+    if (!opts.resume) return; let w; try { w = JSON.parse(localStorage.getItem(WORK) || '{}')[opts.key]; } catch (e) {} if (!w) return;
+    const a = new Image(), b = new Image(); let n = 0; const done = () => { if (++n < 2) return;
+      cx(colorC).drawImage(a, 0, 0, N, N); cx(eyeC).clearRect(0, 0, N, N); cx(eyeC).drawImage(b, 0, 0, N, N); celebrated = true; halfSaid = true; render(); recount(); };   // already praised last time
+    a.onload = b.onload = done; a.onerror = b.onerror = done; a.src = w.c; b.src = w.e;
+  }
   window.MoColor = { open, CRAYONS, LINES,
+    works: () => { try { const w = JSON.parse(localStorage.getItem(WORK) || '{}'), th = JSON.parse(localStorage.getItem(STORE) || '{}');
+      return Object.keys(w).reverse().map(k => ({ key: k, thumb: th[k] || w[k].c, src: w[k].src, guide: w[k].guide, title: w[k].title, t: w[k].t })); } catch (e) { return []; } },
     saved: k => { try { return (JSON.parse(localStorage.getItem(STORE) || '{}'))[k] || null; } catch (e) { return null; } } };
 })();
