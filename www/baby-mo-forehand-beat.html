@@ -1534,12 +1534,12 @@ function drawPlayer(dt) {
 
   // Running cadence at ~2 steps/second-ish, scaled by movement speed.
   // Each "step impact" = the back foot planting on the ground.
-  const runPhase = t * 11.5;
+  const runPhase = state.runClock * RUN_FPS * (2 * Math.PI / 3);   // one step = 3 frames of the 6-frame cycle
   const stepImpact = Math.max(0, Math.sin(runPhase));   // 0..1 per step
 
   // Subtle running motion — character "settles" 1.5px on each foot plant,
   // tiny tilt sells the running feel without being cartoony.
-  const runBob = p.onGround ? -stepImpact * 1.5 : 0;     // negative = down (visual sink)
+  const runBob = p.onGround ? -stepImpact * 2.2 : 0;     // negative = down (visual sink)
   const runTilt = p.onGround ? Math.cos(runPhase) * 0.018 : (p.vy * 0.0004);
 
   // Gentle squash/stretch — half the magnitude of cartoony runners.
@@ -1613,6 +1613,10 @@ function drawPlayer(dt) {
 }
 
 
+/* run cycle pace: like a small child running (about 2.6 steps a second), a little quicker as the game speeds up */
+const RUN_FPS = 8;
+function runRate() { return Math.min(1.25, Math.max(.85, Math.sqrt(Math.max(.01, state.speed / BASE_SPEED)))); }
+
 /* which frame Mo shows right now */
 function moPose(dt) {
   const p = state.player, t = state.songTime;
@@ -1624,8 +1628,8 @@ function moPose(dt) {
   }
   if (t - (p.landAt || -9) < 0.11) return 'land';
   if (state.speed < BASE_SPEED * 0.12) return 'ready';
-  state.runClock += dt * (state.speed / BASE_SPEED);
-  return 'run' + (1 + Math.floor(state.runClock * 12.5) % 6);
+  state.runClock += dt * runRate();
+  return 'run' + (1 + Math.floor(state.runClock * RUN_FPS) % 6);
 }
 
 /* ─── Running dust puff (small, behind character) ────────────────────────── */
