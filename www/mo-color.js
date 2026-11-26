@@ -569,6 +569,34 @@
         for (let y = e.y0; y <= e.y1; y++) for (let x = e.x0; x <= e.x1; x++) { const p = y * N + x; if (inB.has(p) || lineWall[p]) continue;
           let enc = 0; for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) for (let t = 1; t <= 12; t++) { const q = (y + dy * t) * N + x + dx * t; if (inB.has(q)) { enc++; break; } if (!lineWall[q] && t > 10) break; }
           if (enc === 4) { const i = p * 4; eo[i] = eo[i + 1] = eo[i + 2] = 255; eo[i + 3] = 255; } } }
+      // the coloured version's whole eye (eyelid, white, pupil, shine), moved and sized onto this eye and laid over
+      // the page with a soft edge, so the eye looks just like the coloured picture
+      for (const e of faceEyes) { const { bl } = e, inB = new Set(bl.px), bo = e.bo || [0, 0], w = e.x1 - e.x0 + 1, h = e.y1 - e.y0 + 1, sz = Math.max(w, h), L = bl.L;
+        // find the coloured version's eye: slide and size the page's eye shape over it until the shape is dark
+        // inside and the thin ring just around it is not (an eyelid touching the eye cannot fool this)
+        const cx0 = (e.x0 + e.x1) / 2, cy0 = (e.y0 + e.y1) / 2, dkA = (x, y) => { x = Math.round(x); y = Math.round(y); if (x < 0 || y < 0 || x >= N || y >= N) return 0; const i = (y * N + x) * 4; return Math.max(d[i], d[i + 1], d[i + 2]) < 110 ? 1 : 0; };
+        const ins = [], ring = []; for (let j = 0; j < bl.px.length; j += 2) { const q = bl.px[j]; ins.push(q % N - cx0, ((q / N) | 0) - cy0); }
+        for (const q of bl.px) { let edge = false; for (const o of [-1, 1, -N, N]) if (!inB.has(q + o)) edge = true; if (!edge) continue;
+          const x = q % N - cx0, y = ((q / N) | 0) - cy0, l = Math.hypot(x, y) || 1; ring.push(x + x / l * sz * .09, y + y / l * sz * .09); }
+        const score = (k, ox, oy) => { let a = 0, b2 = 0; for (let j = 0; j < ins.length; j += 2) a += dkA(cx0 + ox + ins[j] * k, cy0 + oy + ins[j + 1] * k);
+          for (let j = 0; j < ring.length; j += 2) b2 += dkA(cx0 + ox + ring[j] * k, cy0 + oy + ring[j + 1] * k); return a / (ins.length / 2) - b2 / (ring.length / 2 || 1); };
+        let bk = 1, box = bo[0], boy = bo[1], bsc2 = -9;
+        for (let k = .8; k <= 1.26; k += .04) for (let oy = bo[1] - 12; oy <= bo[1] + 12; oy += 2) for (let ox = bo[0] - 12; ox <= bo[0] + 12; ox += 2) { const v = score(k, ox, oy); if (v > bsc2) { bsc2 = v; bk = k; box = ox; boy = oy; } }
+        for (let k = bk - .03; k <= bk + .031; k += .01) for (let oy = boy - 2; oy <= boy + 2; oy++) for (let ox = box - 2; ox <= box + 2; ox++) { const v = score(k, ox, oy); if (v > bsc2) { bsc2 = v; bk = k; box = ox; boy = oy; } }
+        if (bsc2 < .55) continue;                                                     // no clear match: keep the eye as it is
+        const mapX = x => cx0 + box + (x - cx0) * bk, mapY = y => cy0 + boy + (y - cy0) * bk;
+        const sk = cl[L][0], R = .5 + .3, F = .12;                                     // patch: eye + 30 % around it, soft last 12 %
+        for (let y = Math.max(0, Math.floor(e.y0 - h * .32)); y <= Math.min(N - 1, e.y1 + h * .32); y++) for (let x = Math.max(0, Math.floor(e.x0 - w * .32)); x <= Math.min(N - 1, e.x1 + w * .32); x++) {
+          const p = y * N + x, Lp = labels[p];
+          if (!inB.has(p) && !lineWall[p] && Lp !== L && !(Lp >= 0 && regions[Lp] < sz * sz * .8)) continue;   // only the face around the eye (never hair or sky)
+          const rr = Math.hypot((x - cx0) / w, (y - cy0) / h); if (rr > R) continue;
+          const X = Math.round(mapX(x)), Y = Math.round(mapY(y)); if (X < 0 || Y < 0 || X >= N || Y >= N) continue;
+          const i = (Y * N + X) * 4; let r = d[i], g = d[i + 1], b = d[i + 2];
+          if (r > 200 && r - g > 45 && r - b > 40 && !inB.has(p)) continue;   // cheek blush: leave the page's own
+          const alpha = rr < R - F ? 1 : (R - rr) / F; const o4 = p * 4;
+          if (alpha < 1) {                                                  // blend into what the page has underneath (face colour, or the page's own line)
+            const base = lineWall[p] && !inB.has(p) ? [20, 14, 12] : sk; r = r * alpha + base[0] * (1 - alpha); g = g * alpha + base[1] * (1 - alpha); b = b * alpha + base[2] * (1 - alpha); }
+          eo[o4] = Math.round(r); eo[o4 + 1] = Math.round(g); eo[o4 + 2] = Math.round(b); eo[o4 + 3] = 255; } }
       for (const bl of blobs) { if (faceEyes.some(e => e.bl === bl)) continue; const sk = cl[bl.L] && cl[bl.L][0];
         for (const p of bl.px) { const i = p * 4, r = d[i], gg = d[i + 1], b = d[i + 2];
           if (Math.max(r, gg, b) < 45) continue;
