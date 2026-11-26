@@ -39,7 +39,7 @@
     padding:calc(10px + env(safe-area-inset-top)) 12px calc(12px + env(safe-area-inset-bottom));font-family:'Fredoka','Nunito',sans-serif;touch-action:manipulation;user-select:none;-webkit-user-select:none;overflow:hidden}
   #moColor.on{display:flex}
   #moColor .mc-top{width:100%;max-width:680px;display:flex;align-items:center;gap:10px;min-height:48px}
-  #moColor .mc-x,#moColor .mc-undo{width:48px;height:48px;border-radius:50%;border:0;background:#fff;box-shadow:0 6px 14px -8px rgba(60,40,120,.5);font-size:22px;color:#4A3B8C;cursor:pointer;flex:none;display:grid;place-items:center}
+  #moColor .mc-x,#moColor .mc-undo{touch-action:manipulation;-webkit-tap-highlight-color:transparent;width:48px;height:48px;border-radius:50%;border:0;background:#fff;box-shadow:0 6px 14px -8px rgba(60,40,120,.5);font-size:22px;color:#4A3B8C;cursor:pointer;flex:none;display:grid;place-items:center}
   #moColor .mc-title{flex:1;text-align:center;font-size:clamp(18px,5vw,24px);font-weight:700;color:#4A3B8C;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   #moColor .mc-stage{flex:1;min-height:0;width:100%;display:flex;align-items:center;justify-content:center;padding:4px 0 6px}
   #moColor .mc-paper{position:relative;aspect-ratio:1;height:100%;max-width:100%;max-height:100%;background:#fff;border-radius:26px;box-shadow:0 18px 36px -18px rgba(60,40,120,.45),0 0 0 6px #fff;overflow:hidden}
@@ -242,7 +242,9 @@
     });
     pal.firstChild.classList.add('sel');
     root.querySelector('.mc-x').onclick = close;
-    root.querySelector('.mc-undo').onclick = undo;
+    { const ub = root.querySelector('.mc-undo'); let lastUp = 0;
+      ub.addEventListener('pointerup', e => { e.preventDefault(); lastUp = performance.now(); undo(); });
+      ub.addEventListener('click', () => { if (performance.now() - lastUp > 600) undo(); }); }
     root.querySelector('.mc-done').onclick = finish;
     root.querySelector('.mc-auto').onclick = magicAll;
     cvs.addEventListener('pointerdown', onDown);
@@ -660,7 +662,7 @@
   }
   function snapshot() {
     const a = mk(), b = mk(); cx(a).drawImage(colorC, 0, 0); cx(b).drawImage(eyeC, 0, 0);
-    undoStack.push({ a, b, g: glitPts.length }); if (undoStack.length > 12) undoStack.shift();
+    undoStack.push({ a, b, g: glitPts.length }); if (undoStack.length > 30) undoStack.shift();
   }
   function commit() {
     if (!stroke) return;
@@ -723,6 +725,7 @@
     maxR += BR; const t0 = performance.now(), dur = Math.min(900, 300 + maxR * 1.1);
     note(.15); swish(.2); setTimeout(() => swish(.15), 160);
     const step = now => {
+      if (s.cancelled) return;                                   // undone while still spreading
       const u = Math.min(1, (now - t0) / dur), r = maxR * (1 - Math.pow(1 - u, 2.2)), ring = Math.max(10, Math.floor(r / 5));
       for (let i = 0; i < ring; i++) { const a = Math.random() * Math.PI * 2, rr = r * (.55 + Math.random() * .45); dab(s.x0 + Math.cos(a) * rr, s.y0 + Math.sin(a) * rr, BR * (1 + u * 1.6)); }
       dab(s.x0, s.y0, Math.max(BR, r * .7));
@@ -747,7 +750,9 @@
     }
   }
   function undo() {
-    if (stroke || autoRun) return; const h = undoStack.pop(); if (!h) return;
+    if (autoRun) return;
+    if (stroke) { stroke.cancelled = true; stroke = null; cx(strokeC).clearRect(0, 0, N, N); shimmerOff(); wand = null; }
+    const h = undoStack.pop(); if (!h) { render(); return; }
     const a = cx(colorC); a.clearRect(0, 0, N, N); a.drawImage(h.a, 0, 0); const b = cx(eyeC); b.clearRect(0, 0, N, N); b.drawImage(h.b, 0, 0);
     glitPts.length = h.g; render(); tone(330, .08);
     recount();
