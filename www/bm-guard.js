@@ -85,6 +85,7 @@
       "html[data-bm-theme=classic] .bmg-title{color:#F1EBFF}html[data-bm-theme=classic] .bmg-text{color:#CFC7EE}html[data-bm-theme=classic] .bmg-ar{color:#6FE89B}" +
       "html[data-bm-theme=classic] .bmg-wait{background:rgba(111,232,155,.12);color:#8EF0B2}html[data-bm-theme=classic] .bmg-grown{color:#A9A2CC}" +
       "html[data-bm-theme=classic] .bmg-btn[disabled]{background:linear-gradient(180deg,#4A5288,#3E4578);box-shadow:0 6px 0 #2C3264;color:#8F96C6}" +
+      ".bmg-card.mo-mat{padding-top:104px}.bmg-card.mo-mat .bmg-mo{top:-80px}" +
       "@media (prefers-reduced-motion:reduce){.bmg,.bmg-card,.bmg-mo,.bmg-toast,.bmg-btn.main::after{animation:none}}";
     document.head.appendChild(st);
   }
@@ -97,7 +98,7 @@
     close();
     try { if (window.speechSynthesis) speechSynthesis.cancel(); } catch (e) {}
     card = document.createElement("div"); card.className = "bmg"; card.setAttribute("role", "dialog"); card.setAttribute("aria-modal", "true");
-    card.innerHTML = '<div class="bmg-card has-mo"><img class="bmg-mo" alt="" draggable="false" src="' + mo + '">' + html + "</div>";
+    card.innerHTML = '<div class="bmg-card has-mo' + (mo === POSE_PRAY ? ' mo-mat' : '') + '"><img class="bmg-mo" alt="" draggable="false" src="' + mo + '">' + html + "</div>";
     // the card catches every tap so the game underneath can't be played
     ["pointerdown", "touchstart", "touchend", "click", "keydown"].forEach(function (ev) { card.addEventListener(ev, function (e) { e.stopPropagation(); }); });   // after the card's own buttons ran
     cardKind = kind; document.body.appendChild(card);
